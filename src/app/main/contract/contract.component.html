@@ -1,0 +1,92 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row" id="table-striped">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmitSearch()">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control" placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <select class="form-control" name="is_customer_sign" [(ngModel)]="searchForm.is_customer_sign">
+                  <option value="">Chọn trạng thái</option>
+                  <option value="1">Đã ký</option>
+                  <option value="0">Chưa ký</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive" *ngIf="!isViewFile">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                
+                <th>Tên khách hàng</th>                
+                <th>SĐT</th>
+                <th>Số CCCD/CMND</th>   
+                <th>Số tiền vay</th>            
+                <th>Ngày tạo</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of list">
+               
+                
+                <td>{{ item?.people?.name }}</td>
+                           
+                <td>
+                  {{ item?.people?.mobile }}
+                </td>   
+                <td>
+                  {{ item?.people?.identification_no }}
+              </td>  
+                <td>
+                  {{ item.amount }}
+                </td>
+                <td>
+                  {{ item.created_at | date: 'dd/MM/yyyy H:mm' }}
+              </td>
+                <td>
+                  <div [innerHTML]="item.is_signed | statusFile"></div>                  
+                </td>                
+                
+                <td>
+                  <a [routerLink]="['/contract/view', item.id]" >
+                    <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                    </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ngb-pagination
+          class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="total"
+                [(page)]="page"
+                [directionLinks]="false"
+              ></ngb-pagination>
+        </div>
+        
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    </div>
+</div>

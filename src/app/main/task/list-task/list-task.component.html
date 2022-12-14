@@ -1,0 +1,193 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row" id="table-striped">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmitSearch()">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control" placeholder="Nhập mã giao dịch">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control" placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <select class="form-control" name="service_code" [(ngModel)]="searchForm.service_code">
+                  <option value="">Chọn dịch vụ</option>
+                  <option *ngFor="let item of listService | keyvalue" [value]="item.key">{{ item.value }}</option>                  
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                  <option value="">Chọn trạng thái task</option>
+                  
+                  <option value="2">Chờ duyệt</option>
+                  <option value="0">Không duyệt</option>
+                  <option value="3">Đã duyệt</option>
+                  <option value="4">Chờ giải ngân</option>
+                  <option value="5">Đã giải ngân</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive" >
+          <table class="table table-striped text-nowrap">
+            <thead>
+              <tr>             
+                <th>ID</th>   
+                <th *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">Mã hợp đồng</th>
+                <th>Tên khách hàng</th>                
+                <th>SĐT</th>
+                <th>Số CCCD/CMND</th>
+                <th>Số tiền</th>     
+                <th>Tiêu đề</th>       
+                <th>Ngày tạo</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of list">
+               
+                <td>{{ item?.id }}</td>
+                <td *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">{{ item.contract[0]?.contract_code }}</td>
+                <td>{{ item?.user?.people?.name }}</td>
+                           
+                <td>
+                  {{ item?.user?.people?.mobile }}
+                </td>   
+                <td>
+                  {{ item?.user?.people?.identification_no }}
+              </td>  
+                <td>
+                  {{ item?.amount | currency:'VND':true}}
+                </td>
+                <td>
+                  {{ item?.title }}
+                </td>
+                <td>
+                  {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
+              </td>
+                <td>
+                  <div [innerHTML]="item.status | showStatusLoan"></div>                  
+                </td>                
+                
+                <td>
+                  <ng-template *ngIf="item.service_code == 'BANK_LOAN_PVCOMBANK'">
+                    <a [routerLink]="['/loan-bank/view', item.id]" >
+                      <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                      </a>
+                  </ng-template>    
+                  <button class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item.id)"                  
+                  >
+                    <i data-feather="monitor" class="text-primary cursor-pointer"></i>
+                    View webhook
+                  </button>              
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ngb-pagination
+          class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="total"
+                [(page)]="searchForm.page"
+                [directionLinks]="false"
+                (pageChange)="loadPage($event)"
+              ></ngb-pagination>
+        </div>
+        
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    </div>
+</div>
+
+<ng-template #modalTransWh let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Chi tiết</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div>
+      <h4>Thông tin webhook</h4>
+      <div class="row">
+        <div class="col-md-6">
+          trans_id: {{ wh?.trans_id }}
+        </div>
+        <div class="col-md-6">
+          order_id: {{ wh?.order_id }}
+        </div>
+        <div class="col-md-6">
+          Số tiền: {{ wh?.amount }}
+        </div>
+        <div class="col-md-6">
+          gateway: {{ wh?.gateway }}
+        </div>
+        <div class="col-md-6">
+          detail: <code>{{ wh?.detail }}</code>
+        </div>
+        <div class="col-md-6">
+          status: {{ wh?.status }}
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4>Thông tin transaction</h4>
+
+      <div class="row">
+        <div class="col-md-6">
+          trans_type: {{ trans?.trans_type }}
+        </div>
+        <div class="col-md-6">
+          merchant_id: {{ trans?.merchant_id }}
+        </div>
+        <div class="col-md-6">
+          user_id: {{ trans?.user_id }}
+        </div>
+        <div class="col-md-6">
+          Số tiền: {{ trans?.amount }}
+        </div>        
+        <div class="col-md-6">
+          Phí: {{ trans?.fee }}
+        </div>
+        <div class="col-md-6">
+          Phí merchant: {{ trans?.merchant_fee }}
+        </div>
+        <div class="col-md-6">
+          gateway: {{ trans?.gateway }}
+        </div>
+        <div class="col-md-6">
+          status: {{ trans?.status }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+      Đóng
+    </button>
+  </div>
+
+</ng-template>

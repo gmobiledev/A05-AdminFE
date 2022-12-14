@@ -1,0 +1,129 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row" id="table-striped">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">Danh sách admin</h4></div>        
+        <div class="card-body">
+          <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <input type="text" name="keyword" [(ngModel)]="searchForm.keyword" class="form-control" placeholder="Nhập từ khóa tìm theo tên, sđt, email...">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                  <option value="">Chọn trạng thái</option>
+                  <option value="1">Đang hoạt động</option>
+                  <option value="0">Đang khóa</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span [data-feather]="'search'"></span></button>
+              </div>
+            </div>
+          </div>
+        </form>
+          <a [routerLink]="['/admin/create']" routerLinkActive="router-link-active" class="btn btn-primary" >
+            <span [data-feather]="'plus-circle'" [class]="'mr-25'"></span>
+            Thêm admin</a>
+            <div class="table-responsive mt-3" *blockUI="'section-block'">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Họ tên</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list">
+                    <td>
+                      {{ item.email }}
+                    </td>
+                    <td>{{ item.full_name }}</td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatus"></div>
+                    </td>
+                    <td>
+                      
+                    </td>                
+                    <td class="overflow-hidden">
+                      <a [routerLink]="['/admin/view', item.id]" [state]="item">
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        </a>
+                        <a class="ml-2" (click)="onSubmitLock(item.id, 0)" *ngIf="item.status">
+                          <i data-feather="lock" class="text-primary cursor-pointer"></i>
+                        </a>
+                        <a class="ml-2" (click)="onSubmitLock(item.id, 1)" *ngIf="!item.status">
+                          <i data-feather="unlock" class="text-primary cursor-pointer"></i>
+                        </a>
+
+                        <a class="ml-2" (click)="modalOpen(modalCreate, item)" >
+                          <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
+                        </a>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <ngb-pagination
+              class="d-flex justify-content-end pr-3 pt-2"
+                    [collectionSize]="totalPage"
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [directionLinks]="false"
+                  ></ngb-pagination>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    </div>
+</div>
+
+<ng-template #modalCreate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Dịch vụ khả dụng</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="auth-login-form mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    
+    <div class="form-group mt-2" >
+      <label>Chọn dịch vụ</label>
+      <input type="text" class="form-control" (input)="onSearchService($event)" placeholder="Tìm kiếm" />
+      <div class="row pt-1" style="max-height:600px; overflow-y: auto">
+        <div class="col-md-6 mb-2" *ngFor="let item of listServiceFilter">
+
+        
+        <div class="custom-control custom-checkbox" >
+          
+          <input [checked]="selectedService.includes(item.service_code)" id="{{item.service_code}}" type="checkbox" [value]="item.service_code" class="custom-control-input" (change)="onChangeService($event, item)" />
+          <label for="{{item.service_code}}"  class="custom-control-label" 
+         
+          >{{ item.desc }}</label>
+        
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button  type="submit" class="btn btn-primary" rippleEffect>
+      Lưu
+    </button>
+  </div>
+</form>
+</ng-template>

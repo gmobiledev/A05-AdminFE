@@ -1,0 +1,82 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+      <div class="row" >
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+            <div class="card-body" *blockUI="'section-block'">
+                <form [formGroup]="form" (ngSubmit)="onSubmitSave()">
+                    <div class="form-group">
+                        <label for="">Username</label>
+                        <input type="text" class="form-control"
+                        (keydown.space)="$event.preventDefault()"
+                        formControlName="username"
+                        >
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                            <div *ngIf="f.username.errors.required">Vui lòng nhập username</div>       
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="email" class="form-control"
+                    formControlName="email"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="">Số điện thoại</label>
+                    <input type="text" class="form-control"
+                    placeholder="098 765 43 21" mask="000 000 00 00"
+                    formControlName="mobile"
+                    >
+                    <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                        <div *ngIf="f.mobile.errors.required">Vui lòng nhập SĐT</div>       
+                    </div>
+                </div>
+                <div *ngIf="isCreate">
+                <div class="form-group">
+                    <label for="">Mật khẩu</label>
+                    <input type="password" class="form-control"
+                    formControlName="password"
+                    >
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Vui lòng nhập mật khẩu</div>       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="">Nhập lại mật khẩu</label>
+                    <input type="password" class="form-control"
+                    formControlName="repassword"
+                    >
+                    <div *ngIf="submitted && f.repassword.errors" class="invalid-feedback">
+                        <div *ngIf="f.repassword.errors.required">Vui lòng nhập lại mật khẩu</div>       
+                    </div>
+                </div>
+                </div>
+                <div class="form-group">
+                    <label for="">Chọn vai trò</label>
+                        <input type="text" class="form-control" (input)="onSearch($event)" placeholder="Tìm kiếm" />
+                    <div class="demo-inline-spacing">
+                        <div class="custom-control custom-checkbox" *ngFor="let item of allRoleFilter">
+                        <input 
+                        [checked]="selectedRole.includes(item.name)" type="checkbox" [value]="item.name" class="custom-control-input"
+                        id="{{item.name}}" type="checkbox" name="choose" class="custom-control-input" (change)="onChange($event, item)" />
+                        <label for="{{item.name}}"  class="custom-control-label" >{{ item.name }}</label>
+                        </div>
+                    </div>
+              
+                </div>
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <span [data-feather]="'save'" [class]="'mr-25'"></span>
+                        Lưu lại
+                    </button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

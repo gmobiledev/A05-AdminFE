@@ -1,0 +1,49 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+        <div class="card-body">
+            <div class="mb-2">
+                <div>
+                    Tổng giá trị đơn hàng: <b>{{ order?.amount | currency:'VND' }}</b>
+                </div>
+            </div>
+            <div>
+                <h4>Danh sách sản phẩm</h4>
+                <div class="table-responsive" *ngIf="orderProduct && orderProduct.length > 0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Đơn vị</th>                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of orderProduct;let i = index">
+                                <td>
+                                    {{ item?.name }}
+                                </td>
+                                <td>{{ item?.price }}</td>
+                                <td>
+                                    {{ item?.quantity }}
+                                </td>
+                                <td>
+                                    {{ item?.unit }}
+                                </td>                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row" id="table-striped">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+        <div class="card-body">     
+            <div class="mt-3 mb-3 overflow-hidden">
+                <div class="pull-left">            
+                <button type="button" (click)="modalOpen(modalUploadData)" class="btn btn-info">Tải file ekyc lô <span [data-feather]="'upload'"></span></button>            
+            </div>
+            </div>     
+        <div class="table-responsive" *blockUI="'section-block'">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID lô</th>
+                <th>File tải lên</th>                
+                <th>Số dữ liệu</th>
+                <th>Số dữ liệu mới</th>                
+                <th>Số ekyc thành công</th>
+                <th>Số ekyc thất bại</th>
+                <th>File đã xử lý ekyc</th>
+                <th>Thời gian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of list">
+                <td>
+                  {{ item?.id }}
+                </td>
+                <td>
+                    <a class="text-success" (click)="onExportExcel(item.file_name)">
+                        {{ item?.file_name }}
+                    </a>                    
+                </td>
+                <td>{{ item?.number_record }}</td>
+                <td>{{ item?.number_new_record }}</td>
+                <td>
+                    {{ item?.number_success_ekyc }}
+                </td>
+                <td>
+                  {{ item?.number_fail_ekyc }}
+              </td>              
+                
+                <td>
+                    <a class="text-success" (click)="onExportExcel(item.file_processed)">
+                    {{ item?.file_processed }}      
+                </a>
+                </td>
+                <td>
+                  {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
+                    <!-- <button type="button" (click)="onCheckEkycData(item)" class="btn btn-success">Kiểm tra dữ liệu ekyc
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="idCheck == item.id && submittedCheck"></span>
+                    </button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ngb-pagination
+          class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="total"
+                [(page)]="searchForm.page"
+                [pageSize]="pageSize"
+                [directionLinks]="false"
+                (pageChange)="loadPage($event)"
+              ></ngb-pagination>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    </div>
+</div>
+
+<ng-template #modalUploadData let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Tải lên dữ liệu lô EKYC</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      <div class="form-group">
+        <i class="fa fa-upload" aria-hidden="true"></i> 
+          <input type="file" (change)="onFileChangeExcel($event)" />
+          <label >Tải lên file excel</label>
+  
+        <a href="/assets/data.xls" class="ml-2">File mẫu tại đây</a>
+      </div>
+      
+      <div class="form-group">
+        <i class="fa fa-upload" aria-hidden="true"></i>
+        <input type="file" (change)="onFileChangeImages($event)"  />
+        <label>Tải lên zip ảnh giấy tờ tùy thân</label>
+  
+    </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="onSubmitUpload()" type="submit" class="btn btn-primary" rippleEffect>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="submittedUpload"></span>
+        Submit
+      </button>
+    </div>
+  
+  </ng-template>

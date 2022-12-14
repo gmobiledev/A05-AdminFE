@@ -1,0 +1,205 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+        <div class="card-body">
+            <div class="mb-3">
+                <div *ngIf="task?.status == 2" >
+                    <button (click)="modalOpen(modalUpdateStatus, 3)" class="btn btn-info mr-2">Duyệt khoản vay <span [data-feather]="'check'"></span></button>
+                    <button (click)="modalOpen(modalUpdateStatus, 0)" class="btn btn-warning">Không duyệt khoản vay <span [data-feather]="'check'"></span></button>
+                </div>
+                <!-- <div *ngIf="task?.status == 4" >
+                    <button (click)="modalOpen(modalUpdateStatus, 5)" class="btn btn-success">Duyệt giải ngân <span [data-feather]="'check'"></span></button>
+                </div> -->
+                <div *ngIf="task?.status == 5" >
+                  <button (click)="modalOpen(modalUpdateStatus, 1)" class="btn btn-success">Tất toán <span [data-feather]="'check'"></span></button>
+              </div>
+            </div>
+            <div class="mb-3">
+                Trạng thái: <span [innerHTML]="task?.status | showStatusLoan"></span>  
+                <div *ngIf="task?.status === 0 && task?.response_note">
+                    Lý do: <b>{{ task?.response_note }}</b>
+                </div>
+            </div>
+            <div *ngIf="task">
+                Khoản vay mong muốn: <b>{{ task?.amount | currency:'VND':true }}</b>
+            </div>
+            <div>
+                Ngân hàng cho vay: <b>{{ itemBankname?.value }}</b>
+            </div>
+            <div>
+                Lãi suất: <b>{{ itemKyhanLaisuat?.value }} % / năm</b>
+            </div>
+            <div>
+                Kỳ hạn: <b>{{ itemKyhanLaisuat?.name }}</b>
+            </div>
+            <div class="mt-2">
+              <h5>Tài khoản nhận tiền</h5>
+              <div>
+                Ngân hàng: <b>{{ task?.receiver_bank_code }}</b>
+              </div>
+              <div>
+                Tên chủ tài khoản: <b>{{ task?.receiver_name }}</b>
+              </div>
+              <div>
+                Số tài khoản: <b>{{ task?.receiver_banker_number }}</b>
+              </div>
+            </div>
+            <!-- <app-view-file-contract [id]="'cf7fd27ce091f2fbe8c020b8f7b14e04'"></app-view-file-contract> -->
+            <div *ngIf="files && files.length > 0" class="mt-3">
+                <button (click)="modalOpenContract(modalContract)" class="btn btn-info mr-2">Xem nội dung hợp đồng <span [data-feather]="'eye'"></span></button>
+                <div *ngIf="!contract.is_customer_sign">
+                  <span class="badge badge-pill badge-light-warning mr-1">Khách hàng chưa ký</span>
+                </div>
+                <div *ngIf="contract.is_customer_sign">
+                  <span class="badge badge-pill badge-light-success mr-1">Khách hàng đã ký</span>
+                </div>
+              </div>
+            <div *ngIf="people" class="mt-3">
+                <h4>Thông tin khách hàng vay</h4>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p>Ảnh CMND/CCCD mặt trước</p>
+                    <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ people?.identification_front_file }}" alt="avatar img" />
+                  </div>
+                  <div class="col-md-6">
+                    <p>Ảnh CMND/CCCD mặt sau</p>
+                    <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ people?.identification_back_file }}" alt="avatar img" />
+                  </div>
+                </div>
+                <div>
+                    Số điện thoại: <b>{{ people?.mobile }}</b>
+                </div>
+            </div>
+            <div class="table-responsive mt-3" *ngIf="listOrder && listOrder.length > 0">
+              <h4>Danh sách đơn hàng</h4>
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>Mã Đơn</th>
+                          <th>Mã Ruộng</th>
+                          <th>Nông Dân</th>
+                          <th>Mã ĐL</th>
+                          <th>Tên ĐL</th>
+                          <th>Tổng tiền</th>
+                          <th>Nội dung</th>
+                          <th>Trạng thái</th>
+                          <th>Thời gian</th>
+                          <th>Thao tác</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of listOrder;let i = index">
+                          <td>
+                              {{ item.code }}
+                          </td>
+                          <td>{{ item.field_code }}</td>
+                          <td>
+                              {{ item.user_id }}
+                          </td>
+                          <td>
+                              {{ item.agency_code_c2 }}
+                          </td>
+                          <td>
+                              {{ item.agency_name_c2 }}
+                          </td>
+                          <td>{{ item.amount | currency:'VND':true }}</td>
+                          <td>{{ item.desc }}</td>
+                          <td>
+                              <div [innerHTML]="showStatusText(item.status)"></div>
+                          </td>
+                          <td>
+                              {{ item.created_at | date: 'dd/MM/yyyy H:mm' }}
+                          </td>
+                          <td>
+                            <button *ngIf="item.status == 3" (click)="modalOpenOrder(modalUpdateStatusOrder, item, 5)" class="btn btn-success">Giải ngân <span [data-feather]="'check'"></span></button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="total"
+              (pageChange)="loadPage($event)"
+                  [(page)]="page" [pageSize]="pageSize" [directionLinks]="true"></ngb-pagination>
+            </div>
+            </div>
+      </div>
+    </div>
+</div>
+    </div>
+</div>
+
+<ng-template #modalUpdateStatus let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      
+      <div class="form-group" *ngIf="dataUpdate.status === 0">
+        <label for="">Ghi chú</label>
+        <textarea class="form-control" [(ngModel)]="dataUpdate.note" id="" rows="3"></textarea>
+      </div>
+      
+    </div>
+    <div class="modal-footer">
+      <button (click)="onSubmitUpdateStatus()" type="submit" class="btn btn-primary" rippleEffect>
+        Lưu
+      </button>
+    </div>
+ 
+  </ng-template>
+
+  <ng-template #modalUpdateStatusOrder let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      
+      <div class="form-group" *ngIf="dataUpdate.status === 0">
+        <label for="">Ghi chú</label>
+        <textarea class="form-control" [(ngModel)]="dataUpdate.note" id="" rows="3"></textarea>
+      </div>
+      
+    </div>
+    <div class="modal-footer">
+      <button (click)="onSubmitUpdateStatusOrder()" type="submit" class="btn btn-primary" rippleEffect>
+        Lưu
+      </button>
+    </div>
+ 
+  </ng-template>
+
+  <ng-template #modalContract let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabe0">Nội dung hợp đồng</h5>
+      <button type="button" class="close" (click)="modalContractClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      
+        <div *ngIf="files && files.length > 0">
+            <div *ngFor="let item of files">
+             
+                <app-view-file-contract [id]="item.id"></app-view-file-contract>
+            </div>
+        </div>
+      
+    </div>
+    <div class="modal-footer">
+      <button (click)="modalContractClose()" type="submit" class="btn btn-primary" rippleEffect>
+        Đóng
+      </button>
+    </div>
+ 
+  </ng-template>

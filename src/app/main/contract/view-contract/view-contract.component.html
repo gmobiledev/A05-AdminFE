@@ -1,0 +1,29 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+        <div class="card-body">
+            <div *ngIf="contract" class="mb-3">
+                Khoản vay mong muốn: {{ contract.amount }}
+            </div>
+            <!-- <app-view-file-contract [id]="'cf7fd27ce091f2fbe8c020b8f7b14e04'"></app-view-file-contract> -->
+            <div *ngIf="files && files.length > 0">
+                <div *ngFor="let item of files">
+                 
+                    <app-view-file-contract [id]="item.id"></app-view-file-contract>
+                </div>
+            </div>
+            <div *ngIf="people" class="mt-3">
+                <h4>Thông tin khách hàng vay</h4>
+
+            </div>
+            </div>
+      </div>
+    </div>
+</div>
+    </div>
+</div>

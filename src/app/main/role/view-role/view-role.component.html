@@ -1,0 +1,53 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <!-- content-header component -->
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+      <section class="bootstrap-select">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Chi tiết vai trò {{ id }}</h4>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-5 col-12">
+                    <div class="form-group">
+                      <label for="customSelectMulti">Tất cả quyền trên hệ thống</label>
+                      <select [(ngModel)]="selectedPermission" class="custom-select" id="customSelectMulti" multiple>
+                        <option *ngFor="let item of allPermissionExcept" value="{{ item.child }}">
+                          {{ item.child }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2 pt-2">
+                    <div class="form-group">
+                        <label></label>
+                        <button  (click)="onSubmitAdd()" type="button" class="btn btn-success mb-1" rippleEffect><span [data-feather]="'chevrons-right'" [class]="'mr-25'"></span>Thêm</button>
+                        <br/>
+                        <button (click)="onSubmitRemove()" type="button" class="btn btn-danger" rippleEffect><span [data-feather]="'chevrons-left'" [class]="'mr-25'"></span>Gỡ</button>
+                    </div>
+                   
+                  </div>
+                  <div class="col-md-5 col-12">
+                    <div class="form-group">
+                      <label for="customSelectMulti">Quyền hiện có</label>
+                      <select [(ngModel)]="selectedPermission" class="custom-select" id="customSelectMulti" multiple>
+                        <option *ngFor="let item of data" value="{{ item.child }}">
+                          {{ item.child }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+</div>  

@@ -1,0 +1,131 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+<div class="row" id="table-striped">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmitSearch()">
+          <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                  <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                    <option value="">Chọn trạng thái</option>
+                    <option value="1">Thành công</option>
+                    <option value="2">Thất bại</option>
+                  </select>
+                </div>
+              </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <input type="text" 
+                placeholder="Khoảng thời gian"
+                [ngModelOptions]="{standalone: true}" 
+                ngxDaterangepickerMd [(ngModel)]="dateRange" 
+                [ranges]="ranges"
+                [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
+                [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true"
+                name="daterange"
+                class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <select class="form-control" name="telco" [(ngModel)]="searchForm.telco">
+                  <option value="">Chọn nhà mạng</option>
+                  <option *ngFor="let item of listTelco | keyvalue" [value]="item.key">{{ item.value }}</option>                  
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button (click)="onSubmitSearch()" type="submit" class="btn btn-block btn-info">Lọc kết quả <span [data-feather]="'search'"></span></button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control" placeholder="Số điện thoại">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control" placeholder="Mã giao dịch">
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="mt-3 mb-3 overflow-hidden">
+          <div class="pull-right">
+            <button type="button" class="btn btn-success">Xuất dữ liễu ra file excel 
+              
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="submittedExport; else downloadIcon"></span>
+              <ng-template #downloadIcon>
+                <i class="fa fa-download" aria-hidden="true"></i>
+                
+                <!-- <span [data-feather]="'download'"></span> -->
+              </ng-template>
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive" *blockUI="'section-block'">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Số điện thoại</th>
+                <th>Nhà mạng</th>
+                <th>Mã giao dịch</th>
+                <th>Số lượng tin nhắn</th>
+                <th>Trạng thái</th>
+                <th>Thời gian</th>
+                <th>TỔNG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of list;let i = index">
+                <td>
+                  {{ item.mobile }}
+                </td>
+                <td>{{ listTelco[item.telco] }}</td>
+                <td>
+                    {{ item.trans_id }}
+                </td>
+                <td>
+                    {{ item.sms_count }}
+                </td>
+                <td>
+                  <div [innerHTML]="showStatusText(item.error_code)"></div>
+                </td>
+                <td>
+                  {{ item.create_date * 1000 | date: 'dd/MM/yyyy H:mm' }}
+                </td>
+                <td>
+                  <span *ngIf="i == 0" >
+                    {{ sumSms }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ngb-pagination
+          class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="total"
+                [(page)]="page"
+                [pageSize]="pageSize"
+                [directionLinks]="false"
+                (pageChange)="loadPage($event)"
+              ></ngb-pagination>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    </div>
+</div>

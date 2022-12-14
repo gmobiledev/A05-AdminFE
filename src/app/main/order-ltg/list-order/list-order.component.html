@@ -1,0 +1,76 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+                    </div>
+
+                    <!-- <div class="card-body">
+                        <button type="button" [routerLink]="['/order-ltg/create']" class="btn btn-outline-primary" rippleEffect>Tạo đơn giao vật tư</button>
+                    </div> -->
+
+                    <div class="card-body">
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Mã Đơn</th>
+                                        <th>Mã Ruộng</th>
+                                        <th>Nông Dân</th>
+                                        <th>Mã ĐL</th>
+                                        <th>Tên ĐL</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Nội dung</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thời gian</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ item.code }}
+                                        </td>
+                                        <td>{{ item.field_code }}</td>
+                                        <td>
+                                            {{ item.user_id }}
+                                        </td>
+                                        <td>
+                                            {{ item.agency_code_c2 }}
+                                        </td>
+                                        <td>
+                                            {{ item.agency_name_c2 }}
+                                        </td>
+                                        <td>{{ item.amount }}</td>
+                                        <td>{{ item.desc }}</td>
+                                        <td>
+                                            <div [innerHTML]="showStatusText(item.status)"></div>
+                                        </td>
+                                        <td>
+                                            {{ item.created_at | date: 'dd/MM/yyyy H:mm' }}
+                                        </td>
+                                        <td>
+                                            <a [routerLink]="['/order-ltg/view', item.id]" >
+                                                <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                                                </a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="total"
+                            (pageChange)="loadPage($event)"
+                                [(page)]="searchForm.page" [pageSize]="pageSize" [directionLinks]="true"></ngb-pagination>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

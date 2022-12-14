@@ -1,0 +1,111 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <!-- content-header component -->
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+      <!-- Inline Editing Datatables -->
+    <section id="ngx-datatable-inline-editing">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+          <h4 class="card-header">Danh sách Vai trò</h4>
+          <div class="card-body">
+            <div class="mt-2 mb-2">
+              <button (click)="modalOpen(modalCreate)" type="button" class="btn btn-warning" rippleEffect>
+                <span [data-feather]="'plus-circle'" [class]="'mr-25'"></span>Thêm</button>
+
+                <button (click)="loadPermission()" type="button" class="btn btn-info ml-2" rippleEffect>
+                <span [data-feather]="'refresh-ccw'" [class]="'mr-25'"></span>Tải lại quyền</button>
+            </div>
+            <div class="table-responsive" *blockUI="'section-block'">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Tên vai trò</th>
+                    <th>Mô tả</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of rows">
+                    <td>
+                      {{ item.name }}
+                    </td>
+                    <td>
+                      {{ item.description }}
+                    </td>              
+                    <td class="overflow-hidden">
+                      <a (click)="modalOpen(modalCreate, item)" placement="top"
+                      ngbTooltip="Xem">
+                        <i data-feather="eye" class="text-primary cursor-pointer mr-2"></i>
+                        </a>
+                        <a (click)="onSubmitDelete(item)" placement="top"
+                        ngbTooltip="Xóa">
+                          <i data-feather="trash-2" class="text-primary cursor-pointer"></i>
+                          </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      </section>
+      <!--/ Inline Editing Datatables -->
+    </div>
+</div>
+
+<ng-template #modalCreate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Thêm vai trò mới</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="auth-login-form mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    
+    <div class="form-group">
+      <label for="basicInput">Tên vai trò</label>
+      <input type="text" class="form-control" id="basicInput" placeholder="Nhập tên vai trò"
+      (keydown.space)="$event.preventDefault()"
+      formControlName="role_name"
+      [ngClass]="{ 'is-invalid': submitted && f.role_name.errors }"
+      />
+      <div *ngIf="submitted && f.role_name.errors" class="invalid-feedback">
+        <div *ngIf="f.role_name.errors.required">Vui lòng nhập tên</div>       
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Mô tả</label>
+      <textarea class="form-control" formControlName="role_description" id="" rows="3"></textarea>
+    </div>
+    <div class="form-group mt-2" >
+      <label>Chọn quyền</label>
+      <input type="text" class="form-control" (input)="onSearchRoute($event)" placeholder="Tìm kiếm" />
+      <div class="row pt-1" style="max-height:600px; overflow-y: auto">
+        <div class="col-md-6 mb-2" *ngFor="let item of allRouteFilter">
+
+        
+        <div class="custom-control custom-checkbox" >
+          
+          <input [checked]="selectedRoute.includes(item.child)" id="{{item.child}}" type="checkbox" [value]="item.child" class="custom-control-input" (change)="onChangeRoute($event, item)" />
+          <label for="{{item.child}}"  class="custom-control-label" 
+          placement="right"
+            ngbTooltip="{{ item.description }}"
+          >{{ item.child }}</label>
+        
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button  type="submit" class="btn btn-primary" rippleEffect>
+      Lưu
+    </button>
+  </div>
+</form>
+</ng-template>
