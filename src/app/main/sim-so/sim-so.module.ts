@@ -15,6 +15,7 @@ import { SharedModule } from '../shared/share.module';
 import { SimPackagesComponent } from './sim-packages/sim-packages.component';
 import { QuillModule } from 'ngx-quill';
 import { ViewTaskComponent } from './view-task/view-task.component';
+import { SearchSimSoComponent } from './search-sim-so/search-sim-so.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
     path: 'package',
     component: SimPackagesComponent
   },
+  {
+    path: 'search',
+    component: SearchSimSoComponent
+  },
 ];
 
 @NgModule({
@@ -42,7 +47,8 @@ const routes: Routes = [
     TaskItemComponent,
     TaskCountdownComponent,
     SimPackagesComponent,
-    ViewTaskComponent
+    ViewTaskComponent,
+    SearchSimSoComponent
   ],
   imports: [
     CommonModule, 

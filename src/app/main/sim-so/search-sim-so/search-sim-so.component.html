@@ -1,0 +1,67 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+      
+<div class="row" id="table-striped">
+    <div class="col-12">
+      
+      <div class="card">
+        <div class="card-header"><h4 class="card-title">Mua số</h4></div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmitSearch()">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <input type="text" name="keysearch" [(ngModel)]="searchSim.keysearch" class="form-control" placeholder="Tìm kiếm">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <select class="btn btn-block btn-info" [(ngModel)]="searchSim.category_id" [ngModelOptions]="{standalone: true}" aria-label="Default select example">
+                  <option value="2">Sim</option>
+                  <option value="3">Số</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span [data-feather]="'search'"></span></button>
+              </div>
+            </div>
+          </div>
+        </form>  
+        <div class="table-responsive" *blockUI="'section-block'">
+            <table class="table table-striped text-nowrap" *ngIf="list">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Số</th>
+                    <th>Nhà mạng</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list;index as i">
+                    <td>
+                      <input type="checkbox" (change)="onSubmitSearch($list, total)" >                    
+                    </td>
+                    <!-- <td>
+                      {{(searchSim.take)*(page-1)+(i +1)}}
+                    </td> -->
+                    <td>{{ item?.name }}</td>
+                    <td>{{ item?.brand}}</td>
+                    <td>
+                    <div [innerHTML]="item.status | showStatusSim"></div> 
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</div>
