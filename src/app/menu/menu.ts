@@ -95,6 +95,14 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'agent'      
       },
+      {
+        id: 'agents',
+        title: 'Tìm Sim Số',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/search'      
+      },
     ]
   },
   {
