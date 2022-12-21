@@ -66,7 +66,8 @@ export class ListTaskComponent implements OnInit {
     page: 1,
     array_status: [],
     page_size: 20,
-    date_range: ''
+    date_range: '',
+    telco: ''
   }
   dateRange: any;
 
@@ -277,6 +278,25 @@ export class ListTaskComponent implements OnInit {
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
     this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm});
+  }
+
+  onSubmitExportExcelReport() {
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
+    ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    this.searchForm.date_range = daterangeString;
+    this.telecomService.exportExcelReport(this.searchForm).subscribe(res => {
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Báo cáo đấu nối";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
   }
 
   onUpdateStatusSuccess(eventData: {updated: boolean}) {

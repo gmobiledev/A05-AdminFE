@@ -139,6 +139,15 @@
                   class="form-control"/>
                 </div>
               </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select class="form-control" name="telco" [(ngModel)]="searchForm.telco">
+                    <option value="">Chọn nhà mạng</option>
+                    <option value="VNM">Vietnammobile</option>
+                    <option value="VMS">Mobifone</option>
+                  </select>
+                </div>
+              </div>
               <!-- <div class="col-md-4">
                 <div class="form-group">
                   <select class="form-control" name="status" [(ngModel)]="searchForm.action">
@@ -160,6 +169,11 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span [data-feather]="'search'"></span></button>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <button type="button" (click)="onSubmitExportExcelReport()" class="btn btn-block btn-success">Xuất báo cáo excel <span [data-feather]="'file'"></span></button>
                 </div>
               </div>
             </div>

@@ -186,7 +186,7 @@ export class TaskItemComponent implements OnInit {
             data: {
               "type": this.data.task.action,
               "status": status + "",
-              "message": `Yêu cầu ${this.actionText} ID ${this.data.task.id} số ${listPhone} thành công`,
+              "message": `Yêu cầu ${this.actionText} ID ${this.data.task.id} số ${listPhone} thành công, vui lòng nạp tiền và kích hoạt trong vòng 72h `,
               "id": this.data.task.id + ""
             }
           }
