@@ -22,7 +22,7 @@ export class ListAgentComponent implements OnInit {
   public pageSize: number;
   public searchForm = {
     keyword: '',
-    status: '',
+    ekyc_status: '',
     page: 1
   }
 
@@ -52,6 +52,7 @@ export class ListAgentComponent implements OnInit {
   public subFormGroup: FormGroup;
 
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+count: any;
   
   constructor(
     private route: ActivatedRoute,
@@ -64,20 +65,17 @@ export class ListAgentComponent implements OnInit {
   ) { 
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
-      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+      this.searchForm.ekyc_status = params['ekyc_status'] && params['ekyc_status'] != undefined ? params['ekyc_status'] : '';   
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
 
       this.getData();
       this.getService();
-    })
-    
+    }) 
   }
-
-  loadPage(page) {
+  loadPage(page): void { 
     this.searchForm.page = page;
     this.router.navigate(['/agent'], { queryParams: this.searchForm})
   }
-
   modalOpen(modal, item = null) { 
     if(item) {
       this.titleModal = "Cập nhật đại lý";
