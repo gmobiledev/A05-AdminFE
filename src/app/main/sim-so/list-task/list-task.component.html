@@ -193,7 +193,7 @@
                 <th>Nhà mạng</th> -->
                  <th>Đại lý</th>
                 <!-- <th>Người mua</th> -->
-                <th>Thời gian mua</th>
+                <th>TG tạo/mua</th>
                 <th>Thời gian tiếp nhận</th>
                 <th>Trạng thái</th>                
                 <th>Thao tác</th>
@@ -234,6 +234,7 @@
                   
                 </td> -->
                 <td>
+                  {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
                   {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
                 </td>
                 <td>

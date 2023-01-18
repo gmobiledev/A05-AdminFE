@@ -1,8 +1,8 @@
 export const environment = {
     production: true,
     hmr: false,
-    apiUrl: 'https://devadmin.s198.vn/api',
-    apiTelecomUrl: 'https://devadmin.s198.vn/telecom/api',
+    apiUrl: 'https://sandbox-admin.g99.vn/api',
+    apiTelecomUrl: 'https://sandbox-admin.g99.vn/telecom/api',
     FCM_VAPID_PUBLIC_KEY: 'BD1zjiNqZGojPvrF2BBbUNe_zv_tq9q4ftHSlCJlxTugdNZpMbV7r_e6YjKIpToTWt_PVoJQwFisoEk-HI2ASEo',
     firebaseConfig: {
       apiKey: "AIzaSyC8R9fJFmjp0JtpRUQl3hrIhzGtiDc_sl8",
