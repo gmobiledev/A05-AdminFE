@@ -242,7 +242,8 @@
                   <!-- {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }} -->
                 </td>
                 <td>
-                  <div [innerHTML]="item.status | showStatusTelecom"></div>   
+                  <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>  
+                  {{ item.note }} 
                 </td>
                 <td>    
                   
