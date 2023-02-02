@@ -26,6 +26,7 @@ export class TaskItemComponent implements OnInit {
   public actionText = 'Đấu nối' ;
   public titleDocumentImage = 'Ảnh phiếu yêu cấu/hợp đồng';
   public titleModal = 'Đấu nối sim mới';
+  public mnos: string[] = [];
 
   public viewImage;
   public modalRef: any;
@@ -198,6 +199,24 @@ export class TaskItemComponent implements OnInit {
       }    
     }
     
+  }
+
+  /**
+   * Đồng bộ với nhà mạng khác
+   */
+  async asyncToMnoViaApi(item){
+    let confirmMessage = "Xác nhận đồng bộ thông tin"
+    if((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+      }, error => {
+        
+      })
+    }
   }
 
   /**
@@ -488,6 +507,9 @@ export class TaskItemComponent implements OnInit {
   getData() {
     this.telecomService.getDetailTask(this.item.id).subscribe(res => {
       this.data = res.data;
+      for (const msi of this.data.msisdn.msisdns) {
+          this.mnos.push(msi.mno);
+      }
       if(this.data.task.action == this.listTaskAction.change_info) {
         this.actionText = 'Cập nhật'
       }

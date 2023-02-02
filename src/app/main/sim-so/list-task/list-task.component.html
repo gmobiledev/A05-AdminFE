@@ -1,154 +1,152 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
-  <div class="row box-summary">
-    <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-      <div class="card" [ngClass]="{'active': isActivedBoxNewInit}">
-        <div class="card-header">
-  
-        </div>
-        <div class="card-body statistics-body">
-          <div class="media">
-            <div class="avatar bg-light-primary mr-2">
-              <div class="avatar-content">
-                <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
+    <div class="row box-summary">
+      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+        <div class="card" [ngClass]="{'active': isActivedBoxNewInit}">
+          <div class="card-header">
+
+          </div>
+          <div class="card-body statistics-body">
+            <div class="media">
+              <div class="avatar bg-light-primary mr-2">
+                <div class="avatar-content">
+                  <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
+                </div>
+              </div>
+              <div class="media-body my-auto">
+                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_new_sim }} đấu nối sim mới</h5>
+                <p class="card-text font-small-3 mb-1">Mới khởi tạo</p>
+                <a (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.new_sim.value)">Xem
+                  chi
+                  tiết</a>
               </div>
             </div>
-            <div class="media-body my-auto">
-              <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_new_sim }} đấu nối sim mới</h5>
-              <p class="card-text font-small-3 mb-1">Mới khởi tạo</p>
-              <a (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.new_sim.value)">Xem chi
-                tiết</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+        <div class="card" [ngClass]="{'active': isActivedBoxNewProcessing}">
+          <div class="card-header">
+
+          </div>
+          <div class="card-body statistics-body">
+            <div class="media">
+              <div class="avatar bg-light-primary mr-2">
+                <div class="avatar-content">
+                  <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
+                </div>
+              </div>
+              <div class="media-body my-auto">
+                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_new_sim }} đấu nối sim mới</h5>
+                <p class="card-text font-small-3 mb-1">Đang xử lý</p>
+                <a
+                  (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.new_sim.value)">Xem
+                  chi tiết</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+        <div class="card" [ngClass]="{'active': isActivedBoxChangeSimInit}">
+          <div class="card-header">
+
+          </div>
+          <div class="card-body statistics-body">
+            <div class="media">
+              <div class="avatar bg-light-primary mr-2">
+                <div class="avatar-content">
+                  <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
+                </div>
+              </div>
+              <div class="media-body my-auto">
+                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_change_info }} đổi sim</h5>
+                <p class="card-text font-small-3 mb-1">Mới tạo</p>
+                <a (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.change_info.value)">Xem
+                  chi tiết</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
+        <div class="card" [ngClass]="{'active': isActivedBoxChangeSimProcessing}">
+          <div class="card-header">
+
+          </div>
+          <div class="card-body statistics-body">
+            <div class="media">
+              <div class="avatar bg-light-primary mr-2">
+                <div class="avatar-content">
+                  <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
+                </div>
+              </div>
+              <div class="media-body my-auto">
+                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_change_info }} đổi sim</h5>
+                <p class="card-text font-small-3 mb-1">Đang xử lý</p>
+                <a
+                  (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.change_info.value)">Xem
+                  chi tiết</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-      <div class="card" [ngClass]="{'active': isActivedBoxNewProcessing}">
-        <div class="card-header">
-  
-        </div>
-        <div class="card-body statistics-body">
-          <div class="media">
-            <div class="avatar bg-light-primary mr-2">
-              <div class="avatar-content">
-                <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
-              </div>
-            </div>
-            <div class="media-body my-auto">
-              <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_new_sim }} đấu nối sim mới</h5>
-              <p class="card-text font-small-3 mb-1">Đang xử lý</p>
-              <a
-                (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.new_sim.value)">Xem
-                chi tiết</a>
-            </div>
-          </div>
-        </div>
+
+    <div class="row mb-2">
+      <div class="col-md-3">
+        <button type="button" (click)="onGetAvaiable(modalItem)" class="btn btn-block btn-info">Tiếp nhận yêu cầu
+          mới<span [data-feather]="'arrow-up-circle'"></span></button>
       </div>
     </div>
 
-    <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-      <div class="card" [ngClass]="{'active': isActivedBoxChangeSimInit}">
-        <div class="card-header">
-  
-        </div>
-        <div class="card-body statistics-body">
-          <div class="media">
-            <div class="avatar bg-light-primary mr-2">
-              <div class="avatar-content">
-                <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
-              </div>
-            </div>
-            <div class="media-body my-auto">
-              <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_change_info }} đổi sim</h5>
-              <p class="card-text font-small-3 mb-1">Mới tạo</p>
-              <a
-                (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.change_info.value)">Xem
-                chi tiết</a>
-            </div>
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-      <div class="card" [ngClass]="{'active': isActivedBoxChangeSimProcessing}">
-        <div class="card-header">
-  
-        </div>
-        <div class="card-body statistics-body">
-          <div class="media">
-            <div class="avatar bg-light-primary mr-2">
-              <div class="avatar-content">
-                <!-- <i [data-feather]="item.show_icon" class="avatar-icon"></i>  -->
-              </div>
-            </div>
-            <div class="media-body my-auto">
-              <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_change_info }} đổi sim</h5>
-              <p class="card-text font-small-3 mb-1">Đang xử lý</p>
-              <a
-                (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.change_info.value)">Xem
-                chi tiết</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-2">
-    <div class="col-md-3">
-      <button type="button" (click)="onGetAvaiable(modalItem)" class="btn btn-block btn-info" >Tiếp nhận yêu cầu mới<span [data-feather]="'arrow-up-circle'"></span></button>
-    </div>
-  </div>
-
-<div class="row" id="table-striped">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
-        <div class="card-body">
-          <form (ngSubmit)="onSubmitSearch()" class="mb-2">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control" placeholder="Nhập số điện thoại">
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control"
+                      placeholder="Nhập số điện thoại">
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" name="status" [(ngModel)]="searchForm.status">
-                    <option value="">Chọn trạng thái</option>
-                    <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value" [id]="item.key">
-                      <span [innerHTML]="item.value | showStatusTelecom"></span>
-                    </option> 
-                  </select>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                      <option value="">Chọn trạng thái</option>
+                      <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value" [id]="item.key">
+                        <span [innerHTML]="item.value | showStatusTelecom"></span>
+                      </option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <input type="text" 
-                  placeholder="Khoảng thời gian"
-                  [ngModelOptions]="{standalone: true}" 
-                  ngxDaterangepickerMd [(ngModel)]="dateRange" 
-                  [ranges]="ranges"
-                  [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
-                  [showCustomRangeLabel]="true"
-                  [alwaysShowCalendars]="true"
-                  name="daterange"
-                  class="form-control"/>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" placeholder="Khoảng thời gian" [ngModelOptions]="{standalone: true}"
+                      ngxDaterangepickerMd [(ngModel)]="dateRange" [ranges]="ranges"
+                      [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
+                      [alwaysShowCalendars]="true" name="daterange" class="form-control" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" name="telco" [(ngModel)]="searchForm.telco">
-                    <option value="">Chọn nhà mạng</option>
-                    <option value="VNM">Vietnammobile</option>
-                    <option value="VMS">Mobifone</option>
-                  </select>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <select class="form-control" name="telco" [(ngModel)]="searchForm.telco">
+                      <option value="">Chọn nhà mạng</option>
+                      <option value="VNM">Vietnammobile</option>
+                      <option value="VMS">Mobifone</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <!-- <div class="col-md-4">
+                <!-- <div class="col-md-4">
                 <div class="form-group">
                   <select class="form-control" name="status" [(ngModel)]="searchForm.action">
                     <option value="">Chọn trạng thái</option>
@@ -157,154 +155,154 @@
                   </select>
                 </div>
               </div> -->
-              <div class="col-md-2">
-                <div class="">
-                  <label for="" style="font-size: 1rem">Tôi đang thực hiện</label>
-                <input type="checkbox" [(ngModel)]="mineTask" [ngModelOptions]="{standalone: true}" >
-                </div>
-                
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-md-2">
-                <div class="form-group">
-                  <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span [data-feather]="'search'"></span></button>
+                <div class="col-md-2">
+                  <div class="">
+                    <label for="" style="font-size: 1rem">Tôi đang thực hiện</label>
+                    <input type="checkbox" [(ngModel)]="mineTask" [ngModelOptions]="{standalone: true}">
+                  </div>
+
                 </div>
               </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <button type="button" (click)="onSubmitExportExcelReport()" class="btn btn-block btn-success">Xuất báo cáo excel <span [data-feather]="'file'"></span></button>
+              <div class="row mt-2">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                        [data-feather]="'search'"></span></button>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="button" (click)="onSubmitExportExcelReport()" class="btn btn-block btn-success">Xuất
+                      báo cáo excel <span [data-feather]="'file'"></span></button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-        <div class="table-responsive" *blockUI="'section-block'">
-          <div class="mb-1">
-            <span>Tổng số:</span> <b>{{ totalItems }}</b>
-          </div>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>ID</th>
-                <th>Yêu cầu</th>
-                <th>Số thuê bao | Serial | Nhà mạng</th>
-                <!-- <th>Serial sim</th>
+            </form>
+            <div class="table-responsive" *blockUI="'section-block'">
+              <div class="mb-1">
+                <span>Tổng số:</span> <b>{{ totalItems }}</b>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>ID</th>
+                    <th>Yêu cầu</th>
+                    <th>Số thuê bao | Serial | Nhà mạng</th>
+                    <!-- <th>Serial sim</th>
                 <th>Nhà mạng</th> -->
-                 <th>Đại lý</th>
-                <!-- <th>Người mua</th> -->
-                <th>TG tạo/mua</th>
-                <th>Thời gian tiếp nhận</th>
-                <th>Trạng thái</th>                
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of list;let i = index">
-                <td>
-                  {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
-                </td>
-                <td>
-                  {{ item.id }}
-                </td>
-                <td>
-                  {{ listTaskAction[item.action]['label'] }}
-                </td>
-                <td>
-                  <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
-                    {{ item.msisdns[0].msisdn }} - {{ item.msisdns[0].serial }} - 
-                    <span [innerHTML]="item.msisdns[0].mno | showIconMno"></span>  
-                  </div>
-                  <div *ngIf="item.msisdns.length >= 2">
-                    <div *ngFor="let number of item.msisdns">
-                      {{ number.msisdn }} - {{ number.serial }} - <span [innerHTML]="number.mno | showIconMno"></span>
-                    </div>
-                    <br>
-                  </div>
-                  <div *ngIf="item.msisdns.length < 1">
-                    {{ item.msisdn }}
-                  </div>
-                  
-                </td>
-                
-                 <td>
-                    <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, item.request_by)">{{ item.request_by }}</a>
-                </td>
-                <!-- <td>
+                    <th>Đại lý</th>
+                    <!-- <th>Người mua</th> -->
+                    <th>TG tạo/mua</th>
+                    <th>Thời gian tiếp nhận</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list;let i = index">
+                    <td>
+                      {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                    </td>
+                    <td>
+                      {{ item.id }}
+                    </td>
+                    <td>
+                      {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }}
+                    </td>
+                    <td>
+                      <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
+                        {{ item.msisdns[0].msisdn }} - {{ item.msisdns[0].serial }} -
+                        <span [innerHTML]="item.msisdns[0].mno | showIconMno"></span>
+                      </div>
+                      <div *ngIf="item.msisdns.length >= 2">
+                        <div *ngFor="let number of item.msisdns">
+                          {{ number.msisdn }} - {{ number.serial }} - <span
+                            [innerHTML]="number.mno | showIconMno"></span>
+                        </div>
+                        <br>
+                      </div>
+                      <div *ngIf="item.msisdns.length < 1">
+                        {{ item.msisdn }}
+                      </div>
+
+                    </td>
+
+                    <td>
+                      <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, item.request_by)">{{
+                        item.request_by }}</a>
+                    </td>
+                    <!-- <td>
                   
                 </td> -->
-                <td>
-                  {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
-                  {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
-                </td>
-                <td>
-                  {{ showDate(item.sync_lock, 'UTC', -10 * item.msisdns.length) }}
-                  <!-- {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }} -->
-                </td>
-                <td>
-                  <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>  
-                  {{ item.note }} 
-                </td>
-                <td>    
-                  
-                  <div *ngIf="item.sync_by && currentUser.id != item.sync_by">
-                    <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
-                      <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                      Xem chi tiết
-                    </a>
-                  </div>
-                  <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
-                    <div *ngIf="item.status == taskTelecomStatus.STATUS_NEW_ORDER">
-                      <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
-                        <i data-feather="bookmark" class="text-white cursor-pointer"></i>
-                        Tiếp nhận yêu cầu
-                      </a>
-                    </div>
-                    <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING">
-                      <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
-                        <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                        Tiếp tục thực hiện
-                      </a>
-                    </div>
-                    <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO">
-                      <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
-                        <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                        Tiếp tục thực hiện
-                      </a>
-                    </div>
-                    <div *ngIf="item.status == taskTelecomStatus.STATUS_REJECT">
-                      <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
-                        <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                        Xem chi tiết
-                      </a>
-                    </div>
-                    <div *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT">
-                      <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
-                        <i data-feather="eye" class="text-white cursor-pointer"></i>
-                        Xem chi tiết
-                      </a>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                    <td>
+                      {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                      {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                    </td>
+                    <td>
+                      {{ showDate(item.sync_lock, 'UTC', -10 * item.msisdns.length) }}
+                      <!-- {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }} -->
+                    </td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
+                      {{ item.note }}
+                    </td>
+                    <td>
 
-          <ngb-pagination
-          class="d-flex justify-content-end pr-3 pt-2"
-                [collectionSize]="totalItems"
-                [(page)]="searchForm.page"
-                [pageSize]="searchForm.page_size"
-                [directionLinks]="false"
-                (pageChange)="loadPage($event)"
-              ></ngb-pagination>
+                      <div *ngIf="item.sync_by && currentUser.id != item.sync_by">
+                        <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                          <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+                          Xem chi tiết
+                        </a>
+                      </div>
+                      <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_NEW_ORDER">
+                          <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="bookmark" class="text-white cursor-pointer"></i>
+                            Tiếp nhận yêu cầu
+                          </a>
+                        </div>
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING">
+                          <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+                            Tiếp tục thực hiện
+                          </a>
+                        </div>
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO">
+                          <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+                            Tiếp tục thực hiện
+                          </a>
+                        </div>
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_REJECT">
+                          <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+                            Xem chi tiết
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT">
+                          <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="eye" class="text-white cursor-pointer"></i>
+                            Xem chi tiết
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [directionLinks]="false"
+                (pageChange)="loadPage($event)"></ngb-pagination>
+            </div>
+          </div>
+
         </div>
-        </div>
-        
       </div>
     </div>
   </div>
-    </div>
 </div>
 
 <ng-template #modalItem let-modal>
@@ -315,7 +313,8 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)" [currentUserId]="currentUser.id"></app-task-item>
+    <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)"
+      [currentUserId]="currentUser.id"></app-task-item>
   </div>
 </ng-template>
 

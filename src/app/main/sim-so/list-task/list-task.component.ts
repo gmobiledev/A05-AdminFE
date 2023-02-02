@@ -57,6 +57,7 @@ export class ListTaskComponent implements OnInit {
   public mineTask = false;
   public currentUser: any;
   public isAdmin: boolean = false;
+  public mnos: any = []
 
   public searchForm: any = {
     mobile: '',

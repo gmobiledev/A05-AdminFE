@@ -351,9 +351,7 @@
             Đẩy sang nhà mạng
         </a>
     </div> -->
-        <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING
-   
-    ">
+        <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING">
             <a class="ml-2 btn btn-success" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)">
                 <i data-feather="check-circle" class="text-white cursor-pointer"></i>
                 <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
@@ -367,7 +365,13 @@
                     *ngIf="data.task.action == listTaskAction['new_sim']['value'] && data?.msisdn?.msisdns.length > 1">
                     Đấu nối thành công tất cả
                 </span>
-
+            </a>
+            <a class="ml-2 btn btn-success" *ngIf="mnos.includes('VNM')"
+                (click)="asyncToMnoViaApi(data.task)">
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                <span>
+                    Đồng bộ thông tin thuê bao qua API VNM
+                </span>
             </a>
             <a class="ml-2 btn btn-info" *ngIf="data?.msisdn?.msisdns.length > 1"
                 (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS_PART)">

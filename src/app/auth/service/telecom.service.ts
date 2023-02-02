@@ -34,7 +34,7 @@ export class TelecomService {
   }
 
   exportExcelReport(dto: any): Observable<any> {
-    return this._http.post(`${environment.apiTelecomUrl}/telecom-admin/task/export-excel-report`, dto, {observe: 'response' , responseType: 'blob'});
+    return this._http.post(`${environment.apiTelecomUrl}/telecom-admin/task/export-excel-report`, dto, { observe: 'response', responseType: 'blob' });
   }
   /**
    * 
@@ -55,6 +55,13 @@ export class TelecomService {
    */
   updateTaskStatus(id, data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/update-status`, data);
+  }
+
+  asyncToMnoViaApi(task) {
+    if (task.action == "change_info")
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-sim-vnm`, {});
+    else if (task.action == "new_sim")
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
   }
 
   /**
