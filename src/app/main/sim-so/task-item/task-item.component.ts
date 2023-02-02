@@ -19,11 +19,11 @@ export class TaskItemComponent implements OnInit {
   @Input() currentUserId: any;
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
   public data: any;
-  
+
   public taskTelecomStatus = TaskTelecomStatus;
   public listTaskAction = TaskTelecom.ACTION;
   public msisdnStatus = MsisdnStatus;
-  public actionText = 'Đấu nối' ;
+  public actionText = 'Đấu nối';
   public titleDocumentImage = 'Ảnh phiếu yêu cấu/hợp đồng';
   public titleModal = 'Đấu nối sim mới';
   public mnos: string[] = [];
@@ -36,8 +36,8 @@ export class TaskItemComponent implements OnInit {
     private telecomService: TelecomService,
     private adminService: AdminService,
     private alertService: SweetAlertService
-  ) { 
-    
+  ) {
+
   }
 
   /**
@@ -57,10 +57,10 @@ export class TaskItemComponent implements OnInit {
       confirmButtonText: 'Gửi',
       showLoaderOnConfirm: true,
       preConfirm: (note) => {
-        const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => {return x.msisdn } ).join('-') : this.data.msisdn.msisdns[0].msisdn; 
-        const dataPushNotify = { 
-          user_ids: [this.data.task.request_by], 
-          message: `${note}`, 
+        const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => { return x.msisdn }).join('-') : this.data.msisdn.msisdns[0].msisdn;
+        const dataPushNotify = {
+          user_ids: [this.data.task.request_by],
+          message: `${note}`,
           title: `${this.actionText} số ${listPhone}`,
           data: {
             "type": "TELECOM",
@@ -89,12 +89,12 @@ export class TaskItemComponent implements OnInit {
    * @param status 
    */
   async onUpdateStatus(item, status) {
-    if(status == this.taskTelecomStatus.STATUS_REJECT || status == this.taskTelecomStatus.STATUS_CANCEL) {
+    if (status == this.taskTelecomStatus.STATUS_REJECT || status == this.taskTelecomStatus.STATUS_CANCEL) {
       let titleS;
-      if(status == this.taskTelecomStatus.STATUS_REJECT) {
+      if (status == this.taskTelecomStatus.STATUS_REJECT) {
         titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
       }
-      if(status == this.taskTelecomStatus.STATUS_CANCEL) {
+      if (status == this.taskTelecomStatus.STATUS_CANCEL) {
         titleS = 'Xác nhận hủy yêu cầu của đại lý?'
       }
       Swal.fire({
@@ -107,14 +107,14 @@ export class TaskItemComponent implements OnInit {
         confirmButtonText: 'Gửi',
         showLoaderOnConfirm: true,
         preConfirm: (note) => {
-          if(!note || note == '') {
+          if (!note || note == '') {
             Swal.showValidationMessage(
               "Vui lòng nhập nội dung"
             )
             return;
           }
-          this.telecomService.updateTaskStatus(item.id, {status: status, note: note}).subscribe(res => {
-            if(!res.status) {
+          this.telecomService.updateTaskStatus(item.id, { status: status, note: note }).subscribe(res => {
+            if (!res.status) {
               Swal.showValidationMessage(
                 res.message
               )
@@ -122,13 +122,13 @@ export class TaskItemComponent implements OnInit {
               return;
             }
           }, error => {
-            
+
           });
 
-          const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => {return x.msisdn } ).join('-') : this.data.msisdn.msisdns[0].msisdn; 
-          const dataPushNotify = { 
-            user_ids: [this.data.task.request_by], 
-            message: `Yêu cầu ${this.actionText} ID ${this.data.task.id} bị từ chối: ${note}`, 
+          const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => { return x.msisdn }).join('-') : this.data.msisdn.msisdns[0].msisdn;
+          const dataPushNotify = {
+            user_ids: [this.data.task.request_by],
+            message: `Yêu cầu ${this.actionText} ID ${this.data.task.id} bị từ chối: ${note}`,
             title: `${this.actionText} số ${listPhone}`,
             data: {
               "type": this.data.task.action,
@@ -152,37 +152,37 @@ export class TaskItemComponent implements OnInit {
       })
     } else {
       let confirmMessage = "";
-      if(status == this.taskTelecomStatus.STATUS_PROCESSING) {
-        
-      } else if(status == this.taskTelecomStatus.STATUS_PROCESS_TO_MNO) {
-        confirmMessage = "Xác nhận đã đẩy thông tin "+ this.actionText +" sang nhà mạng?"
-      } else if(status == this.taskTelecomStatus.STATUS_SUCCESS) {
-        confirmMessage = "Xác nhận đã "+ this.actionText +" thành công?"
-      } else if(status == this.taskTelecomStatus.STATUS_SUCCESS_PART) {
-        confirmMessage = "Xác nhận đã "+ this.actionText +" thành công 1 phần?"
-      } 
-      
+      if (status == this.taskTelecomStatus.STATUS_PROCESSING) {
 
-      if((await this.alertService.showConfirm(confirmMessage)).value) {
-        this.telecomService.updateTaskStatus(item.id, {status: status}).subscribe(res => {
-          if(!res.status) {
+      } else if (status == this.taskTelecomStatus.STATUS_PROCESS_TO_MNO) {
+        confirmMessage = "Xác nhận đã đẩy thông tin " + this.actionText + " sang nhà mạng?"
+      } else if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+        confirmMessage = "Xác nhận đã " + this.actionText + " thành công?"
+      } else if (status == this.taskTelecomStatus.STATUS_SUCCESS_PART) {
+        confirmMessage = "Xác nhận đã " + this.actionText + " thành công 1 phần?"
+      }
+
+
+      if ((await this.alertService.showConfirm(confirmMessage)).value) {
+        this.telecomService.updateTaskStatus(item.id, { status: status }).subscribe(res => {
+          if (!res.status) {
             this.alertService.showError(res.message);
             return;
           }
-          if(status == this.taskTelecomStatus.STATUS_SUCCESS ) {
+          if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
             //this.updateStatus.emit({updated: true});
-          }          
+          }
           this.getData();
           //this.updateStatus.emit({updated: true});
           this.alertService.showSuccess(res.message);
         }, error => {
-          
+
         })
-        if(status == this.taskTelecomStatus.STATUS_SUCCESS) {
-          const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => {return x.msisdn } ).join('-') : this.data.msisdn.msisdns[0].msisdn;           
-          const dataPushNotify = { 
-            user_ids: [this.data.task.request_by], 
-            title: `Yêu cầu ${this.actionText} ID ${this.data.task.id} đã thành công`, 
+        if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+          const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => { return x.msisdn }).join('-') : this.data.msisdn.msisdns[0].msisdn;
+          const dataPushNotify = {
+            user_ids: [this.data.task.request_by],
+            title: `Yêu cầu ${this.actionText} ID ${this.data.task.id} đã thành công`,
             message: `${this.actionText} số ${listPhone}`,
             data: {
               "type": this.data.task.action,
@@ -196,27 +196,40 @@ export class TaskItemComponent implements OnInit {
 
           });
         }
-      }    
+      }
     }
-    
+
   }
 
   /**
    * Đồng bộ với nhà mạng khác
    */
-  async asyncToMnoViaApi(item){
+  async asyncToMnoViaApi(item) {
     let confirmMessage = "Xác nhận đồng bộ thông tin"
-    if((await this.alertService.showConfirm(confirmMessage)).value) {
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showError(res.message);
           return;
         }
         this.alertService.showSuccess(res.message);
       }, error => {
-        
+
       })
     }
+  }
+
+  async sendCallback(item) {
+    this.telecomService.sendCallback(item).subscribe(res => {
+      if (!res.status) {
+        this.alertService.showError(res.message);
+        return;
+      }
+      this.alertService.showSuccess(res.message);
+    }, error => {
+      this.alertService.showError(error);
+
+    })
   }
 
   /**
@@ -231,7 +244,7 @@ export class TaskItemComponent implements OnInit {
       status: status,
       note: ''
     }
-    if(status == this.msisdnStatus.STATUS_PROCESSED_MNO_FAIL) {
+    if (status == this.msisdnStatus.STATUS_PROCESSED_MNO_FAIL) {
       Swal.fire({
         title: this.actionText + ' thất bại, đẩy lý do về cho đại lý',
         input: 'textarea',
@@ -242,7 +255,7 @@ export class TaskItemComponent implements OnInit {
         confirmButtonText: 'Gửi',
         showLoaderOnConfirm: true,
         preConfirm: (note) => {
-          if(!note || note == '') {
+          if (!note || note == '') {
             Swal.showValidationMessage(
               "Vui lòng nhập nội dung"
             )
@@ -250,7 +263,7 @@ export class TaskItemComponent implements OnInit {
           }
           dataUpdateMsisdn.note = note;
           this.telecomService.updateMsisdnStatus(item.id, dataUpdateMsisdn).subscribe(res => {
-            if(!res.status) {
+            if (!res.status) {
               Swal.showValidationMessage(
                 res.message
               )
@@ -261,11 +274,11 @@ export class TaskItemComponent implements OnInit {
             //this.updateStatus.emit({updated: true});
             this.alertService.showSuccess('Thành công');
           }, error => {
-            
+
           });
-          const dataPushNotify = { 
-            user_ids: [this.data.task.request_by], 
-            message: `${this.actionText} thất bại: ${note}`, 
+          const dataPushNotify = {
+            user_ids: [this.data.task.request_by],
+            message: `${this.actionText} thất bại: ${note}`,
             title: `${this.actionText} số ${item.msisdn}`,
             data: {
               "type": this.data.task.action,
@@ -281,15 +294,15 @@ export class TaskItemComponent implements OnInit {
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
         if (result.isConfirmed) {
-          
+
         }
       })
     } else {
-      let confirmMessage = "Xác nhận đã "+ this.actionText +" thành công?";
-      
-      if((await this.alertService.showConfirm(confirmMessage)).value) {
+      let confirmMessage = "Xác nhận đã " + this.actionText + " thành công?";
+
+      if ((await this.alertService.showConfirm(confirmMessage)).value) {
         this.telecomService.updateMsisdnStatus(item.id, dataUpdateMsisdn).subscribe(res => {
-          if(!res.status) {
+          if (!res.status) {
             this.alertService.showError(res.message);
             return;
           }
@@ -297,12 +310,12 @@ export class TaskItemComponent implements OnInit {
           this.getData();
           this.alertService.showSuccess(res.message);
         }, error => {
-          
+
         })
-        if(status == this.msisdnStatus.STATUS_PROCESSED_MNO_SUCCESS) {
+        if (status == this.msisdnStatus.STATUS_PROCESSED_MNO_SUCCESS) {
           const dataPushNotify = {
             user_ids: [this.data.task.request_by],
-            message: `${this.actionText} thành công`, 
+            message: `${this.actionText} thành công`,
             title: `${this.actionText} số ${item.msisdn}`,
             data: {
               "type": this.data.task.action,
@@ -315,15 +328,15 @@ export class TaskItemComponent implements OnInit {
 
           });
         }
-      }    
+      }
     }
-    
+
   }
 
   onDownloadImages() {
     var zip = new JSZip();
-    if(this.data.task.action == this.listTaskAction.new_sim.value) {
-      for(const key in this.data?.msisdn?.base64SimFile) {
+    if (this.data.task.action == this.listTaskAction.new_sim.value) {
+      for (const key in this.data?.msisdn?.base64SimFile) {
         let images = [];
         images = [
           {
@@ -335,7 +348,7 @@ export class TaskItemComponent implements OnInit {
             data: this.data?.people?.base64Back
           },
           {
-            name:'__anh_phieu_yeu_cau_hop_dong.jpg',
+            name: '__anh_phieu_yeu_cau_hop_dong.jpg',
             data: this.data?.task?.document_image
           },
           {
@@ -345,19 +358,19 @@ export class TaskItemComponent implements OnInit {
           {
             name: '__anh_khuon_mat.jpg',
             data: this.data?.people?.base64Selfie
-          }        
+          }
         ]
-        const zipFileName = `Đấu sim mới ${this.data.people.name}_${key}`;        
+        const zipFileName = `Đấu sim mới ${this.data.people.name}_${key}`;
         const dataD = this.data?.msisdn?.base64SimFile[key];
         images.push({
-          name: key+'_anh_the_sim.jpg',
+          name: key + '_anh_the_sim.jpg',
           data: dataD
         });
         this.compressImages(images, zipFileName);
       }
     } else if (this.data.task.action == this.listTaskAction.change_info.value) {
-      
-      for(const key in this.data?.msisdn?.listBase64NewSim) {
+
+      for (const key in this.data?.msisdn?.listBase64NewSim) {
         let images = [];
         images = [
           {
@@ -369,7 +382,7 @@ export class TaskItemComponent implements OnInit {
             data: this.data?.people?.base64BackCompare
           },
           {
-            name:'__anh_phieu_yeu_cau_hop_dong.jpg',
+            name: '__anh_phieu_yeu_cau_hop_dong.jpg',
             data: this.data?.task?.document_image
           },
           {
@@ -379,18 +392,18 @@ export class TaskItemComponent implements OnInit {
           {
             name: '__anh_khuon_mat.jpg',
             data: this.data?.people?.base64SelfieCompare
-          }        
+          }
         ]
-        const zipFileName = `Đối sim ${this.data.people.name}_${key}`;    
+        const zipFileName = `Đối sim ${this.data.people.name}_${key}`;
         const dataD = this.data?.msisdn?.listBase64NewSim[key];
         images.push({
-          name: key+'_anh_the_sim.jpg',
+          name: key + '_anh_the_sim.jpg',
           data: dataD
         });
         this.compressImages(images, zipFileName);
       }
     }
-    
+
   }
 
   compressImages(urls, folderName) {
@@ -399,7 +412,7 @@ export class TaskItemComponent implements OnInit {
     var count = 0;
     var fileName = folderName + ".zip";
     urls.forEach(function (item) {
-      
+
       zip.file(folderName + '/' + item.name, item.data, {
         base64: true
       });
@@ -426,37 +439,37 @@ export class TaskItemComponent implements OnInit {
   }
 
   onViewImage(modal, type, mobile = null) {
-    if(type == 'cccd_front') {
+    if (type == 'cccd_front') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64Front
     }
-    if(type == 'cccd_back') {
+    if (type == 'cccd_back') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64Back
     }
-    if(type == 'selfie') {
+    if (type == 'selfie') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64Selfie
     }
-    if(type == 'signature') {
+    if (type == 'signature') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64Signature
     }
-    if(type == 'cccd_front_compare') {
+    if (type == 'cccd_front_compare') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64FrontCompare
     }
-    if(type == 'cccd_back_compare') {
+    if (type == 'cccd_back_compare') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64BackCompare
     }
-    if(type == 'selfie_compare') {
+    if (type == 'selfie_compare') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64SelfieCompare
     }
-    if(type == 'signature_compare') {
+    if (type == 'signature_compare') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64SignatureCompare
     }
-    if(type == 'sim') {
+    if (type == 'sim') {
       this.viewImage = 'data:image/png;base64,' + this.data?.msisdn?.base64SimFile[mobile]
     }
-    if(type == 'sim_compare') {
+    if (type == 'sim_compare') {
       this.viewImage = 'data:image/png;base64,' + this.data?.msisdn?.base64SimFile[mobile]
     }
-    
+
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: 'modal modal-primary',
@@ -466,7 +479,7 @@ export class TaskItemComponent implements OnInit {
 
   onCloseModalImage() {
     this.viewImage = null;
-    this.modalRef.close();  
+    this.modalRef.close();
   }
 
   downloadImage(base64Data, fileName) {
@@ -492,8 +505,8 @@ export class TaskItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.item) {
-      if(this.item.action == this.listTaskAction.change_info.value) {
+    if (this.item) {
+      if (this.item.action == this.listTaskAction.change_info.value) {
         this.actionText = 'Cập nhật';
         this.titleDocumentImage = 'Ảnh phiếu thay đổi thông tin';
         this.titleModal = 'Đổi sim'
@@ -508,13 +521,13 @@ export class TaskItemComponent implements OnInit {
     this.telecomService.getDetailTask(this.item.id).subscribe(res => {
       this.data = res.data;
       for (const msi of this.data.msisdn.msisdns) {
-          this.mnos.push(msi.mno);
+        this.mnos.push(msi.mno);
       }
-      if(this.data.task.action == this.listTaskAction.change_info) {
+      if (this.data.task.action == this.listTaskAction.change_info) {
         this.actionText = 'Cập nhật'
       }
     })
   }
-  
+
 
 }

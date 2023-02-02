@@ -64,6 +64,10 @@ export class TelecomService {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
   }
 
+  sendCallback(task){
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/send-callback`, {});
+  }
+
   /**
    * Cap nhat trang thai msisdn
    * 
