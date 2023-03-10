@@ -1,0 +1,74 @@
+<div class="content-wrapper container-xxl p-0">
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="text" 
+                                placeholder="Thời gian"
+                                [ngModelOptions]="{standalone: true}" 
+                                ngxDaterangepickerMd [(ngModel)]="dateRange" 
+                                [ranges]="ranges"
+                                [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
+                                [showCustomRangeLabel]="true"
+                                [alwaysShowCalendars]="true"
+                                name="daterange"
+                                class="form-control"/>
+                              </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" name="id" [(ngModel)]="actionlogs.id" class="form-control" placeholder="ID">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" name="user" [(ngModel)]="actionlogs.user" class="form-control" placeholder="User">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                                        [data-feather]="'search'"></span></button>
+                            </div>
+                        </div>
+                        </div>
+                        </form>
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <table class="table table-striped text-nowrap" *ngIf="list">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>STT</th>
+                                        <th>ID</th>
+                                        <th>User</th>
+                                        <th>Nội dung</th>
+                                        <th></th>
+                                        <th></th>
+                                     </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of list;index as i">
+                                    <td>
+                                      <input type="checkbox" (change)="onSubmitSearch($list, total)" >                    
+                                    </td>
+                                     <td></td>
+                                     <td>{{ item?.id}}</td> 
+                                     <td>{{ item?.user_id}}</td> 
+                                     <td> {{item?.detail}}</td>
+                                    <td> 
+                                    <div [innerHTML]="item.status "></div> 
+                                    </td>
+                                    <td></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                        
+                

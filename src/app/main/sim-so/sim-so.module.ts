@@ -16,6 +16,7 @@ import { SimPackagesComponent } from './sim-packages/sim-packages.component';
 import { QuillModule } from 'ngx-quill';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { SearchSimSoComponent } from './search-sim-so/search-sim-so.component';
+import { ActionLogsComponent } from './action-logs/action-logs.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
     path: 'search',
     component: SearchSimSoComponent
   },
+  {
+    path: 'action-logs',
+    component: ActionLogsComponent
+  },
 ];
 
 @NgModule({
@@ -48,7 +53,9 @@ const routes: Routes = [
     TaskCountdownComponent,
     SimPackagesComponent,
     ViewTaskComponent,
-    SearchSimSoComponent
+    SearchSimSoComponent,
+    ActionLogsComponent
+
   ],
   imports: [
     CommonModule, 

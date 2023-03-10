@@ -118,5 +118,8 @@ export class TelecomService {
   productListAll(params) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/product`, { params: params });
   }
+  actionLogs(params) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/action-logs`, { params: params });
+  }
 
 }
