@@ -122,4 +122,28 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/action-logs`, { params: params });
   }
 
+  sellChannelList(params) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel`, { params: params });
+  }
+
+  sellChannelCreate(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel`, data);
+  }
+
+  sellChannelAddUser(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel/add-user`, data);
+  }
+
+  sellChannelRemoveUser(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel/remove-user`, data);
+  }
+
+  sellChannelAddChannelToUser(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel/user/add-channel`, data);
+  }
+
+  sellChannelRemoveChannelFromUser(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel/user/remove-channel`, data);
+  }
+
 }
