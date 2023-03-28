@@ -1,0 +1,248 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'app/auth/service';
+import { CreateAgentDto } from 'app/auth/service/dto/user.dto';
+import { InventoryService } from 'app/auth/service/inventory.service';
+import { TelecomService } from 'app/auth/service/telecom.service';
+import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
+@Component({
+  selector: 'app-batch',
+  templateUrl: './batch.component.html',
+  styleUrls: ['./batch.component.scss']
+})
+export class BatchComponent implements OnInit {
+
+  @Input() inventoryType: string;
+  public contentHeader: any;
+  public list: any;
+  public totalPage: number;
+  public page: number = 1;
+  public pageSize: number;
+  public searchForm = {
+    keyword: '',
+    status: '',
+    page: 1
+  }
+  public selectedItem: any
+  public isCreate: boolean = false;
+  public submitted: boolean = false;
+  public exitsUser: boolean = false;
+
+  public submittedUpload: boolean = false;
+  public filesData: any;
+  public filesImages: any;
+  public adminId: any;
+  public refCode: any;
+
+  public currentUser: any;
+  public isAdmin: boolean = false;
+
+  public modalRef: any;
+  public titleModal: string;
+  public formGroup: FormGroup;
+  public subFormGroup: FormGroup;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  count: any;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService,
+    private inventoryService: InventoryService,
+    private telecomService: TelecomService,
+    private alertService: SweetAlertService,
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder
+  ) {
+    this.route.queryParams.subscribe(params => {
+      this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
+      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
+
+      this.getData();
+    })
+  }
+  loadPage(page): void {
+    this.searchForm.page = page;
+    this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
+  }
+  modalOpen(modal, item = null) {
+    if (item) {
+      this.titleModal = "Tải dữ liệu của lô";
+      this.isCreate = false;
+      this.selectedItem = item;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+
+    } else {
+      this.titleModal = "Thêm lô";
+      this.isCreate = true;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    }
+  }
+
+  modalClose() {
+    this.modalRef.close();
+    this.initForm();
+  }
+
+
+  onSubmitSearch(): void {
+    this.searchForm.page = 1;
+    this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
+  }
+
+
+
+  onFocusMobile() {
+    this.exitsUser = false;
+    this.titleModal = "Thêm đại lý";
+  }
+
+
+
+
+
+  /**
+   * Tao tai khoan dai ly
+   */
+  async onSubmitCreate() {
+    console.log(this.formGroup.controls['new_agents_service'].value);
+    if (!this.exitsUser && this.isCreate) {
+      this.submitted = true;
+      if (this.formGroup.invalid) {
+        return;
+      }
+      const data: CreateAgentDto = {
+        username: this.formGroup.controls['mobile'].value,
+        mobile: this.formGroup.controls['mobile'].value,
+        agent_service: this.formGroup.controls['new_agents_service'].value,
+        password: this.formGroup.controls['password'].value,
+      }
+      if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
+        this.userService.createAgent(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            this.submitted = false;
+            return;
+          }
+          this.modalRef.close();
+          this.initForm();
+          this.alertService.showSuccess(res.message);
+        })
+      }
+    } 
+  }
+
+  async onFileChangeExcel(event) {
+    this.filesData = event.target.files[0];
+  }
+
+  async onFileChangeImages(event) {
+    this.filesImages = event.target.files[0];
+  }
+
+  async onSubmitUpload() {
+    if (!this.filesData || !this.filesImages || !this.adminId) {
+      this.alertService.showError("Vui lòng nhập đủ dữ liệu");
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true;
+      const formData = new FormData();
+      formData.append("files", this.filesData);
+      formData.append("batch_id", this.selectedItem.id);
+
+      console.log(this.filesData, this.selectedItem.id,formData)
+    
+      this.inventoryService.uploadFileBatch(formData).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.filesData = null;
+        this.filesImages = null;
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
+  }
+
+  ngOnInit(): void {
+    this.contentHeader = {
+      headerTitle: 'Danh sách lô',
+      actionButton: true,
+      breadcrumb: {
+        type: '',
+        links: [
+          {
+            name: 'Home',
+            isLink: true,
+            link: '/'
+          },
+          {
+            name: 'Danh sách lô',
+            isLink: false
+          }
+        ]
+      }
+    };
+
+    this.initForm();
+  }
+
+  get f() {
+    return this.formGroup.controls;
+  }
+
+  initForm() {
+    this.formGroup = this.formBuilder.group({
+      mobile: ['', Validators.required],
+      password: ['', Validators.required],
+      // ref_code: [],
+      // service_code: new FormArray([]),
+      agents_service: this.formBuilder.array([]),
+      new_agents_service: this.formBuilder.array([])
+    });
+    this.exitsUser = false;
+    this.isCreate = true;
+  }
+
+  getData() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    if (this.currentUser && this.currentUser.roles) {
+      const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
+      if (arrayRoles.includes("admin") || arrayRoles.includes("root")) {
+        this.isAdmin = true;
+      }
+    }
+    this.sectionBlockUI.start();
+    this.inventoryService.findBatchAll(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.list = res.data.items;
+      this.totalPage = res.data.count;
+      this.pageSize = res.data.pageSize;
+    }, error => {
+      this.sectionBlockUI.stop();
+      console.log("ERRRR");
+      console.log(error);
+    })
+  }
+
+
+}

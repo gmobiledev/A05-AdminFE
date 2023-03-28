@@ -108,6 +108,25 @@ export const menu: CoreMenu[] = [
   {
     id: 'users',
     type: 'section',
+    title: 'Kho số',
+    translate: '',
+    icon: 'package',
+    children: [      
+      {
+        id: 'batch-sim',
+        title: 'DS lô sim số',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/batch-sim'      
+      },
+      
+      
+    ]
+  },
+  {
+    id: 'users',
+    type: 'section',
     title: 'Khác',
     translate: 'MENU.OTHERS.SECTION',
     icon: 'package',

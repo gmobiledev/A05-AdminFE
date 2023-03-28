@@ -115,6 +115,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'inventory',
+    loadChildren: () => import('./main/inventory/inventory.module').then(m => m.InventoryModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'dashboard',
     loadChildren: () => import('./main/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard]
