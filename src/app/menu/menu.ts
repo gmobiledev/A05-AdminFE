@@ -103,6 +103,14 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'sim-so/search'      
       },
+      {
+        id: 'agents',
+        title: 'Lịch sử tác động',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/action-logs'      
+      },
     ]
   },
   {

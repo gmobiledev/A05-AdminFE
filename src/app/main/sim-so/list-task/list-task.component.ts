@@ -174,7 +174,6 @@ export class ListTaskComponent implements OnInit {
     this.getData();
     this.modalRef.close();    
   }
-
   async modalViewAgentOpen(modal, item = null) { 
     if(item) {
       this.itemBlockUI.start();
@@ -299,7 +298,6 @@ export class ListTaskComponent implements OnInit {
       a.remove();
     })
   }
-
   onUpdateStatusSuccess(eventData: {updated: boolean}) {
     if(eventData.updated) {
       this.getData();
