@@ -1,0 +1,36 @@
+<div class="pl-3 pr-3">
+    <div>
+        <h3>{{ titleModal }}</h3>
+    </div>
+    <div class="row" *ngIf="item">
+        <div class="col-md-6 ">
+            <div>
+                ID của yêu cầu: {{ item.id }}
+            </div>
+            <div>
+                <span>Trạng thái: </span><span [innerHTML]="item.status | showStatusTelecom"></span>
+            </div>
+            <div>
+                <span>Admin thao tác: </span>{{ item.user_sync }}
+            </div>
+        </div>
+        <div class="col-md-6 ">
+            <div>
+                Trạng thái OCS: <span [innerHTML]="item.ocs_status"></span>
+            </div>
+            <div>
+                <span>Ocs: </span>{{ item.ocs_response }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12 mb-2">
+            <span>Thời gian tạo: </span> {{ item.request_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+            <span>Thời gian cập nhật: </span> {{ item.updated_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+        </div>
+        <div class="col-md-12 mb-2" *ngIf="item.note">
+            <span>Note: </span> {{ item.note }}
+        </div>
+    </div>
+</div>

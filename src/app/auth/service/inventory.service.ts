@@ -26,5 +26,9 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/upload-file-batch`, data);
   }
 
+  findChannelAll(params = null, inventoryType="") {
+    return this._http.get<any>(`${environment.apiUrl}/admin/inventory/channel`, { params: params });
+  }
+
 
 }

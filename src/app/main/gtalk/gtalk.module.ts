@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BatchComponent } from './batch/batch.component';
+import { GTaskComponent } from './g-task/g-task.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,31 +8,26 @@ import { CoreCommonModule } from '@core/common.module';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { BlockUIModule } from 'ng-block-ui';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
-import { BatchSimComponent } from './batch-sim/batch-sim.component';
-import { BatchGtalkComponent } from './batch-gtalk/batch-gtalk.component';
-import { ChannelComponent } from './channel/channel.component';
+import { GTaskItemComponent } from './g-task-item/g-task-item.component';
+import { GMsisdnComponent } from './g-msisdn/g-msisdn.component';
 
 const routes: Routes = [
   {
-    path: 'batch',
-    component: BatchComponent
+    path: 'task',
+    component: GTaskComponent
   },
   {
-    path: 'batch-sim',
-    component: BatchSimComponent
+    path: 'msisdn',
+    component: GMsisdnComponent
   },
-  {
-    path: 'channel',
-    component: ChannelComponent
-  }
+  
 ];
 
 @NgModule({
   declarations: [
-    BatchComponent,
-    BatchSimComponent,
-    BatchGtalkComponent,
-    ChannelComponent
+    GTaskComponent,
+    GTaskItemComponent,
+    GMsisdnComponent
   ],
   imports: [
     CommonModule,
@@ -46,4 +41,4 @@ const routes: Routes = [
     NgxDaterangepickerMd.forRoot()
   ]
 })
-export class InventoryModule { }
+export class GtalkModule { }

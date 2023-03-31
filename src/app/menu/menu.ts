@@ -38,21 +38,21 @@ export const menu: CoreMenu[] = [
     ]
   },
   // Apps & Pages
-  
+
   {
     id: 'users',
     type: 'section',
     title: 'Khách hàng',
     translate: 'MENU.APPS.CUSTOMER.SECTION',
     icon: 'package',
-    children: [      
+    children: [
       {
         id: 'users',
         title: 'Danh sách',
         translate: 'MENU.LIST',
         type: 'item',
         icon: 'user',
-        url: 'user/list'      
+        url: 'user/list'
       },
       {
         id: 'transaction',
@@ -60,7 +60,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.TRANSACTION',
         type: 'item',
         icon: 'list',
-        url: 'transaction'      
+        url: 'transaction'
       },
       {
         id: 'loan',
@@ -68,7 +68,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.LOANBANK',
         type: 'item',
         icon: 'file-text',
-        url: 'loan-bank'      
+        url: 'loan-bank'
       }
     ]
   },
@@ -78,14 +78,14 @@ export const menu: CoreMenu[] = [
     title: 'Mua sim số',
     translate: '',
     icon: 'package',
-    children: [      
+    children: [
       {
         id: 'users',
         title: 'Yêu cầu của đại lý',
         translate: '',
         type: 'item',
         icon: 'user',
-        url: 'sim-so/task'      
+        url: 'sim-so/task'
       },
       {
         id: 'agents',
@@ -93,7 +93,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'user',
-        url: 'agent'      
+        url: 'agent'
       },
       {
         id: 'agents',
@@ -101,7 +101,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'user',
-        url: 'sim-so/search'      
+        url: 'sim-so/search'
       },
       {
         id: 'agents',
@@ -109,7 +109,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'user',
-        url: 'sim-so/action-logs'      
+        url: 'sim-so/action-logs'
       },
     ]
   },
@@ -119,17 +119,49 @@ export const menu: CoreMenu[] = [
     title: 'Kho số',
     translate: '',
     icon: 'package',
-    children: [      
+    children: [
       {
         id: 'batch-sim',
         title: 'DS lô sim số',
         translate: '',
         type: 'item',
         icon: 'database',
-        url: 'inventory/batch-sim'      
+        url: 'inventory/batch-sim'
       },
-      
-      
+      {
+        id: 'sell-channel',
+        title: 'DS kênh bán hàng',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/channel'
+      },
+
+
+    ]
+  }, {
+    id: 'users',
+    type: 'section',
+    title: 'Gtalk',
+    translate: '',
+    icon: 'package',
+    children: [
+      {
+        id: 'g-task',
+        title: 'Task',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gtalk/task'
+      },
+      {
+        id: 'g-task',
+        title: 'Msisdn',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gtalk/msisdn'
+      },
     ]
   },
   {
@@ -138,15 +170,15 @@ export const menu: CoreMenu[] = [
     title: 'Khác',
     translate: 'MENU.OTHERS.SECTION',
     icon: 'package',
-    children: [      
-      
+    children: [
+
       {
         id: 'users',
         title: 'Sms log',
         translate: 'MENU.SMSLOG',
         type: 'item',
         icon: 'database',
-        url: 'sms-log'      
+        url: 'sms-log'
       },
       {
         id: 'users',
@@ -154,7 +186,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.ORDERLTG',
         type: 'item',
         icon: 'database',
-        url: 'order-ltg'      
+        url: 'order-ltg'
       },
       {
         id: 'task',
@@ -162,7 +194,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.TASK',
         type: 'item',
         icon: 'database',
-        url: 'task'      
+        url: 'task'
       },
       {
         id: 'ekyc',
@@ -170,7 +202,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.EKYCBATCH',
         type: 'item',
         icon: 'database',
-        url: 'people/list-ekyc-batch'      
+        url: 'people/list-ekyc-batch'
       },
     ]
   },
@@ -180,7 +212,7 @@ export const menu: CoreMenu[] = [
     title: 'Users & Phân quyền',
     translate: 'MENU.APPS.USER.USERPERMISSION',
     icon: 'package',
-    children: [      
+    children: [
       {
         id: 'role',
         title: 'Vai trò',
@@ -188,14 +220,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'role/list'
-      },    
+      },
       {
         id: 'users',
         title: 'Admin',
         translate: 'MENU.APPS.USER.ADMIN',
         type: 'item',
         icon: 'user',
-        url: 'admin/list'      
+        url: 'admin/list'
       }
     ]
   },

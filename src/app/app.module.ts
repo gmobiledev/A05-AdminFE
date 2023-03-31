@@ -70,6 +70,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'gtalk',
+    loadChildren: () => import('./main/gtalk/gtalk.module').then(m => m.GtalkModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'files',
     loadChildren: () => import('./main/files/files.module').then(m => m.FilesModule),
     canActivate: [AuthGuard]
