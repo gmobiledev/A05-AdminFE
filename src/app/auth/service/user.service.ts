@@ -95,4 +95,12 @@ export class UserService {
   createAgentBatch(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/users/agents/batch`, data);
   }
+
+  createAgentBatchAccount(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/users/agents/batch-account`, data);
+  }
+
+  updateAgentInfo(id, data) {
+    return this._http.put<any>(`${environment.apiUrl}/admin/users/agents/${id}`, data);
+  }
 }

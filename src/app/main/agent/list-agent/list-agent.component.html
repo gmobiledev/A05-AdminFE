@@ -40,6 +40,7 @@
               </div>
               <div class="pull-right">
                 <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Thêm đại lý</button>
+                <button type="button" (click)="modalOpen(modalUploadAccount)" class="btn btn-success mr-2">Tạo tài khoản theo lô</button>
                 <button type="button" (click)="modalOpen(modalUploadData)" class="btn btn-info">Tạo theo lô <span
                     [data-feather]="'upload'"></span></button>
               </div>
@@ -89,6 +90,10 @@
                       <a class="ml-2" (click)="modalOpen(modalCreate, item)">
                         <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
                       </a>
+
+                      <a (click)="openModalUserCode(modalUserCode, item)" >
+                        <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
@@ -113,23 +118,31 @@
     </button>
   </div>
   <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
-    <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="modal-body" tabindex="0" >
 
       <div class="form-group" *ngIf="isCreate">
         <label for="basicInput">Số điện thoại</label>
-        <input type="text" class="form-control" placeholder="" (focusout)="onCheckExits()" (focus)="onFocusMobile()"
+        <input type="tel" class="form-control" placeholder="" (focusout)="onCheckExits()" (focus)="onFocusMobile()"
+        mask="0000000000"
           name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
         <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
-          <div *ngIf="f.mobile.errors.required">Vui lòng nhập tên</div>
+          <div *ngIf="f.mobile.errors.required">Vui lòng số điện thoại</div>
         </div>
       </div>
 
       <div class="form-group" *ngIf="!exitsUser && isCreate">
         <label for="basicInput">Mật khẩu đăng nhập</label>
-        <input type="password" class="form-control" placeholder="" name="password" formControlName="password"
-          [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <code-input 
+        style="width: 350px;"
+        [isCodeHidden]="true"
+            [isCharsCode]="false"
+              [codeLength]="6"
+              (codeCompleted)="onCompletedInputPassword($event)"></code-input>
+
+        <!-- <input type="password" class="form-control" placeholder="" name="password" formControlName="password"
+          [ngClass]="{ 'is-invalid': submitted && f.password.errors }" /> -->
         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Vui lòng nhập tên</div>
+          <div *ngIf="f.password.errors.required">Vui lòng nhập mật khẩu</div>
         </div>
       </div>
       <div class="" *ngIf="exitsUser">
@@ -187,6 +200,7 @@
                   <label for="">Mã giới thiệu</label>
                   <input type="text" class="form-control" formControlName="ref_code">
                 </div>
+               
               </div>
             </div>
             <div class="col-4">
@@ -195,7 +209,7 @@
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn-success btn-sm" (click)="addInput()">Thêm <span
+        <button *ngIf="isShowAddInput" type="button" class="btn btn-success btn-sm" (click)="addInput()">Thêm <span
             [data-feather]="'plus'"></span></button>
 
         <!-- <input type="text" class="form-control" (input)="onSearchService($event)" placeholder="Tìm kiếm" />
@@ -215,6 +229,21 @@
       </div> -->
       </div>
 
+      <div class="form-group">
+        <label for="">Partner code</label>
+        <input type="text" class="form-control" formControlName="partner_user_code">
+      </div>
+
+      <div class="form-group">
+        <label for="">Kênh bán</label>
+        <select formControlName="channel_id" id="" class="form-control">
+          <option [value]="item.id" *ngFor="let item of listSellChannel">
+            {{ item.code }}
+          </option>
+        </select>
+        
+      </div>
+
     </div>
     <div class="modal-footer">
       <button type="submit" class="btn btn-primary" rippleEffect>
@@ -231,7 +260,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" ngbAutofocus>
+  <div class="modal-body" tabindex="0" >
     <div class="form-group" *ngIf="isAdmin">
       <label for="">Admin id</label>
       <input type="text" class="form-control" [(ngModel)]="adminId">
@@ -263,4 +292,93 @@
     </button>
   </div>
 
+</ng-template>
+
+<ng-template #modalUploadAccount let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Tải lên dữ liệu lô tài khoản đại lý</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" >
+    <div class="form-group" *ngIf="isAdmin">
+      <label for="">Admin id</label>
+      <input type="text" class="form-control" [(ngModel)]="adminId">
+    </div>
+    <div class="form-group" *ngIf="isAdmin">
+      <label for="">Ref code</label>
+      <input type="text" class="form-control" [(ngModel)]="refCode">
+    </div>
+    <div class="form-group">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      <input type="file" (change)="onSelectFileAccount($event)" />
+      <label>Tải lên file excel</label>
+
+      <a href="/assets/data.xls" class="ml-2">File mẫu tại đây</a>
+    </div>
+
+    <div class="form-group">
+      <label for="">Kênh bán</label>
+      <select [(ngModel)]="channelId" id="" class="form-control">
+        <option [value]="item.id" *ngFor="let item of listSellChannel">
+          {{ item.code }}
+        </option>
+      </select>
+      
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onSubmitUploadFileAccount()" type="submit" class="btn btn-primary" rippleEffect>
+      <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true"
+        *ngIf="submittedUpload"></span>
+      Submit
+    </button>
+  </div>
+
+</ng-template>
+
+
+<ng-template #modalUserCode let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+    <button type="button" class="close" (click)="modalUserCodeClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="mt-2" [formGroup]="formGroupUserCode" (ngSubmit)="onSubmitUpdateUserCode()">
+    <div class="modal-body" tabindex="0" >
+
+      <!-- <div class="form-group" >
+      <label for="basicInput">Mã giới thiệu</label>
+        <input type="text" class="form-control"  placeholder=""
+        name="ref_code"
+        formControlName="ref_code"
+        [ngClass]="{ 'is-invalid': submitted && f.ref_code.errors }"
+        />
+    </div>  -->
+
+
+      <div class="form-group">
+        <label for="">Partner code</label>
+        <input type="text" class="form-control" formControlName="partner_user_code">
+      </div>
+
+      <div class="form-group">
+        <label for="">Kênh bán</label>
+        <select formControlName="channel_id" id="" class="form-control">
+          <option [value]="item.id" *ngFor="let item of listSellChannel">
+            {{ item.code }}
+          </option>
+        </select>
+        
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Lưu
+      </button>
+    </div>
+  </form>
 </ng-template>

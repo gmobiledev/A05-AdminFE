@@ -44,6 +44,7 @@
     "@ngx-translate/core": "13.0.0",
     "@sweetalert2/ngx-sweetalert2": "8.1.1",
     "@swimlane/ngx-datatable": "19.0.0",
+    "angular-code-input": "^1.6.0",
     "angular-in-memory-web-api": "0.11.0",
     "animate.css": "4.1.1",
     "apexcharts": "3.23.0",
