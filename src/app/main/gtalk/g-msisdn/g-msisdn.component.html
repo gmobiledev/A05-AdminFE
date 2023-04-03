@@ -64,12 +64,12 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Trạng thái</th>
                                         <th>Số thuê bao</th>
                                         <th>Gói cước</th>
                                         <th>Số tiền</th>
                                         <th>Merchant</th>
                                         <th>TaskID</th>
+                                        <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
@@ -80,18 +80,17 @@
                                         </td>
 
                                         <td>
-                                            {{item.state}}
-                                        </td>
-                                        <td>
                                             {{item.msisdn}}
                                         </td>
-
                                         <td>
                                             {{item.package}}
                                         </td>
                                         <td>{{item.amount | number }}</td>
                                         <td>{{item.merchant_id}}</td>
                                         <td>{{item.task_id}}</td>
+                                        <td>
+                                            <div [innerHTML]="item.state | showStatusSim"></div>        
+                                        </td>
                                         <td>
                                             <div>
                                                 <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
