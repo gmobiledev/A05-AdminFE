@@ -22,6 +22,8 @@ export class GtalkService {
     return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/msisdn`, { params: params });
   }
 
+
+
   /**
    * Xem thong tin chi tiet
    */
@@ -49,7 +51,7 @@ export class GtalkService {
   }
 
 
-  sendCallback(task){
+  sendCallback(task) {
     return this._http.post<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/task/${task.id}/send-callback`, {});
   }
 
@@ -129,6 +131,16 @@ export class GtalkService {
 
   sellChannelRemoveChannelFromUser(data) {
     return this._http.post<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/sell-channel/user/remove-channel`, data);
+  }
+
+  /**Customer */
+  //Danh sách khác hàng
+  getAllCustomer(params = null) {
+    return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/customer`, { params: params });
+  }
+
+  lockUser(id: number, status: number, note: string){
+    return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/lock-user`);
   }
 
 }

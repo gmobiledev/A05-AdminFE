@@ -10,6 +10,7 @@ import { BlockUIModule } from 'ng-block-ui';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { GTaskItemComponent } from './g-task-item/g-task-item.component';
 import { GMsisdnComponent } from './g-msisdn/g-msisdn.component';
+import { GCustomerComponent } from './g-customer/g-customer.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
     path: 'msisdn',
     component: GMsisdnComponent
   },
+  {
+    path: 'customer',
+    component: GCustomerComponent
+  },
   
 ];
 
@@ -27,7 +32,8 @@ const routes: Routes = [
   declarations: [
     GTaskComponent,
     GTaskItemComponent,
-    GMsisdnComponent
+    GMsisdnComponent,
+    GCustomerComponent
   ],
   imports: [
     CommonModule,

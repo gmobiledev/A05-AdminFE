@@ -155,12 +155,20 @@ export const menu: CoreMenu[] = [
         url: 'gtalk/task'
       },
       {
-        id: 'g-task',
+        id: 'g-msisdn',
         title: 'Msisdn',
         translate: '',
         type: 'item',
         icon: 'database',
         url: 'gtalk/msisdn'
+      },
+      {
+        id: 'g-customer',
+        title: 'Khách hàng',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gtalk/customer'
       },
     ]
   },
