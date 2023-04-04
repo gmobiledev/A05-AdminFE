@@ -40,12 +40,12 @@ export class SweetAlertService {
     });
   }
 
-  showError(message) {
+  showError(message, timeout = 3500) {
     Swal.fire({
         icon: 'warning',
         title: 'Lỗi!',
         text: message,
-        timer: 3500,
+        timer: timeout,
         customClass: {
           confirmButton: 'btn btn-success'
         }

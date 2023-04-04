@@ -5,6 +5,7 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 import { MsisdnStatus, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import JSZip from 'jszip';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -30,6 +31,7 @@ export class TaskItemComponent implements OnInit {
 
   public viewImage;
   public modalRef: any;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -207,14 +209,17 @@ export class TaskItemComponent implements OnInit {
   async asyncToMnoViaApi(item) {
     let confirmMessage = "Xác nhận đồng bộ thông tin"
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.sectionBlockUI.start();
       this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
+        this.sectionBlockUI.stop();
         if (!res.status) {
-          this.alertService.showError(res.message);
+          this.alertService.showError(res.message, 15000);
           return;
         }
         this.alertService.showSuccess(res.message);
       }, error => {
-
+        this.sectionBlockUI.stop();
+        this.alertService.showError(error,15000);
       })
     }
   }
