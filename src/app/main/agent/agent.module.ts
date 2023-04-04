@@ -8,6 +8,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { BlockUIModule } from 'ng-block-ui';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { CodeInputModule } from 'angular-code-input';
+import { NgxMaskModule } from 'ngx-mask';
 
 const routes: Routes = [
   {
@@ -29,7 +31,9 @@ const routes: Routes = [
     CoreCommonModule, 
     ContentHeaderModule,
     BlockUIModule.forRoot(),
-    NgxDaterangepickerMd.forRoot()
+    NgxDaterangepickerMd.forRoot(),
+    NgxMaskModule.forRoot(),
+    CodeInputModule
   ]
 })
 export class AgentModule { }

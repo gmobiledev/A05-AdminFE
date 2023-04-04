@@ -32,7 +32,8 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     {
         .navbar-brand {
             .brand-logo img {
-                max-width: 120px !important;
+                max-height: 2.5rem;
+                width: auto !important;
             }
         }
     }

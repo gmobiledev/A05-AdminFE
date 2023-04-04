@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'app/auth/service';
 import { CreateAgentDto, CreateAgentServiceDto, CreateUserDto, UpdateStatusAgentDto } from 'app/auth/service/dto/user.dto';
 import { TaskService } from 'app/auth/service/task.service';
+import { TelecomService } from 'app/auth/service/telecom.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -25,6 +26,7 @@ export class ListAgentComponent implements OnInit {
     ekyc_status: '',
     page: 1
   }
+  public listSellChannel: any;
 
   public selectedUserId: number;
   public listAllService: any;
@@ -36,12 +38,15 @@ export class ListAgentComponent implements OnInit {
   public isCreate: boolean = false;
   public submitted: boolean = false;  
   public exitsUser: boolean = false;
+  public isShowAddInput: boolean = true;
 
   public submittedUpload: boolean = false;
   public filesData: any;
   public filesImages: any;
+  public fileAccount: any;
   public adminId: any;
   public refCode: any;
+  public channelId: any;
 
   public currentUser: any;
   public isAdmin: boolean = false;
@@ -50,6 +55,8 @@ export class ListAgentComponent implements OnInit {
   public titleModal: string;
   public formGroup: FormGroup;
   public subFormGroup: FormGroup;
+  public modalUserCodeRef: any;
+  public formGroupUserCode: FormGroup;
 
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 count: any;
@@ -58,6 +65,7 @@ count: any;
     private route: ActivatedRoute,
     private router: Router,
     private taskService: TaskService,
+    private telecomService: TelecomService,
     private userService: UserService,
     private alertService: SweetAlertService,
     private modalService: NgbModal,
@@ -65,11 +73,12 @@ count: any;
   ) { 
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
-      this.searchForm.ekyc_status = params['ekyc_status'] && params['ekyc_status'] != undefined ? params['ekyc_status'] : '';   
+      this.searchForm.ekyc_status = params['ekyc_status'] != undefined ? params['ekyc_status'] : '_all';   
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
 
       this.getData();
       this.getService();
+      this.getSellChannel();
     }) 
   }
   loadPage(page): void { 
@@ -139,6 +148,42 @@ count: any;
     this.initForm();
   }
 
+  openModalUserCode(modal, item) {
+    this.selectedUserId = item.id;
+    this.modalUserCodeRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary', 
+      size: 'lg'
+    });
+  }
+
+  modalUserCodeClose() {
+    this.modalUserCodeRef.close();
+    this.selectedUserId = null;
+    this.initForm();
+  }
+
+  closeModalUserCode() {
+    this.selectedUserId = null;
+    this.modalUserCodeRef.close();
+  }
+
+  async onSubmitUpdateUserCode() {
+    let data = {
+      partner_user_code: this.formGroupUserCode.controls['partner_user_code'].value
+    }
+    if((await this.alertService.showConfirm("Bạn có đồng ý lưu dữ liệu")).value) {
+      this.userService.updateAgentInfo(this.selectedUserId, data).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.modalUserCodeClose();
+      })
+    }
+  }
+
   /*
   onSearchService(event) {
     const value = event.target.value;
@@ -184,6 +229,9 @@ count: any;
       service_code: []
     });
     arrayControl.push(newGroup);
+    if(arrayControl.length == this.listAllService.length) {
+      this.isShowAddInput = false;
+    }
   }
 
   removeInput(index) {
@@ -193,6 +241,9 @@ count: any;
       this.listServiceFilter[i]['disabled'] = '';
     }    
     arrayControl.removeAt(index);
+    if(arrayControl.length < this.listAllService.length) {
+      this.isShowAddInput = true;
+    }
   }
 
   onSelectService(service_code) {
@@ -279,19 +330,32 @@ count: any;
       if (this.formGroup.invalid) {
         return;
       }
+      const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => 
+        {return {ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value}
+      })
       const data: CreateAgentDto = {
         username: this.formGroup.controls['mobile'].value,
         mobile: this.formGroup.controls['mobile'].value,
-        agent_service: this.formGroup.controls['new_agents_service'].value,
+        agent_service: dataAgentServices,
         password: this.formGroup.controls['password'].value,
       }
       if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
         this.userService.createAgent(data).subscribe(res => {
           if (!res.status) {
+           
             this.alertService.showError(res.message);
             this.submitted = false;
             return;
           }
+
+          //them user vua tao vao kenh ban
+          this.telecomService.sellChannelAddChannelToUser({
+            channel_id: this.formGroup.controls['channel_id'].value,
+            user_id: res.data.id
+          }).subscribe(res => {
+
+          })
+
           this.modalRef.close();
           this.initForm();
           this.alertService.showSuccess(res.message);
@@ -311,12 +375,59 @@ count: any;
     }
   }
 
+  onCompletedInputPassword(value) {
+    this.formGroup.patchValue({
+      password: value
+    })
+  }
+
   async onFileChangeExcel(event) {
     this.filesData = event.target.files[0];    
   }
 
   async onFileChangeImages(event) {
     this.filesImages = event.target.files[0];
+  }
+
+  async onSelectFileAccount(event) {
+    this.fileAccount = event.target.files[0];
+  }
+
+  async onSubmitUploadFileAccount() {
+    if (!this.fileAccount || !this.adminId) {
+      this.alertService.showError("Vui lòng nhập đủ dữ liệu");
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true;
+      const formData = new FormData();
+      formData.append("files", this.fileAccount);
+      formData.append("admin_id", this.adminId ? this.adminId : null);
+      formData.append("ref_code", this.refCode ? this.refCode : null);
+      this.userService.createAgentBatchAccount(formData).subscribe(async res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          await this.alertService.showMess(res.message);
+          return;
+        }
+        this.fileAccount = null;
+        const dataSellChannel = {
+          channel_id: this.channelId,
+          user_id: res.data.user_id
+        }
+        this.telecomService.sellChannelAddUser(dataSellChannel).subscribe(resS => {
+          if (!resS.status) {
+            this.alertService.showError(resS.message);
+            return;
+          }
+        })
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
   }
 
   async onSubmitUpload() {
@@ -379,11 +490,19 @@ count: any;
     this.formGroup = this.formBuilder.group({
       mobile: ['', Validators.required],
       password: ['', Validators.required], 
+      partner_user_code: [''],
+      channel_id: [''],
       // ref_code: [],
       // service_code: new FormArray([]),
       agents_service: this.formBuilder.array([]),
       new_agents_service: this.formBuilder.array([])
     });
+
+    this.formGroupUserCode = this.formBuilder.group({
+      partner_user_code: [''],
+      channel_id: [''],
+    });
+
     this.exitsUser = false;
     this.isCreate = true;
   }
@@ -414,6 +533,12 @@ count: any;
       this.listAllService = res.data;
       this.listServiceFilter = res.data.map( x => {return { disabled: '', code: x.code, desc: x.desc }} );
       this.listServiceTmp = res.data;
+    })
+  }
+
+  getSellChannel() {
+    this.telecomService.sellChannelList(null).subscribe(res => {
+      this.listSellChannel = res.data.items;
     })
   }
 
