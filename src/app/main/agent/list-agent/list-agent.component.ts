@@ -6,6 +6,7 @@ import { UserService } from 'app/auth/service';
 import { CreateAgentDto, CreateAgentServiceDto, CreateUserDto, UpdateStatusAgentDto } from 'app/auth/service/dto/user.dto';
 import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { ObjectLocalStorage } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -148,13 +149,26 @@ count: any;
     this.initForm();
   }
 
-  openModalUserCode(modal, item) {
+  async openModalUserCode(modal, item) {
     this.selectedUserId = item.id;
-    this.modalUserCodeRef = this.modalService.open(modal, {
-      centered: true,
-      windowClass: 'modal modal-primary', 
-      size: 'lg'
-    });
+    let r;
+    try {
+      r = await this.userService.getAgentDetails(item.id).toPromise();
+      const agent = r.data.agent && r.data.agent[0] ? r.data.agent[0] : null;
+      const sellChannel = r.data.sell_channel.items && r.data.sell_channel.items[0] ? r.data.sell_channel.items[0].id : null;
+      this.formGroupUserCode.patchValue({
+        partner_user_code: agent.partner_user_code,
+        channel_id: sellChannel.id
+      })
+      this.modalUserCodeRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary', 
+        size: 'lg'
+      });
+    } catch (error) {
+      
+    }
+    
   }
 
   modalUserCodeClose() {
@@ -479,6 +493,9 @@ count: any;
       }
     };
 
+    const currentUser = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
+    this.adminId = currentUser ? currentUser.id : null;
+    // this.refCode = currentUser ? currentUser.username : null;
     this.initForm();
   }
 
