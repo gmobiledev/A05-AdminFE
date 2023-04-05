@@ -87,12 +87,12 @@
                       <a class="ml-2" (click)="onSubmitLock(item.id, 1)" *ngIf="!item.status">
                         <i data-feather="unlock" class="text-primary cursor-pointer"></i>
                       </a> -->
-                      <a class="ml-2" (click)="modalOpen(modalCreate, item)">
+                      <a class="ml-2" (click)="modalOpen(modalCreate, item)" class="mr-1">
                         <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
                       </a>
 
                       <a (click)="openModalUserCode(modalUserCode, item)" >
-                        <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
+                        <i data-feather="credit-card" class="text-primary cursor-pointer" ngbTooltip="'Sửa user code'" placement="right"></i>
                       </a>
                     </td>
                   </tr>
@@ -229,6 +229,7 @@
       </div> -->
       </div>
 
+      <ng-template *ngIf="isCreate">
       <div class="form-group">
         <label for="">Partner code</label>
         <input type="text" class="form-control" formControlName="partner_user_code">
@@ -243,6 +244,7 @@
         </select>
         
       </div>
+    </ng-template>
 
     </div>
     <div class="modal-footer">
@@ -315,7 +317,7 @@
       <input type="file" (change)="onSelectFileAccount($event)" />
       <label>Tải lên file excel</label>
 
-      <a href="/assets/data.xls" class="ml-2">File mẫu tại đây</a>
+      <a href="/assets/data_upload_account.xls" class="ml-2">File mẫu tại đây</a>
     </div>
 
     <div class="form-group">

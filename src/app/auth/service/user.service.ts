@@ -76,6 +76,10 @@ export class UserService {
     return this._http.post<any>(`${environment.apiUrl}/admin/users/agents`, data);
   }
 
+  getAgentDetails(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/agents/${id}`);
+  }
+
   getAgentServices(id) {
     return this._http.get<any>(`${environment.apiUrl}/admin/users/agents/${id}/services`);
   }
