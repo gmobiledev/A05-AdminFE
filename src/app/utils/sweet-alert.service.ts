@@ -28,12 +28,12 @@ export class SweetAlertService {
       })
   }
 
-  showSuccess(message) {
+  showSuccess(message,timeout = 3500) {
     Swal.fire({
         icon: 'success',
         title: 'Thành công!',
         text: message,
-        timer: 3500,
+        timer: timeout,
         customClass: {
           confirmButton: 'btn btn-success'
         }

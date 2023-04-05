@@ -216,7 +216,7 @@ export class TaskItemComponent implements OnInit {
           this.alertService.showError(res.message, 15000);
           return;
         }
-        this.alertService.showSuccess(res.message);
+        this.alertService.showSuccess(res.data.message,15000);
       }, error => {
         this.sectionBlockUI.stop();
         this.alertService.showError(error,15000);
