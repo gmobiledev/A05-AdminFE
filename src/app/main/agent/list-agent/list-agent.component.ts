@@ -410,6 +410,11 @@ count: any;
   async onSubmitUploadFileAccount() {
     if (!this.fileAccount || !this.adminId) {
       this.alertService.showError("Vui lòng nhập đủ dữ liệu");
+      return;
+    }
+    if(!this.channelId) {
+      this.alertService.showError("Vui lòng chọn kênh bán");
+      return;
     }
     if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
       this.submittedUpload = true;
@@ -493,9 +498,7 @@ count: any;
       }
     };
 
-    const currentUser = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
-    this.adminId = currentUser ? currentUser.id : null;
-    // this.refCode = currentUser ? currentUser.username : null;
+    
     this.initForm();
   }
 
@@ -530,6 +533,10 @@ count: any;
       const arrayRoles = this.currentUser.roles.map( item => {return item.item_name.toLowerCase()});
       if(arrayRoles.includes("admin") || arrayRoles.includes("root")) {
         this.isAdmin = true;
+      }      
+      this.adminId = this.currentUser ? this.currentUser.id : null;
+      if(!this.isAdmin) {
+        this.refCode = this.currentUser ? this.currentUser.username : null;
       }
     }
     this.sectionBlockUI.start();
