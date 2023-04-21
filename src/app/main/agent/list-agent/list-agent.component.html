@@ -176,10 +176,10 @@
               </div>
             </div>
             <div class="col-4">
-              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['ekyc_status'] != 3"
-                type="button" class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 3)">Khóa <span
+              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 1"
+                type="button" class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 0)">Khóa <span
                   [data-feather]="'lock'"></span></button>
-              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['ekyc_status'] == 3"
+              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 0"
                 type="button" class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 1)">Mở <span
                   [data-feather]="'unlock'"></span></button>
             </div>
