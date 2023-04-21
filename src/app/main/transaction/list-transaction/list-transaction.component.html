@@ -1,123 +1,132 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
-<div class="row" id="table-striped">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
-        <div class="card-body">
-          <form (ngSubmit)="onSubmitSearch()">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control" placeholder="Nhập mã giao dịch">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control"
+                      placeholder="Nhập mã giao dịch">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control"
+                      placeholder="Nhập tên, sđt, email của user">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" placeholder="Khoảng thời gian" autocomplete="off"
+                      [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd [(ngModel)]="dateRange"
+                      [ranges]="ranges" [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
+                      [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="date_range"
+                      class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <select class="form-control" name="trans_type" [(ngModel)]="searchForm.trans_type">
+                      <option value="">Chọn loại giao dịch</option>
+                      <option *ngFor="let item of listTransType | keyvalue" [value]="item.key">{{ item.key }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <select class="form-control" name="gateway" [(ngModel)]="searchForm.gateway">
+                      <option value="">Cổng thanh toán</option>
+                      <option *ngFor="let item of payment_gateways" [value]="item.code">{{ item.value }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                        [data-feather]="'search'"></span></button>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="button" (click)="onSubmitExportExcel()" class="btn btn-block btn-success">Xuất excel <span [data-feather]="'file'"></span></button>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control" placeholder="Nhập tên, sđt, email của user">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <input type="text" 
-                placeholder="Khoảng thời gian"
-                [ngModelOptions]="{standalone: true}" 
-                ngxDaterangepickerMd [(ngModel)]="dateRange" 
-                [ranges]="ranges"
-                [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
-                [showCustomRangeLabel]="true"
-                [alwaysShowCalendars]="true"
-                name="date_range"
-                class="form-control"/>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <select class="form-control" name="trans_type" [(ngModel)]="searchForm.trans_type">
-                  <option value="">Chọn loại giao dịch</option>
-                  <option *ngFor="let item of listTransType | keyvalue" [value]="item.key">{{ item.key }}</option>                  
-                </select>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span [data-feather]="'search'"></span></button>
-              </div>
+            </form>
+            <br>
+            <div class="table-responsive" *blockUI="'section-block'">
+              <table class="table table-striped text-nowrap">
+                <thead>
+                  <tr>
+                    <th>Loại giao dịch</th>
+                    <th>Mã giao dịch</th>
+                    <th>Gateway</th>
+                    <th>Người thực hiện</th>
+                    <th>Ngày tạo</th>
+                    <th>Số tiền</th>
+                    <th>Phí</th>
+                    <th>Merchant</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list">
+                    <td>
+                      {{ listTransType[item.trans_type] }}
+                    </td>
+                    <td>{{ item.request_id }}</td>
+                    <td>
+                      {{ item.gateway }}
+
+                    </td>
+                    <td>
+                      {{ item?.user?.people?.name }}
+                      <br>{{item?.user?.mobile}}
+                    </td>
+                 
+                    <td>
+                      {{ item.created_at | date: 'dd/MM/yyyy H:mm' }}
+                    </td>
+                    <td>
+                      {{ item.amount | number }}
+                    </td>
+                    <td>
+                      {{ item.fee }}
+                    </td>
+                    <td>
+                      {{ item.merchant_id }}
+                    </td>
+
+                    <td>
+                      <button class="btn btn-icon btn-flat-success btn-sm"
+                        (click)="modalOpen(modalTransWh, item.task_id)">
+                        <i data-feather="monitor" class="text-primary cursor-pointer"></i>
+                        View webhook
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalPage"
+                [(page)]="searchForm.page" [pageSize]="pageSize" [directionLinks]="false"
+                (pageChange)="loadPage($event)"></ngb-pagination>
             </div>
           </div>
-        </form>
-        <div class="table-responsive" *blockUI="'section-block'">
-          <table class="table table-striped text-nowrap">
-            <thead>
-              <tr>
-                <th>Loại giao dịch</th>
-                <th>Mã giao dịch</th>
-                <th>Gateway</th>
-                <th>Người thực hiện</th>
-                <th>SĐT người thực hiện</th>
-                <th>Ngày tạo</th>
-                <th>Số tiền</th>
-                <th>Phí</th>
-                <th>Phí merchant</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of list">
-                <td>
-                  {{ listTransType[item.trans_type] }}
-                </td>
-                <td>{{ item.request_id }}</td>
-                <td>
-                    {{ item.gateway }}
-                </td>                
-                <td>
-                  {{ item?.user?.people?.name }}
-                </td>
-                <td>
-                  {{ item?.user?.mobile }}
-                </td>
-                <td>
-                  {{ item.created_at | date: 'dd/MM/yyyy H:mm' }}
-              </td>
-                <td>
-                    {{ item.amount }}     
-                </td> 
-                <td>
-                  {{ item.fee }}     
-                </td>
-                <td>
-                  {{ item.merchant_fee }}     
-                </td>               
-                
-                <td>
-                  <button class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item.task_id)"                  
-                  >
-                    <i data-feather="monitor" class="text-primary cursor-pointer"></i>
-                    View webhook
-                  </button>  
-                </td>
-              </tr>
-            </tbody>
-          </table>
 
-          <ngb-pagination
-          class="d-flex justify-content-end pr-3 pt-2"
-                [collectionSize]="totalPage"
-                [(page)]="searchForm.page"
-                [pageSize]="pageSize"
-                [directionLinks]="false"
-                (pageChange)="loadPage($event)"
-              ></ngb-pagination>
         </div>
-        </div>
-        
       </div>
     </div>
   </div>
-    </div>
 </div>
 
 <ng-template #modalTransWh let-modal>
@@ -150,7 +159,7 @@
           status: {{ wh?.status }}
         </div>
       </div>
-    </div>    
+    </div>
   </div>
   <div class="modal-footer">
     <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>

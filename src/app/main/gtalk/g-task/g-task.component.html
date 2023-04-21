@@ -89,17 +89,15 @@
                                             item.action }}
                                         </td>
                                         <td>
-
-                                            <div *ngIf="item.msisdns.length >= 2">
+                                            <div *ngIf="item.msisdns.length > 0">
                                                 <div *ngFor="let number of item.msisdns">
-                                                    {{ number.msisdn }} - {{ number.serial }}
+                                                    {{ number.msisdn }}
                                                 </div>
                                                 <br>
                                             </div>
-                                            <div *ngIf="item.msisdns.length < 1">
-                                                {{ item.msisdn }}
+                                            <div *ngIf="item.msisdns.length==0">
+                                                {{ item.msisdn}}
                                             </div>
-
                                         </td>
 
                                         <td>

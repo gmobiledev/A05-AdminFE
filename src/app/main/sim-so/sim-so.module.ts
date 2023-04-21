@@ -18,11 +18,12 @@ import { ViewTaskComponent } from './view-task/view-task.component';
 import { SearchSimSoComponent } from './search-sim-so/search-sim-so.component';
 import { ActionLogsComponent } from './action-logs/action-logs.component';
 import { SellChannelComponent } from './sell-channel/sell-channel.component';
+import { MsisdnComponent } from './msisdn/msisdn.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ListSimComponent
+    component: ListTaskComponent
   },
   {
     path: 'task',
@@ -47,7 +48,11 @@ const routes: Routes = [
   {
     path: 'sell-channel',
     component: SellChannelComponent
-  }
+  },
+  {
+    path: 'msisdn',
+    component: ListSimComponent
+  },
 ];
 
 @NgModule({
@@ -60,7 +65,8 @@ const routes: Routes = [
     ViewTaskComponent,
     SearchSimSoComponent,
     ActionLogsComponent,
-    SellChannelComponent
+    SellChannelComponent,
+    MsisdnComponent,
   ],
   imports: [
     CommonModule, 

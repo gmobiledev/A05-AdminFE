@@ -20,6 +20,11 @@ export class ListTransactionComponent implements OnInit {
   public total: number;
   public page: number = 1;
   public pageSize: number;
+  public payment_gateways = [
+    {value: "GPAY", code: "GPAY"},
+    {value: "G99", code: "G99"},
+    {value: "VIETINBANK", code: "ICB"},
+  ]
   public searchForm = {
     user: '',
     status: '',
@@ -136,6 +141,26 @@ export class ListTransactionComponent implements OnInit {
       this.sectionBlockUI.stop();
       console.log("ERRRR");
       console.log(error);
+    })
+  }
+
+  onSubmitExportExcel() {
+    console.log("onSubmitExportExcel")
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
+    ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    this.searchForm.date_range = daterangeString;
+    this.transactionService.exportExcel(this.searchForm).subscribe(res => {
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Xuất báo cáo";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
     })
   }
 

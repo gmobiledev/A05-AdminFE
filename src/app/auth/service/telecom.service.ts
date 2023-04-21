@@ -146,4 +146,8 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel/user/remove-channel`, data);
   }
 
+  getAllMsisdn(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn`, { params: params });
+  }
+
 }

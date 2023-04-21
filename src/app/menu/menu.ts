@@ -111,6 +111,14 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'sim-so/action-logs'
       },
+      {
+        id: 'agents',
+        title: 'Msisdn',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/msisdn'
+      },
     ]
   },
   {
