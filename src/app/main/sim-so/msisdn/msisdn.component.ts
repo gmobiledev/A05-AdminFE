@@ -127,7 +127,6 @@ export class MsisdnComponent implements OnInit {
   async modalOpen(modal, item = null) {
     this.itemBlockUI.start();
     this.selectedItem = item;
-
     this.itemBlockUI.stop();
     this.modalRef = this.modalService.open(modal, {
       centered: true,

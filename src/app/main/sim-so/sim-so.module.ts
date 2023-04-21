@@ -19,6 +19,7 @@ import { SearchSimSoComponent } from './search-sim-so/search-sim-so.component';
 import { ActionLogsComponent } from './action-logs/action-logs.component';
 import { SellChannelComponent } from './sell-channel/sell-channel.component';
 import { MsisdnComponent } from './msisdn/msisdn.component';
+import { ThongTinThueBaoComponent } from './thong-tin-thue-bao/thong-tin-thue-bao.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,7 @@ const routes: Routes = [
     ActionLogsComponent,
     SellChannelComponent,
     MsisdnComponent,
+    ThongTinThueBaoComponent,
   ],
   imports: [
     CommonModule, 

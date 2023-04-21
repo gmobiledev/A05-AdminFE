@@ -6,10 +6,12 @@ export class ShowIconMnoPipe implements PipeTransform {
   transform(value: string): string {
     let html = '';
     if(value == 'VNM') {
-        html = '<img class="img-icon-mno"  src="/assets/images/mno/vnm.png">'
+        html = '<img class="img-icon-mno" width="30px"  src="/assets/images/mno/vnm.png">'
     } else if (value == 'VMS') {
-        html = '<img class="img-icon-mno"  src="/assets/images/mno/mobifone.png">'
-    } 
+        html = '<img class="img-icon-mno" width="35px"  src="/assets/images/mno/mobifone.png">'
+    } else if (value == 'GMOBILE') {
+      html = '<img class="img-icon-mno" width="30px"  src="/assets/images/mno/gmobile.png">'
+  } 
     return html;
   }
 }
