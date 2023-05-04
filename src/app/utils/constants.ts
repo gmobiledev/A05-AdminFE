@@ -10,7 +10,8 @@ export enum TaskTelecomStatus {
     STATUS_REJECT = 4, //Đấu nối sang nhà mạng thất bại
     STATUS_SUCCESS = 1, //Thành công
     STATUS_NEW_ORDER = 5,
-    STATUS_SUCCESS_PART = 11, // THành công 1 phần
+    STATUS_SUCCESS_PART = 11, 
+    STATUS_INIT_2G_GSIM = 20// THành công 1 phần
 }
 
 export enum MsisdnStatus {

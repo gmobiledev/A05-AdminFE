@@ -67,7 +67,8 @@ export class GTaskComponent implements OnInit {
     array_status: [],
     page_size: 20,
     date_range: '',
-    telco: ''
+    telco: '',
+    detail: ''
   }
   dateRange: any;
 
@@ -102,6 +103,7 @@ export class GTaskComponent implements OnInit {
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.action = params['action'] && params['action'] != undefined ? params['action'] : '';
+      this.searchForm.detail = params['detail'] && params['detail'] != undefined ? params['detail'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       this.initActiveBoxSummary();

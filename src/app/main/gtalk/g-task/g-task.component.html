@@ -38,6 +38,12 @@
                                             class="form-control" />
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" name="detail" [(ngModel)]="searchForm.detail"
+                                            class="form-control" placeholder="Tìm theo chi tiết">
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="row mt-2">
@@ -71,6 +77,7 @@
                                         <th>Số tiền</th>
                                         <th>Cổng thanh toán</th>
                                         <th>Thời gian</th>
+                                        <th>Chi tiết</th>
                                         <th>Trạng thái</th>
                                         <th>OCS</th>
                                         <th>Thao tác</th>
@@ -111,7 +118,11 @@
                                         <td>
                                             {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
                                         </td>
-
+                                        <td>
+                                            <span *ngIf="item.action == 'ORDER_NUMBER'">
+                                                {{ item.detail }}
+                                            </span>
+                                        </td>
                                         <td>
                                             <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
                                             {{ item.note }}

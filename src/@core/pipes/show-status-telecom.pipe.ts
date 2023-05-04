@@ -21,6 +21,8 @@ export class ShowStatusTelecomPipe implements PipeTransform {
         html = '<span class="badge badge-pill badge-light-warning mr-1">Đại lý chưa hoàn thiện thông tin</span>'
     } else if (value === TaskTelecomStatus.STATUS_SUCCESS_PART) {
         html = '<span class="badge badge-pill badge-light-success mr-1">Thành công 1 phần</span>'
+    } else if (value === TaskTelecomStatus.STATUS_INIT_2G_GSIM) {
+        html = '<span class="badge badge-pill badge-light-warning mr-1">Yêu cầu đổi 2G mới</span>'
     }
     return html;
   }
