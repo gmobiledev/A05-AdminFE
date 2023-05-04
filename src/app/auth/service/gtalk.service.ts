@@ -50,6 +50,9 @@ export class GtalkService {
     return this._http.post<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/task/${id}/update-status`, data);
   }
 
+  approve2GTaskStatus(data) {
+    return this._http.post<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/task/approve-2g-gsim`, data);
+  }
 
   sendCallback(task) {
     return this._http.post<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/task/${task.id}/send-callback`, {});

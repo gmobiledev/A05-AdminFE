@@ -33,4 +33,78 @@
             <span>Note: </span> {{ item.note }}
         </div>
     </div>
+
+    <!-- Duyệt/không duyệt thuê bao 2G chuyển sang Gsim -->
+    <div class="row" >
+        <div class="col-6">
+            <label for="">Ảnh giấy tờ mặt trước</label>
+                    <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ detailTask?.people?.base64Front }}" alt="avatar img" />
+        </div>
+        <div class="col-6">
+            <label for="">Ảnh giấy tờ mặt sau</label>
+                    <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ detailTask?.people?.base64Back }}" alt="avatar img" />
+        </div>
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Dữ liệu cũ</th>
+                        <th>Dữ liệu mới</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ detailTask.old_people.name }}
+                        </td>
+                        <td>
+                            {{ detailTask.people.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ detailTask.old_people.identification_no }}
+                        </td>
+                        <td>
+                            {{ detailTask.people.identification_no }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ detailTask.old_people.birth }}
+                        </td>
+                        <td>
+                            {{ detailTask.people.birth }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12" *ngIf="item.status == 20" >
+            <a class="ml-2 btn btn-success" (click)="onUpdateStatus(item.id, 1)">
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                Duyệt
+            </a>
+    
+            <a class="ml-2 btn btn-warning" (click)="onUpdateStatus(item.id, 0)">
+                <i data-feather="cancel" class="text-white cursor-pointer"></i>
+                    Không duyệt
+            </a>
+        </div>
+       
+    </div>
 </div>
+
+<ng-template #modalImage let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel160"></h4>
+        <button type="button" class="close" (click)="onCloseModalImage()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0">
+        <app-poup-view-image [srcImage]="viewImage"></app-poup-view-image>
+    </div>
+</ng-template>

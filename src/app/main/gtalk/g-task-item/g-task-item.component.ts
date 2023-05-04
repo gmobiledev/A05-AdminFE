@@ -24,6 +24,9 @@ export class GTaskItemComponent implements OnInit {
   public actionText = 'Chi tiết';
   public titleModal = 'Chi tiết';
 
+  public detailTask;
+  public viewImage;
+
   public modalRef: any;
 
   constructor(
@@ -34,15 +37,59 @@ export class GTaskItemComponent implements OnInit {
   ) {
 
   }
+
+  async onUpdateStatus(task_id, status) {
+    let confirmMessage;
+    if(status == 1) {
+      confirmMessage = "Bạn có đồng ý duyệt?"
+    } else if (status == 0) {
+      confirmMessage = "Bạn không duyệt yêu cầu này?"
+    }
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.gtalkService.approve2GTaskStatus({
+        task_id: task_id,
+        status: status
+      }).subscribe( res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    } 
+  }
   
+  onViewImage(modal, type, mobile = null) {
+    if (type == 'cccd_front') {
+      this.viewImage = 'data:image/png;base64,' + this.detailTask.people.base64Front
+    }
+    if (type == 'cccd_back') {
+      this.viewImage = 'data:image/png;base64,' + this.detailTask.people.base64Back
+    }
+
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'xl',
+    });
+  }
+
+  onCloseModalImage() {
+    this.viewImage = null;
+    this.modalRef.close();
+  }
 
   ngOnInit(): void {
-      // this.getData();
+      this.getData();
   }
 
   getData() {
     this.gtalkService.getDetailTask(this.item.id).subscribe(res => {
-      this.item = res.data;
+      this.detailTask = res.data;
     })
   }
 }
