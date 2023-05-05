@@ -88,6 +88,14 @@ export const menu: CoreMenu[] = [
         url: 'sim-so/task'
       },
       {
+        id: 'client2g',
+        title: 'Khách hàng 2G',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/client2g '
+      },
+      {
         id: 'agents',
         title: 'Danh sách đại lý',
         translate: '',

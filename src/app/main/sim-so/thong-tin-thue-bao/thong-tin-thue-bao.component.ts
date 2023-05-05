@@ -21,7 +21,7 @@ export class ThongTinThueBaoComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   @Input() msisdn: any
 
-  constructor(
+    constructor(
     private modalService: NgbModal,
     private telecomService: TelecomService,
     private adminService: AdminService,

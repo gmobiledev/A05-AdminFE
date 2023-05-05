@@ -20,7 +20,7 @@ export class SearchSimSoComponent implements OnInit {
      private telecomService: TelecomService
   ) {
   }
-  onSubmitSearch() {
+  onSubmitSearch() {    
     console.log(this.searchSim);
     this.telecomService.productListAll(this.searchSim).subscribe(res => {
          this.list = res.data.products;

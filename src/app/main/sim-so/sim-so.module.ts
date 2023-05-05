@@ -20,6 +20,7 @@ import { ActionLogsComponent } from './action-logs/action-logs.component';
 import { SellChannelComponent } from './sell-channel/sell-channel.component';
 import { MsisdnComponent } from './msisdn/msisdn.component';
 import { ThongTinThueBaoComponent } from './thong-tin-thue-bao/thong-tin-thue-bao.component';
+import { Client2gComponent } from './client2g/client2g.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
     path: 'msisdn',
     component: ListSimComponent
   },
+  {
+    path: 'client2g',
+    component:Client2gComponent
+  }
 ];
 
 @NgModule({

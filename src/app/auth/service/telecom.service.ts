@@ -153,5 +153,8 @@ export class TelecomService {
   getMisisdnInfo(msisdn_id: number){
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/${msisdn_id}`);
   }
+  getClient2g(client2g_id: number){
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/client2g/${client2g_id}`);
+  }
 
 }
