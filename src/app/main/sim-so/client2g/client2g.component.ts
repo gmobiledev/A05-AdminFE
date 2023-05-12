@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GtalkService } from 'app/auth/service/gtalk.service';
+import { TelecomService } from 'app/auth/service/telecom.service';
 
 @Component({
   selector: 'app-client2g',
@@ -14,18 +17,29 @@ export class Client2gComponent implements OnInit {
   selectedItem: any;
   itemBlockUI: any;
   modalRef: any;
-  gtalkService: any;
   alertService: any;
   selectedAgent: any;
-  searchForm: any;
-  router: any;
-  telecomService: any;
+  public searchForm: any = {
+    mobile: '',    
+  }
+  
   currentUser: any;
   totalItems: any;
   list: any;
  
 
-  constructor(  private modalService: NgbModal) { }
+  constructor(  
+    private modalService: NgbModal,
+    private gtalkService: GtalkService,
+    private telecomService: TelecomService,
+    private activeRouted: ActivatedRoute,
+    private router: Router,
+    ) { 
+      this.activeRouted.queryParams.subscribe(params => {
+        this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
+        this.getData();
+      })
+    }
 
   ngOnInit() {
   }
@@ -72,24 +86,16 @@ export class Client2gComponent implements OnInit {
   }
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-     if (this.service == "gtalk") {
-       this.gtalkService.getClient2g(this.searchForm).subscribe(res => {
-         this.list = res.data.items;
-         this.totalItems = res.data.count;
-       });
-     } else {
-       this.telecomService.getClient2g(this.searchForm).subscribe(res => {
-         this.list = res.data.items;
-         this.totalItems = res.data.count;  
-       });
-     }
+    this.telecomService.get2GCustomerInfo(this.searchForm).subscribe(res => {
+      this.list = res.data;      
+    });
   }                                             
   loadPage(page) {
     this.searchForm.page = page;
     this.router.navigate([this.myUrl], { queryParams: this.searchForm });
   }
   onSubmitSearch(){
-
+    this.router.navigate([this.myUrl], { queryParams: this.searchForm });
   }
 
 }

@@ -74,6 +74,7 @@ const routes: Routes = [
     SellChannelComponent,
     MsisdnComponent,
     ThongTinThueBaoComponent,
+    Client2gComponent
   ],
   imports: [
     CommonModule, 

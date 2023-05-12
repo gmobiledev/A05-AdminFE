@@ -87,14 +87,7 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'sim-so/task'
       },
-      {
-        id: 'client2g',
-        title: 'Khách hàng 2G',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/client2g '
-      },
+      
       {
         id: 'agents',
         title: 'Danh sách đại lý',
@@ -152,7 +145,14 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'inventory/channel'
       },
-
+      {
+        id: 'client2g',
+        title: 'Khách hàng 2G',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'sim-so/client2g'
+      },
 
     ]
   }, {

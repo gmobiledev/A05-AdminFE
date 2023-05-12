@@ -64,11 +64,6 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/agent/agent.module').then(m => m.AgentModule),
     canActivate: [AuthGuard]
   },
-  //  {
-  //   path: 'client2g',
-  //   loadChildren: () => import('./main/sim-so/client2g.module').then(m => m.SimSoModule),
-  //   canActivate: [AuthGuard]
-  // },
   {
     path: 'sim-so',
     loadChildren: () => import('./main/sim-so/sim-so.module').then(m => m.SimSoModule),

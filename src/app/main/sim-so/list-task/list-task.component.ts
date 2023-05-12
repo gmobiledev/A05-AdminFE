@@ -68,7 +68,9 @@ export class ListTaskComponent implements OnInit {
     array_status: [],
     page_size: 20,
     date_range: '',
-    telco: ''
+    telco: '',
+    customer_name: '',
+    cccd: ''
   }
   dateRange: any;
 
@@ -101,6 +103,8 @@ export class ListTaskComponent implements OnInit {
       }, {});
       
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
+      this.searchForm.cccd = params['cccd'] && params['cccd'] != undefined ? params['cccd'] : '';
+      this.searchForm.customer_name = params['customer_name'] && params['customer_name'] != undefined ? params['customer_name'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.mine = params['mine'] && params['mine'] != undefined ? params['mine'] : '';
       this.searchForm.action = params['action'] && params['action'] != undefined ? params['action'] : '';

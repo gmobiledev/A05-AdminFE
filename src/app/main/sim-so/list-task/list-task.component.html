@@ -121,6 +121,19 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
+                    <input type="text" name="cccd" [(ngModel)]="searchForm.cccd" class="form-control"
+                      placeholder="Số CCCD của KH">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="customer_name" [(ngModel)]="searchForm.customer_name" class="form-control"
+                      placeholder="Tên khách hàng">
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
                     <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                       <option value="">Chọn trạng thái</option>
                       <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value" [id]="item.key">

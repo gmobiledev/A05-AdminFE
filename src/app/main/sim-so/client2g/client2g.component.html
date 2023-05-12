@@ -6,25 +6,16 @@
 
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Tra cứu sim/số</h4>
+            <h4 class="card-title">Tra cứu số 2G</h4>
           </div>
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                   <div class="form-group">
-                    <input type="text" name="keysearch" class="form-control" placeholder="Tìm kiếm">
+                    <input type="text" name="mobile" class="form-control" placeholder="Nhập số điện thoại" [(ngModel)]="searchForm.mobile">
                   </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <select class="btn btn-block btn-info" aria-label="Default select example">
-                      <option value="">Tất cả</option>
-                      <option value="2">Sim</option>
-                      <option value="3">Số</option>
-                    </select>
-                  </div>
-                </div>
+                </div>                
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span></span></button>
@@ -71,24 +62,27 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">STT</th>
                   <th scope="col">Số thuê bao</th>
+                  <th scope="col">Trạng thái</th>
                   <th scope="col">Họ và tên KH</th>
                   <th scope="col">Số giấy tờ KH</th>
-                  <th scope="col"> Ngày sinh KH</th>
-                  <th></th>
-                  <th scope="col">Thao tác</th>
+                  <th scope="col">Ngày sinh KH</th>
+                  <th scope="col">Ngày cấp giấy tờ</th>
+                  <th scope="col">Địa chỉ</th>
+                  <!-- <th></th> -->
+                  <!-- <th scope="col">Thao tác</th> -->
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>0392948680</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
+              <tbody *ngIf="list">
+                <tr *ngFor="let item of list;index as i">
+                  <td>{{ item.msisdn.msisdn }}</td>
+                  <td>{{ item.msisdn.note }}</td>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.identification_no }}</td>                 
+                  <td>{{ item.birth_string }}</td>
+                  <td>{{ item.identification_date_string }}</td>
+                  <td>{{ item.residence_full_address }}</td>
+                  <!-- <td>
                     <div>
                       <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem)">
                         <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
@@ -96,7 +90,7 @@
                       </a>
                     </div>
 
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
