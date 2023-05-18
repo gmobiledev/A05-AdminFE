@@ -146,6 +146,10 @@ export class GtalkService {
     return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/customer/2g-customer`, {params: params});
   }
 
+  getMisisdnInfo(msisdn_id: number){
+    return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/msisdn/${msisdn_id}`);
+  }
+
   lockUser(id: number, status: number, note: string){
     return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/lock-user`);
   }

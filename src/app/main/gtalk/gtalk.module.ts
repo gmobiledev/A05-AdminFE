@@ -11,6 +11,8 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { GTaskItemComponent } from './g-task-item/g-task-item.component';
 import { GMsisdnComponent } from './g-msisdn/g-msisdn.component';
 import { GCustomerComponent } from './g-customer/g-customer.component';
+import { SharedModule } from '../shared/share.module';
+import { ThongTinThueBaoComponent } from '../shared/thong-tin-thue-bao/thong-tin-thue-bao.component';
 
 const routes: Routes = [
   {
@@ -39,6 +41,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes), 
     NgbModule, 
+    SharedModule,
     FormsModule, 
     ReactiveFormsModule, 
     CoreCommonModule, 

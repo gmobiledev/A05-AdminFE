@@ -19,7 +19,7 @@ export class BatchComponent implements OnInit {
   @Input() inventoryType: string;
   public contentHeader: any;
   public list: any;
-  public totalPage: number;
+  public totalItems: number;
   public page: number = 1;
   public pageSize: number;
   public searchForm = {
@@ -235,7 +235,7 @@ export class BatchComponent implements OnInit {
     this.inventoryService.findBatchAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
-      this.totalPage = res.data.count;
+      this.totalItems = res.data.count;
       this.pageSize = res.data.pageSize;
     }, error => {
       this.sectionBlockUI.stop();

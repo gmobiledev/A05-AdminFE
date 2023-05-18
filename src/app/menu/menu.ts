@@ -96,14 +96,7 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'agent'
       },
-      {
-        id: 'agents',
-        title: 'Tìm Sim Số',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/search'
-      },
+      
       {
         id: 'agents',
         title: 'Lịch sử tác động',
@@ -129,6 +122,14 @@ export const menu: CoreMenu[] = [
     translate: '',
     icon: 'package',
     children: [
+      {
+        id: 'agents',
+        title: 'Tìm Sim Số',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/search'
+      },
       {
         id: 'batch-sim',
         title: 'DS lô sim số',

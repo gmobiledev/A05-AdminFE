@@ -38,7 +38,7 @@
                         </form>
                         <div class="mt-3 mb-3 overflow-hidden">
                             <div class="pull-left">
-                                Tổng: <b>{{totalPage}}</b>
+                                Tổng: <b>{{totalItems}}</b>
                             </div>
                             <div class="pull-right">
                                 <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Thêm
@@ -91,9 +91,23 @@
                                 </tbody>
                             </table>
 
-                            <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalPage"
-                                [(page)]="page" [pageSize]="pageSize" [directionLinks]="false"
-                                (pageChange)="loadPage($event)"></ngb-pagination>
+                            
+
+                                <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems" [(page)]="searchForm.page"
+                                    [pageSize]="searchForm.page_size" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+                                    <ng-template ngbPaginationPages let-page let-pages="pages">
+                                        <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                            <div class="mb-3 d-flex flex-nowrap px-2">
+                                                <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Trang</label>
+                                                <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                                                    id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                                    (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                                    aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                                                <span id="paginationDescription" class="col-form-label text-nowrap px-2"> của {{pages.length}}</span>
+                                            </div>
+                                        </li>
+                                    </ng-template>
+                                </ngb-pagination>
                         </div>
                     </div>
 

@@ -141,9 +141,10 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-
-    </div>
+        <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+            <app-thong-tin-thue-bao [msisdn]="selectedItem" [service]="'gtalk'"></app-thong-tin-thue-bao>
+        </div>
+    
 </ng-template>
 
 <ng-template #modalViewAgent let-modal>
