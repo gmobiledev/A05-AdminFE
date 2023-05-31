@@ -20,7 +20,7 @@
                     <span><u>Ngày cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
                             *ngIf="data?.people?.identification_date"
                             (click)="copyTextClipboard(data?.people?.identification_date)">
-                            <span class="text-info">{{ data?.people?.identification_date }}</span>
+                            <span class="text-info">{{ data?.people?.identification_date * 1000  | date: 'dd/MM/yyyy' }}</span>
                         </a></span>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
@@ -40,7 +40,7 @@
                 <div class="col-md-6 col-sm-12 mb-1">
                     <span><u>Ngày sinh</u>: <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.birth"
                             (click)="copyTextClipboard(data?.people?.birth)">
-                            <span class="text-info">{{ data?.people?.birth }}</span>
+                            <span class="text-info">{{ data?.people?.birth * 1000  | date: 'dd/MM/yyyy'}}</span>
                         </a></span>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
