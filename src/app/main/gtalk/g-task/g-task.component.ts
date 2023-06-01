@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
-import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus, TelecomAction } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -50,7 +50,8 @@ export class GTaskComponent implements OnInit {
   public isActivedBoxChangeSimProcessing: boolean = false;
 
   public listTaskAction = TaskTelecom.ACTION;
-  public taskTelecomStatus;
+  public telecomActions = TelecomAction
+  public taskTelecomStatus
   public selectedItem: any;
   public selectedAgent: any;
   public mineTask = false;

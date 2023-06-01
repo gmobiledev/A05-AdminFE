@@ -20,6 +20,13 @@ export enum MsisdnStatus {
     STATUS_PROCESSED_MNO_SUCCESS = 1,
 }
 
+export enum TelecomAction {
+    TOPUP = "TOPUP",
+    ORDER_NUMBER = "ORDER_NUMBER",
+    GENERATE_CONTRACT = "GENERATE_CONTRACT",
+    REQUIRE_TO_PREPAID = "REQUIRE_TO_PREPAID"
+}
+
 
 export class TaskTelecom {
     static ACTION = {
@@ -58,6 +65,8 @@ export class TelecomConst {
         }
     ]
 }
+
+
 
 export enum STORAGE_KEY {
     FCM_SUBSCRIBE = 'fcm_subscribe'
