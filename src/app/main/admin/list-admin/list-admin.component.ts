@@ -47,7 +47,7 @@ export class ListAdminComponent implements OnInit {
     this.activeRouted.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
-
+      this.page = params['page'] && params['page'] != undefined ? params['page'] : '';
       this.getData();
       this.getService();
     })
@@ -55,6 +55,11 @@ export class ListAdminComponent implements OnInit {
 
   onSubmitSearch(): void {
     this.router.navigate(['/admin/list'], { queryParams: {keyword: this.searchForm.keyword, status: this.searchForm.status}})
+  }
+
+  loadPage(page) {
+    this.page = page;
+    this.router.navigate(['/admin/list'], { queryParams: {keyword: this.searchForm.keyword, status: this.searchForm.status, page: this.page} });
   }
 
   async onSubmitLock(id, status){
