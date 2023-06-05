@@ -10,6 +10,7 @@ export const locale = {
         ORDERLTG: 'Giao vật tư LTG',
         LOANBANK: "Khoản vay",
         TASK: "Task",
+        REPORT: "Báo cáo",
         EKYCBATCH: "Lô EKYC",
         DASHBOARD: {
           COLLAPSIBLE: 'Dashboards',

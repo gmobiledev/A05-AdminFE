@@ -7,7 +7,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { SharedModule } from '../shared/share.module';
 import { ListTaskComponent } from './list-task/list-task.component';
+import { ReportComponent } from './report/report.component';
 
+
+
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { CardAnalyticsService } from 'app/main/ui/card/card-analytics/card-analytics.service';
 
 
 const routes: Routes = [
@@ -15,11 +20,20 @@ const routes: Routes = [
     path: '',
     component: ListTaskComponent
   },
+  {
+    path: 'report',
+    component: ReportComponent,
+    resolve: {
+      css: CardAnalyticsService
+    },
+    data: { animation: 'analytics' }
+  },
 ];
 
 @NgModule({
   declarations: [
-    ListTaskComponent,  
+    ListTaskComponent,
+    ReportComponent,  
   ],
   imports: [
     CommonModule, 
@@ -29,7 +43,9 @@ const routes: Routes = [
     ReactiveFormsModule, 
     CoreCommonModule, 
     ContentHeaderModule,
-    SharedModule
-  ]
+    SharedModule,
+    NgApexchartsModule
+  ],
+  providers: [CardAnalyticsService]
 })
 export class TaskModule { }

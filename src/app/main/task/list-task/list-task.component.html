@@ -1,125 +1,141 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
-<div class="row" id="table-striped">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
-        <div class="card-body">
-          <form (ngSubmit)="onSubmitSearch()">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control" placeholder="Nhập mã giao dịch">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control" placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <select class="form-control" name="service_code" [(ngModel)]="searchForm.service_code">
-                  <option value="">Chọn dịch vụ</option>
-                  <option *ngFor="let item of listService | keyvalue" [value]="item.key">{{ item.value }}</option>                  
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <select class="form-control" name="status" [(ngModel)]="searchForm.status">
-                  <option value="">Chọn trạng thái task</option>
-                  
-                  <option value="2">Chờ duyệt</option>
-                  <option value="0">Không duyệt</option>
-                  <option value="3">Đã duyệt</option>
-                  <option value="4">Chờ giải ngân</option>
-                  <option value="5">Đã giải ngân</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
-              </div>
-            </div>
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
           </div>
-        </form>
-        <div class="table-responsive" >
-          <table class="table table-striped text-nowrap">
-            <thead>
-              <tr>             
-                <th>ID</th>   
-                <th *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">Mã hợp đồng</th>
-                <th>Tên khách hàng</th>                
-                <th>SĐT</th>
-                <th>Số CCCD/CMND</th>
-                <th>Số tiền</th>     
-                <th>Tiêu đề</th>       
-                <th>Ngày tạo</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of list">
-               
-                <td>{{ item?.id }}</td>
-                <td *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">{{ item.contract[0]?.contract_code }}</td>
-                <td>{{ item?.user?.people?.name }}</td>
-                           
-                <td>
-                  {{ item?.user?.people?.mobile }}
-                </td>   
-                <td>
-                  {{ item?.user?.people?.identification_no }}
-              </td>  
-                <td>
-                  {{ item?.amount | currency:'VND':true}}
-                </td>
-                <td>
-                  {{ item?.title }}
-                </td>
-                <td>
-                  {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
-              </td>
-                <td>
-                  <div [innerHTML]="item.status | showStatusLoan"></div>                  
-                </td>                
-                
-                <td>
-                  <ng-template *ngIf="item.service_code == 'BANK_LOAN_PVCOMBANK'">
-                    <a [routerLink]="['/loan-bank/view', item.id]" >
-                      <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                      </a>
-                  </ng-template>    
-                  <button class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item.id)"                  
-                  >
-                    <i data-feather="monitor" class="text-primary cursor-pointer"></i>
-                    View webhook
-                  </button>              
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control"
+                      placeholder="Nhập mã giao dịch">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control"
+                      placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select class="form-control" name="service_code" [(ngModel)]="searchForm.service_code">
+                      <option value="">Chọn dịch vụ</option>
+                      <option *ngFor="let item of listService | keyvalue" [value]="item.key">{{ item.value }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                      <option value="">Chọn trạng thái task</option>
 
-          <ngb-pagination
-          class="d-flex justify-content-end pr-3 pt-2"
-                [collectionSize]="total"
-                [(page)]="searchForm.page"
-                [directionLinks]="false"
-                (pageChange)="loadPage($event)"
-              ></ngb-pagination>
+                      <option value="2">Chờ duyệt</option>
+                      <option value="0">Không duyệt</option>
+                      <option value="3">Đã duyệt</option>
+                      <option value="4">Chờ giải ngân</option>
+                      <option value="5">Đã giải ngân</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="table-responsive">
+              <table class="table table-striped text-nowrap">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">Mã hợp đồng</th>
+                    <th>Người dùng</th>
+                    <th>Dịch vụ</th>
+                    <th>Merchant</th>
+                    <th>Số tiền</th>
+                    <th>Tiêu đề</th>
+                    <th>Ngày tạo</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list">
+
+                    <td>{{ item?.id }}</td>
+                    <td *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">{{ item.contract[0]?.contract_code }}
+                    </td>
+                    <td>{{ item?.user?.people?.name }}
+                      <br>{{ item?.user?.people?.mobile }}
+                    </td>
+                    <td>
+                      {{ item.service_code }}
+                    </td>
+                    <td>
+                      {{item.merchant_id}}
+                    </td>
+                    <td>
+                      {{ item?.amount | currency:'VND':true}}
+                    </td>
+                    <td>
+                      {{ item?.title }}
+                    </td>
+                    <td>
+                      {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
+                    </td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatusLoan"></div>
+                    </td>
+
+                    <td>
+                      <ng-template *ngIf="item.service_code == 'BANK_LOAN_PVCOMBANK'">
+                        <a [routerLink]="['/loan-bank/view', item.id]">
+                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        </a>
+                      </ng-template>
+                      <button class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item.id)">
+                        <i data-feather="monitor" class="text-primary cursor-pointer"></i>
+                        View webhook
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                (pageChange)="loadPage($event)">
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Trang</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 4.5rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        của {{pages.length}}</span>
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+
+          </div>
+
         </div>
-        
-        </div>
-        
       </div>
     </div>
   </div>
-    </div>
 </div>
 
 <ng-template #modalTransWh let-modal>
@@ -168,7 +184,7 @@
         </div>
         <div class="col-md-6">
           Số tiền: {{ trans?.amount }}
-        </div>        
+        </div>
         <div class="col-md-6">
           Phí: {{ trans?.fee }}
         </div>

@@ -1,0 +1,67 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <!-- content-header component -->
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+        <!-- Analytics card section start -->
+        <section id="analytics-card">
+
+            <div class="row match-height">
+                <!-- Revenue Card -->
+                <div class="col-lg-12 col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-end">
+                            <div>
+                                <h4>Doanh thu</h4>
+                                <p class="card-text mb-0">Total: 12.84k</p>
+                            </div>
+                            <div ngbDropdown class="chart-dropdown">
+                                <button class="btn btn-sm border-0 px-50" ngbDropdownToggle type="button"
+                                    id="dropdownItem1" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Hôm nay
+                                </button>
+                                <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownItem1">
+                                    <a ngbDropdownItem href="javascript:void(0);">Hôm nay</a>
+                                    <a ngbDropdownItem href="javascript:void(0);">Hôm qua</a>
+                                    <a ngbDropdownItem href="javascript:void(0);">Tháng này</a>
+                                    <a ngbDropdownItem href="javascript:void(0);">Tháng trước</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div id="salesavgChartoptions" #salesavgChartoptionsRef>
+                                <!-- Apexchart component-->
+                                <apx-chart [chart]="{
+                                  height: 270,
+                                  width:
+                                    isMenuToggled === false
+                                      ? salesavgChartoptionsRef.offsetWidth
+                                      : salesavgChartoptions.chart.width,
+                                  toolbar: { show: false },
+                                  type: 'line',
+                                  dropShadow: {
+                                    enabled: true,
+                                    top: 20,
+                                    left: 2,
+                                    blur: 6,
+                                    opacity: 0.2
+                                  }
+                                }" [stroke]="salesavgChartoptions.stroke" [grid]="salesavgChartoptions.grid"
+                                    [legend]="salesavgChartoptions.legend" [colors]="salesavgChartoptions.colors"
+                                    [fill]="salesavgChartoptions.fill" [xaxis]="salesavgChartoptions.xaxis"
+                                    [yaxis]="salesavgChartoptions.yaxis" [tooltip]="salesavgChartoptions.tooltip"
+                                    [series]="data.sales.series"></apx-chart>
+                                <!-- / Apexchart component-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/ Revenue Card -->
+
+            </div>
+
+        </section>
+        <!-- Analytics Card section end-->
+    </div>
+</div>

@@ -13,6 +13,8 @@ export class ListTaskComponent implements OnInit {
 
   public contentHeader: any;
   public list: any;
+  public totalItems: number;
+  public summaryTask: any;
   public listService: any;
   public page: any;
   public total: any;
@@ -28,6 +30,7 @@ export class ListTaskComponent implements OnInit {
     is_bank_sign: '',
     page: 1,
     service_code: '',
+    page_size: 20
   }
   public isViewFile: boolean = false;
   public urlFile: any;
@@ -120,8 +123,7 @@ export class ListTaskComponent implements OnInit {
     })
     this.taskService.getAll(this.searchForm).subscribe(res => {
       this.list = res.data.items;
-      this.total = res.data.count;
-      this.pageSize = res.data.pageSize;
+      this.totalItems = res.data.count;
     }, error => {
       console.log("ERRRR");
       console.log(error);

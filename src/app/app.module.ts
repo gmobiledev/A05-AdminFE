@@ -163,11 +163,11 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/tables/tables.module').then(m => m.TablesModule),
     canActivate: [AuthGuard]
   },
-  {
-    path: 'charts-and-maps',
-    loadChildren: () => import('./main/charts-and-maps/charts-and-maps.module').then(m => m.ChartsAndMapsModule),
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'charts-and-maps',
+  //   loadChildren: () => import('./main/charts-and-maps/charts-and-maps.module').then(m => m.ChartsAndMapsModule),
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: '',
     redirectTo: '/dashboard/reports',

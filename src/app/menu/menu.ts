@@ -205,13 +205,21 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'sms-log'
       },
+      // {
+      //   id: 'users',
+      //   title: 'Đơn giao vật tư LTG',
+      //   translate: 'MENU.ORDERLTG',
+      //   type: 'item',
+      //   icon: 'database',
+      //   url: 'order-ltg'
+      // },
       {
-        id: 'users',
-        title: 'Đơn giao vật tư LTG',
-        translate: 'MENU.ORDERLTG',
+        id: 'report-revenue',
+        title: 'Báo cáo',
+        translate: 'MENU.REPORT',
         type: 'item',
         icon: 'database',
-        url: 'order-ltg'
+        url: 'task/report'
       },
       {
         id: 'task',
@@ -221,6 +229,7 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'task'
       },
+      
       {
         id: 'ekyc',
         title: 'Lô EKYC',
