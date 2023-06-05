@@ -27,6 +27,7 @@ import { takeUntil } from 'rxjs/operators';
 import { colors } from 'app/colors.const';
 import { CardAnalyticsService } from 'app/main/ui/card/card-analytics/card-analytics.service';
 import { CoreConfigService } from '@core/services/config.service';
+import { AdminService } from 'app/auth/service/admin.service';
 
 // Interface Chartoptions
 export interface ChartOptions {
@@ -138,6 +139,22 @@ export class ReportComponent implements OnInit, OnDestroy {
   private $earningsStrokeColor3 = '#28c76f33';
 
   private _unsubscribeAll: Subject<any>;
+  public currentUser: any;
+
+  public searchForm: any = {
+    mobile: '',
+    action: '',
+    status: '',
+    mine: '',
+    page: 1,
+    array_status: [],
+    page_size: 20,
+    date_range: '',
+    telco: '',
+    detail: ''
+  }
+  dateRange: any;
+  public reportTask;
 
   /**
    * Constructor
@@ -145,7 +162,11 @@ export class ReportComponent implements OnInit, OnDestroy {
    * @param {CoreConfigService} _coreConfigService
    * @param {CardAnalyticsService} _cardAnalyticsService
    */
-  constructor(private _cardAnalyticsService: CardAnalyticsService, private _coreConfigService: CoreConfigService) {
+  constructor(
+    private _cardAnalyticsService: CardAnalyticsService,
+    private _coreConfigService: CoreConfigService,
+    private adminService: AdminService,
+  ) {
     this._unsubscribeAll = new Subject();
 
     // Revenue Report Chart
@@ -202,120 +223,9 @@ export class ReportComponent implements OnInit, OnDestroy {
         }
       }
     };
-    // Budget Chart
-    this.budgetChartoptions = {
-      chart: {
-        height: 80,
-        toolbar: { show: false },
-        zoom: { enabled: false },
-        type: 'line',
-        sparkline: { enabled: true }
-      },
-      stroke: {
-        curve: 'smooth',
-        dashArray: [0, 5],
-        width: [2]
-      },
-      colors: [colors.solid.primary, this.$budgetStrokeColor2],
-      tooltip: {
-        enabled: false
-      }
-    };
-    // Session Chart
-    this.sessionChartoptions = {
-      chart: {
-        type: 'donut',
-        height: 320,
-        toolbar: {
-          show: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      legend: { show: false },
-      labels: ['Desktop', 'Mobile', 'Tablet'],
-      stroke: { width: 0 },
-      colors: [colors.solid.primary, colors.solid.warning, colors.solid.danger]
-    };
+   
 
-    // Product Order Chart
-    this.orderChartoptions = {
-      chart: {
-        height: 345,
-        type: 'radialBar'
-      },
-      colors: [this.$primary, this.$warning, this.$danger],
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'dark',
-          type: 'vertical',
-          shadeIntensity: 0.5,
-          gradientToColors: [this.$primary_light, this.$warning_light, this.$danger_light],
-          inverseColors: false,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100]
-        }
-      },
-      stroke: {
-        lineCap: 'round'
-      },
-      plotOptions: {
-        radialBar: {
-          hollow: {
-            size: '20%'
-          },
-          track: {
-            strokeWidth: '100%',
-            margin: 15
-          },
-          dataLabels: {
-            value: {
-              fontSize: '1rem',
-              color: this.$textHeadingColor,
-              fontWeight: '500',
-              offsetY: 5
-            },
-            total: {
-              show: true,
-              label: 'Total',
-              fontSize: '1.286rem',
-              color: this.$textHeadingColor,
-              fontWeight: '500',
-
-              formatter: function (w) {
-                // By Default This Function Returns The Average Of All Series.
-                // The Below Is Just An Example To Show The Use Of Custom Formatter Function
-                return '42459';
-              }
-            }
-          }
-        }
-      },
-      labels: ['Finished', 'Pending', 'Rejected']
-    };
-
-    // Customer Chart
-    this.customerChartoptions = {
-      chart: {
-        type: 'pie',
-        height: 345,
-        toolbar: {
-          show: false
-        }
-      },
-      labels: ['New', 'Returning', 'Referrals'],
-      dataLabels: {
-        enabled: false
-      },
-      legend: { show: false },
-      stroke: {
-        width: 4
-      },
-      colors: [colors.solid.primary, colors.solid.warning, colors.solid.danger]
-    };
+   
 
     // Sales Chart
     this.salesChartoptions = {
@@ -380,227 +290,7 @@ export class ReportComponent implements OnInit, OnDestroy {
       }
     };
 
-    // Support Tracker Chart
-    this.supportChartoptions = {
-      chart: {
-        height: 290,
-        type: 'radialBar',
-        sparkline: {
-          enabled: false
-        }
-      },
-      plotOptions: {
-        radialBar: {
-          offsetY: 20,
-          startAngle: -150,
-          endAngle: 150,
-          hollow: {
-            size: '65%'
-          },
-          track: {
-            background: this.$white,
-            strokeWidth: '100%'
-          },
-          dataLabels: {
-            name: {
-              offsetY: -5,
-              color: this.$textHeadingColor,
-              fontSize: '1rem'
-            },
-            value: {
-              offsetY: 15,
-              color: this.$textHeadingColor,
-              fontSize: '1.714rem'
-            }
-          }
-        }
-      },
-      colors: [colors.solid.danger],
-      fill: {
-        type: 'gradient',
-        gradient: {
-          // Enabled: True,
-          shade: 'dark',
-          type: 'horizontal',
-          shadeIntensity: 0.5,
-          gradientToColors: [colors.solid.primary],
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100]
-        }
-      },
-      stroke: {
-        dashArray: 8
-      },
-      labels: ['Completed Tickets']
-    };
-
-    // Revenue Chart
-    this.revenueChartoptions = {
-      chart: {
-        height: 260,
-        toolbar: { show: false },
-        type: 'line'
-      },
-      stroke: {
-        curve: 'smooth',
-        dashArray: [0, 8],
-        width: [4, 2]
-      },
-      grid: {
-        borderColor: this.$label_color
-      },
-      legend: {
-        show: false
-      },
-      colors: [this.$revenueStrokeColor2, this.$stroke_color],
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'dark',
-          inverseColors: false,
-          gradientToColors: [this.$primary, this.$stroke_color],
-          shadeIntensity: 1,
-          type: 'horizontal',
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100, 100, 100]
-        }
-      },
-      markers: {
-        size: 0,
-        hover: {
-          size: 5
-        }
-      },
-      xaxis: {
-        labels: {
-          style: {
-            colors: this.$stroke_color
-          }
-        },
-        axisTicks: {
-          show: false
-        },
-        categories: ['01', '05', '09', '13', '17', '21', '26', '31'],
-        axisBorder: {
-          show: false
-        },
-        tickPlacement: 'on'
-      },
-      yaxis: {
-        tickAmount: 5,
-        labels: {
-          formatter: function (val) {
-            return <string>(val > 999 ? (val / 1000).toFixed(1) + 'k' : val);
-          }
-        }
-      },
-      tooltip: {
-        x: { show: false }
-      }
-    };
-
-    // Goal Overview  Chart
-    this.goalChartoptions = {
-      chart: {
-        height: 245,
-        type: 'radialBar',
-        sparkline: {
-          enabled: true
-        },
-        dropShadow: {
-          enabled: true,
-          blur: 3,
-          left: 1,
-          top: 1,
-          opacity: 0.1
-        }
-      },
-      colors: [this.$goalStrokeColor2],
-      plotOptions: {
-        radialBar: {
-          offsetY: -10,
-          startAngle: -150,
-          endAngle: 150,
-          hollow: {
-            size: '77%'
-          },
-          track: {
-            background: this.$strokeColor,
-            strokeWidth: '50%'
-          },
-          dataLabels: {
-            name: {
-              show: false
-            },
-            value: {
-              color: this.$textHeadingColor,
-              fontSize: '2.86rem',
-              fontWeight: '600'
-            }
-          }
-        }
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'dark',
-          type: 'horizontal',
-          shadeIntensity: 0.5,
-          gradientToColors: [colors.solid.success],
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100]
-        }
-      },
-      stroke: {
-        lineCap: 'round'
-      },
-      grid: {
-        padding: {
-          bottom: 30
-        }
-      }
-    };
-
-    // Average Session Chart
-    this.avgsessionChartoptions = {
-      chart: {
-        type: 'bar',
-        height: 200,
-        sparkline: { enabled: true },
-        toolbar: { show: false }
-      },
-      colors: [
-        this.$label_color,
-        this.$label_color,
-        this.$primary,
-        this.$label_color,
-        this.$label_color,
-        this.$label_color
-      ],
-      grid: {
-        show: false,
-        padding: {
-          left: 0,
-          right: 0
-        }
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '45%',
-          distributed: true,
-          endingShape: 'rounded'
-        }
-      },
-      tooltip: {
-        x: { show: false }
-      }
-    };
-
+  
     // Sales  Chart
     this.salesavgChartoptions = {
       chart: {
@@ -666,151 +356,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         x: { show: false }
       }
     };
-
-    // Client Retention Chart
-    this.retentionChartoptions = {
-      chart: {
-        stacked: true,
-        type: 'bar',
-        toolbar: { show: false },
-        height: 290
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '10%'
-        }
-      },
-      colors: [this.$primary, this.$danger],
-      grid: {
-        borderColor: this.$label_color,
-        padding: {
-          left: 0,
-          right: 0
-        }
-      },
-      legend: {
-        show: true,
-        position: 'top',
-        horizontalAlign: 'left',
-        offsetX: 0,
-        fontSize: '14px',
-        markers: {
-          radius: 50,
-          width: 10,
-          height: 10
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      xaxis: {
-        labels: {
-          style: {
-            colors: this.$stroke_color
-          }
-        },
-        axisTicks: {
-          show: false
-        },
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        axisBorder: {
-          show: false
-        }
-      },
-      yaxis: {
-        tickAmount: 5
-      },
-      tooltip: {
-        x: { show: false }
-      }
-    };
-
-    // Earnings Chart
-    this.earningChartoptions = {
-      chart: {
-        type: 'donut',
-        height: 120,
-        toolbar: {
-          show: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      legend: { show: false },
-      comparedResult: [2, -3, 8],
-      labels: ['App', 'Service', 'Product'],
-      stroke: { width: 0 },
-      colors: [this.$earningsStrokeColor2, this.$earningsStrokeColor3, colors.solid.success],
-      grid: {
-        padding: {
-          right: -20,
-          bottom: -8,
-          left: -20
-        }
-      },
-      plotOptions: {
-        pie: {
-          startAngle: -10,
-          donut: {
-            labels: {
-              show: true,
-              name: {
-                offsetY: 15
-              },
-              value: {
-                offsetY: -15,
-                formatter: function (val) {
-                  return parseInt(val) + '%';
-                }
-              },
-              total: {
-                show: true,
-                offsetY: 15,
-                label: 'App',
-                formatter: function (w) {
-                  return '53%';
-                }
-              }
-            }
-          }
-        }
-      },
-      responsive: [
-        {
-          breakpoint: 1325,
-          options: {
-            chart: {
-              height: 100
-            }
-          }
-        },
-        {
-          breakpoint: 1200,
-          options: {
-            chart: {
-              height: 120
-            }
-          }
-        },
-        {
-          breakpoint: 1065,
-          options: {
-            chart: {
-              height: 100
-            }
-          }
-        },
-        {
-          breakpoint: 992,
-          options: {
-            chart: {
-              height: 120
-            }
-          }
-        }
-      ]
-    };
+    
   }
 
   // Lifecycle Hooks
@@ -837,7 +383,7 @@ export class ReportComponent implements OnInit, OnDestroy {
             isLink: true,
             link: '/'
           },
-          
+
           {
             name: 'Báo cáo tài chính',
             isLink: false
@@ -861,18 +407,9 @@ export class ReportComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           // Get Dynamic Width for Charts
           this.isMenuToggled = true;
-          this.supportChartoptions.chart.width = this.supportChartoptionsRef?.nativeElement.offsetWidth;
-          this.avgsessionChartoptions.chart.width = this.avgsessionChartoptionsRef?.nativeElement.offsetWidth;
-          this.revenueReportChartoptions.chart.width = this.revenueReportChartoptionsRef?.nativeElement.offsetWidth;
-          this.budgetChartoptions.chart.width = this.budgetChartoptionsRef?.nativeElement.offsetWidth;
-          this.goalChartoptions.chart.width = this.goalChartoptionsRef?.nativeElement.offsetWidth;
-          this.revenueChartoptions.chart.width = this.revenueChartoptionsRef?.nativeElement.offsetWidth;
           this.salesChartoptions.chart.width = this.salesChartoptionsRef?.nativeElement.offsetWidth;
           this.salesavgChartoptions.chart.width = this.salesavgChartoptionsRef?.nativeElement.offsetWidth;
-          this.sessionChartoptions.chart.width = this.sessionChartoptionsRef?.nativeElement.offsetWidth;
-          this.customerChartoptions.chart.width = this.customerChartoptionsRef?.nativeElement.offsetWidth;
-          this.orderChartoptions.chart.width = this.orderChartoptionsRef?.nativeElement.offsetWidth;
-          this.earningChartoptions.chart.width = this.earningChartoptionsRef?.nativeElement.offsetWidth;
+
         }, 500);
       }
     });
@@ -885,6 +422,15 @@ export class ReportComponent implements OnInit, OnDestroy {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  getData() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+
+    this.adminService.reportTask(this.searchForm).subscribe(res => {
+        this.reportTask = res.data
+    });
+
   }
 }
 

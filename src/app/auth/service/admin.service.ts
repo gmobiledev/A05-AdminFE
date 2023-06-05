@@ -59,4 +59,8 @@ export class AdminService {
   saveRegId(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/save-regid`, data);
   }
+
+  reportTask(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/task/report`, data);
+  }
 }
