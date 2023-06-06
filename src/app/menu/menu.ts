@@ -187,6 +187,14 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'gtalk/customer'
       },
+      {
+        id: 'g-report',
+        title: 'Báo cáo',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gtalk/report'
+      },
     ]
   },
   {
@@ -227,7 +235,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.TASK',
         type: 'item',
         icon: 'database',
-        url: 'task'
+        url: 'task/list'
       },
       
       {

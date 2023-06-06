@@ -8,44 +8,45 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { SharedModule } from '../shared/share.module';
 import { ListTaskComponent } from './list-task/list-task.component';
 import { ReportComponent } from './report/report.component';
-
-
-
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { CardAnalyticsService } from 'app/main/ui/card/card-analytics/card-analytics.service';
+import { BlockUIModule } from 'ng-block-ui';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ListTaskComponent
+    redirectTo: 'list',
+    pathMatch: 'full'
   },
   {
     path: 'report',
     component: ReportComponent,
-    resolve: {
-      css: CardAnalyticsService
-    },
-    data: { animation: 'analytics' }
+  },
+  {
+    path: 'list',
+    component: ListTaskComponent,
   },
 ];
 
 @NgModule({
   declarations: [
     ListTaskComponent,
-    ReportComponent,  
+    ReportComponent,
   ],
   imports: [
-    CommonModule, 
-    RouterModule.forChild(routes), 
-    NgbModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
-    CoreCommonModule, 
+    CommonModule,
+    RouterModule.forChild(routes),
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreCommonModule,
     ContentHeaderModule,
     SharedModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    BlockUIModule.forRoot(),
+    NgxDaterangepickerMd.forRoot()
   ],
-  providers: [CardAnalyticsService]
+  providers: []
 })
 export class TaskModule { }

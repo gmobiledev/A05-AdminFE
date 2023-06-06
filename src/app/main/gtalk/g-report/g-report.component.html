@@ -58,7 +58,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Dịch vụ</th>
+                                        <th>Action</th>
                                         <th>Merchant</th>
                                         <th>Trạng thái</th>
                                         <th>Số lượng</th>
@@ -70,7 +70,7 @@
                                 <tbody>
                                     <tr *ngFor="let item of list;let i = index">
                                         <td>
-                                            {{ item.service_code }}
+                                            {{ item.action }}
                                         </td>
                                         <td>{{item.merchant_id}}</td>
                                         <td>{{ item.status }}</td>
@@ -84,12 +84,6 @@
 
                                     </tr>
                                 </tbody>
-
-                                <tr>
-                                    <td>
-                                        Tổng
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                     </div>

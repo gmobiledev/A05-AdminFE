@@ -13,6 +13,7 @@ import { GMsisdnComponent } from './g-msisdn/g-msisdn.component';
 import { GCustomerComponent } from './g-customer/g-customer.component';
 import { SharedModule } from '../shared/share.module';
 import { ThongTinThueBaoComponent } from '../shared/thong-tin-thue-bao/thong-tin-thue-bao.component';
+import { GReportComponent } from './g-report/g-report.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
     path: 'customer',
     component: GCustomerComponent
   },
+  {
+    path: 'report',
+    component: GReportComponent
+  },
   
 ];
 
@@ -35,7 +40,8 @@ const routes: Routes = [
     GTaskComponent,
     GTaskItemComponent,
     GMsisdnComponent,
-    GCustomerComponent
+    GCustomerComponent,
+    GReportComponent
   ],
   imports: [
     CommonModule,

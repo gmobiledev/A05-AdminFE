@@ -60,7 +60,7 @@ export class AdminService {
     return this._http.post<any>(`${environment.apiUrl}/admin/save-regid`, data);
   }
 
-  reportTask(data) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/task/report`, data);
+  reportTask(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/report`, {params: params});
   }
 }

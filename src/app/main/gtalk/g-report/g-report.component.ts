@@ -1,19 +1,18 @@
-
-
-import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'app/auth/service/admin.service';
+import { GtalkService } from 'app/auth/service/gtalk.service';
 import dayjs from 'dayjs';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 dayjs.locale('vi')
 
-
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  selector: 'app-g-report',
+  templateUrl: './g-report.component.html',
+  styleUrls: ['./g-report.component.scss']
 })
-export class ReportComponent implements OnInit {
+export class GReportComponent implements OnInit {
+
   public contentHeader: any;
   public list: any;
   public total: number;
@@ -44,7 +43,7 @@ export class ReportComponent implements OnInit {
   constructor(
     private activedRoute: ActivatedRoute,
     private router: Router,
-    private adminService: AdminService
+    private gtalkService: GtalkService
   ) {
     this.dateRange = null;
     this.activedRoute.queryParams.subscribe(params => {
@@ -87,18 +86,18 @@ export class ReportComponent implements OnInit {
       ? this.dateRange.startDate.toISOString().slice(0, 10) + '|' + this.dateRange.endDate.toISOString().slice(0, 10) : '';
     this.searchForm.daterange = daterangeString;
     console.log(this.searchForm);
-    this.router.navigate(['/task/report'], { queryParams: this.searchForm })
+    this.router.navigate(['/gtalk/report'], { queryParams: this.searchForm })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/task/report'], { queryParams: this.searchForm });
+    this.router.navigate(['/gtalk/report'], { queryParams: this.searchForm });
   }
 
   getData() {
     this.sectionBlockUI.start();
 
-    this.adminService.reportTask(this.searchForm).subscribe(res => {
+    this.gtalkService.reportTask(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data;
     }, error => {
@@ -108,4 +107,3 @@ export class ReportComponent implements OnInit {
     })
   }
 }
-

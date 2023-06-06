@@ -154,4 +154,7 @@ export class GtalkService {
     return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/lock-user`);
   }
 
+  reportTask(params = null) {
+    return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/task/report`, {params: params});
+  }
 }
