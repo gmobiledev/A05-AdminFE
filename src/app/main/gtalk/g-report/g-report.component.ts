@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'app/auth/service/admin.service';
 import { GtalkService } from 'app/auth/service/gtalk.service';
+import { SUB_ACTION, TaskAction, TaskTelecomStatus } from 'app/utils/constants';
 import dayjs from 'dayjs';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 dayjs.locale('vi')
@@ -26,7 +27,8 @@ export class GReportComponent implements OnInit {
     trans_id: '',
     status: '',
     daterange: '',
-    page: ''
+    page: '',
+    type: ''
   }
   dateRange: any;
   ranges: any = {
@@ -52,6 +54,7 @@ export class GReportComponent implements OnInit {
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.trans_id = params['trans_id'] && params['trans_id'] != undefined ? params['trans_id'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+      this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';
       this.searchForm.daterange = params['daterange'] && params['daterange'] != undefined ? params['daterange'] : '';
       this.getData();
     })
@@ -77,6 +80,20 @@ export class GReportComponent implements OnInit {
       }
     };
 
+  }
+
+  showLoaiText(item) {
+    let text = '';
+    if(item.action == TaskAction.TOPUP) {
+      text = 'Nạp tiền'
+    } else if (item.action == TaskAction.ORDER_NUMBER && !item.sub_action) {
+      text = 'Mua mới'
+    } else if (item.action == TaskAction.ORDER_NUMBER && item.sub_action == SUB_ACTION.TRA_SAU_SANG_TRA_TRUOC) {
+      text = 'Chuyển 2G trả sau sang Gsim'
+    } else if (item.action == TaskAction.ORDER_NUMBER && item.sub_action == SUB_ACTION.TRA_TRUOC) {
+      text = 'Chuyển 2G trả trước sang Gsim'
+    }
+    return text;
   }
 
 

@@ -71,3 +71,22 @@ export class TelecomConst {
 export enum STORAGE_KEY {
     FCM_SUBSCRIBE = 'fcm_subscribe'
 }
+
+
+export enum TaskAction {
+    ORDER_NUMBER = "ORDER_NUMBER",
+    TOPUP = "TOPUP",
+    TOPUP_2G = "TOPUP_2G",
+    REQUIRE_TO_PREPAID = "REQUIRE_TO_PREPAID",
+    GENERATE_CONTRACT = 'GENERATE_CONTRACT',
+    EVICTION = "EVICTION"
+}
+
+export enum TASK_DETAIL {
+    GConversion = '2G_Conversion'
+}
+
+export enum SUB_ACTION {
+    TRA_SAU_SANG_TRA_TRUOC = 'tra_sau_sang_tra_truoc',
+    TRA_TRUOC = 'tra_truoc'
+}

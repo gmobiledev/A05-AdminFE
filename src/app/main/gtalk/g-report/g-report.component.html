@@ -23,6 +23,18 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <select class="form-control" name="type" [(ngModel)]="searchForm.type">
+                                            <option value="">Loại giao dịch</option>
+                                            <option value="Topup">Nạp tiền</option>
+                                            <option value="Order_new">Mua mới</option>
+                                            <option value="2G_Conversion_prepaid">Chuyển 2G trả trước sang Gsim</option>
+                                            <option value="2G_Conversion_postpaid">Chuyển 2G trả sau sang Gsim</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <input type="text" placeholder="Khoảng thời gian" autocomplete="off"
                                             [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
                                             [(ngModel)]="dateRange" [ranges]="ranges"
@@ -58,8 +70,8 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Action</th>
-                                        <th>Merchant</th>
+                                        <th>Loại</th>
+                                        <!-- <th>Merchant</th> -->
                                         <th>Trạng thái</th>
                                         <th>Số lượng</th>
                                         <th>Số tiền</th>
@@ -70,10 +82,12 @@
                                 <tbody>
                                     <tr *ngFor="let item of list;let i = index">
                                         <td>
-                                            {{ item.action }}
+                                            {{ showLoaiText(item) }}
                                         </td>
-                                        <td>{{item.merchant_id}}</td>
-                                        <td>{{ item.status }}</td>
+                                        <!-- <td>{{item.merchant_id}}</td> -->
+                                        <td>
+                                            <p [innerHTML]="item.status | showStatusTelecom"></p>
+                                        </td>
                                         <td>
                                             {{ item.count | number }}
                                         </td>
