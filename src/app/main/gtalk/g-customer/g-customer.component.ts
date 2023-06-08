@@ -86,6 +86,11 @@ export class GCustomerComponent implements OnInit {
     };    
   }
 
+  countMsisdn(items, state) {
+    const list = items.filter(item => item.state == state);
+    return list ? list.length : 0;
+  }
+
   getData(): void {
     this.sectionBlockUI.start();
     this.gtalkService.getAllCustomer(this.searchForm).subscribe(res => {
