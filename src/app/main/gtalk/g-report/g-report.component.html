@@ -15,7 +15,7 @@
                                     <div class="form-group">
                                         <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                                             <option value="">Chọn trạng thái</option>
-                                            <option value="1">Thành công</option>
+                                            <option value="1" selected>Thành công</option>
                                             <option value="2">Thất bại</option>
                                         </select>
                                     </div>
@@ -96,6 +96,15 @@
                                         </td>
                                         <td>{{ item.gateway }}</td>
 
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            {{ sumAmount | number }}
+                                        </td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>

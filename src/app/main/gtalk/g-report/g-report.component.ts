@@ -21,6 +21,7 @@ export class GReportComponent implements OnInit {
   public pageSize: number;
   public sumSms: number;
   public listTelco: any;
+  public sumAmount: any;
   public searchForm = {
     gateway: '',
     mobile: '',
@@ -53,7 +54,7 @@ export class GReportComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.trans_id = params['trans_id'] && params['trans_id'] != undefined ? params['trans_id'] : '';
-      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : 1;
       this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';
       this.searchForm.daterange = params['daterange'] && params['daterange'] != undefined ? params['daterange'] : '';
       this.getData();
@@ -117,6 +118,10 @@ export class GReportComponent implements OnInit {
     this.gtalkService.reportTask(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data;
+      this.sumAmount = 0;
+      for(const item of this.list) {
+        this.sumAmount += parseInt(item.total);
+      }
     }, error => {
       this.sectionBlockUI.stop();
       console.log("ERRRR");
