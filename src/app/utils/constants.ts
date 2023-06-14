@@ -18,6 +18,7 @@ export enum MsisdnStatus {
     STATUS_NOT_PROCESS_MNO = 2,
     STATUS_PROCESSED_MNO_FAIL = 3,
     STATUS_PROCESSED_MNO_SUCCESS = 1,
+    STATUS_LOCKED = 30
 }
 
 export enum TelecomAction {

@@ -88,6 +88,7 @@
                                         <th>Số thuê bao</th>
                                         <th>Đại lý</th>
                                         <th>Số tiền</th>
+                                        <th>Số tiền 2</th>
                                         <th>Cổng thanh toán</th>
                                         <th>Thời gian</th>
                                         <th>Chi tiết</th>
@@ -107,6 +108,7 @@
                                         <td>
                                             {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] :
                                             item.action }}
+                                            <span style="font-size: 11px;">{{item.sub_action}}</span>
                                         </td>
                                         <td>
                                             <div *ngIf="item.msisdns.length > 0">
@@ -126,6 +128,7 @@
                                                 item.request_by }}</a>
                                         </td>
                                         <td>{{item.amount | number }}</td>
+                                        <td>{{item.charge_amount | number }}</td>
                                         <td>{{item.payment_gateway}}</td>
 
                                         <td>
