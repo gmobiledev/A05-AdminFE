@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GtalkService } from 'app/auth/service/gtalk.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-client2g',
@@ -17,7 +19,6 @@ export class Client2gComponent implements OnInit {
   selectedItem: any;
   itemBlockUI: any;
   modalRef: any;
-  alertService: any;
   selectedAgent: any;
   public searchForm: any = {
     mobile: '',    
@@ -26,13 +27,22 @@ export class Client2gComponent implements OnInit {
   currentUser: any;
   totalItems: any;
   list: any;
- 
 
+  qrInfoPayment = {
+    amount: 0,
+    amount_holder: '',
+    account_number: '',
+    qrcode: ''
+  }
+
+  @BlockUI('section-block') sectionBlock: NgBlockUI;
+ 
   constructor(  
     private modalService: NgbModal,
     private gtalkService: GtalkService,
     private telecomService: TelecomService,
     private activeRouted: ActivatedRoute,
+    private alertService: SweetAlertService,
     private router: Router,
     ) { 
       this.activeRouted.queryParams.subscribe(params => {
@@ -47,7 +57,6 @@ export class Client2gComponent implements OnInit {
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: 'modal modal-primary',
-      size: 'xl',
       backdrop: 'static',
       keyboard: false
     });
@@ -57,33 +66,43 @@ export class Client2gComponent implements OnInit {
     this.selectedItem = null;
     
     this.modalRef.close();
+    this.getData();
   }
-  async modalViewAgentOpen(modal, item = null) {
-    if (item) {
-      this.itemBlockUI.start();
 
-      try {
-        let res = await this.gtalkService.taskViewAgent(item);
-        if (!res.status) {
-          this.getData();
-          this.alertService.showMess(res.message);
-        }
-        this.selectedAgent = res.data;
-        this.itemBlockUI.stop();
-        this.modalRef = this.modalService.open(modal, {
-          centered: true,
-          windowClass: 'modal modal-primary',
-          size: 'sm',
-          backdrop: 'static',
-          keyboard: false
-        });
-      } catch (error) {
-        this.itemBlockUI.stop();
-        return;
+  showLoaiThuebao(item) {
+    let text = 'Trả trước';
+    if(item.prepaid === 0) {
+      text = 'Trả sau';
+    }
+    return text;
+  }
+
+  async onSubmitThanhToanNoCuoc(item, modal) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo QR toán nợ cước cho số " + item.msisdn.msisdn)).value) {
+      //goi api request qr thanh toán nợ
+      this.sectionBlock.start();
+      const data = {
+        msisdn: item.msisdn.msisdn,
+        amount: Math.abs(item.msisdn.amount)
       }
-
+      try {
+        const rpayment = await this.telecomService.requestPayDebit(data).toPromise();
+        this.sectionBlock.stop();
+        if(!rpayment || !rpayment.status) {
+          this.alertService.showMess(rpayment.message);
+          return;
+        }
+        this.qrInfoPayment = rpayment.data;
+        //show modal
+        this.modalOpen(modal);
+      } catch (error) {
+        this.sectionBlock.stop();
+        this.alertService.showMess(error);
+      }
+      
     }
   }
+
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.telecomService.get2GCustomerInfo(this.searchForm).subscribe(res => {
