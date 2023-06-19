@@ -14,6 +14,8 @@ export class ShowStatusSimPipe implements PipeTransform {
               return '<span class="badge badge-pill badge-light-danger mr-1">Đang khóa</span>'
             case 30:
               return '<span class="badge badge-pill badge-light-danger mr-1">Đang khóa - Nợ cước 2G</span>'
+            case 99:
+              return '<span class="badge badge-pill badge-light-danger mr-1">Thu hồi</span>'
             default:
               return value.toString();
           }
