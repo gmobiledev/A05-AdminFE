@@ -91,6 +91,10 @@
                     <button *ngIf="item.msisdn.amount" type="submit"
                     (click)="onSubmitThanhToanNoCuoc(item, modalViewQr)"
                      class="btn btn-block btn-info btn-sm">Thanh toán nợ cước <span></span></button>
+
+                     <button *ngIf="item.msisdn.amount" type="submit"
+                    (click)="onConfirmThanhToanNoCuoc(item, modalViewQr)"
+                     class="btn btn-block btn-success btn-sm">Đã thu tại quầy<span></span></button>
                   </td>
                   <!-- <td>
                     <div>

@@ -161,4 +161,8 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/request-pay-debit`, data);
   }
 
+  confirmPayDebit(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/confirm-pay-debit`, data);
+  }
+
 }
