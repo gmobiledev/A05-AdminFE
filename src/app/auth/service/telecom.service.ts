@@ -157,4 +157,8 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/2g-customer`, {params: params});
   }
 
+  requestPayDebit(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/request-pay-debit`, data);
+  }
+
 }

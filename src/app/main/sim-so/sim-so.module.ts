@@ -21,6 +21,7 @@ import { SellChannelComponent } from './sell-channel/sell-channel.component';
 import { MsisdnComponent } from './msisdn/msisdn.component';
 import { Client2gComponent } from './client2g/client2g.component';
 import { ThongTinThueBaoComponent } from '../shared/thong-tin-thue-bao/thong-tin-thue-bao.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const routes: Routes = [
   {
@@ -88,6 +89,7 @@ const routes: Routes = [
     NgxDaterangepickerMd.forRoot(),
     SharedModule,
     QuillModule.forRoot(),
+    QRCodeModule
   ]
 })
 export class SimSoModule { }
