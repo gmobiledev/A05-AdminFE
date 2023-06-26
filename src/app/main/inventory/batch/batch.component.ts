@@ -25,7 +25,8 @@ export class BatchComponent implements OnInit {
   public searchForm = {
     keyword: '',
     status: '',
-    page: 1
+    page: 1,
+    page_size: 20,
   }
   public selectedItem: any
   public isCreate: boolean = false;
@@ -61,7 +62,7 @@ export class BatchComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
-      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
+      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
       this.getData();
     })
@@ -236,7 +237,6 @@ export class BatchComponent implements OnInit {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
-      this.pageSize = res.data.pageSize;
     }, error => {
       this.sectionBlockUI.stop();
       console.log("ERRRR");

@@ -213,7 +213,7 @@ export class TaskItemComponent implements OnInit {
       this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
-          this.alertService.showError(res.message, 15000);
+          this.alertService.showError(res.message, 30000);
           return;
         }
         this.alertService.showSuccess(res.data.message,15000);
