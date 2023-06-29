@@ -234,14 +234,14 @@ export class GTaskComponent implements OnInit {
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
-    this.gtalkService.exportExcelReport(this.searchForm).subscribe(res => {
+    this.gtalkService.exportExcelTask(this.searchForm).subscribe(res => {
       var newBlob = new Blob([res.body], { type: res.body.type });
       let url = window.URL.createObjectURL(newBlob);
       let a = document.createElement('a');
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');
       a.href = url;
-      a.download = "Báo cáo đấu nối";
+      a.download = "Báo cáo đấu đấu nối topup";
       a.click();
       window.URL.revokeObjectURL(url);
       a.remove();

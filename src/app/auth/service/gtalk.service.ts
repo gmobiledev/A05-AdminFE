@@ -38,6 +38,9 @@ export class GtalkService {
   exportExcelReport(dto: any): Observable<any> {
     return this._http.post(`${environment.apiGtalkUrl}/virtualnumber-admin/task/export-excel-report`, dto, { observe: 'response', responseType: 'blob' });
   }
+  exportExcelTask(dto: any): Observable<any> {
+    return this._http.post(`${environment.apiGtalkUrl}/virtualnumber-admin/task/export-excel-task`, dto, { observe: 'response', responseType: 'blob' });
+  }
 
   /**
    * Cap nhat trang thai
