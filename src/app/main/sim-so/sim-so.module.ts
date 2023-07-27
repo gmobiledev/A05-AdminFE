@@ -22,6 +22,8 @@ import { MsisdnComponent } from './msisdn/msisdn.component';
 import { Client2gComponent } from './client2g/client2g.component';
 import { ThongTinThueBaoComponent } from '../shared/thong-tin-thue-bao/thong-tin-thue-bao.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ApproveConvert2gItemComponent } from './approve-convert2g-item/approve-convert2g-item.component';
+import { ApproveConvert2gIdentificationComponent } from './approve-convert2g-identification/approve-convert2g-identification.component';
 
 const routes: Routes = [
   {
@@ -74,7 +76,9 @@ const routes: Routes = [
     ActionLogsComponent,
     SellChannelComponent,
     MsisdnComponent,
-    Client2gComponent
+    Client2gComponent,
+    ApproveConvert2gItemComponent,
+    ApproveConvert2gIdentificationComponent
   ],
   imports: [
     CommonModule, 

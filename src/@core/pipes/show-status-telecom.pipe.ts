@@ -23,6 +23,11 @@ export class ShowStatusTelecomPipe implements PipeTransform {
         html = '<span class="badge badge-pill badge-light-success mr-1">Thành công 1 phần</span>'
     } else if (value === TaskTelecomStatus.STATUS_INIT_2G_GSIM) {
         html = '<span class="badge badge-pill badge-light-warning mr-1">Yêu cầu đổi 2G mới</span>'
+    } else if ([TaskTelecomStatus.STATUS_APPROVED_1, TaskTelecomStatus.STATUS_APPROVED_2, TaskTelecomStatus.STATUS_APPROVED_3]
+        .includes(value)) { 
+            html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ DVKH/KD duyệt</span>'
+    } else if (value === TaskTelecomStatus.STATUS_DVKHKD_REJECT) {
+        html = '<span class="badge badge-pill badge-light-warning mr-1">DVKH/KD từ chối</span>'
     }
     return html;
   }

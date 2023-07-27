@@ -29,6 +29,13 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}`);
   }
 
+  /**
+   * Xem thong tin chi tiet, có thông tin hạng số, thông tin KH 2 cũ nếu có
+   */
+  getDetailTaskV2(id) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/detail-v2/${id}`);
+  }
+
   getSummary() {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/summary`);
   }
@@ -110,6 +117,20 @@ export class TelecomService {
   packageUpdateStatus(data) {
     return this._http.put<any>(`${environment.apiTelecomUrl}/telecom-admin/package`, data);
   }
+
+  approveSubcriberInfo(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-subcriber-info`, data);
+  }
+
+  approveMsisdnLevel(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-msisdn-level`, data);
+  }
+
+  uploadOldIdenficationDocs(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-old-indetification-docs`, data);
+  }
+
+  ////
 
   productImportBatch(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/import-batch`, data);

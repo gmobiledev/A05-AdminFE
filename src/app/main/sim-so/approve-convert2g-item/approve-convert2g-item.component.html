@@ -1,0 +1,134 @@
+<div class="pl-3 pr-3" *ngIf="detailTask" >
+    <div class="row" *blockUI="'section-block'">
+        <div class="col-md-6 ">
+            <div>
+                <h3>{{ titleModal }}</h3>
+            </div>
+            <div>
+                ID của yêu cầu: {{ detailTask.task.id }}
+            </div>
+            <div>
+                <span>Trạng thái: </span><span [innerHTML]="detailTask.task.status | showStatusTelecom"></span>
+            </div>
+        </div>
+        <div class="col-md-12 mb-2">
+            <!-- <span>Thời gian tạo: </span> {{ detailTask.task.request_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+            <span>Thời gian mua : </span> {{ detailTask.task.buy_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+            <span>Thời gian cập nhật: </span> {{ detailTask.task.updated_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+            <span>Thời gian hoàn thành: </span> {{ detailTask.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }} -->
+            <!-- <span
+                *ngIf="data.task.status == taskTelecomStatus.STATUS_SUCCESS_PART || data.task.status == taskTelecomStatus.STATUS_SUCCESS || data.task.status == taskTelecomStatus.STATUS_CANCEL">
+                Thời gian hoàn thành: </span> {{ data.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }} -->
+        </div>
+        <div class="col-md-12 mb-2" *ngIf="detailTask.task.note">
+            <span>Note: </span> {{ detailTask.task.note }}
+        </div>
+    </div>
+
+    <!-- Duyệt TTTB -->
+    <div class="row border-bottom pb-2" >
+        <div class="col-12">
+            <h4>Thông tin thuê bao</h4>
+        </div>
+        <div class="col-4">
+            <label for=""><b>Ảnh giấy tờ mặt trước</b></label>
+                    <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ detailTask?.people?.base64Front }}" alt="avatar img" />
+        </div>
+        <div class="col-4">
+            <label for=""><b>Ảnh giấy tờ mặt sau</b></label>
+                    <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ detailTask?.people?.base64Back }}" alt="avatar img" />
+        </div>
+        <div class="col-4">
+            <label for=""><b>Ảnh chân dung</b></label>
+                    <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ detailTask?.people?.base64Selfie }}" alt="avatar img" />
+        </div>
+        
+
+        <div class="col-4 mt-2">
+            <label for=""><b>Ảnh giấy tờ cũ mặt trước</b></label>
+                    <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ detailTask?.old_people?.base64Front }}" alt="avatar img" />
+        </div>
+        <div class="col-4 mt-2">
+            <label for=""><b>Ảnh giấy tờ cũ mặt sau</b></label>
+                    <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ detailTask?.old_people?.base64Back }}" alt="avatar img" />
+        </div>
+        <div class="col-4 mt-2"></div>
+
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Dữ liệu cũ</th>
+                        <th>Dữ liệu mới</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ detailTask.old_people.name }}
+                        </td>
+                        <td>
+                            {{ detailTask.people.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ detailTask.old_people.identification_no }}
+                        </td>
+                        <td>
+                            {{ detailTask.people.identification_no }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ detailTask.old_people.birth }}
+                        </td>
+                        <td>
+                            {{ detailTask.people.birth }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12" *ngIf="detailTask.task.status == taskTelecomStatus.STATUS_APPROVED_1">
+            <a class="btn btn-success" (click)="onUpdateStatus(item.id, 1, 'duyet_tttb')">
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                Duyệt
+            </a>
+    
+            <a class="ml-2 btn btn-warning" (click)="onUpdateStatus(item.id, 0, 'duyet_tttb')">
+                <i data-feather="cancel" class="text-white cursor-pointer"></i>
+                    Không duyệt
+            </a>
+        </div>
+       
+    </div>
+
+    
+
+    <!-- Duyệt hạng số -->
+    <div class="row mt-2" >
+        <div class="col-12">
+            <h4>Hạng số</h4>
+            <h5><b>
+                <span class="badge badge-pill badge-light-info">{{ detailTask.msisdn.msisdns[0].level ? detailTask.msisdn.msisdns[0].level : '' }}</span></b></h5>
+        </div>
+        <div class="col-12" *ngIf="detailTask.task.status == taskTelecomStatus.STATUS_APPROVED">
+            <a class="btn btn-success" (click)="onUpdateStatus(item.id, 1, 'duyet_hang_so')">
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                Duyệt
+            </a>
+    
+            <a class="ml-2 btn btn-warning" (click)="onUpdateStatus(item.id, 0, 'duyet_hang_so')">
+                <i data-feather="cancel" class="text-white cursor-pointer"></i>
+                    Không duyệt
+            </a>
+        </div>
+    </div>
+</div>
+

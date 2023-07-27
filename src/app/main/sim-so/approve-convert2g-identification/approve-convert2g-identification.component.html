@@ -1,0 +1,27 @@
+<div class="row" *blockUI="'section-block'">
+    <div class="col-12" *ngIf="detailTask && detailTask.task">
+        <p>Note: <i>{{ detailTask.task.note }}</i></p>
+    </div>
+    <div class="col-4">
+        <label for="">Upload ảnh giấy tờ cũ mặt trước</label>
+        <input id="file-front-input" type="file" (change)="onSelectFile($event, 'front')"  accept="image/gif, image/jpeg, image/png" />
+
+        <div class="image-preview" *ngIf="imageFrontBase64">
+            <img [src]="imageFrontBase64" alt="" class="img-fluid" >
+        </div>
+    </div>
+    <div class="col-4">
+        <label for="">Upload ảnh giấy tờ cũ mặt sau</label>
+        <input id="file-front-input" type="file" (change)="onSelectFile($event, 'back')"  accept="image/gif, image/jpeg, image/png" />
+
+        <div class="image-preview" *ngIf="imageBackBase64">
+            <img [src]="imageBackBase64" alt="" class="img-fluid" >
+        </div>
+    </div>
+    <div class="col-12 mt-2">
+        <a class="btn btn-success" (click)="onSubmitUpload()">
+            <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+            Gửi
+        </a>
+    </div>
+</div>

@@ -10,8 +10,13 @@ export enum TaskTelecomStatus {
     STATUS_REJECT = 4, //Đấu nối sang nhà mạng thất bại
     STATUS_SUCCESS = 1, //Thành công
     STATUS_NEW_ORDER = 5,
-    STATUS_SUCCESS_PART = 11, 
-    STATUS_INIT_2G_GSIM = 20// THành công 1 phần
+    STATUS_SUCCESS_PART = 11,  // THành công 1 phần
+    STATUS_INIT_2G_GSIM = 20,
+    STATUS_APPROVED = 30, //chấp nhận từ 30-39, duyệt từ lớn đến bé
+    STATUS_APPROVED_1 = 31, 
+    STATUS_APPROVED_2 = 32,
+    STATUS_APPROVED_3 = 33,
+    STATUS_DVKHKD_REJECT = 40
 }
 
 export enum MsisdnStatus {
@@ -80,6 +85,7 @@ export enum TaskAction {
     TOPUP_2G = "TOPUP_2G",
     REQUIRE_TO_PREPAID = "REQUIRE_TO_PREPAID",
     GENERATE_CONTRACT = 'GENERATE_CONTRACT',
+    CONVERT_TO_PREPAID = "CONVERT_TO_PREPAID",
     EVICTION = "EVICTION"
 }
 
@@ -90,4 +96,11 @@ export enum TASK_DETAIL {
 export enum SUB_ACTION {
     TRA_SAU_SANG_TRA_TRUOC = 'tra_sau_sang_tra_truoc',
     TRA_TRUOC = 'tra_truoc'
+}
+
+export enum HANG_SO_THUE_BAO {
+    NORMAL = 'NORMAL',
+    SILVER = 'SILVER',
+    GOLD = 'GOLD',
+    PLATIUM = 'PLATIUM'
 }
