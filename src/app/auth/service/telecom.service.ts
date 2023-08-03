@@ -186,4 +186,8 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/confirm-pay-debit`, data);
   }
 
+  uploadOganizationContract(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-oganization-contract`, data);
+  }
+
 }

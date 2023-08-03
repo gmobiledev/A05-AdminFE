@@ -201,6 +201,7 @@
                     <th>STT</th>
                     <th>ID</th>
                     <th>Yêu cầu</th>
+                    <th>Loại KH</th>
                     <th>Số thuê bao | Serial | Nhà mạng</th>
                     <th>Số tiền</th>
                     <!-- <th>Serial sim</th>
@@ -220,9 +221,12 @@
                     </td>
                     <td>
                       {{ item.id }}
-                    </td>
+                    </td>                    
                     <td>
                       {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }}
+                    </td>
+                    <td>
+                      {{ item.customer_type }}
                     </td>
                     <td>
                       <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
@@ -305,6 +309,20 @@
                           </a>
                         </div>
                       </div>
+
+                      <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalApproveInfo, item)"
+                      *ngIf="[taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)"
+                      >
+                        <i data-feather="user-check" class="text-white cursor-pointer"></i>
+                        {{ showApproveText(item.status) }}
+                      </a>
+
+                      <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalUpload, item)" 
+                      *ngIf="[taskTelecomStatus.STATUS_APPROVED_2, taskTelecomStatus.STATUS_DVKHKD_REJECT].includes(item.status)">
+                        <i data-feather="upload" class="text-white cursor-pointer"></i>
+                        Upload ảnh CMT cũ
+                      </a>
+
                     </td>
                   </tr>
                 </tbody>
@@ -378,4 +396,30 @@
     </div>
   </div>
 
+</ng-template>
+
+<ng-template #modalApproveInfo let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160"></h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+      <app-approve-convert2g-item [item]="selectedItem" 
+          [currentUserId]="currentUser.id"></app-approve-convert2g-item>
+  </div>
+</ng-template>
+
+<ng-template #modalUpload let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160"></h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+      <app-approve-convert2g-identification [item]="selectedItem"
+          [currentUserId]="currentUser.id"></app-approve-convert2g-identification>
+  </div>
 </ng-template>

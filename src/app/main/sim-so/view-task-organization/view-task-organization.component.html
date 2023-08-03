@@ -1,0 +1,362 @@
+
+<div class="content-wrapper container-xxl p-0" *ngIf="data">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+      <div class="row" id="table-striped">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+            </div>
+            <div class="card-body" *blockUI="'section-block'">
+                <div class="row mb-3" >                               
+                        <div class="col-6">
+                            <div>
+                                ID của yêu cầu: {{ data.task.id }}
+                            </div>
+                            <div>
+                              Đại lý:  <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, data.task.request_by)">{{
+                                data.task.request_by }}</a>
+                            </div>
+                            <div>
+                                <span>Trạng thái: </span><span [innerHTML]="data.task.status | showStatusTelecom"></span>
+                            </div>
+                            <div>
+                                <span>Admin thao tác: </span>{{ data.user_sync }}
+                            </div>
+                        </div>   
+                        <div class="col-6">
+                            <div>
+                                <span>Thời gian tạo: </span> {{ data.task.request_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+                                <span>Thời gian mua : </span> {{ data.task.buy_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+                                <span>Thời gian cập nhật: </span> {{ data.task.updated_time | date: 'dd/MM/yyyy H:mm':'UTC' }}<br>
+                                <span>Thời gian hoàn thành: </span> {{ data.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
+                                <!-- <span
+                                    *ngIf="data.task.status == taskTelecomStatus.STATUS_SUCCESS_PART || data.task.status == taskTelecomStatus.STATUS_SUCCESS || data.task.status == taskTelecomStatus.STATUS_CANCEL">
+                                    Thời gian hoàn thành: </span> {{ data.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }} -->
+                            </div>
+                            <div *ngIf="data.task.note">
+                                <span>Note: </span> {{ data.task.note }}
+                            </div>
+                        </div>         
+                  </div>
+                  
+                  <!-- THông tin doanh nghiệp -->
+                  <div class="row">
+                    <div class="col-12">
+                      <h5>Thông tin tổ chức</h5>
+                    </div>
+                  </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6 col-sm-12 mb-1">
+                            <span><u>Tên tổ chức</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                    *ngIf="data?.people?.identification_no"
+                                    (click)="copyTextClipboard('')">
+                                    <span class="text-info">{{ data?.customer?.organization?.name }}</span>
+                                </a></span>
+                        </div>
+            
+                        <div class="col-md-6 col-sm-12 mb-1">
+                            <span><u>Địa chỉ</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                    *ngIf="data?.people?.identification_no"
+                                    (click)="copyTextClipboard('')">
+                                    <span class="text-info">{{ data?.customer?.address }}</span>
+                                </a></span>
+                        </div>
+            
+                        <div class="col-md-6 col-sm-12 mb-1">
+                            <span><u>Số ĐKKD</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                    *ngIf="data?.people?.identification_no"
+                                    (click)="copyTextClipboard('')">
+                                    <span class="text-info">{{ data?.customer?.organization?.id_no }}</span>
+                                </a></span>
+                        </div>
+                        <div class="col-md-6 col-sm-12 mb-1">
+                            <span><u>Ngày cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                    *ngIf="data?.people?.identification_no"
+                                    (click)="copyTextClipboard('')">
+                                    <span class="text-info">{{ data?.customer?.organization?.license_issue_date | date : 'dd/MM/yyyy':'UTC' }}</span>
+                                </a></span>
+                        </div>
+                        <div class="col-md-6 col-sm-12 mb-1">
+                            <span><u>Nơi cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                    *ngIf="data?.people?.identification_no"
+                                    (click)="copyTextClipboard('')">
+                                    <span class="text-info">{{ data?.customer?.organization?.license_issue_place }}</span>
+                                </a></span>
+                        </div>
+                        <div class="col-md-6 col-sm-12 mb-1">
+                          <span><u>Mã số thuế</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                  *ngIf="data?.people?.identification_no"
+                                  (click)="copyTextClipboard('')">
+                                  <span class="text-info">{{ data?.customer?.organization?.tax_no }}</span>
+                              </a></span>
+                      </div>
+                        <div class="col-md-6 col-sm-12 mb-1">
+                            <label for="">Giấy ĐKKD</label>
+                            <div class="border">
+                              <pdf-viewer [src]="urlFileDKKD" *ngIf="data.organization.base64LiceseFile"
+                              [render-text]="true"
+                              [original-size]="false"
+                              style="height: 450px"
+                            ></pdf-viewer>
+                            </div>                            
+                        </div>
+                        
+            
+                        <div class="col-md-6 col-sm-12 mb-1">
+                            <label for="">Ảnh hợp đồng</label>
+                            <div style="overflow-y: auto; height: 450px;" class="border">
+                              <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.task?.document_image }}"
+                                    alt="avatar img" />
+                            </div>
+                                
+                        </div>
+                    </div>
+
+                    <!-- Thông tin người đại diện -->
+                    <div class="row">
+                      <div class="col-12">
+                        <h5>Thông người đại diện</h5>
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="col-md-6 col-sm-12 mb-1">
+                          <span><u>Họ tên người đại diện</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                  
+                                  (click)="copyTextClipboard('')">
+                                  <span class="text-info">{{ data?.people?.name }}</span>
+                              </a></span>
+                      </div>
+          
+                      <div class="col-md-6 col-sm-12 mb-1">
+                          <span><u>Số CCCD</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                  
+                                  (click)="copyTextClipboard('')">
+                                  <span class="text-info">{{ data?.people?.identification_no }}</span>
+                              </a></span>
+                      </div>
+          
+                      <div class="col-md-6 col-sm-12 mb-1">
+                          <span><u>Ngày cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                  
+                                  (click)="copyTextClipboard('')">
+                                  <span class="text-info">{{ data?.people?.identification_date | date: 'dd/mm/yyyy' }}</span>
+                              </a></span>
+                      </div>
+                      <div class="col-md-6 col-sm-12 mb-1">
+                          <span><u>Nơi cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
+                                  
+                                  (click)="copyTextClipboard('')">
+                                  <span class="text-info">{{ data?.people?.identification_place }}</span>
+                              </a></span>
+                      </div>
+          
+                      <div class="col-md-4 col-sm-12 mb-1">
+                          <label for="">Ảnh mặt trước</label>
+                              <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.people?.base64Front }}"
+                                  alt="avatar img" />
+                      </div>
+                      <div class="col-md-4 col-sm-12 mb-1">
+                        <label for="">Ảnh mặt sau</label>
+                            <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.people?.base64Back }}"
+                                alt="avatar img" />
+                      </div>
+          
+                      <div class="col-md-4 col-sm-12 mb-1">
+                        <label for="">Ảnh chân dung</label>
+                            <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.people?.base64Selfie }}"
+                                alt="avatar img" />
+                    </div>
+                  </div>
+            
+                    <!-- Danh sách các số và các nhân sử dụng -->
+                  <div class="table-responsive">
+                    <div>
+                      <h5>Danh sách thuê bao</h5>
+                    </div>
+                    <div class="mb-1">
+                      <span>Tổng số:</span> <b>{{ data.organization.listMsisdn.length }}</b>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Số thuê bao | Serial | Nhà mạng</th>
+                                <th>Tên người sử dụng</th>
+                                <th>Số CCCD/CMND</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="data.organization.listMsisdn">
+                            <tr *ngFor="let item of data.organization.listMsisdn;index as i">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ item.msisdn }} {{ item.serial }} -
+                                  <span [innerHTML]="item.mno | showIconMno"></span>
+
+                                </td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.identification_no }}</td>
+                                <td>
+                                  <a class="ml-2 btn btn-sm btn-info"
+                                    (click)="modalOpen(modalUpload, item)">                                    
+                                    Xem chi tiết
+                                  </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+                    <!-- <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                      [(page)]="searchForm.page" [pageSize]="searchForm.page_size" 
+                      [boundaryLinks]="true"
+                      (pageChange)="loadPage($event)"
+                      >
+                      <ng-template ngbPaginationPages let-page let-pages="pages">
+                      <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                        <div class="mb-3 d-flex flex-nowrap px-2">
+                          <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Trang</label>
+                          <input
+                            #i
+                            type="text"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            class="form-control custom-pages-input"
+                            id="paginationInput"
+                            [value]="searchForm.page"
+                            (keyup.enter)="loadPage(i.value)"
+                            (blur)="loadPage(i.value)"
+                            (input)="formatInput($any($event).target)"
+                            aria-labelledby="paginationInputLabel paginationDescription"
+                            style="width: 2.5rem"
+                          />
+                          <span id="paginationDescription" class="col-form-label text-nowrap px-2"> của {{pages.length}}</span>
+                        </div>
+                      </li>
+                      </ng-template>
+                    </ngb-pagination> -->
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+<div>
+  <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING || 
+  data?.task?.status == taskTelecomStatus.STATUS_INIT ||
+  data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER
+  " class=" bg-white border text-center"
+  style="position: fixed; bottom: 0; width: 100%; left: 0; z-index: 9999; padding: 5px 0">
+
+  <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER" class="ml-2 btn btn-sm btn-info"  (click)="onTakeTask(data.task)">
+    <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+    <span>
+        Tiếp nhận yêu cầu
+    </span>
+  </a>
+
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING" class="ml-2 btn-sm btn btn-success" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)">
+        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+        <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
+            Cập nhật thành công
+        </span>
+        <span
+            *ngIf="data.task.action == listTaskAction['new_sim']['value'] && data?.msisdn?.msisdns.length < 2">
+            Đấu nối thành công
+        </span>
+        <span
+            *ngIf="data.task.action == listTaskAction['new_sim']['value'] && data?.msisdn?.msisdns.length > 1">
+            Đấu nối thành công tất cả
+        </span>
+    </a>
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING" class="ml-2 btn btn-sm btn-success"  (click)="asyncToMnoViaApi(data.task)">
+        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+        <span>
+            Đồng bộ thông tin thuê bao qua API
+        </span>
+    </a>
+    
+    <a class="ml-2 btn btn-sm btn-info" *ngIf="data?.msisdn?.msisdns.length > 1"
+        (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS_PART)">
+        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+        <span>
+            Đấu thành công 1 phần
+        </span>
+
+    </a>
+
+
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_INIT" class="ml-2 btn btn-sm btn-success" 
+    
+    (click)="modalOpen(modalUpload, item)" 
+    >
+      <i data-feather="upload" class="text-white cursor-pointer"></i>      
+      Tải hợp đồng
+    </a>
+
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING  || data?.task?.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO" class="ml-2 btn btn-sm btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_REJECT)">
+      <i data-feather="slash" class="text-white cursor-pointer"></i>      
+      Từ chối yêu cầu
+  </a>
+
+</div>
+</div>
+
+<ng-template #modalItem let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160"></h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+      <app-task-item [item]="selectedItem"
+        [currentUserId]="currentUser.id"></app-task-item>
+    </div>
+  </ng-template>
+
+  <ng-template #modalViewAgent let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Thông tin đại lý</h5>
+      <button type="button" class="close" (click)="modalViewAgentClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      <div class="row">
+        <div class="col-md-6">
+          SĐT đại lý: {{ selectedAgent?.user?.mobile }}
+        </div>
+        <div class="col-md-6">
+          Tên đại lý: {{ selectedAgent?.peopleInfo.name }}
+        </div>
+      </div>
+    </div>
+  
+  </ng-template>
+
+  <ng-template #modalUpload let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <div class="row">
+          <div class="col-12">
+            <label for="">Upload file pdf hợp đồng</label>
+            <input id="file-front-input" type="file" (change)="onSelectFile($event)"  accept="application/pdf" />
+        </div>
+          <div class="col-12 mt-2">
+            <a class="btn btn-success" (click)="onSubmitUpload()">
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                Gửi
+            </a>
+        </div>
+        </div>
+    </div>
+  </ng-template>
