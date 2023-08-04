@@ -28,6 +28,8 @@ export class ShowStatusTelecomPipe implements PipeTransform {
             html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ DVKH/KD duyệt</span>'
     } else if (value === TaskTelecomStatus.STATUS_DVKHKD_REJECT) {
         html = '<span class="badge badge-pill badge-light-warning mr-1">DVKH/KD từ chối</span>'
+    } else if (value == TaskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION) {
+        html = '<span class="badge badge-pill badge-light-warning mr-1">Mới khởi tạo</span>'
     }
     return html;
   }

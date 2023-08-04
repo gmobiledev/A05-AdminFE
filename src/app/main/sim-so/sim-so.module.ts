@@ -24,6 +24,8 @@ import { ThongTinThueBaoComponent } from '../shared/thong-tin-thue-bao/thong-tin
 import { QRCodeModule } from 'angularx-qrcode';
 import { ApproveConvert2gItemComponent } from './approve-convert2g-item/approve-convert2g-item.component';
 import { ApproveConvert2gIdentificationComponent } from './approve-convert2g-identification/approve-convert2g-identification.component';
+import { ViewTaskOrganizationComponent } from './view-task-organization/view-task-organization.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const routes: Routes = [
   {
@@ -36,7 +38,7 @@ const routes: Routes = [
   },
   {
     path: 'task/:id',
-    component: ViewTaskComponent
+    component: ViewTaskOrganizationComponent
   },
   {
     path: 'package',
@@ -78,7 +80,8 @@ const routes: Routes = [
     MsisdnComponent,
     Client2gComponent,
     ApproveConvert2gItemComponent,
-    ApproveConvert2gIdentificationComponent
+    ApproveConvert2gIdentificationComponent,
+    ViewTaskOrganizationComponent
   ],
   imports: [
     CommonModule, 
@@ -93,6 +96,7 @@ const routes: Routes = [
     NgxDaterangepickerMd.forRoot(),
     SharedModule,
     QuillModule.forRoot(),
+    PdfViewerModule,
     QRCodeModule
   ]
 })

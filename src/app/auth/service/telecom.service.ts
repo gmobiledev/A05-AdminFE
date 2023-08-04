@@ -43,6 +43,13 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/detail-v2/${id}`);
   }
 
+  /**
+   * Xem thong tin chi tiet
+   */
+  getDetailTaskMsisdn(id) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/msisdn/${id}`);
+  }
+
   getSummary() {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/summary`);
   }
@@ -191,6 +198,10 @@ export class TelecomService {
 
   confirmPayDebit(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/confirm-pay-debit`, data);
+  }
+
+  uploadOganizationContract(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-oganization-contract`, data);
   }
 
 }

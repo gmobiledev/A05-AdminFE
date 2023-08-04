@@ -132,9 +132,31 @@ export class ListTaskComponent implements OnInit {
 
   async modalOpen(modal, item = null) { 
     if(item) {
+      let check;
+      //neu la task dau noi cho KH doanh nghiep, chuyen sang trang moi
+      if(item.customer_id && item.customer_type == 'ORGANIZATION') {
+        if(item.status == TaskTelecomStatus.STATUS_NEW_ORDER) {
+          try {
+            check = await this.telecomService.checkAvailabledTask(item.id);
+            if(!check.status) { 
+              this.getData();
+              this.alertService.showMess(check.message); 
+              return;              
+            }
+            this.itemBlockUI.stop();
+            this.router.navigateByUrl('/sim-so/task/'+item.id);
+          } catch (error) {
+            this.itemBlockUI.stop();
+            return;
+          }
+        } else {
+          this.router.navigateByUrl('/sim-so/task/'+item.id);
+        }
+        return;
+      }
       this.itemBlockUI.start();
       this.selectedItem = item;
-      let check;
+      
       if(item.status != this.taskTelecomStatus.STATUS_CANCEL && item.status != this.taskTelecomStatus.STATUS_SUCCESS) {
         try {
           check = await this.telecomService.checkAvailabledTask(item.id);
@@ -170,6 +192,19 @@ export class ListTaskComponent implements OnInit {
       }
       
       
+    }
+  }
+
+  async modalApprovalOpen(modal, item = null) { 
+    if(item) {     
+      this.selectedItem = item;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'xl',
+        backdrop : 'static',
+        keyboard : false
+      });            
     }
   }
 
@@ -307,6 +342,19 @@ export class ListTaskComponent implements OnInit {
       this.getData();
       // this.modalRef.close();
     }
+  }
+
+  showApproveText(status) {
+    let text = 'Duyệt';
+    switch (status) {
+      case this.taskTelecomStatus.STATUS_APPROVED_1:
+        text = 'Duyệt TTTB';
+        break;
+      case this.taskTelecomStatus.STATUS_APPROVED:
+        text = 'Duyệt hạng số';
+        break;
+    }
+    return text;
   }
 
   ngOnInit(): void {
