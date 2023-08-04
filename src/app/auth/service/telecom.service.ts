@@ -29,6 +29,13 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}`);
   }
 
+    /**
+   * Tìm Sim/Số
+   */
+    getDetailSim(params = null) {
+      return this._http.get<any>(`${environment.apiUrl}/admin/inventory/search`, { params: params });
+    }
+
   /**
    * Xem thong tin chi tiet, có thông tin hạng số, thông tin KH 2 cũ nếu có
    */
