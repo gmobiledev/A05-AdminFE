@@ -30,7 +30,7 @@ export class ViewTaskOrganizationComponent implements OnInit {
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
-
+  
   public contentHeader: any =  {
     headerTitle: 'Yêu cầu của đại lý',
     actionButton: true,
@@ -66,10 +66,11 @@ export class ViewTaskOrganizationComponent implements OnInit {
   }
 
   async modalOpen(modal, item = null) { 
+    this.selectedItem = item;
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: 'modal modal-primary',
-      size: 'lg',
+      size: item ? 'xl': 'lg',
       backdrop : 'static',
       keyboard : false
     });
@@ -281,18 +282,22 @@ export class ViewTaskOrganizationComponent implements OnInit {
     try {
       check = await this.telecomService.checkAvailabledTask(task.id);
       if(!check.status) { 
-        this.getData();        
+        this.alertService.showMess(check.message);
         return;              
       }
+      this.getData();
       this.sectionBlockUI.stop();
     } catch (error) {
       this.sectionBlockUI.stop();
+      this.alertService.showMess(error);
       return;
     }
   }
 
   getData() {
+    this.sectionBlockUI.start();
     this.telecomService.getDetailTask(this.id).subscribe(res => {
+      this.sectionBlockUI.stop();
       this.data = res.data;
       if(this.data.organization.base64LiceseFile) {
         this.urlFileDKKD = this.commonService.base64ToArrayBuffer(this.data.organization.base64LiceseFile)

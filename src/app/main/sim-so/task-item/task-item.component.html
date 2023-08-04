@@ -346,7 +346,9 @@
         <span>Note: </span> {{ data.task.note }}
     </div>
     <div class="row pull-right"
-        *ngIf="currentUserId == data?.task?.sync_by && data.task.status != taskTelecomStatus.STATUS_SUCCESS">
+        *ngIf="currentUserId == data?.task?.sync_by && data.task.status != taskTelecomStatus.STATUS_SUCCESS
+        && typeDetail != 'msisdn'
+        ">
         <!-- <a class="btn btn-info mr-3" (click)="onSendMessage(data.task)">
         <i data-feather="message-square" class="text-white cursor-pointer"></i>
         Phản hồi cho đại lý

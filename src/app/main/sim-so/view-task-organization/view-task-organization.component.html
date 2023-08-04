@@ -1,5 +1,5 @@
 
-<div class="content-wrapper container-xxl p-0" *ngIf="data">
+<div class="content-wrapper container-xxl p-0" *blockUI="'section-block'" >
     <div class="content-body">
       <app-content-header [contentHeader]="contentHeader"></app-content-header>
       <div class="row" id="table-striped">
@@ -8,7 +8,7 @@
             <div class="card-header">
               <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
             </div>
-            <div class="card-body" *blockUI="'section-block'">
+            <div class="card-body"  *ngIf="data">
                 <div class="row mb-3" >                               
                         <div class="col-6">
                             <div>
@@ -191,7 +191,7 @@
                         <tbody *ngIf="data.organization.listMsisdn">
                             <tr *ngFor="let item of data.organization.listMsisdn;index as i">
                                 <td>{{ i + 1 }}</td>
-                                <td>{{ item.msisdn }} {{ item.serial }} -
+                                <td>{{ item.msisdn }} - {{ item.serial }} -
                                   <span [innerHTML]="item.mno | showIconMno"></span>
 
                                 </td>
@@ -199,7 +199,7 @@
                                 <td>{{ item.identification_no }}</td>
                                 <td>
                                   <a class="ml-2 btn btn-sm btn-info"
-                                    (click)="modalOpen(modalUpload, item)">                                    
+                                  (click)="modalOpen(modalItem, item)">                                    
                                     Xem chi tiết
                                   </a>
                                 </td>
@@ -246,7 +246,7 @@
 
 <div>
   <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING || 
-  data?.task?.status == taskTelecomStatus.STATUS_INIT ||
+  data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION ||
   data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER
   " class=" bg-white border text-center"
   style="position: fixed; bottom: 0; width: 100%; left: 0; z-index: 9999; padding: 5px 0">
@@ -279,7 +279,7 @@
         </span>
     </a>
     
-    <a class="ml-2 btn btn-sm btn-info" *ngIf="data?.msisdn?.msisdns.length > 1"
+    <a class="ml-2 btn btn-sm btn-info" *ngIf="data?.msisdn?.msisdns.length > 1 && data?.task?.status == taskTelecomStatus.STATUS_PROCESSING"
         (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS_PART)">
         <i data-feather="check-circle" class="text-white cursor-pointer"></i>
         <span>
@@ -289,7 +289,7 @@
     </a>
 
 
-    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_INIT" class="ml-2 btn btn-sm btn-success" 
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION" class="ml-2 btn btn-sm btn-success" 
     
     (click)="modalOpen(modalUpload, item)" 
     >
@@ -304,19 +304,6 @@
 
 </div>
 </div>
-
-<ng-template #modalItem let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160"></h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <app-task-item [item]="selectedItem"
-        [currentUserId]="currentUser.id"></app-task-item>
-    </div>
-  </ng-template>
 
   <ng-template #modalViewAgent let-modal>
     <div class="modal-header">
@@ -358,5 +345,17 @@
             </a>
         </div>
         </div>
+    </div>
+  </ng-template>
+
+  <ng-template #modalItem let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160"></h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+      <app-task-item [item]="selectedItem" [typeDetail]="'msisdn'"></app-task-item>
     </div>
   </ng-template>

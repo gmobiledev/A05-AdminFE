@@ -18,6 +18,7 @@ export class TaskItemComponent implements OnInit {
 
   @Input() item: any;
   @Input() currentUserId: any;
+  @Input() typeDetail: any;
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
   public data: any;
 
@@ -523,15 +524,28 @@ export class TaskItemComponent implements OnInit {
   }
 
   getData() {
-    this.telecomService.getDetailTask(this.item.id).subscribe(res => {
-      this.data = res.data;
-      for (const msi of this.data.msisdn.msisdns) {
-        this.mnos.push(msi.mno);
-      }
-      if (this.data.task.action == this.listTaskAction.change_info) {
-        this.actionText = 'Cập nhật'
-      }
-    })
+    if(this.typeDetail && this.typeDetail == 'msisdn') {
+      this.telecomService.getDetailTaskMsisdn(this.item.id).subscribe(res => {
+        this.data = res.data;
+        for (const msi of this.data.msisdn.msisdns) {
+          this.mnos.push(msi.mno);
+        }
+        if (this.data.task.action == this.listTaskAction.change_info) {
+          this.actionText = 'Cập nhật'
+        }
+      })
+    } else {
+      this.telecomService.getDetailTask(this.item.id).subscribe(res => {
+        this.data = res.data;
+        for (const msi of this.data.msisdn.msisdns) {
+          this.mnos.push(msi.mno);
+        }
+        if (this.data.task.action == this.listTaskAction.change_info) {
+          this.actionText = 'Cập nhật'
+        }
+      })
+    }
+    
   }
 
 

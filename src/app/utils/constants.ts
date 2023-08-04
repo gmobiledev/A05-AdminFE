@@ -16,7 +16,8 @@ export enum TaskTelecomStatus {
     STATUS_APPROVED_1 = 31, 
     STATUS_APPROVED_2 = 32,
     STATUS_APPROVED_3 = 33,
-    STATUS_DVKHKD_REJECT = 40
+    STATUS_DVKHKD_REJECT = 40,
+    STATUS_NEW_ORDER_ORGANIZATION = 50
 }
 
 export enum MsisdnStatus {
