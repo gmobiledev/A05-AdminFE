@@ -51,27 +51,17 @@
                     </td>
 
                     <td>
-                      <a
-                        class="ml-2"
-                        (click)="modalOpen(modalCreate, item)"
-                        title="Chỉnh sửa"
-                      >
-                        <i
-                          data-feather="edit-3"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <a [routerLink]="['/user', item.id]">
+                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
                       </a>
-                      <a
-                        class="ml-2"
-                        (click)="modalOpen(modalUploadData, item)"
-                        title="Tải dữ liệu lên lô"
-                      >
-                        <i
-                          data-feather="upload"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <a class="ml-2" (click)="onSubmitLock(item.id, 0)" *ngIf="item.status">
+                        <i data-feather="lock" class="text-primary cursor-pointer"></i>
                       </a>
-                    </td>
+                      <a class="ml-2" (click)="onSubmitLock(item.id, 1)" *ngIf="!item.status">
+                        <i data-feather="unlock" class="text-primary cursor-pointer"></i>
+                      </a>
+                  </td>
+
                   </tr>
                 </tbody>
               </table>
