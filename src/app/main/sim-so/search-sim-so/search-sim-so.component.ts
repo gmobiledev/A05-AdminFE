@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TelecomService } from 'app/auth/service/telecom.service';
-import { ToastService } from 'app/main/components/toasts/toasts.service';
-import { init } from 'node-waves';
 
 @Component({
   selector: 'app-search-sim-so',
@@ -12,6 +10,7 @@ export class SearchSimSoComponent implements OnInit {
 
   public total: any;
   public item: any;
+  public showMessage: boolean
 
   public searchSim: any = {
     keysearch: '',
@@ -21,7 +20,7 @@ export class SearchSimSoComponent implements OnInit {
   productListAll: any;
   constructor(
     private telecomService: TelecomService,
-    private toastr: ToastService
+
   ) {
   }
   onSubmitSearch() {
@@ -29,10 +28,12 @@ export class SearchSimSoComponent implements OnInit {
 
     this.telecomService.getDetailSim(this.searchSim).subscribe(res => {
       if (res.data) {
+        this.showMessage = false;
         this.item = res.data
         this.total = res.data.count;
       } else {
-        this.toastr.show('Success!');
+        this.item = null
+        this.showMessage = true;
       }
 
     })
@@ -42,4 +43,5 @@ export class SearchSimSoComponent implements OnInit {
   }
   getData(): void {
   }
+
 }
