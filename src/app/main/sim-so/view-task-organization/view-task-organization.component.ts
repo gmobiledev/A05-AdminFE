@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'app/auth/service/admin.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonService } from 'app/utils/common.service';
-import { TaskTelecomStatus, TaskTelecom, MsisdnStatus } from 'app/utils/constants';
+import { TaskTelecomStatus, TaskTelecom, MsisdnStatus, STORAGE_KEY, ObjectLocalStorage } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import Swal from 'sweetalert2';
@@ -22,6 +22,7 @@ export class ViewTaskOrganizationComponent implements OnInit {
   urlFileDKKD: any;
   fileContract: any;
   selectedAgent: any;
+  currentUser: any;
   public modalRef: any;
   public taskTelecomStatus = TaskTelecomStatus;
   public listTaskAction = TaskTelecom.ACTION;
@@ -295,6 +296,7 @@ export class ViewTaskOrganizationComponent implements OnInit {
   }
 
   getData() {
+    this.currentUser = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
     this.sectionBlockUI.start();
     this.telecomService.getDetailTask(this.id).subscribe(res => {
       this.sectionBlockUI.stop();

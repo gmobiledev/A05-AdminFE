@@ -85,6 +85,7 @@
                                         <th>STT</th>
                                         <th>ID</th>
                                         <th>Loại</th>
+                                        <th>Mã dịch vụ</th>
                                         <th>Số thuê bao</th>
                                         <th>Đại lý</th>
                                         <th>Số tiền</th>
@@ -109,6 +110,9 @@
                                             {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] :
                                             item.action }}
                                             <span style="font-size: 11px;">{{item.sub_action}}</span>
+                                        </td>
+                                        <td>
+                                            {{ item.service_code }}
                                         </td>
                                         <td>
                                             <div *ngIf="item.msisdns.length > 0">
