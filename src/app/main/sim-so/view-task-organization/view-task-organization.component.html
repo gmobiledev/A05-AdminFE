@@ -153,20 +153,20 @@
                       </div>
           
                       <div class="col-md-4 col-sm-12 mb-1">
-                          <label for="">Ảnh mặt trước</label>
+                          <label for="">Ảnh mặt trước</label><br>
                               <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.people?.base64Front }}"
-                                  alt="avatar img" />
+                                  alt="avatar img" style="height: 400px;" />
                       </div>
                       <div class="col-md-4 col-sm-12 mb-1">
-                        <label for="">Ảnh mặt sau</label>
+                        <label for="">Ảnh mặt sau</label><br>
                             <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.people?.base64Back }}"
-                                alt="avatar img" />
+                                alt="avatar img"  style="height: 400px;" />
                       </div>
           
                       <div class="col-md-4 col-sm-12 mb-1">
-                        <label for="">Ảnh chân dung</label>
+                        <label for="">Ảnh chân dung</label><br>
                             <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.people?.base64Selfie }}"
-                                alt="avatar img" />
+                                alt="avatar img"  style="height: 400px;" />
                     </div>
                   </div>
             
@@ -245,9 +245,9 @@
 </div>
 
 <div>
-  <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING || 
+  <div *ngIf=" currentUser.id == data?.task?.sync_by && (data?.task?.status == taskTelecomStatus.STATUS_PROCESSING || 
   data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION ||
-  data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER
+  data?.task?.status == taskTelecomStatus.STATUS_NEW_ORDER)
   " class=" bg-white border text-center"
   style="position: fixed; bottom: 0; width: 100%; left: 0; z-index: 9999; padding: 5px 0">
 

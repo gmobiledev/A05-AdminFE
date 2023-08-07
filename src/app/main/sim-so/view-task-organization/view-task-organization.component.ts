@@ -253,6 +253,124 @@ export class ViewTaskOrganizationComponent implements OnInit {
     }
   }
 
+  /**
+   * Cap nhat trang thai cua task
+   * 
+   * @param item 
+   * @param status 
+   */
+  async onUpdateStatus(item, status) {
+    if (status == this.taskTelecomStatus.STATUS_REJECT || status == this.taskTelecomStatus.STATUS_CANCEL) {
+      let titleS;
+      if (status == this.taskTelecomStatus.STATUS_REJECT) {
+        titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
+      }
+      if (status == this.taskTelecomStatus.STATUS_CANCEL) {
+        titleS = 'Xác nhận hủy yêu cầu của đại lý?'
+      }
+      Swal.fire({
+        title: titleS,
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Gửi',
+        showLoaderOnConfirm: true,
+        preConfirm: (note) => {
+          if (!note || note == '') {
+            Swal.showValidationMessage(
+              "Vui lòng nhập nội dung"
+            )
+            return;
+          }
+          this.telecomService.updateTaskStatus(item.id, { status: status, note: note }).subscribe(res => {
+            if (!res.status) {
+              Swal.showValidationMessage(
+                res.message
+              )
+              // this.alertService.showError(res.message);
+              return;
+            }
+          }, error => {
+
+          });
+
+          const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => { return x.msisdn }).join('-') : this.data.msisdn.msisdns[0].msisdn;
+          const dataPushNotify = {
+            user_ids: [this.data.task.request_by],
+            message: `Yêu cầu ${this.actionText} ID ${this.data.task.id} bị từ chối: ${note}`,
+            title: `${this.actionText} số ${listPhone}`,
+            data: {
+              "type": this.data.task.action,
+              "status": status + "",
+              "message": `Yêu cầu ${this.actionText} ID ${this.data.task.id} bị từ chối: ${note}`,
+              "id": this.data.task.id + ""
+            }
+          }
+          console.log(dataPushNotify);
+          this.adminService.pushNotify(dataPushNotify).subscribe(res => {
+
+          });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.getData();
+          //this.updateStatus.emit({updated: true});
+          this.alertService.showSuccess('Thành công');
+        }
+      })
+    } else {
+      let confirmMessage = "";
+      if (status == this.taskTelecomStatus.STATUS_PROCESSING) {
+
+      } else if (status == this.taskTelecomStatus.STATUS_PROCESS_TO_MNO) {
+        confirmMessage = "Xác nhận đã đẩy thông tin " + this.actionText + " sang nhà mạng?"
+      } else if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+        confirmMessage = "Xác nhận đã " + this.actionText + " thành công?"
+      } else if (status == this.taskTelecomStatus.STATUS_SUCCESS_PART) {
+        confirmMessage = "Xác nhận đã " + this.actionText + " thành công 1 phần?"
+      }
+
+
+      if ((await this.alertService.showConfirm(confirmMessage)).value) {
+        this.telecomService.updateTaskStatus(item.id, { status: status }).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            return;
+          }
+          if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+            //this.updateStatus.emit({updated: true});
+          }
+          this.getData();
+          //this.updateStatus.emit({updated: true});
+          this.alertService.showSuccess(res.message);
+        }, error => {
+
+        })
+        if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+          const listPhone = this.data.msisdn.msisdns.length > 1 ? this.data.msisdn.msisdns.map(x => { return x.msisdn }).join('-') : this.data.msisdn.msisdns[0].msisdn;
+          const dataPushNotify = {
+            user_ids: [this.data.task.request_by],
+            title: `Yêu cầu ${this.actionText} ID ${this.data.task.id} đã thành công`,
+            message: `${this.actionText} số ${listPhone}`,
+            data: {
+              "type": this.data.task.action,
+              "status": status + "",
+              "message": `Yêu cầu ${this.actionText} ID ${this.data.task.id} số ${listPhone} thành công, vui lòng nạp tiền và kích hoạt trong vòng 72h `,
+              "id": this.data.task.id + ""
+            }
+          }
+          console.log(dataPushNotify);
+          this.adminService.pushNotify(dataPushNotify).subscribe(res => {
+
+          });
+        }
+      }
+    }
+
+  }
 
   async onSubmitUpload() {
     let data = new FormData();
