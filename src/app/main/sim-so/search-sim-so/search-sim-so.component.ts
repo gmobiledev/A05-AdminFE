@@ -5,6 +5,7 @@ import { UserService } from 'app/auth/service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { NgIf } from '@angular/common';
 
 
 @Component({
@@ -64,8 +65,16 @@ export class SearchSimSoComponent implements OnInit {
   getData(): void {
   }
 
-  async onSubmitLock(id, status) {
-    const confirmMessage = status ? "Bạn có đồng ý mở khóa user?" : "Bạn có đồng ý khóa user?";
+  async onSubmitLock(id, status, name) {
+
+    let confirmMessage: string;
+
+    if (status == 2) {
+      confirmMessage = "Bạn có đồng ý mở khóa " + name + "?";
+    } else {
+      confirmMessage = "Bạn có đồng ý khóa " + name + "?";
+    }
+
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.userService.lockUser(id, status, "").subscribe(res => {
         if (!res.status) {

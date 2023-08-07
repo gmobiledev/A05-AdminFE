@@ -60,7 +60,7 @@
 
                       <a
                         class="ml-2"
-                        (click)="onSubmitLock(item.id, 0)"
+                        (click)="onSubmitLock(item.id, 1, item?.name)"
                         *ngIf="item.status"
                       >
                         <i
@@ -70,7 +70,7 @@
                       </a>
                       <a
                         class="ml-2"
-                        (click)="onSubmitLock(item.id, 1)"
+                        (click)="onSubmitLock(item.id, 2, item?.name)"
                         *ngIf="!item.status"
                       >
                         <i
