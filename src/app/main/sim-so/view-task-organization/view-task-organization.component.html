@@ -356,6 +356,8 @@
       </button>
     </div>
     <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <app-task-item [item]="selectedItem" [typeDetail]="'msisdn'" [currentUserId]="currentUser.id"></app-task-item>
+      <app-task-item [item]="selectedItem" [typeDetail]="'msisdn'"
+      [currentGPKD]="data?.organization?.base64LiceseFile"
+      [currentUserId]="currentUser.id"></app-task-item>
     </div>
   </ng-template>

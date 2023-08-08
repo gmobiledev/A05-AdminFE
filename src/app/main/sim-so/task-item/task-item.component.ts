@@ -18,6 +18,7 @@ export class TaskItemComponent implements OnInit {
 
   @Input() item: any;
   @Input() currentUserId: any;
+  @Input() currentGPKD: any;
   @Input() typeDetail: any;
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
   public data: any;
@@ -366,6 +367,12 @@ export class TaskItemComponent implements OnInit {
             data: this.data?.people?.base64Selfie
           }
         ]
+        if(this.currentGPKD) {
+          images.push({
+            name: key + '_GPKD.pdf',
+            data: this.currentGPKD
+          });
+        }
         const zipFileName = `Đấu sim mới ${this.data.people.name}_${key}`;
         const dataD = this.data?.msisdn?.base64SimFile[key];
         images.push({
