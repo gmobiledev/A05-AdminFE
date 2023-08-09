@@ -369,7 +369,7 @@ export class TaskItemComponent implements OnInit {
         ]
         if(this.currentGPKD) {
           images.push({
-            name: key + '_GPKD.pdf',
+            name: key + '_GPKD.jpg',
             data: this.currentGPKD
           });
         }
