@@ -190,7 +190,9 @@
                     </td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.identification_no }}</td>
-                    <td></td>
+                    <td>
+                      <span [innerHTML]="item.state | showStatusMsisdn"></span>
+                    </td>
                     <td>
                       <a class="ml-2 btn btn-sm btn-info" (click)="modalOpen(modalItem, item)">
                         Xem chi tiết

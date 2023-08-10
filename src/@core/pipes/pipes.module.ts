@@ -14,10 +14,17 @@ import { ShowStatusTelecomPipe } from './show-status-telecom.pipe';
 import { ShowIconMnoPipe } from './show-icon-mno.pipe';
 import { ShowStatusEkycPipe } from './show-status-ekyc.pipe';
 import { ShowStatusSimPipe } from './show-status-Sim';
+import { ShowStatusMsisdnPipe } from './show-status-msisdn.pipe';
 
 @NgModule({
-  declarations: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, SafePipe, ShowStatusPipe, ShowStatusTelecomPipe, ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe],
+  declarations: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
+    SafePipe, ShowStatusPipe, ShowStatusTelecomPipe, ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
+    ShowStatusMsisdnPipe
+  ],
   imports: [],
-  exports: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, SafePipe, ShowStatusPipe, ShowStatusTelecomPipe,ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe]
+  exports: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
+    SafePipe, ShowStatusPipe, ShowStatusTelecomPipe,ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
+    ShowStatusMsisdnPipe
+  ]
 })
 export class CorePipesModule {}
