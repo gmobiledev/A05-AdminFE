@@ -15,16 +15,17 @@ import { ShowIconMnoPipe } from './show-icon-mno.pipe';
 import { ShowStatusEkycPipe } from './show-status-ekyc.pipe';
 import { ShowStatusSimPipe } from './show-status-Sim';
 import { ShowStatusMsisdnPipe } from './show-status-msisdn.pipe';
+import { ShowStatusTaskPipe } from './show-status-task.pipe';
 
 @NgModule({
   declarations: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
     SafePipe, ShowStatusPipe, ShowStatusTelecomPipe, ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
-    ShowStatusMsisdnPipe
+    ShowStatusMsisdnPipe, ShowStatusTaskPipe
   ],
   imports: [],
   exports: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
     SafePipe, ShowStatusPipe, ShowStatusTelecomPipe,ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
-    ShowStatusMsisdnPipe
+    ShowStatusMsisdnPipe, ShowStatusTaskPipe
   ]
 })
 export class CorePipesModule {}

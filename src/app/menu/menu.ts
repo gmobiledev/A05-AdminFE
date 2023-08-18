@@ -69,6 +69,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'file-text',
         url: 'loan-bank'
+      },
+      {
+        id: 'transaction',
+        title: 'Duyệt Airtime',
+        translate: '',
+        type: 'item',
+        icon: 'list',
+        url: 'user/airtime'
       }
     ]
   },

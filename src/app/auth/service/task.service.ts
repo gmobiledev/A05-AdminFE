@@ -20,6 +20,10 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/task`, {params: params});
   }
 
+  getAllAirTime(params: any = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/airtime`, {params: params});
+  }
+
   getAllLoan(params: any = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/loan-bank`, {params: params});
   }
@@ -40,6 +44,9 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/${id}`);
   }
 
+  departmentUpdateTaskStatus(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/task/department-update-status`, data);
+  }
  
 
 }

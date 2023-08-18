@@ -10,6 +10,7 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { ListUserComponent } from './list-user/list-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { AirtimeTopupComponent } from './airtime-topup/airtime-topup.component';
 
 
 // routing
@@ -19,6 +20,17 @@ const routes: Routes = [
     component: ListUserComponent
   },
   {
+    path: 'airtime',
+    component: AirtimeTopupComponent
+  },
+  // {
+  //   path: 'airtime-ketoan',
+  //   component: AirtimeTopupComponent,
+  //   data: {
+  //     role: 'ketoan'
+  //   }
+  // },
+  {
     path: ':id',
     component: ViewUserComponent
   }
@@ -27,7 +39,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ListUserComponent,
-    ViewUserComponent
+    ViewUserComponent,
+    AirtimeTopupComponent
   ],
   imports: [
     CommonModule, 
