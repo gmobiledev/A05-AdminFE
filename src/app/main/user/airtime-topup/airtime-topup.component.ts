@@ -140,7 +140,9 @@ export class AirtimeTopupComponent implements OnInit {
               return;
             }
           }, error => {
-
+            Swal.showValidationMessage(
+              error
+            )
           });
 
         },
@@ -160,17 +162,17 @@ export class AirtimeTopupComponent implements OnInit {
         confirmMessage = 'Xác nhận đã nhận được tiền';
       }
 
-
       if ((await this.alertService.showConfirm(confirmMessage)).value) {
         this.taskService.departmentUpdateTaskStatus(data).subscribe(res => {
           if (!res.status) {
-            this.alertService.showError(res.message);
+            this.alertService.showMess(res.message);
             return;
           }
           this.getData();
           this.alertService.showSuccess(res.message);
         }, error => {
-
+          this.alertService.showMess(error);
+          return;
         })
 
       }

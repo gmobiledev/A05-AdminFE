@@ -45,7 +45,7 @@ export class TaskService {
   }
 
   departmentUpdateTaskStatus(data) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/task/department-update-status`, data);
+    return this._http.put<any>(`${environment.apiUrl}/admin/task/department-update-status`, data);
   }
  
 

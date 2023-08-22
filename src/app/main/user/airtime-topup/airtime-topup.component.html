@@ -91,26 +91,26 @@
                         <div *ngIf="item.status >= 10 && item.status <= 19 && checkAction('BUSINESS_DEPARTMENT')">
                           <button 
                             (click)="onUpdateStatus(item, 30)"
-                            class="btn btn-icon btn-info btn-sm" >
+                            class="btn btn-icon btn-info btn-sm mb-2" >
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
                             Duyệt
                           </button>
 
                           <button 
                             (click)="onUpdateStatus(item, 0)"
-                            class="btn btn-icon btn-warning btn-sm" >
+                            class="btn btn-icon btn-warning " >
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
                             Không duyệt
                           </button>
                         </div>
                        
                         <div *ngIf="item.status >= 31 && item.status <= 39 && checkAction('ACCOUNTING')">
-                          <button (click)="onUpdateStatus(item, 1)" class="btn btn-icon btn-info btn-sm">
+                          <button (click)="onUpdateStatus(item, 1)" class="btn btn-icon btn-info mb-2">
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
                             Duyệt
                           </button>
                           
-                          <button (click)="onUpdateStatus(item, 10)" class="btn btn-icon btn-warning btn-sm">
+                          <button (click)="onUpdateStatus(item, 10)" class="btn btn-icon btn-warning ">
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
                             Không duyệt
                           </button>
