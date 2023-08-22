@@ -393,10 +393,7 @@ export class TaskItemComponent implements OnInit {
           }
         })
       } else {
-        let confirmMessage = "";
-        if (status == this.taskTelecomStatus.STATUS_APPROVED) {
-          confirmMessage = "Xác nhận duyệt?"
-        } 
+        let confirmMessage = "Xác nhận duyệt?";        
         if ((await this.alertService.showConfirm(confirmMessage)).value) {
           this.telecomService.conversion2GApprove({task_id: item.id, status: status }).subscribe(res => {
             if (!res.status) {
