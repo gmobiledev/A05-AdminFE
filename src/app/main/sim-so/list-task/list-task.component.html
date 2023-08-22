@@ -200,8 +200,7 @@
                   <tr>
                     <th>STT</th>
                     <th>ID</th>
-                    <th>Yêu cầu</th>
-                    <th>Loại KH</th>
+                    <th>Yêu cầu|Loại KH</th>                    
                     <th>Số thuê bao | Serial | Nhà mạng</th>
                     <th>Số tiền</th>
                     <!-- <th>Serial sim</th>
@@ -223,10 +222,7 @@
                       {{ item.id }}
                     </td>                    
                     <td>
-                      {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }}
-                    </td>
-                    <td>
-                      {{ item.customer_type }}
+                      {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }} -  {{ item.customer_type }}
                     </td>
                     <td>
                       <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
