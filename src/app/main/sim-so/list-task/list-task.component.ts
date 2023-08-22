@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +21,8 @@ import dayjs from 'dayjs';
 })
 export class ListTaskComponent implements OnInit {
 
+  @ViewChild('modalItem') modalItem: ElementRef;
+  
   public contentHeader: any =  {
     headerTitle: 'Yêu cầu của đại lý',
     actionButton: true,
@@ -337,11 +339,17 @@ export class ListTaskComponent implements OnInit {
       a.remove();
     })
   }
+
   onUpdateStatusSuccess(eventData: {updated: boolean}) {
     if(eventData.updated) {
       this.getData();
       // this.modalRef.close();
     }
+  }
+
+  onCreateTaskNewSim(item) {
+    this.modalClose();
+    this.modalOpen(this.modalItem, item)
   }
 
   showApproveText(status) {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'app/auth/service/admin.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
@@ -21,6 +21,10 @@ export class TaskItemComponent implements OnInit {
   @Input() currentGPKD: any;
   @Input() typeDetail: any;
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
+  @Output() createNewTask = new EventEmitter<any>();
+
+  @ViewChild('modalCreateTask') modalCreateTask: ElementRef;
+  
   public data: any;
 
   public taskTelecomStatus = TaskTelecomStatus;
@@ -31,6 +35,7 @@ export class TaskItemComponent implements OnInit {
   public titleModal = 'Đấu nối sim mới';
   public mnos: string[] = [];
 
+  simFile: any;
   public viewImage;
   public modalRef: any;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
@@ -338,6 +343,155 @@ export class TaskItemComponent implements OnInit {
       }
     }
 
+  }
+
+    /**
+   * Duyệt chuyển đổi 2G
+   * 
+   * @param item 
+   * @param status 
+   */
+    async onUpdateStatus2G(item, status) {
+      if (status == this.taskTelecomStatus.STATUS_CANCEL) {
+        let titleS;
+        if (status == this.taskTelecomStatus.STATUS_CANCEL) {
+          titleS = 'Không duyệt, gửi lại lý do'
+        }
+        Swal.fire({
+          title: titleS,
+          input: 'textarea',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Gửi',
+          showLoaderOnConfirm: true,
+          preConfirm: (note) => {
+            if (!note || note == '') {
+              Swal.showValidationMessage(
+                "Vui lòng nhập nội dung"
+              )
+              return;
+            }
+            this.telecomService.conversion2GApprove({task_id: item.id, status: status, note: note }).subscribe(res => {
+              if (!res.status) {
+                Swal.showValidationMessage(
+                  res.message
+                )
+                // this.alertService.showError(res.message);
+                return;
+              }
+            }, error => {
+              this.alertService.showMess(error);
+            });          
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.getData();
+            this.alertService.showSuccess('Thành công');
+          }
+        })
+      } else {
+        let confirmMessage = "";
+        if (status == this.taskTelecomStatus.STATUS_APPROVED) {
+          confirmMessage = "Xác nhận duyệt?"
+        } 
+        if ((await this.alertService.showConfirm(confirmMessage)).value) {
+          this.telecomService.conversion2GApprove({task_id: item.id, status: status }).subscribe(res => {
+            if (!res.status) {
+              this.alertService.showError(res.message);
+              return;
+            }
+            if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+            }
+            this.getData();
+            this.alertService.showSuccess(res.message);
+          }, error => {
+            this.alertService.showMess(error);
+          })
+        }
+      }
+    }
+  
+  /**
+   * Nhập số serial để tạo task new_sim
+   * 
+   * @param item 
+   * @param serial 
+   */
+  onCreateTaskNewSim(item) {
+    this.modalRef = this.modalService.open(this.modalCreateTask, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'lg',
+      backdrop : 'static',
+      keyboard : false
+    });
+  }
+
+  onCloseModalNewTask() {
+    this.modalRef.close();
+  }
+
+  async onSelectFile(event, file_type) {
+    if(event.target.files && event.target.files[0]) {
+      this.simFile = event.target.files[0]
+    }    
+  }
+
+  /**
+   * Nhập serial, tải ảnh sim tạo task
+   * 
+   * @param serial 
+   * @returns 
+   */
+  async onSubmitCreateNewTask(serial) {
+    let data = new FormData();
+    if(!serial || serial == undefined) {
+      this.alertService.showMess("Vui lòng nhập số serial");
+      return;
+    }
+    data.append("task_id", this.item.id);
+    data.append("serial", serial);
+    data.append("sim_image", this.simFile);
+    if ((await this.alertService.showConfirm("Bạn có đồng ý lưu lại")).value) {
+      this.telecomService.createTaskNewSim(data).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.createNewTask.emit(res.data);
+      }, err => {
+        this.alertService.showMess(err);
+      })
+    }    
+  }
+
+  /**
+   * Lưu link tracking
+   * 
+   * @param link 
+   * @returns 
+   */
+  async onSubmitShipTracking(link) {
+    if(!link || link == undefined) {
+      this.alertService.showMess("Vui lòng nhập link");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý lưu lại")).value) {
+      this.telecomService.submitShipTracking({
+        ship_tracking: link,
+        task_id: this.item.id
+      }).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+      }, err => {
+        this.alertService.showMess(err);
+      })
+    }  
   }
 
   onDownloadImages() {

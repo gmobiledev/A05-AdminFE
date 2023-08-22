@@ -313,11 +313,18 @@
                       </div>
 
                       <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalApproveInfo, item)"
-                      *ngIf="[taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)"
+                      *ngIf="item.action != listTaskAction['CHECK_CONVERSION_2G']['value'] && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)"
                       >
                         <i data-feather="user-check" class="text-white cursor-pointer"></i>
                         {{ showApproveText(item.status) }}
                       </a>
+
+                      <div *ngIf="item.status == taskTelecomStatus.STATUS_APPROVED && item.action == listTaskAction['CHECK_CONVERSION_2G']['value']">
+                        <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                          <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+                          Tiếp tục thực hiện
+                        </a>
+                      </div>
 
                       <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalUpload, item)" 
                       *ngIf="[taskTelecomStatus.STATUS_APPROVED_2, taskTelecomStatus.STATUS_DVKHKD_REJECT].includes(item.status)">
@@ -376,6 +383,7 @@
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)"
+    (createNewTask)="onCreateTaskNewSim($event)"
       [currentUserId]="currentUser.id"></app-task-item>
   </div>
 </ng-template>
