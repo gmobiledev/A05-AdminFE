@@ -461,6 +461,7 @@ export class TaskItemComponent implements OnInit {
           this.alertService.showMess(res.message);
           return;
         }
+        this.onCloseModalNewTask();
         this.createNewTask.emit(res.data);
       }, err => {
         this.alertService.showMess(err);
