@@ -158,6 +158,7 @@ export class AirtimeTopupComponent implements OnInit {
       let confirmMessage = "";
       if (status == 30) {
         confirmMessage = 'Xác nhận duyệt yêu cầu';
+        data.note = "Xác nhận"
       } else if (status == 1) {
         confirmMessage = 'Xác nhận đã nhận được tiền';
       }
