@@ -688,11 +688,11 @@ export class TaskItemComponent implements OnInit {
       } else {
         this.titleModal = 'Đấu nối sim mới';
       }
-      this.getData();
+      this.getData(1);
     }
   }
 
-  getData() {
+  getData(action_view = null) {
     if(this.typeDetail && this.typeDetail == 'msisdn') {
       this.telecomService.getDetailTaskMsisdn(this.item.id).subscribe(res => {
         this.data = res.data;
@@ -704,7 +704,7 @@ export class TaskItemComponent implements OnInit {
         }
       })
     } else {
-      this.telecomService.getDetailTask(this.item.id).subscribe(res => {
+      this.telecomService.getDetailTask(this.item.id, action_view).subscribe(res => {
         this.data = res.data;
         for (const msi of this.data.msisdn.msisdns) {
           this.mnos.push(msi.mno);
