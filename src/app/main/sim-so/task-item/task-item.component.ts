@@ -427,7 +427,7 @@ export class TaskItemComponent implements OnInit {
     });
   }
 
-  onCloseModalNewTask() {
+  onCloseModal() {
     this.modalRef.close();
   }
 
@@ -458,12 +458,22 @@ export class TaskItemComponent implements OnInit {
           this.alertService.showMess(res.message);
           return;
         }
-        this.onCloseModalNewTask();
+        this.onCloseModal();
         this.createNewTask.emit(res.data);
       }, err => {
         this.alertService.showMess(err);
       })
     }    
+  }
+
+  onModalShipOpen(modal) {
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'lg',
+      backdrop : 'static',
+      keyboard : false
+    });
   }
 
   /**

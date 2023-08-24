@@ -429,6 +429,13 @@
                 Tiếp tục
             </a>
         </div>
+        <div *ngIf="data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id" >
+            <a 
+             class="ml-2 btn btn-danger" (click)="onModalShipOpen(modalUpdateShipTracking)" >
+                <i data-feather="pencil" class="text-white cursor-pointer"></i>                
+                Nhập link ship
+            </a>
+        </div>
 
         <!-- <div *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL && data.task.status != taskTelecomStatus.STATUS_SUCCESS">
         <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_CANCEL)">
@@ -454,7 +461,7 @@
 <ng-template #modalCreateTask let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="myModalLabel160">Tải ảnh sim và nhập số serial</h4>
-        <button type="button" class="close" (click)="onCloseModalNewTask()" aria-label="Close">
+        <button type="button" class="close" (click)="onCloseModal()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -491,7 +498,7 @@
             <input type="text" class="form-control" #link_ship_tracking_input>
         </div>
         <div class="form-group">
-            <a class="ml-2 btn btn-success" >
+            <a class="ml-2 btn btn-success" (click)="onSubmitShipTracking(link_ship_tracking_input?.value)" >
                 <i data-feather="check-circle" class="text-white cursor-pointer"></i>
                 <span>
                     Lưu
