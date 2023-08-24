@@ -197,13 +197,13 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
-  async modalApprovalOpen(modal, item = null) { 
+  async modalApprovalOpen(modal, item = null, size = 'xl') { 
     if(item) {     
       this.selectedItem = item;
       this.modalRef = this.modalService.open(modal, {
         centered: true,
         windowClass: 'modal modal-primary',
-        size: 'xl',
+        size: size,
         backdrop : 'static',
         keyboard : false
       });            

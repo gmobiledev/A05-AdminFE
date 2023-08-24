@@ -342,9 +342,9 @@
         *ngIf="data?.task?.status == taskTelecomStatus.STATUS_SUCCESS_PART || data?.task?.status == taskTelecomStatus.STATUS_SUCCESS || data?.task?.status == taskTelecomStatus.STATUS_CANCEL">
         <span>Thời gian hoàn thành: </span> {{ data.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
     </div>    
-    <div class="row mb-2" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >
+    <!-- <div class="row mb-2" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >
         <span>Link ship: </span> {{ linkShipTracking }}
-    </div>
+    </div> -->
     <div class="row mb-2" *ngIf="data.task.note">
         <span>Note: </span> {{ data.task.note }}
     </div>
@@ -440,13 +440,13 @@
         </a>
     </div> -->
     </div>
-    <div class="row" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >        
+    <!-- <div class="row" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >        
         <a 
          class="btn btn-info" (click)="onModalShipOpen(modalUpdateShipTracking)" >
             <i data-feather="pencil" class="text-white cursor-pointer"></i>                
             Nhập link ship
         </a>
-    </div>
+    </div> -->
 </div>
 
 <ng-template #modalImage let-modal>
