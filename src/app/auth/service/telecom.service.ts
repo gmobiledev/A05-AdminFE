@@ -25,8 +25,9 @@ export class TelecomService {
   /**
    * Xem thong tin chi tiet
    */
-  getDetailTask(id) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}`);
+  getDetailTask(id, action_view = null) {
+    let url = action_view ? `${environment.apiTelecomUrl}/telecom-admin/task/${id}?action_view=${action_view}` : `${environment.apiTelecomUrl}/telecom-admin/task/${id}`
+    return this._http.get<any>(url);
   }
 
     /**

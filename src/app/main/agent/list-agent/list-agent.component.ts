@@ -158,7 +158,7 @@ count: any;
       const sellChannel = r.data.sell_channel.items && r.data.sell_channel.items[0] ? r.data.sell_channel.items[0].id : null;
       this.formGroupUserCode.patchValue({
         partner_user_code: agent.partner_user_code,
-        channel_id: sellChannel.id
+        channel_id: sellChannel ? sellChannel : null
       })
       this.modalUserCodeRef = this.modalService.open(modal, {
         centered: true,
@@ -192,8 +192,30 @@ count: any;
           this.alertService.showMess(res.message);
           return;
         }
-        this.alertService.showSuccess(res.message);
-        this.modalUserCodeClose();
+        if (this.formGroupUserCode.controls['channel_id'].value) {
+          this.telecomService.sellChannelAddChannelToUser({
+            channel_id: [this.formGroupUserCode.controls['channel_id'].value],
+            user_id: this.selectedUserId
+          }).subscribe(res2 => {
+            if (!res2.status) {
+              this.alertService.showMess(res2.message);
+              return;
+            }
+            this.alertService.showSuccess(res2.message);
+            this.modalUserCodeClose();
+          }, error => {
+            this.alertService.showMess(error);
+            return;
+          }
+          )
+        } else {
+          this.alertService.showSuccess(res.message);
+          this.modalUserCodeClose();
+        }
+        
+      }, error => {
+        this.alertService.showMess(error);
+        return;
       })
     }
   }
@@ -348,6 +370,7 @@ count: any;
         {return {ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value}
       })
       const data: CreateAgentDto = {
+        name: this.formGroup.controls['name'].value,
         username: this.formGroup.controls['mobile'].value,
         mobile: this.formGroup.controls['mobile'].value,
         agent_service: dataAgentServices,
@@ -362,17 +385,19 @@ count: any;
             return;
           }
 
-          //them user vua tao vao kenh ban
-          this.telecomService.sellChannelAddChannelToUser({
-            channel_id: this.formGroup.controls['channel_id'].value,
-            user_id: res.data.id
-          }).subscribe(res => {
+          // //them user vua tao vao kenh ban
+          // this.telecomService.sellChannelAddChannelToUser({
+          //   channel_id: this.formGroup.controls['channel_id'].value,
+          //   user_id: res.data.id
+          // }).subscribe(res => {
 
-          })
+          // })
 
           this.modalRef.close();
           this.initForm();
           this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
         })
       }
     } else {
@@ -508,6 +533,7 @@ count: any;
 
   initForm() {
     this.formGroup = this.formBuilder.group({
+      name: ['', Validators.required],
       mobile: ['', Validators.required],
       password: ['', Validators.required], 
       partner_user_code: [''],

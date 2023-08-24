@@ -111,41 +111,6 @@ export class BatchComponent implements OnInit {
     this.titleModal = "Thêm đại lý";
   }
 
-
-
-
-
-  /**
-   * Tao tai khoan dai ly
-   */
-  async onSubmitCreate() {
-    console.log(this.formGroup.controls['new_agents_service'].value);
-    if (!this.exitsUser && this.isCreate) {
-      this.submitted = true;
-      if (this.formGroup.invalid) {
-        return;
-      }
-      const data: CreateAgentDto = {
-        username: this.formGroup.controls['mobile'].value,
-        mobile: this.formGroup.controls['mobile'].value,
-        agent_service: this.formGroup.controls['new_agents_service'].value,
-        password: this.formGroup.controls['password'].value,
-      }
-      if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
-        this.userService.createAgent(data).subscribe(res => {
-          if (!res.status) {
-            this.alertService.showError(res.message);
-            this.submitted = false;
-            return;
-          }
-          this.modalRef.close();
-          this.initForm();
-          this.alertService.showSuccess(res.message);
-        })
-      }
-    } 
-  }
-
   async onFileChangeExcel(event) {
     this.filesData = event.target.files[0];
   }
