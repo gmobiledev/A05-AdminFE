@@ -34,6 +34,7 @@ export class TaskItemComponent implements OnInit {
   public titleDocumentImage = 'Ảnh phiếu yêu cấu/hợp đồng';
   public titleModal = 'Đấu nối sim mới';
   public mnos: string[] = [];
+  public linkShipTracking;
 
   simFile: any;
   public viewImage;
@@ -496,6 +497,9 @@ export class TaskItemComponent implements OnInit {
           this.alertService.showMess(res.message);
           return;
         }
+        this.getData();
+        this.onCloseModal();
+        this.alertService.showSuccess(res.message);
       }, err => {
         this.alertService.showMess(err);
       })
@@ -712,6 +716,8 @@ export class TaskItemComponent implements OnInit {
         if (this.data.task.action == this.listTaskAction.change_info) {
           this.actionText = 'Cập nhật'
         }
+        const detailObj = JSON.parse(this.data.task.detail);
+        this.linkShipTracking = detailObj['ship_tracking'];
       })
     }
     

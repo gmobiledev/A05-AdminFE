@@ -338,11 +338,14 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3"
+    <div class="row mb-2"
         *ngIf="data?.task?.status == taskTelecomStatus.STATUS_SUCCESS_PART || data?.task?.status == taskTelecomStatus.STATUS_SUCCESS || data?.task?.status == taskTelecomStatus.STATUS_CANCEL">
         <span>Thời gian hoàn thành: </span> {{ data.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
+    </div>    
+    <div class="row mb-2" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >
+        <span>Link ship: </span> {{ linkShipTracking }}
     </div>
-    <div class="row mb-3" *ngIf="data.task.note">
+    <div class="row mb-2" *ngIf="data.task.note">
         <span>Note: </span> {{ data.task.note }}
     </div>
     <div class="row pull-right"
@@ -428,14 +431,7 @@
                 <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>                
                 Tiếp tục
             </a>
-        </div>
-        <div *ngIf="data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id" >
-            <a 
-             class="ml-2 btn btn-danger" (click)="onModalShipOpen(modalUpdateShipTracking)" >
-                <i data-feather="pencil" class="text-white cursor-pointer"></i>                
-                Nhập link ship
-            </a>
-        </div>
+        </div>        
 
         <!-- <div *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL && data.task.status != taskTelecomStatus.STATUS_SUCCESS">
         <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_CANCEL)">
@@ -443,6 +439,13 @@
             Hủy yêu cầu
         </a>
     </div> -->
+    </div>
+    <div class="row" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >        
+        <a 
+         class="btn btn-info" (click)="onModalShipOpen(modalUpdateShipTracking)" >
+            <i data-feather="pencil" class="text-white cursor-pointer"></i>                
+            Nhập link ship
+        </a>
     </div>
 </div>
 
