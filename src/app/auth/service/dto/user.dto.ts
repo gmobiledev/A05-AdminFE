@@ -19,6 +19,7 @@ export class CreateUserDto {
 }
 
 export class CreateAgentDto {
+    name: string;
     username: string;
     mobile: string;
     password: string;

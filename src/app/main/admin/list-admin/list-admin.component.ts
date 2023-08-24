@@ -21,7 +21,8 @@ export class ListAdminComponent implements OnInit {
   public pageSize: number;
   public searchForm = {
     keyword: '',
-    status: ''
+    status: '',
+    page: 1
   }
   public listAllService: any;
   public listServiceFilter: any;
@@ -48,6 +49,7 @@ export class ListAdminComponent implements OnInit {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.page = params['page'] && params['page'] != undefined ? params['page'] : '';
+      this.searchForm.page = this.page;
       this.getData();
       this.getService();
     })
