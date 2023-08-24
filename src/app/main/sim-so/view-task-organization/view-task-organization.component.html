@@ -49,40 +49,40 @@
             <div class="row mb-2">
               <div class="col-md-6 col-sm-12 mb-1">
                 <span><u>Tên tổ chức</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard('')">
+                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard(data?.customer?.organization?.name)">
                     <span class="text-info">{{ data?.customer?.organization?.name }}</span>
                   </a></span>
               </div>
 
               <div class="col-md-6 col-sm-12 mb-1">
                 <span><u>Địa chỉ</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard('')">
-                    <span class="text-info">{{ data?.customer?.address }}</span>
+                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard(data?.organization?.full_address )">
+                    <span class="text-info">{{ data?.organization?.full_address }}</span>
                   </a></span>
               </div>
 
               <div class="col-md-6 col-sm-12 mb-1">
                 <span><u>Số ĐKKD</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard('')">
+                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard( data?.customer?.organization?.id_no)">
                     <span class="text-info">{{ data?.customer?.organization?.id_no }}</span>
                   </a></span>
               </div>
               <div class="col-md-6 col-sm-12 mb-1">
-                <span><u>Ngày cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard('')">
+                <span><u>Ngày cấp</u>: <a placement="right"
+                    *ngIf="data?.people?.identification_no" >
                     <span class="text-info">{{ data?.customer?.organization?.license_issue_date | date :
                       'dd/MM/yyyy':'UTC' }}</span>
                   </a></span>
               </div>
               <div class="col-md-6 col-sm-12 mb-1">
                 <span><u>Nơi cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard('')">
+                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard(data?.customer?.organization?.license_issue_place)">
                     <span class="text-info">{{ data?.customer?.organization?.license_issue_place }}</span>
                   </a></span>
               </div>
               <div class="col-md-6 col-sm-12 mb-1">
                 <span><u>Mã số thuế</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard('')">
+                    *ngIf="data?.people?.identification_no" (click)="copyTextClipboard(data?.customer?.organization?.tax_no)">
                     <span class="text-info">{{ data?.customer?.organization?.tax_no }}</span>
                   </a></span>
               </div>
@@ -122,24 +122,24 @@
             <div class="row mb-2">
               <div class="col-md-6 col-sm-12 mb-1">
                 <span><u>Họ tên người đại diện</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                    (click)="copyTextClipboard('')">
+                    (click)="copyTextClipboard(data?.people?.name)">
                     <span class="text-info">{{ data?.people?.name }}</span>
                   </a></span>
               </div>
 
               <div class="col-md-6 col-sm-12 mb-1">
-                <span><u>Số CCCD</u>: <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard('')">
+                <span><u>Số CCCD</u>: <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard(data?.people?.identification_no)">
                     <span class="text-info">{{ data?.people?.identification_no }}</span>
                   </a></span>
               </div>
 
               <div class="col-md-6 col-sm-12 mb-1">
-                <span><u>Ngày cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard('')">
-                    <span class="text-info">{{ data?.people?.identification_date | date: 'dd/mm/yyyy' }}</span>
+                <span><u>Ngày cấp</u>: <a placement="right"  (click)="copyTextClipboard('')">
+                    <span class="text-info">{{ data?.people?.identification_date | date: 'dd/MM/yyyy':'UTC' }}</span>
                   </a></span>
               </div>
               <div class="col-md-6 col-sm-12 mb-1">
-                <span><u>Nơi cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard('')">
+                <span><u>Nơi cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard(data?.people?.identification_place)">
                     <span class="text-info">{{ data?.people?.identification_place }}</span>
                   </a></span>
               </div>
