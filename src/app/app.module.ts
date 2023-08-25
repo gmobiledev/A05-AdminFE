@@ -120,6 +120,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'merchant',
+    loadChildren: () => import('./main/merchant/merchant.module').then(m => m.MerchantModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./main/inventory/inventory.module').then(m => m.InventoryModule),
     canActivate: [AuthGuard]
