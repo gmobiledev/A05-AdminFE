@@ -22,7 +22,7 @@ export class UserService {
   }
 
   getAllMerchant(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/users/merchants`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/merchants`, {params: params});
   }
 
   getMerchantBalances(id) {

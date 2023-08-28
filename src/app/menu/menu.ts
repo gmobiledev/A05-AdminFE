@@ -81,8 +81,8 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: 'users',
-        title: 'Danh sách',
-        translate: 'MENU.LIST',
+        title: 'Danh sách merchant',
+        translate: '',
         type: 'item',
         icon: 'user',
         url: 'merchant/list'

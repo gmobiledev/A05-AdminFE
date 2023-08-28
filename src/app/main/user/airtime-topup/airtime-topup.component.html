@@ -50,7 +50,7 @@
                   <tr>
                     <th>ID</th>
                     <th>Mã giao dịch</th>
-                    <th>User</th>
+                    <!-- <th>User</th> -->
                     <th>Đối tác</th>
                     <th>Hình thức</th>
                     <th>Số tiền</th>
@@ -65,9 +65,9 @@
                   <tr *ngFor="let item of list">
                     <td>{{ item?.id }}</td>
                     <td>{{ item?.trans_id }}</td>
-                    <td>{{ item?.user?.people?.name }}
+                    <!-- <td>{{ item?.user?.people?.name }}
                       <br>{{ item?.user?.people?.mobile }}
-                    </td>
+                    </td> -->
                     <td>
                       {{ item?.merchant_id }}
                     </td>

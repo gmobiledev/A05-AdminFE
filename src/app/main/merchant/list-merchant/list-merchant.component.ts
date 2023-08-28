@@ -147,7 +147,7 @@ export class ListMerchantComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách tài khoản merchant',
+      headerTitle: 'Danh sách merchant',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -158,7 +158,7 @@ export class ListMerchantComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách tài khoản merchant',
+            name: 'Danh sách merchant',
             isLink: false
           }
         ]

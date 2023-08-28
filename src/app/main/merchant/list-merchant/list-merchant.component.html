@@ -38,7 +38,7 @@
                 <th>SĐT</th>
                 <th>Email</th>
                 <th>Ngày tạo</th>
-                <th>Trạng thái</th>                
+                <!-- <th>Trạng thái</th>                 -->
                 <th>Thao tác</th>
               </tr>
             </thead>
@@ -54,17 +54,17 @@
                 <td>
                   {{ item?.create_date | date: 'dd/MM/yyyy H:mm':'UTC' }}
               </td>
-                <td>
+                <!-- <td>
                   <div [innerHTML]="item.status | showStatus"></div>                  
-                </td>                
+                </td>                 -->
                 
                 <td>
-                    <a class="btn btn-info" (click)="modalBalanceOpen(modalBalances, item)">
-                        <i data-feather="eye" class="text-primary cursor-pointer"></i>Xem số dư
+                    <a ngbTooltip="Xem số dư"  (click)="modalBalanceOpen(modalBalances, item)">
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
                     </a>
                     <br>
-                    <a class="btn btn-success mt-1" (click)="modalOpen(modalPayment, item)">
-                        <i data-feather="credit-card" class="text-primary cursor-pointer"></i>Tạo yêu cầu nạp
+                    <a ngbTooltip="Tạo yêu cầu nạp" (click)="modalOpen(modalPayment, item)">
+                        <i data-feather="credit-card" class="text-primary cursor-pointer"></i>
                     </a>
                 </td>
               </tr>

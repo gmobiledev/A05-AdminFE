@@ -109,10 +109,13 @@ export class AirtimeTopupComponent implements OnInit {
       status: status,
       note: ''
     }
-    if (status == 0 || (status == 10 && this.checkAction("ACCOUNTING"))) {
+    if (status == 0 || (status == 10 && this.checkAction("ACCOUNTING")) || status == 1) {
       let titleS;
       if (status == 0) {
         titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
+      }
+      if (status == 1) {
+        titleS = 'Xác nhận đã nhận được tiền, lưu ghi chú'
       }
 
       Swal.fire({
@@ -160,8 +163,6 @@ export class AirtimeTopupComponent implements OnInit {
       if (status == 20) {
         confirmMessage = 'Xác nhận duyệt yêu cầu';
         data.note = "Xác nhận"
-      } else if (status == 1) {
-        confirmMessage = 'Xác nhận đã nhận được tiền';
       }
 
       if ((await this.alertService.showConfirm(confirmMessage)).value) {
