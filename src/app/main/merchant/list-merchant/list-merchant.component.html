@@ -37,7 +37,6 @@
                 <th>ID</th>
                 <th>SĐT</th>
                 <th>Email</th>
-                <th>Tên</th>
                 <th>Ngày tạo</th>
                 <th>Trạng thái</th>                
                 <th>Thao tác</th>
@@ -53,9 +52,6 @@
                 </td>
                 <td>{{ item?.email }}</td>
                 <td>
-                    {{ item.people ? item?.people?.name : item.full_name }}
-                </td>
-                <td>
                   {{ item?.create_date | date: 'dd/MM/yyyy H:mm':'UTC' }}
               </td>
                 <td>
@@ -63,12 +59,12 @@
                 </td>                
                 
                 <td>
-                    <a class="btn btn-info" (click)="onViewBalance()">
+                    <a class="btn btn-info" (click)="modalBalanceOpen(modalBalances, item)">
                         <i data-feather="eye" class="text-primary cursor-pointer"></i>Xem số dư
                     </a>
                     <br>
                     <a class="btn btn-success mt-1" (click)="modalOpen(modalPayment, item)">
-                        <i data-feather="credit-card" class="text-primary cursor-pointer"></i>Tạo yêu cầu nạp airtime
+                        <i data-feather="credit-card" class="text-primary cursor-pointer"></i>Tạo yêu cầu nạp
                     </a>
                 </td>
               </tr>
@@ -118,18 +114,14 @@
         </button>
     </div>
         <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <label>Chọn dịch vụ</label>
                 <select name="service" id="" placeholder="Chọn dịch vụ" class="form-control"
                     [(ngModel)]="dataCreatePayment.service_code">
                     <option value="">Chọn dịch vụ</option>
-                    <option value="AIRTIME_TOPUP">AIRTIME_TOPUP</option>
-                    <option value="SMS_OTP">SMS_OTP</option>
-                    <option value="VOICE_OTP">Voice_OTP</option>
-                    <option value="VIDEO_KYC">Video_KYC</option>
-                    <option value="Einvoice">E-invoice</option>
+                    <option value="{{ item.service_code }}" *ngFor="let item of listServices">{{ item.name }}</option>
                 </select>
-            </div> -->
+            </div>
 
             <div class="form-group">
                 <label>Nhập số tiền</label>
@@ -144,7 +136,7 @@
                     [(ngModel)]="dataCreatePayment.desc" />
             </div>
 
-            <h5>Tổng tiền : {{ dataCreatePayment.amount | numberToText }}</h5>
+            <h5>Số tiền : {{ dataCreatePayment.amount | numberToText }}</h5>
         </div>
         <div class="modal-footer">
             <a (click)="onCreateTask()">
@@ -153,4 +145,35 @@
                 </button>
             </a>
         </div>
+</ng-template>
+
+<ng-template #modalBalances let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Số dư</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="table-responsive" *blockUI="'section-block'">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Dịch vụ</th>
+            <th>Số dư</th>            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listBalances">
+            <td>
+              {{ item.service }}
+            </td>
+            <td>
+              {{ item.balance | number }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </ng-template>

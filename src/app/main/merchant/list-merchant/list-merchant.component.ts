@@ -25,6 +25,8 @@ export class ListMerchantComponent implements OnInit {
     page: 1,
   }
   public selectedUser: any;
+  public listServices: any;
+  public listBalances: any;
 
   public dataCreatePayment = {
     amount: 0,
@@ -81,7 +83,8 @@ export class ListMerchantComponent implements OnInit {
 
   async onCreateTask() {
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu nạp airtime?")).value) {
-      this.itemBlockUI.start();      
+      this.itemBlockUI.start();
+      this.dataCreatePayment.bill_id = this.selectedUser.mobile;
       this.taskService.createTask(this.selectedUser.id, this.dataCreatePayment).subscribe(res => {
         this.itemBlockUI.stop();
         if (!res.status) {
@@ -107,11 +110,35 @@ export class ListMerchantComponent implements OnInit {
 
   modalOpen(modal, item = null) {
     this.selectedUser = item;
-    this.modalRef = this.modalService.open(modal, {
-      centered: true,
-      windowClass: 'modal modal-primary',
-      size: 'lg'
-    });
+    this.userService.getMerchantService(item.id).subscribe(res => {
+      if(!res.status) {
+        this.alertService.showMess(res.message);
+        return;
+      }
+      this.listServices = res.data;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    })
+    
+  }
+
+  modalBalanceOpen(modal, item) {
+    this.userService.getMerchantBalances(item.id).subscribe(res => {
+      if(!res.status) {
+        this.alertService.showMess(res.message);
+        return;
+      }
+      this.listBalances = res.data;
+
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    })
   }
 
   modalClose() {
@@ -120,7 +147,7 @@ export class ListMerchantComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách merchant',
+      headerTitle: 'Danh sách tài khoản merchant',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -131,7 +158,7 @@ export class ListMerchantComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách merchant',
+            name: 'Danh sách tài khoản merchant',
             isLink: false
           }
         ]

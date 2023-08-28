@@ -28,11 +28,12 @@
                       <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                         <option value="">Chọn trạng thái task</option>
   
-                        <option value="2">Chờ duyệt</option>
-                        <option value="0">Không duyệt</option>
-                        <option value="3">Đã duyệt</option>
-                        <option value="4">Chờ giải ngân</option>
-                        <option value="5">Đã giải ngân</option>
+                        <option value="1">Thành công</option>
+                        <option value="0">Thất bại</option>
+                        <option value="-1">Từ chối</option>
+                        <option value="10">Chờ KD duyệt</option>
+                        <option value="20">Chờ thanh toán</option>
+                        <option value="30">KD duyệt, Chờ KT duyệt</option>
                       </select>
                     </div>
                   </div>
@@ -47,12 +48,13 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th>ID</th>                      
-                      <th>Người dùng</th>
-                      <th>Dịch vụ</th>
+                      <th>ID</th>      
+                      <th>Mã giao dịch</th>                
+                      <th>User</th>
+                      <!-- <th>Dịch vụ</th> -->
                       <th>Hình thức</th>
                       <th>Số tiền</th>
-                      <th>Tiêu đề</th>
+                      <!-- <th>Tiêu đề</th> -->
                       <th>Mô tả</th>
                       <th>Ngày tạo</th>
                       <th>Trạng thái</th>
@@ -61,22 +63,23 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of list">  
-                      <td>{{ item?.id }}</td>                                
+                      <td>{{ item?.id }}</td>    
+                      <td>{{ item?.trans_id }}</td>                            
                       <td>{{ item?.user?.people?.name }}
                         <br>{{ item?.user?.people?.mobile }}
                       </td>
-                      <td>
+                      <!-- <td>
                         {{ item?.service_code }}
-                      </td>
+                      </td> -->
                       <td>
                         {{item?.payment_method}}
                       </td>
                       <td>
                         {{ item?.amount | currency:'VND':true}}
                       </td>
-                      <td>
+                      <!-- <td>
                         {{ item?.title }}
-                      </td>
+                      </td> -->
                       <td>
                         {{ item?.desc }}
                       </td>
