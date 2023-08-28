@@ -93,7 +93,7 @@
                       <td>
                         <div *ngIf="item.status >= 10 && item.status <= 19 && checkAction('BUSINESS_DEPARTMENT')">
                           <button 
-                            (click)="onUpdateStatus(item, 30)"
+                            (click)="onUpdateStatus(item, 20)"
                             class="btn btn-icon btn-info btn-sm mb-2" >
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
                             Duyệt
@@ -108,6 +108,11 @@
                         </div>
                        
                         <div *ngIf="item.status >= 30 && item.status <= 39 && checkAction('ACCOUNTING')">
+                          <!-- <button (click)="onViewAttachments(item)" class="btn btn-icon btn-info mb-2">
+                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                            Xem ảnh CK
+                          </button> -->
+
                           <button (click)="onUpdateStatus(item, 1)" class="btn btn-icon btn-info mb-2">
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
                             Duyệt
@@ -152,3 +157,18 @@
     </div>
   </div>
   
+  <ng-template #modalAttachments let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+      <div class="row">
+        <div class="col-6" *ngFor="let item of listFiles">
+          <img src="" alt="">
+        </div>
+      </div>
+    </div>
+  </ng-template>

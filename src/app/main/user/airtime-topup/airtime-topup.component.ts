@@ -21,6 +21,7 @@ export class AirtimeTopupComponent implements OnInit {
   public pageSize: any;
   public listCurrentAction: any;
   public listCurrentRoles: any;
+  public listFiles: any;
   public searchForm = {
     user: '',
     title: '',
@@ -156,7 +157,7 @@ export class AirtimeTopupComponent implements OnInit {
       })
     } else {
       let confirmMessage = "";
-      if (status == 30) {
+      if (status == 20) {
         confirmMessage = 'Xác nhận duyệt yêu cầu';
         data.note = "Xác nhận"
       } else if (status == 1) {
@@ -179,6 +180,10 @@ export class AirtimeTopupComponent implements OnInit {
       }
     }
 
+  }
+
+  onViewAttachments() {
+    
   }
 
   getData(): void {
