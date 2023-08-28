@@ -107,7 +107,7 @@
                           </button>
                         </div>
                        
-                        <div *ngIf="item.status >= 31 && item.status <= 39 && checkAction('ACCOUNTING')">
+                        <div *ngIf="item.status >= 30 && item.status <= 39 && checkAction('ACCOUNTING')">
                           <button (click)="onUpdateStatus(item, 1)" class="btn btn-icon btn-info mb-2">
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
                             Duyệt
