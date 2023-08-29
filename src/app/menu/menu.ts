@@ -69,6 +69,23 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'file-text',
         url: 'loan-bank'
+      }
+    ]
+  },
+  {
+    id: 'users',
+    type: 'section',
+    title: 'Merchant',
+    translate: '',
+    icon: 'package',
+    children: [
+      {
+        id: 'users',
+        title: 'Danh sách merchant',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'merchant/list'
       },
       {
         id: 'transaction',

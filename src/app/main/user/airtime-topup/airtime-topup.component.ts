@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
@@ -21,6 +22,8 @@ export class AirtimeTopupComponent implements OnInit {
   public pageSize: any;
   public listCurrentAction: any;
   public listCurrentRoles: any;
+  public listFiles: any;
+  public selectedItem: any;
   public searchForm = {
     user: '',
     title: '',
@@ -46,6 +49,7 @@ export class AirtimeTopupComponent implements OnInit {
     private readonly taskService: TaskService,
     private router: Router,
     private route: ActivatedRoute,
+    private modalService: NgbModal
   ) { 
     this.route.queryParams.subscribe(params => {
       this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
@@ -108,10 +112,13 @@ export class AirtimeTopupComponent implements OnInit {
       status: status,
       note: ''
     }
-    if (status == 0 || (status == 10 && this.checkAction("ACCOUNTING"))) {
+    if (status == 0 || (status == 10 && this.checkAction("ACCOUNTING")) || status == 1) {
       let titleS;
       if (status == 0) {
         titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
+      }
+      if (status == 1) {
+        titleS = 'Xác nhận đã nhận được tiền, lưu ghi chú'
       }
 
       Swal.fire({
@@ -156,11 +163,9 @@ export class AirtimeTopupComponent implements OnInit {
       })
     } else {
       let confirmMessage = "";
-      if (status == 30) {
+      if (status == 20) {
         confirmMessage = 'Xác nhận duyệt yêu cầu';
         data.note = "Xác nhận"
-      } else if (status == 1) {
-        confirmMessage = 'Xác nhận đã nhận được tiền';
       }
 
       if ((await this.alertService.showConfirm(confirmMessage)).value) {
@@ -179,6 +184,26 @@ export class AirtimeTopupComponent implements OnInit {
       }
     }
 
+  }
+
+  onViewDetail(modal, item) {
+    this.selectedItem = item;
+    this.taskService.getFileMerchantAttach(item.id).subscribe(res => {
+      if(res.status && res.data) {
+        this.listFiles = res.data;
+      }
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    }, error => {
+
+    })
+  }
+
+  modalClose() {
+    this.modalRef.close();;
   }
 
   getData(): void {

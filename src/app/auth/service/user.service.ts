@@ -21,6 +21,18 @@ export class UserService {
     return this._http.get<any>(`${environment.apiUrl}/admin/users`, {params: params});
   }
 
+  getAllMerchant(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/merchants`, {params: params});
+  }
+
+  getMerchantBalances(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/merchants/${id}/balances`);
+  }
+
+  getMerchantService(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/merchants/${id}/services`);
+  }
+
   /**
    * Get user by id
    */
