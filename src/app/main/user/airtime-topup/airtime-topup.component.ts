@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
@@ -22,6 +23,7 @@ export class AirtimeTopupComponent implements OnInit {
   public listCurrentAction: any;
   public listCurrentRoles: any;
   public listFiles: any;
+  public selectedItem: any;
   public searchForm = {
     user: '',
     title: '',
@@ -47,6 +49,7 @@ export class AirtimeTopupComponent implements OnInit {
     private readonly taskService: TaskService,
     private router: Router,
     private route: ActivatedRoute,
+    private modalService: NgbModal
   ) { 
     this.route.queryParams.subscribe(params => {
       this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
@@ -183,8 +186,24 @@ export class AirtimeTopupComponent implements OnInit {
 
   }
 
-  onViewAttachments() {
-    
+  onViewDetail(modal, item) {
+    this.selectedItem = item;
+    this.taskService.getFileMerchantAttach(item.id).subscribe(res => {
+      if(res.status && res.data) {
+        this.listFiles = res.data;
+      }
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    }, error => {
+
+    })
+  }
+
+  modalClose() {
+    this.modalRef.close();;
   }
 
   getData(): void {

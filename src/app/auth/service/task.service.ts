@@ -51,6 +51,10 @@ export class TaskService {
   createTask(user_id, data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/task/payment/${user_id}`, data);
   }
+
+  getFileMerchantAttach(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/${id}/get-files-merchant-attach`);
+  }
  
 
 }
