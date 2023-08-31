@@ -74,8 +74,10 @@
                     <td>
                       <span ngbTooltip="{{item?.receiver_name}}">
                         {{item?.payment_method}}
-                        <br>
+                        <br><br>
                         {{item.receiver_bank_code}}
+                        <br>
+                        {{item.receiver_name}}
                         <br>
                         {{item?.receiver_banker_number}}
                       </span>
@@ -109,11 +111,8 @@
                         </button>
                       </div>
 
-                      <div *ngIf="item.status >= 30 && item.status <= 39 && checkAction('ACCOUNTING')">
-                        <!-- <button (click)="onViewAttachments(item)" class="btn btn-icon btn-info mb-2">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                            Xem ảnh CK
-                          </button> -->
+                      <div  *ngIf="item.status >= 30 && item.status <= 39 && checkAction('ACCOUNTING')">
+                        
 
                         <button ngbTooltip="Duyệt đã nhận tiền" (click)="onUpdateStatus(item, 1)"
                           class="btn btn-icon btn-info btn-sm mb-2">
@@ -125,6 +124,10 @@
                           <i data-feather="alert-triangle" class=" cursor-pointer"></i>
                         </button> -->
                       </div>
+
+                      <button ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)" class="btn btn-icon btn-info mb-2">
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>                        
+                      </button>
 
                     </td>
                   </tr>
@@ -159,7 +162,7 @@
   </div>
 </div>
 
-<ng-template #modalAttachments let-modal>
+<ng-template #modalDetail let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
     <button type="button" class="close" (click)="modalClose()" aria-label="Close">
@@ -167,9 +170,30 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <div class="row">
-      <div class="col-6" *ngFor="let item of listFiles">
-        <img src="" alt="">
+    <div class="row mb-2">
+      <div class="col-4">
+        <span>Ngân hàng nhận: </span> {{ selectedItem?.receiver_bank_code }}
+      </div>
+      <div class="col-4">
+        <span>Tên tài khoản: </span> {{ selectedItem?.receiver_name }}
+      </div>
+      <div class="col-4">
+        <span>Số tài khoản: </span> {{ selectedItem?.receiver_banker_number }}
+      </div>
+    </div>
+    <div class="row" *ngIf="listFiles.files_banking">
+      <div class="col-6" *ngFor="let item of listFiles.files_banking">
+        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row" *ngIf="listFiles.files_order">
+      <div class="col-6" *ngFor="let item of listFiles.files_order">
+        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12">
+        <span>Note: </span> {{ selectedItem?.response_note}}
       </div>
     </div>
   </div>
