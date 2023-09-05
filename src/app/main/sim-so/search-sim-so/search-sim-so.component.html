@@ -112,9 +112,9 @@
     <div>
       <!-- <h4>Thông tin Sim/Số</h4> -->
       <div class="column">
-        <div class="col-md-6">MÃ LÔ: {{ item?.id }}</div>
-        <div class="col-md-6">TÊN LÔ: {{ item?.name }}</div>
-        <div class="col-md-6">KHO: {{ item?.status }}</div>
+        <div class="col-md-6">MÃ LÔ: {{ item?.batch_id }}</div>
+        <div class="col-md-6">TÊN LÔ: {{ item?.batch?.title }}</div>
+        <div class="col-md-6">KHO: {{ item?.sell_channels[0]?.channel.name}}</div>
       </div>
     </div>
   </div>

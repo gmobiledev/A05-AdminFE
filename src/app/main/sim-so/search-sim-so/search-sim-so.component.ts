@@ -75,18 +75,18 @@ export class SearchSimSoComponent implements OnInit {
       confirmMessage = "Bạn có đồng ý khóa " + name + "?";
     }
 
-    if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.userService.lockUser(id, status, "").subscribe(res => {
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, err => {
-        this.alertService.showError(err);
-      })
-    }
+    // if ((await this.alertService.showConfirm(confirmMessage)).value) {
+    //   this.userService.lockUser(id, status, "").subscribe(res => {
+    //     if (!res.status) {
+    //       this.alertService.showError(res.message);
+    //       return;
+    //     }
+    //     this.alertService.showSuccess(res.message);
+    //     this.getData();
+    //   }, err => {
+    //     this.alertService.showError(err);
+    //   })
+    // }
   }
 
 
@@ -94,41 +94,13 @@ export class SearchSimSoComponent implements OnInit {
     if (item) {
       this.itemBlockUI.start();
       this.selectedItem = item;
-      let check;
-      if (item.status != 2) {
-        try {
-          check = await this.telecomService.checkAvailabledTask(item.id);
-          if (!check.status) {
-            this.getData();
-            this.alertService.showMess(check.message);
-            // if(!this.isAdmin) {                         
-            //   return;
-            // }           
-
-          }
-          this.itemBlockUI.stop();
-          this.modalRef = this.modalService.open(modal, {
-            centered: true,
-            windowClass: 'modal modal-primary',
-            size: 'lg',
-            backdrop: 'static',
-            keyboard: false
-          });
-        } catch (error) {
-          this.itemBlockUI.stop();
-          return;
-        }
-      } else {
-        this.itemBlockUI.stop();
-        this.modalRef = this.modalService.open(modal, {
-          centered: true,
-          windowClass: 'modal modal-primary',
-          size: 'lg',
-          backdrop: 'static',
-          keyboard: false
-        });
-      }
-
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg',
+        backdrop: 'static',
+        keyboard: false
+      });
 
     }
   }
