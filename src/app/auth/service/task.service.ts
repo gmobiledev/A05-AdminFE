@@ -24,6 +24,14 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/airtime`, {params: params});
   }
 
+  getAllTaskRoot(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/root`, {params: params});
+  }
+
+  approveTaskRoot(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/task/payment/approve-root`, data);
+  }
+
   getAllLoan(params: any = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/loan-bank`, {params: params});
   }

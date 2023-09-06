@@ -131,7 +131,7 @@ export class TasksRootAccountComponent implements OnInit {
             return;
           }
           data.note = note;
-          this.taskService.departmentUpdateTaskStatus(data).subscribe(res => {
+          this.taskService.approveTaskRoot(data).subscribe(res => {
             if (!res.status) {
               Swal.showValidationMessage(
                 res.message
@@ -162,7 +162,7 @@ export class TasksRootAccountComponent implements OnInit {
       }
 
       if ((await this.alertService.showConfirm(confirmMessage)).value) {
-        this.taskService.departmentUpdateTaskStatus(data).subscribe(res => {
+        this.taskService.approveTaskRoot(data).subscribe(res => {
           if (!res.status) {
             this.alertService.showMess(res.message);
             return;
@@ -200,7 +200,7 @@ export class TasksRootAccountComponent implements OnInit {
   }
 
   getData(): void {
-    this.taskService.getAllAirTime(this.searchForm).subscribe(res => {
+    this.taskService.getAllTaskRoot(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.totalItems = res.data.count;
     }, error => {
