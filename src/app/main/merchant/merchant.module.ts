@@ -12,11 +12,17 @@ import { InputMaskModule } from '../forms/form-elements/input-mask/input-mask.mo
 import { NgxMaskModule } from 'ngx-mask';
 import { RootAccountComponent } from './root-account/root-account.component';
 import { TasksRootAccountComponent } from './tasks-root-account/tasks-root-account.component';
+import { NgChartsModule } from 'ng2-charts';
 
 const routes: Routes = [
   {
     path: 'list',
     component: ListMerchantComponent
+  },
+
+  {
+    path: 'root',
+    component: RootAccountComponent
   },
 ];
 
@@ -35,6 +41,7 @@ const routes: Routes = [
     CoreCommonModule, 
     ContentHeaderModule,
     NgxDatatableModule,
+    NgChartsModule,
     NgxMaskModule.forRoot(),
     BlockUIModule.forRoot()
   ],
