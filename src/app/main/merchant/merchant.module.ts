@@ -14,6 +14,7 @@ import { RootAccountComponent } from './root-account/root-account.component';
 import { TasksRootAccountComponent } from './tasks-root-account/tasks-root-account.component';
 import { NgChartsModule } from 'ng2-charts';
 import { CodeInputModule } from 'angular-code-input';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 const routes: Routes = [
   {
@@ -49,7 +50,8 @@ const routes: Routes = [
     NgChartsModule,
     CodeInputModule,
     NgxMaskModule.forRoot(),
-    BlockUIModule.forRoot()
+    BlockUIModule.forRoot(),
+    NgApexchartsModule
   ],
   providers: []
 })

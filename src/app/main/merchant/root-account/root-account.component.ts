@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AdminService } from 'app/auth/service/admin.service';
 import { colors } from 'app/colors.const';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UserService } from 'app/auth/service';
-import { TaskService } from 'app/auth/service/task.service';
-import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { CoreConfigService } from '@core/services/config.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
+import { User } from 'app/auth/models';
+import { AuthenticationService } from 'app/auth/service';
+import { DashboardService } from 'app/main/dashboard/dashboard.service';
+import { TransactionServivce } from 'app/auth/service/transaction.service';
 
 @Component({
   selector: 'app-root-account',
@@ -16,11 +17,12 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 export class RootAccountComponent implements OnInit {
 
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   public contentHeader: any;
-  public list: any;
-  sums: any;
-  total: any;
+
+  public listIn: any;
+  public listOut: any;
 
   public isViewFile: boolean = false;
   public urlFile: any;
@@ -38,9 +40,12 @@ export class RootAccountComponent implements OnInit {
   private successColorShade = '#28dac6';
   private warningLightColor = '#FDAC34';
   private grid_line_color = 'rgba(200, 200, 200, 0.2)'; // RGBA color helps in dark layout
-  private primaryColorShade = '#836AF9';
   private yellowColor = '#ffe800';
 
+
+  public total: number;
+  public page: number = 1;
+  public pageSize: number;
 
   public data: any = {
     subscribers_gained: {
@@ -249,9 +254,13 @@ export class RootAccountComponent implements OnInit {
   };
 
   constructor(
-    private adminService: AdminService
+    private adminService: AdminService,
+    private transactionService: TransactionServivce
+
   ) {
     this.getData();
+
+
   }
 
   ngOnInit(): void {
@@ -276,6 +285,25 @@ export class RootAccountComponent implements OnInit {
   }
 
   getData() {
+    this.sectionBlockUI.start();
+    this.transactionService.getMoneyIn().subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.listIn = res.data.items;
+      this.total = res.data.count;
+      this.pageSize = res.data.pageSize;
+
+    })
+
+    this.transactionService.getMoneyOut().subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.listOut = res.data.items;
+      this.total = res.data.count;
+      this.pageSize = res.data.pageSize;
+    }, error => {
+      this.sectionBlockUI.stop();
+      console.log("ERRRR");
+      console.log(error);
+    })
 
   }
 
