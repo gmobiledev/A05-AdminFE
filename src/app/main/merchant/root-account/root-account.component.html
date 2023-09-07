@@ -1,79 +1,167 @@
 <!-- Statistics Card -->
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
-  
-      <div class="row" id="table-striped">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-8" id="table-striped">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Hoạt động gần đây</h4>
+          </div>
+          <div class="card-body">
+            <ul ngbNav #navWithIcons="ngbNav" class="nav-tabs">
+              <li ngbNavItem>
+                <a ngbNavLink>Tiền chuyển ra</a>
+                <ng-template ngbNavContent>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Ngày giao dịch</th>
+                        <th>Mã giao dịch</th>
+                        <th>Dịch vụ</th>
+                        <th>Số tiền</th>
+                        <!-- <th>Thao tác</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of listOut">
+                        <td>
+                          {{ item?.created_at | date : "dd/MM/yyyy H:mm" }}
+                        </td>
+                        <td>
+                          {{ item?.id }}
+                        </td>
+                        <td>{{ item?.trans_type }}</td>
+                        <td>
+                          {{
+                            sum_out| currency
+                          }}
+                        </td>
+                    
+                        <!-- <td>
+                          <a [routerLink]="['/user', item.id]">
+                            <i
+                              data-feather="eye"
+                            ></i>
+                          </a>
+                        </td> -->
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-template>
+              </li>
+              <li ngbNavItem>
+                <a ngbNavLink>Tiền chuyển vào</a>
+                <ng-template ngbNavContent>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Ngày giao dịch</th>
+                        <th>Mã giao dịch</th>
+                        <th>Dịch vụ</th>
+                        <th>Số tiền</th>
+                        <!-- <th>Thao tác</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of listIn">
+                        <td>
+                          {{ item?.created_at | date : "dd/MM/yyyy H:mm" }}
+                        </td>
+                        <td>
+                          {{ item?.id }}
+                        </td>
+                        <td>{{ item?.trans_type }}</td>
+                        <td>
+                          {{
+                            item?.amount | currency
+                          }}
+                        </td>
+                    
+                        <!-- <td>
+                          <a [routerLink]="['/user', item.id]">
+                            <i
+                              data-feather="eye"
+                            ></i>
+                          </a>
+                        </td> -->
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-template>
+              </li>
+            </ul>
+            <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Biểu đồ thu chi</h4>
+          </div>
+          <div class="card-body">
+            <canvas
+              class="doughnut-chart-ex chartjs mx-auto"
+              baseChart
+              [datasets]="doughnutChart.datasets"
+              [options]="doughnutChart.options"
+              [type]="doughnutChart.chartType"
+            >
+            </canvas>
+            <div class="d-flex justify-content-between mt-3 mb-1">
+              <div class="d-flex align-items-center">
+                <i
+                  data-feather="monitor"
+                  class="font-medium-2 text-primary"
+                ></i>
+                <span class="font-weight-bold ml-75 mr-25">Tiền chuyển ra</span>
+                <span>- 80%</span>
+              </div>
+              <div>
+                <span>2%</span>
+                <i data-feather="arrow-up" class="text-success"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <div class="d-flex align-items-center">
+                <i data-feather="tablet" class="font-medium-2 text-warning"></i>
+                <span class="font-weight-bold ml-75 mr-25">Tiền chuyển vào</span>
+                <span>- 10%</span>
+              </div>
+              <div>
+                <span>8%</span>
+                <i data-feather="arrow-up" class="text-success"></i>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center">
+                <i data-feather="tablet" class="font-medium-2 text-success"></i>
+                <span class="font-weight-bold ml-75 mr-25">Khác</span>
+                <span>- 10%</span>
+              </div>
+              <div>
+                <span>-5%</span>
+                <i data-feather="arrow-down" class="text-danger"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
-  
-
-
-      <section id="Donut-and-scatter-charts">
-        <div class="row">
-          <!-- Donut Chart Starts -->
-          <div class="col-lg-4 col-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">Tra cứu giao dịch</h4>
-              </div>
-              <div class="card-body">
-                <canvas
-                  class="doughnut-chart-ex chartjs mx-auto"
-                  baseChart
-                  [datasets]="doughnutChart.datasets"
-                  [options]="doughnutChart.options"
-                  [type]="doughnutChart.chartType"
-                >
-                </canvas>
-                <div class="d-flex justify-content-between mt-3 mb-1">
-                  <div class="d-flex align-items-center">
-                    <i data-feather="monitor" class="font-medium-2 text-primary"></i>
-                    <span class="font-weight-bold ml-75 mr-25">Chuyển tiền đi</span>
-                    <span>- 80%</span>
-                  </div>
-                  <div>
-                    <span>2%</span>
-                    <i data-feather="arrow-up" class="text-success"></i>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-between mb-1">
-                  <div class="d-flex align-items-center">
-                    <i data-feather="tablet" class="font-medium-2 text-warning"></i>
-                    <span class="font-weight-bold ml-75 mr-25">Nhận tiền đến</span>
-                    <span>- 10%</span>
-                  </div>
-                  <div>
-                    <span>8%</span>
-                    <i data-feather="arrow-up" class="text-success"></i>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex align-items-center">
-                    <i data-feather="tablet" class="font-medium-2 text-success"></i>
-                    <span class="font-weight-bold ml-75 mr-25">Khác</span>
-                    <span>- 10%</span>
-                  </div>
-                  <div>
-                    <span>-5%</span>
-                    <i data-feather="arrow-down" class="text-danger"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--/ Donut Chart Starts -->
-
-        </div>
-      </section>
-      
     </div>
   </div>
-  
-  
+</div>

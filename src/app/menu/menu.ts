@@ -9,7 +9,6 @@ export const menu: CoreMenu[] = [
     title: 'Console',
     translate: '',
     type: 'collapsible',
-    // role: ['Admin'], //? To hide collapsible based on user role
     icon: 'home',
     badge: {
       title: '2',
