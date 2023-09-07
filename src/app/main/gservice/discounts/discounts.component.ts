@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GServiceService } from 'app/auth/service/gservice.service';
 import { TaskService } from 'app/auth/service/task.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
@@ -8,11 +9,11 @@ import Swal from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-tasks-root-account',
-  templateUrl: './tasks-root-account.component.html',
-  styleUrls: ['./tasks-root-account.component.scss']
+  selector: 'app-discounts',
+  templateUrl: './discounts.component.html',
+  styleUrls: ['./discounts.component.scss']
 })
-export class TasksRootAccountComponent implements OnInit {
+export class DiscountsComponent implements OnInit {
 
   public contentHeader: any;
   public list: any;
@@ -34,16 +35,26 @@ export class TasksRootAccountComponent implements OnInit {
     service_code: '',
     page_size: 20
   }
-  public file: any;
-  public dataCreatePayment = {
-    amount: 0
+
+  public dataCreate = {
+    name: '',
+    services: [],
+    date_range: '',
+    start_money: 0,
+    end_money: 0,
+    value: 0
   }
   
+  public task;
+  public trans;
+  public wh;
+
   public modalRef: any;
 
   constructor(
     private readonly alertService: SweetAlertService,
     private readonly taskService: TaskService,
+    private readonly gServiceService: GServiceService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal
@@ -67,7 +78,7 @@ export class TasksRootAccountComponent implements OnInit {
     this.listCurrentAction = user.actions;
     this.listCurrentRoles = user.roles;
     this.contentHeader = {
-      headerTitle: 'Duyệt airtime tổng',
+      headerTitle: 'Chương trình chiết khấu',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -78,7 +89,7 @@ export class TasksRootAccountComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Duyệt airtime tổng',
+            name: 'Chương trình chiết khấu',
             isLink: false
           }
         ]
@@ -110,70 +121,20 @@ export class TasksRootAccountComponent implements OnInit {
     });   
   }
 
-  async onUpdateStatus(item, status) {
-    let data = {
-      id: item.id,
-      status: status,
-      note: ''
-    }
-    if (status == -1) {
-      let titleS = 'Hủy bỏ';
-      
-      Swal.fire({
-        title: titleS,
-        input: 'textarea',
-        inputAttributes: {
-          autocapitalize: 'off'
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Gửi',
-        showLoaderOnConfirm: true,
-        preConfirm: (note) => {
-          if (!note || note == '') {
-            Swal.showValidationMessage(
-              "Vui lòng nhập nội dung"
-            )
-            return;
-          }
-          data.note = note;
-          this.taskService.approveTaskRoot(data).subscribe(res => {
-            if (!res.status) {
-              Swal.showValidationMessage(
-                res.message
-              )
-              // this.alertService.showError(res.message);
-              return;
-            }
-          }, error => {
-            Swal.showValidationMessage(
-              error
-            )
-          });
-
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.getData();
-          //this.updateStatus.emit({updated: true});
-          this.alertService.showSuccess('Thành công');
-        }
-      })
-    } else {
-      let confirmMessage = "Bạn có đồng ý thực hiện thao tác?";
-      if ((await this.alertService.showConfirm(confirmMessage)).value) {
-        this.taskService.approveTaskRoot(data).subscribe(res => {
-          if (!res.status) {
-            this.alertService.showMess(res.message);
-            return;
-          }
-          this.getData();
-          this.alertService.showSuccess(res.message);
-        }, error => {
-          this.alertService.showMess(error);
+  async onCreate() {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo đơn hàng này không?")).value) {      
+      this.gServiceService.createDiscount(this.dataCreate).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
           return;
-        })
-      }
+        }
+        this.alertService.showSuccess(res.message);
+        this.modalClose();
+        this.getData();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
     }
   }
 
@@ -197,25 +158,8 @@ export class TasksRootAccountComponent implements OnInit {
     this.modalRef.close();;
   }
 
-  async onCreateTask() {
-    if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {   
-      this.taskService.createTaskRoot(this.dataCreatePayment).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.modalClose();
-        this.getData();
-      }, error => {
-        this.alertService.showMess(error);
-        return;
-      })
-    }
-  }
-
   getData(): void {
-    this.taskService.getAllTaskRoot(this.searchForm).subscribe(res => {
+    this.gServiceService.getDiscount(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.totalItems = res.data.count;
     }, error => {

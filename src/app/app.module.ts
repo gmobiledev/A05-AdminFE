@@ -125,6 +125,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'services',
+    loadChildren: () => import('./main/gservice/gservice.module').then(m => m.GserviceModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./main/inventory/inventory.module').then(m => m.InventoryModule),
     canActivate: [AuthGuard]
