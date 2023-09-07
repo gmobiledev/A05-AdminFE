@@ -10,6 +10,8 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { BlockUIModule } from 'ng-block-ui';
 import { InputMaskModule } from '../forms/form-elements/input-mask/input-mask.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { RootAccountComponent } from './root-account/root-account.component';
+import { TasksRootAccountComponent } from './tasks-root-account/tasks-root-account.component';
 
 const routes: Routes = [
   {
@@ -20,7 +22,9 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ListMerchantComponent
+    ListMerchantComponent,
+    RootAccountComponent,
+    TasksRootAccountComponent
   ],
   imports: [
     CommonModule, 
