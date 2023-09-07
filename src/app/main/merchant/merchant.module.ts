@@ -13,6 +13,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { RootAccountComponent } from './root-account/root-account.component';
 import { TasksRootAccountComponent } from './tasks-root-account/tasks-root-account.component';
 import { NgChartsModule } from 'ng2-charts';
+import { CodeInputModule } from 'angular-code-input';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
 const routes: Routes = [
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'root',
     component: RootAccountComponent
+  },
+  {
+    path: 'root-payment',
+    component: TasksRootAccountComponent
   },
 ];
 
@@ -43,6 +48,7 @@ const routes: Routes = [
     ContentHeaderModule,
     NgxDatatableModule,
     NgChartsModule,
+    CodeInputModule,
     NgxMaskModule.forRoot(),
     BlockUIModule.forRoot(),
     NgApexchartsModule

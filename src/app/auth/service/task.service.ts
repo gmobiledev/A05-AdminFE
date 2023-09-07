@@ -25,7 +25,11 @@ export class TaskService {
   }
 
   getAllTaskRoot(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/task/root`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/merchant-root`, {params: params});
+  }
+
+  createTaskRoot(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/task/payment/create-root`, data);
   }
 
   approveTaskRoot(data) {

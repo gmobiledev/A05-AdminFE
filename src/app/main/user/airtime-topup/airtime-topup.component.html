@@ -29,8 +29,8 @@
                       <option value="">Chọn trạng thái task</option>
 
                       <option value="1">Thành công</option>
-                      <option value="0">Thất bại</option>
-                      <option value="-1">Từ chối</option>
+                      <option value="99">Từ chối</option>
+                      <option value="-1">Hủy</option>
                       <option value="10">Chờ KD duyệt</option>
                       <option value="20">Chờ thanh toán</option>
                       <option value="30">KD duyệt, Chờ KT duyệt</option>
@@ -105,7 +105,7 @@
                           <i data-feather="check" class=" cursor-pointer"></i>
                         </button>
 
-                        <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 0)"
+                        <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 99)"
                           class="btn btn-icon btn-danger btn-sm mb-2">
                           <i data-feather="x-circle" class=" cursor-pointer"></i>
                         </button>
@@ -119,7 +119,7 @@
                           <i data-feather="check" class=" cursor-pointer"></i>
                         </button>
 
-                        <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 0)"
+                        <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 99)"
                           class="btn btn-icon btn-warning btn-sm mb-2 ">
                           <i data-feather="alert-triangle" class=" cursor-pointer"></i>
                         </button>

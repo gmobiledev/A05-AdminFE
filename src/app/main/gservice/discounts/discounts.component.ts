@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GServiceService } from 'app/auth/service/gservice.service';
 import { TaskService } from 'app/auth/service/task.service';
-import { CommonService } from 'app/utils/common.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import Swal from 'sweetalert2';
-
+import dayjs from 'dayjs';
+import { CommonService } from 'app/utils/common.service';
 
 @Component({
-  selector: 'app-tasks-root-account',
-  templateUrl: './tasks-root-account.component.html',
-  styleUrls: ['./tasks-root-account.component.scss']
+  selector: 'app-discounts',
+  templateUrl: './discounts.component.html',
+  styleUrls: ['./discounts.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class TasksRootAccountComponent implements OnInit {
+export class DiscountsComponent implements OnInit {
 
   public contentHeader: any;
   public list: any;
@@ -25,6 +27,8 @@ export class TasksRootAccountComponent implements OnInit {
   public listCurrentRoles: any;
   public listFiles: any;
   public selectedItem: any;
+  public dateRange: any;
+  public listServices: any;
   public searchForm = {
     user: '',
     title: '',
@@ -35,22 +39,34 @@ export class TasksRootAccountComponent implements OnInit {
     service_code: '',
     page_size: 20
   }
-  public file: any;
-  public dataCreatePayment = {
-    amount: 0
-  }
-  public dataApprove = {
-    id: 0,
-    status: 0,
-    note: '',
+
+  public dataCreate = {
+    name: '',
+    service_id: [],
+    date_range: '',
+    start_money: 0,
+    end_money: 0,
+    value: 0,
     file: ''
   }
   
+  public task;
+  public trans;
+  public wh;
+
   public modalRef: any;
+  ranges: any = {
+    'Hôm nay': [dayjs(), dayjs()],
+    'Hôm qua': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
+    'Tuần vừa qua': [dayjs().subtract(6, 'days'), dayjs()],    
+    'Tháng này': [dayjs().startOf('month'), dayjs().endOf('month')],
+    'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
+  }
 
   constructor(
     private readonly alertService: SweetAlertService,
     private readonly taskService: TaskService,
+    private readonly gServiceService: GServiceService,
     private commonService: CommonService,
     private router: Router,
     private route: ActivatedRoute,
@@ -75,7 +91,7 @@ export class TasksRootAccountComponent implements OnInit {
     this.listCurrentAction = user.actions;
     this.listCurrentRoles = user.roles;
     this.contentHeader = {
-      headerTitle: 'Duyệt airtime tổng',
+      headerTitle: 'Chương trình chiết khấu',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -86,7 +102,7 @@ export class TasksRootAccountComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Duyệt airtime tổng',
+            name: 'Chương trình chiết khấu',
             isLink: false
           }
         ]
@@ -118,69 +134,37 @@ export class TasksRootAccountComponent implements OnInit {
     });   
   }
 
-  async onUpdateStatus(item, status) {
-    this.dataApprove.id = item.id;
-    this.dataApprove.status = status;
-    this.dataApprove.note = '';
-   
-    if (status == -1) {
-      let titleS = 'Hủy bỏ';
-      
-      Swal.fire({
-        title: titleS,
-        input: 'textarea',
-        inputAttributes: {
-          autocapitalize: 'off'
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Gửi',
-        showLoaderOnConfirm: true,
-        preConfirm: (note) => {
-          if (!note || note == '') {
-            Swal.showValidationMessage(
-              "Vui lòng nhập nội dung"
-            )
-            return;
-          }
-          this.dataApprove.note = note;
-          this.taskService.approveTaskRoot(this.dataApprove).subscribe(res => {
-            if (!res.status) {
-              Swal.showValidationMessage(
-                res.message
-              )
-              // this.alertService.showError(res.message);
-              return;
-            }
-          }, error => {
-            Swal.showValidationMessage(
-              error
-            )
-          });
+  async onSelectFileFront(event) {
+    if (event.target.files && event.target.files[0]) {
+      let img = await this.commonService.resizeImage(event.target.files[0]);
+      this.dataCreate.file = (img+'').replace('data:image/png;base64,', '')
+    }
+  }
 
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.getData();
-          //this.updateStatus.emit({updated: true});
-          this.alertService.showSuccess('Thành công');
-        }
-      })
-    } else {
-      let confirmMessage = "Bạn có đồng ý thực hiện thao tác?";
-      if ((await this.alertService.showConfirm(confirmMessage)).value) {
-        this.taskService.approveTaskRoot(this.dataApprove).subscribe(res => {
-          if (!res.status) {
-            this.alertService.showMess(res.message);
-            return;
-          }
-          this.getData();
-          this.alertService.showSuccess(res.message);
-        }, error => {
-          this.alertService.showMess(error);
-          return;
-        })
+  async onCreate() {
+    if(this.dateRange) {
+      let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+      this.dataCreate.date_range = this.dateRange.startDate && this.dateRange.endDate 
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    }
+   
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo đơn hàng này không?")).value) {      
+      if(!this.dataCreate.date_range || !this.dataCreate.end_money || !this.dataCreate.start_money || !this.dataCreate.name || !this.dataCreate.value) {
+        this.alertService.showMess('Vui lòng nhập đầy đủ thông tin');
+        return;
       }
+      this.gServiceService.createDiscount(this.dataCreate).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.modalClose();
+        this.getData();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
     }
   }
 
@@ -204,37 +188,20 @@ export class TasksRootAccountComponent implements OnInit {
     this.modalRef.close();;
   }
 
-  async onCreateTask() {
-    if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {   
-      this.taskService.createTaskRoot(this.dataCreatePayment).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.modalClose();
-        this.getData();
-      }, error => {
-        this.alertService.showMess(error);
-        return;
-      })
-    }
-  }
-
-  async onSelectFileFront(event) {
-    if (event.target.files && event.target.files[0]) {
-      let img = await this.commonService.resizeImage(event.target.files[0]);
-      this.dataApprove.file = (img+'').replace('data:image/png;base64,', '')
-    }
-  }
-
   getData(): void {
-    this.taskService.getAllTaskRoot(this.searchForm).subscribe(res => {
+    this.gServiceService.getDiscount(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.totalItems = res.data.count;
     }, error => {
       console.log("ERRRR");
       console.log(error);
+    })
+    this.gServiceService.getAllService().subscribe(res => {
+      this.listServices = res.data;
+      const airtime = this.listServices.find(item => item.code == 'AIRTIME_TOPUP');
+      if(airtime) {
+        this.dataCreate.service_id = [airtime.id];
+      }
     })
   }
 

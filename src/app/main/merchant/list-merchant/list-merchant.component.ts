@@ -36,6 +36,14 @@ export class ListMerchantComponent implements OnInit {
     desc: ''
   };
 
+  public dataCreateMerchant = {
+    services: ['AIRTIME_TOPUP'],
+    username: '',
+    mobile: '',
+    password: '',
+    email: ''
+  }
+
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
 
@@ -100,7 +108,33 @@ export class ListMerchantComponent implements OnInit {
         return;
       })
     }
+  }
 
+  async onCreateMerchant() {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo tài khoản đại lý?")).value) {
+      this.itemBlockUI.start();
+      this.userService.createMerchant(this.dataCreateMerchant).subscribe(res => {
+        this.itemBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.dataCreateMerchant = {
+          services: ['AIRTIME_TOPUP'],
+          username: '',
+          mobile: '',
+          password: '',
+          email: ''
+        }
+        this.alertService.showSuccess(res.message);
+        this.modalClose();
+        this.getData();
+      }, error => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(error);
+        return;
+      })
+    }
   }
 
   onViewBalance() {
@@ -108,21 +142,28 @@ export class ListMerchantComponent implements OnInit {
     return;
   }
 
-  modalOpen(modal, item = null) {
-    this.selectedUser = item;
-    this.userService.getMerchantService(item.id).subscribe(res => {
-      if(!res.status) {
-        this.alertService.showMess(res.message);
-        return;
-      }
-      this.listServices = res.data;
+  modalOpen(modal, item = null) {    
+    if(item) {
+      this.selectedUser = item;
+      this.userService.getMerchantService(item.id).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.listServices = res.data;
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'lg'
+        });
+      })
+    } else {
       this.modalRef = this.modalService.open(modal, {
         centered: true,
         windowClass: 'modal modal-primary',
         size: 'lg'
       });
-    })
-    
+    }        
   }
 
   modalBalanceOpen(modal, item) {
@@ -143,6 +184,13 @@ export class ListMerchantComponent implements OnInit {
 
   modalClose() {
     this.modalRef.close();;
+  }
+
+  onCompletedInputPassword(value) {
+    this.dataCreateMerchant.password = value;
+    // this.formGroup.patchValue({
+    //   password: value
+    // })
   }
 
   ngOnInit(): void {

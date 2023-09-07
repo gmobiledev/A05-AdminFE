@@ -112,9 +112,9 @@ export class AirtimeTopupComponent implements OnInit {
       status: status,
       note: ''
     }
-    if (status == 0 || (status == 10 && this.checkAction("ACCOUNTING")) || status == 1) {
+    if (status == 99 || (status == 10 && this.checkAction("ACCOUNTING")) || status == 1) {
       let titleS;
-      if (status == 0) {
+      if (status == 99) {
         titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
       }
       if (status == 1) {
@@ -180,10 +180,8 @@ export class AirtimeTopupComponent implements OnInit {
           this.alertService.showMess(error);
           return;
         })
-
       }
     }
-
   }
 
   onViewDetail(modal, item) {
