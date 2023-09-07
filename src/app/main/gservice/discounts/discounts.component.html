@@ -52,7 +52,6 @@
                       <th>Khoảng thời gian</th>
                       <!-- <th>Tiêu đề</th> -->
                       <th>Chiết khấu</th>
-                      <th>Ngày tạo</th>
                       <th>Thao tác</th>
                     </tr>
                   </thead>
@@ -67,14 +66,12 @@
                           {{ item?.title }}
                         </td> -->
                       <td>
-                        {{ item?.start_date }} - {{ item?.end_date }}
+                        {{ item?.start_date | date:'dd/MM/yyyy' }} - {{ item?.end_date | date:'dd/MM/yyyy' }}
                       </td>
                       <td>
                         {{ item?.value }} <span *ngIf="item?.unit == 'RATIO'">%</span>
                       </td>
-                      <td>
-                        {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
-                      </td>
+                      
                       
                       <td>                        
                         
@@ -120,31 +117,48 @@
   
             <div class="form-group">
                 <label>Tên chương trình (*)</label>
-                <input class="form-control"  type="text" 
+                <input class="form-control"  type="text"  name="name"
                 [(ngModel)]="dataCreate.name" />
             </div>
   
             <div class="form-group">
               <label>Khoảng thời gian (*)</label>
-              <input class="form-control"   />
+              <input class="form-control" ngxDaterangepickerMd [(ngModel)]="dateRange" [ranges]="ranges"
+              [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
+              [alwaysShowCalendars]="true" name="daterange"  />
             </div>
   
             <div class="form-group">
-              <label>Số tiền từ</label>
-              <input class="form-control"  
-              [(ngModel)]="dataCreate.start_money" />
+              <label>Số tiền</label>
+              <div class="row">
+                <div class="col-6">
+                  <label for="">Từ</label>
+                  <input class="form-control" 
+                  name="start_money"
+                  mask="separator" thousandSeparator="," 
+                  [(ngModel)]="dataCreate.start_money" />
+                </div>
+                <div class="col-6">
+                  <label>Đến</label>
+                  <input class="form-control"  name="end_money"
+                  mask="separator" thousandSeparator=","
+                  [(ngModel)]="dataCreate.end_money" />
+                </div>
+              </div>
+              
             </div>
-
-            <div class="form-group">
-              <label>Đến</label>
-              <input class="form-control"  
-              [(ngModel)]="dataCreate.end_money" />
-            </div>
-
             <div class="form-group">
               <label>Chiết khấu (%)</label>
-              <input class="form-control"  
+              <input class="form-control" 
+              name="value" 
+              mask="separator.2"
               [(ngModel)]="dataCreate.value" />
+            </div>
+
+            <div class="form-group">
+              <label>Ảnh giấy quyết định phê duyệt (*)</label>
+              <input class="form-control" (change)="onSelectFileFront($event)" accept="image/png, image/gif, image/jpeg, image/jpg"
+              type="file" />
             </div>
         </div>
         <div class="modal-footer">

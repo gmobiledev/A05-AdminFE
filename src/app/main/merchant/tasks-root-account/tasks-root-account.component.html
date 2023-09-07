@@ -57,7 +57,7 @@
                       <th>Thao tác</th>
                     </tr>
                   </thead>
-                  <tbody *ngIf="list.lengt > 0">
+                  <tbody *ngIf="list && list.length > 0">
                     <tr *ngFor="let item of list">
                       <td>{{ item?.id }}</td>
                       <td>{{ item?.trans_id }}</td>
@@ -96,7 +96,7 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="list.length == 0">
+                  <tbody *ngIf="!list || list.length == 0">
                       <tr>Không có dữ liệu</tr>
                   </tbody>
                 </table>
@@ -190,7 +190,9 @@
   
       <div class="form-group">
         <label>Đính kèm quyết định phê duyệt</label>
-        <input class="form-control" type="file" />
+        <input class="form-control" type="file" (change)="onSelectFileFront($event)" 
+        accept="image/png, image/gif, image/jpeg, image/jpg"
+        />
       </div>  
     </div>
     <div class="modal-footer">

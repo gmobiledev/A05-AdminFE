@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from 'app/auth/service/task.service';
+import { CommonService } from 'app/utils/common.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import Swal from 'sweetalert2';
@@ -38,12 +39,19 @@ export class TasksRootAccountComponent implements OnInit {
   public dataCreatePayment = {
     amount: 0
   }
+  public dataApprove = {
+    id: 0,
+    status: 0,
+    note: '',
+    file: ''
+  }
   
   public modalRef: any;
 
   constructor(
     private readonly alertService: SweetAlertService,
     private readonly taskService: TaskService,
+    private commonService: CommonService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal
@@ -111,11 +119,10 @@ export class TasksRootAccountComponent implements OnInit {
   }
 
   async onUpdateStatus(item, status) {
-    let data = {
-      id: item.id,
-      status: status,
-      note: ''
-    }
+    this.dataApprove.id = item.id;
+    this.dataApprove.status = status;
+    this.dataApprove.note = '';
+   
     if (status == -1) {
       let titleS = 'Hủy bỏ';
       
@@ -135,8 +142,8 @@ export class TasksRootAccountComponent implements OnInit {
             )
             return;
           }
-          data.note = note;
-          this.taskService.approveTaskRoot(data).subscribe(res => {
+          this.dataApprove.note = note;
+          this.taskService.approveTaskRoot(this.dataApprove).subscribe(res => {
             if (!res.status) {
               Swal.showValidationMessage(
                 res.message
@@ -162,7 +169,7 @@ export class TasksRootAccountComponent implements OnInit {
     } else {
       let confirmMessage = "Bạn có đồng ý thực hiện thao tác?";
       if ((await this.alertService.showConfirm(confirmMessage)).value) {
-        this.taskService.approveTaskRoot(data).subscribe(res => {
+        this.taskService.approveTaskRoot(this.dataApprove).subscribe(res => {
           if (!res.status) {
             this.alertService.showMess(res.message);
             return;
@@ -211,6 +218,13 @@ export class TasksRootAccountComponent implements OnInit {
         this.alertService.showMess(error);
         return;
       })
+    }
+  }
+
+  async onSelectFileFront(event) {
+    if (event.target.files && event.target.files[0]) {
+      let img = await this.commonService.resizeImage(event.target.files[0]);
+      this.dataApprove.file = (img+'').replace('data:image/png;base64,', '')
     }
   }
 

@@ -10,6 +10,7 @@ import { CodeInputModule } from 'angular-code-input';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { BlockUIModule } from 'ng-block-ui';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 const routes: Routes = [
   {
@@ -33,7 +34,8 @@ const routes: Routes = [
     NgxDatatableModule,
     CodeInputModule,
     NgxMaskModule.forRoot(),
-    BlockUIModule.forRoot()
+    BlockUIModule.forRoot(),
+    NgxDaterangepickerMd.forRoot(),
   ],
   providers: []
 })

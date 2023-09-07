@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GServiceService } from 'app/auth/service/gservice.service';
@@ -6,12 +6,14 @@ import { TaskService } from 'app/auth/service/task.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import Swal from 'sweetalert2';
-
+import dayjs from 'dayjs';
+import { CommonService } from 'app/utils/common.service';
 
 @Component({
   selector: 'app-discounts',
   templateUrl: './discounts.component.html',
-  styleUrls: ['./discounts.component.scss']
+  styleUrls: ['./discounts.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DiscountsComponent implements OnInit {
 
@@ -25,6 +27,8 @@ export class DiscountsComponent implements OnInit {
   public listCurrentRoles: any;
   public listFiles: any;
   public selectedItem: any;
+  public dateRange: any;
+  public listServices: any;
   public searchForm = {
     user: '',
     title: '',
@@ -38,11 +42,12 @@ export class DiscountsComponent implements OnInit {
 
   public dataCreate = {
     name: '',
-    services: [],
+    service_id: [],
     date_range: '',
     start_money: 0,
     end_money: 0,
-    value: 0
+    value: 0,
+    file: ''
   }
   
   public task;
@@ -50,11 +55,19 @@ export class DiscountsComponent implements OnInit {
   public wh;
 
   public modalRef: any;
+  ranges: any = {
+    'Hôm nay': [dayjs(), dayjs()],
+    'Hôm qua': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
+    'Tuần vừa qua': [dayjs().subtract(6, 'days'), dayjs()],    
+    'Tháng này': [dayjs().startOf('month'), dayjs().endOf('month')],
+    'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
+  }
 
   constructor(
     private readonly alertService: SweetAlertService,
     private readonly taskService: TaskService,
     private readonly gServiceService: GServiceService,
+    private commonService: CommonService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal
@@ -121,8 +134,25 @@ export class DiscountsComponent implements OnInit {
     });   
   }
 
+  async onSelectFileFront(event) {
+    if (event.target.files && event.target.files[0]) {
+      let img = await this.commonService.resizeImage(event.target.files[0]);
+      this.dataCreate.file = (img+'').replace('data:image/png;base64,', '')
+    }
+  }
+
   async onCreate() {
+    if(this.dateRange) {
+      let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+      this.dataCreate.date_range = this.dateRange.startDate && this.dateRange.endDate 
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    }
+   
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo đơn hàng này không?")).value) {      
+      if(!this.dataCreate.date_range || !this.dataCreate.end_money || !this.dataCreate.start_money || !this.dataCreate.name || !this.dataCreate.value) {
+        this.alertService.showMess('Vui lòng nhập đầy đủ thông tin');
+        return;
+      }
       this.gServiceService.createDiscount(this.dataCreate).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);
@@ -165,6 +195,13 @@ export class DiscountsComponent implements OnInit {
     }, error => {
       console.log("ERRRR");
       console.log(error);
+    })
+    this.gServiceService.getAllService().subscribe(res => {
+      this.listServices = res.data;
+      const airtime = this.listServices.find(item => item.code == 'AIRTIME_TOPUP');
+      if(airtime) {
+        this.dataCreate.service_id = [airtime.id];
+      }
     })
   }
 

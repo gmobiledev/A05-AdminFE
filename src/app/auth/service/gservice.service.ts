@@ -13,6 +13,9 @@ export class GServiceService {
    */
   constructor(private _http: HttpClient) {}
 
+  getAllService(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/services`, {params: params});
+  }
   /**
    * Get all users
    */

@@ -19,10 +19,13 @@ export class ShowStatusTaskPipe implements PipeTransform {
         html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ KD duyệt</span>'
         break;
       case 20:
-        html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ thanh toán</span>'
+        html = '<span class="badge badge-pill badge-light-info mr-1">Chờ thanh toán</span>'
         break;
       case 30:
         html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ KT duyệt</span>'
+        break;
+      case 60:
+        html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ duyệt</span>'
         break;
       default:
         html = value + '';
