@@ -27,6 +27,14 @@ export class TransactionServivce {
     return this._http.get<any>(`${environment.apiUrl}/admin/transaction/trans-type`);
   }
 
+  getMoneyIn() {
+    return this._http.get<any>(`${environment.apiUrl}/admin/transaction/merchant-root?money_out=1`);
+  }
+
+  getMoneyOut() {
+    return this._http.get<any>(`${environment.apiUrl}/admin/transaction/merchant-root?money_out=0`);
+  }
+
   exportExcel(dto = null) {
     return this._http.post<any>(`${environment.apiUrl}/admin/transaction/export-excel`,dto);
   }

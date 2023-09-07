@@ -3,13 +3,12 @@ import { CoreMenu } from '@core/types';
 //? DOC: http://localhost:7777/demo/vuexy-angular-admin-dashboard-template/documentation/guide/development/navigation-menus.html#interface
 
 export const menu: CoreMenu[] = [
-  // Dashboard
+
   {
     id: 'dashboard',
-    title: 'Dashboard',
-    translate: 'MENU.DASHBOARD.COLLAPSIBLE',
+    title: 'Console',
+    translate: '',
     type: 'collapsible',
-    // role: ['Admin'], //? To hide collapsible based on user role
     icon: 'home',
     badge: {
       title: '2',
@@ -17,28 +16,26 @@ export const menu: CoreMenu[] = [
       classes: 'badge-light-warning badge-pill'
     },
     children: [
-      // {
-      //   id: 'analytics',
-      //   title: 'Analytics',
-      //   translate: 'MENU.DASHBOARD.ANALYTICS',
-      //   type: 'item',
-      //   role: ['Admin'],
-      //   icon: 'circle',
-      //   url: 'dashboard/analytics'
-      // },
       {
-        // If role is not assigned will be display to all
         id: 'ecommerce',
         title: 'Báo cáo',
         translate: '',
         type: 'item',
         icon: 'circle',
         url: 'dashboard/reports'
+      },
+      {
+        id: 'users',
+        title: 'Sao kê',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'merchant/root'
       }
     ]
   },
-  // Apps & Pages
 
+  // Apps & Pages
   {
     id: 'users',
     type: 'section',
@@ -79,6 +76,7 @@ export const menu: CoreMenu[] = [
     translate: '',
     icon: 'package',
     children: [
+      
       {
         id: 'users',
         title: 'Danh sách merchant',
@@ -94,6 +92,22 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'list',
         url: 'user/airtime'
+      },
+      {
+        id: 'users',
+        title: 'Duyệt tài khoản tổng',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'merchant/root-payment'
+      },
+      {
+        id: 'users',
+        title: 'Chiết khấu',
+        translate: '',
+        type: 'item',
+        icon: 'list',
+        url: 'services/discount'
       }
     ]
   },
@@ -112,7 +126,7 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'sim-so/task'
       },
-      
+
       {
         id: 'agents',
         title: 'Danh sách đại lý',
@@ -121,7 +135,7 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'agent'
       },
-      
+
       {
         id: 'agents',
         title: 'Lịch sử tác động',
@@ -181,7 +195,8 @@ export const menu: CoreMenu[] = [
       },
 
     ]
-  }, {
+  },
+  {
     id: 'users',
     type: 'section',
     title: 'Gtalk',
@@ -262,7 +277,7 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'task/list'
       },
-      
+
       {
         id: 'ekyc',
         title: 'Lô EKYC',
