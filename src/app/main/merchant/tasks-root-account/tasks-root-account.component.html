@@ -62,7 +62,7 @@
                       <td>{{ item?.id }}</td>
                       <td>{{ item?.trans_id }}</td>
                       <td>
-                        {{ item?.amount | currency:'VND':true}}
+                        {{ item?.amount | formatPrice }}
                       </td>
                       <!-- <td>
                           {{ item?.title }}
@@ -81,17 +81,17 @@
                         <div  *ngIf="item.status >= 60 && item.status <= 69">                          
                           <button ngbTooltip="Duyệt" (click)="modalOpen(modalApprove, item)"
                             class="btn btn-icon btn-info btn-sm mb-2">
-                            <i data-feather="check" class=" cursor-pointer"></i>
+                            <i data-feather="check" class="text-white cursor-pointer"></i>
                           </button>
   
                           <button ngbTooltip="Không duyệt" (click)="onUpdateStatus(item, -1)"
                             class="btn btn-icon btn-warning btn-sm mb-2 ">
-                            <i data-feather="alert-triangle" class=" cursor-pointer"></i>
+                            <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
                           </button>
                         </div>
   
                         <button ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)" class="btn btn-icon btn-info mb-2">
-                          <i data-feather="eye" class="text-primary cursor-pointer"></i>                        
+                          <i data-feather="eye" class="text-white cursor-pointer"></i>                        
                         </button>
                       </td>
                     </tr>
@@ -196,7 +196,7 @@
       </div>  
     </div>
     <div class="modal-footer">
-      <a (click)="onApproveTask()">
+      <a (click)="onUpdateStatus(selectedItem, 1)">
         <button type="submit" class="btn btn-primary" rippleEffect>
           Gửi
         </button>

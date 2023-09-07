@@ -60,7 +60,7 @@
                       <td>{{ item?.name }}</td>
                       <td>{{ item?.service_code }}</td>
                       <td>
-                        {{ item?.start_money | currency:'VND':true}} - {{ item?.end_money | currency:'VND':true}}
+                        {{ item?.start_money | formatPrice }} - {{ item?.end_money | formatPrice }}
                       </td>
                       <!-- <td>
                           {{ item?.title }}
@@ -120,6 +120,20 @@
                 <input class="form-control"  type="text"  name="name"
                 [(ngModel)]="dataCreate.name" />
             </div>
+
+            <div class="form-group">
+              <label for="">Chọn dịch vụ</label>
+                  <!-- <input type="text" class="form-control" (input)="onSearch($event)" placeholder="Tìm kiếm" /> -->
+              <div class="demo-inline-spacing">
+                  <div class="custom-control custom-checkbox" *ngFor="let item of listServices">
+                  <input 
+                   type="checkbox" [value]="item.id" class="custom-control-input"
+                  id="{{item.id}}" type="checkbox" name="choose" class="custom-control-input" (change)="onChangeCheckBox($event, item)" />
+                  <label for="{{item.code}}"  class="custom-control-label" >{{ item.code }}</label>
+                  </div>
+              </div>
+        
+          </div>
   
             <div class="form-group">
               <label>Khoảng thời gian (*)</label>

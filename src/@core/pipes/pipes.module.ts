@@ -17,16 +17,17 @@ import { ShowStatusSimPipe } from './show-status-Sim';
 import { ShowStatusMsisdnPipe } from './show-status-msisdn.pipe';
 import { ShowStatusTaskPipe } from './show-status-task.pipe';
 import { NumberToTextPipe } from './numberToText.pipe';
+import { FormatPricePipe } from './formatPrice.pipe';
 
 @NgModule({
   declarations: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
     SafePipe, ShowStatusPipe, ShowStatusTelecomPipe, ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
-    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe
+    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe
   ],
   imports: [],
   exports: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
     SafePipe, ShowStatusPipe, ShowStatusTelecomPipe,ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
-    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe
+    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe
   ]
 })
 export class CorePipesModule {}
