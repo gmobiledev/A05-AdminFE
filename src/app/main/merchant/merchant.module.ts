@@ -13,6 +13,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { RootAccountComponent } from './root-account/root-account.component';
 import { TasksRootAccountComponent } from './tasks-root-account/tasks-root-account.component';
 import { NgChartsModule } from 'ng2-charts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 const routes: Routes = [
   {
@@ -43,7 +44,8 @@ const routes: Routes = [
     NgxDatatableModule,
     NgChartsModule,
     NgxMaskModule.forRoot(),
-    BlockUIModule.forRoot()
+    BlockUIModule.forRoot(),
+    NgApexchartsModule
   ],
   providers: []
 })
