@@ -514,23 +514,23 @@ export class TaskItemComponent implements OnInit {
         images = [
           {
             name: '__anh_giay_to_mat_truoc.jpg',
-            data: this.data?.people?.base64Front
+            data: this.data?.customer.people?.identification_front_file
           },
           {
             name: '__anh_giay_to_mat_sau.jpg',
-            data: this.data?.people?.base64Back
+            data: this.data?.customer.people?.identification_back_file
           },
           {
             name: '__anh_phieu_yeu_cau_hop_dong.jpg',
-            data: this.data?.task?.document_image
+            data: this.data?.task?.identification_back_file
           },
           {
             name: '__anh_chu_ky.jpg',
-            data: this.data?.people?.base64Signature
+            data: this.data?.customer.people?.identification_signature_file
           },
           {
             name: '__anh_khuon_mat.jpg',
-            data: this.data?.people?.base64Selfie
+            data: this.data?.customer.people?.identification_selfie_file
           }
         ]
         if(this.currentGPKD) {
