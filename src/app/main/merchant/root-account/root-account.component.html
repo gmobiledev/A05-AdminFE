@@ -3,6 +3,15 @@
   <div class="content-body">
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
     <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4><b>Số dư tài khoản tổng: <span class="text-success">{{ balance | formatPrice }}</span></b></h4>
+          </div>
+        </div>        
+      </div>                
+    </div>
+    <div class="row">
       <div class="col-8" id="table-striped">
         <div class="card">
           <div class="card-header">

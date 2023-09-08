@@ -5,7 +5,7 @@ import { CoreConfigService } from '@core/services/config.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 import { User } from 'app/auth/models';
-import { AuthenticationService } from 'app/auth/service';
+import { AuthenticationService, UserService } from 'app/auth/service';
 import { DashboardService } from 'app/main/dashboard/dashboard.service';
 import { TransactionServivce } from 'app/auth/service/transaction.service';
 
@@ -50,6 +50,8 @@ export class RootAccountComponent implements OnInit {
   public sumIn = 0;
   public sumOut = 0;
 
+  public balance;
+
   public loading = false;
   public doughnutChart = {
     chartType: 'doughnut',
@@ -92,6 +94,7 @@ export class RootAccountComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
+    private userService: UserService,
     private transactionService: TransactionServivce
 
   ) {
@@ -146,6 +149,10 @@ export class RootAccountComponent implements OnInit {
       this.sectionBlockUI.stop();
       console.log("ERRRR");
       console.log(error);
+    })
+
+    this.userService.getRootMerchantBalance().subscribe(res => {
+      this.balance = res.data && res.data.balance ? res.data.balance : 0
     })
 
   }

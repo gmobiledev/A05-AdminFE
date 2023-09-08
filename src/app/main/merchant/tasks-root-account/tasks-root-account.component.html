@@ -9,6 +9,11 @@
               <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
             </div>
             <div class="card-body">
+              <div class="row mb-1">
+                <div class="col-12">
+                  <h4><b>Số dư tài khoản tổng: <span class="text-success">{{ balance | formatPrice }}</span></b></h4>
+                </div>                
+              </div>
               <form (ngSubmit)="onSubmitSearch()">
                 <div class="row">
                   <div class="col-md-3">
@@ -135,16 +140,13 @@
       </button>
     </div>
     <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <div class="row" *ngIf="listFiles.files_banking">
-        <div class="col-6" *ngFor="let item of listFiles.files_banking">
+      <div class="row" *ngIf="listFiles.files_approve_root && listFiles.files_approve_root.length > 0">
+        <div class="col-12">Ảnh quyết duyệt</div>
+        <div class="col-6" *ngFor="let item of listFiles.files_approve_root">
           <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
         </div>
       </div>
-      <div class="row" *ngIf="listFiles.files_order">
-        <div class="col-6" *ngFor="let item of listFiles.files_order">
-          <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
-        </div>
-      </div>
+      
       <div class="row mt-2">
         <div class="col-12">
           <span>Note: </span> {{ selectedItem?.response_note}}
@@ -187,7 +189,10 @@
       </button>
     </div>
     <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-  
+      <div class="form-group">
+        <label for="">Ghi chú</label>
+        <textarea name="" id="" class="form-control" rows="5" [(ngModel)]="dataApprove.note"></textarea>
+      </div>
       <div class="form-group">
         <label>Đính kèm quyết định phê duyệt</label>
         <input class="form-control" type="file" (change)="onSelectFileFront($event)" 

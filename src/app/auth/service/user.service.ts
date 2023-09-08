@@ -33,6 +33,9 @@ export class UserService {
     return this._http.get<any>(`${environment.apiUrl}/admin/users/merchants/${id}/services`);
   }
 
+  getRootMerchantBalance() {
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/merchants/root`);
+  }
   /**
    * Get user by id
    */

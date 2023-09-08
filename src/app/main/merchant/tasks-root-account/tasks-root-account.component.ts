@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'app/auth/service';
 import { TaskService } from 'app/auth/service/task.service';
 import { CommonService } from 'app/utils/common.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
@@ -45,12 +46,13 @@ export class TasksRootAccountComponent implements OnInit {
     note: '',
     file: ''
   }
-  
+  public balance;
   public modalRef: any;
 
   constructor(
     private readonly alertService: SweetAlertService,
     private readonly taskService: TaskService,
+    private readonly userService: UserService,
     private commonService: CommonService,
     private router: Router,
     private route: ActivatedRoute,
@@ -235,6 +237,10 @@ export class TasksRootAccountComponent implements OnInit {
     }, error => {
       console.log("ERRRR");
       console.log(error);
+    })
+
+    this.userService.getRootMerchantBalance().subscribe(res => {
+      this.balance = res.data && res.data.balance ? res.data.balance : 0
     })
   }
 
