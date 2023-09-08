@@ -119,4 +119,8 @@ export class UserService {
   updateAgentInfo(id, data) {
     return this._http.put<any>(`${environment.apiUrl}/admin/users/agents/${id}`, data);
   }
+
+  createMerchant(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/users/merchants`, data);
+  }
 }

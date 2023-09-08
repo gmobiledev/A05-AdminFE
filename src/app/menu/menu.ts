@@ -76,6 +76,7 @@ export const menu: CoreMenu[] = [
     translate: '',
     icon: 'package',
     children: [
+      
       {
         id: 'users',
         title: 'Danh sách merchant',
@@ -91,6 +92,22 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'list',
         url: 'user/airtime'
+      },
+      {
+        id: 'users',
+        title: 'Duyệt tài khoản tổng',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'merchant/root-payment'
+      },
+      {
+        id: 'users',
+        title: 'Chiết khấu',
+        translate: '',
+        type: 'item',
+        icon: 'list',
+        url: 'services/discount'
       }
     ]
   },

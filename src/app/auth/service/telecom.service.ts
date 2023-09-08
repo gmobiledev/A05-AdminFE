@@ -205,4 +205,16 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-oganization-contract`, data);
   }
 
+  conversion2GApprove(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-2g-conversion`, data);
+  }
+
+  createTaskNewSim(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/create-task-newsim`, data);
+  }
+
+  submitShipTracking(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/submit-shipping-info`, data);
+  }
+
 }

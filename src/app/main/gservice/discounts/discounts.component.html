@@ -1,0 +1,185 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  
+      <div class="row" id="table-striped">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+            </div>
+            <div class="card-body">
+              <!-- <form (ngSubmit)="onSubmitSearch()">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control"
+                        placeholder="Nhập mã giao dịch">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                        <option value="">Chọn trạng thái task</option>
+  
+                        <option value="1">Thành công</option>
+                        <option value="0">Thất bại</option>
+                        <option value="-1">Từ chối</option>
+                        <option value="60">Chờ duyệt</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
+                    </div>
+                  </div>
+                </div>
+              </form> -->
+              <div class="row mt-2 mb-2 pull-right">
+                <div class="">
+                  <button type="button" class="btn btn-success mr-2" (click)="modalOpen(modalCreate)" >Thêm chương trình</button>              
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Tên chương trình</th>
+                      <th>Dịch vụ</th>
+                      <th>Khoảng tiền</th>
+                      <!-- <th>User</th> -->
+                      <th>Khoảng thời gian</th>
+                      <!-- <th>Tiêu đề</th> -->
+                      <th>Chiết khấu</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of list">
+                      <td>{{ item?.name }}</td>
+                      <td>{{ item?.service_code }}</td>
+                      <td>
+                        {{ item?.start_money | formatPrice }} - {{ item?.end_money | formatPrice }}
+                      </td>
+                      <!-- <td>
+                          {{ item?.title }}
+                        </td> -->
+                      <td>
+                        {{ item?.start_date | date:'dd/MM/yyyy' }} - {{ item?.end_date | date:'dd/MM/yyyy' }}
+                      </td>
+                      <td>
+                        {{ item?.value }} <span *ngIf="item?.unit == 'RATIO'">%</span>
+                      </td>
+                      
+                      
+                      <td>                        
+                        
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+                <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                  [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                  (pageChange)="loadPage($event)">
+                  <ng-template ngbPaginationPages let-page let-pages="pages">
+                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                      <div class="mb-3 d-flex flex-nowrap px-2">
+                        <label id="paginationInputLabel" for="paginationInput"
+                          class="col-form-label me-2 ms-1">Trang</label>
+                        <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                          id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                          (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                          aria-labelledby="paginationInputLabel paginationDescription" style="width: 4.5rem" />
+                        <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                          của {{pages.length}}</span>
+                      </div>
+                    </li>
+                  </ng-template>
+                </ngb-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #modalCreate let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+        <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+  
+            <div class="form-group">
+                <label>Tên chương trình (*)</label>
+                <input class="form-control"  type="text"  name="name"
+                [(ngModel)]="dataCreate.name" />
+            </div>
+
+            <div class="form-group">
+              <label for="">Chọn dịch vụ</label>
+                  <!-- <input type="text" class="form-control" (input)="onSearch($event)" placeholder="Tìm kiếm" /> -->
+              <div class="demo-inline-spacing">
+                  <div class="custom-control custom-checkbox" *ngFor="let item of listServices">
+                  <input 
+                   type="checkbox" [value]="item.id" class="custom-control-input"
+                  id="{{item.id}}" type="checkbox" name="choose" class="custom-control-input" (change)="onChangeCheckBox($event, item)" />
+                  <label for="{{item.code}}"  class="custom-control-label" >{{ item.code }}</label>
+                  </div>
+              </div>
+        
+          </div>
+  
+            <div class="form-group">
+              <label>Khoảng thời gian (*)</label>
+              <input class="form-control" ngxDaterangepickerMd [(ngModel)]="dateRange" [ranges]="ranges"
+              [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
+              [alwaysShowCalendars]="true" name="daterange"  />
+            </div>
+  
+            <div class="form-group">
+              <label>Số tiền</label>
+              <div class="row">
+                <div class="col-6">
+                  <label for="">Từ</label>
+                  <input class="form-control" 
+                  name="start_money"
+                  mask="separator" thousandSeparator="," 
+                  [(ngModel)]="dataCreate.start_money" />
+                </div>
+                <div class="col-6">
+                  <label>Đến</label>
+                  <input class="form-control"  name="end_money"
+                  mask="separator" thousandSeparator=","
+                  [(ngModel)]="dataCreate.end_money" />
+                </div>
+              </div>
+              
+            </div>
+            <div class="form-group">
+              <label>Chiết khấu (%)</label>
+              <input class="form-control" 
+              name="value" 
+              mask="separator.2"
+              [(ngModel)]="dataCreate.value" />
+            </div>
+
+            <div class="form-group">
+              <label>Ảnh giấy quyết định phê duyệt (*)</label>
+              <input class="form-control" (change)="onSelectFileFront($event)" accept="image/png, image/gif, image/jpeg, image/jpg"
+              type="file" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a (click)="onCreate()">
+                <button type="submit" class="btn btn-primary" rippleEffect>
+                    Tạo
+                </button>
+            </a>
+        </div>
+  </ng-template>

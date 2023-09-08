@@ -48,6 +48,10 @@ export class TaskTelecom {
         change_user_info: {
             value: 'change_user_info',
             label: 'Đổi thông tin'
+        },
+        CHECK_CONVERSION_2G: {
+            value: 'CHECK_CONVERSION_2G',
+            label: '2G sang 4G'
         }
     };
 }

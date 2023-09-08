@@ -1,0 +1,9 @@
+<div class="row mb-1">
+    <span>SĐT liên hệ: </span> <a (click)="copyTextClipboard(detail?.contact_mobile)" ><span class="text-info ml-2">{{ detail?.contact_mobile }}</span></a>
+</div>
+<div class="row mb-1">
+    <span>Địa chỉ nhận hàng: </span> <a (click)="copyTextClipboard(detail?.ship_address)"><span class="text-info ml-2">{{ detail?.ship_address }}</span></a>
+</div>
+<div class="row">
+    <span>Link tracking đơn hàng: </span> <input type="text" class="form-control" [(ngModel)]="ship_tracking" (change)="onSubmitShipTracking()">
+</div>

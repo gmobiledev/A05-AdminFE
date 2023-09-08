@@ -36,6 +36,12 @@
                   </div>
                 </div>
               </form>
+              <div class="row mt-2 mb-2 pull-right">
+                <div class="">
+                  <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Tạo yêu cầu</button>              
+                </div>
+              </div>
+
               <div class="table-responsive">
                 <table class="table table-striped">
                   <thead>
@@ -51,12 +57,12 @@
                       <th>Thao tác</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody *ngIf="list && list.length > 0">
                     <tr *ngFor="let item of list">
                       <td>{{ item?.id }}</td>
                       <td>{{ item?.trans_id }}</td>
                       <td>
-                        {{ item?.amount | currency:'VND':true}}
+                        {{ item?.amount | formatPrice }}
                       </td>
                       <!-- <td>
                           {{ item?.title }}
@@ -72,23 +78,26 @@
                       </td>
   
                       <td>                        
-                        <div  *ngIf="item.status >= 60 && item.status <= 69 && checkAction('ACCOUNTING')">                          
-                          <button ngbTooltip="Duyệt" (click)="onUpdateStatus(item, 1)"
+                        <div  *ngIf="item.status >= 60 && item.status <= 69">                          
+                          <button ngbTooltip="Duyệt" (click)="modalOpen(modalApprove, item)"
                             class="btn btn-icon btn-info btn-sm mb-2">
-                            <i data-feather="check" class=" cursor-pointer"></i>
+                            <i data-feather="check" class="text-white cursor-pointer"></i>
                           </button>
   
                           <button ngbTooltip="Không duyệt" (click)="onUpdateStatus(item, -1)"
                             class="btn btn-icon btn-warning btn-sm mb-2 ">
-                            <i data-feather="alert-triangle" class=" cursor-pointer"></i>
+                            <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
                           </button>
                         </div>
   
                         <button ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)" class="btn btn-icon btn-info mb-2">
-                          <i data-feather="eye" class="text-primary cursor-pointer"></i>                        
+                          <i data-feather="eye" class="text-white cursor-pointer"></i>                        
                         </button>
                       </td>
                     </tr>
+                  </tbody>
+                  <tbody *ngIf="!list || list.length == 0">
+                      <tr>Không có dữ liệu</tr>
                   </tbody>
                 </table>
   
@@ -141,5 +150,56 @@
           <span>Note: </span> {{ selectedItem?.response_note}}
         </div>
       </div>
+    </div>
+  </ng-template>
+
+  <ng-template #modalCreate let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Tạo yêu cầu</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+  
+      <div class="form-group">
+        <label>Nhập số tiền</label>
+        <input class="form-control" type="text" placeholder="100,000" mask="separator" thousandSeparator=","
+          [(ngModel)]="dataCreatePayment.amount" />
+      </div>
+  
+      <h5>Số tiền : {{ dataCreatePayment.amount | numberToText }}</h5>
+    </div>
+    <div class="modal-footer">
+      <a (click)="onCreateTask()">
+        <button type="submit" class="btn btn-primary" rippleEffect>
+          Khởi tạo
+        </button>
+      </a>
+    </div>
+  </ng-template>
+
+  <ng-template #modalApprove let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Duyệt yêu cầu</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+  
+      <div class="form-group">
+        <label>Đính kèm quyết định phê duyệt</label>
+        <input class="form-control" type="file" (change)="onSelectFileFront($event)" 
+        accept="image/png, image/gif, image/jpeg, image/jpg"
+        />
+      </div>  
+    </div>
+    <div class="modal-footer">
+      <a (click)="onUpdateStatus(selectedItem, 1)">
+        <button type="submit" class="btn btn-primary" rippleEffect>
+          Gửi
+        </button>
+      </a>
     </div>
   </ng-template>

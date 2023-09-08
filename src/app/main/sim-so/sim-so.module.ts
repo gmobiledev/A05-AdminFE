@@ -26,6 +26,7 @@ import { ApproveConvert2gItemComponent } from './approve-convert2g-item/approve-
 import { ApproveConvert2gIdentificationComponent } from './approve-convert2g-identification/approve-convert2g-identification.component';
 import { ViewTaskOrganizationComponent } from './view-task-organization/view-task-organization.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ShipInfoComponent } from './ship-info/ship-info.component';
 
 const routes: Routes = [
   {
@@ -81,7 +82,8 @@ const routes: Routes = [
     Client2gComponent,
     ApproveConvert2gItemComponent,
     ApproveConvert2gIdentificationComponent,
-    ViewTaskOrganizationComponent
+    ViewTaskOrganizationComponent,
+    ShipInfoComponent
   ],
   imports: [
     CommonModule, 
