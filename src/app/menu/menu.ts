@@ -90,7 +90,7 @@ export const menu: CoreMenu[] = [
         title: 'Duyệt Airtime',
         translate: '',
         type: 'item',
-        icon: 'list',
+        icon: 'check-circle',
         url: 'user/airtime'
       },
       {
@@ -98,7 +98,7 @@ export const menu: CoreMenu[] = [
         title: 'Duyệt tài khoản tổng',
         translate: '',
         type: 'item',
-        icon: 'user',
+        icon: 'dollar-sign',
         url: 'merchant/root-payment'
       },
       {
@@ -106,7 +106,7 @@ export const menu: CoreMenu[] = [
         title: 'Chiết khấu',
         translate: '',
         type: 'item',
-        icon: 'list',
+        icon: 'trending-down',
         url: 'services/discount'
       }
     ]
