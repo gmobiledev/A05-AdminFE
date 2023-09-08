@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { CommonService } from 'app/utils/common.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import Swal from 'sweetalert2';
@@ -42,11 +43,17 @@ export class AirtimeTopupComponent implements OnInit {
   public trans;
   public wh;
 
+  dataRollBack = {
+    id: 0,
+    file: ''
+  }
+
   public modalRef: any;
 
   constructor(
     private readonly alertService: SweetAlertService,
     private readonly taskService: TaskService,
+    private commonService: CommonService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal
@@ -93,8 +100,12 @@ export class AirtimeTopupComponent implements OnInit {
     };    
   }
 
-  checkAction(action) {
-    return this.listCurrentRoles.find(item => item.item_name.includes(action))
+  checkRole(item) {
+    return this.listCurrentRoles.find(item => item.item_name.includes(item))
+  }
+
+  checkAction(item) {
+    return this.listCurrentAction ? this.listCurrentAction.find(item => item.includes(item)) : false;
   }
 
   onSubmitSearch(): void {
@@ -189,6 +200,38 @@ export class AirtimeTopupComponent implements OnInit {
     return item ? parseInt(item.value) : amount;
   }
 
+  getDiscount(details) {
+    const item = details.find(x => x.attribute == 'discount');
+    return item ? parseInt(item.value) : 0;
+  }
+
+  async onRollback() {
+    if(!this.dataRollBack.file) {
+      this.alertService.showMess('Vui lòng đính kèm phê duyệt hoàn giao dịch');
+      return;
+    }
+    if ((await this.alertService.showConfirm('Bạn có đồng ý thực hiện thao tác?')).value) {
+      this.taskService.rollBackTask(this.dataRollBack).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.getData();
+        this.alertService.showSuccess(res.message);
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+  }
+
+  async onSelectFileFront(event) {
+    if (event.target.files && event.target.files[0]) {
+      let img = await this.commonService.resizeImage(event.target.files[0]);
+      this.dataRollBack.file = (img+'').replace('data:image/png;base64,', '')
+    }
+  }
+
   onViewDetail(modal, item) {
     this.selectedItem = item;
     this.taskService.getFileMerchantAttach(item.id).subscribe(res => {
@@ -205,8 +248,21 @@ export class AirtimeTopupComponent implements OnInit {
     })
   }
 
+  modalOpen(modal, item) {
+    this.selectedItem = item;
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'lg'
+    });
+  }
+
   modalClose() {
-    this.modalRef.close();;
+    this.dataRollBack = {
+      id: 0,
+      file: ''
+    }
+    this.modalRef.close();
   }
 
   getData(): void {

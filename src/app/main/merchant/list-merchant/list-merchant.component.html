@@ -71,8 +71,8 @@
                     <a ngbTooltip="Xem số dư"  (click)="modalBalanceOpen(modalBalances, item)">
                         <i data-feather="eye" class="text-primary cursor-pointer"></i>
                     </a>
-                    <br>
-                    <a ngbTooltip="Tạo yêu cầu nạp" (click)="modalOpen(modalPayment, item)">
+                    
+                    <a ngbTooltip="Tạo yêu cầu nạp" (click)="modalOpen(modalPayment, item)" class="ml-2">
                         <i data-feather="credit-card" class="text-primary cursor-pointer"></i>
                     </a>
                 </td>
@@ -184,18 +184,35 @@
 
             <div class="form-group">
                 <label>Nhập số tiền</label>
-                <input class="form-control"  type="text" placeholder="100,000" 
+                <input class="form-control"  type="text" placeholder="100,000,000" 
                 mask="separator" thousandSeparator=","
+                (blur)="onInputAmount($event)"
+                name="amount"
                 [(ngModel)]="dataCreatePayment.amount" />
+                <i><small>Chiết khấu : <span *ngIf="discount">{{ discount }}%</span></small></i>
             </div>
 
             <div class="form-group">
                 <label>Nội dụng đơn hàng</label>
                 <input type="text" class="form-control" placeholder="Nhập nội dung đơn hàng"
+                name="desc"
                     [(ngModel)]="dataCreatePayment.desc" />
             </div>
 
-            <h5>Số tiền : {{ dataCreatePayment.amount | numberToText }}</h5>
+            <div class="image-upload mb-1">
+              <input
+                id="file-front-input"
+                type="file"
+                accept="image/png, image/gif, image/jpeg, image/jpg"
+                (change)="onSelectFileFront($event)"
+              />
+              <label>
+                <b>File đính kèm</b>
+              </label>
+            </div>
+
+            <h5>Số tiền nạp thực : {{ price | formatPrice }}</h5>
+            <i>{{ price | numberToText }}</i>
         </div>
         <div class="modal-footer">
             <a (click)="onCreateTask()">

@@ -36,7 +36,7 @@
                   </div>
                 </div>
               </form>
-              <div class="row mt-2 mb-2 pull-right">
+              <div class="row mt-2 mb-2 pull-right" *ngIf="checkAction('admin/task/payment/create-root')">
                 <div class="">
                   <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Tạo yêu cầu</button>              
                 </div>
@@ -71,21 +71,21 @@
                         {{ item?.desc }}
                       </td>
                       <td>
-                        {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
+                        {{ item?.created_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
                       </td>
                       <td>
                         <div [innerHTML]="item.status | showStatusTask"></div>
                       </td>
   
                       <td>                        
-                        <div  *ngIf="item.status >= 60 && item.status <= 69">                          
+                        <div  *ngIf="item.status >= 60 && item.status <= 69 && checkAction('admin/task/payment/approve-root')">                          
                           <button ngbTooltip="Duyệt" (click)="modalOpen(modalApprove, item)"
                             class="btn btn-icon btn-info btn-sm mb-2">
                             <i data-feather="check" class="text-white cursor-pointer"></i>
                           </button>
   
                           <button ngbTooltip="Không duyệt" (click)="onUpdateStatus(item, -1)"
-                            class="btn btn-icon btn-warning btn-sm mb-2 ">
+                            class="ml-2 btn btn-icon btn-warning btn-sm mb-2 ">
                             <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
                           </button>
                         </div>

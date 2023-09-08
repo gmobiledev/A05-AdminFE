@@ -67,6 +67,15 @@ export class TaskService {
   getFileMerchantAttach(id) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/${id}/get-files-merchant-attach`);
   }
+
+  rollBackTask(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/task/payment/rollback`, data);
+  }
+
+  calculatePriceDiscount(data) {
+    return this._http.post<any>(`${environment.apiUrl}/task/calculate-price`, data);
+  }
+  
  
 
 }

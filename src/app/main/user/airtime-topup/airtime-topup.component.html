@@ -54,7 +54,7 @@
                     <th>Đối tác</th>
                     <th>Hình thức</th>
                     <th>Số tiền</th>
-                    <th>Số tiền sau chiết khấu</th>
+                    <th>Số tiền nạp thực</th>
                     <!-- <th>Tiêu đề</th> -->
                     <th>Mô tả</th>
                     <th>Ngày tạo</th>
@@ -88,6 +88,8 @@
                     </td>
                     <td>
                       {{ item?.amount | formatPrice }}
+                      <br>
+                      <i><small>chiết khấu: {{ getDiscount(item?.details) }} %</small></i>
                     </td>
                     <!-- <td>
                         {{ item?.title }}
@@ -96,14 +98,14 @@
                       {{ item?.desc }}
                     </td>
                     <td>
-                      {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
+                      {{ item?.created_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
                     </td>
                     <td>
                       <div [innerHTML]="item.status | showStatusTask"></div>
                     </td>
 
                     <td>
-                      <div *ngIf="item.status >= 10 && item.status <= 19 && checkAction('BUSINESS_DEPARTMENT')">
+                      <div *ngIf="item.status >= 10 && item.status <= 19 && checkRole('BUSINESS_DEPARTMENT')">
                         <button ngbTooltip="Duyệt yêu cầu" (click)="onUpdateStatus(item, 20)"
                           class="btn btn-icon btn-info btn-sm mb-2">
                           <i data-feather="check" class="text-white cursor-pointer"></i>
@@ -115,17 +117,22 @@
                         </button>
                       </div>
 
-                      <div  *ngIf="item.status >= 30 && item.status <= 39 && checkAction('ACCOUNTING')">
-                        
-
+                      <div  *ngIf="item.status >= 30 && item.status <= 39 && checkRole('ACCOUNTING')">                        
                         <button ngbTooltip="Duyệt đã nhận tiền" (click)="onUpdateStatus(item, 1)"
                           class="btn btn-icon btn-info btn-sm mb-2">
                           <i data-feather="check" class="text-white cursor-pointer"></i>
                         </button>
 
                         <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 99)"
-                          class="btn btn-icon btn-warning btn-sm mb-2 ">
+                          class="ml-2 btn btn-icon btn-warning btn-sm mb-2 ">
                           <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
+                        </button>
+                      </div>
+
+                      <div *ngIf="item.status  == 1 && checkAction('admin/task/payment/rollback')">
+                        <button ngbTooltip="Hoàn giao dịch" (click)="modalOpen(modalRollback, item)"
+                          class="btn btn-icon btn-danger btn-sm mb-2 ">
+                          <i data-feather="x-octagon" class="text-white cursor-pointer"></i>
                         </button>
                       </div>
 
@@ -185,20 +192,54 @@
         <span>Số tài khoản: </span> {{ selectedItem?.receiver_banker_number }}
       </div>
     </div>
-    <div class="row" *ngIf="listFiles.files_banking">
+    <div class="row" *ngIf="listFiles.files_request && listFiles.files_request.length > 0">
+      <div class="col-12">Ảnh yêu cầu</div>      
+      <div class="col-6" *ngFor="let item of listFiles.files_request">
+        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row" *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0">
+      <div class="col-12">Ảnh chuyển khoản</div>
       <div class="col-6" *ngFor="let item of listFiles.files_banking">
         <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
       </div>
     </div>
-    <div class="row" *ngIf="listFiles.files_order">
-      <div class="col-6" *ngFor="let item of listFiles.files_order">
+    <div class="row" *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0">
+      <div class="col-12">Ảnh quyết định hoàn tiền</div>
+      <div class="col-6" *ngFor="let item of listFiles.files_rollback">
         <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
       </div>
     </div>
+    
     <div class="row mt-2">
       <div class="col-12">
         <span>Note: </span> {{ selectedItem?.response_note}}
       </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #modalRollback let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Xác nhận hoàn giao dịch</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+
+    <div class="form-group">
+      <label>Đính kèm quyết định phê duyệt</label>
+      <input class="form-control" type="file" (change)="onSelectFileFront($event)" 
+      accept="image/png, image/gif, image/jpeg, image/jpg"
+      />
+    </div>  
+  </div>
+  <div class="modal-footer">
+    <a (click)="onRollback(selectedItem, 1)">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Gửi
+      </button>
+    </a>
   </div>
 </ng-template>

@@ -95,7 +95,7 @@ export class TasksRootAccountComponent implements OnInit {
   }
 
   checkAction(action) {
-    return this.listCurrentRoles.find(item => item.item_name.includes(action))
+    return this.listCurrentAction ? this.listCurrentAction.find(item => item.includes(action)) : false
   }
 
   onSubmitSearch(): void {

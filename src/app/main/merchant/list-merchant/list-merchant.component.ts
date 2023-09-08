@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'app/auth/service';
 import { TaskService } from 'app/auth/service/task.service';
+import { CommonService } from 'app/utils/common.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -28,12 +29,16 @@ export class ListMerchantComponent implements OnInit {
   public listServices: any;
   public listBalances: any;
 
+  public price;
+  public discount;
+
   public dataCreatePayment = {
     amount: 0,
     service_code: "AIRTIME_TOPUP",
     bill_id: "0356342770",
     payment_method: "BANK_TRANSFER",
-    desc: ''
+    desc: '',
+    file: ''
   };
 
   public dataCreateMerchant = {
@@ -51,6 +56,7 @@ export class ListMerchantComponent implements OnInit {
     private userService: UserService,
     private taskService: TaskService,
     private alertService: SweetAlertService,
+    private commonService: CommonService,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private router: Router,
@@ -145,6 +151,7 @@ export class ListMerchantComponent implements OnInit {
   modalOpen(modal, item = null) {    
     if(item) {
       this.selectedUser = item;
+      this.dataCreatePayment.desc = this.selectedUser.mobile + ' thanh toan don hang';
       this.userService.getMerchantService(item.id).subscribe(res => {
         if(!res.status) {
           this.alertService.showMess(res.message);
@@ -183,6 +190,14 @@ export class ListMerchantComponent implements OnInit {
   }
 
   modalClose() {
+    this.dataCreatePayment = {
+      amount: 0,
+      service_code: "AIRTIME_TOPUP",
+      bill_id: "0356342770",
+      payment_method: "BANK_TRANSFER",
+      desc: '',
+      file: ''
+    };
     this.modalRef.close();;
   }
 
@@ -191,6 +206,21 @@ export class ListMerchantComponent implements OnInit {
     // this.formGroup.patchValue({
     //   password: value
     // })
+  }
+
+  onInputAmount(event) {
+  
+    this.taskService.calculatePriceDiscount({ service_code: this.dataCreatePayment.service_code, amount: this.dataCreatePayment.amount }).subscribe(res => {
+      this.price = res.data.amount
+      this.discount = res.data.discount      
+    })
+  }
+
+  async onSelectFileFront(event) {
+    if (event.target.files && event.target.files[0]) {
+      const image = await this.commonService.resizeImage(event.target.files[0]) + '';
+      this.dataCreatePayment.file = image.replace('data:image/png;base64,', '')
+    }
   }
 
   ngOnInit(): void {
