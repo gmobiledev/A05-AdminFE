@@ -33,7 +33,7 @@
                         </td>
                         <td>{{ item?.trans_type }}</td>
                         <td>
-                          {{ sum_out | currency }}
+                          {{ item?.amount | currency }}
                         </td>
 
                         <!-- <td>
@@ -119,7 +119,7 @@
 
                 <tr *ngFor="let item of listIn">
                   <td>
-                    {{ item?.amount | currency }}
+                    {{ sumOut | currency }}
                   </td>
                 </tr>
               </div>
@@ -133,9 +133,9 @@
                 <span class="font-weight-bold ml-75 mr-25"
                   >Tổng tiền chuyển vào</span
                 >
-                <tr *ngFor="let item of listIn">
+                <tr>
                   <td>
-                    {{ item?.amount | currency }}
+                    {{ sumIn | currency }}
                   </td>
                 </tr>
               </div>
