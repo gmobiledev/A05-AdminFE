@@ -619,16 +619,16 @@ export class TaskItemComponent implements OnInit {
 
   onViewImage(modal, type, mobile = null) {
     if (type == 'cccd_front') {
-      this.viewImage = 'data:image/png;base64,' + this.data.people.base64Front
+      this.viewImage = 'data:image/png;base64,' + this.data.customer.people.identification_front_file
     }
     if (type == 'cccd_back') {
-      this.viewImage = 'data:image/png;base64,' + this.data.people.base64Back
+      this.viewImage = 'data:image/png;base64,' + this.data.customer.people.identification_back_file
     }
     if (type == 'selfie') {
-      this.viewImage = 'data:image/png;base64,' + this.data.people.base64Selfie
+      this.viewImage = 'data:image/png;base64,' + this.data.customer.people.identification_selfie_file
     }
     if (type == 'signature') {
-      this.viewImage = 'data:image/png;base64,' + this.data.people.base64Signature
+      this.viewImage = 'data:image/png;base64,' + this.data.customer.people.identification_signature_file
     }
     if (type == 'cccd_front_compare') {
       this.viewImage = 'data:image/png;base64,' + this.data.people.base64FrontCompare
