@@ -76,14 +76,14 @@
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
                     <span><u>Ngày cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                            *ngIf="data?.customer?.people?.identification_date"
+                            *ngIf="data?.people?.identification_date"
                             (click)="copyTextClipboard(data?.customer?.people?.identification_date)">
-                            <span class="text-info">{{ data?.customer?.people?.identification_date }}</span>
+                            <span class="text-info">{{ data?.people?.identification_date }}</span>
                         </a></span>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
                     <span><u>Nơi cấp</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
-                            *ngIf="data?.customer?.people?.identification_place"
+                            *ngIf="data?.people?.identification_place"
                             (click)="copyTextClipboard(data?.customer?.people?.identification_place)">
                             <span class="text-info">{{ data?.customer?.people?.identification_place }}</span>
                         </a></span>
@@ -96,9 +96,9 @@
                         </a></span>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
-                    <span><u>Ngày sinh</u>: <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.customer?.people?.birth"
-                            (click)="copyTextClipboard(data?.customer?.people?.birth)">
-                            <span class="text-info">{{ data?.customer?.people?.birth }}</span>
+                    <span><u>Ngày sinh</u>: <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.birth"
+                            (click)="copyTextClipboard(data?.people?.birth)">
+                            <span class="text-info">{{ data?.people?.birth }}</span>
                         </a></span>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
@@ -110,9 +110,9 @@
                 </div>
                 <div class="col-md-12 col-sm-12 mt-1">
                     <h6>Địa chỉ thường trú:</h6>
-                    <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.customer?.people?.full_address"
-                        (click)="copyTextClipboard(data?.customer?.people?.full_address)">
-                        <span class="text-info">{{ data?.customer?.people?.full_address }}</span></a>
+                    <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.customer?.people?.residence_full_address"
+                        (click)="copyTextClipboard(data?.customer?.people?.residence_full_address)">
+                        <span class="text-info">{{ data?.customer?.people?.residence_full_address }}</span></a>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
                     <span><u>Thôn, số nhà</u>:
@@ -142,7 +142,7 @@
                 <div class="col-md-6 mt-1">
                     <label for="">Ảnh giấy tờ mặt trước</label>
                     <img (click)="onViewImage(modalImage, 'cccd_front') " class="img-fluid rounded mb-75"
-                        src="data:image/png;base64,{{ data?.customer?.people?.identification_back_file }}" alt="avatar img" />
+                        src="data:image/png;base64,{{ data?.customer?.people?.identification_front_file }}" alt="avatar img" />
                 </div>
 
                 <div class="col-md-6 mt-1">
