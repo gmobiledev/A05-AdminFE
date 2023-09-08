@@ -153,6 +153,10 @@ export class DiscountsComponent implements OnInit {
         this.alertService.showMess('Vui lòng nhập đầy đủ thông tin');
         return;
       }
+      if(this.dataCreate.service_id.length < 1) {
+        this.alertService.showMess('Vui lòng chọn dịch vụ');
+        return;
+      }
       this.gServiceService.createDiscount(this.dataCreate).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);
@@ -188,6 +192,18 @@ export class DiscountsComponent implements OnInit {
     this.modalRef.close();;
   }
 
+  onChangeCheckBox(event, item) { 
+    if(event.target.checked){
+      this.dataCreate.service_id.push(event.target.value);
+    }
+    else{
+      const i = this.dataCreate.service_id.findIndex(value => value == event.target.value);
+      if(i) {
+        this.dataCreate.service_id.splice(i, 1);
+      }
+    }
+  }
+
   getData(): void {
     this.gServiceService.getDiscount(this.searchForm).subscribe(res => {
       this.list = res.data.items;
@@ -199,7 +215,9 @@ export class DiscountsComponent implements OnInit {
     this.gServiceService.getAllService().subscribe(res => {
       this.listServices = res.data;
       const airtime = this.listServices.find(item => item.code == 'AIRTIME_TOPUP');
+      
       if(airtime) {
+        this.listServices = [airtime];
         this.dataCreate.service_id = [airtime.id];
       }
     })

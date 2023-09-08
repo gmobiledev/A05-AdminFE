@@ -31,9 +31,9 @@
                       <option value="1">Thành công</option>
                       <option value="99">Từ chối</option>
                       <option value="-1">Hủy</option>
-                      <option value="10">Chờ KD duyệt</option>
+                      <!-- <option value="10">Chờ KD duyệt</option> -->
                       <option value="20">Chờ thanh toán</option>
-                      <option value="30">KD duyệt, Chờ KT duyệt</option>
+                      <option value="30">Chờ KT duyệt</option>
                     </select>
                   </div>
                 </div>
@@ -54,6 +54,7 @@
                     <th>Đối tác</th>
                     <th>Hình thức</th>
                     <th>Số tiền</th>
+                    <th>Số tiền sau chiết khấu</th>
                     <!-- <th>Tiêu đề</th> -->
                     <th>Mô tả</th>
                     <th>Ngày tạo</th>
@@ -83,7 +84,10 @@
                       </span>
                     </td>
                     <td>
-                      {{ item?.amount | currency:'VND':true}}
+                      {{ getMoneyBeforeDiscount(item?.details, item.amount) | formatPrice }}
+                    </td>
+                    <td>
+                      {{ item?.amount | formatPrice }}
                     </td>
                     <!-- <td>
                         {{ item?.title }}
@@ -102,12 +106,12 @@
                       <div *ngIf="item.status >= 10 && item.status <= 19 && checkAction('BUSINESS_DEPARTMENT')">
                         <button ngbTooltip="Duyệt yêu cầu" (click)="onUpdateStatus(item, 20)"
                           class="btn btn-icon btn-info btn-sm mb-2">
-                          <i data-feather="check" class=" cursor-pointer"></i>
+                          <i data-feather="check" class="text-white cursor-pointer"></i>
                         </button>
 
                         <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 99)"
                           class="btn btn-icon btn-danger btn-sm mb-2">
-                          <i data-feather="x-circle" class=" cursor-pointer"></i>
+                          <i data-feather="x-circle" class="text-white cursor-pointer"></i>
                         </button>
                       </div>
 
@@ -116,17 +120,17 @@
 
                         <button ngbTooltip="Duyệt đã nhận tiền" (click)="onUpdateStatus(item, 1)"
                           class="btn btn-icon btn-info btn-sm mb-2">
-                          <i data-feather="check" class=" cursor-pointer"></i>
+                          <i data-feather="check" class="text-white cursor-pointer"></i>
                         </button>
 
                         <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 99)"
                           class="btn btn-icon btn-warning btn-sm mb-2 ">
-                          <i data-feather="alert-triangle" class=" cursor-pointer"></i>
+                          <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
                         </button>
                       </div>
 
                       <button ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)" class="btn btn-icon btn-info mb-2">
-                        <i data-feather="eye" class="text-primary cursor-pointer"></i>                        
+                        <i data-feather="eye" class="text-white cursor-pointer"></i>                        
                       </button>
 
                     </td>

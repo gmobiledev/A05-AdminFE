@@ -338,11 +338,14 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3"
+    <div class="row mb-2"
         *ngIf="data?.task?.status == taskTelecomStatus.STATUS_SUCCESS_PART || data?.task?.status == taskTelecomStatus.STATUS_SUCCESS || data?.task?.status == taskTelecomStatus.STATUS_CANCEL">
         <span>Thời gian hoàn thành: </span> {{ data.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
-    </div>
-    <div class="row mb-3" *ngIf="data.task.note">
+    </div>    
+    <!-- <div class="row mb-2" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >
+        <span>Link ship: </span> {{ linkShipTracking }}
+    </div> -->
+    <div class="row mb-2" *ngIf="data.task.note">
         <span>Note: </span> {{ data.task.note }}
     </div>
     <div class="row pull-right"
@@ -359,7 +362,10 @@
             Đẩy sang nhà mạng
         </a>
     </div> -->
-        <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING">
+        <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING
+        && (data.task.action == listTaskAction['change_info']['value'] || data.task.action == listTaskAction['change_user_info']['value']
+        || data.task.action == listTaskAction['new_sim']['value'] )
+        ">
             <a class="ml-2 btn btn-success" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)">
                 <i data-feather="check-circle" class="text-white cursor-pointer"></i>
                 <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
@@ -404,6 +410,29 @@
 
             </a>
         </div>
+
+        <div *ngIf="data.task.action == listTaskAction['CHECK_CONVERSION_2G']['value']" >
+            <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT"
+             class="ml-2 btn btn-success" (click)="onUpdateStatus2G(item, 1)" >
+                <i data-feather="check" class="text-white cursor-pointer"></i>                
+                Duyệt
+            </a>
+
+            <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT"
+             class="ml-2 btn btn-danger" (click)="onUpdateStatus2G(item, -1)" >
+                <i data-feather="slash" class="text-white cursor-pointer"></i>                
+                Từ chối
+            </a>
+
+            <a *ngIf="data.task.status == taskTelecomStatus.STATUS_PROCESSING
+            || data.task.status == taskTelecomStatus.STATUS_APPROVED" class="ml-2 btn btn-info" 
+            (click)="onCreateTaskNewSim(item)"
+            >
+                <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>                
+                Tiếp tục
+            </a>
+        </div>        
+
         <!-- <div *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL && data.task.status != taskTelecomStatus.STATUS_SUCCESS">
         <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_CANCEL)">
             <i data-feather="slash" class="text-white cursor-pointer"></i>
@@ -411,6 +440,13 @@
         </a>
     </div> -->
     </div>
+    <!-- <div class="row" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >        
+        <a 
+         class="btn btn-info" (click)="onModalShipOpen(modalUpdateShipTracking)" >
+            <i data-feather="pencil" class="text-white cursor-pointer"></i>                
+            Nhập link ship
+        </a>
+    </div> -->
 </div>
 
 <ng-template #modalImage let-modal>
@@ -422,5 +458,55 @@
     </div>
     <div class="modal-body" tabindex="0">
         <app-poup-view-image [srcImage]="viewImage"></app-poup-view-image>
+    </div>
+</ng-template>
+
+<ng-template #modalCreateTask let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel160">Tải ảnh sim và nhập số serial</h4>
+        <button type="button" class="close" (click)="onCloseModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0">
+        <div class="form-group">
+            <label for="">Ảnh sim</label>
+            <input type="file" (change)="onSelectFile($event, 'sim')" >
+        </div>
+        <div class="form-group">
+            <label for="">Số serial</label>
+            <input type="text" #serial_input class="form-control">
+        </div>
+        <div class="form-group">
+            <a class="ml-2 btn btn-success" (click)="onSubmitCreateNewTask(serial_input?.value)" >
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                <span>
+                    Gửi
+                </span>
+            </a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #modalUpdateShipTracking let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel160">Nhập link ship tracking</h4>
+        <button type="button" class="close" (click)="onCloseModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0">
+        <div class="form-group">
+            <label for="">Link</label>
+            <input type="text" class="form-control" #link_ship_tracking_input>
+        </div>
+        <div class="form-group">
+            <a class="ml-2 btn btn-success" (click)="onSubmitShipTracking(link_ship_tracking_input?.value)" >
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                <span>
+                    Lưu
+                </span>
+            </a>
+        </div>
     </div>
 </ng-template>

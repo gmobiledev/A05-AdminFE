@@ -184,6 +184,11 @@ export class AirtimeTopupComponent implements OnInit {
     }
   }
 
+  getMoneyBeforeDiscount(details, amount) {
+    const item = details.find(x => x.attribute == 'amount_before');
+    return item ? parseInt(item.value) : amount;
+  }
+
   onViewDetail(modal, item) {
     this.selectedItem = item;
     this.taskService.getFileMerchantAttach(item.id).subscribe(res => {
