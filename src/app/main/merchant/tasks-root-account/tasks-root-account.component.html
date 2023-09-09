@@ -58,6 +58,7 @@
                       <!-- <th>Tiêu đề</th> -->
                       <th>Mô tả</th>
                       <th>Ngày tạo</th>
+                      <th>Ngày duyệt</th>
                       <th>Trạng thái</th>
                       <th>Thao tác</th>
                     </tr>
@@ -79,12 +80,15 @@
                         {{ item?.created_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
                       </td>
                       <td>
+                        {{ item?.trans_finished_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
+                      </td>
+                      <td>
                         <div [innerHTML]="item.status | showStatusTask"></div>
                       </td>
   
                       <td>                        
-                        <div  *ngIf="item.status >= 60 && item.status <= 69 && checkAction('admin/task/payment/approve-root')">                          
-                          <button ngbTooltip="Duyệt" (click)="modalOpen(modalApprove, item)"
+                        <!-- <div  *ngIf="item.status >= 60 && item.status <= 69 && checkAction('admin/task/payment/approve-root')">                          
+                          <button ngbTooltip="Duyệt" (click)="onViewDetail(modalDetail, item)"
                             class="btn btn-icon btn-info btn-sm mb-2">
                             <i data-feather="check" class="text-white cursor-pointer"></i>
                           </button>
@@ -93,7 +97,7 @@
                             class="ml-2 btn btn-icon btn-warning btn-sm mb-2 ">
                             <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
                           </button>
-                        </div>
+                        </div> -->
   
                         <button ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)" class="btn btn-icon btn-info mb-2">
                           <i data-feather="eye" class="text-white cursor-pointer"></i>                        
@@ -153,6 +157,15 @@
         </div>
       </div>
     </div>
+    <div class="modal-footer" *ngIf="selectedItem && selectedItem.status >= 60 && selectedItem.status <= 69 && checkAction('admin/task/payment/approve-root')">
+        <button (click)="onUpdateStatus(selectedItem, 1)" class="btn btn-info btn-sm mb-2">
+          <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+        </button>
+        
+        <button  (click)="onUpdateStatus(selectedItem, -1)" class="ml-2 btn btn-warning btn-sm mb-2 ">
+          <i data-feather="alert-triangle" class="text-white cursor-pointer"></i> Không duyệt
+        </button>
+    </div>
   </ng-template>
 
   <ng-template #modalCreate let-modal>
@@ -169,7 +182,14 @@
         <input class="form-control" type="text" placeholder="100,000" mask="separator" thousandSeparator=","
           [(ngModel)]="dataCreatePayment.amount" />
       </div>
-  
+
+      <div class="form-group">
+        <label>Đính kèm quyết định phê duyệt (*)</label>
+        <input class="form-control" type="file" (change)="onSelectFileFront($event)" 
+        accept="image/png, image/gif, image/jpeg, image/jpg"
+        />
+      </div>
+
       <h5>Số tiền : {{ dataCreatePayment.amount | numberToText }}</h5>
     </div>
     <div class="modal-footer">
@@ -193,12 +213,6 @@
         <label for="">Ghi chú</label>
         <textarea name="" id="" class="form-control" rows="5" [(ngModel)]="dataApprove.note"></textarea>
       </div>
-      <div class="form-group">
-        <label>Đính kèm quyết định phê duyệt</label>
-        <input class="form-control" type="file" (change)="onSelectFileFront($event)" 
-        accept="image/png, image/gif, image/jpeg, image/jpg"
-        />
-      </div>  
     </div>
     <div class="modal-footer">
       <a (click)="onUpdateStatus(selectedItem, 1)">

@@ -23,14 +23,6 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'dashboard/reports'
-      },
-      {
-        id: 'users',
-        title: 'Sao kê',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'merchant/root'
       }
     ]
   },
@@ -108,6 +100,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'trending-down',
         url: 'services/discount'
+      },
+      {
+        id: 'users',
+        title: 'Báo cáo',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'merchant/root'
       }
     ]
   },

@@ -36,7 +36,8 @@ export class AirtimeTopupComponent implements OnInit {
     is_bank_sign: '',
     page: 1,
     service_code: '',
-    page_size: 20
+    page_size: 20,
+    money_out: 0
   }
   
   public task;
@@ -101,11 +102,11 @@ export class AirtimeTopupComponent implements OnInit {
   }
 
   checkRole(item) {
-    return this.listCurrentRoles.find(item => item.item_name.includes(item))
+    return this.listCurrentRoles.find(itemX => itemX.item_name.includes(item))
   }
 
   checkAction(item) {
-    return this.listCurrentAction ? this.listCurrentAction.find(item => item.includes(item)) : false;
+    return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
   onSubmitSearch(): void {
@@ -154,7 +155,9 @@ export class AirtimeTopupComponent implements OnInit {
               Swal.showValidationMessage(
                 res.message
               )
-              // this.alertService.showError(res.message);
+              this.getData();
+          //this.updateStatus.emit({updated: true});
+              // this.alertService.showSuccess('Thành công');
               return;
             }
           }, error => {
@@ -168,6 +171,7 @@ export class AirtimeTopupComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.getData();
+          this.modalClose();
           //this.updateStatus.emit({updated: true});
           this.alertService.showSuccess('Thành công');
         }
@@ -185,6 +189,7 @@ export class AirtimeTopupComponent implements OnInit {
             this.alertService.showMess(res.message);
             return;
           }
+          this.modalClose();
           this.getData();
           this.alertService.showSuccess(res.message);
         }, error => {
@@ -200,9 +205,14 @@ export class AirtimeTopupComponent implements OnInit {
     return item ? parseInt(item.value) : amount;
   }
 
+  getMoneyAfterDiscount(details, amount) {
+    const item = details.find(x => x.attribute == 'amount_after');
+    return item ? parseInt(item.value) : amount;
+  }
+
   getDiscount(details) {
     const item = details.find(x => x.attribute == 'discount');
-    return item ? parseInt(item.value) : 0;
+    return item ? item.value : 0;
   }
 
   async onRollback() {

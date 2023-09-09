@@ -127,6 +127,7 @@
               <div class="demo-inline-spacing">
                   <div class="custom-control custom-checkbox" *ngFor="let item of listServices">
                   <input 
+                  [checked]="dataCreate.service_id.includes(item.id)"
                    type="checkbox" [value]="item.id" class="custom-control-input"
                   id="{{item.id}}" type="checkbox" name="choose" class="custom-control-input" (change)="onChangeCheckBox($event, item)" />
                   <label for="{{item.code}}"  class="custom-control-label" >{{ item.code }}</label>

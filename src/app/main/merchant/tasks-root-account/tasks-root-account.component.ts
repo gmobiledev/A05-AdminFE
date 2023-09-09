@@ -38,13 +38,13 @@ export class TasksRootAccountComponent implements OnInit {
   }
   public file: any;
   public dataCreatePayment = {
-    amount: 0
+    amount: 0,
+    file: ''
   }
   public dataApprove = {
     id: 0,
     status: 0,
-    note: '',
-    file: ''
+    note: ''
   }
   public balance;
   public modalRef: any;
@@ -123,10 +123,9 @@ export class TasksRootAccountComponent implements OnInit {
   async onUpdateStatus(item, status) {
     this.dataApprove.id = item.id;
     this.dataApprove.status = status;
-    this.dataApprove.note = '';
-   
-    if (status == -1) {
-      let titleS = 'Hủy bỏ';
+
+    if (status == -1 || status == 1) {
+      let titleS = status == -1 ? 'Hủy bỏ yêu cầu' :  'Duyệt yêu cầu';
       
       Swal.fire({
         title: titleS,
@@ -137,52 +136,44 @@ export class TasksRootAccountComponent implements OnInit {
         showCancelButton: true,
         confirmButtonText: 'Gửi',
         showLoaderOnConfirm: true,
-        preConfirm: (note) => {
-          if (!note || note == '') {
+        preConfirm: async (note) => {
+          if (status == -1 && (!note || note == '')) {
             Swal.showValidationMessage(
               "Vui lòng nhập nội dung"
             )
             return;
           }
           this.dataApprove.note = note;
+          let confirmMessage = "Bạn có đồng ý thực hiện thao tác?";
+          if ((await this.alertService.showConfirm(confirmMessage)).value) {
           this.taskService.approveTaskRoot(this.dataApprove).subscribe(res => {
             if (!res.status) {
               Swal.showValidationMessage(
                 res.message
               )
-              // this.alertService.showError(res.message);
+              // this.alertService.showError(res.message);                            
               return;
             }
+            this.modalClose();
+            this.getData();
+
           }, error => {
             Swal.showValidationMessage(
               error
             )
-          });
+          })
+        };
 
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
         if (result.isConfirmed) {
+          this.modalClose();
           this.getData();
           //this.updateStatus.emit({updated: true});
           this.alertService.showSuccess('Thành công');
         }
       })
-    } else {
-      let confirmMessage = "Bạn có đồng ý thực hiện thao tác?";
-      if ((await this.alertService.showConfirm(confirmMessage)).value) {
-        this.taskService.approveTaskRoot(this.dataApprove).subscribe(res => {
-          if (!res.status) {
-            this.alertService.showMess(res.message);
-            return;
-          }
-          this.getData();
-          this.alertService.showSuccess(res.message);
-        }, error => {
-          this.alertService.showMess(error);
-          return;
-        })
-      }
     }
   }
 
@@ -207,6 +198,14 @@ export class TasksRootAccountComponent implements OnInit {
   }
 
   async onCreateTask() {
+    if(!this.dataCreatePayment.amount) {
+      return this.alertService.showMess("Vui lòng nhập đủ thông tin");
+      return;
+    }
+    if(!this.dataCreatePayment.file) {
+      this.alertService.showMess("Vui lòng đính kèm ảnh quyết định duyệt");
+      return;
+    }
     if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {   
       this.taskService.createTaskRoot(this.dataCreatePayment).subscribe(res => {
         if (!res.status) {
@@ -226,7 +225,7 @@ export class TasksRootAccountComponent implements OnInit {
   async onSelectFileFront(event) {
     if (event.target.files && event.target.files[0]) {
       let img = await this.commonService.resizeImage(event.target.files[0]);
-      this.dataApprove.file = (img+'').replace('data:image/png;base64,', '')
+      this.dataCreatePayment.file = (img+'').replace('data:image/png;base64,', '')
     }
   }
 
