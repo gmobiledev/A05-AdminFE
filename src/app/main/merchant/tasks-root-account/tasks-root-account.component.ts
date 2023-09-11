@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'app/auth/service';
@@ -7,6 +7,11 @@ import { CommonService } from 'app/utils/common.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import Swal from 'sweetalert2';
+import dayjs from 'dayjs';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+dayjs.locale('vi')
+import { TelecomService } from 'app/auth/service/telecom.service';
+import { GtalkService } from 'app/auth/service/gtalk.service';
 
 
 @Component({
@@ -15,6 +20,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./tasks-root-account.component.scss']
 })
 export class TasksRootAccountComponent implements OnInit {
+
+  @Input() service: string;
 
   public contentHeader: any;
   public list: any;
@@ -36,11 +43,25 @@ export class TasksRootAccountComponent implements OnInit {
     service_code: '',
     page_size: 20
   }
+  dateRange: any;
+  ranges: any = {
+    'Hôm nay': [dayjs(), dayjs()],
+    'Hôm qua': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
+    'Tuần vừa qua': [dayjs().subtract(6, 'days'), dayjs()],
+    'Tháng này': [dayjs().startOf('month'), dayjs().endOf('month')],
+    'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
+  }
   public file: any;
   public dataCreatePayment = {
     amount: 0,
     file: ''
   }
+
+  public dataExcel = {
+    "service_code": "AIRTIME_TOPUP",
+    "is_task_account_root": true
+  }
+
   public dataApprove = {
     id: 0,
     status: 0,
@@ -56,7 +77,9 @@ export class TasksRootAccountComponent implements OnInit {
     private commonService: CommonService,
     private router: Router,
     private route: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,  
+    private gtalkService: GtalkService,
+    private telecomService: TelecomService
   ) { 
     this.route.queryParams.subscribe(params => {
       this.searchForm.title = params['title'] && params['title'] != undefined ? params['title'] : '';
@@ -101,7 +124,34 @@ export class TasksRootAccountComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
+    console.log(this.dateRange);
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate ?
+      this.dateRange.startDate.toISOString().slice(0, 10) + '|' + this.dateRange.endDate.toISOString().slice(0, 10) : '';
+    this.searchForm.daterange = daterangeString;
+    console.log(this.searchForm);
     this.router.navigate(['/merchant/root-payment'], { queryParams: this.searchForm})
+  }
+
+  onSubmitExportExcelReport() {
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
+    this.searchForm.daterange = daterangeString;
+
+    this.userService.exportExcelReport(this.dataExcel).subscribe(res => {
+      console.log(res.body.type)
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Báo cáo Airtime";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
+
   }
 
   loadPage(page) {

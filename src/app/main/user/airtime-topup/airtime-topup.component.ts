@@ -8,7 +8,7 @@ import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { UserService } from 'app/auth/service';
 dayjs.locale('vi')
 import { GtalkService } from 'app/auth/service/gtalk.service';
 
@@ -19,7 +19,6 @@ import { GtalkService } from 'app/auth/service/gtalk.service';
 })
 export class AirtimeTopupComponent implements OnInit {
   @Input() service: string;
-  private myUrl = "user/airtime"
 
   public contentHeader: any;
   public list: any;
@@ -44,6 +43,11 @@ export class AirtimeTopupComponent implements OnInit {
     service_code: '',
     page_size: 20,
     money_out: 0
+  }
+
+  public dataExcel = {
+    "service_code": "AIRTIME_TOPUP",
+    "is_task_account_root": false
   }
 
   public task;
@@ -73,7 +77,9 @@ export class AirtimeTopupComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private gtalkService: GtalkService,
-    private telecomService: TelecomService
+    private telecomService: TelecomService,
+    private userService: UserService,
+
 
   ) {
     this.route.queryParams.subscribe(params => {
@@ -86,17 +92,13 @@ export class AirtimeTopupComponent implements OnInit {
       this.searchForm.is_customer_sign = params['is_customer_sign'] && params['is_customer_sign'] != undefined ? params['is_customer_sign'] : '';
       this.searchForm.is_guarantee_sign = params['is_guarantee_sign'] && params['is_guarantee_sign'] != undefined ? params['is_guarantee_sign'] : '';
       this.searchForm.is_bank_sign = params['is_bank_sign'] && params['is_bank_sign'] != undefined ? params['is_bank_sign'] : '';
-      this.searchForm.daterange = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
+      this.searchForm.daterange = params['daterange'] && params['daterange'] != undefined ? params['daterange'] : '';
 
       this.route.data.subscribe(data => {
         console.log(data);
       });
       this.getData();
 
-
-      if (this.service == "gtalk") {
-        this.myUrl = "/gtalk/airtime"
-      }
     })
   }
 
@@ -133,13 +135,11 @@ export class AirtimeTopupComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
-    console.log(this.dateRange);
-    const daterangeString = this.dateRange.startDate && this.dateRange.endDate ?
-      this.dateRange.startDate.toISOString().slice(0, 10) + '|' + this.dateRange.endDate.toISOString().slice(0, 10) : '';
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.daterange = daterangeString;
-    console.log(this.searchForm);
     this.router.navigate(['/user/airtime'], { queryParams: this.searchForm })
-
   }
 
   onSubmitExportExcelReport() {
@@ -147,33 +147,21 @@ export class AirtimeTopupComponent implements OnInit {
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.daterange = daterangeString;
-    if (this.service == "gtalk") {
-      this.gtalkService.exportExcelReport(this.searchForm).subscribe(res => {
-        var newBlob = new Blob([res.body], { type: res.body.type });
-        let url = window.URL.createObjectURL(newBlob);
-        let a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = url;
-        a.download = "Báo cáo airtime";
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
-      })
-    } else {
-      this.telecomService.exportExcelReport(this.searchForm).subscribe(res => {
-        var newBlob = new Blob([res.body], { type: res.body.type });
-        let url = window.URL.createObjectURL(newBlob);
-        let a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = url;
-        a.download = "Báo cáo airtime";
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
-      })
-    }
+
+    this.userService.exportExcelReport(this.dataExcel).subscribe(res => {
+      console.log(res.body.type)
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Báo cáo Airtime";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
+
   }
 
   loadPage(page) {

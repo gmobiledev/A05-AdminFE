@@ -15,6 +15,8 @@ import { TasksRootAccountComponent } from './tasks-root-account/tasks-root-accou
 import { NgChartsModule } from 'ng2-charts';
 import { CodeInputModule } from 'angular-code-input';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+
 
 const routes: Routes = [
   {
@@ -51,7 +53,9 @@ const routes: Routes = [
     CodeInputModule,
     NgxMaskModule.forRoot(),
     BlockUIModule.forRoot(),
-    NgApexchartsModule
+    NgApexchartsModule,
+   
+    NgxDaterangepickerMd.forRoot()
   ],
   providers: []
 })

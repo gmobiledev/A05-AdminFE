@@ -1,93 +1,155 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
-  
-      <div class="row" id="table-striped">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
-            </div>
-            <div class="card-body">
-              <div class="row mb-1">
-                <div class="col-12">
-                  <h4><b>Số dư tài khoản tổng: <span class="text-success">{{ balance | formatPrice }}</span></b></h4>
-                </div>                
-              </div>
-              <form (ngSubmit)="onSubmitSearch()">
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control"
-                        placeholder="Nhập mã giao dịch">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <select class="form-control" name="status" [(ngModel)]="searchForm.status">
-                        <option value="">Chọn trạng thái task</option>
-  
-                        <option value="1">Thành công</option>
-                        <option value="0">Thất bại</option>
-                        <option value="-1">Từ chối</option>
-                        <option value="60">Chờ duyệt</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-              <div class="row mt-2 mb-2 pull-right" *ngIf="checkAction('admin/task/payment/create-root')">
-                <div class="">
-                  <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Tạo yêu cầu</button>              
-                </div>
-              </div>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Mã giao dịch</th>
-                      <!-- <th>User</th> -->
-                      <th>Số tiền</th>
-                      <!-- <th>Tiêu đề</th> -->
-                      <th>Mô tả</th>
-                      <th>Ngày tạo</th>
-                      <th>Ngày duyệt</th>
-                      <th>Trạng thái</th>
-                      <th>Thao tác</th>
-                    </tr>
-                  </thead>
-                  <tbody *ngIf="list && list.length > 0">
-                    <tr *ngFor="let item of list">
-                      <td>{{ item?.id }}</td>
-                      <td>{{ item?.trans_id }}</td>
-                      <td>
-                        {{ item?.amount | formatPrice }}
-                      </td>
-                      <!-- <td>
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row mb-1">
+              <div class="col-12">
+                <h4>
+                  <b
+                    >Số dư tài khoản tổng:
+                    <span class="text-success">{{
+                      balance | formatPrice
+                    }}</span></b
+                  >
+                </h4>
+              </div>
+            </div>
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="trans_id"
+                      [(ngModel)]="searchForm.trans_id"
+                      class="form-control"
+                      placeholder="Nhập mã giao dịch"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      placeholder="Khoảng thời gian"
+                      autocomplete="off"
+                      [ngModelOptions]="{ standalone: true }"
+                      ngxDaterangepickerMd
+                      [(ngModel)]="dateRange"
+                      [ranges]="ranges"
+                      [locale]="{ applyLabel: 'Chọn', format: 'DD/MM/YYYY' }"
+                      [showCustomRangeLabel]="true"
+                      [alwaysShowCalendars]="true"
+                      name="date_range"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                    >
+                      <option value="">Chọn trạng thái task</option>
+                      <option value="1">Thành công</option>
+                      <option value="0">Thất bại</option>
+                      <option value="-1">Từ chối</option>
+                      <option value="60">Chờ duyệt</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button
+                      type="button"
+                      class="btn btn-block btn-success"
+                      (click)="onSubmitExportExcelReport()"
+                    >
+                      Xuất báo cáo excel <span [data-feather]="'file'"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div
+              class="row mt-2 mb-2 pull-right"
+              *ngIf="checkAction('admin/task/payment/create-root')"
+            >
+              <div class="">
+                <button
+                  type="button"
+                  (click)="modalOpen(modalCreate)"
+                  class="btn btn-success mr-2"
+                >
+                  Tạo yêu cầu
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Mã giao dịch</th>
+                    <!-- <th>User</th> -->
+                    <th>Số tiền</th>
+                    <!-- <th>Tiêu đề</th> -->
+                    <th>Mô tả</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày duyệt</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="list && list.length > 0">
+                  <tr *ngFor="let item of list">
+                    <td>{{ item?.id }}</td>
+                    <td>{{ item?.trans_id }}</td>
+                    <td>
+                      {{ item?.amount | formatPrice }}
+                    </td>
+                    <!-- <td>
                           {{ item?.title }}
                         </td> -->
-                      <td>
-                        {{ item?.desc }}
-                      </td>
-                      <td>
-                        {{ item?.created_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
-                      </td>
-                      <td>
-                        {{ item?.trans_finished_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
-                      </td>
-                      <td>
-                        <div [innerHTML]="item.status | showStatusTask"></div>
-                      </td>
-  
-                      <td>                        
-                        <!-- <div  *ngIf="item.status >= 60 && item.status <= 69 && checkAction('admin/task/payment/approve-root')">                          
+                    <td>
+                      {{ item?.desc }}
+                    </td>
+                    <td>
+                      {{
+                        item?.created_at | date : "dd/MM/yyyy H:mm" : "+0000"
+                      }}
+                    </td>
+                    <td>
+                      {{
+                        item?.trans_finished_at
+                          | date : "dd/MM/yyyy H:mm" : "+0000"
+                      }}
+                    </td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatusTask"></div>
+                    </td>
+
+                    <td>
+                      <!-- <div  *ngIf="item.status >= 60 && item.status <= 69 && checkAction('admin/task/payment/approve-root')">                          
                           <button ngbTooltip="Duyệt" (click)="onViewDetail(modalDetail, item)"
                             class="btn btn-icon btn-info btn-sm mb-2">
                             <i data-feather="check" class="text-white cursor-pointer"></i>
@@ -98,127 +160,206 @@
                             <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
                           </button>
                         </div> -->
-  
-                        <button ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)" class="btn btn-icon btn-info mb-2">
-                          <i data-feather="eye" class="text-white cursor-pointer"></i>                        
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <tbody *ngIf="!list || list.length == 0">
-                      <tr>Không có dữ liệu</tr>
-                  </tbody>
-                </table>
-  
-                <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
-                  [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
-                  (pageChange)="loadPage($event)">
-                  <ng-template ngbPaginationPages let-page let-pages="pages">
-                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
-                      <div class="mb-3 d-flex flex-nowrap px-2">
-                        <label id="paginationInputLabel" for="paginationInput"
-                          class="col-form-label me-2 ms-1">Trang</label>
-                        <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
-                          id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
-                          (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
-                          aria-labelledby="paginationInputLabel paginationDescription" style="width: 4.5rem" />
-                        <span id="paginationDescription" class="col-form-label text-nowrap px-2">
-                          của {{pages.length}}</span>
-                      </div>
-                    </li>
-                  </ng-template>
-                </ngb-pagination>
-              </div>
+
+                      <button
+                        ngbTooltip="Xem chi tiết"
+                        (click)="onViewDetail(modalDetail, item)"
+                        class="btn btn-icon btn-info mb-2"
+                      >
+                        <i
+                          data-feather="eye"
+                          class="text-white cursor-pointer"
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="!list || list.length == 0">
+                  <tr>
+                    Không có dữ liệu
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalItems"
+                [(page)]="searchForm.page"
+                [pageSize]="searchForm.page_size"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 4.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <ng-template #modalDetail let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <div class="row" *ngIf="listFiles.files_approve_root && listFiles.files_approve_root.length > 0">
-        <div class="col-12">Ảnh quyết duyệt</div>
-        <div class="col-6" *ngFor="let item of listFiles.files_approve_root">
-          <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
-        </div>
-      </div>
-      
-      <div class="row mt-2">
-        <div class="col-12">
-          <span>Note: </span> {{ selectedItem?.response_note}}
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer" *ngIf="selectedItem && selectedItem.status >= 60 && selectedItem.status <= 69 && checkAction('admin/task/payment/approve-root')">
-        <button (click)="onUpdateStatus(selectedItem, 1)" class="btn btn-info btn-sm mb-2">
-          <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
-        </button>
-        
-        <button  (click)="onUpdateStatus(selectedItem, -1)" class="ml-2 btn btn-warning btn-sm mb-2 ">
-          <i data-feather="alert-triangle" class="text-white cursor-pointer"></i> Không duyệt
-        </button>
-    </div>
-  </ng-template>
+</div>
 
-  <ng-template #modalCreate let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Tạo yêu cầu</h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-  
-      <div class="form-group">
-        <label>Nhập số tiền</label>
-        <input class="form-control" type="text" placeholder="100,000" mask="separator" thousandSeparator=","
-          [(ngModel)]="dataCreatePayment.amount" />
+<ng-template #modalDetail let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div
+      class="row"
+      *ngIf="
+        listFiles.files_approve_root && listFiles.files_approve_root.length > 0
+      "
+    >
+      <div class="col-12">Ảnh quyết duyệt</div>
+      <div class="col-6" *ngFor="let item of listFiles.files_approve_root">
+        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid" />
       </div>
+    </div>
 
-      <div class="form-group">
-        <label>Đính kèm quyết định phê duyệt (*)</label>
-        <input class="form-control" type="file" (change)="onSelectFileFront($event)" 
+    <div class="row mt-2">
+      <div class="col-12">
+        <span>Note: </span> {{ selectedItem?.response_note }}
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal-footer"
+    *ngIf="
+      selectedItem &&
+      selectedItem.status >= 60 &&
+      selectedItem.status <= 69 &&
+      checkAction('admin/task/payment/approve-root')
+    "
+  >
+    <button
+      (click)="onUpdateStatus(selectedItem, 1)"
+      class="btn btn-info btn-sm mb-2"
+    >
+      <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+    </button>
+
+    <button
+      (click)="onUpdateStatus(selectedItem, -1)"
+      class="ml-2 btn btn-warning btn-sm mb-2"
+    >
+      <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
+      Không duyệt
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalCreate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Tạo yêu cầu</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="form-group">
+      <label>Nhập số tiền</label>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="100,000"
+        mask="separator"
+        thousandSeparator=","
+        [(ngModel)]="dataCreatePayment.amount"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Đính kèm quyết định phê duyệt (*)</label>
+      <input
+        class="form-control"
+        type="file"
+        (change)="onSelectFileFront($event)"
         accept="image/png, image/gif, image/jpeg, image/jpg"
-        />
-      </div>
-
-      <h5>Số tiền : {{ dataCreatePayment.amount | numberToText }}</h5>
+      />
     </div>
-    <div class="modal-footer">
-      <a (click)="onCreateTask()">
-        <button type="submit" class="btn btn-primary" rippleEffect>
-          Khởi tạo
-        </button>
-      </a>
-    </div>
-  </ng-template>
 
-  <ng-template #modalApprove let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Duyệt yêu cầu</h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+    <h5>Số tiền : {{ dataCreatePayment.amount | numberToText }}</h5>
+  </div>
+  <div class="modal-footer">
+    <a (click)="onCreateTask()">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Khởi tạo
       </button>
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #modalApprove let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Duyệt yêu cầu</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="form-group">
+      <label for="">Ghi chú</label>
+      <textarea
+        name=""
+        id=""
+        class="form-control"
+        rows="5"
+        [(ngModel)]="dataApprove.note"
+      ></textarea>
     </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <div class="form-group">
-        <label for="">Ghi chú</label>
-        <textarea name="" id="" class="form-control" rows="5" [(ngModel)]="dataApprove.note"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a (click)="onUpdateStatus(selectedItem, 1)">
-        <button type="submit" class="btn btn-primary" rippleEffect>
-          Gửi
-        </button>
-      </a>
-    </div>
-  </ng-template>
+  </div>
+  <div class="modal-footer">
+    <a (click)="onUpdateStatus(selectedItem, 1)">
+      <button type="submit" class="btn btn-primary" rippleEffect>Gửi</button>
+    </a>
+  </div>
+</ng-template>
