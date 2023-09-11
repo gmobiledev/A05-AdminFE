@@ -13,19 +13,53 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
-                    <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control"
-                      placeholder="Nhập mã giao dịch">
+                    <input
+                      type="text"
+                      name="trans_id"
+                      [(ngModel)]="searchForm.trans_id"
+                      class="form-control"
+                      placeholder="Nhập mã giao dịch"
+                    />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control"
-                      placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
+                    <input
+                      type="text"
+                      name="user"
+                      [(ngModel)]="searchForm.user"
+                      class="form-control"
+                      placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng..."
+                    />
                   </div>
                 </div>
+
                 <div class="col-md-3">
                   <div class="form-group">
-                    <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                    <input
+                      type="text"
+                      placeholder="Khoảng thời gian"
+                      autocomplete="off"
+                      [ngModelOptions]="{ standalone: true }"
+                      ngxDaterangepickerMd
+                      [(ngModel)]="dateRange"
+                      [ranges]="ranges"
+                      [locale]="{ applyLabel: 'Chọn', format: 'DD/MM/YYYY' }"
+                      [showCustomRangeLabel]="true"
+                      [alwaysShowCalendars]="true"
+                      name="date_range"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                    >
                       <option value="">Chọn trạng thái task</option>
 
                       <option value="1">Thành công</option>
@@ -39,7 +73,20 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button
+                      type="button"
+                      class="btn btn-block btn-success"
+                      (click)="onSubmitExportExcelReport()"
+                    >
+                      Xuất báo cáo excel <span [data-feather]="'file'"></span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -74,23 +121,30 @@
                       {{ item?.merchant_id }}
                     </td>
                     <td>
-                      <span ngbTooltip="{{item?.receiver_name}}">
-                        {{item?.payment_method}}
-                        <br><br>
-                        {{item.receiver_bank_code}}
-                        <br>
-                        {{item.receiver_name}}
-                        <br>
-                        {{item?.receiver_banker_number}}
+                      <span ngbTooltip="{{ item?.receiver_name }}">
+                        {{ item?.payment_method }}
+                        <br /><br />
+                        {{ item.receiver_bank_code }}
+                        <br />
+                        {{ item.receiver_name }}
+                        <br />
+                        {{ item?.receiver_banker_number }}
                       </span>
                     </td>
                     <td>
-                      {{ getMoneyBeforeDiscount(item?.details, item.amount) | formatPrice }}
+                      {{
+                        getMoneyBeforeDiscount(item?.details, item.amount)
+                          | formatPrice
+                      }}
                     </td>
                     <td>
                       {{ item?.amount | formatPrice }}
-                      <br>
-                      <i><small>chiết khấu: {{ getDiscount(item?.details) }} %</small></i>
+                      <br />
+                      <i
+                        ><small
+                          >chiết khấu: {{ getDiscount(item?.details) }} %</small
+                        ></i
+                      >
                     </td>
                     <!-- <td>
                         {{ item?.title }}
@@ -99,78 +153,157 @@
                       {{ item?.desc }}
                     </td>
                     <td>
-                      {{ item?.created_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
+                      {{
+                        item?.created_at | date : "dd/MM/yyyy H:mm" : "+0000"
+                      }}
                     </td>
                     <td>
-                      {{ item?.trans_finished_at | date: 'dd/MM/yyyy H:mm':'+0000' }}
+                      {{
+                        item?.trans_finished_at
+                          | date : "dd/MM/yyyy H:mm" : "+0000"
+                      }}
                     </td>
                     <td>
                       <div [innerHTML]="item.status | showStatusTask"></div>
                     </td>
 
                     <td>
-                      <div *ngIf="item.status >= 10 && item.status <= 19 && checkRole('BUSINESS_DEPARTMENT')">
-                        <button ngbTooltip="Duyệt yêu cầu" (click)="onUpdateStatus(item, 20)"
-                          class="btn btn-icon btn-info btn-sm mb-2">
-                          <i data-feather="check" class="text-white cursor-pointer"></i>
+                      <div
+                        *ngIf="
+                          item.status >= 10 &&
+                          item.status <= 19 &&
+                          checkRole('BUSINESS_DEPARTMENT')
+                        "
+                      >
+                        <button
+                          ngbTooltip="Duyệt yêu cầu"
+                          (click)="onUpdateStatus(item, 20)"
+                          class="btn btn-icon btn-info btn-sm mb-2"
+                        >
+                          <i
+                            data-feather="check"
+                            class="text-white cursor-pointer"
+                          ></i>
                         </button>
 
-                        <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 99)"
-                          class="btn btn-icon btn-danger btn-sm mb-2">
-                          <i data-feather="x-circle" class="text-white cursor-pointer"></i>
+                        <button
+                          ngbTooltip="Từ chối"
+                          (click)="onUpdateStatus(item, 99)"
+                          class="btn btn-icon btn-danger btn-sm mb-2"
+                        >
+                          <i
+                            data-feather="x-circle"
+                            class="text-white cursor-pointer"
+                          ></i>
                         </button>
                       </div>
 
-                      <div  *ngIf="item.status >= 30 && item.status <= 39 && checkRole('ACCOUNTING')">                        
-                        <button ngbTooltip="Duyệt đã nhận tiền" (click)="onUpdateStatus(item, 1)"
-                          class="btn btn-icon btn-info btn-sm mb-2">
-                          <i data-feather="check" class="text-white cursor-pointer"></i>
+                      <div
+                        *ngIf="
+                          item.status >= 30 &&
+                          item.status <= 39 &&
+                          checkRole('ACCOUNTING')
+                        "
+                      >
+                        <button
+                          ngbTooltip="Duyệt đã nhận tiền"
+                          (click)="onUpdateStatus(item, 1)"
+                          class="btn btn-icon btn-info btn-sm mb-2"
+                        >
+                          <i
+                            data-feather="check"
+                            class="text-white cursor-pointer"
+                          ></i>
                         </button>
 
-                        <button ngbTooltip="Từ chối" (click)="onUpdateStatus(item, 99)"
-                          class="ml-2 btn btn-icon btn-warning btn-sm mb-2 ">
-                          <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
+                        <button
+                          ngbTooltip="Từ chối"
+                          (click)="onUpdateStatus(item, 99)"
+                          class="ml-2 btn btn-icon btn-warning btn-sm mb-2"
+                        >
+                          <i
+                            data-feather="alert-triangle"
+                            class="text-white cursor-pointer"
+                          ></i>
                         </button>
                       </div>
 
-                      <div *ngIf="item.status  == 1 && checkAction('admin/task/payment/rollback')">
-                        <button ngbTooltip="Hoàn giao dịch" (click)="modalOpen(modalRollback, item)"
-                          class="btn btn-icon btn-danger btn-sm mb-2 ">
-                          <i data-feather="x-octagon" class="text-white cursor-pointer"></i>
+                      <div
+                        *ngIf="
+                          item.status == 1 &&
+                          checkAction('admin/task/payment/rollback')
+                        "
+                      >
+                        <button
+                          ngbTooltip="Hoàn giao dịch"
+                          (click)="modalOpen(modalRollback, item)"
+                          class="btn btn-icon btn-danger btn-sm mb-2"
+                        >
+                          <i
+                            data-feather="x-octagon"
+                            class="text-white cursor-pointer"
+                          ></i>
                         </button>
                       </div>
 
-                      <button ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)" class="btn btn-icon btn-info mb-2">
-                        <i data-feather="eye" class="text-white cursor-pointer"></i>                        
+                      <button
+                        ngbTooltip="Xem chi tiết"
+                        (click)="onViewDetail(modalDetail, item)"
+                        class="btn btn-icon btn-info mb-2"
+                      >
+                        <i
+                          data-feather="eye"
+                          class="text-white cursor-pointer"
+                        ></i>
                       </button>
-
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
-                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
-                (pageChange)="loadPage($event)">
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalItems"
+                [(page)]="searchForm.page"
+                [pageSize]="searchForm.page_size"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
                 <ng-template ngbPaginationPages let-page let-pages="pages">
                   <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
                     <div class="mb-3 d-flex flex-nowrap px-2">
-                      <label id="paginationInputLabel" for="paginationInput"
-                        class="col-form-label me-2 ms-1">Trang</label>
-                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
-                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
-                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
-                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 4.5rem" />
-                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
-                        của {{pages.length}}</span>
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 4.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
                     </div>
                   </li>
                 </ng-template>
               </ngb-pagination>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>
@@ -180,7 +313,12 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -196,28 +334,37 @@
         <span>Số tài khoản: </span> {{ selectedItem?.receiver_banker_number }}
       </div>
     </div>
-    <div class="row" *ngIf="listFiles.files_request && listFiles.files_request.length > 0">
-      <div class="col-12">Ảnh yêu cầu</div>      
+    <div
+      class="row"
+      *ngIf="listFiles.files_request && listFiles.files_request.length > 0"
+    >
+      <div class="col-12">Ảnh yêu cầu</div>
       <div class="col-6" *ngFor="let item of listFiles.files_request">
-        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
+        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid" />
       </div>
     </div>
-    <div class="row" *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0">
+    <div
+      class="row"
+      *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0"
+    >
       <div class="col-12">Ảnh chuyển khoản</div>
       <div class="col-6" *ngFor="let item of listFiles.files_banking">
-        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
+        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid" />
       </div>
     </div>
-    <div class="row" *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0">
+    <div
+      class="row"
+      *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0"
+    >
       <div class="col-12">Ảnh quyết định hoàn tiền</div>
       <div class="col-6" *ngFor="let item of listFiles.files_rollback">
-        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid">
+        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid" />
       </div>
     </div>
-    
+
     <div class="row mt-2">
       <div class="col-12">
-        <span>Note: </span> {{ selectedItem?.response_note}}
+        <span>Note: </span> {{ selectedItem?.response_note }}
       </div>
     </div>
   </div>
@@ -226,24 +373,29 @@
 <ng-template #modalRollback let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Xác nhận hoàn giao dịch</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-
     <div class="form-group">
       <label>Đính kèm quyết định phê duyệt (*)</label>
-      <input class="form-control" type="file" (change)="onSelectFileFront($event)" 
-      accept="image/png, image/gif, image/jpeg, image/jpg"
+      <input
+        class="form-control"
+        type="file"
+        (change)="onSelectFileFront($event)"
+        accept="image/png, image/gif, image/jpeg, image/jpg"
       />
-    </div>  
+    </div>
   </div>
   <div class="modal-footer">
     <a (click)="onRollback(selectedItem, 1)">
-      <button type="submit" class="btn btn-primary" rippleEffect>
-        Gửi
-      </button>
+      <button type="submit" class="btn btn-primary" rippleEffect>Gửi</button>
     </a>
   </div>
 </ng-template>

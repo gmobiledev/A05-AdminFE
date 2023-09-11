@@ -11,6 +11,7 @@ import { ListUserComponent } from './list-user/list-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { AirtimeTopupComponent } from './airtime-topup/airtime-topup.component';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 
 // routing
@@ -43,16 +44,19 @@ const routes: Routes = [
     AirtimeTopupComponent
   ],
   imports: [
-    CommonModule, 
-    RouterModule.forChild(routes), 
-    NgbModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
-    CoreCommonModule, 
+    CommonModule,
+    RouterModule.forChild(routes),
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreCommonModule,
     ContentHeaderModule,
     NgxDatatableModule,
-    BlockUIModule.forRoot()
+    BlockUIModule.forRoot(), 
+    NgxDatatableModule,
+    BlockUIModule.forRoot(),
+    NgxDaterangepickerMd.forRoot()
   ],
   providers: []
 })
-export class UserModule {}
+export class UserModule { }
