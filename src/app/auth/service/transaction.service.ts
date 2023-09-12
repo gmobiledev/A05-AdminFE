@@ -28,11 +28,7 @@ export class TransactionServivce {
   }
 
   getMoneyIn() {
-    return this._http.get<any>(`${environment.apiUrl}/admin/transaction/merchant-root?money_out=1`);
-  }
-
-  getMoneyOut() {
-    return this._http.get<any>(`${environment.apiUrl}/admin/transaction/merchant-root?money_out=0`);
+    return this._http.get<any>(`${environment.apiUrl}/admin/transaction/merchant-root`);
   }
 
   exportExcel(dto = null) {

@@ -6,10 +6,15 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <h4><b>Số dư tài khoản tổng: <span class="text-success">{{ balance | formatPrice }}</span></b></h4>
+            <h4>
+              <b
+                >Số dư tài khoản tổng:
+                <span class="text-success">{{ balance | formatPrice }}</span></b
+              >
+            </h4>
           </div>
-        </div>        
-      </div>                
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-8" id="table-striped">
@@ -18,85 +23,47 @@
             <h4 class="card-title">Lịch sử giao dịch</h4>
           </div>
           <div class="card-body">
-            <ul ngbNav #navWithIcons="ngbNav" class="nav-tabs">
-              <li ngbNavItem>
-                <a ngbNavLink>Airtime chuyển vào</a>
-                <ng-template ngbNavContent>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Ngày giao dịch</th>
-                        <th>Mã giao dịch</th>
-                        <th>Dịch vụ</th>
-                        <th>Số Airtime</th>
-                        <!-- <th>Thao tác</th> -->
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of listOut">
-                        <td>
-                          {{ item?.created_at | date : "dd/MM/yyyy H:mm":'+0000' }}
-                        </td>
-                        <td>
-                          {{ item?.id }}
-                        </td>
-                        <td>{{ item?.trans_type }}</td>
-                        <td>
-                          {{ item?.amount | formatPrice }}
-                        </td>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Ngày giao dịch</th>
+                  <th>Mã giao dịch</th>
+                  <th>Dịch vụ</th>
+                  <th>Số Airtime</th>
+                  <!-- <th>Thao tác</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listIn">
+                  <td>
+                    {{ item?.created_at | date : "dd/MM/yyyy H:mm" : "+0000" }}
+                  </td>
+                  <td>
+                    {{ item?.id }}
+                  </td>
+                  <td>{{ item?.trans_type }}</td>
 
-                        <!-- <td>
-                          <a [routerLink]="['/user', item.id]">
-                            <i
-                              data-feather="eye"
-                            ></i>
-                          </a>
-                        </td> -->
-                      </tr>
-                    </tbody>
-                  </table>
-                </ng-template>
-              </li>
-              <li ngbNavItem>
-                <a ngbNavLink>Airtime chuyển ra</a>
-                <ng-template ngbNavContent>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Ngày giao dịch</th>
-                        <th>Mã giao dịch</th>
-                        <th>Dịch vụ</th>
-                        <th>Số Airtime</th>
-                        <!-- <th>Thao tác</th> -->
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of listIn">
-                        <td>
-                          {{ item?.created_at | date : "dd/MM/yyyy H:mm":'+0000' }}
-                        </td>
-                        <td>
-                          {{ item?.id }}
-                        </td>
-                        <td>{{ item?.trans_type }}</td>
-                        <td>
-                          {{ item?.amount | formatPrice }}
-                        </td>
+                  <td *ngIf="item?.amount > 0">
+                    <span class="text-dark">
+                      + {{ item?.amount | formatPrice }}
+                    </span>
+                  </td>
+                  <td *ngIf="item?.amount < 0">
+                    <span class="text-danger">
+                      {{ item?.amount | formatPrice }}
+                    </span>
+                  </td>
 
-                        <!-- <td>
-                          <a [routerLink]="['/user', item.id]">
-                            <i
-                              data-feather="eye"
-                            ></i>
-                          </a>
-                        </td> -->
-                      </tr>
-                    </tbody>
-                  </table>
-                </ng-template>
-              </li>
-            </ul>
-            <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+                  <!-- <td>
+                    <a [routerLink]="['/user', item.id]">
+                      <i
+                        data-feather="eye"
+                      ></i>
+                    </a>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -123,8 +90,8 @@
                   class="font-medium-2 text-danger"
                 ></i>
                 <span class="font-weight-bold ml-75 mr-25"
-                  >Tổng tiền chuyển ra : </span
-                >
+                  >Tổng tiền chuyển ra :
+                </span>
                 {{ sumOut | formatPrice }}
               </div>
             </div>
@@ -135,8 +102,8 @@
                   class="font-medium-2 text-warning"
                 ></i>
                 <span class="font-weight-bold ml-75 mr-25"
-                  >Tổng tiền chuyển vào : </span
-                >
+                  >Tổng tiền chuyển vào :
+                </span>
                 <tr>
                   <td>
                     {{ sumIn | formatPrice }}

@@ -140,16 +140,16 @@ export class RootAccountComponent implements OnInit {
 
     })
 
-    this.transactionService.getMoneyOut().subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.listOut = res.data.items;
-      this.total = res.data.count;
-      this.pageSize = res.data.pageSize;
-    }, error => {
-      this.sectionBlockUI.stop();
-      console.log("ERRRR");
-      console.log(error);
-    })
+    // this.transactionService.getMoneyOut().subscribe(res => {
+    //   this.sectionBlockUI.stop();
+    //   this.listOut = res.data.items;
+    //   this.total = res.data.count;
+    //   this.pageSize = res.data.pageSize;
+    // }, error => {
+    //   this.sectionBlockUI.stop();
+    //   console.log("ERRRR");
+    //   console.log(error);
+    // })
 
     this.userService.getRootMerchantBalance().subscribe(res => {
       this.balance = res.data && res.data.balance ? res.data.balance : 0
