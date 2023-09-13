@@ -22,7 +22,6 @@
 
                       <option value="1">Bật</option>
                       <option value="0">Tắt</option>
-                 
                     </select>
                   </div>
                 </div>
@@ -77,8 +76,8 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list">
-                    <td>{{ item?.name }}</td>                 
-                    <td>{{ item?.service_code }}</td>                             
+                    <td>{{ item?.name }}</td>
+                    <td>{{ item?.service_code }}</td>
                     <td>
                       {{ item?.start_date | date : "dd/MM/yyyy" }} -
                       {{ item?.end_date | date : "dd/MM/yyyy" }}
@@ -178,7 +177,6 @@
   </div>
 
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    
     <form [formGroup]="form">
       <div class="form-group">
         <label>Tên chương trình (*)</label>
@@ -186,11 +184,10 @@
           class="form-control"
           type="text"
           name="name"
-          formControlName='name'
-
+          formControlName="name"
         />
       </div>
-  
+
       <div class="form-group">
         <label for="">Chọn dịch vụ</label>
         <!-- <input type="text" class="form-control" (input)="onSearch($event)" placeholder="Tìm kiếm" /> -->
@@ -216,14 +213,14 @@
           </div>
         </div>
       </div>
-  
+
       <div class="form-group">
         <label>Khoảng thời gian (*)</label>
         <input
           class="form-control"
           ngxDaterangepickerMd
           [(ngModel)]="dateRange"
-          [ngModelOptions]="{standalone: true}"
+          [ngModelOptions]="{ standalone: true }"
           [ranges]="ranges"
           [locale]="{ applyLabel: 'Chọn', format: 'DD/MM/YYYY' }"
           [showCustomRangeLabel]="true"
@@ -231,7 +228,7 @@
           name="daterange"
         />
       </div>
-  
+
       <div class="form-group">
         <label>Ảnh giấy quyết định phê duyệt (*)</label>
         <input
@@ -241,49 +238,54 @@
           type="file"
         />
       </div>
-  
+
       <div class="form-group">
         <form [formGroup]="form">
           <button (click)="addCreds()" class="btn btn-facebook" rippleEffect>
             <span [data-feather]="'plus'"></span>
           </button>
-  
+          <div class="row mt-1">
+            <div class="col-4"><label>Số tiền Từ</label></div>
+            <div class="col-4"><label>Đến</label></div>
+            <div class="col-3"><label>Chiết khấu (%)</label></div>
+            <div class="col-1"><label></label></div>
+
+          </div>
           <div
             formArrayName="items"
-            *ngFor="
-              let creds of form.controls.items.controls;
-              let i = index
-            "
+            *ngFor="let creds of form.controls.items.controls; let i = index"
           >
             <ng-container [formGroupName]="i">
               <div class="row">
                 <div class="col-4">
                   <input
                     placeholder="Từ"
-                    mask="separator" thousandSeparator=","
+                    mask="separator"
+                    thousandSeparator=","
                     formControlName="start_money"
                     class="form-control mt-1"
                   />
                 </div>
-  
+
                 <div class="col-4">
                   <input
                     placeholder="Đến"
-                    mask="separator" thousandSeparator=","
+                    mask="separator"
+                    thousandSeparator=","
                     formControlName="end_money"
                     class="form-control mt-1"
                   />
                 </div>
-  
+
                 <div class="col-3">
                   <input
-                  mask="separator.2"
+                    mask="separator.2"
                     placeholder="Chiết khấu (%)"
                     formControlName="value"
                     class="form-control mt-1"
                   />
                 </div>
-  
+
                 <div class="col-1">
                   <button
                     (click)="removeCreds(i)"
@@ -331,14 +333,16 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of listDiscount">
-            <td>{{ item?.start_money | formatPrice }} -
-              {{ item?.end_money | formatPrice }}</td>
-            <td>{{ item?.value }}
-              <span *ngIf="item?.unit == 'RATIO'">%</span></td>
+            <td>
+              {{ item?.start_money | formatPrice }} -
+              {{ item?.end_money | formatPrice }}
+            </td>
+            <td>
+              {{ item?.value }} <span *ngIf="item?.unit == 'RATIO'">%</span>
+            </td>
           </tr>
         </tbody>
       </table>
-    
     </div>
   </div>
   <div class="modal-footer">
