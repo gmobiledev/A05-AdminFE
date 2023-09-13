@@ -23,6 +23,10 @@ export class GServiceService {
     return this._http.get<any>(`${environment.apiUrl}/admin/services/discount`, {params: params});
   }
 
+  getDiscountDetail(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/services/discount/${id}`);
+  }
+
   createDiscount(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/services/discount`, data);
   }
