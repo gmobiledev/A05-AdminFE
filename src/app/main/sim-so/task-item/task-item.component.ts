@@ -717,7 +717,6 @@ export class TaskItemComponent implements OnInit {
           this.actionText = 'Cập nhật'
         }
         const detailObj = JSON.parse(this.data.task.detail);
-        this.linkShipTracking = detailObj['ship_tracking'];
       })
     }
     
