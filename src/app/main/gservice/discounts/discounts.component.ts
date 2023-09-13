@@ -5,7 +5,6 @@ import { GServiceService } from 'app/auth/service/gservice.service';
 import { TaskService } from 'app/auth/service/task.service';
 import { ObjectLocalStorage, STORAGE_KEY } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
-import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
 import { CommonService } from 'app/utils/common.service';
 import { FormControl, FormGroup, FormArray, FormBuilder } from '@angular/forms';
@@ -33,6 +32,12 @@ export class DiscountsComponent implements OnInit {
   public selectedItem: any;
   public dateRange: any;
   public listServices: any;
+  public task;
+  public trans;
+  public wh;
+
+  public arrayServiceIds = [];
+
   public searchForm = {
     user: '',
     title: '',
@@ -44,20 +49,6 @@ export class DiscountsComponent implements OnInit {
     page_size: 20
   }
 
-  public dataCreate = {
-    name: '',
-    service_id: [],
-    date_range: '',
-    start_money: 0,
-    end_money: 0,
-    value: 0,
-    file: ''
-  }
-
-  public task;
-  public trans;
-  public wh;
-
   public modalRef: any;
   ranges: any = {
     'Hôm nay': [dayjs(), dayjs()],
@@ -66,6 +57,16 @@ export class DiscountsComponent implements OnInit {
     'Tháng này': [dayjs().startOf('month'), dayjs().endOf('month')],
     'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
   }
+
+  // public dataCreate = {
+  //   name: '',
+  //   service_id: [],
+  //   date_range: '',
+  //   start_money: 0,
+  //   end_money: 0,
+  //   value: 0,
+  //   file: ''
+  // }
 
   constructor(
     private readonly alertService: SweetAlertService,
@@ -79,8 +80,11 @@ export class DiscountsComponent implements OnInit {
   ) {
 
     this.form = this.fb.group({
-      class: [''],
-      credentials: this.fb.array([]),
+      // service_id: this.fb.array([]),
+      name: [''],
+      date_range: [''],
+      items: this.fb.array([]),
+      file: [''],
     });
 
     this.route.queryParams.subscribe(params => {
@@ -100,18 +104,18 @@ export class DiscountsComponent implements OnInit {
   }
 
   addCreds() {
-    const creds = this.form.controls.credentials as FormArray;
+    const creds = this.form.controls.items as FormArray;
     creds.push(
       this.fb.group({
-        username: '',
-        password: '',
-        sdt: '',
+        startMoney: 0,
+        endMoney: 0,
+        value: 0,
       })
     );
   }
 
   removeCreds(i) {
-    let creds = this.form.controls.credentials as FormArray;
+    let creds = this.form.controls.items as FormArray;
     creds.removeAt(i)
   }
 
@@ -166,7 +170,7 @@ export class DiscountsComponent implements OnInit {
   async onSelectFileFront(event) {
     if (event.target.files && event.target.files[0]) {
       let img = await this.commonService.resizeImage(event.target.files[0]);
-      this.dataCreate.file = (img + '').replace('data:image/png;base64,', '')
+      this.form.controls.file.setValue((img + '').replace('data:image/png;base64,', ''))
     }
   }
 
@@ -182,22 +186,31 @@ export class DiscountsComponent implements OnInit {
   }
 
   async onCreate() {
+
+
     if (this.dateRange) {
+      console.log(this.dateRange)
+
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-      this.dataCreate.date_range = this.dateRange.startDate && this.dateRange.endDate
-        ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
+      this.form.controls.date_range.setValue(this.dateRange.startDate && this.dateRange.endDate ? 
+      (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + 
+      (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '');
     }
 
+    const postData = { ...this.form.value, ...{service_id: this.arrayServiceIds}};
+    console.log(this.form.value)
+    console.log(postData)
+
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo đơn hàng này không?")).value) {
-      if (!this.dataCreate.date_range || !this.dataCreate.end_money || !this.dataCreate.start_money || !this.dataCreate.name || !this.dataCreate.value) {
+      if (!this.form.controls.date_range || !this.form.controls.end_money || !this.form.controls.start_money || !this.form.controls.name || !this.form.controls.value) {
         this.alertService.showMess('Vui lòng nhập đầy đủ thông tin');
         return;
       }
-      if (this.dataCreate.service_id.length < 1) {
+      if (this.arrayServiceIds.length < 1) {
         this.alertService.showMess('Vui lòng chọn dịch vụ');
         return;
       }
-      this.gServiceService.createDiscount(this.dataCreate).subscribe(res => {
+      this.gServiceService.createDiscount(this.form).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);
           return;
@@ -234,12 +247,12 @@ export class DiscountsComponent implements OnInit {
 
   onChangeCheckBox(event, item) {
     if (event.target.checked) {
-      this.dataCreate.service_id.push(event.target.value);
+      this.arrayServiceIds.push(event.target.value);
     }
     else {
-      const i = this.dataCreate.service_id.findIndex(value => value == event.target.value);
+      const i = this.arrayServiceIds.findIndex(value => value == event.target.value);
       if (i) {
-        this.dataCreate.service_id.splice(i, 1);
+        this.arrayServiceIds.splice(i, 1);
       }
     }
   }
@@ -259,19 +272,16 @@ export class DiscountsComponent implements OnInit {
 
       if (airtime) {
         this.listServices = [airtime];
-        this.dataCreate.service_id = [airtime.id];
+        this.arrayServiceIds = [airtime.id];
       }
     })
-
-
   }
 
-  detailDiscount(id){
+  detailDiscount(id) {
     this.gServiceService.getDiscountDetail(id).subscribe(res => {
       this.listDiscount = res.data;
       this.totalItems = res.data.count;
     })
-
   }
 
 }
