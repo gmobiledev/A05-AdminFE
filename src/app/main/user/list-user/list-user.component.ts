@@ -28,7 +28,7 @@ export class ListUserComponent implements OnInit {
     private alertService: SweetAlertService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
@@ -39,19 +39,19 @@ export class ListUserComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
-    this.router.navigate(['/user/list'], { queryParams: {keyword: this.searchForm.keyword, status: this.searchForm.status}})
+    this.router.navigate(['/user/list'], { queryParams: { keyword: this.searchForm.keyword, status: this.searchForm.status } })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/user/list'], { queryParams: this.searchForm})
+    this.router.navigate(['/user/list'], { queryParams: this.searchForm })
   }
 
-  async onSubmitLock(id, status){
+  async onSubmitLock(id, status) {
     const confirmMessage = status ? "Bạn có đồng ý mở khóa user?" : "Bạn có đồng ý khóa user?";
-    if((await this.alertService.showConfirm(confirmMessage)).value) {
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.userService.lockUser(id, status, "").subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showError(res.message);
           return;
         }
@@ -81,7 +81,7 @@ export class ListUserComponent implements OnInit {
           }
         ]
       }
-    };    
+    };
   }
 
   getData(): void {

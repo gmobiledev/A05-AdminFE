@@ -31,4 +31,9 @@ export class GServiceService {
     return this._http.post<any>(`${environment.apiUrl}/admin/services/discount`, data);
   }
 
+  lockService(id, status, reason) {
+    return this._http.put<any>(`${environment.apiUrl}/admin/services/discount/${id}/update-status`, {user_id: id, status: status, reason: reason});
+  }
+
+
 }

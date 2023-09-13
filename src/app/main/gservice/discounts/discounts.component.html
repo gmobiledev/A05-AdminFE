@@ -11,12 +11,6 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="row mb-2">
-                <!-- <div class="col-md-3">
-                    <div class="form-group">
-                      <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control"
-                        placeholder="Nhập mã giao dịch">
-                    </div>
-                  </div> -->
                 <div class="col-md-3">
                   <div class="form-group">
                     <select
@@ -28,8 +22,7 @@
 
                       <option value="1">Bật</option>
                       <option value="0">Tắt</option>
-                      <!-- <option value="-1">Từ chối</option>
-                        <option value="60">Chờ duyệt</option> -->
+                 
                     </select>
                   </div>
                 </div>
@@ -72,47 +65,26 @@
                 </div>
               </div>
             </form>
-            <!-- <div class="row mt-2 mb-2 pull-right">
-                <div class="">
-                  <button type="button" class="btn btn-success mr-2" (click)="modalOpen(modalCreate)" >Thêm chương trình</button>              
-                </div>
-              </div> -->
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
                   <tr>
                     <th>Tên chương trình</th>
                     <th>Dịch vụ</th>
-                    <!-- <th>Khoảng tiền</th> -->
-                    <!-- <th>User</th> -->
                     <th>Khoảng thời gian</th>
-                    <!-- <th>Tiêu đề</th> -->
-                    <!-- <th>Chiết khấu</th> -->
                     <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list">
-                    <td>{{ item?.name }}</td>
-                    <td>{{ item?.service_code }}</td>
-                    <!-- <td>
-                      {{ item?.start_money | formatPrice }} -
-                      {{ item?.end_money | formatPrice }}
-                    </td> -->
-                    <!-- <td>
-                          {{ item?.title }}
-                        </td> -->
+                    <td>{{ item?.name }}</td>                 
+                    <td>{{ item?.service_code }}</td>                             
                     <td>
                       {{ item?.start_date | date : "dd/MM/yyyy" }} -
                       {{ item?.end_date | date : "dd/MM/yyyy" }}
                     </td>
-                    <!-- <td>
-                      {{ item?.value }}
-                      <span *ngIf="item?.unit == 'RATIO'">%</span>
-                    </td> -->
-
                     <td>
-                      <a (click)="modalOpen(modalTransWh, item.task_id)">
+                      <a (click)="modalOpen(modalTransWh, item)">
                         <i
                           data-feather="eye"
                           class="text-primary cursor-pointer"
@@ -124,7 +96,7 @@
                         *ngIf="item.status"
                       >
                         <i
-                          data-feather="lock"
+                          data-feather="unlock"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
@@ -134,7 +106,7 @@
                         *ngIf="!item.status"
                       >
                         <i
-                          data-feather="unlock"
+                          data-feather="lock"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
@@ -288,7 +260,8 @@
                 <div class="col-4">
                   <input
                     placeholder="Từ"
-                    formControlName="startMoney"
+                    mask="separator" thousandSeparator=","
+                    formControlName="start_money"
                     class="form-control mt-1"
                   />
                 </div>
@@ -296,13 +269,15 @@
                 <div class="col-4">
                   <input
                     placeholder="Đến"
-                    formControlName="endMoney"
+                    mask="separator" thousandSeparator=","
+                    formControlName="end_money"
                     class="form-control mt-1"
                   />
                 </div>
   
                 <div class="col-3">
                   <input
+                  mask="separator.2"
                     placeholder="Chiết khấu (%)"
                     formControlName="value"
                     class="form-control mt-1"

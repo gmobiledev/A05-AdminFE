@@ -99,7 +99,6 @@ export class DiscountsComponent implements OnInit {
       });
 
       this.getData();
-      this.detailDiscount(14);
     })
   }
 
@@ -107,8 +106,8 @@ export class DiscountsComponent implements OnInit {
     const creds = this.form.controls.items as FormArray;
     creds.push(
       this.fb.group({
-        startMoney: 0,
-        endMoney: 0,
+        start_money: 0,
+        end_money: 0,
         value: 0,
       })
     );
@@ -159,6 +158,8 @@ export class DiscountsComponent implements OnInit {
   modalOpen(modal, item = null) {
     if (item) {
       this.selectedItem = item;
+      this.detailDiscount(item.id);
+
     }
     this.modalRef = this.modalService.open(modal, {
       centered: true,
@@ -186,23 +187,16 @@ export class DiscountsComponent implements OnInit {
   }
 
   async onCreate() {
-
-
     if (this.dateRange) {
       console.log(this.dateRange)
-
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-      this.form.controls.date_range.setValue(this.dateRange.startDate && this.dateRange.endDate ? 
-      (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + 
-      (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '');
+      this.form.controls.date_range.setValue(this.dateRange.startDate && this.dateRange.endDate ?
+        (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' +
+        (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '');
     }
-
-    const postData = { ...this.form.value, ...{service_id: this.arrayServiceIds}};
-    console.log(this.form.value)
-    console.log(postData)
-
+    const postData = { ...this.form.value, ...{ service_id: this.arrayServiceIds } };
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo đơn hàng này không?")).value) {
-      if (!this.form.controls.date_range || !this.form.controls.end_money || !this.form.controls.start_money || !this.form.controls.name || !this.form.controls.value) {
+      if (!this.form.controls.date_range.value || !this.form.controls.name.value ) {
         this.alertService.showMess('Vui lòng nhập đầy đủ thông tin');
         return;
       }
@@ -210,7 +204,7 @@ export class DiscountsComponent implements OnInit {
         this.alertService.showMess('Vui lòng chọn dịch vụ');
         return;
       }
-      this.gServiceService.createDiscount(this.form).subscribe(res => {
+      this.gServiceService.createDiscount(postData).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);
           return;
@@ -223,6 +217,10 @@ export class DiscountsComponent implements OnInit {
         return;
       })
     }
+
+    
+    console.log(this.form.value)
+    console.log(postData)
   }
 
   onViewDetail(modal, item) {
@@ -282,6 +280,22 @@ export class DiscountsComponent implements OnInit {
       this.listDiscount = res.data;
       this.totalItems = res.data.count;
     })
+  }
+
+  async onSubmitLock(id, status) {
+    const confirmMessage = status ? "Bạn có đồng ý mở khóa dịch vụ?" : "Bạn có đồng ý khóa dịch vụ?";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.gServiceService.lockService(id, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
   }
 
 }
