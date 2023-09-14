@@ -109,11 +109,11 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Mã giao dịch</th>
+                    <!-- <th>Mã giao dịch</th> -->
                     <th>Số airtime</th>
                     <th>Mô tả</th>
-                    <th>Ngày tạo</th>
-                    <th>Ngày duyệt</th>
+                    <th>Ngày tạo - duyệt</th>
+                    <!-- <th>Ngày duyệt</th> -->
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
@@ -121,7 +121,7 @@
                 <tbody *ngIf="list && list.length > 0">
                   <tr *ngFor="let item of list">
                     <td>{{ item?.id }}</td>
-                    <td>{{ item?.trans_id }}</td>
+                    <!-- <td>{{ item?.trans_id }}</td> -->
                     <td>
                       {{ item?.amount | formatPrice }}
                     </td>
@@ -132,16 +132,23 @@
                       {{ item?.desc }}
                     </td>
                     <td>
-                      {{
-                        item?.created_at | date : "dd/MM/yyyy H:mm" : "+0000"
-                      }}
+                      <b class="text-dark">
+                        {{ item?.created_at | date : "dd/MM/yyyy " : "+0000" }}
+                      </b>
+
+                      <b>
+                        {{
+                          item?.trans_finished_at
+                            | date : "dd/MM/yyyy " : "+0000"
+                        }}
+                      </b>
                     </td>
-                    <td>
+                    <!-- <td>
                       {{
                         item?.trans_finished_at
                           | date : "dd/MM/yyyy H:mm" : "+0000"
                       }}
-                    </td>
+                    </td> -->
                     <td>
                       <div [innerHTML]="item.status | showStatusTask"></div>
                     </td>

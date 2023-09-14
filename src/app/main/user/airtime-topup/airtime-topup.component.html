@@ -96,16 +96,14 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Mã giao dịch</th>
-                    <!-- <th>User</th> -->
+                    <!-- <th>Mã giao dịch</th> -->
                     <th>Đối tác</th>
                     <th>Hình thức</th>
                     <th>Số airtime</th>
                     <th>Số tiền thanh toán</th>
-                    <!-- <th>Tiêu đề</th> -->
                     <th>Mô tả</th>
-                    <th>Ngày tạo</th>
-                    <th>Ngày duyệt</th>
+                    <th>Ngày tạo - duyệt</th>
+                    <!-- <th>Ngày duyệt</th> -->
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
@@ -113,10 +111,7 @@
                 <tbody>
                   <tr *ngFor="let item of list">
                     <td>{{ item?.id }}</td>
-                    <td>{{ item?.trans_id }}</td>
-                    <!-- <td>{{ item?.user?.people?.name }}
-                      <br>{{ item?.user?.people?.mobile }}
-                    </td> -->
+                    <!-- <td>{{ item?.trans_id }}</td> -->
                     <td>
                       {{ item?.merchant_id }}
                       <br />
@@ -151,23 +146,27 @@
                         ></i
                       >
                     </td>
-                    <!-- <td>
-                        {{ item?.title }}
-                      </td> -->
                     <td>
                       {{ item?.desc }}
                     </td>
                     <td>
-                      {{
-                        item?.created_at | date : "dd/MM/yyyy H:mm" : "+0000"
-                      }}
+                      <b class="text-dark">
+                        {{ item?.created_at | date : "dd/MM/yyyy " : "+0000" }}
+                      </b>
+
+                      <b>
+                        {{
+                          item?.trans_finished_at
+                            | date : "dd/MM/yyyy " : "+0000"
+                        }}
+                      </b>
                     </td>
-                    <td>
+                    <!-- <td>
                       {{
                         item?.trans_finished_at
                           | date : "dd/MM/yyyy H:mm" : "+0000"
                       }}
-                    </td>
+                    </td> -->
                     <td>
                       <div [innerHTML]="item.status | showStatusTask"></div>
                     </td>
@@ -375,32 +374,28 @@
   </div>
   <div class="modal-footer">
     <div
-    *ngIf="
-    selectedItem.status >= 30 &&
-    selectedItem.status <= 39 &&
-      checkRole('ACCOUNTING')
-    "
-  >
-    <button   
-      (click)="onUpdateStatus(selectedItem, 1)"
-      class="btn btn-info btn-sm mb-2"
+      *ngIf="
+        selectedItem.status >= 30 &&
+        selectedItem.status <= 39 &&
+        checkRole('ACCOUNTING')
+      "
     >
-      <i
-        data-feather="check"
-        class="text-white cursor-pointer"
-      ></i> Duyệt đã nhận tiền
-    </button>
+      <button
+        (click)="onUpdateStatus(selectedItem, 1)"
+        class="btn btn-info btn-sm mb-2"
+      >
+        <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt đã
+        nhận tiền
+      </button>
 
-    <button
-      (click)="onUpdateStatus(selectedItem, 99)"
-      class="ml-2 btn btn-warning btn-sm mb-2"
-    >
-      <i
-        data-feather="alert-triangle"
-        class="text-white cursor-pointer"
-      ></i> Từ chối
-    </button>
-  </div>
+      <button
+        (click)="onUpdateStatus(selectedItem, 99)"
+        class="ml-2 btn btn-warning btn-sm mb-2"
+      >
+        <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
+        Từ chối
+      </button>
+    </div>
   </div>
 </ng-template>
 

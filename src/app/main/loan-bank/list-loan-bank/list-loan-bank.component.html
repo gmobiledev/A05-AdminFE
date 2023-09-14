@@ -1,103 +1,119 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
-<div class="row" id="table-striped">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
-        <div class="card-body">
-          <form (ngSubmit)="onSubmitSearch()">
-          <div class="row">
-            <div class="col-md-5">
-              <div class="form-group">
-                <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control" placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <select class="form-control" name="status" [(ngModel)]="searchForm.status">
-                  <option value="">Chọn trạng thái khoản vay</option>
-                  
-                  <option value="2">Chờ duyệt</option>
-                  <option value="0">Không duyệt</option>
-                  <option value="3">Đã duyệt</option>
-                  <option value="4">Chờ giải ngân</option>
-                  <option value="5">Đã giải ngân</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
-              </div>
-            </div>
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
           </div>
-        </form>
-        <div class="table-responsive" >
-          <table class="table table-striped">
-            <thead>
-              <tr>             
-                <th>ID khoản vay</th>   
-                <th>Mã hợp đồng</th>
-                <th>Tên khách hàng</th>                
-                <th>SĐT</th>
-                <th>Số CCCD/CMND</th>   
-                <th>Số tiền vay</th>     
-                <th>Tiêu đề</th>       
-                <th>Ngày tạo</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of list">
-               
-                <td>{{ item?.id }}</td>
-                <td>{{ item.contract[0]?.contract_code }}</td>
-                <td>{{ item?.user?.people?.name }}</td>
-                           
-                <td>
-                  {{ item?.user?.people?.mobile }}
-                </td>   
-                <td>
-                  {{ item?.user?.people?.identification_no }}
-              </td>  
-                <td>
-                  {{ item?.amount | currency:'VND':true}}
-                </td>
-                <td>
-                  {{ item?.title }}
-                </td>
-                <td>
-                  {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
-              </td>
-                <td>
-                  <div [innerHTML]="item.status | showStatusLoan"></div>                  
-                </td>                
-                
-                <td>
-                  <a [routerLink]="['/loan-bank/view', item.id]" >
-                    <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                    </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="user"
+                      [(ngModel)]="searchForm.user"
+                      class="form-control"
+                      placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng..."
+                    />
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                    >
+                      <option value="">Chọn trạng thái khoản vay</option>
 
-          <ngb-pagination
-          class="d-flex justify-content-end pr-3 pt-2"
+                      <option value="2">Chờ duyệt</option>
+                      <option value="0">Không duyệt</option>
+                      <option value="3">Đã duyệt</option>
+                      <option value="4">Chờ giải ngân</option>
+                      <option value="5">Đã giải ngân</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID khoản vay</th>
+                    <th>Mã hợp đồng</th>
+                    <th>Tên khách hàng</th>
+                    <th>SĐT</th>
+                    <th>Số CCCD/CMND</th>
+                    <th>Số tiền vay</th>
+                    <th>Tiêu đề</th>
+                    <th>Ngày tạo</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list">
+                    <td>{{ item?.id }}</td>
+                    <td>{{ item.contract[0]?.contract_code }}</td>
+                    <td>{{ item?.user?.people?.name }}</td>
+
+                    <td>
+                      {{ item?.user?.people?.mobile }}
+                    </td>
+                    <td>
+                      {{ item?.user?.people?.identification_no }}
+                    </td>
+                    <td>
+                      {{ item?.amount | currency : "VND" : true }}
+                    </td>
+                    <td>
+                      {{ item?.title }}
+                    </td>
+                    <td>
+                      {{ item?.created_at | date : "dd/MM/yyyy H:mm" }}
+                    </td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatusLoan"></div>
+                    </td>
+
+                    <td>
+                      <a [routerLink]="['/loan-bank/view', item.id]">
+                        <i
+                          data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
                 [collectionSize]="total"
                 [(page)]="searchForm.page"
                 [directionLinks]="false"
                 (pageChange)="loadPage($event)"
               ></ngb-pagination>
+              
+            </div>
+          </div>
         </div>
-        
-        </div>
-        
       </div>
     </div>
+
   </div>
-    </div>
 </div>

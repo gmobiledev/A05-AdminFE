@@ -104,9 +104,12 @@ export class DiscountsComponent implements OnInit {
 
   addCreds() {
     const creds = this.form.controls.items as FormArray;
+    console.log(creds);
+    const last = creds.controls[creds.controls.length-1] as FormGroup;
+    console.log(last);
     creds.push(
       this.fb.group({
-        start_money: 0,
+        start_money: last ? last.controls.end_money.value + 1 : 0,
         end_money: 0,
         value: 0,
       })
