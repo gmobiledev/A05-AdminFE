@@ -148,7 +148,7 @@ export class AirtimeTopupComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.daterange = daterangeString;
 
-    this.userService.exportExcelReport(this.dataExcel).subscribe(res => {
+    this.userService.exportExcelReport(this.dataExcel, this.searchForm).subscribe(res => {
       console.log(res.body.type)
       var newBlob = new Blob([res.body], { type: res.body.type });
       let url = window.URL.createObjectURL(newBlob);
@@ -211,6 +211,9 @@ export class AirtimeTopupComponent implements OnInit {
               // this.alertService.showSuccess('Thành công');
               return;
             }
+            this.modalClose();
+            this.getData();
+            this.alertService.showSuccess(res.message);
           }, error => {
             Swal.showValidationMessage(
               error
@@ -220,11 +223,9 @@ export class AirtimeTopupComponent implements OnInit {
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
-        if (result.isConfirmed) {
-          this.getData();
-          this.modalClose();
+        if (result.isConfirmed) {       
           //this.updateStatus.emit({updated: true});
-          this.alertService.showSuccess('Thành công');
+          // this.alertService.showSuccess('Thành công');
         }
       })
     } else {

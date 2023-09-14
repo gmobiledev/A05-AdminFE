@@ -25,8 +25,8 @@ export class UserService {
     return this._http.get<any>(`${environment.apiUrl}/admin/merchants`, {params: params});
   }
 
-  exportExcelReport(dto: any): Observable<any> {
-    return this._http.post(`${environment.apiUrl}/admin/task/export-excel`, dto, { observe: 'response', responseType: 'blob' });
+  exportExcelReport(dto: any, params = null): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/task/export-excel`, dto, { observe: 'response', responseType: 'blob', params: params });
   }
 
   getMerchantBalances(id) {
