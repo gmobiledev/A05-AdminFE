@@ -240,7 +240,15 @@ export class DiscountsComponent implements OnInit {
   }
 
   modalClose() {
-    this.modalRef.close();;
+    this.form = this.fb.group({
+      name: [''],
+      date_range: [''],
+      items: this.fb.array([]),
+      file: [''],
+    });
+
+    this.modalRef.close();
+
   }
 
   onChangeCheckBox(event, item) {
