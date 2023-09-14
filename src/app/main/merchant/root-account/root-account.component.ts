@@ -3,11 +3,14 @@ import { AdminService } from 'app/auth/service/admin.service';
 import { colors } from 'app/colors.const';
 import { CoreConfigService } from '@core/services/config.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from 'app/auth/models';
 import { AuthenticationService, UserService } from 'app/auth/service';
 import { DashboardService } from 'app/main/dashboard/dashboard.service';
 import { TransactionServivce } from 'app/auth/service/transaction.service';
+import dayjs from 'dayjs';
+dayjs.locale('vi')
 
 @Component({
   selector: 'app-root-account',
@@ -26,10 +29,6 @@ export class RootAccountComponent implements OnInit {
 
   public isViewFile: boolean = false;
   public urlFile: any;
-  // Private
-  private $primary = '#7367F0';
-  private $warning = '#FF9F43';
-
 
   public avgsessionChartoptions;
   public supportChartoptions;
@@ -39,8 +38,6 @@ export class RootAccountComponent implements OnInit {
   private tooltipShadow = 'rgba(0, 0, 0, 0.25)';
   private successColorShade = '#28dac6';
   private warningLightColor = '#FDAC34';
-  private grid_line_color = 'rgba(200, 200, 200, 0.2)'; // RGBA color helps in dark layout
-  private yellowColor = '#ffe800';
 
 
   public total: number;
@@ -86,20 +83,41 @@ export class RootAccountComponent implements OnInit {
         labels: ['Tiền vào', 'Tiền ra'],
         backgroundColor: [this.successColorShade, this.warningLightColor],
         borderWidth: 0,
-        data: [1,1],
+        data: [1, 1],
         pointStyle: 'rectRounded'
       }
     ]
-  };; 
+  };
+
+  dateRange: any;
+  ranges: any = {
+    'Hôm nay': [dayjs(), dayjs()],
+    'Hôm qua': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
+    'Tuần vừa qua': [dayjs().subtract(6, 'days'), dayjs()],    
+    'Tháng này': [dayjs().startOf('month'), dayjs().endOf('month')],
+    'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
+  }
+
+  public searchForm = {
+    user: '',
+    title: '',
+    status: '',
+    daterange: '',
+    trans_id: '',
+    is_customer_sign: '',
+    is_guarantee_sign: '',
+    is_bank_sign: '',
+    page: 1,
+    service_code: '',
+    page_size: 20,
+    money_out: 0
+  }
 
   constructor(
-    private adminService: AdminService,
     private userService: UserService,
-    private transactionService: TransactionServivce
-
+    private transactionService: TransactionServivce,
+    private router: Router,
   ) {
-
-  
   }
 
   ngOnInit(): void {
@@ -124,6 +142,15 @@ export class RootAccountComponent implements OnInit {
     this.getData();
   }
 
+  onSubmitSearch(): void {
+    this.router.navigate(['/merchant/root'], { queryParams: this.searchForm})
+  }
+
+  loadPage(page) {
+    this.searchForm.page = page;
+    this.router.navigate(['/merchant/root'], { queryParams: this.searchForm });
+  }
+
   getData() {
     this.sectionBlockUI.start();
     this.transactionService.getMoneyIn().subscribe(res => {
@@ -136,28 +163,14 @@ export class RootAccountComponent implements OnInit {
 
       this.total = res.data.count;
       this.pageSize = res.data.pageSize;
-      console.log(this.doughnutChart)
 
     })
-
-    // this.transactionService.getMoneyOut().subscribe(res => {
-    //   this.sectionBlockUI.stop();
-    //   this.listOut = res.data.items;
-    //   this.total = res.data.count;
-    //   this.pageSize = res.data.pageSize;
-    // }, error => {
-    //   this.sectionBlockUI.stop();
-    //   console.log("ERRRR");
-    //   console.log(error);
-    // })
 
     this.userService.getRootMerchantBalance().subscribe(res => {
       this.balance = res.data && res.data.balance ? res.data.balance : 0
     })
 
   }
-
-
 
 }
 
