@@ -148,7 +148,7 @@ export class AirtimeTopupComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.daterange = daterangeString;
 
-    this.userService.exportExcelReport(this.dataExcel).subscribe(res => {
+    this.userService.exportExcelReport(this.dataExcel, this.searchForm).subscribe(res => {
       console.log(res.body.type)
       var newBlob = new Blob([res.body], { type: res.body.type });
       let url = window.URL.createObjectURL(newBlob);
