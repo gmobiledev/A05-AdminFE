@@ -211,6 +211,9 @@ export class AirtimeTopupComponent implements OnInit {
               // this.alertService.showSuccess('Thành công');
               return;
             }
+            this.modalClose();
+            this.getData();
+            this.alertService.showSuccess(res.message);
           }, error => {
             Swal.showValidationMessage(
               error
@@ -220,11 +223,9 @@ export class AirtimeTopupComponent implements OnInit {
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
-        if (result.isConfirmed) {
-          this.getData();
-          this.modalClose();
+        if (result.isConfirmed) {       
           //this.updateStatus.emit({updated: true});
-          this.alertService.showSuccess('Thành công');
+          // this.alertService.showSuccess('Thành công');
         }
       })
     } else {
