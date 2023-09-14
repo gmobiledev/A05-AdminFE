@@ -1,0 +1,24 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <app-form-organiration #formOrganization
+                        ></app-form-organiration>
+                        <div class="row">
+                            <div class="col-12">
+                                <a (click)="onSubmit()" class="btn btn-success">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
