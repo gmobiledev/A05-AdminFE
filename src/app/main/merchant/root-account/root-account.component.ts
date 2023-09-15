@@ -100,13 +100,9 @@ export class RootAccountComponent implements OnInit {
 
   public searchForm = {
     user: '',
-    title: '',
     status: '',
-    daterange: '',
+    date_range: '',
     trans_id: '',
-    is_customer_sign: '',
-    is_guarantee_sign: '',
-    is_bank_sign: '',
     page: 1,
     service_code: '',
     page_size: 20,
@@ -117,7 +113,18 @@ export class RootAccountComponent implements OnInit {
     private userService: UserService,
     private transactionService: TransactionServivce,
     private router: Router,
+    private route: ActivatedRoute
   ) {
+
+    this.route.queryParams.subscribe(params => {
+      this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
+      this.searchForm.money_out = params['money_out'] && params['money_out'] != undefined ? params['money_out'] : '';
+      this.route.data.subscribe(data => {
+        console.log(data);
+      });
+      this.getData();
+
+    })
   }
 
   ngOnInit(): void {
@@ -139,10 +146,14 @@ export class RootAccountComponent implements OnInit {
         ]
       }
     };
-    this.getData();
   }
 
   onSubmitSearch(): void {
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
+    this.searchForm.date_range = daterangeString;
+
     this.router.navigate(['/merchant/root'], { queryParams: this.searchForm})
   }
 
@@ -153,7 +164,7 @@ export class RootAccountComponent implements OnInit {
 
   getData() {
     this.sectionBlockUI.start();
-    this.transactionService.getMoneyIn().subscribe(res => {
+    this.transactionService.getMoneyIn(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listIn = res.data.items;
       this.sumIn = res.data.sum_in ? Math.abs(res.data.sum_in) : 0;

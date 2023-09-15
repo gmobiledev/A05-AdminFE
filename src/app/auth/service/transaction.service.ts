@@ -27,8 +27,8 @@ export class TransactionServivce {
     return this._http.get<any>(`${environment.apiUrl}/admin/transaction/trans-type`);
   }
 
-  getMoneyIn() {
-    return this._http.get<any>(`${environment.apiUrl}/admin/transaction/merchant-root`);
+  getMoneyIn(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/transaction/merchant-root`, {params: params});
   }
 
   exportExcel(dto = null) {
