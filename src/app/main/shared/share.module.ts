@@ -5,13 +5,14 @@ import { PoupViewImageComponent } from './poup-view-image/poup-view-image.compon
 import { ThongTinThueBaoComponent } from './thong-tin-thue-bao/thong-tin-thue-bao.component';
 import { FormPersonalComponent } from './form-personal/form-personal.component';
 import { FormOrganirationComponent } from './form-organiration/form-organiration.component';
+import { OrganizationDocComponent } from './organization-doc/organization-doc.component';
 
 
 @NgModule({
   declarations: [
     ViewFileContractComponent,
     PoupViewImageComponent,    
-    ThongTinThueBaoComponent, FormPersonalComponent, FormOrganirationComponent
+    ThongTinThueBaoComponent, FormPersonalComponent, FormOrganirationComponent, OrganizationDocComponent
   ],
   imports: [
     CoreCommonModule
@@ -20,7 +21,8 @@ import { FormOrganirationComponent } from './form-organiration/form-organiration
     ViewFileContractComponent,
     PoupViewImageComponent,
     ThongTinThueBaoComponent,
-    FormPersonalComponent, FormOrganirationComponent
+    FormPersonalComponent, FormOrganirationComponent,
+    OrganizationDocComponent
   ]
 })
 export class SharedModule { }

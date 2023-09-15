@@ -12,6 +12,17 @@ export class FormPersonalComponent implements OnInit {
   @Input() submitted;
   @Input() options: string = ''
 
+  public countries = []
+  public provinces = []
+  public residence_districts = []
+  public residence_commues = []
+  public home_districts = []
+  public home_commues = []
+  public residence: any = {}
+  public imageFront;
+  public imageBack;
+  public imageSelfie;  
+
   constructor(
     private formBuilder: FormBuilder
   ) { }
@@ -20,11 +31,64 @@ export class FormPersonalComponent implements OnInit {
     this.initForm();
   }
 
-  onChangeDistrict(e) {
-
+  onChangeResidenceProvince(event) {
+    console.log(event.target);
+    if (event.target['options'])
+      this.residence['province'] = event.target['options'][event.target['options'].selectedIndex].text;
+    let id = event.target.value
+    // this.adminSerivce.getDistricts(id).subscribe((res: any) => {
+    //   if (res.status == 1) {
+    //     this.residence_districts = res.data
+    //     this.residence_commues = []
+    //   }
+    // })
   }
 
-  onChangeProvince(e) {
+  onChangeResidenceDistrict(event) {
+    if (event.target['options'])
+      this.residence['district'] = event.target['options'][event.target['options'].selectedIndex].text;
+    let id = event.target.value
+    // this.adminSerivce.getCommunes(id).subscribe((res: any) => {
+    //   if (res.status == 1) {
+    //     this.residence_commues = res.data
+    //   }
+    // })
+  }
+  onChangeResidenceCommune(event) {
+    if (event.target['options'])
+      this.residence['commune'] = event.target['options'][event.target['options'].selectedIndex].text;
+  }
+
+  onChangeHomeProvince(event) {
+    let id = event.target.value
+    // this.adminSerivce.getDistricts(id).subscribe((res: any) => {
+    //   if (res.status == 1) {
+    //     this.home_districts = res.data
+    //     this.home_commues = []
+    //   }
+    // })
+  }
+
+  onChangeHomeDistrict(event) {
+    let id = event.target.value
+    // this.adminSerivce.getCommunes(id).subscribe((res: any) => {
+    //   if (res.status == 1) {
+    //     this.home_commues = res.data
+    //   }
+    // })
+  }
+
+  onChangeIdentificationType(event) {
+    let id = event.target.value
+    if (id == "CCCD" || id == "CCCD_CHIP") {
+      this.formPeople.patchValue({
+        identification_place: "CỤC TRƯỞNG CỤC CẢNH SÁT QUẢN LÝ HÀNH CHÍNH VỀ TRẬT TỰ XÃ HỘI"
+      })
+    } else {
+      this.formPeople.patchValue({
+        identification_place: ""
+      })
+    }
 
   }
 

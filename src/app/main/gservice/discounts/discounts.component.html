@@ -262,6 +262,7 @@
                     placeholder="Từ"
                     mask="separator"
                     thousandSeparator=","
+                    [attr.disabled]="disableInput[i] ? '' : null"
                     formControlName="start_money"
                     class="form-control mt-1"
                   />
@@ -272,6 +273,7 @@
                     placeholder="Đến"
                     mask="separator"
                     thousandSeparator=","
+                    (blur)="onInputEndAmount($event, i)"
                     formControlName="end_money"
                     class="form-control mt-1"
                   />
