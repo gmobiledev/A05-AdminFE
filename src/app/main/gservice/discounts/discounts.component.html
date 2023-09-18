@@ -83,13 +83,17 @@
                       {{ item?.end_date | date : "dd/MM/yyyy" }}
                     </td>
                     <td>
-                      <a (click)="modalOpen(modalTransWh, item)">
+                      <a
+                        ngbTooltip="Xem chi tiết"
+                        (click)="modalOpen(modalTransWh, item)"
+                      >
                         <i
                           data-feather="eye"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
                       <a
+                        ngbTooltip="Bật chương trình"
                         class="ml-2"
                         (click)="onSubmitLock(item.id, 0)"
                         *ngIf="item.status"
@@ -100,6 +104,7 @@
                         ></i>
                       </a>
                       <a
+                        ngbTooltip="Tắt chương trình"
                         class="ml-2"
                         (click)="onSubmitLock(item.id, 1)"
                         *ngIf="!item.status"
@@ -249,7 +254,6 @@
             <div class="col-4"><label>Đến</label></div>
             <div class="col-3"><label>Chiết khấu (%)</label></div>
             <div class="col-1"><label></label></div>
-
           </div>
           <div
             formArrayName="items"
@@ -262,7 +266,6 @@
                     placeholder="Từ"
                     mask="separator"
                     thousandSeparator=","
-                    [attr.disabled]="disableInput[i] ? '' : null"
                     formControlName="start_money"
                     class="form-control mt-1"
                   />
@@ -273,7 +276,6 @@
                     placeholder="Đến"
                     mask="separator"
                     thousandSeparator=","
-                    (blur)="onInputEndAmount($event, i)"
                     formControlName="end_money"
                     class="form-control mt-1"
                   />
@@ -310,7 +312,6 @@
       <button type="submit" class="btn btn-primary" rippleEffect>Tạo</button>
     </a>
   </div>
-
 </ng-template>
 
 <ng-template #modalTransWh let-modal>
