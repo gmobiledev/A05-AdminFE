@@ -294,7 +294,7 @@ export class DiscountsComponent implements OnInit {
   }
 
   async onSubmitLock(id, status) {
-    const confirmMessage = status ? "Bạn có đồng ý Bặt dịch vụ?" : "Bạn có đồng ý Tắt dịch vụ?";
+    const confirmMessage = status ? "Bạn có đồng ý Tắt dịch vụ?" : "Bạn có đồng ý Bật dịch vụ?";
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.gServiceService.lockService(id, status, "").subscribe(res => {
         if (!res.status) {
