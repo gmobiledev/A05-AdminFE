@@ -224,7 +224,7 @@
                     <td>
                       {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }} -  {{ item.customer_type }}
                       <br>
-                      {{ getDetail(item) && getDetail(item)['type'] ? getDetail(item)['type'] : '' }}
+                      {{ item.sub_action ? item.sub_action : '' }}
                     </td>
                     <td>
                       <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
@@ -275,7 +275,8 @@
                         </a>
                       </div>
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
-                        <div *ngIf="(item.action == listTaskAction['CHECK_CONVERSION_2G']['value']  && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
+                        <div *ngIf="(
+                          (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])  && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
                         || (item.status == taskTelecomStatus.STATUS_NEW_ORDER && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
@@ -312,13 +313,17 @@
                       </div>
 
                       <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalApproveInfo, item)"
-                      *ngIf="item.action != listTaskAction['CHECK_CONVERSION_2G']['value'] && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)"
+                      *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
+                
+                       && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)"
                       >
                         <i data-feather="user-check" class="text-white cursor-pointer"></i>
                         {{ showApproveText(item.status) }}
                       </a>
 
-                      <div *ngIf="item.status == taskTelecomStatus.STATUS_APPROVED && item.action == listTaskAction['CHECK_CONVERSION_2G']['value']">
+                      <div *ngIf="(item.status == taskTelecomStatus.STATUS_APPROVED 
+                      || item.status == taskTelecomStatus.STATUS_WAITING_SIM ) && (
+                      item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])">
                         <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                           Tiếp tục thực hiện
@@ -336,7 +341,12 @@
                          class="btn btn-info mt-1" (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')" >
                             <i data-feather="info" class="text-white cursor-pointer"></i>                
                             Thông tin Ship
-                        </a>                  
+                        </a>  
+                        
+                        <a ngbTooltip="Lưu note" *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
+                         class="btn btn-sm btn-icon btn-info mt-1" (click)="modalApprovalOpen(modaNote, item, 'lg')" >
+                            <i data-feather="pen-tool" class="text-white cursor-pointer"></i>
+                        </a>
                     </td>
                   </tr>
                 </tbody>
@@ -450,5 +460,28 @@
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
       <app-ship-info [item]="selectedItem"
           ></app-ship-info>
+  </div>
+</ng-template>
+
+<ng-template #modaNote let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Lưu note</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="form-group">
+      <label for="">Note</label>
+      <input type="text" class="form-control" #note>
+    </div>
+    <div class="form-group">
+      <a class="btn btn-success" (click)="onSaveNote(note?.value)">
+        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+        <span>
+          Lưu
+        </span>
+      </a>
+    </div>
   </div>
 </ng-template>

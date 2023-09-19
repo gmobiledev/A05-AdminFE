@@ -17,6 +17,7 @@ export enum TaskTelecomStatus {
     STATUS_APPROVED_2 = 32,
     STATUS_APPROVED_3 = 33,
     STATUS_DVKHKD_REJECT = 40,
+    STATUS_WAITING_SIM = 60,
     STATUS_NEW_ORDER_ORGANIZATION = 50
 }
 
@@ -52,6 +53,10 @@ export class TaskTelecom {
         CHECK_CONVERSION_2G: {
             value: 'CHECK_CONVERSION_2G',
             label: '2G sang 4G'
+        },
+        TYPE_2G_CONVERSION: {
+            value: '2G_CONVERSION',
+            label: 'Đổi 2G'
         }
     };
 }

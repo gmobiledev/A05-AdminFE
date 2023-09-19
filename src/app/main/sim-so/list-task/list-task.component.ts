@@ -457,6 +457,35 @@ export class ListTaskComponent implements OnInit {
     return null;
   }
 
+  /**
+   * Lưu note
+   * 
+   * @param content 
+   * @returns 
+   */
+  async onSaveNote(content) {
+    if(!content || content == undefined) {
+      this.alertService.showMess("Vui lòng nhập nội dung");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý lưu lại")).value) {
+      this.telecomService.saveNote({
+        note: content,
+        task_id: this.selectedItem.id
+      }).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.getData();
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+      }, err => {
+        this.alertService.showMess(err);
+      })
+    }  
+  }
+
   checkAction(item) {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }

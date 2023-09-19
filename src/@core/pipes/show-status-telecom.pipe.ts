@@ -32,6 +32,8 @@ export class ShowStatusTelecomPipe implements PipeTransform {
         html = '<span class="badge badge-pill badge-light-warning mr-1">Mới khởi tạo</span>'
     }  else if (value == TaskTelecomStatus.STATUS_APPROVED) {
         html = '<span class="badge badge-pill badge-light-info mr-1">Đã duyệt</span>'
+    } else if (value == TaskTelecomStatus.STATUS_WAITING_SIM) {
+        html = '<span class="badge badge-pill badge-light-info mr-1">Chờ thông tin SIM</span>'
     }
     return html;
   }

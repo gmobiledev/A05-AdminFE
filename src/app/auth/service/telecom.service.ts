@@ -209,12 +209,16 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-2g-conversion`, data);
   }
 
-  createTaskNewSim(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/create-task-newsim`, data);
+  uploadSimInfo(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-sim-info`, data);
   }
 
   submitShipTracking(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/submit-shipping-info`, data);
+  }
+
+  saveNote(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/save-note`, data);
   }
 
 }

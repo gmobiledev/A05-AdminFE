@@ -24,7 +24,7 @@ export class TaskItemComponent implements OnInit {
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
   @Output() createNewTask = new EventEmitter<any>();
 
-  @ViewChild('modalCreateTask') modalCreateTask: ElementRef;
+  @ViewChild('modalUploadSim') modalUploadSim: ElementRef;
   
   public data: any;
   listCurrentAction: any;
@@ -42,7 +42,7 @@ export class TaskItemComponent implements OnInit {
   public viewImage;
   public modalRef: any;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
-  @BlockUI('modal-create-task') modalCreateTaskBlockUI: NgBlockUI;
+  @BlockUI('modal-create-task') modalUploadSimBlockUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -421,8 +421,8 @@ export class TaskItemComponent implements OnInit {
    * @param item 
    * @param serial 
    */
-  onCreateTaskNewSim(item) {
-    this.modalRef = this.modalService.open(this.modalCreateTask, {
+  onUploadSimInfo(item) {
+    this.modalRef = this.modalService.open(this.modalUploadSim, {
       centered: true,
       windowClass: 'modal modal-primary',
       size: 'lg',
@@ -447,7 +447,7 @@ export class TaskItemComponent implements OnInit {
    * @param serial 
    * @returns 
    */
-  async onSubmitCreateNewTask(serial) {
+  async onSubmitUploadSimInfo(serial) {
     let data = new FormData();
     if(!serial || serial == undefined) {
       this.alertService.showMess("Vui lòng nhập số serial");
@@ -457,9 +457,9 @@ export class TaskItemComponent implements OnInit {
     data.append("serial", serial);
     data.append("sim_image", this.simFile);
     if ((await this.alertService.showConfirm("Bạn có đồng ý lưu lại")).value) {
-      this.modalCreateTaskBlockUI.start();
-      this.telecomService.createTaskNewSim(data).subscribe(res => {
-        this.modalCreateTaskBlockUI.stop();
+      this.modalUploadSimBlockUI.start();
+      this.telecomService.uploadSimInfo(data).subscribe(res => {
+        this.modalUploadSimBlockUI.stop();
         if(!res.status) {
           this.alertService.showMess(res.message);
           return;
