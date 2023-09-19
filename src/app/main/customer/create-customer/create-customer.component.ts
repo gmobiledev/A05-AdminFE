@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { UserService } from 'app/auth/service';
 import { FormOrganirationComponent } from 'app/main/shared/form-organiration/form-organiration.component';
 import { FormPersonalComponent } from 'app/main/shared/form-personal/form-personal.component';
 import { OrganizationDocComponent } from 'app/main/shared/organization-doc/organization-doc.component';
@@ -41,9 +42,17 @@ export class CreateCustomerComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  onSubmitCreate() {
+    this.userService.createCustomerOcr(this.formOrganDoc.form.value).subscribe(res => {
+      
+    })
   }
 
   onSubmit() {

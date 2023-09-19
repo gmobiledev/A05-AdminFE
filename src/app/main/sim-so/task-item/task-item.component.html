@@ -200,6 +200,62 @@
                         src="data:image/png;base64,{{ data?.people?.base64SignatureCompare }}" alt="avatar img" />
                 </div>
             </div>
+
+            <div class="row" *ngIf="data.old_people.name">
+                <div class="col-md-12">
+                    <h4>Thông tin cũ của KH</h4>
+                </div>
+
+                <div class="col-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Số giấy tờ</th>
+                                <th>Ngày sinh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ data?.old_people?.name }}
+                                </td>
+                                <td>
+                                    {{ data?.old_people?.identification_no }}
+                                </td>
+                                <td>
+                                    {{ data?.old_people?.birth }}
+                                </td>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-4" *ngIf="data?.old_people?.base64Front">
+                    <label for="">Ảnh giấy tờ mặt trước</label>
+                    <img  class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ data?.old_people?.base64Front }}" alt="avatar img" />
+                </div>
+                <div class="col-4" *ngIf="data?.old_people?.base64Back">
+                    <label for="">Ảnh giấy tờ mặt sau</label>
+                    <img  class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ data?.old_people?.base64Back }}" alt="avatar img" />
+                </div>
+                <div class="col-4" *ngIf="data?.old_people?.base64Selfie">
+                    <label for="">Ảnh chân dung</label>
+                    <img  class="img-fluid rounded mb-75"
+                        src="data:image/png;base64,{{ data?.old_people?.base64Selfie }}" alt="avatar img" />
+                </div>
+            </div>
+            <div class="row mb-2">
+                <a class="ml-2 btn btn-info" (click)="modalOpen(modalUpload)"
+                    *ngIf="checkAction('telecom-admin/task/upload-old-indetification-docs') && data.task.action == listTaskAction['CHECK_CONVERSION_2G']['value']
+                    
+                    ">
+                    <i data-feather="upload" class="text-white cursor-pointer"></i>
+                    Upload ảnh CMT cũ
+                </a>
+            </div>
+
             <div class="row mb-2  p-2 border-bottom" *ngFor="let itemN of data?.msisdn?.msisdns">
                 <div class="col-md-12" *ngIf="data.task.action == listTaskAction['change_info']['value']">
                     <h4>Thông tin đã đấu nối</h4>
@@ -313,12 +369,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div>            
         </div>
 
         <div class="col-md-12">
-            <div class="col-md-12 text-center" *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL">
+            <div class="col-md-12 text-center" *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL && data.task.action != listTaskAction['CHECK_CONVERSION_2G']['value']">
                 <a class="ml-2 btn btn-primary" (click)="onDownloadImages()">
                     <i data-feather="download" class="text-white cursor-pointer"></i>
                     <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
@@ -363,6 +418,7 @@
         </a>
     </div> -->
         <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING
+        && checkAction('telecom-admin/task/:slug(\\d+)/update-status')
         && (data.task.action == listTaskAction['change_info']['value'] || data.task.action == listTaskAction['change_user_info']['value']
         || data.task.action == listTaskAction['new_sim']['value'] )
         ">
@@ -397,7 +453,8 @@
 
         </div>
         <div
-            *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING  || data?.task?.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO">
+            *ngIf="
+            checkAction('telecom-admin/task/:slug(\\d+)/update-status') && (data?.task?.status == taskTelecomStatus.STATUS_PROCESSING  || data?.task?.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO)">
             <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_REJECT)">
                 <i data-feather="slash" class="text-white cursor-pointer"></i>
                 <!-- <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
@@ -411,7 +468,7 @@
             </a>
         </div>
 
-        <div *ngIf="data.task.action == listTaskAction['CHECK_CONVERSION_2G']['value']" >
+        <div *ngIf="checkAction('telecom-admin/task/approve-2g-conversion') && data.task.action == listTaskAction['CHECK_CONVERSION_2G']['value']" >
             <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT"
              class="ml-2 btn btn-success" (click)="onUpdateStatus2G(item, 1)" >
                 <i data-feather="check" class="text-white cursor-pointer"></i>                
@@ -425,7 +482,7 @@
             </a>
 
             <a *ngIf="data.task.status == taskTelecomStatus.STATUS_PROCESSING
-            || data.task.status == taskTelecomStatus.STATUS_APPROVED" class="ml-2 btn btn-info" 
+            || data.task.status == taskTelecomStatus.STATUS_NEW_ORDER" class="ml-2 btn btn-info" 
             (click)="onCreateTaskNewSim(item)"
             >
                 <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>                
@@ -478,7 +535,7 @@
             <input type="text" #serial_input class="form-control">
         </div>
         <div class="form-group">
-            <a class="ml-2 btn btn-success" (click)="onSubmitCreateNewTask(serial_input?.value)" >
+            <a class="btn btn-success" (click)="onSubmitCreateNewTask(serial_input?.value)" >
                 <i data-feather="check-circle" class="text-white cursor-pointer"></i>
                 <span>
                     Gửi
@@ -508,5 +565,19 @@
                 </span>
             </a>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #modalUpload let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <app-approve-convert2g-identification [item]="data?.task"
+        (uploadImages)="onUploadImages($event)"
+            [currentUserId]="currentUser.id"></app-approve-convert2g-identification>
     </div>
 </ng-template>

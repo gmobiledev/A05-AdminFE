@@ -18,6 +18,14 @@
             <img [src]="imageBackBase64" alt="" class="img-fluid" >
         </div>
     </div>
+    <div class="col-4">
+        <label for="">Upload ảnh chân dung</label>
+        <input id="file-front-input" type="file" (change)="onSelectFile($event, 'selfie')"  accept="image/gif, image/jpeg, image/png" />
+
+        <div class="image-preview" *ngIf="imageSelfieBase64">
+            <img [src]="imageSelfieBase64" alt="" class="img-fluid" >
+        </div>
+    </div>
     <div class="col-12 mt-2">
         <a class="btn btn-success" (click)="onSubmitUpload()">
             <i data-feather="check-circle" class="text-white cursor-pointer"></i>

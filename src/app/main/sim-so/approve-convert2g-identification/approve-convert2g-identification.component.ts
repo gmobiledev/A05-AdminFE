@@ -13,11 +13,14 @@ export class ApproveConvert2gIdentificationComponent implements OnInit {
   @Input() item: any;
   @Input() currentUserId: any;
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
+  @Output() uploadImages = new EventEmitter<{ updated: boolean }>();
   
   public imageFront;
   public imageFrontBase64;
   public imageBack;
   public imageBackBase64;
+  public imageSelfie;
+  public imageSelfieBase64;
   public detailTask;
   isUploadNew = 0;
   
@@ -44,6 +47,11 @@ export class ApproveConvert2gIdentificationComponent implements OnInit {
         this.imageBackBase64 = await this.resizeImage(event.target.files[0]);
         this.imageBack  = this.dataURLtoFile(this.imageBackBase64, `old_back.png`);
       }
+      if(file_type == 'selfie') {        
+        this.isUploadNew = 1;
+        this.imageSelfieBase64 = await this.resizeImage(event.target.files[0]);
+        this.imageSelfie  = this.dataURLtoFile(this.imageSelfieBase64, `selfie.png`);
+      }
       
     } 
     
@@ -56,15 +64,17 @@ export class ApproveConvert2gIdentificationComponent implements OnInit {
     data.append("is_upload_new", this.isUploadNew + '');
     data.append("mat_truoc", this.imageFront);
     data.append("mat_sau", this.imageBack);
+    data.append("chan_dung", this.imageSelfie);
 
-    if ((await this.alertService.showConfirm("Bạn có muốn tải các hình ảnh này lên")).value) {
+    if ((await this.alertService.showConfirm("Bạn có muốn tải các hình ảnh này lên?")).value) {
       this.sectionBlockUI.start();
       this.telecomService.uploadOldIdenficationDocs(data).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
           this.alertService.showMess(res.message);
           return;
-        }
+        }        
+        this.uploadImages.emit({updated: true});
         this.alertService.showSuccess(res.message);
       }, error => {
         this.sectionBlockUI.stop();
@@ -127,6 +137,10 @@ export class ApproveConvert2gIdentificationComponent implements OnInit {
       if(this.detailTask.old_people.base64Back) {
         this.imageBackBase64 = 'data:image/png;base64,' + this.detailTask.old_people.base64Back;
         this.imageBack  = this.dataURLtoFile(this.imageBackBase64, `old_back.png`);
+      }
+      if(this.detailTask.old_people.base64Selfie) {
+        this.imageSelfieBase64 = 'data:image/png;base64,' + this.detailTask.old_people.base64Selfie;
+        this.imageSelfie  = this.dataURLtoFile(this.imageSelfieBase64, `old_selfie.png`);
       }
     })
   }

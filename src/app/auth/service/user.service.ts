@@ -130,4 +130,8 @@ export class UserService {
   createMerchant(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/users/merchants`, data);
   }
+
+  createCustomerOcr(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/customer`, data);
+  }
 }

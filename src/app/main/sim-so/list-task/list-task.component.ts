@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
 import { TelecomService } from 'app/auth/service/telecom.service';
-import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { STORAGE_KEY, TaskAction, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -161,15 +161,18 @@ export class ListTaskComponent implements OnInit {
       
       if(item.status != this.taskTelecomStatus.STATUS_CANCEL && item.status != this.taskTelecomStatus.STATUS_SUCCESS) {
         try {
-          check = await this.telecomService.checkAvailabledTask(item.id);
-          if(!check.status) { 
-            this.getData();
-            this.alertService.showMess(check.message); 
-            // if(!this.isAdmin) {                         
-            //   return;
-            // }           
-            
-          }
+          // if (item.action != 'CHECK_CONVERSION_2G') {
+            check = await this.telecomService.checkAvailabledTask(item.id);
+            if (!check.status) {
+              this.getData();
+              this.alertService.showMess(check.message);
+              // if(!this.isAdmin) {                         
+              //   return;
+              // }           
+
+            }
+          // }
+          
           this.itemBlockUI.stop();
           this.modalRef = this.modalService.open(modal, {
             centered: true,
@@ -349,7 +352,7 @@ export class ListTaskComponent implements OnInit {
 
   onCreateTaskNewSim(item) {
     this.modalClose();
-    this.modalOpen(this.modalItem, item)
+    // this.modalOpen(this.modalItem, item)
   }
 
   showApproveText(status) {
@@ -439,6 +442,17 @@ export class ListTaskComponent implements OnInit {
     this.telecomService.getSummary().subscribe(res => {
       this.summaryTask = res.data;
     })
+  }
+
+  getDetail(item) {
+    if(item.detail) {
+      try {
+        return JSON.parse(item.detail);
+      } catch (error) {
+        return null;
+      }
+    }
+    return null;
   }
 
 }

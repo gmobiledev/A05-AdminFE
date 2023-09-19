@@ -20,12 +20,14 @@ export class TaskItemComponent implements OnInit {
   @Input() currentUserId: any;
   @Input() currentGPKD: any;
   @Input() typeDetail: any;
+  @Input() currentUser: any;
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
   @Output() createNewTask = new EventEmitter<any>();
 
   @ViewChild('modalCreateTask') modalCreateTask: ElementRef;
   
   public data: any;
+  listCurrentAction: any;
 
   public taskTelecomStatus = TaskTelecomStatus;
   public listTaskAction = TaskTelecom.ACTION;
@@ -684,6 +686,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.listCurrentAction = this.currentUser.actions;
     if (this.item) {
       if (this.item.action == this.listTaskAction.change_info.value) {
         this.actionText = 'Cập nhật';
@@ -722,5 +725,29 @@ export class TaskItemComponent implements OnInit {
     
   }
 
+  async modalOpen(modal, item = null) { 
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'lg',
+      backdrop : 'static',
+      keyboard : false
+    });
+  }
+
+  async modalClose() {
+    // this.getData();
+    this.modalRef.close(); 
+  }
+
+  onUploadImages() {
+    this.modalClose();
+    this.getData();
+    // this.createNewTask.emit({});
+  }
+
+  checkAction(item) {
+    return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
+  }
 
 }
