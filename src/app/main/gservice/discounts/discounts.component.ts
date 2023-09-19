@@ -37,6 +37,7 @@ export class DiscountsComponent implements OnInit {
   public wh;
 
   public arrayServiceIds = [];
+  public disableInput = [];
 
   public searchForm = {
     user: '',
@@ -103,21 +104,40 @@ export class DiscountsComponent implements OnInit {
   }
 
   addCreds() {
+    if(this.form.value.items.length > 0) {
+      console.log(this.form.value.items);
+      let checkStartEndMoney = false;
+      for(const itemX of this.form.value.items) {
+        if(itemX.start_money >= itemX.end_money) {
+          checkStartEndMoney = true;
+        }
+      }
+      if(checkStartEndMoney) {
+        this.alertService.showMess("Số tiền sau phải lớn hơn số tiền trước");
+        return;
+      }
+    }
     const creds = this.form.controls.items as FormArray;
-    console.log(creds);
+
     const last = creds.controls[creds.controls.length-1] as FormGroup;
-    console.log(last);
-    creds.push(
-      this.fb.group({
-        start_money: last ? last.controls.end_money.value + 1 : 0,
-        end_money: 0,
-        value: 0,
-      })
-    );
+    let fg = this.fb.group({
+      start_money: 0,
+      end_money: 0,
+      value: 0,
+    })
+    if(last) {
+      this.disableInput.push(true);
+      fg.controls['start_money'].setValue(last.controls.end_money.value + 1)      
+    } else {
+      this.disableInput.push(false)
+    }
+
+    creds.push(fg);
   }
 
   removeCreds(i) {
     let creds = this.form.controls.items as FormArray;
+    this.disableInput.splice(i, 1);
     creds.removeAt(i)
   }
 
@@ -197,10 +217,41 @@ export class DiscountsComponent implements OnInit {
         (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' +
         (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '');
     }
+    if (!this.form.controls.date_range.value || !this.form.controls.name.value ) {
+      this.alertService.showMess('Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+    if (this.arrayServiceIds.length < 1) {
+      this.alertService.showMess('Vui lòng chọn dịch vụ');
+      return;
+    }
+    let checkInvalid = false;
+    let checkStartEndMoney = false;
+    if(this.form.value.items.length < 1) {
+      this.alertService.showMess('Vui lòng nhập đầy đủ chiết khấu');
+      return;
+    }
+
+    for(const itemX of this.form.value.items) {
+      if(itemX.start_money === null || itemX.end_money === null || itemX.value === null) {
+        checkInvalid = true;
+      }
+      if(itemX.start_money >= itemX.end_money) {
+        checkStartEndMoney = true;
+      }
+    }
+    if(checkInvalid) {
+      this.alertService.showMess('Vui lòng nhập đầy đủ chiết khấu');
+      return;
+    }
+    if(checkStartEndMoney) {
+      this.alertService.showMess('Số tiền sau phải lớn hơn số tiền trước');
+      return;
+    }
     const postData = { ...this.form.value, ...{ service_id: this.arrayServiceIds } };
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo đơn hàng này không?")).value) {
       if (!this.form.controls.date_range.value || !this.form.controls.name.value ) {
-        this.alertService.showMess('Vui lòng nhập đầy đủ thông tin');
+        this.alertService.showMess('Vui lòng nhập đầy đủ thông tin tên chương trình và khoảng thời gian');
         return;
       }
       if (this.arrayServiceIds.length < 1) {
@@ -224,6 +275,19 @@ export class DiscountsComponent implements OnInit {
     
     console.log(this.form.value)
     console.log(postData)
+  }
+
+  onInputEndAmount(event, i) {
+    const creds = this.form.controls.items as FormArray;
+    const currentRow = creds.controls[i] as FormGroup;
+    const nextRowInput = creds.controls[i+1] ? creds.controls[i+1] as FormGroup : null;
+    if(nextRowInput) {
+      nextRowInput.controls.start_money.setValue(event.target.value + 1);
+    }
+    if(currentRow.controls.end_money.value < currentRow.controls.start_money.value) {
+      this.alertService.showMess('Số tiền sau phải lớn hơn số tiền trước');
+      return;
+    }
   }
 
   onViewDetail(modal, item) {
