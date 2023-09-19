@@ -12,6 +12,7 @@ export class ShipInfoComponent implements OnInit {
   @Input() item;
   public detail;
   public ship_tracking;
+  public ship_code;
 
   constructor(
     private alertService: SweetAlertService,
@@ -23,6 +24,9 @@ export class ShipInfoComponent implements OnInit {
       this.detail = JSON.parse(this.item.detail);
       if(this.detail['ship_tracking']) {
         this.ship_tracking = this.detail['ship_tracking'];
+      }
+      if(this.detail['ship_code']) {
+        this.ship_code = this.detail['ship_code'];
       }
     }    
   }
@@ -44,13 +48,14 @@ export class ShipInfoComponent implements OnInit {
 
   async onSubmitShipTracking() {
     
-    if ((await this.alertService.showConfirm("Vừa thực hiện thay đổi, bạn có đồng ý lưu lại")).value) {
-      if(!this.ship_tracking || this.ship_tracking == undefined) {
-        this.alertService.showMess("Vui lòng nhập link");
+    if ((await this.alertService.showConfirm("Bạn có đồng ý lưu lại")).value) {
+      if(!this.ship_tracking || this.ship_tracking == undefined || !this.ship_code || this.ship_code == undefined) {
+        this.alertService.showMess("Vui lòng nhập link và mã vận đơn");
         return;
       }
 
       this.telecomService.submitShipTracking({
+        ship_code: this.ship_code,
         ship_tracking: this.ship_tracking,
         task_id: this.item.id
       }).subscribe(res => {

@@ -85,6 +85,7 @@ export class ListTaskComponent implements OnInit {
   }
 
   public modalRef: any;
+  listCurrentAction: any;
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
 
@@ -417,6 +418,7 @@ export class ListTaskComponent implements OnInit {
 
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.listCurrentAction = this.currentUser.actions;
     if(this.currentUser && this.currentUser.roles) {
       // const arrayRoles = this.currentUser.roles.map( item => {return item.item_name.toLowerCase()});
       // if(arrayRoles.includes("admin") || arrayRoles.includes("root")) {
@@ -453,6 +455,10 @@ export class ListTaskComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  checkAction(item) {
+    return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
 }

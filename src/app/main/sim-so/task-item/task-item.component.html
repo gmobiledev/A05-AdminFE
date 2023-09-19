@@ -525,7 +525,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body" tabindex="0">
+    <div class="modal-body" tabindex="0" *blockUI="'modal-create-task'">
         <div class="form-group">
             <label for="">Ảnh sim</label>
             <input type="file" (change)="onSelectFile($event, 'sim')" >

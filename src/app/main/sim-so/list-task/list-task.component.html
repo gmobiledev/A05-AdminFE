@@ -97,12 +97,12 @@
       </div>
     </div>
 
-    <div class="row mb-2">
+    <!-- <div class="row mb-2">
       <div class="col-md-3">
         <button type="button" (click)="onGetAvaiable(modalItem)" class="btn btn-block btn-info">Tiếp nhận yêu cầu
           mới<span [data-feather]="'arrow-up-circle'"></span></button>
       </div>
-    </div>
+    </div> -->
 
     <div class="row" id="table-striped">
       <div class="col-12">
@@ -275,7 +275,8 @@
                         </a>
                       </div>
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_NEW_ORDER">
+                        <div *ngIf="(item.action == listTaskAction['CHECK_CONVERSION_2G']['value']  && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
+                        || (item.status == taskTelecomStatus.STATUS_NEW_ORDER && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
                             Tiếp nhận yêu cầu

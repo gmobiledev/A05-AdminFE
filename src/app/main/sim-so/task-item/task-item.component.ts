@@ -42,6 +42,7 @@ export class TaskItemComponent implements OnInit {
   public viewImage;
   public modalRef: any;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  @BlockUI('modal-create-task') modalCreateTaskBlockUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -456,7 +457,9 @@ export class TaskItemComponent implements OnInit {
     data.append("serial", serial);
     data.append("sim_image", this.simFile);
     if ((await this.alertService.showConfirm("Bạn có đồng ý lưu lại")).value) {
+      this.modalCreateTaskBlockUI.start();
       this.telecomService.createTaskNewSim(data).subscribe(res => {
+        this.modalCreateTaskBlockUI.stop();
         if(!res.status) {
           this.alertService.showMess(res.message);
           return;
