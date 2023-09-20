@@ -184,6 +184,11 @@ const appRoutes: Routes = [
   //   canActivate: [AuthGuard]
   // },
   {
+    path: 'share',
+    loadChildren: () => import('./main/shared/share.module').then(m => m.SharedModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '',
     redirectTo: '/dashboard/reports',
     pathMatch: 'full'
