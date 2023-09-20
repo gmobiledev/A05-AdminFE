@@ -485,8 +485,7 @@
                 Từ chối
             </a>
 
-            <a *ngIf="data.task.status == taskTelecomStatus.STATUS_WAITING_SIM
-            && data.task.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']" class="ml-2 btn btn-info" 
+            <a *ngIf="data.task.status == taskTelecomStatus.STATUS_WAITING_SIM" class="ml-2 btn btn-info" 
             (click)="onUploadSimInfo(item)"
             >
                 <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>                

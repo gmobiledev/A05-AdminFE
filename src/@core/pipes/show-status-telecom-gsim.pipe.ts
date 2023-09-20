@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TaskTelecomStatus } from 'app/utils/constants';
 
-@Pipe({name: 'showStatusTelecom'})
-export class ShowStatusTelecomPipe implements PipeTransform {
+@Pipe({name: 'showStatusTelecomGsim'})
+export class ShowStatusTelecomGsimPipe implements PipeTransform {
   transform(value: number): string {
     let html = '';
     if(value == TaskTelecomStatus.STATUS_NEW_ORDER) {
@@ -22,7 +22,7 @@ export class ShowStatusTelecomPipe implements PipeTransform {
     } else if (value === TaskTelecomStatus.STATUS_SUCCESS_PART) {
         html = '<span class="badge badge-pill badge-light-success mr-1">Thành công 1 phần</span>'
     } else if (value === TaskTelecomStatus.STATUS_INIT_2G_GSIM) {
-        html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ thanh toán</span>'
+        html = '<span class="badge badge-pill badge-light-warning mr-1">Yêu cầu đổi 2G mới</span>'
     } else if ([TaskTelecomStatus.STATUS_APPROVED_1, TaskTelecomStatus.STATUS_APPROVED_2, TaskTelecomStatus.STATUS_APPROVED_3]
         .includes(value)) { 
             html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ DVKH/KD duyệt</span>'

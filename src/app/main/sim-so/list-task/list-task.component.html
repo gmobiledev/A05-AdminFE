@@ -321,9 +321,9 @@
                         {{ showApproveText(item.status) }}
                       </a>
 
-                      <div *ngIf="(item.status == taskTelecomStatus.STATUS_APPROVED 
-                      || item.status == taskTelecomStatus.STATUS_WAITING_SIM ) && (
-                      item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])">
+                      <div *ngIf="((item.status == taskTelecomStatus.STATUS_APPROVED 
+                      &&
+                      item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']) || item.status == taskTelecomStatus.STATUS_WAITING_SIM )">
                         <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                           Tiếp tục thực hiện

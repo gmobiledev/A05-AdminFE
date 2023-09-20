@@ -163,15 +163,14 @@ export class ListTaskComponent implements OnInit {
       if(item.status != this.taskTelecomStatus.STATUS_CANCEL && item.status != this.taskTelecomStatus.STATUS_SUCCESS) {
         try {
           // if (item.action != 'CHECK_CONVERSION_2G') {
+          if (item.status != this.taskTelecomStatus.STATUS_NEW_ORDER || this.checkAction('telecom-admin/task/:slug(\\d+)/update-status')) {
             check = await this.telecomService.checkAvailabledTask(item.id);
             if (!check.status) {
               this.getData();
               this.alertService.showMess(check.message);
-              // if(!this.isAdmin) {                         
-              //   return;
-              // }           
-
             }
+          }
+            
           // }
           
           this.itemBlockUI.stop();
