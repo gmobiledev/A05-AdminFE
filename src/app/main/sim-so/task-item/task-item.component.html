@@ -374,9 +374,8 @@
         </div>
 
         <div class="col-md-12">
-            <div class="col-md-12 text-center" *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL 
-           
-            && data.task.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value']">
+            <div class="col-md-12 text-center" *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL            
+            && checkAction('telecom-admin/task/:slug(\\d+)/update-status')">
                 <a class="ml-2 btn btn-primary" (click)="onDownloadImages()">
                     <i data-feather="download" class="text-white cursor-pointer"></i>
                     <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
@@ -472,7 +471,7 @@
         </div>
 
         <div *ngIf="checkAction('telecom-admin/task/approve-2g-conversion') && 
-        (data.task.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']) " >
+        (data.task.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'] || data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value']) " >
             <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT"
              class="ml-2 btn btn-success" (click)="onUpdateStatus2G(item, 1)" >
                 <i data-feather="check" class="text-white cursor-pointer"></i>                
@@ -535,7 +534,7 @@
         </div>
         <div class="form-group">
             <label for="">Số serial</label>
-            <input type="text" #serial_input class="form-control">
+            <input type="text" #serial_input class="form-control" [(ngModel)]="kit_serial" [attr.disabled]="disabled_kit ? '' : null">
         </div>
         <div class="form-group">
             <a class="btn btn-success" (click)="onSubmitUploadSimInfo(serial_input?.value)" >

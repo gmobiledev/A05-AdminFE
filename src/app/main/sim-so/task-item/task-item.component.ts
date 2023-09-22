@@ -39,6 +39,8 @@ export class TaskItemComponent implements OnInit {
   public linkShipTracking;
 
   simFile: any;
+  disabled_kit: boolean = false;
+  kit_serial: string;
   public viewImage;
   public modalRef: any;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
@@ -422,16 +424,25 @@ export class TaskItemComponent implements OnInit {
    * @param serial 
    */
   onUploadSimInfo(item) {
-    this.modalRef = this.modalService.open(this.modalUploadSim, {
-      centered: true,
-      windowClass: 'modal modal-primary',
-      size: 'lg',
-      backdrop : 'static',
-      keyboard : false
-    });
+    this.telecomService.getDetailSim({keysearch: this.data.task.msisdn, category_id: 2, take: 10}).subscribe(res => {
+      if(res.data && res.data.short_desc && res.data.short_desc.includes('8984')) {
+        this.disabled_kit = true;
+        this.kit_serial = res.data.short_desc;
+      }
+      this.modalRef = this.modalService.open(this.modalUploadSim, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg',
+        backdrop : 'static',
+        keyboard : false
+      });
+    })
+    
   }
 
   onCloseModal() {
+    this.disabled_kit = false;
+    this.kit_serial = '';
     this.modalRef.close();
   }
 
@@ -527,7 +538,7 @@ export class TaskItemComponent implements OnInit {
           },
           {
             name: '__anh_phieu_yeu_cau_hop_dong.jpg',
-            data: this.data?.task?.identification_back_file
+            data: this.data?.task?.document_image
           },
           {
             name: '__anh_chu_ky.jpg',

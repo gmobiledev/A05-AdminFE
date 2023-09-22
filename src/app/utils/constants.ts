@@ -57,6 +57,10 @@ export class TaskTelecom {
         TYPE_2G_CONVERSION: {
             value: '2G_CONVERSION',
             label: 'Đổi 2G'
+        },
+        GSIM_TO_SIM: {
+            value: 'GSIM_TO_SIM',
+            label: 'GSIM sang SIM'
         }
     };
 }

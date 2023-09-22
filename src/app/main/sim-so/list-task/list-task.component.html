@@ -473,7 +473,12 @@
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <div class="form-group">
       <label for="">Note</label>
-      <input type="text" class="form-control" #note>
+      <select name="" id="" class="form-control mb-2" [(ngModel)]="selectedNote">
+        <option value="">- Chọn nội dung -</option>
+        <option value="Ảnh giấy tờ bị mờ, mất góc">Ảnh giấy tờ bị mờ, mất góc</option>
+        <option value="Hệ thống đấu nối bận">Hệ thống đấu nối bận</option>
+      </select>
+      <input type="text" class="form-control" #note placeholder="Tự nhập nội dung ở đây" value="{{ selectedNote }}">
     </div>
     <div class="form-group">
       <a class="btn btn-success" (click)="onSaveNote(note?.value)">

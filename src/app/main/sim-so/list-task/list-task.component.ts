@@ -75,6 +75,7 @@ export class ListTaskComponent implements OnInit {
     cccd: ''
   }
   dateRange: any;
+  selectedNote: string;
 
   ranges: any = {
     'Hôm nay': [dayjs(), dayjs()],
@@ -215,6 +216,7 @@ export class ListTaskComponent implements OnInit {
 
   modalClose() {    
     this.selectedItem = null;
+    this.selectedNote = '';
     this.getData();
     this.modalRef.close();    
   }
