@@ -72,7 +72,8 @@ export class ListTaskComponent implements OnInit {
     date_range: '',
     telco: '',
     customer_name: '',
-    cccd: ''
+    cccd: '',
+    sub_action: ''
   }
   dateRange: any;
   selectedNote: string;
@@ -89,6 +90,7 @@ export class ListTaskComponent implements OnInit {
   listCurrentAction: any;
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
+  @BlockUI('item-block-detail') itemBlockDetailUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -115,6 +117,7 @@ export class ListTaskComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       this.searchForm.array_status = params['array_status'] && params['array_status'] != undefined ? params['array_status'] : [];
+      this.searchForm.sub_action = params['sub_action'] && params['sub_action'] != undefined ? params['sub_action'] : '';
       this.initActiveBoxSummary();
       if(this.searchForm.action && this.searchForm.array_status.length > 0) {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
@@ -137,6 +140,7 @@ export class ListTaskComponent implements OnInit {
   async modalOpen(modal, item = null) { 
     if(item) {
       let check;
+      this.itemBlockDetailUI.start();
       //neu la task dau noi cho KH doanh nghiep, chuyen sang trang moi
       if(item.customer_id && item.customer_type == 'ORGANIZATION') {
         if(item.status == TaskTelecomStatus.STATUS_NEW_ORDER) {
@@ -147,24 +151,30 @@ export class ListTaskComponent implements OnInit {
               this.alertService.showMess(check.message); 
               return;              
             }
-            this.itemBlockUI.stop();
+            this.itemBlockDetailUI.stop();
             this.router.navigateByUrl('/sim-so/task/'+item.id);
           } catch (error) {
-            this.itemBlockUI.stop();
+            this.itemBlockDetailUI.stop();
             return;
           }
         } else {
           this.router.navigateByUrl('/sim-so/task/'+item.id);
         }
         return;
-      }
-      this.itemBlockUI.start();
+      }      
       this.selectedItem = item;
       
       if(item.status != this.taskTelecomStatus.STATUS_CANCEL && item.status != this.taskTelecomStatus.STATUS_SUCCESS) {
         try {
           // if (item.action != 'CHECK_CONVERSION_2G') {
-          if (item.status != this.taskTelecomStatus.STATUS_NEW_ORDER || this.checkAction('telecom-admin/task/:slug(\\d+)/update-status')) {
+          if ((item.status != this.taskTelecomStatus.STATUS_NEW_ORDER
+            && this.checkAction('telecom-admin/task/approve-2g-conversion'))
+            || (
+              (item.status == this.taskTelecomStatus.STATUS_NEW_ORDER || item.status == this.taskTelecomStatus.STATUS_PROCESSING) &&
+              this.checkAction('telecom-admin/task/:slug(\\d+)/update-status')
+            )
+          
+          ) {
             check = await this.telecomService.checkAvailabledTask(item.id);
             if (!check.status) {
               this.getData();
@@ -174,7 +184,7 @@ export class ListTaskComponent implements OnInit {
             
           // }
           
-          this.itemBlockUI.stop();
+          this.itemBlockDetailUI.stop();
           this.modalRef = this.modalService.open(modal, {
             centered: true,
             windowClass: 'modal modal-primary',
@@ -183,11 +193,11 @@ export class ListTaskComponent implements OnInit {
             keyboard : false
           });
         } catch (error) {
-          this.itemBlockUI.stop();
+          this.itemBlockDetailUI.stop();
           return;
         }
       } else {
-        this.itemBlockUI.stop();
+        this.itemBlockDetailUI.stop();
         this.modalRef = this.modalService.open(modal, {
           centered: true,
           windowClass: 'modal modal-primary',
@@ -195,9 +205,7 @@ export class ListTaskComponent implements OnInit {
           backdrop : 'static',
           keyboard : false
         });
-      }
-      
-      
+      }            
     }
   }
 
