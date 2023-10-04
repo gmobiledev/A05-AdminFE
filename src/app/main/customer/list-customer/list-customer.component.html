@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info">
+                    <button type="button" class="btn btn-block btn-info">
                       Lọc kết quả
                     </button>
                   </div>
@@ -67,8 +67,8 @@
                   <tr>
                     <th>ID khách hàng</th>
                     <th>Tên khách hàng</th>
-                    <th>SĐT</th>             
-                    <th>Loại khách hàng</th>           
+                    <th>SĐT</th>
+                    <th>Loại khách hàng</th>
                     <th>Thao tác</th>
                   </tr>
                 </thead>
@@ -93,11 +93,10 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
-
                       <a
-                        ngbTooltip="Cập nhật thông tin"
-                        (click)="modalOpen(modalPayment, item)"
                         class="ml-2"
+                        ngbTooltip="Cập nhật thông tin"
+                        [routerLink]="['/customer/view']"
                       >
                         <i
                           data-feather="credit-card"
@@ -126,13 +125,20 @@
 
 <ng-template #modalItem let-modal>
   <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160"></h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h5 class="modal-title" id="myModalLabel160"></h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-      <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-          <app-thong-tin-thue-bao [msisdn]="selectedItem" [service]="'gtalk'"></app-thong-tin-thue-bao>
-      </div>
-  
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <app-thong-tin-thue-bao
+      [msisdn]="selectedItem"
+      [service]="'gtalk'"
+    ></app-thong-tin-thue-bao>
+  </div>
 </ng-template>
