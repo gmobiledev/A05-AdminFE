@@ -11,12 +11,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ViewCustomerComponent implements OnInit {
 
   formPeople: FormGroup;
+  formOrganization: FormGroup;
+
   @Input() submitted;
   @Input() options: string = ''
+  @Input() provinces;
+  @Input() districts;
+  @Input() commues;
+  @Input() countries;
+
+  
   public contentHeader: any;
 
-  public countries = []
-  public provinces = []
+  // public countries = []
+  // public provinces = []
   public residence_districts = []
   public residence_commues = []
   public home_districts = []
@@ -115,6 +123,14 @@ export class ViewCustomerComponent implements OnInit {
         identification_place: ""
       })
     }
+
+  }
+
+  onChangeDistrict(event) {
+
+  }
+
+  onChangeProvince(event) {
 
   }
 

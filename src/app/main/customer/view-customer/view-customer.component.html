@@ -1,197 +1,199 @@
 <div class="content-wrapper container-xxl p-0">
   <div class="content-body">
-    <!-- content-header component -->
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
     <div class="row">
-      <div class="card">
-        <div class="card-body">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
 
-          <form [formGroup]="formPeople">
-            <div class="row">
-              <div class="col-4">
-                <div
-                  class="image-upload"
-                  *ngIf="!imageFront"
-                  style="text-align: center"
-                >
-                  <label for="file-front-input">
-                    <img
-                      src="/assets/images/icons/cccd_front.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-                    <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
-                  </label>
-                  <input
-                    id="file-front-input"
-                    type="file"
-                    class="form-group"
-                    (change)="onSelectFileFront($event)"
-                  />
-                </div>
-    
-                <div class="image-preview" *ngIf="imageFront">
-                  <img [src]="imageFront" alt="" class="img-fluid" />
-    
-                  <button
-                    (click)="onReUpload('front')"
-                    type="button"
-                    class="btn btn-outline-primary btn-next"
-                    rippleEffect
+            <form [formGroup]="formPeople">
+              <div class="row">
+                <div class="col-4 p-1">
+                  <div
+                    class="image-upload"
+                    *ngIf="!imageFront"
+                    style="text-align: center"
                   >
-                    <span class="align-middle">Tải lại</span>
-                  </button>
-                </div>
-              </div>
-              <div class="col-4">
-                <div
-                  class="image-upload"
-                  *ngIf="!imageBack"
-                  style="text-align: center"
-                >
-                  <label for="file-back-input">
-                    <img
-                      src="/assets/images/icons/cccd_back.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-                    <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
-                  </label>
-                  <input
-                    id="file-back-input"
-                    type="file"
-                    (change)="onSelectFileBack($event)"
-                  />
-                </div>
-    
-                <div class="image-preview" *ngIf="imageBack">
-                  <img [src]="imageBack" alt="" class="img-fluid" />
-                  <button
-                    (click)="onReUpload('back')"
-                    type="button"
-                    class="btn btn-outline-primary btn-next"
-                    rippleEffect
-                  >
-                    <span class="align-middle">Tải lại</span>
-                  </button>
-                </div>
-              </div>
-              <div class="col-4">
-                <div
-                  class="image-upload"
-                  *ngIf="!imageSelfie"
-                  style="text-align: center"
-                >
-                  <label for="file-input">
-                    <img
-                      style="max-height: 200px"
-                      src="/assets/images/icons/selfie.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-                    <h6 class="text-center">Tải ảnh chân dung</h6>
-                  </label>
-                  <input
-                    id="file-input"
-                    type="file"
-                    (change)="onSelectFileSelfie($event)"
-                  />
-                </div>
-    
-                <div class="image-preview" *ngIf="imageSelfie">
-                  <img [src]="imageSelfie" alt="" class="img-fluid" />
-    
-                  <button
-                    (click)="onReUpload()"
-                    type="button"
-                    class="btn btn-outline-primary btn-next"
-                    rippleEffect
-                  >
-                    <span class="align-middle">Tải lại</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="identification_no" class="col-md-3 col-form-label"
-                    >Số định danh</label
-                  >
-                  <div class="col-md-9">
-                    <!-- <input type="text" class="form-control" placeholder="Số CCCD/CMND" mask="0*"
-                                    [(ngModel)]="people.id_no"> -->
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Số CCCD/CMND"
-                      mask="0*"
-                      maxlength="15"
-                      formControlName="identification_no"
-                    />
-                    <div
-                      *ngIf="submitted && f.identification_no.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.identification_no.errors.required">
-                        Vui lòng nhập trường này
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="name" class="col-md-3 col-form-label"
-                    >Họ và tên</label
-                  >
-                  <div class="col-md-9">
-                    <!-- <input type="text" class="form-control" placeholder="Họ tên" [(ngModel)]="people.name"> -->
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Họ và tên"
-                      formControlName="name"
-                    />
-                    <div
-                      *ngIf="submitted && f.name.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.name.errors.required">
-                        Vui lòng nhập trường này
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="birth" class="col-md-3 col-form-label"
-                    >Ngày sinh</label
-                  >
-                  <div class="col-md-9">
-                    <div style="display: flex">
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="birth"
-                        placeholder="01/01/1996"
-                        mask="00/00/0000"
+                    <label for="file-front-input">
+                      <img
+                        src="/assets/images/icons/cccd_front.png"
+                        class="img-fluid"
+                        alt=""
                       />
-                    </div>
-                    <div
-                      *ngIf="submitted && f.birth.errors"
-                      class="invalid-feedback"
+                      <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
+                    </label>
+                    <input
+                      id="file-front-input"
+                      type="file"
+                      class="form-group"
+                      (change)="onSelectFileFront($event)"
+                    />
+                  </div>
+
+                  <div class="image-preview" *ngIf="imageFront">
+                    <img [src]="imageFront" alt="" class="img-fluid" />
+
+                    <button
+                      (click)="onReUpload('front')"
+                      type="button"
+                      class="btn btn-outline-primary btn-next"
+                      rippleEffect
                     >
-                      <div *ngIf="f.birth.errors.required">
-                        Vui lòng nhập trường này
+                      <span class="align-middle">Tải lại</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-4 p-1">
+                  <div
+                    class="image-upload"
+                    *ngIf="!imageBack"
+                    style="text-align: center"
+                  >
+                    <label for="file-back-input">
+                      <img
+                        src="/assets/images/icons/cccd_back.png"
+                        class="img-fluid"
+                        alt=""
+                      />
+                      <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
+                    </label>
+                    <input
+                      id="file-back-input"
+                      type="file"
+                      (change)="onSelectFileBack($event)"
+                    />
+                  </div>
+
+                  <div class="image-preview" *ngIf="imageBack">
+                    <img [src]="imageBack" alt="" class="img-fluid" />
+                    <button
+                      (click)="onReUpload('back')"
+                      type="button"
+                      class="btn btn-outline-primary btn-next"
+                      rippleEffect
+                    >
+                      <span class="align-middle">Tải lại</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-4 p-1">
+                  <div
+                    class="image-upload"
+                    *ngIf="!imageSelfie"
+                    style="text-align: center"
+                  >
+                    <label for="file-input">
+                      <img
+                        style="max-height: 200px"
+                        src="/assets/images/icons/selfie.png"
+                        class="img-fluid"
+                        alt=""
+                      />
+                      <h6 class="text-center">Tải ảnh chân dung</h6>
+                    </label>
+                    <input
+                      id="file-input"
+                      type="file"
+                      (change)="onSelectFileSelfie($event)"
+                    />
+                  </div>
+
+                  <div class="image-preview" *ngIf="imageSelfie">
+                    <img [src]="imageSelfie" alt="" class="img-fluid" />
+
+                    <button
+                      (click)="onReUpload()"
+                      type="button"
+                      class="btn btn-outline-primary btn-next"
+                      rippleEffect
+                    >
+                      <span class="align-middle">Tải lại</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label
+                      for="identification_no"
+                      class="col-md-3 col-form-label"
+                      >Số định danh</label
+                    >
+                    <div class="col-md-9">
+                      <!-- <input type="text" class="form-control" placeholder="Số CCCD/CMND" mask="0*"
+                                    [(ngModel)]="people.id_no"> -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Số CCCD/CMND"
+                        mask="0*"
+                        maxlength="15"
+                        formControlName="identification_no"
+                      />
+                      <div
+                        *ngIf="submitted && f.identification_no.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.identification_no.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="col-md-9">
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="name" class="col-md-3 col-form-label"
+                      >Họ và tên</label
+                    >
+                    <div class="col-md-9">
+                      <!-- <input type="text" class="form-control" placeholder="Họ tên" [(ngModel)]="people.name"> -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Họ và tên"
+                        formControlName="name"
+                      />
+                      <div
+                        *ngIf="submitted && f.name.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.name.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="birth" class="col-md-3 col-form-label"
+                      >Ngày sinh</label
+                    >
+                    <div class="col-md-9">
+                      <div style="display: flex">
+                        <input
+                          class="form-control"
+                          type="text"
+                          formControlName="birth"
+                          placeholder="01/01/1996"
+                          mask="00/00/0000"
+                        />
+                      </div>
+                      <div
+                        *ngIf="submitted && f.birth.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.birth.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-9">
                                 <div style="display: flex;">
                                     <input class="form-control" placeholder="dd/mm/yyyy" formControlName="birth" 
                                         (click)="basicDPBirth.toggle()" ngbDatepicker #basicDPBirth="ngbDatepicker" />
@@ -204,152 +206,160 @@
                                     <div *ngIf="f.birth.errors.required">Vui lòng nhập trường này</div>
                                 </div>
                             </div> -->
-                </div>
-              </div>
-    
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="country" class="col-md-3 col-form-label"
-                    >Quốc tịch</label
-                  >
-                  <div class="col-md-9">
-                    <!-- [(ngModel)]="people.country" -->
-                    <select
-                      name=""
-                      id="country"
-                      class="form-control"
-                      formControlName="country"
-                    >
-                      <option [value]="null" disabled>-- Chọn Quốc tịch --</option>
-                      <option
-                        *ngFor="let p of countries"
-                        [value]="p.code"
-                        [selected]
-                      >
-                        {{ p.name }}
-                      </option>
-                    </select>
-                    <div
-                      *ngIf="submitted && f.country.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.country.errors.required">
-                        Vui lòng nhập trường này
-                      </div>
-                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="identification_type" class="col-md-3 col-form-label"
-                    >Loại giấy tờ</label
-                  >
-                  <div class="col-md-9">
-                    <!-- [(ngModel)]="people.identification_type" -->
-                    <select
-                      formControlName="identification_type"
-                      id="identification_type"
-                      class="form-control"
-                      (change)="onChangeIdentificationType($event)"
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="country" class="col-md-3 col-form-label"
+                      >Quốc tịch</label
                     >
-                      <option value="">--Chọn loại giấy tờ --</option>
-                      <option value="CCCD">CCCD</option>
-                      <option value="CCCD_CHIP">CCCD CHIP</option>
-                      <option value="CMND">CMND</option>
-                      <option value="PASSPOST">Hộ Chiếu</option>
-                    </select>
-                    <div
-                      *ngIf="submitted && f.identification_type.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.identification_type.errors.required">
-                        Vui lòng nhập trường này
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="identification_place" class="col-md-3 col-form-label"
-                    >Nơi cấp</label
-                  >
-                  <div class="col-md-9">
-                    <!-- [(ngModel)]="people.identification_place" -->
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="identification_place"
-                      placeholder="Nơi cấp"
-                      formControlName="identification_place"
-                    />
-                    <div
-                      *ngIf="submitted && f.identification_place.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.identification_place.errors.required">
-                        Vui lòng nhập trường này
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="gender" class="col-md-3 col-form-label"
-                    >Giới tính</label
-                  >
-                  <div class="col-md-9">
-                    <!-- [(ngModel)]="people.gender" -->
-                    <select
-                      name=""
-                      id=""
-                      class="form-control"
-                      formControlName="gender"
-                    >
-                      <option value="">--Chọn giới tính --</option>
-                      <option value="MALE">Nam</option>
-                      <option value="FEMALE">Nữ</option>
-                    </select>
-                    <div
-                      *ngIf="submitted && f.gender.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.gender.errors.required">
-                        Vui lòng nhập trường này
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="identification_date" class="col-md-3 col-form-label"
-                    >Ngày cấp</label
-                  >
-                  <div class="col-md-9">
-                    <div style="display: flex">
-                      <input
+                    <div class="col-md-9">
+                      <!-- [(ngModel)]="people.country" -->
+                      <select
+                        name=""
+                        id="country"
                         class="form-control"
-                        type="text"
-                        formControlName="identification_date"
-                        placeholder="01/01/2020"
-                        mask="00/00/0000"
-                      />
-                    </div>
-                    <div
-                      *ngIf="submitted && f.identification_date.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.identification_date.errors.required">
-                        Vui lòng nhập trường này
+                        formControlName="country"
+                      >
+                        <option [value]="null" disabled>
+                          -- Chọn Quốc tịch --
+                        </option>
+                        <option
+                          *ngFor="let p of countries"
+                          [value]="p.code"
+                          [selected]
+                        >
+                          {{ p.name }}
+                        </option>
+                      </select>
+                      <div
+                        *ngIf="submitted && f.country.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.country.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="col-md-9">
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label
+                      for="identification_type"
+                      class="col-md-3 col-form-label"
+                      >Loại giấy tờ</label
+                    >
+                    <div class="col-md-9">
+                      <!-- [(ngModel)]="people.identification_type" -->
+                      <select
+                        formControlName="identification_type"
+                        id="identification_type"
+                        class="form-control"
+                        (change)="onChangeIdentificationType($event)"
+                      >
+                        <option value="">--Chọn loại giấy tờ --</option>
+                        <option value="CCCD">CCCD</option>
+                        <option value="CCCD_CHIP">CCCD CHIP</option>
+                        <option value="CMND">CMND</option>
+                        <option value="PASSPOST">Hộ Chiếu</option>
+                      </select>
+                      <div
+                        *ngIf="submitted && f.identification_type.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.identification_type.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label
+                      for="identification_place"
+                      class="col-md-3 col-form-label"
+                      >Nơi cấp</label
+                    >
+                    <div class="col-md-9">
+                      <!-- [(ngModel)]="people.identification_place" -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="identification_place"
+                        placeholder="Nơi cấp"
+                        formControlName="identification_place"
+                      />
+                      <div
+                        *ngIf="submitted && f.identification_place.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.identification_place.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="gender" class="col-md-3 col-form-label"
+                      >Giới tính</label
+                    >
+                    <div class="col-md-9">
+                      <!-- [(ngModel)]="people.gender" -->
+                      <select
+                        name=""
+                        id=""
+                        class="form-control"
+                        formControlName="gender"
+                      >
+                        <option value="">--Chọn giới tính --</option>
+                        <option value="MALE">Nam</option>
+                        <option value="FEMALE">Nữ</option>
+                      </select>
+                      <div
+                        *ngIf="submitted && f.gender.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.gender.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label
+                      for="identification_date"
+                      class="col-md-3 col-form-label"
+                      >Ngày cấp</label
+                    >
+                    <div class="col-md-9">
+                      <div style="display: flex">
+                        <input
+                          class="form-control"
+                          type="text"
+                          formControlName="identification_date"
+                          placeholder="01/01/2020"
+                          mask="00/00/0000"
+                        />
+                      </div>
+                      <div
+                        *ngIf="submitted && f.identification_date.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.identification_date.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-9">
                                 <div style="display: flex;">
                                     <input class="form-control" placeholder="dd/mm/yyyy" formControlName="identification_date"
                                         (click)="basicDPIssueDate.toggle()" ngbDatepicker #basicDPIssueDate="ngbDatepicker" />
@@ -362,48 +372,574 @@
                                     <div *ngIf="f.identification_date.errors.required">Vui lòng nhập trường này</div>
                                 </div>
                             </div> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label
+                      for="identification_expire_date"
+                      class="col-md-3 col-form-label"
+                      >Ngày hết hạn</label
+                    >
+                    <div class="col-md-9">
+                      <div style="display: flex">
+                        <input
+                          class="form-control"
+                          type="text"
+                          formControlName="identification_expire_date"
+                          placeholder="01/02/2030"
+                          mask="00/00/0000"
+                        />
+                      </div>
+                      <div
+                        *ngIf="submitted && f.identification_expire_date.errors"
+                        class="invalid-feedback"
+                      >
+                        <div
+                          *ngIf="f.identification_expire_date.errors.required"
+                        >
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="mobile" class="col-md-3 col-form-label"
+                      >SĐT liên hệ</label
+                    >
+                    <div class="col-md-9">
+                      <!-- [(ngModel)]="people.identification_place" -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="SĐT liên hệ"
+                        formControlName="mobile"
+                      />
+                      <div
+                        *ngIf="submitted && f.mobile.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.mobile.errors.required">
+                          Vui lòng nhập trường này
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="home_country"
+                          class="col-md-3 col-form-label"
+                          >Quốc gia - Nguyên Quán</label
+                        >
+                        <div class="col-md-9">
+                          <select
+                            name=""
+                            id="home_country"
+                            class="form-control"
+                            formControlName="home_country"
+                          >
+                            <option [value]="null" disabled>
+                              -- Chọn Quốc gia --
+                            </option>
+                            <option
+                              *ngFor="let p of countries"
+                              [value]="p.code"
+                              [selected]
+                            >
+                              {{ p.name }}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="submitted && f.home_country.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.home_country.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="home_province"
+                          class="col-md-3 col-form-label"
+                          >Tỉnh/TP - Nguyên Quán</label
+                        >
+                        <div class="col-md-9">
+                          <select
+                            name=""
+                            id="home_province"
+                            class="form-control"
+                            formControlName="home_province"
+                            (change)="onChangeHomeProvince($event)"
+                          >
+                            <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                            <option *ngFor="let p of provinces" [value]="p.id">
+                              {{ p.title }}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="submitted && f.home_province.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.home_province.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="home_district"
+                          class="col-md-3 col-form-label"
+                          >Quận/Huyện - Nguyên Quán</label
+                        >
+                        <div class="col-md-9">
+                          <select
+                            formControlName="home_district"
+                            id="home_district"
+                            class="form-control"
+                            (change)="onChangeHomeDistrict($event)"
+                          >
+                            <option value="">--Chọn Quận/Huyện--</option>
+                            <option
+                              *ngFor="let p of home_districts"
+                              [value]="p.id"
+                            >
+                              {{ p.title }}
+                            </option>
+                          </select>
+
+                          <div
+                            *ngIf="submitted && f.home_district.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.home_district.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="home_commune"
+                          class="col-md-3 col-form-label"
+                          >Phường/Xã - Nguyên Quán</label
+                        >
+                        <div class="col-md-9">
+                          <select
+                            name=""
+                            formControlName="home_commune"
+                            class="form-control"
+                          >
+                            <option value="">--Chọn Phường/xã --</option>
+                            <option
+                              *ngFor="let p of home_commues"
+                              [value]="p.id"
+                            >
+                              {{ p.title }}
+                            </option>
+                          </select>
+
+                          <div
+                            *ngIf="submitted && f.home_commune.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.home_commune.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="residence_address"
+                          class="col-md-3 col-form-label"
+                          >Địa chỉ thường trú</label
+                        >
+                        <div class="col-md-9">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="residence_address"
+                            placeholder="Địa chỉ số nhà"
+                          />
+                          <div
+                            *ngIf="submitted && f.residence_address.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.residence_address.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="residence_province"
+                          class="col-md-3 col-form-label"
+                          >Tỉnh/TP - Thường trú</label
+                        >
+                        <div class="col-md-9">
+                          <select
+                            name=""
+                            formControlName="residence_province"
+                            class="form-control"
+                            (change)="onChangeResidenceProvince($event)"
+                          >
+                            <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                            <option *ngFor="let p of provinces" [value]="p.id">
+                              {{ p.title }}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="submitted && f.residence_province.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.residence_province.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="residence_district"
+                          class="col-md-3 col-form-label"
+                          >Quận/Huyện - Thường trú</label
+                        >
+                        <div class="col-md-9">
+                          <select
+                            name=""
+                            formControlName="residence_district"
+                            class="form-control"
+                            (change)="onChangeResidenceDistrict($event)"
+                          >
+                            <option value="" selected>
+                              --Chọn Quận/Huyện --
+                            </option>
+                            <option
+                              *ngFor="let p of residence_districts"
+                              [value]="p.id"
+                            >
+                              {{ p.title }}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="submitted && f.residence_district.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.residence_district.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group row">
+                        <label
+                          for="residence_commune"
+                          class="col-md-3 col-form-label"
+                          >Phường/Xã - Thường trú</label
+                        >
+                        <div class="col-md-9">
+                          <select
+                            name=""
+                            formControlName="residence_commune"
+                            class="form-control"
+                            (change)="onChangeResidenceCommune($event)"
+                          >
+                            <option value="">--Chọn Phường/Xã --</option>
+                            <option
+                              *ngFor="let p of residence_commues"
+                              [value]="p.id"
+                            >
+                              {{ p.title }}
+                            </option>
+                          </select>
+
+                          <div
+                            *ngIf="submitted && f.residence_commune.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.residence_commune.errors.required">
+                              Vui lòng nhập trường này
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="pull-right">
+              <div class="form-group">
+                <button type="button" class="btn btn-success mr-2">
+                  Cập nhật thông tin
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="formOrganization">
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
+                  <label for="name" class="col-md-3 col-form-label"
+                    >Tên tổ chức/DN</label
+                  >
+                  <div class="col-md-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      max
+                      placeholder="Tên tổ chức/Doanh nghiệp"
+                      formControlName="name"
+                    />
+                    <div
+                      *ngIf="submitted && f.name.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.name.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="license_no" class="col-md-3 col-form-label"
+                    >Số GPKD/MST</label
+                  >
+                  <div class="col-md-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Số GPKD/Mã số thuế"
+                      formControlName="license_no"
+                    />
+                    <div
+                      *ngIf="submitted && f.license_no.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.license_no.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
                   <label
-                    for="identification_expire_date"
+                    for="license_issue_date"
                     class="col-md-3 col-form-label"
-                    >Ngày hết hạn</label
+                    >Ngày cấp phép</label
                   >
                   <div class="col-md-9">
                     <div style="display: flex">
                       <input
                         class="form-control"
-                        type="text"
-                        formControlName="identification_expire_date"
-                        placeholder="01/02/2030"
-                        mask="00/00/0000"
+                        placeholder="dd/mm/yyyy"
+                        formControlName="license_issue_date"
+                        (click)="basicDP.toggle()"
+                        ngbDatepicker
+                        #basicDP="ngbDatepicker"
                       />
+                      <div class="input-group-append">
+                        <button
+                          class="btn rounded-0 btn-outline-secondary feather icon-calendar"
+                          (click)="basicDP.toggle()"
+                          type="button"
+                          rippleEffect
+                        ></button>
+                      </div>
                     </div>
                     <div
-                      *ngIf="submitted && f.identification_expire_date.errors"
+                      *ngIf="submitted && f.license_issue_date.errors"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="f.identification_expire_date.errors.required">
+                      <div *ngIf="f.license_issue_date.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label
+                    for="license_issue_place"
+                    class="col-md-3 col-form-label"
+                    >Nơi cấp giấy phép</label
+                  >
+                  <div class="col-md-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Nơi cấp giấy phép"
+                      formControlName="license_issue_place"
+                    />
+                    <div
+                      *ngIf="submitted && f.license_issue_place.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.license_issue_place.errors.required">
                         Vui lòng nhập trường này
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-    
+
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label for="mobile" class="col-md-3 col-form-label"
-                    >SĐT liên hệ</label
+                  <label
+                    for="license_issue_place"
+                    class="col-md-3 col-form-label"
+                    >Địa chỉ Tổ chức</label
                   >
                   <div class="col-md-9">
-                    <!-- [(ngModel)]="people.identification_place" -->
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="SĐT liên hệ"
+                      placeholder="Địa chỉ"
+                      formControlName="address"
+                    />
+                    <div
+                      *ngIf="submitted && f.address.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.address.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="province" class="col-md-3 col-form-label"
+                    >Tỉnh/TP Tổ chức</label
+                  >
+                  <div class="col-md-9">
+                    <select
+                      name=""
+                      id="province"
+                      class="form-control"
+                      formControlName="province"
+                      (change)="onChangeProvince($event)"
+                    >
+                      <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                      <option *ngFor="let p of provinces" [value]="p.id">
+                        {{ p.title }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="submitted && f.province.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.province.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="district" class="col-md-3 col-form-label"
+                    >Quận/Huyện Tổ chức
+                  </label>
+                  <div class="col-md-9">
+                    <select
+                      formControlName="district"
+                      id="home_district"
+                      class="form-control"
+                      (change)="onChangeDistrict($event)"
+                    >
+                      <option value="">--Chọn Quận/Huyện--</option>
+                      <option *ngFor="let p of districts" [value]="p.id">
+                        {{ p.title }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="submitted && f.district.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.district.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="commune" class="col-md-3 col-form-label"
+                    >Phường/Xã Tổ chức</label
+                  >
+                  <div class="col-md-9">
+                    <select
+                      name=""
+                      formControlName="commune"
+                      class="form-control"
+                    >
+                      <option value="">--Chọn Phường/xã --</option>
+                      <option *ngFor="let p of commues" [value]="p.id">
+                        {{ p.title }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="submitted && f.commune.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.commune.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="mobile" class="col-md-3 col-form-label"
+                    >Số điện thoại</label
+                  >
+                  <div class="col-md-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="0999888999"
                       formControlName="mobile"
                     />
                     <div
@@ -413,253 +949,262 @@
                       <div *ngIf="f.mobile.errors.required">
                         Vui lòng nhập trường này
                       </div>
+                      <div *ngIf="f.mobile.errors.minlength">
+                        Vui lòng nhập đúng định dạng số điện thoại
+                      </div>
+                      <div *ngIf="f.mobile.errors.maxlength">
+                        Vui lòng nhập đúng định dạng số điện thoại
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="contact_address" class="col-md-3 col-form-label"
+                    >Địa chỉ liên hệ</label
+                  >
+                  <div class="col-md-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Địa chỉ"
+                      formControlName="contact_address"
+                    />
+                    <div
+                      *ngIf="submitted && f.contact_address.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.address.contact_address.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="address_contact" class="col-md-3 col-form-label"
+                    >Email</label
+                  >
+                  <div class="col-md-9">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="abc@domain.com"
+                      formControlName="email"
+                    />
+                    <div
+                      *ngIf="submitted && f.email.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.email.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                      <div *ngIf="f.email.errors.email">
+                        Vui lòng nhập đúng định dạng mail
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-md-6">
                     <div class="form-group row">
-                      <label for="home_country" class="col-md-3 col-form-label"
-                        >Quốc gia - Nguyên Quán</label
+                      <label
+                        for="address_contact"
+                        class="col-md-3 col-form-label"
+                        >Loại khách hàng</label
                       >
                       <div class="col-md-9">
-                        <select
-                          name=""
-                          id="home_country"
-                          class="form-control"
-                          formControlName="home_country"
+                        <div
+                          class="custom-control custom-radio"
+                          style="margin-top: 10px"
                         >
-                          <option [value]="null" disabled>
-                            -- Chọn Quốc gia --
-                          </option>
-                          <option
-                            *ngFor="let p of countries"
-                            [value]="p.code"
-                            [selected]
+                          <input
+                            type="radio"
+                            id="ORG_GOVERNMENT"
+                            formControlName="type"
+                            value="ORG_GOVERNMENT"
+                            class="custom-control-input"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="ORG_GOVERNMENT"
+                            >Doanh nghiệp, cơ quan nhà nước</label
                           >
-                            {{ p.name }}
-                          </option>
-                        </select>
-                        <div
-                          *ngIf="submitted && f.home_country.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.home_country.errors.required">
-                            Vui lòng nhập trường này
-                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-12">
                     <div class="form-group row">
-                      <label for="home_province" class="col-md-3 col-form-label"
-                        >Tỉnh/TP - Nguyên Quán</label
-                      >
+                      <label
+                        for="address_contact"
+                        class="col-md-3 col-form-label"
+                      ></label>
                       <div class="col-md-9">
-                        <select
-                          name=""
-                          id="home_province"
-                          class="form-control"
-                          formControlName="home_province"
-                          (change)="onChangeHomeProvince($event)"
-                        >
-                          <option value="">-- Chọn Tỉnh/Thành phố --</option>
-                          <option *ngFor="let p of provinces" [value]="p.id">
-                            {{ p.title }}
-                          </option>
-                        </select>
-                        <div
-                          *ngIf="submitted && f.home_province.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.home_province.errors.required">
-                            Vui lòng nhập trường này
-                          </div>
+                        <div class="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="ORG_PRIVATE"
+                            value="ORG_PRIVATE"
+                            formControlName="type"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label" for="ORG_PRIVATE"
+                            >Công ty TNHH, cổ phần, hợp danh, tư nhân</label
+                          >
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-12">
                     <div class="form-group row">
-                      <label for="home_district" class="col-md-3 col-form-label"
-                        >Quận/Huyện - Nguyên Quán</label
-                      >
+                      <label
+                        for="address_contact"
+                        class="col-md-3 col-form-label"
+                      ></label>
                       <div class="col-md-9">
-                        <select
-                          formControlName="home_district"
-                          id="home_district"
-                          class="form-control"
-                          (change)="onChangeHomeDistrict($event)"
-                        >
-                          <option value="">--Chọn Quận/Huyện--</option>
-                          <option *ngFor="let p of home_districts" [value]="p.id">
-                            {{ p.title }}
-                          </option>
-                        </select>
-    
-                        <div
-                          *ngIf="submitted && f.home_district.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.home_district.errors.required">
-                            Vui lòng nhập trường này
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <label for="home_commune" class="col-md-3 col-form-label"
-                        >Phường/Xã - Nguyên Quán</label
-                      >
-                      <div class="col-md-9">
-                        <select
-                          name=""
-                          formControlName="home_commune"
-                          class="form-control"
-                        >
-                          <option value="">--Chọn Phường/xã --</option>
-                          <option *ngFor="let p of home_commues" [value]="p.id">
-                            {{ p.title }}
-                          </option>
-                        </select>
-    
-                        <div
-                          *ngIf="submitted && f.home_commune.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.home_commune.errors.required">
-                            Vui lòng nhập trường này
-                          </div>
+                        <div class="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="ORG_FOREIGN"
+                            value="ORG_FOREIGN"
+                            formControlName="type"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label" for="ORG_FOREIGN"
+                            >Văn phòng đại diện, chi nhánh, công ty nước
+                            ngoài</label
+                          >
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="col-md-6">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <label for="residence_address" class="col-md-3 col-form-label"
-                        >Địa chỉ thường trú</label
-                      >
-                      <div class="col-md-9">
+                <div class="form-group row">
+                  <label for="isDelegation" class="col-md-3 col-form-label"
+                    >Giấy ủy quyền</label
+                  >
+                  <div class="col-md-9">
+                    <div
+                      class="custom-control custom-checkbox"
+                      style="margin-top: 10px"
+                    >
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="isDelegation"
+                        formControlName="isDelegation"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="isDelegation"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="f.isDelegation.value">
+                  <div class="form-group row">
+                    <label for="delegation_file" class="col-md-3 col-form-label"
+                      >Giấy quỷ quyền</label
+                    >
+                    <div class="col-md-9">
+                      <div class="col-md-12">
                         <input
-                          type="text"
+                          type="file"
                           class="form-control"
-                          formControlName="residence_address"
-                          placeholder="Địa chỉ số nhà"
+                          id="delegation_file"
+                          formControlName="delegation_file"
+                          (change)="onSelectFileDelegation($event)"
                         />
+                        <label
+                          class="custom-file-label"
+                          for="delegation_file"
+                          >{{
+                            delegation_file
+                              ? delegation_file.name
+                              : "Chọn tệp đính kèm"
+                          }}</label
+                        >
                         <div
-                          *ngIf="submitted && f.residence_address.errors"
+                          *ngIf="submitted && f.delegation_file.errors"
                           class="invalid-feedback"
                         >
-                          <div *ngIf="f.residence_address.errors.required">
+                          <div *ngIf="f.delegation_file.errors.required">
                             Vui lòng nhập trường này
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <label
-                        for="residence_province"
-                        class="col-md-3 col-form-label"
-                        >Tỉnh/TP - Thường trú</label
+                  <div class="form-group row">
+                    <label for="delegation_no" class="col-md-3 col-form-label"
+                      >Ủy quyền số</label
+                    >
+                    <div class="col-md-9">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="delegation_no"
+                      />
+                      <div
+                        *ngIf="submitted && f.delegation_no.errors"
+                        class="invalid-feedback"
                       >
-                      <div class="col-md-9">
-                        <select
-                          name=""
-                          formControlName="residence_province"
-                          class="form-control"
-                          (change)="onChangeResidenceProvince($event)"
-                        >
-                          <option value="">-- Chọn Tỉnh/Thành phố --</option>
-                          <option *ngFor="let p of provinces" [value]="p.id">
-                            {{ p.title }}
-                          </option>
-                        </select>
-                        <div
-                          *ngIf="submitted && f.residence_province.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.residence_province.errors.required">
-                            Vui lòng nhập trường này
-                          </div>
+                        <div *ngIf="f.delegation_no.errors.required">
+                          Vui lòng nhập trường này
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <label
-                        for="residence_district"
-                        class="col-md-3 col-form-label"
-                        >Quận/Huyện - Thường trú</label
+                  <div class="form-group row">
+                    <label for="delegation_date" class="col-md-3 col-form-label"
+                      >Ủy quyền ngày</label
+                    >
+                    <div class="col-md-9">
+                      <input
+                        class="form-control"
+                        type="text"
+                        formControlName="delegation_date"
+                        placeholder="01/02/2030"
+                        mask="00/00/0000"
+                      />
+                      <div
+                        *ngIf="submitted && f.delegation_date.errors"
+                        class="invalid-feedback"
                       >
-                      <div class="col-md-9">
-                        <select
-                          name=""
-                          formControlName="residence_district"
-                          class="form-control"
-                          (change)="onChangeResidenceDistrict($event)"
-                        >
-                          <option value="" selected>--Chọn Quận/Huyện --</option>
-                          <option
-                            *ngFor="let p of residence_districts"
-                            [value]="p.id"
-                          >
-                            {{ p.title }}
-                          </option>
-                        </select>
-                        <div
-                          *ngIf="submitted && f.residence_district.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.residence_district.errors.required">
-                            Vui lòng nhập trường này
-                          </div>
+                        <div *ngIf="f.delegation_date.errors.required">
+                          Vui lòng nhập trường này
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <label for="residence_commune" class="col-md-3 col-form-label"
-                        >Phường/Xã - Thường trú</label
-                      >
-                      <div class="col-md-9">
-                        <select
-                          name=""
-                          formControlName="residence_commune"
-                          class="form-control"
-                          (change)="onChangeResidenceCommune($event)"
-                        >
-                          <option value="">--Chọn Phường/Xã --</option>
-                          <option
-                            *ngFor="let p of residence_commues"
-                            [value]="p.id"
-                          >
-                            {{ p.title }}
-                          </option>
-                        </select>
-    
-                        <div
-                          *ngIf="submitted && f.residence_commune.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.residence_commune.errors.required">
-                            Vui lòng nhập trường này
-                          </div>
-                        </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="address_contact" class="col-md-3 col-form-label"
+                    >Chức vụ người đại diện</label
+                  >
+                  <div class="col-md-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Giám đốc/Kế toán .."
+                      formControlName="position"
+                    />
+                    <div
+                      *ngIf="submitted && f.position.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.email.position.required">
+                        Vui lòng nhập trường này
+                      </div>
+                      <div *ngIf="f.email.position.email">
+                        Vui lòng nhập đúng định dạng mail
                       </div>
                     </div>
                   </div>
@@ -668,20 +1213,8 @@
             </div>
           </form>
         </div>
-
       </div>
-
-    </div>
-
+    </div> -->
+ 
   </div>
 </div>
-
-<!-- 
-  <style>
-    .img-fluid {
-      max-height: 350px;
-    }
-    .image-upload input {
-      display: none;
-    }
-  </style> -->
