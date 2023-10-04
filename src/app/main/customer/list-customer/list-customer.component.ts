@@ -4,6 +4,8 @@ import { ContractServive } from 'app/auth/service/contract.service';
 import { FileServive } from 'app/auth/service/file.service';
 import { TaskService } from 'app/auth/service/task.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-list-customer',
@@ -13,6 +15,10 @@ import { SweetAlertService } from 'app/utils/sweet-alert.service';
 
 export class ListCustomerComponent implements OnInit {
 
+  @BlockUI('item-block') itemBlockUI: NgBlockUI;
+
+  public modalRef: any;
+  public selectedItem: any;
   public contentHeader: any;
   public list: any;
   public page: any;
@@ -36,6 +42,7 @@ export class ListCustomerComponent implements OnInit {
     private alertService: SweetAlertService,
     private route: ActivatedRoute,
     private router: Router,
+    private modalService: NgbModal,
   ) {
     this.route.queryParams.subscribe(params => {
       this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
@@ -51,12 +58,12 @@ export class ListCustomerComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
-    this.router.navigate(['/loan-bank'], { queryParams: this.searchForm})
+    this.router.navigate(['/loan-bank'], { queryParams: this.searchForm })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/loan-bank'], { queryParams: this.searchForm})
+    this.router.navigate(['/loan-bank'], { queryParams: this.searchForm })
   }
 
   ngOnInit(): void {
@@ -77,7 +84,7 @@ export class ListCustomerComponent implements OnInit {
           }
         ]
       }
-    };    
+    };
   }
 
   getData(): void {
@@ -90,6 +97,26 @@ export class ListCustomerComponent implements OnInit {
       console.log(error);
     })
   }
+
+  async modalOpen(modal, item = null) {
+    this.itemBlockUI.start();
+    this.selectedItem = item;
+
+    this.itemBlockUI.stop();
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'xl',
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+  modalClose() {
+    this.selectedItem = null;
+    this.getData();
+    this.modalRef.close();
+  }
+
 
 }
 
