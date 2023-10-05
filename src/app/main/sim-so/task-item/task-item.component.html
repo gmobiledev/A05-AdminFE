@@ -661,7 +661,14 @@
         </a>
 
         <a>
-          <span *ngIf="data.task.action == listTaskAction['new_sim']['value']">
+          <span *ngIf="data.task.action == listTaskAction['new_sim']['value']
+          && !data.customer.people.identification_signature_file
+          && (
+            data.task.sub_action ==
+          listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+          data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value']
+          )
+          ">
             <a
               class="ml-2 btn btn-info"
               (click)="modalOpen(modalUploadSignature)"
@@ -674,7 +681,14 @@
 
         <a class="ml-2 btn btn-primary" (click)="onCreateTask()">
           <i data-feather="plus" class="text-white cursor-pointer"></i>
-          <span *ngIf="data.task.action == listTaskAction['new_sim']['value']">
+          <span *ngIf="data.task.action == listTaskAction['new_sim']['value']
+          && (
+            data.task.sub_action ==
+          listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+          data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value']
+          )
+          && data.task.status == 2
+          ">
             Tạo phiếu yêu cầu
           </span>
         </a>
