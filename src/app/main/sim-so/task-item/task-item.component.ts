@@ -23,9 +23,10 @@ export class TaskItemComponent implements OnInit {
   @Input() currentUser: any;
   @Output() updateStatus = new EventEmitter<{ updated: boolean }>();
   @Output() createNewTask = new EventEmitter<any>();
+  @Output() uploadImages = new EventEmitter<{ updated: boolean }>();
 
   @ViewChild('modalUploadSim') modalUploadSim: ElementRef;
-  
+
   public data: any;
   listCurrentAction: any;
 
@@ -37,6 +38,14 @@ export class TaskItemComponent implements OnInit {
   public titleModal = 'Đấu nối sim mới';
   public mnos: string[] = [];
   public linkShipTracking;
+  public imageSgnatureBase64;
+
+  public dataCreateSignature = {
+    people: {
+      identification_signature_file: ''
+    }
+  }
+
 
   simFile: any;
   disabled_kit: boolean = false;
@@ -229,10 +238,10 @@ export class TaskItemComponent implements OnInit {
           this.alertService.showError(res.message, 30000);
           return;
         }
-        this.alertService.showSuccess(res.data.message,15000);
+        this.alertService.showSuccess(res.data.message, 15000);
       }, error => {
         this.sectionBlockUI.stop();
-        this.alertService.showError(error,15000);
+        this.alertService.showError(error, 15000);
       })
     }
   }
@@ -351,72 +360,72 @@ export class TaskItemComponent implements OnInit {
 
   }
 
-    /**
-   * Duyệt chuyển đổi 2G
-   * 
-   * @param item 
-   * @param status 
-   */
-    async onUpdateStatus2G(item, status) {
+  /**
+ * Duyệt chuyển đổi 2G
+ * 
+ * @param item 
+ * @param status 
+ */
+  async onUpdateStatus2G(item, status) {
+    if (status == this.taskTelecomStatus.STATUS_CANCEL) {
+      let titleS;
       if (status == this.taskTelecomStatus.STATUS_CANCEL) {
-        let titleS;
-        if (status == this.taskTelecomStatus.STATUS_CANCEL) {
-          titleS = 'Không duyệt, gửi lại lý do'
-        }
-        Swal.fire({
-          title: titleS,
-          input: 'textarea',
-          inputAttributes: {
-            autocapitalize: 'off'
-          },
-          showCancelButton: true,
-          confirmButtonText: 'Gửi',
-          showLoaderOnConfirm: true,
-          preConfirm: (note) => {
-            if (!note || note == '') {
-              Swal.showValidationMessage(
-                "Vui lòng nhập nội dung"
-              )
-              return;
-            }
-            this.telecomService.conversion2GApprove({task_id: item.id, status: status, note: note }).subscribe(res => {
-              if (!res.status) {
-                Swal.showValidationMessage(
-                  res.message
-                )
-                // this.alertService.showError(res.message);
-                return;
-              }
-            }, error => {
-              this.alertService.showMess(error);
-            });          
-          },
-          allowOutsideClick: () => !Swal.isLoading()
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.getData();
-            this.alertService.showSuccess('Thành công');
+        titleS = 'Không duyệt, gửi lại lý do'
+      }
+      Swal.fire({
+        title: titleS,
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Gửi',
+        showLoaderOnConfirm: true,
+        preConfirm: (note) => {
+          if (!note || note == '') {
+            Swal.showValidationMessage(
+              "Vui lòng nhập nội dung"
+            )
+            return;
           }
-        })
-      } else {
-        let confirmMessage = "Xác nhận duyệt?";        
-        if ((await this.alertService.showConfirm(confirmMessage)).value) {
-          this.telecomService.conversion2GApprove({task_id: item.id, status: status }).subscribe(res => {
+          this.telecomService.conversion2GApprove({ task_id: item.id, status: status, note: note }).subscribe(res => {
             if (!res.status) {
-              this.alertService.showError(res.message);
+              Swal.showValidationMessage(
+                res.message
+              )
+              // this.alertService.showError(res.message);
               return;
             }
-            if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
-            }
-            this.getData();
-            this.alertService.showSuccess(res.message);
           }, error => {
             this.alertService.showMess(error);
-          })
+          });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.getData();
+          this.alertService.showSuccess('Thành công');
         }
+      })
+    } else {
+      let confirmMessage = "Xác nhận duyệt?";
+      if ((await this.alertService.showConfirm(confirmMessage)).value) {
+        this.telecomService.conversion2GApprove({ task_id: item.id, status: status }).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            return;
+          }
+          if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+          }
+          this.getData();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
+        })
       }
     }
-  
+  }
+
   /**
    * Nhập số serial để tạo task new_sim
    * 
@@ -424,8 +433,8 @@ export class TaskItemComponent implements OnInit {
    * @param serial 
    */
   onUploadSimInfo(item) {
-    this.telecomService.getDetailSim({keysearch: this.data.task.msisdn, category_id: 2, take: 10}).subscribe(res => {
-      if(res.data && res.data.short_desc && res.data.short_desc.includes('8984')) {
+    this.telecomService.getDetailSim({ keysearch: this.data.task.msisdn, category_id: 2, take: 10 }).subscribe(res => {
+      if (res.data && res.data.short_desc && res.data.short_desc.includes('8984')) {
         this.disabled_kit = true;
         this.kit_serial = res.data.short_desc;
       }
@@ -433,11 +442,11 @@ export class TaskItemComponent implements OnInit {
         centered: true,
         windowClass: 'modal modal-primary',
         size: 'lg',
-        backdrop : 'static',
-        keyboard : false
+        backdrop: 'static',
+        keyboard: false
       });
     })
-    
+
   }
 
   onCloseModal() {
@@ -447,9 +456,85 @@ export class TaskItemComponent implements OnInit {
   }
 
   async onSelectFile(event, file_type) {
-    if(event.target.files && event.target.files[0]) {
+    if (event.target.files && event.target.files[0]) {
       this.simFile = event.target.files[0]
-    }    
+    }
+  }
+
+  async onSelectFileSignature(event, file_type) {
+    if (event.target.files && event.target.files[0]) {
+      this.imageSgnatureBase64 = await this.resizeImage(event.target.files[0]);
+      
+    }
+
+  }
+
+  resizeImage(image) {
+    return new Promise((resolve) => {
+      let fr = new FileReader;
+      fr.onload = () => {
+        var img = new Image();
+        img.onload = () => {
+          console.log(img.width);
+          let width = img.width < 900 ? img.width : 900;
+          let height = img.width < 900 ? img.height : width * img.height / img.width;
+          console.log(width, height);
+          let canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          let ctx = canvas.getContext('2d');
+          if (ctx != null) {
+            ctx.drawImage(img, 0, 0, width, height);
+          }
+          let data = canvas.toDataURL('image/png');
+          resolve(data);
+        };
+
+        // @ts-ignore
+        img.src = fr.result;
+      };
+
+      fr.readAsDataURL(image);
+    })
+  }
+
+  async onSubmitUpload() {
+    
+    if ((await this.alertService.showConfirm("Bạn có muốn tải hình ảnh này lên?")).value) {
+      this.sectionBlockUI.start();
+      this.telecomService.patchSignature(this.item.id, this.dataCreateSignature.people).subscribe(res => {
+        this.sectionBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.uploadImages.emit({ updated: true });
+        this.alertService.showSuccess(res.message);
+        this.modalRef.close();
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+  }
+
+  async onCreateTask() {
+
+    if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {
+      this.telecomService.getCreatContract(this.item.id).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.modalClose();
+        this.getData();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
   }
 
   /**
@@ -460,7 +545,7 @@ export class TaskItemComponent implements OnInit {
    */
   async onSubmitUploadSimInfo(serial) {
     let data = new FormData();
-    if(!serial || serial == undefined) {
+    if (!serial || serial == undefined) {
       this.alertService.showMess("Vui lòng nhập số serial");
       return;
     }
@@ -471,7 +556,7 @@ export class TaskItemComponent implements OnInit {
       this.modalUploadSimBlockUI.start();
       this.telecomService.uploadSimInfo(data).subscribe(res => {
         this.modalUploadSimBlockUI.stop();
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
@@ -480,7 +565,7 @@ export class TaskItemComponent implements OnInit {
       }, err => {
         this.alertService.showMess(err);
       })
-    }    
+    }
   }
 
   onModalShipOpen(modal) {
@@ -488,8 +573,8 @@ export class TaskItemComponent implements OnInit {
       centered: true,
       windowClass: 'modal modal-primary',
       size: 'lg',
-      backdrop : 'static',
-      keyboard : false
+      backdrop: 'static',
+      keyboard: false
     });
   }
 
@@ -500,7 +585,7 @@ export class TaskItemComponent implements OnInit {
    * @returns 
    */
   async onSubmitShipTracking(link) {
-    if(!link || link == undefined) {
+    if (!link || link == undefined) {
       this.alertService.showMess("Vui lòng nhập link");
       return;
     }
@@ -509,7 +594,7 @@ export class TaskItemComponent implements OnInit {
         ship_tracking: link,
         task_id: this.item.id
       }).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
@@ -519,7 +604,7 @@ export class TaskItemComponent implements OnInit {
       }, err => {
         this.alertService.showMess(err);
       })
-    }  
+    }
   }
 
   onDownloadImages() {
@@ -549,7 +634,7 @@ export class TaskItemComponent implements OnInit {
             data: this.data?.customer.people?.identification_selfie_file
           }
         ]
-        if(this.currentGPKD) {
+        if (this.currentGPKD) {
           images.push({
             name: key + '_GPKD.jpg',
             data: this.currentGPKD
@@ -714,7 +799,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   getData(action_view = null) {
-    if(this.typeDetail && this.typeDetail == 'msisdn') {
+    if (this.typeDetail && this.typeDetail == 'msisdn') {
       this.telecomService.getDetailTaskMsisdn(this.item.id).subscribe(res => {
         this.data = res.data;
         for (const msi of this.data.msisdn.msisdns) {
@@ -736,22 +821,22 @@ export class TaskItemComponent implements OnInit {
         const detailObj = JSON.parse(this.data.task.detail);
       })
     }
-    
+
   }
 
-  async modalOpen(modal, item = null) { 
+  async modalOpen(modal, item = null) {
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: 'modal modal-primary',
       size: 'lg',
-      backdrop : 'static',
-      keyboard : false
+      backdrop: 'static',
+      keyboard: false
     });
   }
 
   async modalClose() {
     // this.getData();
-    this.modalRef.close(); 
+    this.modalRef.close();
   }
 
   onUploadImages() {

@@ -30,12 +30,12 @@ export class TelecomService {
     return this._http.get<any>(url);
   }
 
-    /**
-   * Tìm Sim/Số
-   */
-    getDetailSim(params = null) {
-      return this._http.get<any>(`${environment.apiUrl}/admin/inventory/search`, { params: params });
-    }
+  /**
+ * Tìm Sim/Số
+ */
+  getDetailSim(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/inventory/search`, { params: params });
+  }
 
   /**
    * Xem thong tin chi tiet, có thông tin hạng số, thông tin KH 2 cũ nếu có
@@ -86,7 +86,7 @@ export class TelecomService {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
   }
 
-  sendCallback(task){
+  sendCallback(task) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/send-callback`, {});
   }
 
@@ -145,6 +145,8 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-old-indetification-docs`, data);
   }
 
+
+
   ////
 
   productImportBatch(data) {
@@ -186,11 +188,20 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn`, { params: params });
   }
 
-  getMisisdnInfo(msisdn_id: number){
+  getMisisdnInfo(msisdn_id: number) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/${msisdn_id}`);
   }
-  get2GCustomerInfo(params){
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/2g-customer`, {params: params});
+
+  getCreatContract(id: number, data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/create-pyc`, data);
+  }
+
+  patchSignature(id: number, data) {
+    return this._http.patch<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/update-customer-info`, data);
+  }
+
+  get2GCustomerInfo(params) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/2g-customer`, { params: params });
   }
 
   requestPayDebit(data) {
