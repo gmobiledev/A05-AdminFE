@@ -464,9 +464,23 @@ export class TaskItemComponent implements OnInit {
   async onSelectFileSignature(event, file_type) {
     if (event.target.files && event.target.files[0]) {
       this.imageSgnatureBase64 = await this.resizeImage(event.target.files[0]);
-      
+      this.dataCreateSignature.people.identification_signature_file = this.imageSgnatureBase64.replace('data:image/png;base64,', '')
     }
 
+  }
+
+  private dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
   }
 
   resizeImage(image) {
@@ -499,10 +513,9 @@ export class TaskItemComponent implements OnInit {
   }
 
   async onSubmitUpload() {
-    
     if ((await this.alertService.showConfirm("Bạn có muốn tải hình ảnh này lên?")).value) {
       this.sectionBlockUI.start();
-      this.telecomService.patchSignature(this.item.id, this.dataCreateSignature.people).subscribe(res => {
+      this.telecomService.patchSignature(this.item.id, this.dataCreateSignature).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
           this.alertService.showMess(res.message);

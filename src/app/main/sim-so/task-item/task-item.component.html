@@ -662,7 +662,10 @@
 
         <a>
           <span *ngIf="data.task.action == listTaskAction['new_sim']['value']">
-            <a class="ml-2 btn btn-info" (click)="modalOpen(modalUploadSignature)">
+            <a
+              class="ml-2 btn btn-info"
+              (click)="modalOpen(modalUploadSignature)"
+            >
               <i data-feather="upload" class="text-white cursor-pointer"></i>
               Upload ảnh chữ ký
             </a>
@@ -959,52 +962,60 @@
 </ng-template>
 
 <ng-template #modalUploadSignature let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160"></h5>
-      <button
-        type="button"
-        class="close"
-        (click)="modalClose()"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-        <div class="col-4">
-            <label for="">Upload ảnh chữ ký</label>
-            <input id="file-front-input" type="file" (change)="onSelectFileSignature($event, 'front')"  accept="image/gif, image/jpeg, image/png" />
-    
-            <div class="image-preview" *ngIf="imageFrontBase64">
-                <img [src]="imageFrontBase64" alt="" class="img-fluid" >
-            </div>
-        </div>
-        <div class="col-12 mt-2">
-            <a class="btn btn-success" (click)="onSubmitUpload()">
-                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
-                Gửi
-            </a>
-        </div>
-    </div>
-  </ng-template>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160"></h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="col-4">
+      <label for="">Upload ảnh chữ ký</label>
+      <input
+        id="file-front-input"
+        type="file"
+        (change)="onSelectFileSignature($event, 'front')"
+        accept="image/gif, image/jpeg, image/png"
+      />
 
-  <ng-template #modalUploadCreat let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160"></h5>
-      <button
-        type="button"
-        class="close"
-        (click)="modalClose()"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <div class="image-preview" *ngIf="imageFrontBase64">
+        <img [src]="imageFrontBase64" alt="" class="img-fluid" />
+      </div>
     </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-        <div class="col-12 mt-2">
-            <a class="btn btn-success" (click)="onCreateTask()">
-                Tạo phiếu yêu cầu
-            </a>
-        </div>
+    <div class="col-12 mt-2">
+      <a class="btn btn-success" (click)="onSubmitUpload()">
+        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+        Gửi
+      </a>
     </div>
-  </ng-template>
+  </div>
+</ng-template>
+
+<ng-template #modalUploadCreat let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160"></h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="col-12 mt-1">
+      <h5>Tạo phiếu yêu cầu hợp đồng</h5>
+
+      <a class="btn btn-success" (click)="onCreateTask()">
+        Tạo phiếu yêu cầu
+      </a>
+    </div>
+  </div>
+</ng-template>
