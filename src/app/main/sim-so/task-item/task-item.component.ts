@@ -534,7 +534,7 @@ export class TaskItemComponent implements OnInit {
 
   async onCreateTask() {
 
-    if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo phiếu yêu cầu/hợp đồng ?")).value) {
       this.telecomService.getCreatContract(this.item.id).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);

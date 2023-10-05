@@ -672,7 +672,7 @@
           </span>
         </a>
 
-        <a class="ml-2 btn btn-primary" (click)="modalOpen(modalUploadCreat)">
+        <a class="ml-2 btn btn-primary" (click)="onCreateTask()">
           <i data-feather="plus" class="text-white cursor-pointer"></i>
           <span *ngIf="data.task.action == listTaskAction['new_sim']['value']">
             Tạo phiếu yêu cầu
@@ -996,26 +996,3 @@
   </div>
 </ng-template>
 
-<ng-template #modalUploadCreat let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160"></h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <div class="col-12 mt-1">
-      <h5>Tạo phiếu yêu cầu hợp đồng</h5>
-
-      <a class="btn btn-success" (click)="onCreateTask()">
-        Tạo phiếu yêu cầu
-      </a>
-    </div>
-  </div>
-</ng-template>
