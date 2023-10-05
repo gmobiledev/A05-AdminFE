@@ -386,6 +386,23 @@
                     </span>
 
                 </a>
+
+                <a>
+                    <span *ngIf="data.task.action == listTaskAction['new_sim']['value']">
+                      <a class="ml-2 btn btn-info">
+                        <i data-feather="upload" class="text-white cursor-pointer"></i>
+                        Upload ảnh chữ ký
+                      </a>
+                    </span>
+                  </a>
+          
+                  <a class="ml-2 btn btn-primary">
+                      <i data-feather="plus" class="text-white cursor-pointer"></i>
+                    <span *ngIf="data.task.action == listTaskAction['new_sim']['value']">
+                      Tạo phiếu yêu cầu
+                    </span>
+                  </a>
+
                 <a *ngIf="data.task.status == 1" class="ml-2 btn btn-primary" (click)="sendCallback(item)">
                     <i data-feather="send" class="text-white cursor-pointer"></i>
                     <span>
