@@ -40,6 +40,10 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/loan-bank`, {params: params});
   }
 
+  getListCustomer(params: any = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/customer`, {params: params});
+  }
+
   getById(id) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/loan-bank/${id}`);
   }
@@ -54,6 +58,10 @@ export class TaskService {
 
   getTransWebhook(id) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/${id}`);
+  }
+
+  getDetailCustomer(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/customer/${id}`);
   }
 
   departmentUpdateTaskStatus(data) {

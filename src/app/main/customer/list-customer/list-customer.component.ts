@@ -20,6 +20,8 @@ export class ListCustomerComponent implements OnInit {
   public modalRef: any;
   public selectedItem: any;
   public contentHeader: any;
+  public data: any;
+
   public list: any;
   public page: any;
   public total: any;
@@ -58,12 +60,12 @@ export class ListCustomerComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
-    this.router.navigate(['/loan-bank'], { queryParams: this.searchForm })
+    this.router.navigate(['/customer/list'], { queryParams: this.searchForm })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/loan-bank'], { queryParams: this.searchForm })
+    this.router.navigate(['/customer/list'], { queryParams: this.searchForm })
   }
 
   ngOnInit(): void {
@@ -88,7 +90,7 @@ export class ListCustomerComponent implements OnInit {
   }
 
   getData(): void {
-    this.taskService.getAllLoan(this.searchForm).subscribe(res => {
+    this.taskService.getListCustomer(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.total = res.data.count;
       this.pageSize = res.data.pageSize;
@@ -111,6 +113,21 @@ export class ListCustomerComponent implements OnInit {
       keyboard: false
     });
   }
+
+  onViewDetail(modal, item) {
+    this.selectedItem = item;
+    this.taskService.getDetailCustomer(item.id).subscribe(res => {
+      if (res.status && res.data) {
+        this.data = res.data;
+      }
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'xl'
+      });
+    })
+  }
+
   modalClose() {
     this.selectedItem = null;
     this.getData();
