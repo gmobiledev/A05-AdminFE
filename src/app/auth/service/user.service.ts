@@ -131,7 +131,7 @@ export class UserService {
     return this._http.post<any>(`${environment.apiUrl}/admin/users/merchants`, data);
   }
 
-  createCustomerOcr(data) {
+  createCustomer(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/customer`, data);
   }
 }

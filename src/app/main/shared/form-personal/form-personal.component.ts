@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonDataService } from 'app/auth/service/common-data.service';
+import { CommonService } from 'app/utils/common.service';
 
 @Component({
   selector: 'app-form-personal',
@@ -12,31 +14,30 @@ export class FormPersonalComponent implements OnInit {
   @Input() submitted;
   @Input() options: string = ''
 
-  public countries = []
-  public provinces = []
-  public residence_districts = []
-  public residence_commues = []
-  public home_districts = []
-  public home_commues = []
-  public residence: any = {}
+  @Input() countries;
+  @Input() provinces; //thuong tru
+  public residence_districts;
+  public residence_commues;
+  public home_districts;
+  public home_commues;
+  public residence;
   public imageFront;
   public imageBack;
   public imageSelfie;  
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private commonService: CommonService,
+    private commonDataService: CommonDataService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
   }
 
-  onChangeResidenceProvince(event) {
-    console.log(event.target);
-    if (event.target['options'])
-      this.residence['province'] = event.target['options'][event.target['options'].selectedIndex].text;
-    let id = event.target.value
-    // this.adminSerivce.getDistricts(id).subscribe((res: any) => {
+  onChangeResidenceProvince(event) {    
+    // let id = event.target.value
+    // this.commonDataService.getDistricts(id).subscribe((res: any) => {
     //   if (res.status == 1) {
     //     this.residence_districts = res.data
     //     this.residence_commues = []
@@ -44,11 +45,9 @@ export class FormPersonalComponent implements OnInit {
     // })
   }
 
-  onChangeResidenceDistrict(event) {
-    if (event.target['options'])
-      this.residence['district'] = event.target['options'][event.target['options'].selectedIndex].text;
-    let id = event.target.value
-    // this.adminSerivce.getCommunes(id).subscribe((res: any) => {
+  onChangeResidenceDistrict(event) {    
+    // let id = event.target.value
+    // this.commonDataService.getCommunes(id).subscribe((res: any) => {
     //   if (res.status == 1) {
     //     this.residence_commues = res.data
     //   }
@@ -60,8 +59,8 @@ export class FormPersonalComponent implements OnInit {
   }
 
   onChangeHomeProvince(event) {
-    let id = event.target.value
-    // this.adminSerivce.getDistricts(id).subscribe((res: any) => {
+    // let id = event.target.value
+    // this.commonDataService.getDistricts(id).subscribe((res: any) => {
     //   if (res.status == 1) {
     //     this.home_districts = res.data
     //     this.home_commues = []
@@ -70,8 +69,8 @@ export class FormPersonalComponent implements OnInit {
   }
 
   onChangeHomeDistrict(event) {
-    let id = event.target.value
-    // this.adminSerivce.getCommunes(id).subscribe((res: any) => {
+    // let id = event.target.value
+    // this.commonDataService.getCommunes(id).subscribe((res: any) => {
     //   if (res.status == 1) {
     //     this.home_commues = res.data
     //   }
@@ -92,6 +91,34 @@ export class FormPersonalComponent implements OnInit {
 
   }
 
+  async onSelectFileFront(event) {
+    if (event.target.files && event.target.files[0]) {
+      const image = await this.commonService.resizeImage(event.target.files[0]) + '';
+      this.formPeople.controls['identification_front_file'].setValue(image.replace('data:image/png;base64,', ''));
+    }
+  }
+
+  async onSelectFileBack(event) {
+    if (event.target.files && event.target.files[0]) {
+      const image = await this.commonService.resizeImage(event.target.files[0]) + '';
+      this.formPeople.controls['identification_back_file'].setValue(image.replace('data:image/png;base64,', ''));
+    }
+  }
+
+  async onSelectFileSelfie(event) {
+    if (event.target.files && event.target.files[0]) {
+      const image = await this.commonService.resizeImage(event.target.files[0]) + '';
+      this.formPeople.controls['identification_selfie_file'].setValue(image.replace('data:image/png;base64,', ''));
+    }
+  }
+
+  async onSelectFileSignature(event) {
+    if (event.target.files && event.target.files[0]) {
+      const image = await this.commonService.resizeImage(event.target.files[0]) + '';
+      this.formPeople.controls['signature'].setValue(image.replace('data:image/png;base64,', ''));
+    }
+  }
+
   get f() {
     return this.formPeople.controls;
   }
@@ -100,6 +127,7 @@ export class FormPersonalComponent implements OnInit {
     this.formPeople = this.formBuilder.group({
       name: ['', Validators.required],
       birth: ['', [Validators.required]],
+      birth_text: ['', [Validators.required]],
       gender: ['', Validators.required],
       country: ['VN', Validators.required],
       identification_no: ['', Validators.required],
@@ -108,24 +136,27 @@ export class FormPersonalComponent implements OnInit {
       identification_front_file: [''],
       identification_selfie_file: [''],
       identification_date: ['', Validators.required],
+      identification_date_text: ['', Validators.required],
       identification_type: ['', Validators.required],
       identification_expire_date: [""],
+      identification_expire_date_text: [""],
       home_country: ['VN', Validators.required], //Có trường người nước noài
-      home_province: [''],
-      home_district: [''],
-      home_commune: [''],
+      home_province: ['-1'],
+      home_district: ['-1'],
+      home_commune: ['-1'],
       home_address: [''],
-      residence_province: ['', Validators.required],
-      residence_district: ['', Validators.required],
-      residence_commune: ['',Validators.required],
+      residence_province: ['-1'],
+      residence_district: ['-1'],
+      residence_commune: ['-1'],
       residence_address: [''], //Có trường hợp CCCD không có địa chỉ thường chú
       residence_full_address: [''],
-      province: ['1'],
-      district: ['1'],
-      commune: ['1'],
-      address: ['1'],
+      province: ['-1'],
+      district: ['-1'],
+      commune: ['-1'],
+      address: [''],
       otpions: [this.options], //any
       mobile: [''],
+      signature: ['']
     })
 
   }

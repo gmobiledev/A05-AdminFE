@@ -1,6 +1,6 @@
 <form [formGroup]="formPeople">
   <div class="row">
-    <div class="col-4">
+    <div class="col-3">
       <div class="image-upload" *ngIf="!imageFront" style="text-align: center">
         <label for="file-front-input">
           <img
@@ -31,7 +31,7 @@
         </button>
       </div>
     </div>
-    <div class="col-4">
+    <div class="col-3">
       <div class="image-upload" *ngIf="!imageBack" style="text-align: center">
         <label for="file-back-input">
           <img
@@ -60,7 +60,7 @@
         </button>
       </div>
     </div>
-    <div class="col-4">
+    <div class="col-3">
       <div class="image-upload" *ngIf="!imageSelfie" style="text-align: center">
         <label for="file-input">
           <img
@@ -91,12 +91,25 @@
         </button>
       </div>
     </div>
+
+    <div class="col-3">
+      <div class="image-upload" style="text-align: center">
+        <label for="file-input">
+          <h6 class="text-center">Tải ảnh chữ ký</h6>
+        </label>
+        <input
+          id="file-input"
+          type="file"
+          (change)="onSelectFileSignature($event)"
+        />
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group row">
         <label for="identification_no" class="col-md-3 col-form-label"
-          >Số định danh</label
+          >Số định danh (*)</label
         >
         <div class="col-md-9">
           <!-- <input type="text" class="form-control" placeholder="Số CCCD/CMND" mask="0*"
@@ -123,7 +136,7 @@
 
     <div class="col-md-6">
       <div class="form-group row">
-        <label for="name" class="col-md-3 col-form-label">Họ và tên</label>
+        <label for="name" class="col-md-3 col-form-label">Họ và tên (*)</label>
         <div class="col-md-9">
           <!-- <input type="text" class="form-control" placeholder="Họ tên" [(ngModel)]="people.name"> -->
           <input
@@ -141,19 +154,19 @@
 
     <div class="col-md-6">
       <div class="form-group row">
-        <label for="birth" class="col-md-3 col-form-label">Ngày sinh</label>
+        <label for="birth" class="col-md-3 col-form-label">Ngày sinh (*)</label>
         <div class="col-md-9">
           <div style="display: flex">
             <input
               class="form-control"
               type="text"
-              formControlName="birth"
+              formControlName="birth_text"
               placeholder="01/01/1996"
               mask="00/00/0000"
             />
           </div>
-          <div *ngIf="submitted && f.birth.errors" class="invalid-feedback">
-            <div *ngIf="f.birth.errors.required">Vui lòng nhập trường này</div>
+          <div *ngIf="submitted && f.birth_text.errors" class="invalid-feedback">
+            <div *ngIf="f.birth_text.errors.required">Vui lòng nhập trường này</div>
           </div>
         </div>
         <!-- <div class="col-md-9">
@@ -199,7 +212,7 @@
     <div class="col-md-6">
       <div class="form-group row">
         <label for="identification_type" class="col-md-3 col-form-label"
-          >Loại giấy tờ</label
+          >Loại giấy tờ (*)</label
         >
         <div class="col-md-9">
           <!-- [(ngModel)]="people.identification_type" -->
@@ -271,24 +284,24 @@
 
     <div class="col-md-6">
       <div class="form-group row">
-        <label for="identification_date" class="col-md-3 col-form-label"
-          >Ngày cấp</label
+        <label for="identification_date_text" class="col-md-3 col-form-label"
+          >Ngày cấp (*)</label
         >
         <div class="col-md-9">
           <div style="display: flex">
             <input
               class="form-control"
               type="text"
-              formControlName="identification_date"
+              formControlName="identification_date_text"
               placeholder="01/01/2020"
               mask="00/00/0000"
             />
           </div>
           <div
-            *ngIf="submitted && f.identification_date.errors"
+            *ngIf="submitted && f.identification_date_text.errors"
             class="invalid-feedback"
           >
-            <div *ngIf="f.identification_date.errors.required">
+            <div *ngIf="f.identification_date_text.errors.required">
               Vui lòng nhập trường này
             </div>
           </div>
@@ -310,7 +323,7 @@
     </div>
     <div class="col-md-6">
       <div class="form-group row">
-        <label for="identification_expire_date" class="col-md-3 col-form-label"
+        <label for="identification_expire_date_text" class="col-md-3 col-form-label"
           >Ngày hết hạn</label
         >
         <div class="col-md-9">
@@ -318,16 +331,16 @@
             <input
               class="form-control"
               type="text"
-              formControlName="identification_expire_date"
+              formControlName="identification_expire_date_text"
               placeholder="01/02/2030"
               mask="00/00/0000"
             />
           </div>
           <div
-            *ngIf="submitted && f.identification_expire_date.errors"
+            *ngIf="submitted && f.identification_expire_date_text.errors"
             class="invalid-feedback"
           >
-            <div *ngIf="f.identification_expire_date.errors.required">
+            <div *ngIf="f.identification_expire_date_text.errors.required">
               Vui lòng nhập trường này
             </div>
           </div>
@@ -337,7 +350,7 @@
 
     <div class="col-md-6">
       <div class="form-group row">
-        <label for="mobile" class="col-md-3 col-form-label">SĐT liên hệ</label>
+        <label for="mobile" class="col-md-3 col-form-label">SĐT liên hệ (*)</label>
         <div class="col-md-9">
           <!-- [(ngModel)]="people.identification_place" -->
           <input
@@ -474,6 +487,30 @@
     </div>
     <div class="col-md-6">
       <div class="row">
+        <div class="col-12">
+          <div class="form-group row">
+            <label for="residence_full_address" class="col-md-3 col-form-label"
+              >Địa chỉ thường trú đầy đủ (*)</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="residence_full_address"
+                placeholder="Địa chỉ thường trú đầy đủ"
+              />
+              <div
+                *ngIf="submitted && f.residence_full_address.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.residence_full_address.errors.required">
+                  Vui lòng nhập trường này
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="col-12">
           <div class="form-group row">
             <label for="residence_address" class="col-md-3 col-form-label"

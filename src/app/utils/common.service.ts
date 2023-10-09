@@ -42,4 +42,26 @@ export class CommonService {
         })
     }
 
+    /**
+     * Chuyen Date sang timestamp
+     * 
+     * @param format 
+     * @param value 
+     * @returns 
+     */
+    convertDateToUnixTime(format, value) {
+        let result = null;
+        if(!value) {
+            return result;
+        }
+        if(format == 'DD/MM/YYYY') {
+            const dateString = value; // Oct 23
+            const dateParts: any = dateString.split("/");
+            // month is 0-based, that's why we need dataParts[1] - 1
+            const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+            result = Math.floor(dateObject.getTime() / 1000);
+        }
+        return result;
+    }
+
 }

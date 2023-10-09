@@ -13,6 +13,21 @@
               <ul ngbNav #navWithIcons="ngbNav" class="nav-tabs">
                 <li ngbNavItem class="col">
                   <a ngbNavLink
+                    ><span [data-feather]="'user'"></span> Cá nhân</a
+                  >
+                  <ng-template ngbNavContent>
+                    <ng-container>
+                      <app-form-personal #formPeople
+                      [countries]="countries"
+                      [provinces]="provinces"
+                      [submitted]="submitted"
+                      ></app-form-personal>
+                    </ng-container>
+                  </ng-template>
+                </li>
+
+                <li ngbNavItem class="col">
+                  <a ngbNavLink
                     ><span [data-feather]="'users'"></span> Doanh nghiệp</a
                   >
                   <ng-template ngbNavContent>
@@ -24,18 +39,7 @@
                       ></app-form-organiration>
                     </ng-container>
                   </ng-template>
-                </li>
-
-                <li ngbNavItem class="col">
-                  <a ngbNavLink
-                    ><span [data-feather]="'user'"></span> Cá nhân</a
-                  >
-                  <ng-template ngbNavContent>
-                    <ng-container>
-                      <app-form-personal #formPeople></app-form-personal>
-                    </ng-container>
-                  </ng-template>
-                </li>
+                </li>                
               </ul>
             </div>
 
@@ -43,7 +47,7 @@
 
             <div class="row pull-right">
               <div class="col-12">
-                <a (click)="onSubmit()" class="btn btn-success">Submit</a>
+                <a (click)="onSubmitCreate()" class="btn btn-success">Submit</a>
               </div>
             </div>
           </div>
