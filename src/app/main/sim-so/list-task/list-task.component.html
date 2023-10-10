@@ -285,6 +285,15 @@
                         </a>
                       </div>
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
+
+                        <div  *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+listTaskAction['change_info']['value']+'/update-status')
+                        && item.status == taskTelecomStatus.STATUS_NEW_ORDER ">
+                          <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="bookmark" class="text-white cursor-pointer"></i>
+                            Tiếp nhận yêu cầu
+                          </a>
+                        </div>
+
                         <div *ngIf="(
                           (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])  && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
                         || (item.status == taskTelecomStatus.STATUS_NEW_ORDER && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
