@@ -286,7 +286,7 @@
                       </div>
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
 
-                        <div  *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+listTaskAction['change_info']['value']+'/update-status')
+                        <div  *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+item.action+'/update-status')
                         && item.status == taskTelecomStatus.STATUS_NEW_ORDER ">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
