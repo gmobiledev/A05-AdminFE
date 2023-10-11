@@ -740,7 +740,9 @@
         </a>
     </div> -->
     <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
-    checkAction('telecom-admin/task/:slug(\\d+)/'+data?.task?.action+'/update-status')">
+    checkAction('telecom-admin/task/:slug(\\d+)/'+data?.task?.action+'/update-status')
+    && !checkAction('telecom-admin/task/:slug(\\d+)/update-status')
+    ">
         <a class="ml-2 btn btn-success" (click)="onUpdateStatusV2(data.task, taskTelecomStatus.STATUS_SUCCESS)">
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
           <span>
