@@ -8,7 +8,7 @@ import { CommonService } from 'app/utils/common.service';
   templateUrl: './form-personal.component.html',
   styleUrls: ['./form-personal.component.scss']
 })
-export class FormPersonalComponent implements OnInit, OnChanges  {
+export class FormPersonalComponent implements OnInit, OnChanges {
 
   formPeople: FormGroup;
   @Input() submitted;
@@ -23,9 +23,14 @@ export class FormPersonalComponent implements OnInit, OnChanges  {
   public home_districts;
   public home_commues;
   public residence;
+
   public imageFront;
   public imageBack;
-  public imageSelfie;  
+  public imageSelfie;
+  public imageSignature;
+  public birthday;
+
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +40,7 @@ export class FormPersonalComponent implements OnInit, OnChanges  {
 
   ngOnInit(): void {
 
-    
+
     this.initForm();
   }
 
@@ -49,21 +54,35 @@ export class FormPersonalComponent implements OnInit, OnChanges  {
     this.formPeople.controls.home_country.setValue(this.dataInput.people.country)
     this.formPeople.controls.gender.setValue(this.dataInput.people.gender)
 
-    this.formPeople.controls.birth_text.setValue(this.dataInput.people.birth)
-    this.formPeople.controls.identification_date_text.setValue(this.dataInput.people.created_at)
-    this.formPeople.controls.identification_expire_date_text.setValue(this.dataInput.people.identification_expire_date)
+
+    let birth_tex = new Date(this.dataInput.people.birth * 1000);
+    const birth = birth_tex.getDate() + '/' + (birth_tex.getMonth() + 1) + '/' + birth_tex.getFullYear();
+    this.formPeople.controls.birth_text.setValue(birth)
+
+    let identification_date_text = new Date(this.dataInput.people.identification_date * 1000);
+    const identificationdatetext = identification_date_text.getDate() + '/' + (identification_date_text.getMonth() + 1) + '/' + identification_date_text.getFullYear();
+    this.formPeople.controls.identification_date_text.setValue(identificationdatetext)
+
+    let identification_expire_date = new Date(this.dataInput.people.identification_expire_date * 1000);
+    const identificationexpiredate = identification_expire_date.getDate() + '/' + (identification_expire_date.getMonth() + 1) + '/' + identification_expire_date.getFullYear();
+    this.formPeople.controls.identification_expire_date_text.setValue(identificationexpiredate)
+
     this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
     this.formPeople.controls.residence_address.setValue(this.dataInput.address)
     this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
-
     this.formPeople.controls.country.setValue(this.dataInput.people.country)
+
+    this.imageFront = this.dataInput.people.identification_front_file
+    this.imageBack = this.dataInput.people.identification_back_file
+    this.imageSelfie = this.dataInput.people.identification_selfie_file
+    this.imageSignature = this.dataInput.people.identification_signature_file
 
 
 
     console.log(this.dataInput)
-  } 
+  }
 
-  onChangeResidenceProvince(event) {    
+  onChangeResidenceProvince(event) {
     // let id = event.target.value
     // this.commonDataService.getDistricts(id).subscribe((res: any) => {
     //   if (res.status == 1) {
@@ -73,7 +92,7 @@ export class FormPersonalComponent implements OnInit, OnChanges  {
     // })
   }
 
-  onChangeResidenceDistrict(event) {    
+  onChangeResidenceDistrict(event) {
     // let id = event.target.value
     // this.commonDataService.getCommunes(id).subscribe((res: any) => {
     //   if (res.status == 1) {
@@ -151,6 +170,21 @@ export class FormPersonalComponent implements OnInit, OnChanges  {
     return this.formPeople.controls;
   }
 
+  onReUpload(img) {
+    if (img == 'front') {
+      this.imageFront = null;
+    }
+    if (img == 'back') {
+      this.imageBack = null;
+    }
+    if (img == 'selfie') {
+      this.imageSelfie = null;
+    }
+    if (img == 'signature') {
+      this.imageSignature = null;
+    }
+  }
+
   initForm() {
     this.formPeople = this.formBuilder.group({
       name: ['', Validators.required],
@@ -182,9 +216,11 @@ export class FormPersonalComponent implements OnInit, OnChanges  {
       district: ['-1'],
       commune: ['-1'],
       address: [''],
+      full_address: [""],
       otpions: [this.options], //any
       mobile: [''],
-      signature: ['']
+      signature: [''],
+      identification_signature_file: ['']
     })
 
   }

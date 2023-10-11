@@ -64,6 +64,10 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/customer/${id}`);
   }
 
+  patchUpdateCustomer(id: number, data) {
+    return this._http.patch<any>(`${environment.apiUrl}/admin/customer/${id}`, data);
+  }
+
   departmentUpdateTaskStatus(data) {
     return this._http.put<any>(`${environment.apiUrl}/admin/task/department-update-status`, data);
   }

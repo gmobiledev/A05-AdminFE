@@ -9,13 +9,16 @@ import { ObjectLocalStorage } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from 'app/auth/service/task.service';
-
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 @Component({
   selector: 'app-create-customer',
   templateUrl: './create-customer.component.html',
   styleUrls: ['./create-customer.component.scss']
 })
 export class CreateCustomerComponent implements OnInit {
+
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+
 
   @ViewChild(FormOrganirationComponent) formOrganization: FormOrganirationComponent;
   @ViewChild(FormPersonalComponent) formPeople: FormPersonalComponent;
@@ -55,6 +58,7 @@ export class CreateCustomerComponent implements OnInit {
       ]
     }
   };
+
 
   constructor(
     private userService: UserService,
@@ -117,6 +121,54 @@ export class CreateCustomerComponent implements OnInit {
 
   onSubmit() {
     console.log(this.formOrganization.formOrganization.value)
+  }
+
+  async onSubmitUpload() {
+
+    let dataUpdate= {
+      created_by: this.currentUser.username,
+      id_no: this.formPeople.formPeople.controls['identification_no'].value,
+      id_type: this.formPeople.formPeople.controls['identification_type'].value,
+      name: this.formPeople.formPeople.controls['name'].value,
+      customer_type: "PERSONAL",
+      address: this.formPeople.formPeople.controls['residence_full_address'].value,
+      mobile: this.formPeople.formPeople.controls['mobile'].value,
+      people: {}
+    }
+    this.formPeople.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['birth_text'].value ))
+    this.formPeople.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_date_text'].value ))
+    this.formPeople.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_expire_date_text'].value ))
+    console.log(this.formPeople.formPeople.value);
+    dataUpdate.people = this.formPeople.formPeople.value;
+
+    delete dataUpdate.people['birth_text'];
+    delete dataUpdate.people['identification_date_text'];
+    delete dataUpdate.people['identification_expire_date_text'];
+    delete dataUpdate.people['signature'];
+    
+
+
+    this.submitted = true;
+
+
+    console.log(dataUpdate)
+
+
+    if ((await this.alertService.showConfirm("Bạn có chắc chắn muốn cập nhật thông tin?")).value) {
+      this.sectionBlockUI.start();
+      this.taskService.patchUpdateCustomer(this.id, dataUpdate).subscribe(res => {
+        this.sectionBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(error);
+        return;
+      })
+    }
   }
 
   getData() {
