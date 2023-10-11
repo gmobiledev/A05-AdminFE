@@ -47,8 +47,18 @@ export class FormPersonalComponent implements OnInit, OnChanges  {
     this.formPeople.controls.identification_place.setValue(this.dataInput.people.identification_place)
     this.formPeople.controls.identification_no.setValue(this.dataInput.id_no)
     this.formPeople.controls.home_country.setValue(this.dataInput.people.country)
-
     this.formPeople.controls.gender.setValue(this.dataInput.people.gender)
+
+    this.formPeople.controls.birth_text.setValue(this.dataInput.people.birth)
+    this.formPeople.controls.identification_date_text.setValue(this.dataInput.people.created_at)
+    this.formPeople.controls.identification_expire_date_text.setValue(this.dataInput.people.identification_expire_date)
+    this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
+    this.formPeople.controls.residence_address.setValue(this.dataInput.address)
+    this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
+
+    this.formPeople.controls.country.setValue(this.dataInput.people.country)
+
+
 
     console.log(this.dataInput)
   } 
