@@ -254,7 +254,7 @@
     <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING" class="ml-2 btn-sm btn btn-success"
       (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)">
       <i data-feather="check-circle" class="text-white cursor-pointer"></i>
-      <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
+      <span *ngIf="data.task.action == listTaskAction['change_sim']['value']">
         Cập nhật thành công
       </span>
       <span *ngIf="data.task.action == listTaskAction['new_sim']['value'] && data?.msisdn?.msisdns.length < 2">

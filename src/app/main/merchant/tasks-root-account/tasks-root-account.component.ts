@@ -54,7 +54,8 @@ export class TasksRootAccountComponent implements OnInit {
   public file: any;
   public dataCreatePayment = {
     amount: 0,
-    file: ''
+    file: '',
+    file_ext: ''
   }
 
   public dataExcel = {
@@ -274,9 +275,20 @@ export class TasksRootAccountComponent implements OnInit {
 
   async onSelectFileFront(event) {
     if (event.target.files && event.target.files[0]) {
-      let img = await this.commonService.resizeImage(event.target.files[0]);
-      this.dataCreatePayment.file = (img+'').replace('data:image/png;base64,', '')
+      const ext = event.target.files[0].type;
+      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.dataCreatePayment.file_ext = 'png';
+        let img = await this.commonService.resizeImage(event.target.files[0]);
+        this.dataCreatePayment.file = (img + '').replace('data:image/png;base64,', '')
+      } else if (ext.includes('pdf')) {
+        this.dataCreatePayment.file_ext = 'pdf';
+        this.dataCreatePayment.file = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+      }
     }
+    // if (event.target.files && event.target.files[0]) {
+    //   let img = await this.commonService.resizeImage(event.target.files[0]);
+    //   this.dataCreatePayment.file = (img+'').replace('data:image/png;base64,', '')
+    // }
   }
 
   getData(): void {

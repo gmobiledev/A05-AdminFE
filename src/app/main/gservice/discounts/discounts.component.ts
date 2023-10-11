@@ -86,6 +86,7 @@ export class DiscountsComponent implements OnInit {
       date_range: [''],
       items: this.fb.array([]),
       file: [''],
+      file_ext: ['']
     });
 
     this.route.queryParams.subscribe(params => {
@@ -193,8 +194,15 @@ export class DiscountsComponent implements OnInit {
 
   async onSelectFileFront(event) {
     if (event.target.files && event.target.files[0]) {
-      let img = await this.commonService.resizeImage(event.target.files[0]);
-      this.form.controls.file.setValue((img + '').replace('data:image/png;base64,', ''))
+      const ext = event.target.files[0].type;
+      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.form.controls['file_ext'].setValue('png');
+        let img = await this.commonService.resizeImage(event.target.files[0]);
+        this.form.controls.file.setValue((img + '').replace('data:image/png;base64,', ''))
+      } else if (ext.includes('pdf')) {
+        this.form.controls['file_ext'].setValue('pdf');
+        this.form.controls.file.setValue((await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', ''));
+      }      
     }
   }
 

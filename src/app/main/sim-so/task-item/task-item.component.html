@@ -65,7 +65,7 @@
       <div class="row mb-2 p-2">
         <div
           class="col-md-12"
-          *ngIf="data.task.action == listTaskAction['change_info']['value']"
+          *ngIf="data.task.action == listTaskAction['change_sim']['value']"
         >
           <h4>Thông tin KH đã đăng ký</h4>
         </div>
@@ -311,7 +311,7 @@
     >
       <div
         class="row mb-2 p-2"
-        *ngIf="data.task.action == listTaskAction['change_info']['value']"
+        *ngIf="data.task.action == listTaskAction['change_sim']['value']"
       >
         <div class="col-md-12">
           <h4>Thông tin KH để xác thực</h4>
@@ -432,7 +432,7 @@
       >
         <div
           class="col-md-12"
-          *ngIf="data.task.action == listTaskAction['change_info']['value']"
+          *ngIf="data.task.action == listTaskAction['change_sim']['value']"
         >
           <h4>Thông tin đã đấu nối</h4>
         </div>
@@ -571,7 +571,7 @@
         <div class="col-md-12">
           <div
             class="row"
-            *ngIf="data.task.action == listTaskAction['change_info']['value']"
+            *ngIf="data.task.action == listTaskAction['change_sim']['value']"
           >
             <div class="col-md-12">
               <h4>Thông tin cập nhật</h4>
@@ -612,7 +612,7 @@
         <div class="col-md-12">
           <div
             class="row"
-            *ngIf="data.task.action == listTaskAction['change_info']['value']"
+            *ngIf="data.task.action == listTaskAction['change_sim']['value']"
           >
             <div class="col-md-12">
               <h4>Các số thường xuyên liên lạc</h4>
@@ -651,7 +651,7 @@
         <a class="ml-2 btn btn-primary" (click)="onDownloadImages()">
           <i data-feather="download" class="text-white cursor-pointer"></i>
           <span
-            *ngIf="data.task.action == listTaskAction['change_info']['value']"
+            *ngIf="data.task.action == listTaskAction['change_sim']['value']"
           >
             Tải về hình ảnh cập nhật
           </span>
@@ -739,11 +739,27 @@
             Đẩy sang nhà mạng
         </a>
     </div> -->
+    <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
+    checkAction('telecom-admin/task/:slug(\\d+)/'+data?.task?.action+'/update-status')
+    && !checkAction('telecom-admin/task/:slug(\\d+)/update-status')
+    ">
+        <a class="ml-2 btn btn-success" (click)="onUpdateStatusV2(data.task, taskTelecomStatus.STATUS_SUCCESS)">
+          <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+          <span>
+            Cập nhật thành công
+          </span>
+        </a>
+
+        <a class="ml-2 btn btn-danger" (click)="onUpdateStatusV2(data.task, taskTelecomStatus.STATUS_REJECT)">
+          <i data-feather="slash" class="text-white cursor-pointer"></i>
+          Từ chối yêu cầu
+        </a>
+    </div>
     <div
       *ngIf="
         data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
         checkAction('telecom-admin/task/:slug(\\d+)/update-status') &&
-        (data.task.action == listTaskAction['change_info']['value'] ||
+        (
           data.task.action == listTaskAction['change_user_info']['value'] ||
           data.task.action == listTaskAction['new_sim']['value'])
       "
@@ -754,7 +770,7 @@
       >
         <i data-feather="check-circle" class="text-white cursor-pointer"></i>
         <span
-          *ngIf="data.task.action == listTaskAction['change_info']['value']"
+          *ngIf="data.task.action == listTaskAction['change_sim']['value']"
         >
           Cập nhật thành công
         </span>
