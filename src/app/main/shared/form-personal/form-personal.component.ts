@@ -45,41 +45,47 @@ export class FormPersonalComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.formPeople.controls.name.setValue(this.dataInput.name)
-    this.formPeople.controls.mobile.setValue(this.dataInput.mobile)
-    this.formPeople.controls.identification_type.setValue(this.dataInput.id_type)
-    this.formPeople.controls.residence_full_address.setValue(this.dataInput.people.full_address)
-    this.formPeople.controls.identification_place.setValue(this.dataInput.people.identification_place)
-    this.formPeople.controls.identification_no.setValue(this.dataInput.id_no)
-    this.formPeople.controls.home_country.setValue(this.dataInput.people.country)
-    this.formPeople.controls.gender.setValue(this.dataInput.people.gender)
+    if (this.dataInput) {
+      this.formPeople.controls.name.setValue(this.dataInput.name)
+      this.formPeople.controls.mobile.setValue(this.dataInput.mobile)
+      this.formPeople.controls.identification_type.setValue(this.dataInput.id_type)
+      this.formPeople.controls.residence_full_address.setValue(this.dataInput.people.residence_full_address)
+      this.formPeople.controls.identification_place.setValue(this.dataInput.people.identification_place)
+      this.formPeople.controls.identification_no.setValue(this.dataInput.id_no)
+      this.formPeople.controls.home_country.setValue(this.dataInput.people.country)
+      this.formPeople.controls.gender.setValue(this.dataInput.people.gender)
 
 
-    let birth_tex = new Date(this.dataInput.people.birth * 1000);
-    const birth = birth_tex.getDate() + '/' + (birth_tex.getMonth() + 1) + '/' + birth_tex.getFullYear();
-    this.formPeople.controls.birth_text.setValue(birth)
+      if(this.dataInput.people.birth !== null && this.dataInput.people.birth !== '') {
+        let birth_tex = new Date(this.dataInput.people.birth * 1000);
+        const birth = birth_tex.getDate() + '/' + (birth_tex.getMonth() + 1) + '/' + birth_tex.getFullYear();
+        this.formPeople.controls.birth_text.setValue(birth)
+      }
 
-    let identification_date_text = new Date(this.dataInput.people.identification_date * 1000);
-    const identificationdatetext = identification_date_text.getDate() + '/' + (identification_date_text.getMonth() + 1) + '/' + identification_date_text.getFullYear();
-    this.formPeople.controls.identification_date_text.setValue(identificationdatetext)
+      if(this.dataInput.people.identification_date !== null && this.dataInput.people.identification_date !== '') {
+        let identification_date_text = new Date(this.dataInput.people.identification_date * 1000);
+        const identificationdatetext = identification_date_text.getDate() + '/' + (identification_date_text.getMonth() + 1) + '/' + identification_date_text.getFullYear();
+        this.formPeople.controls.identification_date_text.setValue(identificationdatetext)
+      }
 
-    let identification_expire_date = new Date(this.dataInput.people.identification_expire_date * 1000);
-    const identificationexpiredate = identification_expire_date.getDate() + '/' + (identification_expire_date.getMonth() + 1) + '/' + identification_expire_date.getFullYear();
-    this.formPeople.controls.identification_expire_date_text.setValue(identificationexpiredate)
+      if(this.dataInput.people.identification_expire_date !== null && this.dataInput.people.identification_expire_date !== '') {
+        let identification_expire_date = new Date(this.dataInput.people.identification_expire_date * 1000);
+        const identificationexpiredate = identification_expire_date.getDate() + '/' + (identification_expire_date.getMonth() + 1) + '/' + identification_expire_date.getFullYear();
+        this.formPeople.controls.identification_expire_date_text.setValue(identificationexpiredate)
+      }
+      
+      this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
+      // this.formPeople.controls.residence_address.setValue(this.dataInput.address)
+      this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
+      this.formPeople.controls.country.setValue(this.dataInput.people.country)
 
-    this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
-    this.formPeople.controls.residence_address.setValue(this.dataInput.address)
-    this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
-    this.formPeople.controls.country.setValue(this.dataInput.people.country)
+      this.imageFront = this.dataInput.people.identification_front_file
+      this.imageBack = this.dataInput.people.identification_back_file
+      this.imageSelfie = this.dataInput.people.identification_selfie_file
+      this.imageSignature = this.dataInput.people.identification_signature_file
+      console.log(this.dataInput)
+    }
 
-    this.imageFront = this.dataInput.people.identification_front_file
-    this.imageBack = this.dataInput.people.identification_back_file
-    this.imageSelfie = this.dataInput.people.identification_selfie_file
-    this.imageSignature = this.dataInput.people.identification_signature_file
-
-
-
-    console.log(this.dataInput)
   }
 
   onChangeResidenceProvince(event) {

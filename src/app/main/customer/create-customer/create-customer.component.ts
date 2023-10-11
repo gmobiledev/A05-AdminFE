@@ -21,7 +21,7 @@ export class CreateCustomerComponent implements OnInit {
 
 
   @ViewChild(FormOrganirationComponent) formOrganization: FormOrganirationComponent;
-  @ViewChild(FormPersonalComponent) formPeople: FormPersonalComponent;
+  @ViewChild(FormPersonalComponent) formPeopleComponent: FormPersonalComponent;
   @ViewChild(OrganizationDocComponent) formOrganDoc: OrganizationDocComponent;
 
   public countries;
@@ -82,24 +82,25 @@ export class CreateCustomerComponent implements OnInit {
   onSubmitCreate() {
     let dataCreate = {
       created_by: this.currentUser.username,
-      id_no: this.formPeople.formPeople.controls['identification_no'].value,
-      id_type: this.formPeople.formPeople.controls['identification_type'].value,
-      name: this.formPeople.formPeople.controls['name'].value,
+      id_no: this.formPeopleComponent.formPeople.controls['identification_no'].value,
+      id_type: this.formPeopleComponent.formPeople.controls['identification_type'].value,
+      name: this.formPeopleComponent.formPeople.controls['name'].value,
       customer_type: "PERSONAL",
-      address: this.formPeople.formPeople.controls['residence_full_address'].value,
-      mobile: this.formPeople.formPeople.controls['mobile'].value,
+      address: this.formPeopleComponent.formPeople.controls['residence_full_address'].value,
+      mobile: this.formPeopleComponent.formPeople.controls['mobile'].value,
       apeople: {}
     }
-    this.formPeople.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['birth_text'].value ))
-    this.formPeople.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_date_text'].value ))
-    this.formPeople.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_expire_date_text'].value ))
-    console.log(this.formPeople.formPeople.value);
-    dataCreate.apeople = this.formPeople.formPeople.value;
+    this.formPeopleComponent.formPeople.controls['full_address'].setValue(this.formPeopleComponent.formPeople.controls.residence_full_address.value);
+    this.formPeopleComponent.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['birth_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_date_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_expire_date_text'].value ))
+    console.log(this.formPeopleComponent.formPeople.value);
+    dataCreate.apeople = this.formPeopleComponent.formPeople.value;
     delete dataCreate.apeople['birth_text'];
     delete dataCreate.apeople['identification_date_text'];
     delete dataCreate.apeople['identification_expire_date_text'];
     this.submitted = true;
-    // if(this.formPeople.formPeople.invalid) {
+    // if(this.formPeopleComponent.formPeople.invalid) {
     //   this.submitted = false;
     //   return;
     // }
@@ -120,26 +121,29 @@ export class CreateCustomerComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formOrganization.formOrganization.value)
+    if(this.id && this.id != undefined) {
+      this.onSubmitUpdate();
+    } else {
+      this.onSubmitCreate();
+    }
   }
 
-  async onSubmitUpload() {
-
+  async onSubmitUpdate() {
     let dataUpdate= {
       created_by: this.currentUser.username,
-      id_no: this.formPeople.formPeople.controls['identification_no'].value,
-      id_type: this.formPeople.formPeople.controls['identification_type'].value,
-      name: this.formPeople.formPeople.controls['name'].value,
+      id_no: this.formPeopleComponent.formPeople.controls['identification_no'].value,
+      id_type: this.formPeopleComponent.formPeople.controls['identification_type'].value,
+      name: this.formPeopleComponent.formPeople.controls['name'].value,
       customer_type: "PERSONAL",
-      address: this.formPeople.formPeople.controls['residence_full_address'].value,
-      mobile: this.formPeople.formPeople.controls['mobile'].value,
+      address: this.formPeopleComponent.formPeople.controls['residence_full_address'].value,
+      mobile: this.formPeopleComponent.formPeople.controls['mobile'].value,
       people: {}
     }
-    this.formPeople.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['birth_text'].value ))
-    this.formPeople.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_date_text'].value ))
-    this.formPeople.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_expire_date_text'].value ))
-    console.log(this.formPeople.formPeople.value);
-    dataUpdate.people = this.formPeople.formPeople.value;
+    this.formPeopleComponent.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['birth_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_date_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_expire_date_text'].value ))
+    console.log(this.formPeopleComponent.formPeople.value);
+    dataUpdate.people = this.formPeopleComponent.formPeople.value;
 
     delete dataUpdate.people['birth_text'];
     delete dataUpdate.people['identification_date_text'];
@@ -180,12 +184,13 @@ export class CreateCustomerComponent implements OnInit {
       this.provinces = res.data;
     })
 
-    this.taskService.getDetailCustomer(this.id).subscribe(res => {
-      if (res.status && res.data) {
-        this.dataInput = res.data;
-      }
-    })
-
+    if(this.id && this.id != undefined) {
+      this.taskService.getDetailCustomer(this.id).subscribe(res => {
+        if (res.status && res.data) {
+          this.dataInput = res.data;
+        }
+      })
+    }    
   }
 
 }

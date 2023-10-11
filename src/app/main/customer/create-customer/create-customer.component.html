@@ -17,7 +17,7 @@
                   >
                   <ng-template ngbNavContent>
                     <ng-container>
-                      <app-form-personal #formPeople
+                      <app-form-personal #formPeopleComponent
                       [countries]="countries"
                       [provinces]="provinces"
                       [submitted]="submitted"
@@ -49,7 +49,7 @@
 
             <div class="row pull-right">
               <div class="col-12">
-                <a (click)="onSubmitUpload()" class="btn btn-success">Submit</a>
+                <a (click)="onSubmit()" class="btn btn-success">Submit</a>
               </div>
             </div>
           </div>
