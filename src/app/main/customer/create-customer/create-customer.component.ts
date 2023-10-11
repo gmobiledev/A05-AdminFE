@@ -7,6 +7,8 @@ import { OrganizationDocComponent } from 'app/main/shared/organization-doc/organ
 import { CommonService } from 'app/utils/common.service';
 import { ObjectLocalStorage } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { ActivatedRoute } from '@angular/router';
+import { TaskService } from 'app/auth/service/task.service';
 
 @Component({
   selector: 'app-create-customer',
@@ -22,10 +24,13 @@ export class CreateCustomerComponent implements OnInit {
   public countries;
   public provinces;
   
+  public dataInput: any;
+
   currentUser;
   isPersonal: boolean = false;
   isCreate;
   submitted: boolean = false;
+  public id: any;
 
   public contentHeader: any =  {
     headerTitle: 'Thêm khách hàng',
@@ -55,8 +60,16 @@ export class CreateCustomerComponent implements OnInit {
     private userService: UserService,
     private commonService: CommonService,
     private commonDataService: CommonDataService,
-    private alertService: SweetAlertService
-  ) { }
+    private alertService: SweetAlertService,
+    private route: ActivatedRoute,
+    private taskService: TaskService,
+
+  ) {
+
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getData();
+
+   }
 
   ngOnInit(): void {
     this.getData();
@@ -114,6 +127,13 @@ export class CreateCustomerComponent implements OnInit {
     this.commonDataService.getProvinces().subscribe(res => {
       this.provinces = res.data;
     })
+
+    this.taskService.getDetailCustomer(this.id).subscribe(res => {
+      if (res.status && res.data) {
+        this.dataInput = res.data;
+      }
+    })
+
   }
 
 }

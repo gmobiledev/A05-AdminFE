@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { CommonService } from 'app/utils/common.service';
@@ -8,7 +8,7 @@ import { CommonService } from 'app/utils/common.service';
   templateUrl: './form-personal.component.html',
   styleUrls: ['./form-personal.component.scss']
 })
-export class FormPersonalComponent implements OnInit {
+export class FormPersonalComponent implements OnInit, OnChanges  {
 
   formPeople: FormGroup;
   @Input() submitted;
@@ -16,6 +16,8 @@ export class FormPersonalComponent implements OnInit {
 
   @Input() countries;
   @Input() provinces; //thuong tru
+  @Input() dataInput;
+
   public residence_districts;
   public residence_commues;
   public home_districts;
@@ -32,8 +34,34 @@ export class FormPersonalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    
     this.initForm();
   }
+
+  ngOnChanges() {
+    this.formPeople.controls.name.setValue(this.dataInput.name)
+    this.formPeople.controls.mobile.setValue(this.dataInput.mobile)
+    this.formPeople.controls.identification_type.setValue(this.dataInput.id_type)
+    this.formPeople.controls.residence_full_address.setValue(this.dataInput.people.full_address)
+    this.formPeople.controls.identification_place.setValue(this.dataInput.people.identification_place)
+    this.formPeople.controls.identification_no.setValue(this.dataInput.id_no)
+    this.formPeople.controls.home_country.setValue(this.dataInput.people.country)
+    this.formPeople.controls.gender.setValue(this.dataInput.people.gender)
+
+    this.formPeople.controls.birth_text.setValue(this.dataInput.people.birth)
+    this.formPeople.controls.identification_date_text.setValue(this.dataInput.people.created_at)
+    this.formPeople.controls.identification_expire_date_text.setValue(this.dataInput.people.identification_expire_date)
+    this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
+    this.formPeople.controls.residence_address.setValue(this.dataInput.address)
+    this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
+
+    this.formPeople.controls.country.setValue(this.dataInput.people.country)
+
+
+
+    console.log(this.dataInput)
+  } 
 
   onChangeResidenceProvince(event) {    
     // let id = event.target.value

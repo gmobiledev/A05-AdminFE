@@ -10,11 +10,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { BlockUIModule } from 'ng-block-ui';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
-import { AirtimeTopupComponent } from '../user/airtime-topup/airtime-topup.component';
-import { ListUserComponent } from '../user/list-user/list-user.component';
-import { ViewUserComponent } from '../user/view-user/view-user.component';
 import { SharedModule } from '../shared/share.module';
-import { ViewCustomerComponent } from './view-customer/view-customer.component';
 
 const routes: Routes = [
   {
@@ -26,9 +22,10 @@ const routes: Routes = [
     component: CreateCustomerComponent
   },
   {
-    path: 'view',
-    component: ViewCustomerComponent
+    path: 'update/:id',
+    component: CreateCustomerComponent
   },
+
   
 ]
 
@@ -36,7 +33,6 @@ const routes: Routes = [
   declarations: [
     ListCustomerComponent,
     CreateCustomerComponent,
-    ViewCustomerComponent
   ],
   imports: [
     CommonModule,
