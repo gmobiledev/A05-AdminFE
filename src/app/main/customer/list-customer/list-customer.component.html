@@ -9,14 +9,14 @@
             <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
           </div>
           <div class="card-body">
-            <form (ngSubmit)="onSubmitSearch()">
+            <form >
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <input
                       type="text"
                       name="mobile"
-                      [(ngModel)]="searchForm.user"
+                      [(ngModel)]="searchForm.mobile"
                       class="form-control"
                       placeholder="Nhập số điện thoại"
                     />
@@ -26,8 +26,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="cccd"
-                      [(ngModel)]="searchForm.user"
+                      name="id_no"
+                      [(ngModel)]="searchForm.id_no"
                       class="form-control"
                       placeholder="Số CCCD của KH"
                     />
@@ -37,8 +37,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="customer_name"
-                      [(ngModel)]="searchForm.user"
+                      name="name"
+                      [(ngModel)]="searchForm.name"
                       class="form-control"
                       placeholder="Tên khách hàng"
                     />
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="button" class="btn btn-block btn-info">
+                    <button type="button" class="btn btn-block btn-info" (click)="onSubmitSearch()">
                       Lọc kết quả
                     </button>
                   </div>
@@ -112,9 +112,43 @@
                 class="d-flex justify-content-end pr-3 pt-2"
                 [collectionSize]="total"
                 [(page)]="searchForm.page"
-                [directionLinks]="false"
+                [pageSize]="pageSize"
+                [boundaryLinks]="true"
                 (pageChange)="loadPage($event)"
-              ></ngb-pagination>
+              >
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 2.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
             </div>
           </div>
         </div>

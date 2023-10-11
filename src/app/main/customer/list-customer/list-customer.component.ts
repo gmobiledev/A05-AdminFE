@@ -25,15 +25,11 @@ export class ListCustomerComponent implements OnInit {
   public list: any;
   public page: any;
   public total: any;
-  public pageSize: any;
+  public pageSize: any = 20;
   public searchForm = {
-    user: '',
-    title: '',
-    status: '',
-    daterange: '',
-    is_customer_sign: '',
-    is_guarantee_sign: '',
-    is_bank_sign: '',
+    mobile: '',
+    id_no: '',
+    name: '',
     page: 1,
   }
   public isViewFile: boolean = false;
@@ -47,13 +43,10 @@ export class ListCustomerComponent implements OnInit {
     private modalService: NgbModal,
   ) {
     this.route.queryParams.subscribe(params => {
-      this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
-      this.searchForm.title = params['title'] && params['title'] != undefined ? params['title'] : '';
-      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
-      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
-      this.searchForm.is_customer_sign = params['is_customer_sign'] && params['is_customer_sign'] != undefined ? params['is_customer_sign'] : '';
-      this.searchForm.is_guarantee_sign = params['is_guarantee_sign'] && params['is_guarantee_sign'] != undefined ? params['is_guarantee_sign'] : '';
-      this.searchForm.is_bank_sign = params['is_bank_sign'] && params['is_bank_sign'] != undefined ? params['is_bank_sign'] : '';
+      this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
+      this.searchForm.id_no = params['id_no'] && params['id_no'] != undefined ? params['id_no'] : '';
+      this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
+      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;      
 
       this.getData();
     })
