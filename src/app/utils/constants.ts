@@ -46,6 +46,10 @@ export class TaskTelecom {
             value: 'change_info',
             label: 'Đổi sim'
         },
+        change_sim: {
+            value: 'change_sim',
+            label: 'Đổi sim'
+        },
         change_user_info: {
             value: 'change_user_info',
             label: 'Đổi thông tin'

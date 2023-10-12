@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { TaskTelecom } from 'app/utils/constants';
 
 @Injectable({ providedIn: 'root' })
 export class TelecomService {
+
+  listTaskAction = TaskTelecom.ACTION;
   /**
    *
    * @param {HttpClient} _http
@@ -79,10 +82,14 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/update-status`, data);
   }
 
+  updateTaskStatusV2(action, id, data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/${action}/update-status`, data);
+  }
+
   asyncToMnoViaApi(task) {
-    if (task.action == "change_info")
+    if (task.action == this.listTaskAction.change_sim.value)
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-sim-vnm`, {});
-    else if (task.action == "new_sim")
+    else if (task.action == this.listTaskAction.new_sim.value)
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
   }
 

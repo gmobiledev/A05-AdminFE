@@ -7,7 +7,9 @@ import { OrganizationDocComponent } from 'app/main/shared/organization-doc/organ
 import { CommonService } from 'app/utils/common.service';
 import { ObjectLocalStorage } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
-
+import { ActivatedRoute } from '@angular/router';
+import { TaskService } from 'app/auth/service/task.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 @Component({
   selector: 'app-create-customer',
   templateUrl: './create-customer.component.html',
@@ -15,17 +17,23 @@ import { SweetAlertService } from 'app/utils/sweet-alert.service';
 })
 export class CreateCustomerComponent implements OnInit {
 
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+
+
   @ViewChild(FormOrganirationComponent) formOrganization: FormOrganirationComponent;
-  @ViewChild(FormPersonalComponent) formPeople: FormPersonalComponent;
+  @ViewChild(FormPersonalComponent) formPeopleComponent: FormPersonalComponent;
   @ViewChild(OrganizationDocComponent) formOrganDoc: OrganizationDocComponent;
 
   public countries;
   public provinces;
   
+  public dataInput: any;
+
   currentUser;
   isPersonal: boolean = false;
   isCreate;
   submitted: boolean = false;
+  public id: any;
 
   public contentHeader: any =  {
     headerTitle: 'Thêm khách hàng',
@@ -51,12 +59,21 @@ export class CreateCustomerComponent implements OnInit {
     }
   };
 
+
   constructor(
     private userService: UserService,
     private commonService: CommonService,
     private commonDataService: CommonDataService,
-    private alertService: SweetAlertService
-  ) { }
+    private alertService: SweetAlertService,
+    private route: ActivatedRoute,
+    private taskService: TaskService,
+
+  ) {
+
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getData();
+
+   }
 
   ngOnInit(): void {
     this.getData();
@@ -65,24 +82,25 @@ export class CreateCustomerComponent implements OnInit {
   onSubmitCreate() {
     let dataCreate = {
       created_by: this.currentUser.username,
-      id_no: this.formPeople.formPeople.controls['identification_no'].value,
-      id_type: this.formPeople.formPeople.controls['identification_type'].value,
-      name: this.formPeople.formPeople.controls['name'].value,
+      id_no: this.formPeopleComponent.formPeople.controls['identification_no'].value,
+      id_type: this.formPeopleComponent.formPeople.controls['identification_type'].value,
+      name: this.formPeopleComponent.formPeople.controls['name'].value,
       customer_type: "PERSONAL",
-      address: this.formPeople.formPeople.controls['residence_full_address'].value,
-      mobile: this.formPeople.formPeople.controls['mobile'].value,
+      address: this.formPeopleComponent.formPeople.controls['residence_full_address'].value,
+      mobile: this.formPeopleComponent.formPeople.controls['mobile'].value,
       apeople: {}
     }
-    this.formPeople.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['birth_text'].value ))
-    this.formPeople.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_date_text'].value ))
-    this.formPeople.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeople.formPeople.controls['identification_expire_date_text'].value ))
-    console.log(this.formPeople.formPeople.value);
-    dataCreate.apeople = this.formPeople.formPeople.value;
+    this.formPeopleComponent.formPeople.controls['full_address'].setValue(this.formPeopleComponent.formPeople.controls.residence_full_address.value);
+    this.formPeopleComponent.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['birth_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_date_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_expire_date_text'].value ))
+    console.log(this.formPeopleComponent.formPeople.value);
+    dataCreate.apeople = this.formPeopleComponent.formPeople.value;
     delete dataCreate.apeople['birth_text'];
     delete dataCreate.apeople['identification_date_text'];
     delete dataCreate.apeople['identification_expire_date_text'];
     this.submitted = true;
-    // if(this.formPeople.formPeople.invalid) {
+    // if(this.formPeopleComponent.formPeople.invalid) {
     //   this.submitted = false;
     //   return;
     // }
@@ -103,7 +121,58 @@ export class CreateCustomerComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formOrganization.formOrganization.value)
+    if(this.id && this.id != undefined) {
+      this.onSubmitUpdate();
+    } else {
+      this.onSubmitCreate();
+    }
+  }
+
+  async onSubmitUpdate() {
+    let dataUpdate= {
+      created_by: this.currentUser.username,
+      id_no: this.formPeopleComponent.formPeople.controls['identification_no'].value,
+      id_type: this.formPeopleComponent.formPeople.controls['identification_type'].value,
+      name: this.formPeopleComponent.formPeople.controls['name'].value,
+      customer_type: "PERSONAL",
+      address: this.formPeopleComponent.formPeople.controls['residence_full_address'].value,
+      mobile: this.formPeopleComponent.formPeople.controls['mobile'].value,
+      people: {}
+    }
+    this.formPeopleComponent.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['birth_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_date_text'].value ))
+    this.formPeopleComponent.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formPeopleComponent.formPeople.controls['identification_expire_date_text'].value ))
+    console.log(this.formPeopleComponent.formPeople.value);
+    dataUpdate.people = this.formPeopleComponent.formPeople.value;
+
+    delete dataUpdate.people['birth_text'];
+    delete dataUpdate.people['identification_date_text'];
+    delete dataUpdate.people['identification_expire_date_text'];
+    delete dataUpdate.people['signature'];
+    
+
+
+    this.submitted = true;
+
+
+    console.log(dataUpdate)
+
+
+    if ((await this.alertService.showConfirm("Bạn có chắc chắn muốn cập nhật thông tin?")).value) {
+      this.sectionBlockUI.start();
+      this.taskService.patchUpdateCustomer(this.id, dataUpdate).subscribe(res => {
+        this.sectionBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(error);
+        return;
+      })
+    }
   }
 
   getData() {
@@ -114,6 +183,14 @@ export class CreateCustomerComponent implements OnInit {
     this.commonDataService.getProvinces().subscribe(res => {
       this.provinces = res.data;
     })
+
+    if(this.id && this.id != undefined) {
+      this.taskService.getDetailCustomer(this.id).subscribe(res => {
+        if (res.status && res.data) {
+          this.dataInput = res.data;
+        }
+      })
+    }    
   }
 
 }

@@ -106,6 +106,112 @@ export class TaskItemComponent implements OnInit {
       }
     })
   }
+
+  async onUpdateStatusV2(item, status) {
+    if (status == this.taskTelecomStatus.STATUS_REJECT || status == this.taskTelecomStatus.STATUS_CANCEL) {
+      let titleS;
+      if (status == this.taskTelecomStatus.STATUS_REJECT) {
+        titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
+      }
+      if (status == this.taskTelecomStatus.STATUS_CANCEL) {
+        titleS = 'Xác nhận hủy yêu cầu của đại lý?'
+      }
+      Swal.fire({
+        title: titleS,
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Gửi',
+        showLoaderOnConfirm: true,
+        preConfirm: (note) => {
+          if (!note || note == '') {
+            Swal.showValidationMessage(
+              "Vui lòng nhập nội dung"
+            )
+            return;
+          }
+          this.telecomService.updateTaskStatusV2(item.action, item.id, { status: status, note: note }).subscribe(res => {
+            if (!res.status) {
+              Swal.showValidationMessage(
+                res.message
+              )
+              // this.alertService.showError(res.message);
+              return;
+            }
+          }, error => {
+
+          });
+
+          const listPhone = this.data.msisdn;
+          const dataPushNotify = {
+            user_ids: [this.data.task.request_by],
+            message: `Yêu cầu ${this.actionText} ID ${this.data.task.id} bị từ chối: ${note}`,
+            title: `${this.actionText} số ${listPhone}`,
+            data: {
+              "type": this.data.task.action,
+              "status": status + "",
+              "message": `Yêu cầu ${this.actionText} ID ${this.data.task.id} bị từ chối: ${note}`,
+              "id": this.data.task.id + ""
+            }
+          }
+          console.log(dataPushNotify);
+          this.adminService.pushNotify(dataPushNotify).subscribe(res => {
+
+          });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.getData();
+          //this.updateStatus.emit({updated: true});
+          this.alertService.showSuccess('Thành công');
+        }
+      })
+    } else {
+      let confirmMessage = "";
+      if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+        confirmMessage = "Xác nhận đã thành công?"
+      }
+
+      if ((await this.alertService.showConfirm(confirmMessage)).value) {
+        this.telecomService.updateTaskStatusV2(item.action,item.id, { status: status }).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            return;
+          }
+          if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+            //this.updateStatus.emit({updated: true});
+          }
+          this.getData();
+          //this.updateStatus.emit({updated: true});
+          this.alertService.showSuccess(res.message);
+        }, error => {
+
+        })
+        if (status == this.taskTelecomStatus.STATUS_SUCCESS) {
+          const listPhone = this.data.msisdn;
+          const dataPushNotify = {
+            user_ids: [this.data.task.request_by],
+            title: `Yêu cầu ${this.actionText} ID ${this.data.task.id} đã thành công`,
+            message: `${this.actionText} số ${listPhone}`,
+            data: {
+              "type": this.data.task.action,
+              "status": status + "",
+              "message": `Yêu cầu ${this.actionText} ID ${this.data.task.id} số ${listPhone} thành công.`,
+              "id": this.data.task.id + ""
+            }
+          }
+          console.log(dataPushNotify);
+          this.adminService.pushNotify(dataPushNotify).subscribe(res => {
+
+          });
+        }
+      }
+    }
+  }
+
   /**
    * Cap nhat trang thai cua task
    * 
@@ -661,7 +767,7 @@ export class TaskItemComponent implements OnInit {
         });
         this.compressImages(images, zipFileName);
       }
-    } else if (this.data.task.action == this.listTaskAction.change_info.value) {
+    } else if (this.data.task.action == this.listTaskAction.change_sim.value) {
 
       for (const key in this.data?.msisdn?.listBase64NewSim) {
         let images = [];
@@ -800,7 +906,7 @@ export class TaskItemComponent implements OnInit {
   ngOnInit(): void {
     this.listCurrentAction = this.currentUser.actions;
     if (this.item) {
-      if (this.item.action == this.listTaskAction.change_info.value) {
+      if (this.item.action == this.listTaskAction.change_sim.value) {
         this.actionText = 'Cập nhật';
         this.titleDocumentImage = 'Ảnh phiếu thay đổi thông tin';
         this.titleModal = 'Đổi sim'
@@ -818,7 +924,7 @@ export class TaskItemComponent implements OnInit {
         for (const msi of this.data.msisdn.msisdns) {
           this.mnos.push(msi.mno);
         }
-        if (this.data.task.action == this.listTaskAction.change_info) {
+        if (this.data.task.action == this.listTaskAction.change_sim) {
           this.actionText = 'Cập nhật'
         }
       })
@@ -828,7 +934,7 @@ export class TaskItemComponent implements OnInit {
         for (const msi of this.data.msisdn.msisdns) {
           this.mnos.push(msi.mno);
         }
-        if (this.data.task.action == this.listTaskAction.change_info) {
+        if (this.data.task.action == this.listTaskAction.change_sim) {
           this.actionText = 'Cập nhật'
         }
         const detailObj = JSON.parse(this.data.task.detail);
