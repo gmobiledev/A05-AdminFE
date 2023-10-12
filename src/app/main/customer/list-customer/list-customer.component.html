@@ -9,7 +9,7 @@
             <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
           </div>
           <div class="card-body">
-            <form >
+            <form>
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -46,7 +46,11 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="button" class="btn btn-block btn-info" (click)="onSubmitSearch()">
+                    <button
+                      type="button"
+                      class="btn btn-block btn-info"
+                      (click)="onSubmitSearch()"
+                    >
                       Lọc kết quả
                     </button>
                   </div>
@@ -54,7 +58,11 @@
 
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="button" class="btn btn-success mr-2">
+                    <button
+                      type="button"
+                      class="btn btn-success mr-2"
+                      [routerLink]="['/customer/create/']"
+                    >
                       Thêm khách hàng
                     </button>
                   </div>
