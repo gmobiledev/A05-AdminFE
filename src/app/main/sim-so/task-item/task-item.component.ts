@@ -862,4 +862,51 @@ export class TaskItemComponent implements OnInit {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
+
+  onChangeCmndToCccd() {
+    let self = this
+    console.log("MyItem", this.item);
+    Swal.mixin({
+      input: 'text',
+      confirmButtonText: 'Next &rarr;',
+      showCancelButton: true,
+      progressSteps: ['1'],
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger ml-1'
+      }
+    })
+      .queue([
+        {
+          title: 'Số CCCD mới của khách hàng',
+          text: 'Nhập chính xác'
+        },
+      ])
+      .then(function (result) {
+        let body = {
+          "task_id": self.item.id,
+          "id_no": result["value"][0]
+        }
+        self.telecomService.convertCmndToCCCD(body).subscribe(res => {
+          console.log("res", res);
+          Swal.fire({
+            title: res.code,
+            html: res.message + " - Thoát ra và xem chi tiết",
+            customClass: { confirmButton: 'btn btn-primary' },
+            icon: "success"
+          });
+        }, err => {
+          console.log("err", err);
+          Swal.fire({
+            title: err,
+            html: err,
+            customClass: { confirmButton: 'btn btn-primary' },
+            icon: "error"
+          });
+        })
+
+      });
+  }
+
+
 }
