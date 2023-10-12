@@ -239,4 +239,8 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/save-note`, data);
   }
 
+  convertCmndToCCCD(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/2g-convert-cmnd-to-cccd`, data);
+  }
+
 }
