@@ -11,54 +11,24 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-6">
                   <div class="form-group">
                     <input type="text" name="mobile" class="form-control" placeholder="Nhập số điện thoại" [(ngModel)]="searchForm.mobile">
                   </div>
                 </div>                
-                <div class="col-md-2">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span></span></button>
+                    <input type="text" name="id_no" class="form-control" placeholder="Nhập số CMND/CCCD/HỘ CHIẾU" [(ngModel)]="searchForm.id_no">
+                  </div>
+                </div>                
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">Tìm kiếm <span></span></button>
                   </div>
                 </div>
               </div>
             </form>
-            <!-- <div class="table-responsive" *blockUI="'section-block'">
-            <table class="table table-striped text-nowrap" *ngIf="list">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Số</th>
-                    <th>Nhà mạng</th>
-                    <th>Trạng thái</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of list;index as i">
-                    <td>
-                      <input type="checkbox" (change)="onSubmitSearch($list, total)" >                    
-                    </td>
-                    <!<td>
-                      {{(searchSim.take)*(page-1)+(i +1)}}
-                    </td> -->
-            <!-- <td>{{ item?.name }}</td>
-                    <td>{{ item?.brand}}</td>
-                    <td>
-                    <div [innerHTML]="item.status | showStatusSim"></div> 
-                    </td>
-                    <td>
-                      <div>
-                        <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                            Xem chi tiết
-                        </a>
-                    </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> -->
-            <!-- </div>  -->
+            
             <table class="table" *blockUI="'section-block'">
               <thead>
                 <tr>
@@ -72,8 +42,6 @@
                   <th scope="col">Ngày cấp giấy tờ</th>
                   <th scope="col">Địa chỉ</th>
                   <th></th>
-                  <!-- <th></th> -->
-                  <!-- <th scope="col">Thao tác</th> -->
                 </tr>
               </thead>
               <tbody *ngIf="list">
@@ -96,15 +64,7 @@
                     (click)="onConfirmThanhToanNoCuoc(item, modalViewQr)"
                      class="btn btn-block btn-success btn-sm">Xác nhận thanh toán<span></span></button>
                   </td>
-                  <!-- <td>
-                    <div>
-                      <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem)">
-                        <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                        Xem chi tiết
-                      </a>
-                    </div>
-
-                  </td> -->
+                
                 </tr>
               </tbody>
             </table>
@@ -114,24 +74,7 @@
             <div class="row">
               
             </div>
-            <!-- <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
-              [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
-              (pageChange)="loadPage($event)">
-              <ng-template ngbPaginationPages let-page let-pages="pages">
-                <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
-                  <div class="mb-3 d-flex flex-nowrap px-2">
-                    <label id="paginationInputLabel" for="paginationInput"
-                      class="col-form-label me-2 ms-1">Trang</label>
-                    <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
-                      id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
-                      (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
-                      aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
-                    <span id="paginationDescription" class="col-form-label text-nowrap px-2">
-                      của {{pages.length}}</span>
-                  </div>
-                </li>
-              </ng-template>
-            </ngb-pagination> -->
+           
           </div>
         </div>
         <ng-template #modalItem let-modal>

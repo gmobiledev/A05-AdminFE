@@ -22,6 +22,7 @@ export class Client2gComponent implements OnInit {
   selectedAgent: any;
   public searchForm: any = {
     mobile: '',    
+    id_no: ''
   }
   
   currentUser: any;
