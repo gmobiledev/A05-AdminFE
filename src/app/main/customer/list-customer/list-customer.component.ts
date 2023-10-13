@@ -21,6 +21,7 @@ export class ListCustomerComponent implements OnInit {
   public selectedItem: any;
   public contentHeader: any;
   public data: any;
+  public organization: any;
 
   public list: any;
   public page: any;
@@ -112,6 +113,7 @@ export class ListCustomerComponent implements OnInit {
     this.taskService.getDetailCustomer(item.id).subscribe(res => {
       if (res.status && res.data) {
         this.data = res.data;
+        this.organization = res.data;
       }
       this.modalRef = this.modalService.open(modal, {
         centered: true,
