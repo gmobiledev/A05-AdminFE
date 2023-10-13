@@ -287,7 +287,11 @@
       </div>
       <div class="row mb-2">
         <a class="ml-2 btn btn-info" (click)="modalOpen(modalUpload)"
-          *ngIf=" checkAction('telecom-admin/task/upload-old-indetification-docs')">
+          *ngIf=" checkAction('telecom-admin/task/upload-old-indetification-docs') 
+          && (data.task.sub_action ==
+          listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+          data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value'])
+          ">
           <i data-feather="upload" class="text-white cursor-pointer"></i>
           Upload ảnh CMT cũ
         </a>
@@ -482,7 +486,11 @@
           </span>
         </a>
 
-        <button *ngIf="data.task.status==2 || data.task.status ==30" class="ml-2 btn btn-primary"  rippleEffect (click)="onChangeCmndToCccd()">Đổi CMND-CCCD</button>
+        <button *ngIf="(data.task.status==2 || data.task.status ==30)
+        && (data.task.action ==
+        listTaskAction['new_sim']['value'])
+        " 
+        class="ml-2 btn btn-primary"  rippleEffect (click)="onChangeCmndToCccd()">Đổi CMND-CCCD</button>
 
 
         <a *ngIf="data.task.status == 1" class="ml-2 btn btn-primary" (click)="sendCallback(item)">
@@ -523,7 +531,8 @@
     </div> -->
     <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
     checkAction('telecom-admin/task/:slug(\\d+)/'+data?.task?.action+'/update-status')
-    && !checkAction('telecom-admin/task/:slug(\\d+)/update-status')
+    && data.task.action !=
+    listTaskAction['new_sim']['value']
     ">
         <a class="ml-2 btn btn-success" (click)="onUpdateStatusV2(data.task, taskTelecomStatus.STATUS_SUCCESS)">
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
@@ -580,6 +589,10 @@
         checkAction('telecom-admin/task/:slug(\\d+)/update-status') &&
         (data?.task?.status == taskTelecomStatus.STATUS_PROCESSING ||
           data?.task?.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO)
+          &&
+        (
+          data.task.action == listTaskAction['change_user_info']['value'] ||
+          data.task.action == listTaskAction['new_sim']['value'])
       ">
       <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_REJECT)">
         <i data-feather="slash" class="text-white cursor-pointer"></i>
