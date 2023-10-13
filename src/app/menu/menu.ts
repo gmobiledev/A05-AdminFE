@@ -41,23 +41,7 @@ export const menu: CoreMenu[] = [
         translate: 'MENU.LIST',
         type: 'item',
         icon: 'user',
-        url: 'user/list'
-      },
-      {
-        id: 'transaction',
-        title: 'Giao dịch',
-        translate: 'MENU.TRANSACTION',
-        type: 'item',
-        icon: 'list',
-        url: 'transaction'
-      },
-      {
-        id: 'loan',
-        title: 'Khoản vay',
-        translate: 'MENU.LOANBANK',
-        type: 'item',
-        icon: 'file-text',
-        url: 'loan-bank'
+        url: 'customer/list'
       }
     ]
   },
@@ -277,7 +261,22 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'task/list'
       },
-
+      {
+        id: 'transaction',
+        title: 'Giao dịch',
+        translate: 'MENU.TRANSACTION',
+        type: 'item',
+        icon: 'list',
+        url: 'transaction'
+      },
+      {
+        id: 'transaction',
+        title: 'Tài khoản',
+        translate: '',
+        type: 'item',
+        icon: 'list',
+        url: 'user/list'
+      },
       {
         id: 'ekyc',
         title: 'Lô EKYC',

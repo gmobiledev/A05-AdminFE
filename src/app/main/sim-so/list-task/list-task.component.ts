@@ -107,6 +107,12 @@ export class ListTaskComponent implements OnInit {
         obj[key] = TaskTelecomStatus[key];
         return obj;
       }, {});
+      delete this.taskTelecomStatus['STATUS_APPROVED_1'];
+      delete this.taskTelecomStatus['STATUS_APPROVED_2'];
+      delete this.taskTelecomStatus['STATUS_APPROVED_3'];
+      delete this.taskTelecomStatus['STATUS_DVKHKD_REJECT'];
+      delete this.taskTelecomStatus['STATUS_PROCESS_TO_MNO'];
+      console.log(this.taskTelecomStatus);
       
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.cccd = params['cccd'] && params['cccd'] != undefined ? params['cccd'] : '';
