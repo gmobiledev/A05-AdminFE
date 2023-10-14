@@ -910,7 +910,12 @@ export class TaskItemComponent implements OnInit {
         this.actionText = 'Cập nhật';
         this.titleDocumentImage = 'Ảnh phiếu thay đổi thông tin';
         this.titleModal = 'Đổi sim'
-      } else {
+      } else if (this.item.action == this.listTaskAction.change_user_info.value) {
+        this.actionText = 'Cập nhật TTTB';
+        this.titleDocumentImage = 'Ảnh phiếu thay đổi thông tin';
+        this.titleModal = 'Cập nhật TTTB'
+      } else
+       {
         this.titleModal = 'Đấu nối sim mới';
       }
       this.getData(1);
