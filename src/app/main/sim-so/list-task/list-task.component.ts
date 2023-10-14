@@ -177,7 +177,7 @@ export class ListTaskComponent implements OnInit {
             && this.checkAction('telecom-admin/task/approve-2g-conversion'))
             || (
               (item.status == this.taskTelecomStatus.STATUS_NEW_ORDER || item.status == this.taskTelecomStatus.STATUS_PROCESSING) &&
-              this.checkAction('telecom-admin/task/:slug(\\d+)/update-status')
+              (this.checkAction('telecom-admin/task/:slug(\\d+)/update-status') || this.checkAction('telecom-admin/task/:slug(\\d+)/'+ item.action+ '/update-status'))
             )
           
           ) {
