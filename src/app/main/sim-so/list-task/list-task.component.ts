@@ -132,8 +132,8 @@ export class ListTaskComponent implements OnInit {
         this.contentHeader.headerTitle = 'Yêu cầu của đại lý';
         this.contentHeader.breadcrumb.links[1] = 'Yêu cầu của đại lý';
       }else if(this.searchForm.action && this.searchForm.action == this.listTaskAction.change_info.value) {
-        this.contentHeader.headerTitle = 'Yêu cầu đổi sim của đại lý';
-        this.contentHeader.breadcrumb.links[1] = 'Yêu cầu đổi sim của đại lý';
+        this.contentHeader.headerTitle = 'Yêu cầu cập nhật TTTB của đại lý';
+        this.contentHeader.breadcrumb.links[1] = 'Yêu cầu cập nhật TTTB của đại lý';
       } else if (this.searchForm.action && this.searchForm.action == this.listTaskAction.new_sim.value) {
         this.contentHeader.headerTitle = 'Yêu cầu đấu sim mới của đại lý';
         this.contentHeader.breadcrumb.links[1] = 'Yêu cầu đấu sim mới của đại lý';
