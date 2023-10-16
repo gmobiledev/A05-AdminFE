@@ -44,7 +44,7 @@ export class TaskTelecom {
         },
         change_info: {
             value: 'change_info',
-            label: 'Đổi sim'
+            label: 'Cập nhật TTTB'
         },
         change_sim: {
             value: 'change_sim',
