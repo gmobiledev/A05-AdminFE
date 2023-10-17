@@ -16,6 +16,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { CodeInputModule } from 'angular-code-input';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 const routes: Routes = [
@@ -54,7 +55,7 @@ const routes: Routes = [
     NgxMaskModule.forRoot(),
     BlockUIModule.forRoot(),
     NgApexchartsModule,
-   
+    PdfViewerModule,
     NgxDaterangepickerMd.forRoot()
   ],
   providers: []
