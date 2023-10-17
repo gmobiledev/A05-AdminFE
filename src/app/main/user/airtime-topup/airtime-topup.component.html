@@ -344,7 +344,7 @@
     >
       <div class="col-12">Ảnh yêu cầu</div>
       <div class="col-6" *ngFor="let item of listFiles.files_request">
-        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid" />
+        <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
       </div>
     </div>
     <div
@@ -353,7 +353,7 @@
     >
       <div class="col-12">Ảnh chuyển khoản</div>
       <div class="col-6" *ngFor="let item of listFiles.files_banking">
-        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid" />
+        <img *ngIf="item.ext == 'png'"  src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
       </div>
     </div>
     <div
@@ -362,7 +362,7 @@
     >
       <div class="col-12">Ảnh quyết định hoàn tiền</div>
       <div class="col-6" *ngFor="let item of listFiles.files_rollback">
-        <img src="data:image/png;base64,{{ item }}" alt="" class="img-fluid" />
+        <img *ngIf="item.ext == 'png'"  src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
       </div>
     </div>
 
