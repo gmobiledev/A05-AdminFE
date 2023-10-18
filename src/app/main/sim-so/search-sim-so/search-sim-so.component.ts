@@ -49,11 +49,11 @@ export class SearchSimSoComponent implements OnInit {
     this.itemBlockUI.start();
     this.telecomService.getDetailSim(this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
-      if (res.data) {
+      if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;
         this.item = res.data
         this.total = res.data.count;
-      } else {
+      } else if (!res.data || Object.keys(res.data).length === 0) {
         this.item = null
         this.showMessage = true;
       }
