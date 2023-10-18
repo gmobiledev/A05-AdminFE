@@ -29,7 +29,7 @@ export class SearchSimSoComponent implements OnInit {
     take: 10,
   }
 
-  @BlockUI('item-block') itemBlockUI: NgBlockUI;
+  @BlockUI('section-block') itemBlockUI: NgBlockUI;
 
   constructor(
     private telecomService: TelecomService,
@@ -46,8 +46,9 @@ export class SearchSimSoComponent implements OnInit {
   }
   onSubmitSearch() {
     console.log(this.searchSim);
-
+    this.itemBlockUI.start();
     this.telecomService.getDetailSim(this.searchSim).subscribe(res => {
+      this.itemBlockUI.stop();
       if (res.data) {
         this.showMessage = false;
         this.item = res.data
@@ -57,6 +58,9 @@ export class SearchSimSoComponent implements OnInit {
         this.showMessage = true;
       }
 
+    }, err => {
+      this.itemBlockUI.stop();
+      this.alertService.showMess(err);
     })
   }
   ngOnInit(): void {
@@ -92,7 +96,6 @@ export class SearchSimSoComponent implements OnInit {
 
   async modalOpen(modal, item) {
     if (item) {
-      this.itemBlockUI.start();
       this.selectedItem = item;
       this.modalRef = this.modalService.open(modal, {
         centered: true,
