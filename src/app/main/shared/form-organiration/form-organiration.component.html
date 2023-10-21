@@ -240,7 +240,7 @@
                     <label for="delegation_date" class="col-md-3 col-form-label">Ủy quyền ngày</label>
                     <div class="col-md-9">
                         <input class="form-control" type="text" formControlName="delegation_date"
-                            placeholder="01/02/2030" mask="00/00/0000" />
+                            placeholder="01/02/2030" mask="00/00/0000" [dropSpecialCharacters]="false" />
                         <div *ngIf="submitted && f.delegation_date.errors" class="invalid-feedback">
                             <div *ngIf="f.delegation_date.errors.required">Vui lòng nhập trường này</div>
                         </div>
