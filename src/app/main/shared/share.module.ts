@@ -9,6 +9,7 @@ import { OrganizationDocComponent } from './organization-doc/organization-doc.co
 import { Routes, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 const routes: Routes = [
@@ -33,6 +34,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgbModule,
     FormsModule,
+    NgxMaskModule.forRoot(),
+
   ],
   exports: [
     ViewFileContractComponent,
