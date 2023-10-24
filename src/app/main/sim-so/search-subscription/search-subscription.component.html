@@ -13,7 +13,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <input
-                      type="text"
+                      type="number"
                       name="keysearch"
                       [(ngModel)]="searchSim.id_no"
                       class="form-control"
@@ -33,7 +33,6 @@
                     />
                   </div>
                 </div>
-
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">
@@ -41,6 +40,12 @@
                     </button>
                   </div>
                 </div>
+
+              </div>
+              <div *ngIf="showMessage">
+                <h6 style="text-align: center">
+                  Vui lòng nhập CCCD\Tên thuê bao!
+                </h6>
               </div>
             </form>
 
@@ -102,11 +107,7 @@
                 </tbody>
               </table>
 
-              <div *ngIf="showMessage">
-                <h6 style="text-align: center">
-                  Không tìm thấy thông tin sim/số. Vui lòng nhập lại!
-                </h6>
-              </div>
+              
             </div>
           </div>
         </div>

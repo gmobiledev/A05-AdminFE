@@ -56,9 +56,11 @@ export class SearchSubscriptionComponent implements OnInit {
       }
       this.item = res.data.items
       this.totalItems = res.data.count
+      this.showMessage = false;
       // this.alertService.showSuccess(res.message);
     }, err => {
-      this.alertService.showMess(err);
+      // this.alertService.showMess(err);
+      this.showMessage = true;
     })
 
   }
