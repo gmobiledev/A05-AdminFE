@@ -49,7 +49,7 @@
               </div>
             </form>
 
-            <div class="table-responsive" *blockUI="'section-block'">
+            <div class="table-responsive" *ngIf="!showMessage">
               <div class="pull-left mb-2" *ngIf="item">
                 Tổng: <b>{{ totalItems }}</b>
               </div>
