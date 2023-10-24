@@ -27,6 +27,7 @@ import { ApproveConvert2gIdentificationComponent } from './approve-convert2g-ide
 import { ViewTaskOrganizationComponent } from './view-task-organization/view-task-organization.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ShipInfoComponent } from './ship-info/ship-info.component';
+import { SearchSubscriptionComponent } from './search-subscription/search-subscription.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchSimSoComponent
+  },
+  {
+    path: 'search-subscription',
+    component: SearchSubscriptionComponent
   },
   {
     path: 'action-logs',
@@ -83,7 +88,8 @@ const routes: Routes = [
     ApproveConvert2gItemComponent,
     ApproveConvert2gIdentificationComponent,
     ViewTaskOrganizationComponent,
-    ShipInfoComponent
+    ShipInfoComponent,
+    SearchSubscriptionComponent
   ],
   imports: [
     CommonModule, 

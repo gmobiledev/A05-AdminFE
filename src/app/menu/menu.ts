@@ -52,7 +52,7 @@ export const menu: CoreMenu[] = [
     translate: '',
     icon: 'package',
     children: [
-      
+
       {
         id: 'users',
         title: 'Danh sách merchant',
@@ -146,7 +146,7 @@ export const menu: CoreMenu[] = [
     icon: 'package',
     children: [
       {
-        id: 'agents',
+        id: 'search',
         title: 'Tìm Sim Số',
         translate: '',
         type: 'item',
@@ -177,6 +177,14 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'sim-so/client2g'
       },
+      {
+        id: 'search-subscription',
+        title: 'Tìm Thuê bao',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/search-subscription'
+      }
 
     ]
   },
