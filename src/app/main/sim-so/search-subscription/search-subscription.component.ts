@@ -22,11 +22,11 @@ export class SearchSubscriptionComponent implements OnInit {
   public taskTelecomStatus;
   public modalRef: any;
   productListAll: any;
+  public totalItems: number;
 
   public searchSim: any = {
-    keysearch: '',
-    category_id: 2,
-    take: 10,
+    id_no: '',
+    name: ''
   }
 
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
@@ -45,23 +45,22 @@ export class SearchSubscriptionComponent implements OnInit {
     }, {});
   }
   onSubmitSearch() {
-    console.log(this.searchSim);
-    this.itemBlockUI.start();
-    this.telecomService.getDetailSim(this.searchSim).subscribe(res => {
-      this.itemBlockUI.stop();
-      if (res.data && Object.keys(res.data).length > 0) {
-        this.showMessage = false;
-        this.item = res.data
-        this.total = res.data.count;
-      } else if (!res.data || Object.keys(res.data).length === 0) {
-        this.item = null
-        this.showMessage = true;
+    // this.itemBlockUI.start();
+    this.telecomService.searchSubscription({
+      id_no: this.searchSim.id_no,
+      name: this.searchSim.name
+    }).subscribe(res => {
+      if (!res.status) {
+        this.alertService.showMess(res.message);
+        return;
       }
-
+      this.item = res.data
+      this.totalItems = res.data.count
+      // this.alertService.showSuccess(res.message);
     }, err => {
-      this.itemBlockUI.stop();
       this.alertService.showMess(err);
     })
+
   }
   ngOnInit(): void {
     this.getData();

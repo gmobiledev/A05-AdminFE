@@ -1,93 +1,111 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <div class="row" id="table-striped">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Tra cứu thông tin thuê bao</h4>
-            </div>
-  
-            <div class="card-body">
-              <form (ngSubmit)="onSubmitSearch()">
-                <div class="row">
-                  <div class="col-md-10">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        name="keysearch"
-                        [(ngModel)]="searchSim.keysearch"
-                        class="form-control"
-                        placeholder="Tìm kiếm"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-block btn-info">
-                        Lọc kết quả <span [data-feather]="'search'"></span>
-                      </button>
-                    </div>
+  <div class="content-body">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Tra cứu thông tin thuê bao</h4>
+          </div>
+
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="keysearch"
+                      [(ngModel)]="searchSim.id_no"
+                      class="form-control"
+                      placeholder="Nhập số CCCD"
+                    />
                   </div>
                 </div>
-              </form>
-  
-              <div class="table-responsive" *blockUI="'section-block'">
-                <table class="table table-striped text-nowrap" *ngIf="item">
-                  <thead>
-                    <tr>
-                      <th>Số / Serial SIM</th>
-                      <th>Nhà mạng</th>
-                      <th>Trạng thái</th>
-                      <th>Thao tác</th>
-                    </tr>
-                  </thead>
-  
-                  <tbody>
-                    <tr>
-                      <td>{{ item?.name }}</td>
-                      <td>{{ item?.brand }}</td>
-                      <td>
-                        <div [innerHTML]="item.status | showStatusSim"></div>
-                      </td>
-  
-                      <td>
-                        <a (click)="modalOpen(modalTransWh, item)">
-                          <i
-                            data-feather="eye"
-                            class="text-primary cursor-pointer"
-                          ></i>
-                        </a>
-  
-                        <a
-                          class="ml-2"
-                          (click)="onSubmitLock(item.id, 1, item?.name)"
-                          *ngIf="item.status"
-                        >
-                          <i
-                            data-feather="lock"
-                            class="text-primary cursor-pointer"
-                          ></i>
-                        </a>
-                        <a
-                          class="ml-2"
-                          (click)="onSubmitLock(item.id, 2, item?.name)"
-                          *ngIf="!item.status"
-                        >
-                          <i
-                            data-feather="unlock"
-                            class="text-primary cursor-pointer"
-                          ></i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-  
-                <div *ngIf="showMessage">
-                  <h6 style="text-align: center">
-                    Không tìm thấy thông tin sim/số. Vui lòng nhập lại!
-                  </h6>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="keysearch"
+                      [(ngModel)]="searchSim.name"
+                      class="form-control"
+                      placeholder="Nhập tên"
+                    />
+                  </div>
                 </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả <span [data-feather]="'search'"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="table-responsive" *blockUI="'section-block'">
+              <div class="pull-left mb-2" *ngIf="item">
+                Tổng: <b>{{ totalItems }}</b>
+              </div>
+              <table
+                class="table table-striped text-nowrap"
+                *ngFor="let item of item"
+              >
+                <thead>
+                  <tr>
+                    <th>Số thuê bao</th>
+                    <th>Nhà mạng</th>
+                    <th>Gói cước</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>{{ item?.msisdn }}</td>
+                    <td>{{ item?.mno }}</td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatusSim"></div>
+                    </td>
+
+                    <td>
+                      <a (click)="modalOpen(modalTransWh, item)">
+                        <i
+                          data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+
+                      <a
+                        class="ml-2"
+                        (click)="onSubmitLock(item.id, 1, item?.name)"
+                        *ngIf="item.status"
+                      >
+                        <i
+                          data-feather="lock"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+                      <a
+                        class="ml-2"
+                        (click)="onSubmitLock(item.id, 2, item?.name)"
+                        *ngIf="!item.status"
+                      >
+                        <i
+                          data-feather="unlock"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div *ngIf="showMessage">
+                <h6 style="text-align: center">
+                  Không tìm thấy thông tin sim/số. Vui lòng nhập lại!
+                </h6>
               </div>
             </div>
           </div>
@@ -95,39 +113,41 @@
       </div>
     </div>
   </div>
-  
-  <ng-template #modalTransWh let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Chi tiết thông tin Sim/Số</h5>
-      <button
-        type="button"
-        class="close"
-        (click)="modalClose()"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" tabindex="0" ngbAutofocus>
-      <div>
-        <!-- <h4>Thông tin Sim/Số</h4> -->
-        <div class="column">
-          <div class="col-md-6">MÃ LÔ: {{ item?.batch_id }}</div>
-          <div class="col-md-6">TÊN LÔ: {{ item?.batch?.title }}</div>
-          <div class="col-md-6">KHO: {{ item?.sell_channels[0]?.channel.name}}</div>
+</div>
+
+<ng-template #modalTransWh let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Chi tiết thông tin Sim/Số</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div>
+      <!-- <h4>Thông tin Sim/Số</h4> -->
+      <div class="column">
+        <div class="col-md-6">MÃ LÔ: {{ item?.batch_id }}</div>
+        <div class="col-md-6">TÊN LÔ: {{ item?.batch?.title }}</div>
+        <div class="col-md-6">
+          KHO: {{ item?.sell_channels[0]?.channel.name }}
         </div>
       </div>
     </div>
-  
-    <div class="modal-footer">
-      <button
-        (click)="modalClose()"
-        type="submit"
-        class="btn btn-primary"
-        rippleEffect
-      >
-        Đóng
-      </button>
-    </div>
-  </ng-template>
-  
+  </div>
+
+  <div class="modal-footer">
+    <button
+      (click)="modalClose()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      Đóng
+    </button>
+  </div>
+</ng-template>
