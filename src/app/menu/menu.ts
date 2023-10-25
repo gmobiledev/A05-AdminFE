@@ -30,27 +30,15 @@ export const menu: CoreMenu[] = [
   // Apps & Pages
   {
     id: 'users',
-    type: 'section',
-    title: 'Khách hàng',
-    translate: 'MENU.APPS.CUSTOMER.SECTION',
-    icon: 'package',
-    children: [
-      {
-        id: 'users',
-        title: 'Danh sách',
-        translate: 'MENU.LIST',
-        type: 'item',
-        icon: 'user',
-        url: 'customer/list'
-      }
-    ]
-  },
-  {
-    id: 'users',
-    type: 'section',
     title: 'Merchant',
     translate: '',
+    type: 'collapsible',
     icon: 'package',
+    badge: {
+      title: '4',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
     children: [
 
       {
@@ -98,9 +86,31 @@ export const menu: CoreMenu[] = [
   {
     id: 'users',
     type: 'section',
+    title: 'Khách hàng',
+    translate: 'MENU.APPS.CUSTOMER.SECTION',
+    icon: 'package',
+    children: [
+      {
+        id: 'users',
+        title: 'Danh sách',
+        translate: 'MENU.LIST',
+        type: 'item',
+        icon: 'user',
+        url: 'customer/list'
+      }
+    ]
+  },
+  {
+    id: 'users',
     title: 'Mua sim số',
     translate: '',
+    type: 'collapsible',
     icon: 'package',
+    badge: {
+      title: '4',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
     children: [
       {
         id: 'users',
@@ -138,6 +148,7 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+
   {
     id: 'users',
     type: 'section',
@@ -200,12 +211,18 @@ export const menu: CoreMenu[] = [
 
     ]
   },
+
   {
     id: 'users',
-    type: 'section',
     title: 'Gtalk',
     translate: '',
+    type: 'collapsible',
     icon: 'package',
+    badge: {
+      title: '4',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
     children: [
       {
         id: 'g-task',
@@ -241,12 +258,18 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+
   {
     id: 'users',
-    type: 'section',
     title: 'Khác',
-    translate: 'MENU.OTHERS.SECTION',
+    translate: '',
+    type: 'collapsible',
     icon: 'package',
+    badge: {
+      title: '6',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
     children: [
 
       {
@@ -307,6 +330,8 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+
+
   {
     id: 'users',
     type: 'section',
