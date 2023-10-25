@@ -56,26 +56,20 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       this.formPeople.controls.gender.setValue(this.dataInput.people.gender)
 
 
-      if(this.dataInput.people.birth !== null && this.dataInput.people.birth !== '') {
-        let birth_tex = new Date(this.dataInput.people.birth * 1000);
-        const birth = birth_tex.getDate() + '/' + (birth_tex.getMonth() + 1) + '/' + birth_tex.getFullYear();
-        this.formPeople.controls.birth_text.setValue(birth)
+      if (this.dataInput.people.birth !== null && this.dataInput.people.birth !== '') {
+        this.formPeople.controls.birth_text.setValue(this.commonService.formatDateFromTimestamp(this.dataInput.people.birth))
       }
 
-      if(this.dataInput.people.identification_date !== null && this.dataInput.people.identification_date !== '') {
-        let identification_date_text = new Date(this.dataInput.people.identification_date * 1000);
-        const identificationdatetext = identification_date_text.getDate() + '/' + (identification_date_text.getMonth() + 1) + '/' + identification_date_text.getFullYear();
-        this.formPeople.controls.identification_date_text.setValue(identificationdatetext)
+      if (this.dataInput.people.identification_date !== null && this.dataInput.people.identification_date !== '') {
+        this.formPeople.controls.identification_date_text.setValue(this.commonService.formatDateFromTimestamp(this.dataInput.people.identification_date))
       }
 
-      if(this.dataInput.people.identification_expire_date !== null && this.dataInput.people.identification_expire_date !== '') {
-        let identification_expire_date = new Date(this.dataInput.people.identification_expire_date * 1000);
-        const identificationexpiredate = identification_expire_date.getDate() + '/' + (identification_expire_date.getMonth() + 1) + '/' + identification_expire_date.getFullYear();
-        this.formPeople.controls.identification_expire_date_text.setValue(identificationexpiredate)
+      if (this.dataInput.people.identification_expire_date !== null && this.dataInput.people.identification_expire_date !== '') {
+        this.formPeople.controls.identification_expire_date_text.setValue(this.commonService.formatDateFromTimestamp(this.dataInput.people.identification_expire_date))
       }
       
       this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
-      // this.formPeople.controls.residence_address.setValue(this.dataInput.address)
+      this.formPeople.controls.residence_address.setValue(this.dataInput.address)
       this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
       this.formPeople.controls.country.setValue(this.dataInput.people.country)
 
