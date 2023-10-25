@@ -243,4 +243,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/2g-convert-cmnd-to-cccd`, data);
   }
 
+  searchSubscription(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/lookup-by-id-no`, data);
+  }
+
+
+
 }

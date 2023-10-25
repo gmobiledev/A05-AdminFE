@@ -52,7 +52,7 @@ export const menu: CoreMenu[] = [
     translate: '',
     icon: 'package',
     children: [
-      
+
       {
         id: 'users',
         title: 'Danh sách merchant',
@@ -141,18 +141,37 @@ export const menu: CoreMenu[] = [
   {
     id: 'users',
     type: 'section',
-    title: 'Kho số',
+    title: 'CSKH',
     translate: '',
     icon: 'package',
     children: [
       {
-        id: 'agents',
+        id: 'search-subscription',
+        title: 'Tìm Thuê bao',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search-subscription'
+      },
+      {
+        id: 'search',
         title: 'Tìm Sim Số',
         translate: '',
         type: 'item',
-        icon: 'user',
+        icon: 'search',
         url: 'sim-so/search'
       },
+
+    ]
+  },
+  {
+    id: 'users',
+    type: 'section',
+    title: 'Kho số',
+    translate: '',
+    icon: 'package',
+    children: [
+
       {
         id: 'batch-sim',
         title: 'DS lô sim số',
@@ -177,6 +196,7 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'sim-so/client2g'
       },
+
 
     ]
   },
