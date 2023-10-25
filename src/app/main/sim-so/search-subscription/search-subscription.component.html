@@ -13,7 +13,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <input
-                      type="number"
+                      type="text"
                       name="keysearch"
                       [(ngModel)]="searchSim.id_no"
                       class="form-control"
@@ -49,29 +49,30 @@
               </div>
             </form>
 
-            <div class="table-responsive" *ngIf="!showMessage">
-              <div class="pull-left mb-2" *ngIf="item">
+            <div class="table-responsive" *ngIf="item">
+              <div class="pull-left mb-2" *ngIf="!showMessage">
                 Tổng: <b>{{ totalItems }}</b>
               </div>
               <table
                 class="table table-striped text-nowrap"
-                *ngFor="let item of item"
-              >
+                *ngIf="!showMessage">
                 <thead>
                   <tr>
                     <th>Số thuê bao</th>
                     <th>Nhà mạng</th>
+                    <th>Họ tên</th>
                     <th>Gói cước</th>
                     <th>Trạng thái</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
+                  <tr *ngFor="let item of item">
                     <td>{{ item?.msisdn }}</td>
                     <td>{{ item?.mno }}</td>
+                    <td>{{ item?.people.name }}</td>
                     <td>
-                      <div [innerHTML]="item.status | showStatusSim"></div>
+                      <div [innerHTML]="item.status"></div>
                     </td>
 
                     <td>
@@ -82,7 +83,7 @@
                         ></i>
                       </a>
 
-                      <a
+                      <!-- <a
                         class="ml-2"
                         (click)="onSubmitLock(item.id, 1, item?.name)"
                         *ngIf="item.status"
@@ -101,7 +102,8 @@
                           data-feather="unlock"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </a>
+                      </a> -->
+
                     </td>
                   </tr>
                 </tbody>
