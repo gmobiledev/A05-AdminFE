@@ -147,7 +147,7 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: 'search-subscription',
-        title: 'Tìm Thuê bao',
+        title: 'Tra cứu GTTT',
         translate: '',
         type: 'item',
         icon: 'search',
@@ -161,7 +161,14 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/search'
       },
-
+      {
+        id: 'client2g',
+        title: 'Tra cứu TTTB 2G',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'sim-so/client2g'
+      }
     ]
   },
   {
@@ -188,14 +195,7 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'inventory/channel'
       },
-      {
-        id: 'client2g',
-        title: 'Khách hàng 2G',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'sim-so/client2g'
-      },
+     
 
 
     ]
