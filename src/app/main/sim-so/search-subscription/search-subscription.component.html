@@ -72,38 +72,11 @@
                     <td>{{ item?.mno }}</td>
                     <td>{{ item?.people.name }}</td>
                     <td>
-                      <div [innerHTML]="item.status"></div>
+                      <!-- <div [innerHTML]="item?.status | showStatusSim"></div> -->
                     </td>
 
                     <td>
-                      <a (click)="modalOpen(modalTransWh, item)">
-                        <i
-                          data-feather="eye"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a>
-
-                      <!-- <a
-                        class="ml-2"
-                        (click)="onSubmitLock(item.id, 1, item?.name)"
-                        *ngIf="item.status"
-                      >
-                        <i
-                          data-feather="lock"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a>
-                      <a
-                        class="ml-2"
-                        (click)="onSubmitLock(item.id, 2, item?.name)"
-                        *ngIf="!item.status"
-                      >
-                        <i
-                          data-feather="unlock"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a> -->
-
+                      <div [innerHTML]=" item?.state | showStatusSim"></div>
                     </td>
                   </tr>
                 </tbody>
