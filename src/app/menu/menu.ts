@@ -315,7 +315,7 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: 'search-subscription',
-        title: 'Tra cứu GTTT',
+        title: 'Tra cứu TTTB',
         translate: '',
         type: 'item',
         icon: 'search',
