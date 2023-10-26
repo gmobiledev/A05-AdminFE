@@ -167,7 +167,7 @@
 
 <ng-template #modalDetail let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Thông tin thuê bao</h5>
+    <h5 class="modal-title" id="myModalLabel160">Thông tin khách hàng</h5>
     <button
       type="button"
       class="close"
@@ -179,7 +179,84 @@
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <div class="row mb-2">
+      <div class="col-md-12"  *ngIf="data?.customer_type == 'ORGANIZATION'">
+        <h5>Thông tin tổ chức</h5>
+      </div>
+      <div
+        class="col-md-6 col-sm-12 mb-1"
+        *ngIf="data?.customer_type == 'ORGANIZATION'"
+      >
+        <h6>Tên tổ chức:</h6>
+        <a
+          placement="right"
+          ngbTooltip="'Bấm để copy'"
+          (click)="copyTextClipboard(data?.name)"
+        >
+          <span class="text-info">{{ data?.name }}</span></a
+        >
+      </div>
 
+      <div
+        class="col-md-6 col-sm-12 mb-1"
+        *ngIf="data?.customer_type == 'ORGANIZATION'"
+      >
+        <span
+          ><u>Mã số thuế</u>:
+          <a
+            placement="right"
+            ngbTooltip="'Bấm để copy'"
+            (click)="copyTextClipboard(organization?.id_no)"
+          >
+            <span class="text-info">{{ organization?.id_no }}</span>
+          </a></span
+        >
+      </div>
+
+      <div
+        class="col-md-6 col-sm-12 mb-1"
+        *ngIf="data?.customer_type == 'ORGANIZATION'"
+      >
+        <h6>Địa chỉ tổ chức:</h6>
+        <a
+          placement="right"
+          ngbTooltip="'Bấm để copy'"
+          (click)="copyTextClipboard(data?.address)"
+        >
+          <span class="text-info">{{ data?.address }}</span></a
+        >
+      </div>
+
+      <div
+        class="col-md-6 col-sm-12 mb-1"
+        *ngIf="data?.customer_type == 'ORGANIZATION'"
+      >
+        <h6>SĐT liên hệ:</h6>
+        <a
+          placement="right"
+          ngbTooltip="'Bấm để copy'"
+          (click)="copyTextClipboard(data?.organizationta?.mobile)"
+        >
+          <span class="text-info">{{ data?.organizationta?.mobile }}</span></a
+        >
+      </div>
+
+      <div
+        class="col-md-6 col-sm-12 mb-1"
+        *ngIf="data?.customer_type == 'ORGANIZATION'"
+      >
+        <h6>Email liên hệ:</h6>
+        <a
+          placement="right"
+          ngbTooltip="'Bấm để copy'"
+          (click)="copyTextClipboard(data?.organizationta?.email)"
+        >
+          <span class="text-info">{{ data?.organizationta?.email }}</span></a
+        >
+      </div>
+
+      <div class="col-md-12"  *ngIf="data?.customer_type == 'ORGANIZATION'">
+        <h5>Thông người đại diện</h5>
+      </div>
       <div class="col-md-6 col-sm-12 mb-1">
         <span
           ><u>Loại giấy tờ</u>:
@@ -279,65 +356,6 @@
           </a>
         </span>
       </div>
-
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
-        <h6>Tên công ty:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          (click)="copyTextClipboard(data?.name)"
-        >
-          <span class="text-info">{{ data?.name }}</span></a
-        >
-      </div>
-
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
-        <span
-          ><u>Mã số thuế</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            (click)="copyTextClipboard(organization?.id_no)"
-          >
-            <span class="text-info">{{ organization?.id_no }}</span>
-          </a></span
-        >
-      </div>
-
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
-        <h6>Địa chỉ công ty:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          (click)="copyTextClipboard(data?.address)"
-        >
-          <span class="text-info">{{ data?.address }}</span></a
-        >
-      </div>
-
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
-        <h6>Email liên hệ:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          (click)="copyTextClipboard(organization?.tax_no)"
-        >
-          <span class="text-info">{{ daorganizationta?.tax_no }}</span></a
-        >
-      </div>
-
 
       <div class="col-md-12 col-sm-12 mt-1">
         <h6>Địa chỉ thường trú:</h6>

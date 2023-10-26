@@ -149,45 +149,19 @@ export const menu: CoreMenu[] = [
     ]
   },
 
+
+
   {
     id: 'users',
-    type: 'section',
-    title: 'CSKH',
-    translate: '',
-    icon: 'package',
-    children: [
-      {
-        id: 'search-subscription',
-        title: 'Tra cứu GTTT',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/search-subscription'
-      },
-      {
-        id: 'search',
-        title: 'Tìm Sim Số',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/search'
-      },
-      {
-        id: 'client2g',
-        title: 'Tra cứu TTTB 2G',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'sim-so/client2g'
-      }
-    ]
-  },
-  {
-    id: 'users',
-    type: 'section',
     title: 'Kho số',
     translate: '',
+    type: 'collapsible',
     icon: 'package',
+    badge: {
+      title: '3',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
     children: [
 
       {
@@ -211,6 +185,7 @@ export const menu: CoreMenu[] = [
 
     ]
   },
+
 
   {
     id: 'users',
@@ -328,6 +303,40 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'people/list-ekyc-batch'
       },
+    ]
+  },
+
+  {
+    id: 'users',
+    type: 'section',
+    title: 'CSKH',
+    translate: '',
+    icon: 'package',
+    children: [
+      {
+        id: 'search-subscription',
+        title: 'Tra cứu GTTT',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search-subscription'
+      },
+      {
+        id: 'search',
+        title: 'Tìm Sim Số',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search'
+      },
+      {
+        id: 'client2g',
+        title: 'Tra cứu TTTB 2G',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'sim-so/client2g'
+      }
     ]
   },
 
