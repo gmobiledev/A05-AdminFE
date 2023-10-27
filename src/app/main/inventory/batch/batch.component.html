@@ -41,7 +41,7 @@
                                 Tổng: <b>{{totalItems}}</b>
                             </div>
                             <div class="pull-right">
-                                <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Thêm
+                                <button type="button" (click)="modalOpen(modalUploadAccount)" class="btn btn-success mr-2">Thêm
                                     lô</button>
 
                             </div>
@@ -158,3 +158,47 @@
     </div>
 
 </ng-template>
+
+<ng-template #modalUploadAccount let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Tải lên dữ liệu lô tài khoản đại lý</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" >
+      <div class="form-group" *ngIf="isAdmin">
+        <label for="">Admin id</label>
+        <input type="text" class="form-control" [(ngModel)]="adminId">
+      </div>
+      <div class="form-group" *ngIf="isAdmin">
+        <label for="">Ref code</label>
+        <input type="text" class="form-control" [(ngModel)]="refCode">
+      </div>
+      <div class="form-group">
+        <i class="fa fa-upload" aria-hidden="true"></i>
+        <input type="file" (change)="onSelectFileAccount($event)" />
+        <label>Tải lên file excel</label>
+  
+        <a href="/assets/data_upload_account.xls" class="ml-2">File mẫu tại đây</a>
+      </div>
+  
+      <div class="form-group">
+        <label for="">Kênh bán</label>
+        <select [(ngModel)]="channelId" id="" class="form-control">
+          <option [value]="item.id" *ngFor="let item of listSellChannel">
+            {{ item.code }}
+          </option>
+        </select>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="onSubmitUploadFileAccount()" type="submit" class="btn btn-primary" rippleEffect>
+        <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true"
+          *ngIf="submittedUpload"></span>
+        Submit
+      </button>
+    </div>
+  
+  </ng-template>
