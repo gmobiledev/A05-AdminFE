@@ -12,6 +12,7 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import dayjs from 'dayjs';
 import { GtalkService } from 'app/auth/service/gtalk.service';
+import { InventoryService } from 'app/auth/service/inventory.service';
 
 @Component({
   selector: 'app-list-batch-sim',
@@ -67,7 +68,13 @@ export class ListBatchSimComponent implements OnInit {
     array_status: [],
     page_size: 20,
     date_range: '',
-    telco: ''
+    telco: '',
+
+    // channel_id: 1 ,
+    // category_id: 3,
+    // take: 0,
+    // skip: 20
+
   }
   dateRange: any;
 
@@ -90,7 +97,9 @@ export class ListBatchSimComponent implements OnInit {
     private adminService: AdminService,
     private gtalkService: GtalkService,
     private authenticaionService: AuthenticationService,
-    private alertService: SweetAlertService
+    private alertService: SweetAlertService,  
+      private inventoryService: InventoryService,
+
   ) {
     this.dateRange = null;
     this.activeRouted.queryParams.subscribe(params => {
@@ -109,8 +118,8 @@ export class ListBatchSimComponent implements OnInit {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
       }
 
-      this.contentHeader.headerTitle = 'Đơn & Topup';
-      this.contentHeader.breadcrumb.links[1] = 'Đơn & Topup';
+      this.contentHeader.headerTitle = 'Danh sách số';
+      this.contentHeader.breadcrumb.links[1] = 'Danh sách số';
 
       this.getData();
     })
@@ -258,7 +267,7 @@ export class ListBatchSimComponent implements OnInit {
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
-    this.gtalkService.getAllMsisdn(this.searchForm).subscribe(res => {
+    this.inventoryService.getAllSim(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.totalItems = res.data.count;
     });

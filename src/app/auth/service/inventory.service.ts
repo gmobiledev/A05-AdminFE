@@ -30,5 +30,10 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/channel`, { params: params });
   }
 
+  
+  getAllSim(params = null, inventoryType="") {
+    return this._http.get<any>(`${environment.apiUrl}/admin/inventory/product`, { params: params });
+  }
+
 
 }

@@ -65,10 +65,7 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Số thuê bao</th>
-                                        <th>Gói cước</th>
-                                        <th>Số tiền</th>
-                                        <th>Merchant</th>
-                                        <th>TaskID</th>
+                                        <th>Nhà mạng</th>
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
@@ -80,25 +77,23 @@
                                         </td>
 
                                         <td>
-                                            {{item.msisdn}}
+                                            {{item.name}}
                                         </td>
                                         <td>
-                                            {{item.package}}
+                                            {{item.brand}}
                                         </td>
-                                        <td>{{item.amount | number }}</td>
-                                        <td>{{item.merchant_id}}</td>
-                                        <td>{{item.task_id}}</td>
+                                       
                                         <td>
-                                            <div [innerHTML]="item.state | showStatusSim"></div>        
+                                            <div [innerHTML]="item.status | showStatusSim"></div>        
                                         </td>
                                         <td>
-                                            <div>
+                                            <!-- <div>
                                                 <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                                                     <i data-feather="arrow-right-circle"
                                                         class="text-white cursor-pointer"></i>
                                                     Xem chi tiết
                                                 </a>
-                                            </div>
+                                            </div> -->
 
                                         </td>
                                     </tr>
