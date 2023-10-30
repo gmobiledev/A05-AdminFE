@@ -19,6 +19,7 @@ export class BatchComponent implements OnInit {
   @Input() inventoryType: string;
   public contentHeader: any;
   public list: any;
+  public listChannel: any;
   public totalItems: number;
   public page: number = 1;
   public pageSize: number;
@@ -166,19 +167,9 @@ export class BatchComponent implements OnInit {
   }
 
   async onSubmitUploadLo() {
-    // if (!this.filesData || !this.title) {
-    //   this.alertService.showError("Vui lòng nhập đủ dữ liệu Lô");
-    // }
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
-      this.submittedUpload = true;
-      // const formData = new FormData();
-      // formData.append("files", this.filesData);
-      // formData.append("title", this.title);
-      // formData.append("channel_id", this.channel_id ? this.channel_id : 0);
-      // formData.append("quantility", this.quantility ? this.quantility : 0);
-      // formData.append("note", this.note ? this.note : null);
 
-    
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true; 
       this.inventoryService.uploadBatchSim(this.dataLo).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
@@ -278,6 +269,16 @@ export class BatchComponent implements OnInit {
     this.isCreate = true;
   }
 
+  async onListChannel(){
+    this.inventoryService.findChannelAll(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.listChannel = res.data.items;
+      
+    }, error => {
+      this.sectionBlockUI.stop();
+    })
+  }
+
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     if (this.currentUser && this.currentUser.roles) {
@@ -296,6 +297,9 @@ export class BatchComponent implements OnInit {
       console.log("ERRRR");
       console.log(error);
     })
+
+    this.onListChannel();
+
   }
 
 
