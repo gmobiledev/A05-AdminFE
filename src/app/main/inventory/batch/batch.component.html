@@ -225,9 +225,7 @@
 
 <ng-template #modalUploadAccount let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">
-      Tải lên dữ liệu lô tài khoản đại lý
-    </h5>
+    <h5 class="modal-title" id="myModalLabel160">Thêm Lô</h5>
     <button
       type="button"
       class="close"
@@ -239,13 +237,44 @@
   </div>
   <div class="modal-body" tabindex="0">
     <div class="form-group" *ngIf="isAdmin">
-      <label for="">Admin id</label>
-      <input type="text" class="form-control" [(ngModel)]="adminId" />
+      <label for="">Tên lô</label>
+      <input type="text" class="form-control" [(ngModel)]="title" />
     </div>
+
+    <div class="form-group">
+      <label>Nhập số lượng</label>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="100"
+        mask="separator"
+        thousandSeparator=","
+        [(ngModel)]="quantility"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Id kênh bán</label>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="1"
+        mask="separator"
+        thousandSeparator=","
+        [(ngModel)]="channel_id"
+      />
+    </div>
+
     <div class="form-group" *ngIf="isAdmin">
-      <label for="">Ref code</label>
-      <input type="text" class="form-control" [(ngModel)]="refCode" />
+      <label for="">Ghi chú</label>
+      <input type="text" class="form-control" [(ngModel)]="note" />
     </div>
+
+    <!-- <div class="form-group" *ngIf="isAdmin">
+      <label for="">Số lượng</label>
+      <input type="text" class="form-control" [(ngModel)]="refCode" />
+    </div> -->
+
     <div class="form-group">
       <i class="fa fa-upload" aria-hidden="true"></i>
       <input type="file" (change)="onSelectFileAccount($event)" />
@@ -256,18 +285,18 @@
       >
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="">Kênh bán</label>
       <select [(ngModel)]="channelId" id="" class="form-control">
         <option [value]="item.id" *ngFor="let item of listSellChannel">
           {{ item.code }}
         </option>
       </select>
-    </div>
+    </div> -->
   </div>
   <div class="modal-footer">
     <button
-      (click)="onSubmitUploadFileAccount()"
+      (click)="onSubmitUploadLo()"
       type="submit"
       class="btn btn-primary"
       rippleEffect

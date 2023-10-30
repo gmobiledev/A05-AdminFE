@@ -36,8 +36,14 @@ export class BatchComponent implements OnInit {
   public submittedUpload: boolean = false;
   public filesData: any;
   public filesImages: any;
+
   public adminId: any;
   public refCode: any;
+
+  public title: string;
+  public quantility: any;
+  public channel_id: any;
+  public note: string;
 
   public currentUser: any;
   public isAdmin: boolean = false;
@@ -108,8 +114,6 @@ export class BatchComponent implements OnInit {
     this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
   }
 
-
-
   onFocusMobile() {
     this.exitsUser = false;
     this.titleModal = "Thêm đại lý";
@@ -143,6 +147,36 @@ export class BatchComponent implements OnInit {
         }
         this.filesData = null;
         this.filesImages = null;
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
+  }
+
+  async onSubmitUploadLo() {
+    if (!this.filesData || !this.title) {
+      this.alertService.showError("Vui lòng nhập đủ dữ liệu Lô");
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true;
+      const formData = new FormData();
+      formData.append("files", this.filesData);
+      formData.append("title", this.title);
+      formData.append("channel_id", this.channel_id ? this.channel_id : 0);
+      formData.append("quantility", this.quantility ? this.quantility : 0);
+      formData.append("note", this.note ? this.note : null);
+
+    
+      this.inventoryService.uploadBatchSim(formData).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
         this.modalClose();
         this.alertService.showSuccess(res.message);
         this.getData();

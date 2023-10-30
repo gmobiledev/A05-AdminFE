@@ -69,12 +69,6 @@ export class ListBatchSimComponent implements OnInit {
     page_size: 20,
     date_range: '',
     telco: '',
-
-    // channel_id: 1 ,
-    // category_id: 3,
-    // take: 0,
-    // skip: 20
-
   }
   dateRange: any;
 
@@ -113,6 +107,7 @@ export class ListBatchSimComponent implements OnInit {
       this.searchForm.action = params['action'] && params['action'] != undefined ? params['action'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
+      
       this.initActiveBoxSummary();
       if (this.searchForm.action && this.searchForm.array_status.length > 0) {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
@@ -181,13 +176,13 @@ export class ListBatchSimComponent implements OnInit {
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/gtalk/msisdn'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/list-batch'], { queryParams: this.searchForm });
   }
 
   viewDetailSummary(array_status, action) {
     this.searchForm.action = action;
     this.searchForm.array_status = array_status;
-    this.router.navigate(['/gtalk/msisdn'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/list-batch'], { queryParams: this.searchForm });
   }
 
   initActiveBoxSummary() {
