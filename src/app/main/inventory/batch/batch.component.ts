@@ -42,6 +42,9 @@ export class BatchComponent implements OnInit {
   public currentUser: any;
   public isAdmin: boolean = false;
 
+  public fileAccount: any;
+  public channelId: any;
+
   public modalRef: any;
   public titleModal: string;
   public formGroup: FormGroup;
@@ -71,6 +74,7 @@ export class BatchComponent implements OnInit {
     this.searchForm.page = page;
     this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
   }
+
   modalOpen(modal, item = null) {
     if (item) {
       this.titleModal = "Tải dữ liệu của lô";
@@ -174,6 +178,49 @@ export class BatchComponent implements OnInit {
 
   get f() {
     return this.formGroup.controls;
+  }
+
+  async onSubmitUploadFileAccount() {
+    if (!this.fileAccount || !this.adminId) {
+      this.alertService.showError("Vui lòng nhập đủ dữ liệu");
+      return;
+    }
+    if(!this.channelId) {
+      this.alertService.showError("Vui lòng chọn kênh bán");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true;
+      const formData = new FormData();
+      formData.append("files", this.fileAccount);
+      formData.append("admin_id", this.adminId ? this.adminId : null);
+      formData.append("ref_code", this.refCode ? this.refCode : null);
+      
+      this.userService.createAgentBatchAccount(formData).subscribe(async res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          await this.alertService.showMess(res.message);
+          return;
+        }
+        this.fileAccount = null;
+        const dataSellChannel = {
+          channel_id: this.channelId,
+          user_id: res.data.user_id
+        }
+        this.telecomService.sellChannelAddUser(dataSellChannel).subscribe(resS => {
+          if (!resS.status) {
+            this.alertService.showError(resS.message);
+            return;
+          }
+        })
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
   }
 
   initForm() {

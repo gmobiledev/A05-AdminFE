@@ -97,8 +97,8 @@ export class ListBatchSimComponent implements OnInit {
     private adminService: AdminService,
     private gtalkService: GtalkService,
     private authenticaionService: AuthenticationService,
-    private alertService: SweetAlertService,  
-      private inventoryService: InventoryService,
+    private alertService: SweetAlertService,
+    private inventoryService: InventoryService,
 
   ) {
     this.dateRange = null;
@@ -127,17 +127,17 @@ export class ListBatchSimComponent implements OnInit {
   }
 
   async modalOpen(modal, item = null) {
-      this.itemBlockUI.start();
-      this.selectedItem = item;
+    this.itemBlockUI.start();
+    this.selectedItem = item;
 
-      this.itemBlockUI.stop();
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'xl',
-        backdrop: 'static',
-        keyboard: false
-      });
+    this.itemBlockUI.stop();
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'xl',
+      backdrop: 'static',
+      keyboard: false
+    });
   }
 
   modalClose() {

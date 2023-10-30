@@ -17,7 +17,7 @@ export class InventoryService {
   /**
    * Get all batch
    */
-  findBatchAll(params = null, inventoryType="") {
+  findBatchAll(params = null, inventoryType = "") {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/batch`, { params: params });
   }
 
@@ -26,13 +26,17 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/upload-file-batch`, data);
   }
 
-  findChannelAll(params = null, inventoryType="") {
+  findChannelAll(params = null, inventoryType = "") {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/channel`, { params: params });
   }
 
-  
-  getAllSim(params = null, inventoryType="") {
+
+  getAllSim(params = null, inventoryType = "") {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/product`, { params: params });
+  }
+
+  uploadBatchSim(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch`, data);
   }
 
 
