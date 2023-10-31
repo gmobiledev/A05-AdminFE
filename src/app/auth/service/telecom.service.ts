@@ -247,6 +247,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/lookup-by-id-no`, data);
   }
 
+  assignNumberBatch(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-msisnd-customer`, data);
+  }
+
 
 
 }

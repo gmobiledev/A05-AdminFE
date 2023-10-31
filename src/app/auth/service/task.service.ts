@@ -87,13 +87,4 @@ export class TaskService {
   calculatePriceDiscount(data) {
     return this._http.post<any>(`${environment.apiUrl}/task/calculate-price`, data);
   }
-
-  assignNumberBatch(data) {
-    return this._http.post<any>(`${environment.apiUrl}/task/upload-msisnd-customer`, data);
-  }
-
-
-  
- 
-
 }
