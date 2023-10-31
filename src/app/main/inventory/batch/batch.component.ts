@@ -41,11 +41,7 @@ export class BatchComponent implements OnInit {
   public adminId: any;
   public refCode: any;
 
-  public title: string;
-  public quantility: any;
-  public channel_id: any;
-  public note: string;
-
+  
   public dataLo = {
     title: '',
     quantility: 0,

@@ -258,7 +258,7 @@
       <label for="">Kênh bán</label>
       <select [(ngModel)]="dataLo.channel_id" id="" class="form-control">
         <option [value]="item.id" *ngFor="let item of listChannel">
-          {{ item.id }}
+          {{ item.name }}
         </option>
       </select>
     </div>
