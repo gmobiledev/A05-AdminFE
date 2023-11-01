@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
-import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { ProductStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -60,15 +60,18 @@ export class ListBatchSimComponent implements OnInit {
   public mnos: any = []
 
   public searchForm: any = {
-    mobile: '',
+    keysearch: '',
     action: '',
     status: '',
     mine: '',
     page: 1,
     array_status: [],
-    page_size: 20,
+    skip: 0,
+    take: 20,
     date_range: '',
     telco: '',
+    channel_id: '',
+    batch_id: '',
   }
   dateRange: any;
 
@@ -97,22 +100,19 @@ export class ListBatchSimComponent implements OnInit {
   ) {
     this.dateRange = null;
     this.activeRouted.queryParams.subscribe(params => {
-      this.taskTelecomStatus = Object.keys(TaskTelecomStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-        obj[key] = TaskTelecomStatus[key];
+      this.taskTelecomStatus = Object.keys(ProductStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
+        obj[key] = ProductStatus[key];
         return obj;
       }, {});
 
-      this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
+      this.searchForm.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.action = params['action'] && params['action'] != undefined ? params['action'] : '';
+      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
+      this.searchForm.batch_id = params['batch_id'] && params['batch_id'] != undefined ? params['batch_id'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       
-      this.initActiveBoxSummary();
-      if (this.searchForm.action && this.searchForm.array_status.length > 0) {
-        this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
-      }
-
       this.contentHeader.headerTitle = 'Danh sách số';
       this.contentHeader.breadcrumb.links[1] = 'Danh sách số';
 
@@ -227,7 +227,7 @@ export class ListBatchSimComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
-    this.router.navigate(['/gtalk/msisdn'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/list-batch'], { queryParams: this.searchForm });
   }
 
   onSubmitExportExcelReport() {
@@ -261,7 +261,7 @@ export class ListBatchSimComponent implements OnInit {
 
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-
+    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
     this.inventoryService.getAllSim(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.totalItems = res.data.count;

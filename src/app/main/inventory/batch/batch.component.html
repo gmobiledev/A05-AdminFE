@@ -112,6 +112,18 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
+
+                      <a
+                        class="ml-1"
+                        [routerLink]="['/inventory/list-batch']" 
+                        [queryParams]="{batch_id: item.id}"
+                        title="Xem danh sách"
+                      >
+                        <i
+                          data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>

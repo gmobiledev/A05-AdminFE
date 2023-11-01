@@ -103,7 +103,8 @@
 
                       <a
                         class="ml-1"
-                        routerLink="/inventory/list-batch"
+                        [routerLink]="['/inventory/list-batch']" 
+                        [queryParams]="{channel_id: item.id}"
                         title="Xem chi tiết"
                       >
                         <i
