@@ -47,7 +47,7 @@
               <tbody *ngIf="list">
                 <tr *ngFor="let item of list;index as i">
                   <td>{{ item.msisdn.msisdn }}</td>
-                  <td> {{ showLoaiThuebao(item.msisdn) }} </td>
+                  <td> {{ showLoaiThuebao(item.msisdn) }} <br> <span class="alert-success">{{item.msisdn.mno}}</span></td>
                   <td>{{ item.msisdn.note }}</td>
                   <td> {{ item.msisdn.amount | number }} </td>
                   <td>{{ item.name }}</td>
@@ -56,11 +56,11 @@
                   <td>{{ item.identification_date_string }}</td>
                   <td>{{ item.residence_full_address }}</td>
                   <td>
-                    <button *ngIf="item.msisdn.amount" type="submit"
+                    <button *ngIf="item.msisdn.amount && item.msisdn.mno != 'GSIM'" type="submit"
                     (click)="onSubmitThanhToanNoCuoc(item, modalViewQr)"
                      class="btn btn-block btn-info btn-sm">Thanh toán nợ cước <span></span></button>
 
-                     <button *ngIf="item.msisdn.amount" type="submit"
+                     <button *ngIf="item.msisdn.amount && item.msisdn.mno != 'GSIM'" type="submit"
                     (click)="onConfirmThanhToanNoCuoc(item, modalViewQr)"
                      class="btn btn-block btn-success btn-sm">Xác nhận thanh toán<span></span></button>
                   </td>
