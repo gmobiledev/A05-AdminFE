@@ -77,19 +77,19 @@
                 <tbody>
                   <tr *ngFor="let item of list">
                     <td>
-                      {{ item.id }}
+                      {{ item?.id }}
                     </td>
-                    <td>{{ item.title }}</td>
+                    <td>{{ item?.title }}</td>
                     <td>
-                      {{ item.quantility }}
+                      {{ item?.quantility }}
                     </td>
-                    <td>{{ item.imported_quantility }}</td>
-                    <td>{{ item.business.name }}</td>
+                    <td>{{ item?.imported_quantility }}</td>
+                    <td>{{ item?.business?.name }}</td>
                     <td>
-                      <div [innerHTML]="item.status | showStatus"></div>
+                      <div [innerHTML]="item?.status | showStatus"></div>
                     </td>
                     <td>
-                      {{ item.created_at }}
+                      {{ item?.created_at }}
                     </td>
                     <td>
                       <a
