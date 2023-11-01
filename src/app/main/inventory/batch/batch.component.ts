@@ -6,6 +6,7 @@ import { UserService } from 'app/auth/service';
 import { CreateAgentDto } from 'app/auth/service/dto/user.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { CommonService } from 'app/utils/common.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -47,6 +48,7 @@ export class BatchComponent implements OnInit {
     quantility: 0,
     channel_id: 0,
     files: '',
+    file_ext: '',
     note: ''
   }
 
@@ -70,6 +72,7 @@ export class BatchComponent implements OnInit {
     private inventoryService: InventoryService,
     private telecomService: TelecomService,
     private alertService: SweetAlertService,
+    private commonService: CommonService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
   ) {
@@ -130,6 +133,20 @@ export class BatchComponent implements OnInit {
 
   async onFileChangeImages(event) {
     this.filesImages = event.target.files[0];
+  }
+
+  async onFileChangeAttach(event) {
+    if (event.target.files && event.target.files[0]) {
+      const ext = event.target.files[0].type;
+      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.dataLo.file_ext = 'png';
+        let img = await this.commonService.resizeImage(event.target.files[0]);
+        this.dataLo.files = (img + '').replace('data:image/png;base64,', '')
+      } else if (ext.includes('pdf')) {
+        this.dataLo.file_ext = 'pdf';
+        this.dataLo.files = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+      }
+    }
   }
 
   async onSubmitUpload() {
