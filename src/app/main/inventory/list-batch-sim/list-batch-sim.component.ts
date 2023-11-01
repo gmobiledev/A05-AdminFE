@@ -86,6 +86,7 @@ export class ListBatchSimComponent implements OnInit {
   public modalRef: any;
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -260,9 +261,11 @@ export class ListBatchSimComponent implements OnInit {
 
 
   getData() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.sectionBlockUI.start();
     this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
     this.inventoryService.getAllSim(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
     });
