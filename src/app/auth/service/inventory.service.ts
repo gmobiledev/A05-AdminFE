@@ -39,5 +39,12 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch`, data);
   }
 
+  detailBatchSim(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/inventory/batch/${id}`);
+  }
+
+  updateBatchSim(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch/update-status`, data);
+  }
 
 }

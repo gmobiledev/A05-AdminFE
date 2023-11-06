@@ -92,7 +92,7 @@
                       {{ item?.created_at | date : "dd/MM/yyyy" }}
                     </td>
                     <td>
-                      <a
+                      <!-- <a
                         class="ml-1"
                         (click)="modalOpen(modalCreate, item)"
                         title="Chỉnh sửa"
@@ -101,9 +101,20 @@
                           data-feather="edit-3"
                           class="text-primary cursor-pointer"
                         ></i>
+                      </a> -->
+
+                      <a
+                        class="ml-0"
+                        (click)="modalOpen(modalCreate, item)"
+                        title="Xem chi tiết"
+                      >
+                        <i
+                          data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </a>
                       <a
-                        class="ml-1"
+                        class="ml-2"
                         (click)="modalOpen(modalUploadData, item)"
                         title="Tải dữ liệu lên lô"
                       >
@@ -114,13 +125,13 @@
                       </a>
 
                       <a
-                        class="ml-1"
+                        class="ml-2"
                         [routerLink]="['/inventory/list-batch']"
                         [queryParams]="{ batch_id: item.id }"
                         title="Xem danh sách"
                       >
                         <i
-                          data-feather="eye"
+                          data-feather="book"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>

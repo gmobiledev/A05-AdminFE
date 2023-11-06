@@ -35,6 +35,13 @@ export enum ProductStatus {
     STATUS_INIT = 0,
 }
 
+export enum BatchStatus {
+    INIT = 0, // lô mới khởi tạo
+    APPORVED = 2, // lô đã duyệt
+    COMPLETED = 1, // số đã được duyệt
+    CANCEL = -1 //lô không được duyệt
+}
+
 export enum TelecomAction {
     TOPUP = "TOPUP",
     ORDER_NUMBER = "ORDER_NUMBER",
