@@ -86,7 +86,7 @@
                     <td>{{ item?.imported_quantility }}</td>
                     <td>{{ item?.business?.name }}</td>
                     <td>
-                      <div [innerHTML]="item?.status | showStatus"></div>
+                      <div [innerHTML]="item?.status | showStatusBatch"></div>
                     </td>
                     <td>
                       {{ item?.created_at | date : "dd/MM/yyyy" }}
@@ -343,23 +343,24 @@
     </div>
 
     <div class="row">
-      <div class="col-12">Ảnh yêu cầu</div>
+      <div class="col-12">Ảnh yêu cầu (nếu có)</div>
 
       <div class="col-6" *ngFor="let item of itemBatch.file">
         <img
           *ngIf="item.ext == 'png'"
           src="data:image/png;base64,{{ item.base64 }}"
-          alt="ảnh yêu cầu"
+          alt=""
           class="img-fluid"
         />
       </div>
-
     </div>
   </div>
 
   <div class="modal-footer">
     <div>
+      <span>trang thai: </span> {{ batchdDetail?.status }}
       <button
+        *ngIf="batchdDetail?.status == 0"
         (click)="onUpdateStatus(itemBatch, 2)"
         class="btn btn-info btn-sm mb-2"
       >
@@ -367,6 +368,7 @@
       </button>
 
       <button
+        *ngIf="itemBatch.status == 0"
         (click)="onUpdateStatus(itemBatch, -1)"
         class="ml-2 btn btn-warning btn-sm mb-2"
       >
@@ -375,6 +377,7 @@
       </button>
 
       <button
+        *ngIf="itemBatch.status == 2"
         (click)="onUpdateStatus(itemBatch, 1)"
         class="ml-2 btn btn-facebook btn-sm mb-2"
       >

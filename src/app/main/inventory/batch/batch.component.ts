@@ -141,9 +141,9 @@ export class BatchComponent implements OnInit {
       status: status,
       note: ''
     }
-    if (status == 99 || (status == 10 ) || status == 1) {
+    if (status == 0 || status == 1  || status == 2) {
       let titleS;
-      if (status == 99) {
+      if (status == -1) {
         titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
       }
       if (status == 1) {
@@ -152,7 +152,7 @@ export class BatchComponent implements OnInit {
 
     } else {
       let confirmMessage = "";
-      if (status == 20) {
+      if (status == 0) {
         confirmMessage = 'Xác nhận duyệt yêu cầu';
         data.note = "Xác nhận"
       }

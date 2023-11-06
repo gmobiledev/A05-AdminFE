@@ -7,6 +7,8 @@ import { InitialsPipe } from '@core/pipes/initials.pipe';
 import { SafePipe } from '@core/pipes/safe.pipe';
 import { StripHtmlPipe } from '@core/pipes/stripHtml.pipe';
 import { ShowStatusPipe } from '@core/pipes/show-status.pipe';
+import { ShowStatusBatchPipe } from '@core/pipes/show-statusBatch.pipe';
+
 import { FormatDatePipe } from './formatDate.pipe';
 import { StatusFile } from './statusFile.pipe';
 import { ShowStatusLoanPipe } from './show-status-loan.pipe';
@@ -23,12 +25,12 @@ import { ShowStatusTelecomGsimPipe } from './show-status-telecom-gsim.pipe';
 @NgModule({
   declarations: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
     SafePipe, ShowStatusPipe, ShowStatusTelecomPipe, ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
-    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe
+    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe,ShowStatusBatchPipe
   ],
   imports: [],
   exports: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
     SafePipe, ShowStatusPipe, ShowStatusTelecomPipe,ShowIconMnoPipe, FormatDatePipe, StatusFile, ShowStatusLoanPipe,
-    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe
+    ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe, ShowStatusBatchPipe
   ]
 })
 export class CorePipesModule {}
