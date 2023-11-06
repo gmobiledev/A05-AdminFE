@@ -43,7 +43,7 @@ export class BatchComponent implements OnInit {
   public refCode: any;
 
   public batchdDetail: any
-  public listBatch: any
+  public itemBatch: any
 
   
   public dataLo = {
@@ -123,7 +123,7 @@ export class BatchComponent implements OnInit {
     this.batchdDetail = item;
     this.inventoryService.detailBatchSim(item.id).subscribe(res => {
       if (res.status && res.data) {
-        this.listBatch = res.data;
+        this.itemBatch = res.data;
       }
       this.modalRef = this.modalService.open(modal, {
         centered: true,
@@ -133,6 +133,45 @@ export class BatchComponent implements OnInit {
     }, error => {
       this.alertService.showError(error);
     })
+  }
+
+  async onUpdateStatus(item, status) {
+    let data = {
+      id: item.id,
+      status: status,
+      note: ''
+    }
+    if (status == 99 || (status == 10 ) || status == 1) {
+      let titleS;
+      if (status == 99) {
+        titleS = 'Từ chối yêu cầu, gửi lý do cho đại lý'
+      }
+      if (status == 1) {
+        titleS = 'Xác nhận đã nhận được tiền, lưu ghi chú'
+      }
+
+    } else {
+      let confirmMessage = "";
+      if (status == 20) {
+        confirmMessage = 'Xác nhận duyệt yêu cầu';
+        data.note = "Xác nhận"
+      }
+
+      if ((await this.alertService.showConfirm(confirmMessage)).value) {
+        this.inventoryService.detailBatchSim(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.modalClose();
+          this.getData();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
+          return;
+        })
+      }
+    }
   }
 
   onSubmitSearch(): void {
