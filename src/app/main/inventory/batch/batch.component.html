@@ -358,10 +358,10 @@
 
   <div class="modal-footer">
     <div>
-      <span>trang thai: </span> {{ batchdDetail?.status }}
+      
       <button
         *ngIf="batchdDetail?.status == 0"
-        (click)="onUpdateStatus(itemBatch, 2)"
+        (click)="onUpdateStatus(batchdDetail, 2)"
         class="btn btn-info btn-sm mb-2"
       >
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
@@ -369,7 +369,7 @@
 
       <button
         *ngIf="itemBatch.status == 0"
-        (click)="onUpdateStatus(itemBatch, -1)"
+        (click)="onUpdateStatus(batchdDetail, -1)"
         class="ml-2 btn btn-warning btn-sm mb-2"
       >
         <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
@@ -378,7 +378,7 @@
 
       <button
         *ngIf="itemBatch.status == 2"
-        (click)="onUpdateStatus(itemBatch, 1)"
+        (click)="onUpdateStatus(batchdDetail, 1)"
         class="ml-2 btn btn-facebook btn-sm mb-2"
       >
         <i data-feather="archive" class="text-white cursor-pointer"></i>

@@ -12,7 +12,7 @@ export class ShowStatusBatchPipe implements PipeTransform {
     } else if (value === BatchStatus.APPORVED) {
       html = '<span class="badge badge-pill badge-light-info mr-1">Đã duyệt lô</span>' // 1 nút
     } else if (value === BatchStatus.CANCEL) {
-      html = '<span class="badge badge-pill badge-light-info mr-1">Không duyệt</span>' // ko
+      html = '<span class="badge badge-pill badge-light-danger mr-1">Không duyệt</span>' // ko
     }else{
         html =  '<span class="badge badge-pill mr-1 badge-light-warning">' + value + '</span>'
     }
