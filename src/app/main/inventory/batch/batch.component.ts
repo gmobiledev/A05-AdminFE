@@ -42,6 +42,9 @@ export class BatchComponent implements OnInit {
   public adminId: any;
   public refCode: any;
 
+  public batchdDetail: any
+  public listBatch: any
+
   
   public dataLo = {
     title: '',
@@ -116,6 +119,21 @@ export class BatchComponent implements OnInit {
     this.initForm();
   }
 
+  onViewDetail(modal, item) {
+    this.batchdDetail = item;
+    this.inventoryService.detailBatchSim(item.id).subscribe(res => {
+      if (res.status && res.data) {
+        this.listBatch = res.data;
+      }
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    }, error => {
+      this.alertService.showError(error);
+    })
+  }
 
   onSubmitSearch(): void {
     this.searchForm.page = 1;
