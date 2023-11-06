@@ -145,11 +145,11 @@ export class BatchComponent implements OnInit {
 
     let confirmMessage = "";
     if (status == 1) {
-      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt số ?'
+      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt số?'
     } else if (status == 2) {
-      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt lô ?'
+      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt lô?'
     } else if (status == -1) {
-      confirmMessage = 'Bạn có đồng ý Hủy duyệt lô ?'
+      confirmMessage = 'Bạn có đồng ý Hủy duyệt lô?'
     }
 
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
