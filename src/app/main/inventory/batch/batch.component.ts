@@ -6,6 +6,7 @@ import { UserService } from 'app/auth/service';
 import { CreateAgentDto } from 'app/auth/service/dto/user.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { CommonService } from 'app/utils/common.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -19,6 +20,7 @@ export class BatchComponent implements OnInit {
   @Input() inventoryType: string;
   public contentHeader: any;
   public list: any;
+  public listChannel: any;
   public totalItems: number;
   public page: number = 1;
   public pageSize: number;
@@ -36,11 +38,28 @@ export class BatchComponent implements OnInit {
   public submittedUpload: boolean = false;
   public filesData: any;
   public filesImages: any;
+
   public adminId: any;
   public refCode: any;
 
+  public batchdDetail: any
+  public itemBatch: any
+
+
+  public dataLo = {
+    title: '',
+    quantility: 0,
+    channel_id: 0,
+    files: '',
+    file_ext: '',
+    note: ''
+  }
+
   public currentUser: any;
   public isAdmin: boolean = false;
+
+  public fileAccount: any;
+  public channelId: any;
 
   public modalRef: any;
   public titleModal: string;
@@ -56,6 +75,7 @@ export class BatchComponent implements OnInit {
     private inventoryService: InventoryService,
     private telecomService: TelecomService,
     private alertService: SweetAlertService,
+    private commonService: CommonService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
   ) {
@@ -71,6 +91,7 @@ export class BatchComponent implements OnInit {
     this.searchForm.page = page;
     this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
   }
+
   modalOpen(modal, item = null) {
     if (item) {
       this.titleModal = "Tải dữ liệu của lô";
@@ -95,16 +116,63 @@ export class BatchComponent implements OnInit {
 
   modalClose() {
     this.modalRef.close();
+    this.getData();
     this.initForm();
   }
 
+  onViewDetail(modal, item) {
+    this.batchdDetail = item;
+    this.inventoryService.detailBatchSim(item.id).subscribe(res => {
+      if (res.status && res.data) {
+        this.itemBatch = res.data;
+      }
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    }, error => {
+      this.alertService.showError(error);
+    })
+  }
+
+  async onUpdateStatus(item, status) {
+    let data = {
+      id: item.id,
+      status: status,
+      note: ''
+    }
+
+    let confirmMessage = "";
+    if (status == 1) {
+      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt số?'
+    } else if (status == 2) {
+      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt lô?'
+    } else if (status == -1) {
+      confirmMessage = 'Bạn có đồng ý Hủy duyệt lô?'
+    }
+
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.inventoryService.updateBatchSim(data).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.modalClose();
+        this.getData();
+        this.alertService.showSuccess(res.message);
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+
+  }
 
   onSubmitSearch(): void {
     this.searchForm.page = 1;
     this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
   }
-
-
 
   onFocusMobile() {
     this.exitsUser = false;
@@ -119,6 +187,20 @@ export class BatchComponent implements OnInit {
     this.filesImages = event.target.files[0];
   }
 
+  async onFileChangeAttach(event) {
+    if (event.target.files && event.target.files[0]) {
+      const ext = event.target.files[0].type;
+      if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.dataLo.file_ext = 'png';
+        let img = await this.commonService.resizeImage(event.target.files[0]);
+        this.dataLo.files = (img + '').replace('data:image/png;base64,', '')
+      } else if (ext.includes('pdf')) {
+        this.dataLo.file_ext = 'pdf';
+        this.dataLo.files = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
+      }
+    }
+  }
+
   async onSubmitUpload() {
     if (!this.filesData || !this.filesImages || !this.adminId) {
       this.alertService.showError("Vui lòng nhập đủ dữ liệu");
@@ -129,8 +211,8 @@ export class BatchComponent implements OnInit {
       formData.append("files", this.filesData);
       formData.append("batch_id", this.selectedItem.id);
 
-      console.log(this.filesData, this.selectedItem.id,formData)
-    
+      console.log(this.filesData, this.selectedItem.id, formData)
+
       this.inventoryService.uploadFileBatch(formData).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
@@ -139,6 +221,26 @@ export class BatchComponent implements OnInit {
         }
         this.filesData = null;
         this.filesImages = null;
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
+  }
+
+  async onSubmitUploadLo() {
+
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true;
+      this.inventoryService.uploadBatchSim(this.dataLo).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
         this.modalClose();
         this.alertService.showSuccess(res.message);
         this.getData();
@@ -176,6 +278,49 @@ export class BatchComponent implements OnInit {
     return this.formGroup.controls;
   }
 
+  async onSubmitUploadFileAccount() {
+    if (!this.fileAccount || !this.adminId) {
+      this.alertService.showError("Vui lòng nhập đủ dữ liệu");
+      return;
+    }
+    if (!this.channelId) {
+      this.alertService.showError("Vui lòng chọn kênh bán");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true;
+      const formData = new FormData();
+      formData.append("files", this.fileAccount);
+      formData.append("admin_id", this.adminId ? this.adminId : null);
+      formData.append("ref_code", this.refCode ? this.refCode : null);
+
+      this.userService.createAgentBatchAccount(formData).subscribe(async res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          await this.alertService.showMess(res.message);
+          return;
+        }
+        this.fileAccount = null;
+        const dataSellChannel = {
+          channel_id: this.channelId,
+          user_id: res.data.user_id
+        }
+        this.telecomService.sellChannelAddUser(dataSellChannel).subscribe(resS => {
+          if (!resS.status) {
+            this.alertService.showError(resS.message);
+            return;
+          }
+        })
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
+  }
+
   initForm() {
     this.formGroup = this.formBuilder.group({
       mobile: ['', Validators.required],
@@ -187,6 +332,16 @@ export class BatchComponent implements OnInit {
     });
     this.exitsUser = false;
     this.isCreate = true;
+  }
+
+  async onListChannel() {
+    this.inventoryService.findChannelAll(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.listChannel = res.data.items;
+
+    }, error => {
+      this.sectionBlockUI.stop();
+    })
   }
 
   getData() {
@@ -207,6 +362,9 @@ export class BatchComponent implements OnInit {
       console.log("ERRRR");
       console.log(error);
     })
+
+    this.onListChannel();
+
   }
 
 

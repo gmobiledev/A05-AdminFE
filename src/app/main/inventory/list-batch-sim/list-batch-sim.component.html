@@ -1,0 +1,156 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" name="keysearch" [(ngModel)]="searchForm.keysearch"
+                                            class="form-control" placeholder="Nhập số/serial">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                                            <option value="">Chọn trạng thái</option>
+                                            <option *ngFor="let item of taskTelecomStatus | keyvalue"
+                                                [value]="item.value" [id]="item.key">
+                                                <span [innerHTML]="item.value | showStatusSim"></span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Khoảng thời gian"
+                                            [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
+                                            [(ngModel)]="dateRange" [ranges]="ranges"
+                                            [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
+                                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                                                [data-feather]="'search'"></span></button>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </form>
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <span>Tổng số:</span> <b>{{ totalItems }}</b>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Số thuê bao</th>
+                                        <th>Nhà mạng</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ (searchForm.page-1)*searchForm.take + (i+1) }}
+                                        </td>
+
+                                        <td>
+                                            {{item.name}}
+                                        </td>
+                                        <td>
+                                            {{item.brand}}
+                                        </td>
+                                       
+                                        <td>
+                                            <div [innerHTML]="item.status | showStatusSim"></div>        
+                                        </td>
+                                        <td>
+                                            <!-- <div>
+                                                <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                                                    <i data-feather="arrow-right-circle"
+                                                        class="text-white cursor-pointer"></i>
+                                                    Xem chi tiết
+                                                </a>
+                                            </div> -->
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                                [(page)]="searchForm.page" [pageSize]="searchForm.take" [boundaryLinks]="true"
+                                (pageChange)="loadPage($event)">
+                                <ng-template ngbPaginationPages let-page let-pages="pages">
+                                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                        <div class="mb-3 d-flex flex-nowrap px-2">
+                                            <label id="paginationInputLabel" for="paginationInput"
+                                                class="col-form-label me-2 ms-1">Trang</label>
+                                            <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                                class="form-control custom-pages-input" id="paginationInput"
+                                                [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                                (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                                aria-labelledby="paginationInputLabel paginationDescription"
+                                                style="width: 2.5rem" />
+                                            <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                                của {{pages.length}}</span>
+                                        </div>
+                                    </li>
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalItem let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+        <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+            <app-thong-tin-thue-bao [msisdn]="selectedItem" [service]="'gtalk'"></app-thong-tin-thue-bao>
+        </div>
+    
+</ng-template>
+
+<ng-template #modalViewAgent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Thông tin đại lý</h5>
+        <button type="button" class="close" (click)="modalViewAgentClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="row">
+            <div class="col-md-6">
+                SĐT đại lý: {{ selectedAgent?.user?.mobile }}
+            </div>
+            <div class="col-md-6">
+                Tên đại lý: {{ selectedAgent?.peopleInfo.name }}
+            </div>
+        </div>
+    </div>
+
+</ng-template>

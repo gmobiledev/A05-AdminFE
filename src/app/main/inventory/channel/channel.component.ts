@@ -6,6 +6,7 @@ import { UserService } from 'app/auth/service';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { TelecomService } from 'app/auth/service/telecom.service';
 
 @Component({
   selector: 'app-channel',
@@ -52,7 +53,10 @@ export class ChannelComponent implements OnInit {
     private inventoryService: InventoryService,
     private alertService: SweetAlertService,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private telecomService: TelecomService,
+
+
   ) {
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
@@ -62,10 +66,12 @@ export class ChannelComponent implements OnInit {
       this.getData();
     })
   }
+
   loadPage(page): void {
     this.searchForm.page = page;
     this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
   }
+
   modalOpen(modal, item = null) {
     if (item) {
       this.titleModal = "Cập nhật kênh";
@@ -99,23 +105,13 @@ export class ChannelComponent implements OnInit {
     this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
   }
 
-
-
   onFocusMobile() {
     this.exitsUser = false;
     this.titleModal = "Thêm đại lý";
   }
 
-
-
-
-
-  /**
-   * Tao tai khoan dai ly
-   */
   async onSubmitCreate() {
     console.log("onSubmitCreate");
-    
   }
 
   async onFileChangeExcel(event) {
@@ -146,6 +142,34 @@ export class ChannelComponent implements OnInit {
         }
         this.filesData = null;
         this.filesImages = null;
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
+  }
+
+  async onSelectFileAccount(event) {
+    this.filesData = event.target.files[0];
+  }
+
+  async onSubmitUploadCCCD() {
+
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true;
+
+      const formData = new FormData();
+      formData.append("file", this.filesData);
+
+      this.telecomService.assignNumberBatch(formData).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
         this.modalClose();
         this.alertService.showSuccess(res.message);
         this.getData();

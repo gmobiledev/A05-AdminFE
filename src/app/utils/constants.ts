@@ -28,6 +28,20 @@ export enum MsisdnStatus {
     STATUS_LOCKED = 30
 }
 
+export enum ProductStatus {
+    STATUS_ACTIVE = 1,
+    STATUS_AVAILABLE = 2,
+    STATUS_LOCKED = 3,
+    STATUS_INIT = 0,
+}
+
+export enum BatchStatus {
+    INIT = 0, // lô mới khởi tạo
+    APPORVED = 2, // lô đã duyệt
+    COMPLETED = 1, // số đã được duyệt
+    CANCEL = -1 //lô không được duyệt
+}
+
 export enum TelecomAction {
     TOPUP = "TOPUP",
     ORDER_NUMBER = "ORDER_NUMBER",

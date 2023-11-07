@@ -11,6 +11,7 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { BatchSimComponent } from './batch-sim/batch-sim.component';
 import { BatchGtalkComponent } from './batch-gtalk/batch-gtalk.component';
 import { ChannelComponent } from './channel/channel.component';
+import { ListBatchSimComponent } from './list-batch-sim/list-batch-sim.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'channel',
     component: ChannelComponent
+  },
+  {
+    path: 'list-batch',
+    component: ListBatchSimComponent
   }
 ];
 
@@ -32,7 +37,8 @@ const routes: Routes = [
     BatchComponent,
     BatchSimComponent,
     BatchGtalkComponent,
-    ChannelComponent
+    ChannelComponent,
+    ListBatchSimComponent
   ],
   imports: [
     CommonModule,
