@@ -121,8 +121,13 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" name="cccd" [(ngModel)]="searchForm.cccd" class="form-control"
-                      placeholder="Số CCCD của KH">
+                    <select class="form-control" name="action" [(ngModel)]="searchForm.customer_type">
+                      <option value=""> -- Loại khách hàng --</option>
+                      <option value="PERSONAL">Cá nhân</option>
+                      <option value="ORGANIZATION">Doanh nghiệp</option>
+                    </select>
+                    <!-- <input type="text" name="customer_name" [(ngModel)]="searchForm.customer_name" class="form-control"
+                      placeholder="Tên khách hàng"> -->
                   </div>
                 </div>
                 <div class="col-md-4">

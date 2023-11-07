@@ -72,7 +72,7 @@ export class ListTaskComponent implements OnInit {
     date_range: '',
     telco: '',
     customer_name: '',
-    cccd: '',
+    customer_type: '',
     sub_action: ''
   }
   dateRange: any;
