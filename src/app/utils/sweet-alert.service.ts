@@ -52,12 +52,12 @@ export class SweetAlertService {
     });
   }
 
-  showMess(message) {
+  showMess(message, timeout = 3500) {
     Swal.fire({
         icon: 'info',
         title: '',
         text: message,
-        timer: 3500,
+        timer: timeout,
         customClass: {
           confirmButton: 'btn btn-success'
         }
