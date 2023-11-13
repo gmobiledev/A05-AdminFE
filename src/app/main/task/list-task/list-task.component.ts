@@ -116,23 +116,27 @@ export class ListTaskComponent implements OnInit {
 
   checkGatewayTransaction(item) {
     let message = "Không xác định"
+    let self = this;
     if (item.service_code == "AIRTIME_TOPUP") {
       let dto = {
         Account: `AIRTIME_TOPUP_${item.merchant_id}`,
-        TransactionId: 128193
+        TransactionId: item.id
       }
       this.taskService.checkGatewayTransaction(dto).subscribe(res => {
-        if(res.status == 1)
-          this.alertService.showMess(JSON.stringify(res), 20000)
-        else{
-          this.alertService.showError(JSON.stringify(res), 20000)
+        if (res.status == 1)
+          self.alertService.showMess(JSON.stringify(res), 20000)
+        else {
+          self.alertService.showError(JSON.stringify(res), 20000)
         }
       }, error => {
-        this.alertService.showError(error, 20000)
+        self.alertService.showError(error, 20000)
       })
 
     } else if (item.service_code == "CASH") {
       message = "Hình thức thu tiền mặt"
+      self.alertService.showMess(message, 20000)
+    } else {
+      self.alertService.showMess(message, 20000)
     }
   }
 

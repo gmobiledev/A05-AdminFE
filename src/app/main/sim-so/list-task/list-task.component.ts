@@ -501,6 +501,21 @@ export class ListTaskComponent implements OnInit {
     }  
   }
 
+  copyTextClipboard(text: string) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = text;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.alertService.showSuccessToast("Đã copy thành công");
+  }
+
   checkAction(item) {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
