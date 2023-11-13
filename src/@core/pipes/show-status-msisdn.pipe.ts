@@ -11,7 +11,9 @@ export class ShowStatusMsisdnPipe implements PipeTransform {
         html = '<span class="badge badge-pill badge-light-success mr-1">Đã đấu nối</span>'
     } else if (value === TaskTelecomStatus.STATUS_CANCEL) {
         html = '<span class="badge badge-pill badge-light-danger mr-1">Đã hủy</span>'
-    }
+    } else if (value === MsisdnStatus.STATUS_PROCESSED_MNO_FAIL) {
+      html = '<span class="badge badge-pill badge-light-danger mr-1">Đã từ chối</span>'
+  }
     return html;
   }
 }

@@ -308,7 +308,9 @@
 
                         <div *ngIf="(
                           (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])  && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
-                        || (item.status == taskTelecomStatus.STATUS_NEW_ORDER && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
+                        || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
+                        || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
+                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
                             Tiếp nhận yêu cầu
@@ -335,7 +337,7 @@
                         <div
                           *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT
-                          || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION">
+                          ">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-white cursor-pointer"></i>
                             Xem chi tiết

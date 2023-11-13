@@ -28,6 +28,7 @@ import { ViewTaskOrganizationComponent } from './view-task-organization/view-tas
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ShipInfoComponent } from './ship-info/ship-info.component';
 import { SearchSubscriptionComponent } from './search-subscription/search-subscription.component';
+import { TaskAttachmentsComponent } from './task-attachments/task-attachments.component';
 
 const routes: Routes = [
   {
@@ -89,7 +90,8 @@ const routes: Routes = [
     ApproveConvert2gIdentificationComponent,
     ViewTaskOrganizationComponent,
     ShipInfoComponent,
-    SearchSubscriptionComponent
+    SearchSubscriptionComponent,
+    TaskAttachmentsComponent
   ],
   imports: [
     CommonModule, 
