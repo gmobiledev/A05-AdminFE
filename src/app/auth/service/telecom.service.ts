@@ -152,6 +152,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-old-indetification-docs`, data);
   }
 
+  attachmentMsisdn(id: number, data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/${id}/attachment`, data);
+  }
+
 
 
   ////

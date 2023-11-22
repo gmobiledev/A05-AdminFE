@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GtalkService } from 'app/auth/service/gtalk.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { error } from 'console';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -27,7 +28,7 @@ export class Client2gComponent implements OnInit {
   
   currentUser: any;
   totalItems: any;
-  list: any;
+  list: any = [];
 
   qrInfoPayment = {
     amount: 0,
@@ -133,6 +134,8 @@ export class Client2gComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.telecomService.get2GCustomerInfo(this.searchForm).subscribe(res => {
       this.list = res.data;      
+    }, error =>{
+      this.list = []
     });
   }                                             
   loadPage(page) {
@@ -141,6 +144,19 @@ export class Client2gComponent implements OnInit {
   }
   onSubmitSearch(){
     this.router.navigate([this.myUrl], { queryParams: this.searchForm });
+  }
+
+  async modalApprovalOpen(modal, item = null, size = 'xm') { 
+    if(item) {     
+      this.selectedItem = item;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: size,
+        backdrop : 'static',
+        keyboard : false
+      });            
+    }
   }
 
 }

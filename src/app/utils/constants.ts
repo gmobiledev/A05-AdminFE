@@ -25,7 +25,9 @@ export enum MsisdnStatus {
     STATUS_NOT_PROCESS_MNO = 2,
     STATUS_PROCESSED_MNO_FAIL = 3,
     STATUS_PROCESSED_MNO_SUCCESS = 1,
-    STATUS_LOCKED = 30
+    STATUS_2G_VALID = 30,
+    STATUS_2G_WAITING = 31,
+    STATUS_2G_CASE_BY_CASE = 32,
 }
 
 export enum ProductStatus {
