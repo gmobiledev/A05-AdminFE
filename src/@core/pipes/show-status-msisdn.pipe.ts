@@ -19,6 +19,8 @@ export class ShowStatusMsisdnPipe implements PipeTransform {
       html = '<span class="badge badge-pill badge-light-warning mr-1">2G Chờ đợt tiếp theo</span>'
     }else if (value === MsisdnStatus.STATUS_2G_CASE_BY_CASE) {
       html = '<span class="badge badge-pill badge-light-warning mr-1">2G case by case</span>'
+    }else if (value === MsisdnStatus.STATUS_2G_PAID) {
+      html = '<span class="badge badge-pill badge-light-success mr-1">2G đã trả cước</span>'
     }
     return html;
   }

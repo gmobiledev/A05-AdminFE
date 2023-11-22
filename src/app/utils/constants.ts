@@ -28,6 +28,7 @@ export enum MsisdnStatus {
     STATUS_2G_VALID = 30,
     STATUS_2G_WAITING = 31,
     STATUS_2G_CASE_BY_CASE = 32,
+    STATUS_2G_PAID = 34,
 }
 
 export enum ProductStatus {

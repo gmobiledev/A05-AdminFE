@@ -59,14 +59,16 @@
                     <td> <span [innerHTML]="item.msisdn.state | showStatusMsisdn"></span> </td>
                     <td>{{ item.residence_full_address }}</td>
                     <td>
-                      <button *ngIf="item.msisdn.amount && item.msisdn.mno != 'GSIM'" type="submit"
-                        (click)="onSubmitThanhToanNoCuoc(item, modalViewQr)" class="btn btn-block btn-info btn-sm">Thanh
-                        toán nợ cước <span></span></button>
+                      <div *ngIf="item.msisdn.amount && item.msisdn.state < 34 && item.msisdn.state >=30">
+                        <button *ngIf="item.msisdn.amount" type="submit"
+                          (click)="onSubmitThanhToanNoCuoc(item, modalViewQr)"
+                          class="btn btn-block btn-info btn-sm">Thanh
+                          toán nợ cước <span></span></button>
 
-                      <button *ngIf="item.msisdn.amount && item.msisdn.mno != 'GSIM'" type="submit"
-                        (click)="onConfirmThanhToanNoCuoc(item, modalViewQr)"
-                        class="btn btn-block btn-success btn-sm">Xác nhận thanh toán<span></span></button>
-
+                        <button *ngIf="item.msisdn.amount" type="submit"
+                          (click)="onConfirmThanhToanNoCuoc(item, modalViewQr)"
+                          class="btn btn-block btn-success btn-sm">Xác nhận thanh toán<span></span></button>
+                      </div>
                       <button *ngIf="item.msisdn.state == 32" (click)="modalApprovalOpen(modalUpload, item)"
                         class="btn btn-block btn-info btn-sm">
                         {{item.msisdn.sim_file ? "Xem và duyệt": "Upload tờ trình"}}<span></span></button>
