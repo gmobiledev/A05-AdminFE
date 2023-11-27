@@ -42,7 +42,7 @@
                     <th scope="col">Số giấy tờ KH</th>
                     <th scope="col">Ngày sinh KH</th>
                     <th scope="col">Trạng thái</th>
-                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Loại Khách hàng</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -57,7 +57,7 @@
                     <td>{{ item.identification_no }}</td>
                     <td>{{ item.birth_string }}</td>
                     <td> <span [innerHTML]="item.msisdn.state | showStatusMsisdn"></span> </td>
-                    <td>{{ item.residence_full_address }}</td>
+                    <td>{{ item.msisdn.customer_id ? "Doanh nghiệp" : "" }}</td>
                     <td>
                       <div *ngIf="item.msisdn.amount && item.msisdn.state < 34 && item.msisdn.state >=30">
                         <button *ngIf="item.msisdn.amount" type="submit"
