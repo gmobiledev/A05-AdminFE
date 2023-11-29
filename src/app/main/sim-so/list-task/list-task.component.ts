@@ -149,7 +149,9 @@ export class ListTaskComponent implements OnInit {
       this.itemBlockDetailUI.start();
       //neu la task dau noi cho KH doanh nghiep, chuyen sang trang moi
       if(item.customer_id && item.customer_type == 'ORGANIZATION') {
-        if(item.status == TaskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION) {
+        if(item.status == TaskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION || item.status == TaskTelecomStatus.STATUS_NEW_ORDER
+          && (this.checkAction('telecom-admin/task/:slug(\\d+)/update-status') || this.checkAction('telecom-admin/task/:slug(\\d+)/'+ item.action+ '/update-status'))
+          ) {
           try {
             check = await this.telecomService.checkAvailabledTask(item.id);
             if(!check.status) { 
