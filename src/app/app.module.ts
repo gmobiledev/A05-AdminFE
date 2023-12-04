@@ -74,6 +74,12 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/sim-so/sim-so.module').then(m => m.SimSoModule),
     canActivate: [AuthGuard]
   },
+
+  {
+    path: 'gip',
+    loadChildren: () => import('./main/gip/gip.module').then(m => m.GIPModule),
+    canActivate: [AuthGuard]
+  },
   {
     path: 'gtalk',
     loadChildren: () => import('./main/gtalk/gtalk.module').then(m => m.GtalkModule),

@@ -21,7 +21,8 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const currentUser = this._authenticationService.currentUserValue;
     const isLoggedIn = currentUser && currentUser.token;
-    const isApiUrl = request.url.startsWith(environment.apiUrl) || request.url.startsWith(environment.apiTelecomUrl) || request.url.startsWith(environment.apiGtalkUrl);
+    const isApiUrl = request.url.startsWith(environment.apiUrl) || request.url.startsWith(environment.apiTelecomUrl) || request.url.startsWith(environment.apiGtalkUrl)
+    || request.url.startsWith(environment.apiGipUrl);
     if (isLoggedIn && isApiUrl) {
       request = request.clone({
         setHeaders: {
