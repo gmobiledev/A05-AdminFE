@@ -109,9 +109,7 @@
                       {{ item?.msisdn }}
                     </td>
 
-                    <td>
-                      {{ item?.cuoc }} GM69
-                    </td>
+                    <td>{{ item?.cuoc }} GM69</td>
                     <td>
                       {{ item?.created_at | formatDate }}
                     </td>
@@ -224,18 +222,18 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <form class="mt-2">
+    <form class="mt-1">
       <div class="modal-body" tabindex="0">
         <div class="form-group">
-          <label>Chọn dịch vụ</label>
+          <label>Chọn hành động</label>
           <select
             name="service"
             id=""
-            placeholder="Chọn dịch vụ"
+            placeholder="Chọn hành động"
             class="form-control"
             [(ngModel)]="dataUpdate.service_code"
           >
-            <option value="">Chọn dịch vụ</option>
+            <option value="">Chọn hành động</option>
             <option
               value="{{ item.service_code }}"
               *ngFor="let item of listServices"
@@ -246,24 +244,48 @@
         </div>
 
         <div class="form-group">
-          <label>Nhập số tiền</label>
+          <label>Mã đối tác</label>
+
           <input
             class="form-control"
             type="text"
-            name="amount"
-            placeholder="100,000"
-            mask="separator"
-            thousandSeparator=","
-            (blur)="onInputAmount($event)"
-            [(ngModel)]="dataUpdate.amount"
-            (focus)="onFocusAmount()"
+            (keydown.space)="$event.preventDefault()"
+            [(ngModel)]="dataCreateMerchant.username"
           />
-          <label>Chiết khấu : {{ discount }}%</label>
+
           <br />
           <span class="text-danger"> {{ erroMess }} </span>
         </div>
 
-        <div class="image-upload mb-1">
+        <div class="form-group">
+          <label>Số thuê bao GIP</label>
+
+          <input
+            class="form-control"
+            type="text"
+            (keydown.space)="$event.preventDefault()"
+            [(ngModel)]="dataCreateMerchant.username"
+          />
+
+          <br />
+          <span class="text-danger"> {{ erroMess }} </span>
+        </div>
+
+        <div class="form-group">
+          <label>ID số điện thoại chính</label>
+
+          <input
+            class="form-control"
+            type="text"
+            (keydown.space)="$event.preventDefault()"
+            [(ngModel)]="dataCreateMerchant.username"
+          />
+
+          <br />
+          <span class="text-danger"> {{ erroMess }} </span>
+        </div>
+
+        <!-- <div class="image-upload mb-1">
           <input
             id="file-front-input"
             type="file"
@@ -273,38 +295,12 @@
           <label>
             <b>File đính kèm : Ảnh đơn hàng</b>
           </label>
-        </div>
-
-        <div
-          class="image-upload mb-1"
-          *ngIf="selectedItem && selectedItem.status == 99"
-        >
-          <input
-            id="file-front-input"
-            type="file"
-            accept="image/png, image/gif, image/jpeg, image/jpg"
-            (change)="onSelectFileConfirm($event)"
-          />
-          <label>
-            <b>File đính kèm : Ảnh biên lai chuyển khoản</b>
-          </label>
-        </div>
-
-        <h3>
-          Tổng tiền :
-          {{ price | currency : "VND" }}
-        </h3>
-
-        <h5 class="text-warning">
-          <i>
-            {{ price | numberToText }}
-          </i>
-        </h5>
+        </div> -->
       </div>
       <div class="modal-footer">
         <a (click)="onCreateTask()">
           <button type="submit" class="btn btn-primary" rippleEffect>
-            {{ btnFormPayment }}
+            Thêm thuê bao
           </button>
         </a>
       </div>

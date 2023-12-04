@@ -137,40 +137,37 @@ export class ManageListComponent implements OnInit {
     })
   }
 
-
   modalOpen(modal, item = null) {
     if (item) {
-      this.selectedItem = item;
-      this.btnFormPayment = 'Cập nhật';
-      this.titleModal = "Cập nhật";
-      this.isCreate = false;
-      this.selectedId = item.id;
-      this.dataUpdate.amount = item.amount;
-      this.dataUpdate.service_code = item.service_code;
-      this.dataUpdate.bill_id = item.bill_id;
-      this.dataUpdate.payment_method = item.payment_method;
-      this.dataUpdate.desc = item.desc;
+      // this.selectedUser = item;
+      // this.dataCreatePayment.desc = this.selectedUser.mobile + ' thanh toan don hang';
+      this.userService.getMerchantService(item.id).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.listServices = res.data;
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'lg'
+        });
+      })
     } else {
-      this.dataUpdate.desc = this.currentUser.phone + ' thanh toan don hang'
-      this.titleModal = "Tạo đơn hàng";
-      this.isCreate = true;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
     }
-
-
-    // this.userService.getListService().subscribe(res => {
-    //   if (!res.status) {
-    //     this.alertService.showMess(res.message);
-    //     return;
-    //   }
-    //   this.listServices = res.data;
-    //   this.modalRef = this.modalService.open(modal, {
-    //     centered: true,
-    //     windowClass: 'modal modal-primary',
-    //     size: 'lg'
-    //   });
-    // })
-
   }
+
+
+  modalClose() {
+
+    this.modalRef.close();;
+  }
+
 
   async onSelectFileAccount(event) {
     this.fileAccount = event.target.files[0];
@@ -183,24 +180,25 @@ export class ManageListComponent implements OnInit {
     }
   }
 
-  async onSubmitLock(note) {
+  async onSubmitLock() {
 
-    //   "action": "lock_subcriber",
-    //   "msisdn": "string",
-    //   "note": "string"
+    let dataLock = {
+      "action": "lock_subcriber",
+      "note": "string"
+    }
 
     const confirmMessage = status ? "Bạn có đồng ý Đóng thuê bao" : "Bạn có đồng ý Mở thuê bao?";
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      // this.gipService.lockGip("lock_subcriber", "0598292068", note).subscribe(res => {
-      //   if (!res.status) {
-      //     this.alertService.showError(res.message);
-      //     return;
-      //   }
-      //   this.alertService.showSuccess(res.message);
-      //   this.getData();
-      // }, err => {
-      //   this.alertService.showError(err);
-      // })
+      this.gipService.lockGip(dataLock).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
     }
   }
 
@@ -238,19 +236,19 @@ export class ManageListComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
 
-    // this.userService.exportExcelReport(this.dataExcel, this.searchForm).subscribe(res => {
-    //   console.log(res.body.type)
-    //   var newBlob = new Blob([res.body], { type: res.body.type });
-    //   let url = window.URL.createObjectURL(newBlob);
-    //   let a = document.createElement('a');
-    //   document.body.appendChild(a);
-    //   a.setAttribute('style', 'display: none');
-    //   a.href = url;
-    //   a.download = "Báo cáo Airtime";
-    //   a.click();
-    //   window.URL.revokeObjectURL(url);
-    //   a.remove();
-    // })
+    this.gipService.exportData(this.searchForm).subscribe(res => {
+      console.log(res.body.type)
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Danh sách thuê bao";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
 
   }
 
@@ -353,62 +351,62 @@ export class ManageListComponent implements OnInit {
     })
   }
 
-  // async onCreateTask() {
-  //   if (this.dataUpdate.amount < 100000) {
-  //     this.alertService.showMess("Vui lòng Nhập số tiền lớn hơn 100.000 VNĐ");
-  //     return;
-  //   }
+  async onCreateTask() {
+    // if (this.dataUpdate.amount < 100000) {
+    //   this.alertService.showMess("Vui lòng Nhập số tiền lớn hơn 100.000 VNĐ");
+    //   return;
+    // }
 
-  //   if (this.isCreate) {
-  //     if (this.imageFront == null) {
-  //       this.alertService.showMess("Vui lòng tải file ảnh đơn hàng lên!");
-  //       return;
-  //     }
+    if (this.isCreate) {
+      // if (this.imageFront == null) {
+      //   this.alertService.showMess("Vui lòng tải file ảnh đơn hàng lên!");
+      //   return;
+      // }
 
-  //     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo đơn hàng này không?")).value) {
-  //       if (this.imageFront) {
-  //         this.dataUpdate.file = this.imageFront.replace('data:image/png;base64,', '')
-  //       }
-  //       this.itemBlockUI.start();
-  //       this.taskService.getCreateTask(this.dataUpdate).subscribe(res => {
-  //         this.itemBlockUI.stop();
-  //         if (!res.status) {
-  //           this.alertService.showMess(res.message);
-  //           return;
-  //         }
-  //         this.alertService.showSuccess(res.message);
-  //         this.modalClose();
-  //         this.router.navigateByUrl(`/payment/${res.data.id}`)
-  //         this.getData();
-  //       }, error => {
-  //         this.itemBlockUI.stop();
-  //         this.alertService.showMess(error);
-  //         return;
-  //       })
-  //     }
-  //   } else {
-  //     if ((await this.alertService.showConfirm("Bạn có đồng ý cập nhật đơn hàng này không?")).value) {
-  //       if (this.imageFront) {
-  //         this.dataUpdate.file = this.imageFront.replace('data:image/png;base64,', '')
-  //       }
-  //       this.itemBlockUI.start();
-  //       this.taskService.updateTaskPayment(this.selectedId, this.dataUpdate).subscribe(res => {
-  //         this.itemBlockUI.stop();
-  //         if (!res.status) {
-  //           this.alertService.showMess(res.message);
-  //           return;
-  //         }
-  //         this.alertService.showSuccess(res.message);
-  //         this.modalClose();
-  //         this.getData();
-  //       }, error => {
-  //         this.itemBlockUI.stop();
-  //         this.alertService.showMess(error);
-  //         return;
-  //       })
-  //     }
-  //   }
-  // }
+      if ((await this.alertService.showConfirm("Bạn có đồng ý thêm thuê bao này ko?")).value) {
+        // if (this.imageFront) {
+        //   this.dataUpdate.file = this.imageFront.replace('data:image/png;base64,', '')
+        // }
+        this.itemBlockUI.start();
+        this.gipService.getTasks(this.dataUpdate).subscribe(res => {
+          this.itemBlockUI.stop();
+          if (!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.alertService.showSuccess(res.message);
+          this.modalClose();
+          // this.router.navigateByUrl(`/payment/${res.data.id}`)
+          this.getData();
+        }, error => {
+          this.itemBlockUI.stop();
+          this.alertService.showMess(error);
+          return;
+        })
+      }
+    } else {
+      // if ((await this.alertService.showConfirm("Bạn có đồng ý thêm thuê bao này ko?")).value) {
+      // if (this.imageFront) {
+      //   this.dataUpdate.file = this.imageFront.replace('data:image/png;base64,', '')
+      // }
+      // this.itemBlockUI.start();
+      // this.taskService.updateTaskPayment(this.selectedId, this.dataUpdate).subscribe(res => {
+      //   this.itemBlockUI.stop();
+      //   if (!res.status) {
+      //     this.alertService.showMess(res.message);
+      //     return;
+      //   }
+      //   this.alertService.showSuccess(res.message);
+      //   this.modalClose();
+      //   this.getData();
+      // }, error => {
+      //   this.itemBlockUI.stop();
+      //   this.alertService.showMess(error);
+      //   return;
+      // })
+      // }
+    }
+  }
 
 }
 
