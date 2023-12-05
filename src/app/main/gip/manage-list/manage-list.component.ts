@@ -33,32 +33,15 @@ export class ManageListComponent implements OnInit {
   public page: number = 1;
   public pageSize: number;
 
-  public isViewFile: boolean = false;
-  public urlFile: any;
+
   public listServices: any;
-
-  public price: number;
-  public discount: number;
-
   public modalRef: any;
-  public titleModal: string;
-  public formGroup: FormGroup;
-  public subFormGroup: FormGroup;
-  public modalUserCodeRef: any;
-  public formGroupUserCode: FormGroup;
-  public isCreate: boolean = false;
-  public submitted: boolean = false;
-  public exitsUser: boolean = false;
-  public isShowAddInput: boolean = true;
-  public selectedUserId: number;
-  public selectedId: number;
-  public selectedItem: any;
   public fileAccount: any;
-  public erroMess: string;
+  public isCreate: boolean = false
+
   public imageFront;
   public currentUser;
 
-  public btnFormPayment = 'Tạo đơn hàng';
 
   public searchForm = {
     status: '',
@@ -84,8 +67,6 @@ export class ManageListComponent implements OnInit {
     'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
   }
 
-
-
   constructor(
     private taskService: TaskService,
     private alertService: SweetAlertService,
@@ -110,15 +91,7 @@ export class ManageListComponent implements OnInit {
     })
   }
 
-  public dataUpdate = {
-    amount: 0,
-    service_code: "AIRTIME_TOPUP",
-    bill_id: "0356342770",
-    payment_method: "BANK_TRANSFER",
-    desc: '',
-    file: "",
-    files_confirm: ""
-  };
+
 
   public dataSub = {
 
@@ -139,8 +112,6 @@ export class ManageListComponent implements OnInit {
 
   modalOpen(modal, item = null) {
     if (item) {
-      // this.selectedUser = item;
-      // this.dataCreatePayment.desc = this.selectedUser.mobile + ' thanh toan don hang';
       this.userService.getMerchantService(item.id).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);
@@ -176,7 +147,7 @@ export class ManageListComponent implements OnInit {
   async onSelectFileConfirm(event) {
     if (event.target.files && event.target.files[0]) {
       let img = await this.resizeImage(event.target.files[0]);
-      this.dataUpdate.files_confirm = (img + '').replace('data:image/png;base64,', '')
+      // this.dataUpdate.files_confirm = (img + '').replace('data:image/png;base64,', '')
     }
   }
 
@@ -202,24 +173,6 @@ export class ManageListComponent implements OnInit {
     }
   }
 
-  initForm() {
-    this.formGroup = this.formBuilder.group({
-      mobile: ['', Validators.required],
-      password: ['', Validators.required],
-      partner_user_code: [''],
-      channel_id: [''],
-      agents_service: this.formBuilder.array([]),
-      new_agents_service: this.formBuilder.array([])
-    });
-
-    this.formGroupUserCode = this.formBuilder.group({
-      partner_user_code: [''],
-      channel_id: [''],
-    });
-
-    this.exitsUser = false;
-    this.isCreate = true;
-  }
 
   onSubmitSearch(): void {
     this.router.navigate(['/gip/list'], { queryParams: this.searchForm })
@@ -254,7 +207,6 @@ export class ManageListComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
-    this.dataUpdate.bill_id = this.currentUser.phone;
     this.contentHeader = {
       headerTitle: 'Danh sách thuê bao',
       actionButton: true,
@@ -274,47 +226,6 @@ export class ManageListComponent implements OnInit {
       }
     };
   }
-
-
-
-
-  // getDiscount(details: any) {
-  //   let obj = details.find((o: { attribute: string; }) => o.attribute === 'discount');
-  //   if (obj != null) {
-  //     return obj.value;
-  //   } else {
-  //     return 0;
-  //   }
-
-  // }
-
-  // getAmountBefore(details: any, amount: number) {
-  //   let obj = details.find((o: { attribute: string; }) => o.attribute === 'amount_before');
-  //   if (obj != null) {
-  //     return obj.value;
-  //   } else {
-  //     return amount;
-  //   }
-  // }
-
-  // async onCancelTask(item) {
-  //   if ((await this.alertService.showConfirm("Bạn có chắc chắn muốn hủy đơn hàng này không?")).value) {
-  //     this.itemBlockUI.start();
-  //     this.taskService.getTaskDelete(item.id).subscribe(res => {
-  //       this.itemBlockUI.stop();
-  //       if (!res.status) {
-  //         this.alertService.showMess(res.message);
-  //         return;
-  //       }
-  //       this.alertService.showSuccess(res.message);
-  //       this.modalClose();
-  //     }, error => {
-  //       this.itemBlockUI.stop();
-  //       this.alertService.showMess(error);
-  //       return;
-  //     })
-  //   }
-  // }
 
   async onSelectFileFront(event) {
     if (event.target.files && event.target.files[0]) {
@@ -368,7 +279,7 @@ export class ManageListComponent implements OnInit {
         //   this.dataUpdate.file = this.imageFront.replace('data:image/png;base64,', '')
         // }
         this.itemBlockUI.start();
-        this.gipService.getTasks(this.dataUpdate).subscribe(res => {
+        this.gipService.getTasks().subscribe(res => {
           this.itemBlockUI.stop();
           if (!res.status) {
             this.alertService.showMess(res.message);

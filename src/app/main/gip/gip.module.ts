@@ -12,7 +12,6 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { CodeInputModule } from 'angular-code-input';
 import { CallHistoryComponent } from './call-history/call-history.component';
 import { ManageListComponent } from './manage-list/manage-list.component';
-import { ConfigurationInfoComponent } from './configuration-info/configuration-info.component';
 import { ListMerchantComponent } from './list-merchant/list-merchant.component';
 
 const routes: Routes = [
@@ -38,7 +37,6 @@ const routes: Routes = [
   declarations: [
     CallHistoryComponent,
     ManageListComponent,
-    ConfigurationInfoComponent,
     ListMerchantComponent
   ],
   imports: [

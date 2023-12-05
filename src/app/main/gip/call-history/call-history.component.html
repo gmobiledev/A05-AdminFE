@@ -57,7 +57,6 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <!-- <th>Thời gian</th> -->
                       <th>Số đt gọi đến</th>
                       <th>Tổng thời gian gọi</th>
                       <th>Số tiền cước</th>
@@ -73,7 +72,6 @@
                       <td>
                         {{ item?.Cost | currency : "VND" : true }}
                       </td>
-  
                       <td>
                         {{ item?.AnswerTime | formatDate }}
                       </td>
@@ -129,150 +127,4 @@
       </div>
     </div>
   
-    <ng-template #modalCreate let-modal>
-      <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-        <button
-          type="button"
-          class="close"
-          (click)="modalClose()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form class="mt-2">
-        <div class="modal-body" tabindex="0">
-          <div class="form-group">
-            <label>Chọn dịch vụ</label>
-            <select
-              name="service"
-              id=""
-              placeholder="Chọn dịch vụ"
-              class="form-control"
-              [(ngModel)]="dataUpdate.service_code"
-            >
-              <option value="">Chọn dịch vụ</option>
-              <option
-                value="{{ item.service_code }}"
-                *ngFor="let item of listServices"
-              >
-                {{ item.service.code }}
-              </option>
-            </select>
-          </div>
-  
-          <div class="form-group">
-            <label>Nhập số tiền</label>
-            <input
-              class="form-control"
-              type="text"
-              name="amount"
-              placeholder="100,000"
-              mask="separator"
-              thousandSeparator=","
-              (blur)="onInputAmount($event)"
-              [(ngModel)]="dataUpdate.amount"
-              (focus)="onFocusAmount()"
-            />
-            <label>Chiết khấu : {{ discount }}%</label>
-            <br />
-            <span class="text-danger"> {{ erroMess }} </span>
-          </div>
-  
-          <div class="image-upload mb-1">
-            <input
-              id="file-front-input"
-              type="file"
-              accept="image/png, image/gif, image/jpeg, image/jpg"
-              (change)="onSelectFileFront($event)"
-            />
-            <label>
-              <b>File đính kèm : Ảnh đơn hàng</b>
-            </label>
-          </div>
-  
-          <div
-            class="image-upload mb-1"
-            *ngIf="selectedItem && selectedItem.status == 99"
-          >
-            <input
-              id="file-front-input"
-              type="file"
-              accept="image/png, image/gif, image/jpeg, image/jpg"
-              (change)="onSelectFileConfirm($event)"
-            />
-            <label>
-              <b>File đính kèm : Ảnh biên lai chuyển khoản</b>
-            </label>
-          </div>
-  
-          <h3>
-            Tổng tiền :
-            {{ price | currency : "VND" }}
-          </h3>
-  
-          <h5 class="text-warning">
-            <i>
-              {{ price | numberToText }}
-            </i>
-          </h5>
-        </div>
-        <div class="modal-footer">
-          <a (click)="onCreateTask()">
-            <button type="submit" class="btn btn-primary" rippleEffect>
-              {{ btnFormPayment }}
-            </button>
-          </a>
-        </div>
-      </form>
-    </ng-template>
-  </div>
-  
-  <ng-template #modalTransWh let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Chi tiết thuê bao</h5>
-      <button
-        type="button"
-        class="close"
-        (click)="modalClose()"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" tabindex="0" ngbAutofocus>
-      <div>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Số thuê bao</th>
-              <th>Gói cước</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of listDiscount">
-              <td>
-                {{ item?.start_money | formatPrice }} -
-                {{ item?.end_money | formatPrice }}
-              </td>
-              <td>
-                {{ item?.value }} <span *ngIf="item?.unit == 'RATIO'">%</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button
-        (click)="modalClose()"
-        type="submit"
-        class="btn btn-primary"
-        rippleEffect
-      >
-        Đóng
-      </button>
-    </div>
-  </ng-template>
   
