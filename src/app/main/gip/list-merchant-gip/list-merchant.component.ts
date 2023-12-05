@@ -148,7 +148,7 @@ export class ListMerchantComponent implements OnInit {
 
   getData(): void {
     this.sectionBlockUI.start();
-    this.gipService.getTasks(this.searchForm).subscribe(res => {
+    this.userService.getAllMerchant(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       // this.totalPage = res.data.count;

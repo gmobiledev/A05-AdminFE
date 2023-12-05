@@ -12,7 +12,8 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { CodeInputModule } from 'angular-code-input';
 import { CallHistoryComponent } from './call-history/call-history.component';
 import { ManageListComponent } from './manage-list/manage-list.component';
-import { ListMerchantComponent } from './list-merchant/list-merchant.component';
+import { ListMerchantComponent } from './list-merchant-gip/list-merchant.component';
+import { GipTaskComponent } from './gip-task/gip-task.component';
 
 const routes: Routes = [
 
@@ -29,6 +30,11 @@ const routes: Routes = [
     component: ListMerchantComponent
   },
 
+  {
+    path: 'task',
+    component: GipTaskComponent
+  },
+
 
 ];
 
@@ -37,7 +43,8 @@ const routes: Routes = [
   declarations: [
     CallHistoryComponent,
     ManageListComponent,
-    ListMerchantComponent
+    ListMerchantComponent,
+    GipTaskComponent
   ],
   imports: [
     CommonModule,
