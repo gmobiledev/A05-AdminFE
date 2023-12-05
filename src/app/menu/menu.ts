@@ -263,20 +263,20 @@ export const menu: CoreMenu[] = [
         url: 'gip/call-history'
       },
       {
-        id: 'g-info',
-        title: 'Thông tin cấu hình',
+        id: 'g-merchant',
+        title: 'Danh sách merchant',
         translate: '',
         type: 'item',
         icon: 'database',
-        url: 'gip/info'
+        url: 'gip/merchant'
       },
       {
-        id: 'g-enable',
-        title: 'Kích hoạt đối tác',
+        id: 'g-task',
+        title: 'Yêu cầu Gip',
         translate: '',
         type: 'item',
         icon: 'database',
-        url: 'gip/enable'
+        url: 'gip/task'
       },
     ]
   },
