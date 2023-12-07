@@ -1,10 +1,13 @@
 <div class="pl-3 pr-3">
     <div class="row mb-4">
+
         <div class="col-md-12">
             <h4>Thông tin thuê bao - {{msisdn?.msisdn}}</h4>
             <h5>Loại thuê bao: {{ data?.customer?.customer_type }}</h5>
         </div>
-        <div class="col-md-6 border" *ngIf="data?.customer?.customer_type == 'ORGANIZATION'">
+        <div class=""
+        [ngClass]="view == 'full' ? 'col-md-12 border' : 'col-md-6 border'" *ngIf="data?.customer?.customer_type == 'ORGANIZATION'">
+
             <div class="row mb-2  p-2">
                 <div class="col-md-12">
                     <span><label>Tên tổ chức: </label>{{data?.customer?.name}}</span>
@@ -18,7 +21,8 @@
             </div>
 
         </div>
-        <div class="col-md-6 border">
+        <div class=""
+        [ngClass]="view == 'full' ? 'col-md-12 border' : 'col-md-6 border'">
             <div class="row mb-2  p-2">
 
                 <div class="col-md-6 col-sm-12 mb-1">

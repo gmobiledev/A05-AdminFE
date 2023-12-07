@@ -58,7 +58,26 @@
 
   <div class="row mb-4">
     <div class="col-md-6 border">
-      <div class="row mb-2 p-2">
+      <app-thong-tin-thue-bao *ngIf="checkMsisdnTaskGsim(data)" [msisdn]="data.msisdn.msisdns[0]"
+      [view]="'full'"
+      [service]="'gtalk'"></app-thong-tin-thue-bao>
+      <div class="row" *ngIf="checkMsisdnTaskGsim(data)">
+        <div class="col-md-6" style="height: 250px; overflow: hidden">
+          <label for="">{{ titleDocumentImage }}</label>
+          <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{ data?.task?.document_image }}"
+            alt="avatar img" />
+          <p class="hide_content"></p>
+        </div>
+
+        <div class="col-md-6" style="height: 250px; overflow: hidden">
+          <label for="">Ảnh chữ ký</label>
+          <img class="img-fluid rounded mb-75" src="data:image/png;base64,{{
+            data?.task?.signature
+          }}" alt="avatar img" />
+          <p class="hide_content"></p>
+        </div>
+      </div>
+      <div class="row mb-2 p-2" *ngIf="!checkMsisdnTaskGsim(data)">
         <div
           class="col-md-12"
           *ngIf="data.task.action == listTaskAction['change_sim']['value']"
@@ -189,6 +208,7 @@
               data?.customer?.people?.identification_back_file
             }}" alt="avatar img" />
         </div>
+
         <div class="col-md-6">
           <label for="">Ảnh chữ ký</label>
           <img (click)="onViewImage(modalImage, 'signature')" class="img-fluid rounded mb-75" src="data:image/png;base64,{{
@@ -555,7 +575,7 @@
 
     <div class="col-md-12">
       <div class="col-md-12 text-center mb-1">
-        <a class="ml-2 btn btn-info" (click)="modalOpen(modalAttachments)">
+        <a class="ml-2 btn btn-info" (click)="modalOpen(modalAttachments, null, 'xl')">
           <i data-feather="eye" class="text-white cursor-pointer"></i>          
             Xem các tệp đính kèm
         </a>

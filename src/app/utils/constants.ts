@@ -82,6 +82,10 @@ export class TaskTelecom {
         GSIM_TO_SIM: {
             value: 'GSIM_TO_SIM',
             label: 'GSIM sang SIM'
+        },
+        CANCEL_SUBCRIBER: {
+            value: 'cancel_subcriber',
+            label: 'Hủy sim'
         }
     };
 }

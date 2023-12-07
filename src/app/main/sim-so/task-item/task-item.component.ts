@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'app/auth/service/admin.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
-import { MsisdnStatus, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { MsisdnStatus, TaskAction, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import JSZip from 'jszip';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -949,11 +949,11 @@ export class TaskItemComponent implements OnInit {
 
   }
 
-  async modalOpen(modal, item = null) {
+  async modalOpen(modal, item = null, size = 'lg') {
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: 'modal modal-primary',
-      size: 'lg',
+      size: size,
       backdrop: 'static',
       keyboard: false
     });
@@ -1020,5 +1020,9 @@ export class TaskItemComponent implements OnInit {
       });
   }
 
+  checkMsisdnTaskGsim(data) {
+    return data.task.action == this.listTaskAction.CANCEL_SUBCRIBER.value &&
+    data.msisdn.msisdns[0] && data.msisdn.msisdns[0].mno == 'GSIM' ? true : false;
+  }
 
 }
