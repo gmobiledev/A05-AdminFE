@@ -161,13 +161,13 @@ export class GipTaskComponent implements OnInit {
               return;
             }
             this.itemBlockDetailUI.stop();
-            this.router.navigateByUrl('/sim-so/task/' + item.id);
+            this.router.navigateByUrl('/gip/task/' + item.id);
           } catch (error) {
             this.itemBlockDetailUI.stop();
             return;
           }
         } else {
-          this.router.navigateByUrl('/sim-so/task/' + item.id);
+          this.router.navigateByUrl('/gip/task/' + item.id);
         }
         return;
       }
@@ -289,13 +289,13 @@ export class GipTaskComponent implements OnInit {
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
+    this.router.navigate(['/gip/task'], { queryParams: this.searchForm });
   }
 
   viewDetailSummary(array_status, action) {
     this.searchForm.action = action;
     this.searchForm.array_status = array_status;
-    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
+    this.router.navigate(['/gip/task'], { queryParams: this.searchForm });
   }
 
   initActiveBoxSummary() {
@@ -340,7 +340,7 @@ export class GipTaskComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
-    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
+    this.router.navigate(['/gip/task'], { queryParams: this.searchForm });
   }
 
   onSubmitExportExcelReport() {
@@ -467,17 +467,12 @@ export class GipTaskComponent implements OnInit {
       //   return;
       // }
     }
-    // this.telecomService.getAllTaskWorking(this.searchForm).subscribe(res => {
-    //   this.list = res.data.items;
-    //   this.totalItems = res.data.count;
-    // });
-    this.telecomService.getAllTask(this.searchForm).subscribe(res => {
+    
+    this.gipService.getTasks(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.totalItems = res.data.count;
     });
-    this.telecomService.getSummary().subscribe(res => {
-      this.summaryTask = res.data;
-    })
+    
   }
 
   getDetail(item) {

@@ -17,10 +17,11 @@ export class ListMerchantComponent implements OnInit {
 
   public modalRef: any;
   public contentHeader: any;
-  public list: any;
+  public list: any = []
   public totalPage: number;
   public page: number = 1;
   public pageSize: number;
+  listBalances: [] = []
   
   public searchForm = {
     keyword: '',
@@ -98,6 +99,22 @@ export class ListMerchantComponent implements OnInit {
     }
   }
 
+  modalBalanceOpen(modal, item) {
+    this.userService.getMerchantBalances(item.id).subscribe(res => {
+      if(!res.status) {
+        this.alertService.showMess(res.message);
+        return;
+      }
+      this.listBalances = res.data
+
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    })
+  }
+
   modalOpen(modal, item = null) {    
     if(item) {
       this.selectedUser = item;
@@ -127,7 +144,7 @@ export class ListMerchantComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách merchant',
+      headerTitle: 'Danh sách merchant GIP',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -138,7 +155,7 @@ export class ListMerchantComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách merchant',
+            name: 'Danh sách merchant GIP',
             isLink: false
           }
         ]
@@ -148,7 +165,7 @@ export class ListMerchantComponent implements OnInit {
 
   getData(): void {
     this.sectionBlockUI.start();
-    this.userService.getAllMerchant(this.searchForm).subscribe(res => {
+    this.gipService.getAllMerchant(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       // this.totalPage = res.data.count;

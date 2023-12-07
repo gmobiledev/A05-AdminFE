@@ -14,6 +14,7 @@ import { CallHistoryComponent } from './call-history/call-history.component';
 import { ManageListComponent } from './manage-list/manage-list.component';
 import { ListMerchantComponent } from './list-merchant-gip/list-merchant.component';
 import { GipTaskComponent } from './gip-task/gip-task.component';
+import { GipPackageComponent } from './gip-package/gip-package.component';
 
 const routes: Routes = [
 
@@ -31,6 +32,10 @@ const routes: Routes = [
   },
 
   {
+    path: 'package',
+    component: GipPackageComponent
+  },
+  {
     path: 'task',
     component: GipTaskComponent
   },
@@ -44,12 +49,13 @@ const routes: Routes = [
     CallHistoryComponent,
     ManageListComponent,
     ListMerchantComponent,
-    GipTaskComponent
+    GipTaskComponent,
+    GipPackageComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes), 
-    NgbModule, 
+    RouterModule.forChild(routes),
+    NgbModule,
     FormsModule,
     ReactiveFormsModule,
     CoreCommonModule,

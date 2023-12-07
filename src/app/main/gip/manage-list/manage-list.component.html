@@ -95,10 +95,8 @@
                     <th>ID</th>
                     <th>Số thuê bao</th>
                     <th>Gói cước</th>
-                    <th>Ngày tạo</th>
-                    <th>Ngày nạp</th>
-                    <th>Thuê bao tính cước</th>
                     <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
                     <th>Thao tác</th>
                   </tr>
                 </thead>
@@ -108,21 +106,12 @@
                     <td>
                       {{ item?.msisdn }}
                     </td>
-
                     <td>{{ item?.cuoc }} GM69</td>
                     <td>
-                      {{ item?.created_at | formatDate }}
-                    </td>
-
-                    <td>
-                      {{ item?.updated_at | formatDate }}
-                    </td>
-                    <td>
-                      {{ item?.port }}
-                    </td>
-
-                    <td>
                       <div [innerHTML]="item?.state | showStatusTask"></div>
+                    </td>
+                    <td>
+                      {{ item?.created_at | formatDate }}
                     </td>
 
                     <td>

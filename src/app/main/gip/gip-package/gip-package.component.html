@@ -1,0 +1,110 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" name="name" [(ngModel)]="searchForm.mobile"
+                                            class="form-control" placeholder="Nhập tên gói cước" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                                            <option value="">Chọn trạng thái</option>
+                                            <option value="1">Kích hoạt</option>
+                                            <option value="0">Khóa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-info">
+                                            Lọc kết quả <span [data-feather]="'search'"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <span>Tổng số:</span> <b>{{ totalItems || 0 }}</b>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>ID</th>
+                                        <th>Giá</th>
+                                        <th>Gọi ra Viettel</th>
+                                        <th>Gọi ra Mobifone</th>
+                                        <th>Gọi ra Vinaphone</th>
+                                        <th>Gọi ra Vietnamobile</th>
+                                        <th>Gọi ra Gmobile</th>
+                                        <th>Khoảng thời gian</th>
+                                        <th>Expire Date</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list; let i = index">
+                                        <td>
+                                            {{
+                                            (searchForm.page - 1) * searchForm.page_size + (i + 1)
+                                            }}
+                                        </td>
+                                        <td>
+                                            {{ item.bundle_id }}
+                                        </td>
+                                        <td>
+                                            {{ item.price }}
+                                        </td>
+                                        <td>
+                                            {{ item.rate_viettel }}
+                                        </td>
+                                        <td>
+                                            {{ item.rate_mobifone }}
+                                        </td>
+                                        <td>
+                                            {{item.rate_vinaphone}}
+                                        </td>
+                                        <td>
+                                            {{item.rate_vietnamobile}}
+                                        </td>
+
+                                        <td>
+                                            {{item.rate_gmobile}}
+                                        </td>
+                                        <td>
+                                            {{item.interval}}
+                                        </td>
+                                        <td>
+                                            {{ item.expire_date }}
+                                        </td>
+
+                                        <td>
+                                            {{item.is_active}}
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

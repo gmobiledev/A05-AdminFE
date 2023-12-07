@@ -247,8 +247,16 @@ export const menu: CoreMenu[] = [
     },
     children: [
       {
+        id: 'g-merchant',
+        title: 'Merchant GIP',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gip/merchant'
+      },
+      {
         id: 'list',
-        title: 'Danh sách thuê bao',
+        title: 'Thuê bao GIP',
         translate: '',
         type: 'item',
         icon: 'database',
@@ -262,21 +270,22 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'gip/call-history'
       },
-      {
-        id: 'g-merchant',
-        title: 'Danh sách merchant',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gip/merchant'
-      },
+     
       {
         id: 'g-task',
-        title: 'Yêu cầu Gip',
+        title: 'Task',
         translate: '',
         type: 'item',
         icon: 'database',
         url: 'gip/task'
+      },
+      {
+        id: 'g-task',
+        title: 'Gói cước GIP',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gip/package'
       },
     ]
   },

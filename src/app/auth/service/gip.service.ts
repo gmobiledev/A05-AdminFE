@@ -16,6 +16,10 @@ export class GipService {
   getAllGip(params = null) {
     return this._http.get<any>(`${environment.apiGipUrl}/gip-admin/msisdn`, { params: params });
   }
+  getAllMerchant(params = null) {
+    return this._http.get<any>(`${environment.apiGipUrl}/gip-admin/merchant`, {params: params});
+  }
+  
 
   getCallHistory(params: any = null) {
     return this._http.get<any>(`${environment.apiGipUrl}/gip-admin/msisdn/cdrs`, { params: params });
