@@ -91,7 +91,7 @@
                     <td>
                       {{ item?.created_at | date : "dd/MM/yyyy" }}
                     </td>
-                    <td>
+                    <td class="d-inline-flex">
                       <!-- <a
                         class="ml-1"
                         (click)="modalOpen(modalCreate, item)"
@@ -114,7 +114,7 @@
                         ></i>
                       </a>
                       <a
-                        class="ml-2"
+                        class="ml-1"
                         (click)="modalOpen(modalUploadData, item)"
                         title="Tải dữ liệu lên lô"
                       >
@@ -125,7 +125,7 @@
                       </a>
 
                       <a
-                        class="ml-2"
+                        class="ml-1"
                         [routerLink]="['/inventory/list-batch']"
                         [queryParams]="{ batch_id: item.id }"
                         title="Xem danh sách"
@@ -298,9 +298,6 @@
       />
       <label>Tải lên file chứng từ</label>
 
-      <!-- <a href="/assets/data_upload_account.xls" class="ml-2"
-        >File mẫu tại đây</a
-      > -->
     </div>
   </div>
   <div class="modal-footer">
@@ -343,15 +340,25 @@
     </div>
 
     <div class="row">
-      <div class="col-12">Ảnh yêu cầu (nếu có)</div>
+      <div class="col-12">File đính kèm</div>
 
-      <div class="col-6" *ngFor="let item of itemBatch.file">
+      <div class="col-12" *ngFor="let item of itemBatch.file">
         <img
-          *ngIf="item.ext == 'png'"
+        *ngIf="item.ext.includes('png') || item.ext.includes('jpg') || item.ext.includes('jpeg')"
           src="data:image/png;base64,{{ item.base64 }}"
           alt=""
           class="img-fluid"
         />
+
+        <div *ngIf="item.ext.includes('pdf') && item.base64">
+          <pdf-viewer [src]="'data:application/pdf;base64,'+item.base64"
+              [render-text]="true"
+              [original-size]="false"
+              [external-link-target]="'blank'"
+              style="height: 500px"
+            ></pdf-viewer>
+        </div>
+
       </div>
     </div>
   </div>

@@ -12,6 +12,7 @@ import { BatchSimComponent } from './batch-sim/batch-sim.component';
 import { BatchGtalkComponent } from './batch-gtalk/batch-gtalk.component';
 import { ChannelComponent } from './channel/channel.component';
 import { ListBatchSimComponent } from './list-batch-sim/list-batch-sim.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const routes: Routes = [
   {
@@ -49,6 +50,7 @@ const routes: Routes = [
     CoreCommonModule, 
     ContentHeaderModule,
     BlockUIModule.forRoot(),
+    PdfViewerModule,
     NgxDaterangepickerMd.forRoot()
   ]
 })
