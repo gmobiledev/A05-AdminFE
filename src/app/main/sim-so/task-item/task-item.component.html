@@ -59,10 +59,7 @@
   <div class="row mb-4">
     <div class="col-md-6 border">
       <div class="row mb-2 p-2">
-        <div
-          class="col-md-12"
-          *ngIf="data.task.action == listTaskAction['change_sim']['value']"
-        >
+        <div class="col-md-12" *ngIf="data.task.action == listTaskAction['change_sim']['value']">
           <h4>Thông tin KH đã đăng ký</h4>
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
@@ -207,12 +204,8 @@
         data.task.action == listTaskAction['new_sim']['value']
           ? 'height: 600px; overflow-y: auto'
           : ''
-      "
-    >
-      <div
-        class="row mb-2 p-2"
-        *ngIf="data.task.action == listTaskAction['change_sim']['value']"
-      >
+      ">
+      <div class="row mb-2 p-2" *ngIf="data.task.action == listTaskAction['change_sim']['value']">
         <div class="col-md-12">
           <h4>Thông tin KH để xác thực</h4>
         </div>
@@ -241,10 +234,7 @@
       </div>
 
       <!-- Cập nhật TTTB dữ liệu mới -->
-      <div
-        class="row mb-2 p-2"
-        *ngIf="data.task.action == listTaskAction['change_info']['value']"
-      >
+      <div class="row mb-2 p-2" *ngIf="data.task.action == listTaskAction['change_info']['value']">
         <div class="col-12">
           <h4 *ngIf="data.task.status != taskTelecomStatus.STATUS_SUCCESS">Thông tin mới</h4>
           <h4 *ngIf="data.task.status == taskTelecomStatus.STATUS_SUCCESS">Thông tin trước khi cập nhật</h4>
@@ -286,7 +276,7 @@
                 }}</span>
             </a></span>
         </div>
-        
+
         <div class="col-md-6 col-sm-12 mb-1">
           <span><u>Họ và tên</u>:
             <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people_history?.name"
@@ -326,7 +316,7 @@
                       data?.people_history?.identification_front_file
                     }}" alt="avatar img" />
         </div>
-        
+
         <div class="col-md-6 mt-1">
           <label for="">Ảnh chân dung</label>
           <img (click)="onViewImage(modalImage, 'selfie')" class="img-fluid rounded mb-75" src="data:image/png;base64,{{
@@ -395,8 +385,7 @@
         </div>
       </div>
       <div class="row mb-2">
-        <a class="ml-2 btn btn-info" (click)="modalOpen(modalUpload)"
-          *ngIf=" checkAction('telecom-admin/task/upload-old-indetification-docs') 
+        <a class="ml-2 btn btn-info" (click)="modalOpen(modalUpload)" *ngIf=" checkAction('telecom-admin/task/upload-old-indetification-docs') 
           && (data.task.sub_action ==
           listTaskAction['TYPE_2G_CONVERSION']['value'] ||
           data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value'])
@@ -406,14 +395,8 @@
         </a>
       </div>
 
-      <div
-        class="row mb-2 p-2 border-bottom"
-        *ngFor="let itemN of data?.msisdn?.msisdns"
-      >
-        <div
-          class="col-md-12"
-          *ngIf="data.task.action == listTaskAction['change_sim']['value']"
-        >
+      <div class="row mb-2 p-2 border-bottom" *ngFor="let itemN of data?.msisdn?.msisdns">
+        <div class="col-md-12" *ngIf="data.task.action == listTaskAction['change_sim']['value']">
           <h4>Thông tin đã đấu nối</h4>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 mb-2">
@@ -502,10 +485,7 @@
         </div>
 
         <div class="col-md-12">
-          <div
-            class="row"
-            *ngIf="data.task.action == listTaskAction['change_sim']['value']"
-          >
+          <div class="row" *ngIf="data.task.action == listTaskAction['change_sim']['value']">
             <div class="col-md-12">
               <h4>Thông tin cập nhật</h4>
             </div>
@@ -531,10 +511,7 @@
           </div>
         </div>
         <div class="col-md-12">
-          <div
-            class="row"
-            *ngIf="data.task.action == listTaskAction['change_sim']['value']"
-          >
+          <div class="row" *ngIf="data.task.action == listTaskAction['change_sim']['value']">
             <div class="col-md-12">
               <h4>Các số thường xuyên liên lạc</h4>
             </div>
@@ -596,12 +573,8 @@
         </a>
 
         <button *ngIf="(data.task.status==2 || data.task.status ==30)
-        && (data.task.action ==
-        listTaskAction['new_sim']['value'])
-        " 
-        class="ml-2 btn btn-primary"  rippleEffect (click)="onChangeCmndToCccd()">Đổi CMND-CCCD</button>
-
-
+        && (['GSIM_TO_SIM', '2G_CONVERSION'].includes(data.task.sub_action))
+        " class="ml-2 btn btn-primary" rippleEffect (click)="onChangeCmndToCccd()">Đổi CMND-CCCD</button>
         <a *ngIf="data.task.status == 1" class="ml-2 btn btn-primary" (click)="sendCallback(item)">
           <i data-feather="send" class="text-white cursor-pointer"></i>
           <span> Callback </span>
@@ -623,22 +596,9 @@
   <div class="row mb-2" *ngIf="data.task.note">
     <span>Note: </span> {{ data.task.note }}
   </div>
-  <div class="row pull-right" *ngIf="
-      currentUserId == data?.task?.sync_by &&
-      data.task.status != taskTelecomStatus.STATUS_SUCCESS &&
-      typeDetail != 'msisdn'
-    ">
-    <!-- <a class="btn btn-info mr-3" (click)="onSendMessage(data.task)">
-        <i data-feather="message-square" class="text-white cursor-pointer"></i>
-        Phản hồi cho đại lý
-    </a> -->
-    <!-- <div *ngIf="data.task.status == taskTelecomStatus.STATUS_PROCESSING">
-        <a class="ml-2 btn btn-info" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_PROCESS_TO_MNO)">
-            <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-            Đẩy sang nhà mạng
-        </a>
-    </div> -->
-    <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
+  <div class="row pull-right">
+    <ng-container *ngIf="isValidAsyncBy(data.task)">
+      <div *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
     checkAction('telecom-admin/task/:slug(\\d+)/'+data?.task?.action+'/update-status')
     && data.task.action !=
     listTaskAction['new_sim']['value']
@@ -654,47 +614,44 @@
           <i data-feather="slash" class="text-white cursor-pointer"></i>
           Từ chối yêu cầu
         </a>
-    </div>
-    <div
-      *ngIf="
+      </div>
+      <div *ngIf="
         data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
         checkAction('telecom-admin/task/:slug(\\d+)/update-status') &&
         (
           data.task.action == listTaskAction['change_user_info']['value'] ||
           data.task.action == listTaskAction['new_sim']['value'])
       ">
-      <a class="ml-2 btn btn-success" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)">
-        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
-        <span
-          *ngIf="data.task.action == listTaskAction['change_sim']['value']"
-        >
-          Cập nhật thành công
-        </span>
-        <span *ngIf="
+        <a class="ml-2 btn btn-success" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)">
+          <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+          <span *ngIf="data.task.action == listTaskAction['change_sim']['value']">
+            Cập nhật thành công
+          </span>
+          <span *ngIf="
             data.task.action == listTaskAction['new_sim']['value'] &&
             data?.msisdn?.msisdns.length < 2
           ">
-          Đấu nối thành công
-        </span>
-        <span *ngIf="
+            Đấu nối thành công
+          </span>
+          <span *ngIf="
             data.task.action == listTaskAction['new_sim']['value'] &&
             data?.msisdn?.msisdns.length > 1
           ">
-          Đấu nối thành công tất cả
-        </span>
-      </a>
-      <a class="ml-2 btn btn-success" (click)="asyncToMnoViaApi(data.task)">
-        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
-        <span> Đồng bộ thông tin thuê bao qua API </span>
-      </a>
-      <a class="ml-2 btn btn-info" *ngIf="data?.msisdn?.msisdns.length > 1" (click)="
+            Đấu nối thành công tất cả
+          </span>
+        </a>
+        <a class="ml-2 btn btn-success" (click)="asyncToMnoViaApi(data.task)">
+          <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+          <span> Đồng bộ thông tin thuê bao qua API </span>
+        </a>
+        <a class="ml-2 btn btn-info" *ngIf="data?.msisdn?.msisdns.length > 1" (click)="
           onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS_PART)
         ">
-        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
-        <span> Đấu thành công 1 phần </span>
-      </a>
-    </div>
-    <div *ngIf="
+          <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+          <span> Đấu thành công 1 phần </span>
+        </a>
+      </div>
+      <div *ngIf="
         checkAction('telecom-admin/task/:slug(\\d+)/update-status') &&
         (data?.task?.status == taskTelecomStatus.STATUS_PROCESSING ||
           data?.task?.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO)
@@ -703,42 +660,44 @@
           data.task.action == listTaskAction['change_user_info']['value'] ||
           data.task.action == listTaskAction['new_sim']['value'])
       ">
-      <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_REJECT)">
-        <i data-feather="slash" class="text-white cursor-pointer"></i>
-        <!-- <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
+        <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_REJECT)">
+          <i data-feather="slash" class="text-white cursor-pointer"></i>
+          <!-- <span *ngIf="data.task.action == listTaskAction['change_info']['value']">
                 Cập nhật thất bại
             </span>
             <span *ngIf="data.task.action == listTaskAction['new_sim']['value']">
                 Đấu nối thất bại
             </span> -->
-        Từ chối yêu cầu
-      </a>
-    </div>
+          Từ chối yêu cầu
+        </a>
+      </div>
 
-    <div *ngIf="
-        checkAction('telecom-admin/task/approve-2g-conversion') &&
-        (data.task.sub_action ==
-          listTaskAction['TYPE_2G_CONVERSION']['value'] ||
-          data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value'])
-      ">
-      <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT" class="ml-2 btn btn-success"
-        (click)="onUpdateStatus2G(item, 1)">
-        <i data-feather="check" class="text-white cursor-pointer"></i>
-        Duyệt
-      </a>
+      <div>
+        <ng-container *ngIf="
+      checkAction('telecom-admin/task/approve-2g-conversion') &&
+      (data.task.sub_action ==
+        listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+        data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value'])
+    ">
+          <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT" class="ml-2 btn btn-success"
+            (click)="onUpdateStatus2G(item, 1)">
+            <i data-feather="check" class="text-white cursor-pointer"></i>
+            Duyệt
+          </a>
 
-      <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT" class="ml-2 btn btn-danger"
-        (click)="onUpdateStatus2G(item, -1)">
-        <i data-feather="slash" class="text-white cursor-pointer"></i>
-        Từ chối
-      </a>
-
-      <a *ngIf="data.task.status == taskTelecomStatus.STATUS_WAITING_SIM" class="ml-2 btn btn-info"
-        (click)="onUploadSimInfo(item)">
-        <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-        Tiếp tục
-      </a>
-    </div>
+          <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT" class="ml-2 btn btn-danger"
+            (click)="onUpdateStatus2G(item, -1)">
+            <i data-feather="slash" class="text-white cursor-pointer"></i>
+            Từ chối
+          </a>
+        </ng-container>
+      </div>
+    </ng-container>
+    <a *ngIf="data.task.status == taskTelecomStatus.STATUS_WAITING_SIM" class="ml-2 btn btn-info"
+      (click)="onUploadSimInfo(item)">
+      <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+      Tiếp tục
+    </a>
 
     <!-- <div *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL && data.task.status != taskTelecomStatus.STATUS_SUCCESS">
         <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_CANCEL)">

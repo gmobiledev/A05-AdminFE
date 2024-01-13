@@ -46,7 +46,7 @@
                                         <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
                                                 [data-feather]="'search'"></span></button>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                         </form>
                         <div class="table-responsive" *blockUI="'section-block'">
@@ -59,6 +59,7 @@
                                         <th>STT</th>
                                         <th>Số thuê bao</th>
                                         <th>Nhà mạng</th>
+                                        <th>Hạng số</th>
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
@@ -75,9 +76,12 @@
                                         <td>
                                             {{item.brand}}
                                         </td>
-                                       
                                         <td>
-                                            <div [innerHTML]="item.status | showStatusSim"></div>        
+                                            {{item.level}}
+                                        </td>
+
+                                        <td>
+                                            <div [innerHTML]="item.status | showStatusSim"></div>
                                         </td>
                                         <td>
                                             <!-- <div>
@@ -129,10 +133,10 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-        <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-            <app-thong-tin-thue-bao [msisdn]="selectedItem" [service]="'gtalk'"></app-thong-tin-thue-bao>
-        </div>
-    
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <app-thong-tin-thue-bao [msisdn]="selectedItem" [service]="'gtalk'"></app-thong-tin-thue-bao>
+    </div>
+
 </ng-template>
 
 <ng-template #modalViewAgent let-modal>
