@@ -12,6 +12,9 @@ export enum TaskTelecomStatus {
     STATUS_NEW_ORDER = 5,
     STATUS_SUCCESS_PART = 11,  // THành công 1 phần
     STATUS_INIT_2G_GSIM = 20,
+    STATUS_PAID_WAITING_EKYC = 25, //Đã thanh toán Chờ ekyc
+    STATUS_PAID_SUSPENDING = 26, // Chuẩn bị thu hồi
+    STATUS_PAID_TERMINATED = 27, //Đã thu thồi
     STATUS_APPROVED = 30, //chấp nhận từ 30-39, duyệt từ lớn đến bé
     STATUS_APPROVED_1 = 31, 
     STATUS_APPROVED_2 = 32,
