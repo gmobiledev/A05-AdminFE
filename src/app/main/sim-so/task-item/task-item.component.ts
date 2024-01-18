@@ -964,6 +964,10 @@ export class TaskItemComponent implements OnInit {
     this.modalRef.close();
   }
 
+  isValidAsyncBy(task){
+    return this.currentUserId == task.sync_by && task.status != TaskTelecomStatus.STATUS_SUCCESS &&  this.typeDetail != 'msisdn'
+  }
+
   onUploadImages() {
     this.modalClose();
     this.getData();

@@ -1,109 +1,6 @@
 <div class="content-wrapper container-xxl p-0">
   <div class="content-body">
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
-
-    <!-- <div class="row box-summary">
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxNewInit}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_new_sim }} đấu nối sim mới</h5>
-                <p class="card-text font-small-3 mb-1">Mới khởi tạo</p>
-                <a (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.new_sim.value)">Xem
-                  chi
-                  tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxNewProcessing}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                  
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_new_sim }} đấu nối sim mới</h5>
-                <p class="card-text font-small-3 mb-1">Đang xử lý</p>
-                <a
-                  (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.new_sim.value)">Xem
-                  chi tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxChangeSimInit}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                  
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_change_info }} đổi sim</h5>
-                <p class="card-text font-small-3 mb-1">Mới tạo</p>
-                <a (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.change_info.value)">Xem
-                  chi tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxChangeSimProcessing}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                 
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_change_info }} đổi sim</h5>
-                <p class="card-text font-small-3 mb-1">Đang xử lý</p>
-                <a
-                  (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.change_info.value)">Xem
-                  chi tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="row mb-2">
-      <div class="col-md-3">
-        <button type="button" (click)="onGetAvaiable(modalItem)" class="btn btn-block btn-info">Tiếp nhận yêu cầu
-          mới<span [data-feather]="'arrow-up-circle'"></span></button>
-      </div>
-    </div> -->
-
     <div class="row" id="table-striped">
       <div class="col-12">
         <div class="card">
@@ -126,8 +23,6 @@
                       <option value="PERSONAL">Cá nhân</option>
                       <option value="ORGANIZATION">Doanh nghiệp</option>
                     </select>
-                    <!-- <input type="text" name="customer_name" [(ngModel)]="searchForm.customer_name" class="form-control"
-                      placeholder="Tên khách hàng"> -->
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -139,8 +34,6 @@
                       <option value="change_info">Cập nhật TTTB</option>
                       <option value="cancel_subcriber">Hủy SIM</option>
                     </select>
-                    <!-- <input type="text" name="customer_name" [(ngModel)]="searchForm.customer_name" class="form-control"
-                      placeholder="Tên khách hàng"> -->
                   </div>
                 </div>
 
@@ -178,18 +71,10 @@
                       <option value="">-- Lọc thêm --</option>
                       <option value="GSIM_TO_SIM">Gsim sang SIM</option>
                       <option value="2G_CONVERSION">2G sang 4G</option>
+                      <option value="S198">S198</option>
                     </select>
                   </div>
                 </div>
-                <!-- <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" name="status" [(ngModel)]="searchForm.action">
-                    <option value="">Chọn trạng thái</option>
-                    <option value="1">Đang hoạt động</option>
-                    <option value="0">Đang khóa</option>
-                  </select>
-                </div>
-              </div> -->
                 <div class="col-md-2">
                   <div class="">
                     <label for="" style="font-size: 1rem">Tôi đang thực hiện</label>

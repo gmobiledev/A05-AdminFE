@@ -236,6 +236,62 @@ export const menu: CoreMenu[] = [
 
   {
     id: 'users',
+    title: 'GIP',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '4',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'g-merchant',
+        title: 'Merchant GIP',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gip/merchant'
+      },
+      {
+        id: 'list',
+        title: 'Thuê bao GIP',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gip/list'
+      },
+      {
+        id: 'g-call',
+        title: 'Lịch sử cuộc gọi',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gip/call-history'
+      },
+     
+      {
+        id: 'g-task',
+        title: 'Task',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gip/task'
+      },
+      {
+        id: 'g-task',
+        title: 'Gói cước GIP',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'gip/package'
+      },
+    ]
+  },
+
+  {
+    id: 'users',
     title: 'Khác',
     translate: '',
     type: 'collapsible',
