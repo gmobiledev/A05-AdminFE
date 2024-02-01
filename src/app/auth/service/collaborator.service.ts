@@ -20,7 +20,20 @@ export class CollaboratorService {
     return this._http.get<any>(`${environment.apiUrl}/admin/collaborator`, { params: params });
   }
 
+  create(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/collaborator`, data);
+  }
 
+  update(data, id) {
+    return this._http.patch<any>(`${environment.apiUrl}/admin/collaborator/${id}`, data);
+  }
 
+  updateStatus(data, id) {
+    return this._http.patch<any>(`${environment.apiUrl}/admin/collaborator/${id}/status`, data);
+  }
+
+  delete(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/collaborator/${id}`);
+  }
 
 }

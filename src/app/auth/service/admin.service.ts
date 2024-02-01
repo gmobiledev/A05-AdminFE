@@ -63,4 +63,17 @@ export class AdminService {
   reportTask(params = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/report`, {params: params});
   }
+
+  getContries(){
+    return this._http.get<any>(`${environment.apiUrl}/area/countries`);
+  }
+  getProvinces(){
+    return this._http.get<any>(`${environment.apiUrl}/area/get-provinces`);
+  }
+  getDistricts(provinceId: number){
+    return this._http.get<any>(`${environment.apiUrl}/area/get-districts/${provinceId}`);
+  }
+  getCommunes(districtId: number){
+    return this._http.get<any>(`${environment.apiUrl}/area/get-communes/${districtId}`);
+  }
 }
