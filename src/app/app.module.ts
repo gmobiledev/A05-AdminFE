@@ -146,6 +146,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'collaborator',
+    loadChildren: () => import('./main/collaborator/collaborator.module').then(m => m.CollaboratorModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'dashboard',
     loadChildren: () => import('./main/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard]
