@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from 'app/auth/service/admin.service';
+import { CollaboratorService } from 'app/auth/service/collaborator.service';
 
 @Component({
   selector: 'app-list-collaborator',
@@ -47,10 +48,13 @@ export class ListCollaboratorComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private adminSerivce: AdminService,
+    private collaboratorSerivce: CollaboratorService,
+
   ) { }
 
-  ngOnInit(): void {   
-    this.initForm() ;
+  ngOnInit(): void {
+    this.initForm();
+    this.getData()
   }
 
   onSubmitSearch(): void {
@@ -62,46 +66,46 @@ export class ListCollaboratorComponent implements OnInit {
     this.router.navigate(['/collaborator'], { queryParams: this.searchForm })
   }
 
-  async onChangeResidenceProvince(id, init = null) {  
-    if(this.provinces.length > 0) {
-      this.residence['province'] = (this.provinces.find(item => item.id == id)).title;
-    }    
-    try {
-      const res = await this.adminSerivce.getDistricts(id).toPromise();
-      if (res.status == 1) {
-        if(!init) {
-          this.formGroup.controls['residence_district'].setValue('');
-        }
-        this.residence_districts = res.data;
-        this.residence_commues = []
-      }
-    } catch (error) {
-      
-    }
-  }
+  // async onChangeResidenceProvince(id, init = null) {  
+  //   if(this.provinces.length > 0) {
+  //     this.residence['province'] = (this.provinces.find(item => item.id == id)).title;
+  //   }    
+  //   try {
+  //     const res = await this.adminSerivce.getDistricts(id).toPromise();
+  //     if (res.status == 1) {
+  //       if(!init) {
+  //         this.formGroup.controls['residence_district'].setValue('');
+  //       }
+  //       this.residence_districts = res.data;
+  //       this.residence_commues = []
+  //     }
+  //   } catch (error) {
 
-  async onChangeResidenceDistrict(id, init = null) {
-    if(this.residence_districts.length > 0) {
-      this.residence['district'] = (this.residence_districts.find(item => item.id == id)).title;
-    }
-    try {
-      const res = await this.adminSerivce.getCommunes(id).toPromise();
-      if (res.status == 1) {
-        if(!init) {
-          this.formGroup.controls['residence_commune'].setValue('');
-        }
-        this.residence_commues = res.data
-      }
-    } catch (error) {
-      
-    }
-  }
-  
-  onChangeResidenceCommune(event) {
-    if(this.residence_commues.length > 0) {
-      this.residence['commune'] = (this.residence_commues.find(item => item.id == event)).title;
-    }
-  }
+  //   }
+  // }
+
+  // async onChangeResidenceDistrict(id, init = null) {
+  //   if(this.residence_districts.length > 0) {
+  //     this.residence['district'] = (this.residence_districts.find(item => item.id == id)).title;
+  //   }
+  //   try {
+  //     const res = await this.adminSerivce.getCommunes(id).toPromise();
+  //     if (res.status == 1) {
+  //       if(!init) {
+  //         this.formGroup.controls['residence_commune'].setValue('');
+  //       }
+  //       this.residence_commues = res.data
+  //     }
+  //   } catch (error) {
+
+  //   }
+  // }
+
+  // onChangeResidenceCommune(event) {
+  //   if(this.residence_commues.length > 0) {
+  //     this.residence['commune'] = (this.residence_commues.find(item => item.id == event)).title;
+  //   }
+  // }
 
   initForm() {
     this.formGroup = this.fb.group({
@@ -112,6 +116,17 @@ export class ListCollaboratorComponent implements OnInit {
       district: ['', Validators.required],
       commune: ['', Validators.required],
       address_street: [''],
+    })
+  }
+
+  getData(): void {
+    this.collaboratorSerivce.getAll(this.searchForm).subscribe(res => {
+      this.list = res.data.items;
+      this.total = res.data.count;
+      this.pageSize = res.data.pageSize;
+    }, error => {
+      console.log("ERRRR");
+      console.log(error);
     })
   }
 

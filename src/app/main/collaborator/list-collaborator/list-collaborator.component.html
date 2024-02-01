@@ -1,171 +1,110 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
-  
-      <div class="row" id="table-striped">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
-            </div>
-            <div class="card-body">
-              <form>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        name="mobile"
-                        [(ngModel)]="searchForm.mobile"
-                        class="form-control"
-                        placeholder="Nhập số điện thoại"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        name="id_no"
-                        [(ngModel)]="searchForm.id_no"
-                        class="form-control"
-                        placeholder="Số CCCD của KH"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        name="name"
-                        [(ngModel)]="searchForm.name"
-                        class="form-control"
-                        placeholder="Tên khách hàng"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <button
-                        type="button"
-                        class="btn btn-block btn-info"
-                        (click)="onSubmitSearch()"
-                      >
-                        Lọc kết quả
-                      </button>
-                    </div>
-                  </div>
-  
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <button
-                        type="button"
-                        class="btn btn-success mr-2"
-                        [routerLink]="['/customer/create/']"
-                      >
-                        Thêm khách hàng
-                      </button>
-                    </div>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control"
+                      placeholder="Nhập số điện thoại" />
                   </div>
                 </div>
-              </form>
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>ID khách hàng</th>
-                      <th>Tên khách hàng</th>
-                      <th>SĐT</th>
-                      <th>Loại khách hàng</th>
-                      <th>Thao tác</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of list">
-                      <td>{{ item?.id }}</td>
-                      <td>{{ item?.name }}</td>
-                      <td>
-                        {{ item?.mobile }}
-                      </td>
-                      <td>
-                        {{ item?.customer_type }}
-                      </td>
-  
-                      <td>
-                        <a
-                          ngbTooltip="Xem chi tiết"
-                          (click)="onViewDetail(modalDetail, item)"
-                        >
-                          <i
-                            data-feather="eye"
-                            class="text-primary cursor-pointer"
-                          ></i>
-                        </a>
-                        <a
-                          class="ml-2"
-                          ngbTooltip="Cập nhật thông tin"
-                          [routerLink]="['/customer/update/' + item?.id]"
-                        >
-                          <i
-                            data-feather="edit"
-                            class="text-primary cursor-pointer"
-                          ></i>
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-  
-                <ngb-pagination
-                  class="d-flex justify-content-end pr-3 pt-2"
-                  [collectionSize]="total"
-                  [(page)]="searchForm.page"
-                  [pageSize]="pageSize"
-                  [boundaryLinks]="true"
-                  (pageChange)="loadPage($event)"
-                >
-                  <ng-template ngbPaginationPages let-page let-pages="pages">
-                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
-                      <div class="mb-3 d-flex flex-nowrap px-2">
-                        <label
-                          id="paginationInputLabel"
-                          for="paginationInput"
-                          class="col-form-label me-2 ms-1"
-                          >Trang</label
-                        >
-                        <input
-                          #i
-                          type="text"
-                          inputmode="numeric"
-                          pattern="[0-9]*"
-                          class="form-control custom-pages-input"
-                          id="paginationInput"
-                          [value]="searchForm.page"
-                          (keyup.enter)="loadPage(i.value)"
-                          (blur)="loadPage(i.value)"
-                          (input)="formatInput($any($event).target)"
-                          aria-labelledby="paginationInputLabel paginationDescription"
-                          style="width: 2.5rem"
-                        />
-                        <span
-                          id="paginationDescription"
-                          class="col-form-label text-nowrap px-2"
-                        >
-                          của {{ pages.length }}</span
-                        >
-                      </div>
-                    </li>
-                  </ng-template>
-                </ngb-pagination>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="id_no" [(ngModel)]="searchForm.id_no" class="form-control"
+                      placeholder="Số CCCD của KH" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="name" [(ngModel)]="searchForm.name" class="form-control"
+                      placeholder="Tên khách hàng" />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-block btn-info" (click)="onSubmitSearch()">
+                      Lọc kết quả
+                    </button>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success mr-2" [routerLink]="['/customer/create/']">
+                      Thêm khách hàng
+                    </button>
+                  </div>
+                </div>
               </div>
+            </form>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Mã</th>
+                    <th>Tên CTV</th>
+                    <th>Trạng thái</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list">
+                    <td>{{ item?.code }}</td>
+                    <td>{{ item?.name }}</td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatus"></div>
+                    </td>
+                    <td>
+                      {{ item?.contact.phone_mobile }}
+                    </td>
+                    <td>{{item?.contact.address_street }}</td>
+
+                    <td>
+                      <a class="ml-2" ngbTooltip="Cập nhật thông tin" [routerLink]="['/customer/update/' + item?.id]">
+                        <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="total"
+                [(page)]="searchForm.page" [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Trang</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        của {{ pages.length }}</span>
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <ng-template #modalCreate let-modal>
+</div>
+
+<ng-template #modalCreate let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
     <button type="button" class="close" (click)="modalClose()" aria-label="Close">
@@ -173,13 +112,13 @@
     </button>
   </div>
   <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
-    <div class="modal-body" tabindex="0" >
+    <div class="modal-body" tabindex="0">
 
       <div class="form-group" *ngIf="isCreate">
         <label for="basicInput">Số điện thoại</label>
         <input type="tel" class="form-control" placeholder="" (focusout)="onCheckExits()" (focus)="onFocusMobile()"
-        mask="0000000000"
-          name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+          mask="0000000000" name="mobile" formControlName="mobile"
+          [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
         <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
           <div *ngIf="f.mobile.errors.required">Vui lòng số điện thoại</div>
         </div>
@@ -187,101 +126,76 @@
 
       <div class="form-group">
         <label for="basicInput">Họ và tên</label>
-        <input type="text" class="form-control" placeholder=""
-       
-          name="name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <input type="text" class="form-control" placeholder="" name="name" formControlName="name"
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
         <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
           <div *ngIf="f.name.errors.required">Vui lòng nhập họ và tên</div>
         </div>
       </div>
 
-      
 
-    <div class="form-group" >
-      <label for="basicInput">Mã giới thiệu</label>
-        <input type="text" class="form-control"  placeholder=""
-        name="code"
-        formControlName="code"
-        [ngClass]="{ 'is-invalid': submitted && f.code.errors }"
-        />
-    </div>
 
-    <div class="col-12">
-          <div class="form-group row">
-            <label for="province" class="col-md-3 col-form-label"
-              >Tỉnh/Thành Phố</label
-            >
-            <div class="col-md-9">
-              <ng-select 
-              formControlName="province"
-              (clear)="onClearHomeProvince()"
+      <div class="form-group">
+        <label for="basicInput">Mã giới thiệu</label>
+        <input type="text" class="form-control" placeholder="" name="code" formControlName="code"
+          [ngClass]="{ 'is-invalid': submitted && f.code.errors }" />
+      </div>
+
+      <div class="col-12">
+        <div class="form-group row">
+          <label for="province" class="col-md-3 col-form-label">Tỉnh/Thành Phố</label>
+          <div class="col-md-9">
+            <ng-select formControlName="province" (clear)="onClearHomeProvince()"
               (change)="onChangeHomeProvince($event)">
-                <ng-option *ngFor="let p of provinces" [value]="p.id">{{
-                  p.title
+              <ng-option *ngFor="let p of provinces" [value]="p.id">{{
+                p.title
                 }}</ng-option>
-              </ng-select>
+            </ng-select>
 
-              <div
-                *ngIf="submitted && f.province.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="f.province.errors.required">
-                  Vui lòng nhập trường này
-                </div>
+            <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
+              <div *ngIf="f.province.errors.required">
+                Vui lòng nhập trường này
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <div class="form-group row">
-            <label for="district" class="col-md-3 col-form-label"
-              >Quận/Huyện</label
-            >
-            <div class="col-md-9">
-              <ng-select 
-              formControlName="district"
-              (clear)="onClearHomeDistrict()"
+      </div>
+      <div class="col-12">
+        <div class="form-group row">
+          <label for="district" class="col-md-3 col-form-label">Quận/Huyện</label>
+          <div class="col-md-9">
+            <ng-select formControlName="district" (clear)="onClearHomeDistrict()"
               (change)="onChangeHomeDistrict($event)">
-                <ng-option *ngFor="let p of districts" [value]="p.id">{{
-                  p.title
+              <ng-option *ngFor="let p of districts" [value]="p.id">{{
+                p.title
                 }}</ng-option>
-              </ng-select>
+            </ng-select>
 
-              <div
-                *ngIf="submitted && f.district.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="f.district.errors.required">
-                  Vui lòng nhập trường này
-                </div>
+            <div *ngIf="submitted && f.district.errors" class="invalid-feedback">
+              <div *ngIf="f.district.errors.required">
+                Vui lòng nhập trường này
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <div class="form-group row">
-            <label for="commune" class="col-md-3 col-form-label"
-              >Phường/Xã</label
-            >
-            <div class="col-md-9">
-              <ng-select              
-              formControlName="commune"
-              >
-                <ng-option *ngFor="let p of home_commues" [value]="p.id">{{
-                  p.title
+      </div>
+      <div class="col-12">
+        <div class="form-group row">
+          <label for="commune" class="col-md-3 col-form-label">Phường/Xã</label>
+          <div class="col-md-9">
+            <ng-select formControlName="commune">
+              <ng-option *ngFor="let p of home_commues" [value]="p.id">{{
+                p.title
                 }}</ng-option>
-              </ng-select>
-              <div
-                *ngIf="submitted && f.commune.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="f.commune.errors.required">
-                  Vui lòng nhập trường này
-                </div>
+            </ng-select>
+            <div *ngIf="submitted && f.commune.errors" class="invalid-feedback">
+              <div *ngIf="f.commune.errors.required">
+                Vui lòng nhập trường này
               </div>
             </div>
           </div>
         </div>
+      </div>
 
     </div>
     <div class="modal-footer">
