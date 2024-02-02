@@ -135,7 +135,7 @@ export class ListCollaboratorComponent implements OnInit {
       province: ['', Validators.required],
       district: ['', Validators.required],
       commune: ['', Validators.required],
-      address_street: [''],
+      address_street: ['', Validators.required],
     })
   }
 
@@ -164,7 +164,7 @@ export class ListCollaboratorComponent implements OnInit {
         customer_id: item.customer_id,
         province: parseInt(item.contact.province),
         district: parseInt(item.contact.district),
-        commue: parseInt(item.contact.commue),
+        commune: parseInt(item.contact.commune),
         phone_mobile: item.contact.phone_mobile,
         address_street: item.contact.address_street    
       })
@@ -191,7 +191,15 @@ export class ListCollaboratorComponent implements OnInit {
     this.initForm();
   }
 
+  get f() {
+    return this.formGroup.controls;
+  }
+
   onSubmitCreate() {
+    this.submitted = true;
+    if(this.formGroup.invalid) {
+      return;
+    }
     let dataPost = {
       name: this.formGroup.controls['name'].value,
       code: this.formGroup.controls['code'].value,
