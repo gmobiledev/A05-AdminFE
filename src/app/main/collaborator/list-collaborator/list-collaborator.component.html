@@ -70,16 +70,16 @@
                       <div [innerHTML]="item.status | showStatus"></div>
                     </td>
                     <td>
-                      {{ item?.contact.phone_mobile }}
+                      {{ item?.contact?.phone_mobile }}
                     </td>
-                    <td>{{item?.contact.address_street }}</td>
+                    <td>{{item?.contact?.address_street }}</td>
 
                     <td>
                       <a class="ml-2" ngbTooltip="Cập nhật thông tin" (click)="modalOpen(modalCreate, item)">
                         <i data-feather="edit" class="text-primary cursor-pointer"></i>
                       </a>
 
-                      <a
+                      <!-- <a
                         class="ml-2"
                         (click)="onSubmitDelete(item.id)"                       
                       >
@@ -87,7 +87,7 @@
                           data-feather="trash"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </a>
+                      </a> -->
 
                       <a
                         class="ml-2"

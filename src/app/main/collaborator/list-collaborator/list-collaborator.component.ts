@@ -155,18 +155,22 @@ export class ListCollaboratorComponent implements OnInit {
       this.titleModal = "Cập nhật CTV";
       this.isCreate = false;
       this.selectedItem = item.id;
-      this.onChangeHomeProvince(parseInt(item.contact.province), true);
-      this.onChangeHomeDistrict(parseInt(item.contact.district), true);
-      
+      if(item.contact && item.contact.province) {
+        this.onChangeHomeProvince(parseInt(item.contact.province), true);
+      }
+      if(item.contact && item.contact.district) {
+        this.onChangeHomeDistrict(parseInt(item.contact.district), true);
+      }
+            
       this.formGroup.patchValue({
         name: item.name,
         code: item.code, 
         customer_id: item.customer_id,
-        province: parseInt(item.contact.province),
-        district: parseInt(item.contact.district),
-        commune: parseInt(item.contact.commune),
-        phone_mobile: item.contact.phone_mobile,
-        address_street: item.contact.address_street    
+        province: item.contact && item.contact.province ? parseInt(item.contact.province) : '',
+        district: item.contact && item.contact.district ? parseInt(item.contact.district) : '',
+        commune: item.contact && item.contact.commune ? parseInt(item.contact.commune) : '',
+        phone_mobile: item.contact && item.contact.phone_mobile ? item.contact.phone_mobile : '',
+        address_street: item.contact &&  item.contact.address_street ? item.contact.address_street : ''   
       })
 
       this.modalRef = this.modalService.open(modal, {
@@ -242,7 +246,7 @@ export class ListCollaboratorComponent implements OnInit {
   async onSubmitLock(id, status) {
     const confirmMessage = status ? "Bạn có đồng ý mở khóa CTV?" : "Bạn có đồng ý khóa CTV?";
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.collaboratorSerivce.updateStatus({status: status},id).subscribe(res => {
+      this.collaboratorSerivce.delete(id).subscribe(res => {
         if (!res.status) {
           this.alertService.showError(res.message);
           return;
