@@ -192,7 +192,7 @@ export const menu: CoreMenu[] = [
     title: 'Gtalk',
     translate: '',
     type: 'collapsible',
-    icon: 'package',
+    icon: 'phone-call',
     badge: {
       title: '4',
       translate: '',
@@ -204,7 +204,7 @@ export const menu: CoreMenu[] = [
         title: 'Task',
         translate: '',
         type: 'item',
-        icon: 'database',
+        icon: 'phone-call',
         url: 'gtalk/task'
       },
       {
@@ -239,7 +239,7 @@ export const menu: CoreMenu[] = [
     title: 'GIP',
     translate: '',
     type: 'collapsible',
-    icon: 'package',
+    icon: 'phone-outgoing',
     badge: {
       title: '4',
       translate: '',
@@ -251,7 +251,7 @@ export const menu: CoreMenu[] = [
         title: 'Merchant GIP',
         translate: '',
         type: 'item',
-        icon: 'database',
+        icon: 'phone-outgoing',
         url: 'gip/merchant'
       },
       {
@@ -361,6 +361,29 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+  {
+    id: 'users',
+    title: 'Cộng tác viên',
+    translate: '',
+    type: 'collapsible',
+    icon: 'users',
+    badge: {
+      title: '1',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'Cộng tác viên',
+        translate: '',
+        type: 'item',
+        icon: 'users',
+        url: 'collaborator'
+      }
+    ]
+  },
+ 
 
   {
     id: 'users',

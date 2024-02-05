@@ -33,7 +33,7 @@ export class CollaboratorService {
   }
 
   delete(id) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/collaborator/${id}`);
+    return this._http.delete<any>(`${environment.apiUrl}/admin/collaborator/${id}`);
   }
 
 }
