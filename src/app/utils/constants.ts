@@ -16,7 +16,7 @@ export enum TaskTelecomStatus {
     STATUS_PAID_SUSPENDING = 26, // Chuẩn bị thu hồi
     STATUS_PAID_TERMINATED = 27, //Đã thu thồi
     STATUS_APPROVED = 30, //chấp nhận từ 30-39, duyệt từ lớn đến bé
-    STATUS_APPROVED_1 = 31, 
+    STATUS_APPROVED_1 = 31,
     STATUS_APPROVED_2 = 32,
     STATUS_APPROVED_3 = 33,
     STATUS_DVKHKD_REJECT = 40,
@@ -89,6 +89,10 @@ export class TaskTelecom {
         CANCEL_SUBCRIBER: {
             value: 'cancel_subcriber',
             label: 'Hủy sim'
+        },
+        _4G_VNM_TO_VMS: {
+            value: '4G_VNM_TO_VMS',
+            label: 'Chuyển VNM sang Mobifone'
         }
     };
 }

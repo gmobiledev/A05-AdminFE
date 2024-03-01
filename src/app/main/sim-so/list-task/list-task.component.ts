@@ -98,7 +98,6 @@ export class ListTaskComponent implements OnInit {
     private activeRouted: ActivatedRoute,
     private adminService: AdminService,
     private telecomService: TelecomService,
-    private authenticaionService: AuthenticationService,
     private alertService: SweetAlertService
   ) {
     this.dateRange = null;

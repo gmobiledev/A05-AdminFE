@@ -59,9 +59,8 @@
   <div class="row mb-4">
     <div class="col-md-6 border">
 
-      <app-thong-tin-thue-bao *ngIf="checkMsisdnTaskGsim(data)" [msisdn]="data.msisdn.msisdns[0]"
-      [view]="'full'"
-      [service]="'gtalk'"></app-thong-tin-thue-bao>
+      <app-thong-tin-thue-bao *ngIf="checkMsisdnTaskGsim(data)" [msisdn]="data.msisdn.msisdns[0]" [view]="'full'"
+        [service]="'gtalk'"></app-thong-tin-thue-bao>
 
       <div class="row" *ngIf="checkMsisdnTaskGsim(data)">
         <div class="col-md-6" style="height: 250px; overflow: hidden">
@@ -80,10 +79,7 @@
         </div>
       </div>
       <div class="row mb-2 p-2" *ngIf="!checkMsisdnTaskGsim(data)">
-        <div
-          class="col-md-12"
-          *ngIf="data.task.action == listTaskAction['change_sim']['value']"
-        >
+        <div class="col-md-12" *ngIf="data.task.action == listTaskAction['change_sim']['value']">
           <h4>Thông tin KH đã đăng ký</h4>
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
@@ -558,8 +554,8 @@
     <div class="col-md-12">
       <div class="col-md-12 text-center mb-1">
         <a class="ml-2 btn btn-info" (click)="modalOpen(modalAttachments, null, 'xl')">
-          <i data-feather="eye" class="text-white cursor-pointer"></i>          
-            Xem các tệp đính kèm
+          <i data-feather="eye" class="text-white cursor-pointer"></i>
+          Xem các tệp đính kèm
         </a>
       </div>
       <div class="col-md-12 text-center" *ngIf="
@@ -575,13 +571,7 @@
 
         <a>
           <span *ngIf="data.task.action == listTaskAction['new_sim']['value']
-          && !data.customer.people.identification_signature_file
-          && (
-            data.task.sub_action ==
-          listTaskAction['TYPE_2G_CONVERSION']['value'] ||
-          data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value']
-          )
-          ">
+          && !data.customer.people.identification_signature_file">
             <a class="ml-2 btn btn-info" (click)="modalOpen(modalUploadSignature)">
               <i data-feather="upload" class="text-white cursor-pointer"></i>
               Upload ảnh chữ ký
@@ -591,19 +581,12 @@
 
         <a class="ml-2 btn btn-primary" (click)="onCreateTask()">
           <i data-feather="plus" class="text-white cursor-pointer"></i>
-          <span *ngIf="data.task.action == listTaskAction['new_sim']['value']
-          && (
-            data.task.sub_action ==
-          listTaskAction['TYPE_2G_CONVERSION']['value'] ||
-          data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value']
-          )
-          && data.task.status == 2
-          ">
+          <span *ngIf="data.task.action == listTaskAction['new_sim']['value'] && data.task.status == 2">
             Tạo phiếu yêu cầu
           </span>
         </a>
 
-        <button *ngIf="(data.task.status==2 || data.task.status ==30)
+        <button *ngIf="(data.task.status==2 || data.task.status ==30 || data.task.status == 60)
         && (['GSIM_TO_SIM', '2G_CONVERSION'].includes(data.task.sub_action))
         " class="ml-2 btn btn-primary" rippleEffect (click)="onChangeCmndToCccd()">Đổi CMND-CCCD</button>
         <a *ngIf="data.task.status == 1" class="ml-2 btn btn-primary" (click)="sendCallback(item)">
@@ -621,9 +604,6 @@
     <span>Thời gian hoàn thành: </span>
     {{ data.task.sync_time | date : "dd/MM/yyyy H:mm" : "UTC" }}
   </div>
-  <!-- <div class="row mb-2" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >
-        <span>Link ship: </span> {{ linkShipTracking }}
-    </div> -->
   <div class="row mb-2" *ngIf="data.task.note">
     <span>Note: </span> {{ data.task.note }}
   </div>
@@ -704,12 +684,7 @@
       </div>
 
       <div>
-        <ng-container *ngIf="
-      checkAction('telecom-admin/task/approve-2g-conversion') &&
-      (data.task.sub_action ==
-        listTaskAction['TYPE_2G_CONVERSION']['value'] ||
-        data.task.sub_action == listTaskAction['GSIM_TO_SIM']['value'])
-    ">
+        <ng-container *ngIf="isShowButtonApprove()">
           <a *ngIf="data.task.status == taskTelecomStatus.STATUS_INIT" class="ml-2 btn btn-success"
             (click)="onUpdateStatus2G(item, 1)">
             <i data-feather="check" class="text-white cursor-pointer"></i>
@@ -729,21 +704,7 @@
       <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
       Tiếp tục
     </a>
-
-    <!-- <div *ngIf="data.task.status != taskTelecomStatus.STATUS_CANCEL && data.task.status != taskTelecomStatus.STATUS_SUCCESS">
-        <a class="ml-2 btn btn-danger" (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_CANCEL)">
-            <i data-feather="slash" class="text-white cursor-pointer"></i>
-            Hủy yêu cầu
-        </a>
-    </div> -->
   </div>
-  <!-- <div class="row" *ngIf="data.task.status == 1 && data.task.action == listTaskAction['new_sim']['value'] && data.task.request_id != null " >        
-        <a 
-         class="btn btn-info" (click)="onModalShipOpen(modalUpdateShipTracking)" >
-            <i data-feather="pencil" class="text-white cursor-pointer"></i>                
-            Nhập link ship
-        </a>
-    </div> -->
 </div>
 
 <ng-template #modalImage let-modal>
@@ -828,8 +789,8 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-task-attachments [task_id]="data?.task?.id"
-    [entity]="'telecom_task'" [key]="'attachments'"></app-task-attachments>
+    <app-task-attachments [task_id]="data?.task?.id" [entity]="'telecom_task'"
+      [key]="'attachments'"></app-task-attachments>
   </div>
 </ng-template>
 
