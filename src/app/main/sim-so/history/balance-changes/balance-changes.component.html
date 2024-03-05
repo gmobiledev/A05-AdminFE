@@ -1,0 +1,64 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <div class="row" id="table-striped">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Lịch sử cước</h4>
+            </div>
+  
+            <div class="card-body">
+              <form (ngSubmit)="onSubmitSearch()">
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="form-group">
+                      <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control"
+                        placeholder="Tìm kiếm" />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-block btn-info">
+                        Lọc kết quả <span [data-feather]="'search'"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+  
+              <div class="table-responsive" *blockUI="'section-block'">
+                <table class="table table-striped text-nowrap" *ngIf="list">
+                  <thead>
+                    <tr>
+                      <th>Thời gian</th>
+                      <th>Loại</th>
+                      <th>Số tiền</th>
+                      <th>Số dư</th>
+                      <th>Ghi chú</th>
+                    </tr>
+                  </thead>
+  
+                  <tbody>
+                    <tr *ngFor="let item of list">
+                        <td>{{ item.Time | date: 'dd/MM/yyyy H:mm':'GMT' }}</td>
+                        <td>{{ item.Action | typeBalanceChange }}</td>
+                        <td>{{ item.BalanceChange | number }}</td>
+                        <td>{{ item.BalanceAfter | number }}</td>
+                        <td>{{ item.Note }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+                <div *ngIf="showMessage">
+                  <h6 style="text-align: center">
+                    Không tìm thấy thông tin. Vui lòng nhập lại!
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

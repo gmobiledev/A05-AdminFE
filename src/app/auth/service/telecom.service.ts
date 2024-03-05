@@ -255,6 +255,16 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-msisnd-customer`, data);
   }
 
+  getMsisdnInfo(mobile) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/TTTB/${mobile}`);
+  }
 
+  getMsisdnTopup(mobile) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/recharge/${mobile}`);
+  }
+
+  getMsisdnBalanceChanges(mobile, params) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/balance-changes/${mobile}`, { params: params });
+  }
 
 }
