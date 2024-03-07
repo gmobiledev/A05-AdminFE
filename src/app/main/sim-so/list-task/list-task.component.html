@@ -73,6 +73,7 @@
                       <option value="2G_CONVERSION">2G sang 4G</option>
                       <option value="S198">S198</option>
                       <option value="MY_GMOBILE">My Gmobile</option>
+                      <option value="4G_VNM_TO_VMS">4G VNM sang Mobifone</option>
                     </select>
                   </div>
                 </div>
@@ -197,7 +198,11 @@
                         </div>
 
                         <div *ngIf="(
-                          (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])  && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
+                          (
+                            (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
+                            || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value']
+                          )
+                            && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
                         || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
                         || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
                         ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
@@ -236,7 +241,7 @@
 
                       <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalApproveInfo, item)"
                         *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
-                
+                        && item.sub_action != listTaskAction['_4G_VNM_TO_VMS']['value'] 
                        && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)">
                         <i data-feather="user-check" class="text-white cursor-pointer"></i>
                         {{ showApproveText(item.status) }}
@@ -245,7 +250,9 @@
                       <div
                         *ngIf="((item.status == taskTelecomStatus.STATUS_APPROVED 
                       &&
-                      item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']) || item.status == taskTelecomStatus.STATUS_WAITING_SIM )">
+                      (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']
+                      || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
+                      ) || item.status == taskTelecomStatus.STATUS_WAITING_SIM )">
                         <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                           Tiếp tục thực hiện
