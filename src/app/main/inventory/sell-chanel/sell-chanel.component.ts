@@ -24,6 +24,10 @@ export class SellChanelComponent implements OnInit {
   public searchForm = {
     keyword: '',
     status: '',
+    nameSell: '',
+    nameChanel: '',
+    codeSell: '',
+
     page: 1
   }
   public selectedItem: any
@@ -123,20 +127,36 @@ export class SellChanelComponent implements OnInit {
     this.filesImages = event.target.files[0];
   }
 
-  async onSubmitLock(id, status){
-    const confirmMessage = status ? "Bạn có đồng ý mở khóa user?" : "Bạn có đồng ý khóa user?";
-    // if((await this.alertService.showConfirm(confirmMessage)).value) {
-    //   this.gtalkService.lockUser(id, status, "").subscribe(res => {
-    //     if(!res.status) {
-    //       this.alertService.showError(res.message);
-    //       return;
-    //     }
-    //     this.alertService.showSuccess(res.message);
-    //     this.getData();
-    //   }, err => {
-    //     this.alertService.showError(err);
-    //   })
-    // }
+  async onSubmitLock(id, status) {
+    const confirmMessage = status ? "Bạn có đồng ý mở khóa kho?" : "Bạn có đồng ý khóa kho?";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.inventoryService.lockSell(id, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
+  }
+
+  async onAcivteSell(id, status) {
+    const confirmMessage = status ? "Bạn có đồng ý kích hoạt kho?" : "Bạn có đồng ý dừng kích hoạt kho?";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.inventoryService.activeSell(id, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
   }
 
 
@@ -150,8 +170,8 @@ export class SellChanelComponent implements OnInit {
       formData.append("files", this.filesData);
       formData.append("batch_id", this.selectedItem.id);
 
-      console.log(this.filesData, this.selectedItem.id,formData)
-    
+      console.log(this.filesData, this.selectedItem.id, formData)
+
       this.inventoryService.uploadFileBatch(formData).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
@@ -199,22 +219,22 @@ export class SellChanelComponent implements OnInit {
   }
 
   onSubmitExportExcelReport() {
-    // let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    // const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
-    // ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    // const daterangeString = this.dateRange.startDate && this.dateRange.endDate
+    //   ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     // this.searchForm.date_range = daterangeString;
-    // this.telecomService.exportExcelReport(this.searchForm).subscribe(res => {
-    //   var newBlob = new Blob([res.body], { type: res.body.type });
-    //   let url = window.URL.createObjectURL(newBlob);
-    //   let a = document.createElement('a');
-    //   document.body.appendChild(a);
-    //   a.setAttribute('style', 'display: none');
-    //   a.href = url;
-    //   a.download = "Báo cáo đấu nối";
-    //   a.click();
-    //   window.URL.revokeObjectURL(url);
-    //   a.remove();
-    // })
+    this.inventoryService.exportExcelReport(this.searchForm).subscribe(res => {
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Báo cáo kho sim";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
   }
 
   ngOnInit(): void {
@@ -245,7 +265,7 @@ export class SellChanelComponent implements OnInit {
   }
 
   initForm() {
-   
+
   }
 
   getData() {

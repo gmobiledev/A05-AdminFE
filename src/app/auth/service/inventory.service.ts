@@ -35,7 +35,15 @@ export class InventoryService {
   }
 
   lockSell(id: number, status: number, note: string){
-    return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/lock-user`);
+    return this._http.get<any>(`${environment.apiGtalkUrl}/admin/inventory/lock-user`);
+  }
+
+  activeSell(id: number, status: number, note: string){
+    return this._http.get<any>(`${environment.apiGtalkUrl}/admin/inventory/lock-user`);
+  }
+
+  exportExcelReport(dto: any): Observable<any> {
+    return this._http.post(`${environment.apiTelecomUrl}/admin/inventory/export-excel-report`, dto, { observe: 'response', responseType: 'blob' });
   }
 
   getAllSim(params = null, inventoryType = "") {

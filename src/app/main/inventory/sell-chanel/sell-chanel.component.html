@@ -13,37 +13,49 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
+                    <select
                       class="form-control"
-                      placeholder="Nhập tên kho, nội dung lô .."
-                    />
+                      name="ekyc_status"
+                      [(ngModel)]="searchForm.status"
+                    >
+                      <option value="_all">Chọn Tỉnh/Thành phố</option>
+                      <option value="APPROVED">Tải hoàn tất</option>
+                      <option value="APPROVED">Khởi tạo</option>
+                      <option value="APPROVED">Tải lên 1 phẩn</option>
+                      <option value="">Chọn Tỉnh/Thành phố</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
+                    <select
                       class="form-control"
-                      placeholder="Nhập tên kho, nội dung lô .."
-                    />
+                      name="ekyc_status"
+                      [(ngModel)]="searchForm.status"
+                    >
+                      <option value="_all">Chọn Quận/Huyện</option>
+                      <option value="APPROVED">Tải hoàn tất</option>
+                      <option value="APPROVED">Khởi tạo</option>
+                      <option value="APPROVED">Tải lên 1 phẩn</option>
+                      <option value="">Chọn Quận/Huyện</option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
+                    <select
                       class="form-control"
-                      placeholder="Nhập tên kho, nội dung lô .."
-                    />
+                      name="ekyc_status"
+                      [(ngModel)]="searchForm.status"
+                    >
+                      <option value="_all">Chọn Phường/Xã</option>
+                      <option value="APPROVED">Tải hoàn tất</option>
+                      <option value="APPROVED">Khởi tạo</option>
+                      <option value="APPROVED">Tải lên 1 phẩn</option>
+                      <option value="">Chọn Phường/Xã</option>
+                    </select>
                   </div>
                 </div>
 
@@ -67,8 +79,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
+                      name="codeSell"
+                      [(ngModel)]="searchForm.codeSell"
                       class="form-control"
                       placeholder="Mã kho"
                     />
@@ -79,8 +91,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
+                      name="nameSell"
+                      [(ngModel)]="searchForm.nameSell"
                       class="form-control"
                       placeholder="Tên kho"
                     />
@@ -91,8 +103,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
+                      name="nameChanel"
+                      [(ngModel)]="searchForm.nameChanel"
                       class="form-control"
                       placeholder="Tên đại lý"
                     />
@@ -118,18 +130,6 @@
                     </button>
                   </div>
                 </div>
-
-                <!-- <div class="col-md-2">
-                  <div class="form-group">
-                    <button
-                      type="button"
-                      (click)="onSubmitExportExcelReport()"
-                      class="btn btn-block btn-secondary"
-                    >
-                      Xem chi tiết kho <span [data-feather]="'link'"></span>
-                    </button>
-                  </div>
-                </div> -->
               </div>
             </form>
             <div class="mt-3 mb-3 overflow-hidden">
@@ -140,7 +140,7 @@
                 <button
                   type="button"
                   (click)="modalOpen(modalCreateSell)"
-                  class="btn btn-success mr-2"
+                  class="btn btn-success mr-25"
                 >
                   Thêm kho
                 </button>
@@ -221,8 +221,21 @@
 
                       <a
                         class="ml-1"
-                        (click)="modalOpen(modalUploadAccount, item)"
+                        (click)="onAcivteSell(item.id, 1)"
+                        *ngIf="!item.status"
                         title="Kích hoạt kho"
+                      >
+                        <i
+                          data-feather="check"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+
+                      <a
+                        class="ml-1"
+                        (click)="onAcivteSell(item.id, 0)"
+                        *ngIf="item.status"
+                        title="Dừng kích hoạt kho"
                       >
                         <i
                           data-feather="check-circle"
@@ -232,7 +245,8 @@
 
                       <a
                         class="ml-1"
-                        (click)="modalOpen(modalUploadAccount, item)"
+                        [routerLink]="['/inventory/list-batch']"
+                        [queryParams]="{ channel_id: item.id }"
                         title="Xem chi tiết"
                       >
                         <i
@@ -240,6 +254,7 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
+                      
                     </td>
                   </tr>
                 </tbody>
