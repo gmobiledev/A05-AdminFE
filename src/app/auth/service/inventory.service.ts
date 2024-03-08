@@ -31,7 +31,7 @@ export class InventoryService {
   }
 
   findSellChannelAll(params = null, inventoryType = "") {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, { params: params });
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, { params: params });
   }
 
   lockSell(id: number, status: number, note: string){
