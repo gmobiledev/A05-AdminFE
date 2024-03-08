@@ -14,48 +14,61 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <select
-                      class="form-control"
-                      name="ekyc_status"
-                      [(ngModel)]="searchForm.status"
-                    >
-                      <option value="_all">Chọn Tỉnh/Thành phố</option>
-                      <option value="APPROVED">Tải hoàn tất</option>
-                      <option value="APPROVED">Khởi tạo</option>
-                      <option value="APPROVED">Tải lên 1 phẩn</option>
-                      <option value="">Chọn Tỉnh/Thành phố</option>
-                    </select>
+                    name=""
+                    id="province"
+                    class="form-control"
+                    formControlName="province"
+                    (change)="onChangeProvince($event)"
+                  >
+                    <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                    <option *ngFor="let p of provinces" [value]="p.id">
+                      {{ p.title }}
+                    </option>
+                  </select>
+                  <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
+                    <div *ngIf="f.province.errors.required">
+                      Vui lòng nhập trường này
+                    </div>
+                  </div>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
                     <select
-                      class="form-control"
-                      name="ekyc_status"
-                      [(ngModel)]="searchForm.status"
-                    >
-                      <option value="_all">Chọn Quận/Huyện</option>
-                      <option value="APPROVED">Tải hoàn tất</option>
-                      <option value="APPROVED">Khởi tạo</option>
-                      <option value="APPROVED">Tải lên 1 phẩn</option>
-                      <option value="">Chọn Quận/Huyện</option>
-                    </select>
+                    formControlName="district"
+                    id="home_district"
+                    class="form-control"
+                    (change)="onChangeDistrict($event)"
+                  >
+                    <option value="">--Chọn Quận/Huyện--</option>
+                    <option *ngFor="let p of districts" [value]="p.id">
+                      {{ p.title }}
+                    </option>
+                  </select>
+                  <div *ngIf="submitted && f.district.errors" class="invalid-feedback">
+                    <div *ngIf="f.district.errors.required">
+                      Vui lòng nhập trường này
+                    </div>
+                  </div>
+                  
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select
-                      class="form-control"
-                      name="ekyc_status"
-                      [(ngModel)]="searchForm.status"
-                    >
-                      <option value="_all">Chọn Phường/Xã</option>
-                      <option value="APPROVED">Tải hoàn tất</option>
-                      <option value="APPROVED">Khởi tạo</option>
-                      <option value="APPROVED">Tải lên 1 phẩn</option>
-                      <option value="">Chọn Phường/Xã</option>
+                    <select name="" formControlName="commune" class="form-control">
+                      <option value="">--Chọn Phường/xã --</option>
+                      <option *ngFor="let p of commues" [value]="p.id">
+                        {{ p.title }}
+                      </option>
                     </select>
+          
+                    <div *ngIf="submitted && f.commune.errors" class="invalid-feedback">
+                      <div *ngIf="f.commune.errors.required">
+                        Vui lòng nhập trường này
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -66,10 +79,10 @@
                       name="ekyc_status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="_all">Chọn trạng thái</option>
-                      <option value="APPROVED">Tải hoàn tất</option>
                       <option value="APPROVED">Khởi tạo</option>
-                      <option value="APPROVED">Tải lên 1 phẩn</option>
+                      <option value="APPROVED">Đã duyệt</option>
+                      <option value="APPROVED">Từ chối</option>
+                      <option value="APPROVED">Hủy</option>
                       <option value="">Chọn trạng thái</option>
                     </select>
                   </div>
@@ -156,7 +169,7 @@
                     <th>Đại lý</th>
                     <th>Trạng thái</th>
                     <th>Địa điểm</th>
-                    <th>Kiểu kho</th>
+                    <th>Kênh</th>
                     <th>Thao tác</th>
                   </tr>
                 </thead>
@@ -254,7 +267,6 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
-                      
                     </td>
                   </tr>
                 </tbody>
@@ -321,7 +333,7 @@
 
 <ng-template #modalCreateSell let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Thêm Lô</h5>
+    <h5 class="modal-title" id="myModalLabel160">Thêm Kho</h5>
     <button
       type="button"
       class="close"
@@ -332,13 +344,8 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0">
-    <div class="form-group" *ngIf="isAdmin">
-      <label for="">Tên lô</label>
-      <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
-    </div>
-
     <div class="form-group">
-      <label>Nhập số lượng</label>
+      <label>Mã kho</label>
       <input
         class="form-control"
         type="number"
@@ -350,18 +357,24 @@
     </div>
 
     <div class="form-group">
+      <label for="">Tên kho</label>
+      <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
+    </div>
+
+    <!-- <div class="form-group">
       <label for="">Kênh bán</label>
       <select [(ngModel)]="dataLo.channel_id" id="" class="form-control">
         <option [value]="item.id" *ngFor="let item of listChannel">
           {{ item.name }}
         </option>
       </select>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="">Ghi chú</label>
       <input type="text" class="form-control" [(ngModel)]="dataLo.note" />
     </div>
+
     <div class="form-group">
       <i class="fa fa-upload" aria-hidden="true"></i>
       <input
@@ -374,6 +387,97 @@
       <!-- <a href="/assets/data_upload_account.xls" class="ml-2"
         >File mẫu tại đây</a
       > -->
+
+      <div class="form-group row mt-1">
+        <label for="province" class="col-md-3 col-form-label"
+          >Tỉnh/TP Tổ chức</label
+        >
+        <div class="col-md-9">
+          <select
+            name=""
+            id="province"
+            class="form-control"
+            formControlName="province"
+            (change)="onChangeProvince($event)"
+          >
+            <option value="">-- Chọn Tỉnh/Thành phố --</option>
+            <option *ngFor="let p of provinces" [value]="p.id">
+              {{ p.title }}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
+            <div *ngIf="f.province.errors.required">
+              Vui lòng nhập trường này
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row mt-1">
+        <label for="district" class="col-md-3 col-form-label"
+          >Quận/Huyện Tổ chức
+        </label>
+        <div class="col-md-9">
+          <select
+            formControlName="district"
+            id="home_district"
+            class="form-control"
+            (change)="onChangeDistrict($event)"
+          >
+            <option value="">--Chọn Quận/Huyện--</option>
+            <option *ngFor="let p of districts" [value]="p.id">
+              {{ p.title }}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.district.errors" class="invalid-feedback">
+            <div *ngIf="f.district.errors.required">
+              Vui lòng nhập trường này
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row mt-1">
+        <label for="commune" class="col-md-3 col-form-label"
+          >Phường/Xã Tổ chức</label
+        >
+        <div class="col-md-9">
+          <select name="" formControlName="commune" class="form-control">
+            <option value="">--Chọn Phường/xã --</option>
+            <option *ngFor="let p of commues" [value]="p.id">
+              {{ p.title }}
+            </option>
+          </select>
+
+          <div *ngIf="submitted && f.commune.errors" class="invalid-feedback">
+            <div *ngIf="f.commune.errors.required">
+              Vui lòng nhập trường này
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="residence_full_address" class="col-md-3 col-form-label"
+          >Địa chỉ cụ thể</label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="residence_full_address"
+            placeholder="Địa chỉ cụ thể"
+          />
+          <div
+            *ngIf="submitted && f.residence_full_address.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.residence_full_address.errors.required">
+              Vui lòng nhập trường này
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="modal-footer">

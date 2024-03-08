@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -268,6 +268,19 @@ export class SellChanelComponent implements OnInit {
 
   }
 
+  @Input() provinces;
+  @Input() districts;
+  @Input() commues;
+  @Input() countries;
+
+  onChangeDistrict(e) {
+
+  }
+
+  onChangeProvince(e) {
+
+  }
+  
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     if (this.currentUser && this.currentUser.roles) {
