@@ -30,6 +30,13 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/channel`, { params: params });
   }
 
+  findSellChannelAll(params = null, inventoryType = "") {
+    return this._http.get<any>(`${environment.apiUrl}/admin/inventory/channel/my-list`, { params: params });
+  }
+
+  lockSell(id: number, status: number, note: string){
+    return this._http.get<any>(`${environment.apiGtalkUrl}/virtualnumber-admin/lock-user`);
+  }
 
   getAllSim(params = null, inventoryType = "") {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/product`, { params: params });

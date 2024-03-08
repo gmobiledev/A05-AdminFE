@@ -70,7 +70,7 @@ export class SellChanelComponent implements OnInit {
 
   loadPage(page): void {
     this.searchForm.page = page;
-    this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })
+    this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
   }
 
   modalOpen(modal, item = null) {
@@ -122,6 +122,23 @@ export class SellChanelComponent implements OnInit {
   async onFileChangeImages(event) {
     this.filesImages = event.target.files[0];
   }
+
+  async onSubmitLock(id, status){
+    const confirmMessage = status ? "Bạn có đồng ý mở khóa user?" : "Bạn có đồng ý khóa user?";
+    // if((await this.alertService.showConfirm(confirmMessage)).value) {
+    //   this.gtalkService.lockUser(id, status, "").subscribe(res => {
+    //     if(!res.status) {
+    //       this.alertService.showError(res.message);
+    //       return;
+    //     }
+    //     this.alertService.showSuccess(res.message);
+    //     this.getData();
+    //   }, err => {
+    //     this.alertService.showError(err);
+    //   })
+    // }
+  }
+
 
   async onSubmitUpload() {
     if (!this.filesData || !this.filesImages || !this.adminId) {

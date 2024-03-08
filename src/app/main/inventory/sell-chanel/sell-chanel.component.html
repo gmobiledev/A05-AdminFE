@@ -70,7 +70,7 @@
                       name="keyword"
                       [(ngModel)]="searchForm.keyword"
                       class="form-control"
-                      placeholder="Nhập tên kho, nội dung lô .."
+                      placeholder="Mã kho"
                     />
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                       name="keyword"
                       [(ngModel)]="searchForm.keyword"
                       class="form-control"
-                      placeholder="Nhập tên kho, nội dung lô .."
+                      placeholder="Tên kho"
                     />
                   </div>
                 </div>
@@ -94,7 +94,7 @@
                       name="keyword"
                       [(ngModel)]="searchForm.keyword"
                       class="form-control"
-                      placeholder="Nhập tên kho, nội dung lô .."
+                      placeholder="Tên đại lý"
                     />
                   </div>
                 </div>
@@ -139,8 +139,8 @@
               <div class="pull-right">
                 <button
                   type="button"
-                  (click)="modalOpen(modalCreate)"
-                  class="btn btn-success mr-25"
+                  (click)="modalOpen(modalCreateSell)"
+                  class="btn btn-success mr-2"
                 >
                   Thêm kho
                 </button>
@@ -186,7 +186,7 @@
                     <td class="overflow-auto">
                       <a
                         class="ml-1"
-                        (click)="modalOpen(modalCreate, item)"
+                        (click)="modalOpen(modalCreateSell, item)"
                         title="Chỉnh sửa kho"
                       >
                         <i
@@ -195,22 +195,23 @@
                         ></i>
                       </a>
 
-
                       <a
                         class="ml-1"
                         (click)="onSubmitLock(item.id, 0)"
                         *ngIf="item.status"
+                        title="Khóa kho"
                       >
                         <i
                           data-feather="lock"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
-                      
+
                       <a
                         class="ml-1"
                         (click)="onSubmitLock(item.id, 1)"
                         *ngIf="!item.status"
+                        title="Mở kho"
                       >
                         <i
                           data-feather="unlock"
@@ -221,7 +222,7 @@
                       <a
                         class="ml-1"
                         (click)="modalOpen(modalUploadAccount, item)"
-                        title="Gán số"
+                        title="Kích hoạt kho"
                       >
                         <i
                           data-feather="check-circle"
@@ -232,10 +233,10 @@
                       <a
                         class="ml-1"
                         (click)="modalOpen(modalUploadAccount, item)"
-                        title="Gán số"
+                        title="Xem chi tiết"
                       >
                         <i
-                          data-feather="link"
+                          data-feather="eye"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
@@ -259,22 +260,6 @@
     </div>
   </div>
 </div>
-
-<ng-template #modalCreate let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <!-- <div>Xem ở main/agent</div> -->
-  <div>Tính năng đang phát triển</div>
-</ng-template>
 
 <ng-template #modalUploadAccount let-modal>
   <div class="modal-header">
@@ -304,6 +289,81 @@
   <div class="modal-footer">
     <button
       (click)="onSubmitUploadCCCD()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      <span
+        class="spinner-border spinner-border-sm"
+        role="ekyc_status"
+        aria-hidden="true"
+        *ngIf="submittedUpload"
+      ></span>
+      Submit
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalCreateSell let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Thêm Lô</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <div class="form-group" *ngIf="isAdmin">
+      <label for="">Tên lô</label>
+      <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
+    </div>
+
+    <div class="form-group">
+      <label>Nhập số lượng</label>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="100"
+        mask="separator"
+        thousandSeparator=","
+        [(ngModel)]="dataLo.quantility"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="">Kênh bán</label>
+      <select [(ngModel)]="dataLo.channel_id" id="" class="form-control">
+        <option [value]="item.id" *ngFor="let item of listChannel">
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">Ghi chú</label>
+      <input type="text" class="form-control" [(ngModel)]="dataLo.note" />
+    </div>
+    <div class="form-group">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      <input
+        type="file"
+        (change)="onFileChangeAttach($event)"
+        accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
+      />
+      <label>Tải lên file chứng từ</label>
+
+      <!-- <a href="/assets/data_upload_account.xls" class="ml-2"
+        >File mẫu tại đây</a
+      > -->
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      (click)="onSubmitUploadLo()"
       type="submit"
       class="btn btn-primary"
       rippleEffect
