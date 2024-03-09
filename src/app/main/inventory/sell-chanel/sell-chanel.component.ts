@@ -7,6 +7,8 @@ import { InventoryService } from 'app/auth/service/inventory.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { CommonDataService } from 'app/auth/service/common-data.service';
+import { id } from '@swimlane/ngx-datatable';
 
 
 @Component({
@@ -44,6 +46,18 @@ export class SellChanelComponent implements OnInit {
   public currentUser: any;
   public isAdmin: boolean = false;
 
+  @Input() provinces;
+  @Input() districts;
+  @Input() commues;
+  @Input() countries;
+
+
+  public residence_districts;
+  public residence_commues;
+  public home_districts;
+  public home_commues;
+  public residence;
+
   public modalRef: any;
   public titleModal: string;
   public formGroup: FormGroup;
@@ -60,6 +74,7 @@ export class SellChanelComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private telecomService: TelecomService,
+    private commonDataService: CommonDataService
 
 
   ) {
@@ -268,20 +283,38 @@ export class SellChanelComponent implements OnInit {
 
   }
 
-  @Input() provinces;
-  @Input() districts;
-  @Input() commues;
-  @Input() countries;
-
-  onChangeDistrict(e) {
-
+  onChangeProvince(event) {
+    let id = event.target.value
+    this.commonDataService.getDistricts(id).subscribe((res: any) => {
+      if (res.status == 1) {
+        this.districts = res.data
+        
+      }
+    })
   }
 
-  onChangeProvince(e) {
-
+  onChangeDistrict(event) {
+    let id = event.target.value
+    this.commonDataService.getCommunes(id).subscribe((res: any) => {
+      if (res.status == 1) {
+        this.commues = res.data
+      }
+    })
   }
 
   getData() {
+    this.commonDataService.getProvinces().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.provinces = res.data
+        this.commonDataService.getDistricts(res.dataid).subscribe((res: any) => {
+          if (res.status == 1) {
+            this.districts = res.data
+          }
+        })
+
+      }
+    })
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });

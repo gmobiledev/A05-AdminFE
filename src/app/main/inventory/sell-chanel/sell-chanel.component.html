@@ -13,62 +13,43 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select
-                    name=""
-                    id="province"
+                    <select 
+                    name="" 
+                    id="province" 
                     class="form-control"
-                    formControlName="province"
-                    (change)="onChangeProvince($event)"
-                  >
-                    <option value="">-- Chọn Tỉnh/Thành phố --</option>
-                    <option *ngFor="let p of provinces" [value]="p.id">
-                      {{ p.title }}
-                    </option>
-                  </select>
-                  <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
-                    <div *ngIf="f.province.errors.required">
-                      Vui lòng nhập trường này
-                    </div>
-                  </div>
+                    (change)='onChangeProvince($event)'
+                    >
+                      <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                      <option *ngFor="let p of provinces" [value]="p.id">
+                        {{ p.title }}
+                      </option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
                     <select
-                    formControlName="district"
-                    id="home_district"
-                    class="form-control"
-                    (change)="onChangeDistrict($event)"
-                  >
-                    <option value="">--Chọn Quận/Huyện--</option>
-                    <option *ngFor="let p of districts" [value]="p.id">
-                      {{ p.title }}
-                    </option>
-                  </select>
-                  <div *ngIf="submitted && f.district.errors" class="invalid-feedback">
-                    <div *ngIf="f.district.errors.required">
-                      Vui lòng nhập trường này
-                    </div>
-                  </div>
-                  
+                      id="home_district"
+                      class="form-control"
+                      (change)='onChangeDistrict($event)'
+                    >
+                      <option value="">--Chọn Quận/Huyện--</option>
+                      <option *ngFor="let p of districts" [value]="p.id">
+                        {{ p.title }}
+                      </option>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select name="" formControlName="commune" class="form-control">
+                    <select name="" class="form-control">
                       <option value="">--Chọn Phường/xã --</option>
                       <option *ngFor="let p of commues" [value]="p.id">
                         {{ p.title }}
                       </option>
                     </select>
-          
-                    <div *ngIf="submitted && f.commune.errors" class="invalid-feedback">
-                      <div *ngIf="f.commune.errors.required">
-                        Vui lòng nhập trường này
-                      </div>
-                    </div>
                   </div>
                 </div>
 
@@ -393,23 +374,12 @@
           >Tỉnh/TP Tổ chức</label
         >
         <div class="col-md-9">
-          <select
-            name=""
-            id="province"
-            class="form-control"
-            formControlName="province"
-            (change)="onChangeProvince($event)"
-          >
+          <select name="" id="province" class="form-control">
             <option value="">-- Chọn Tỉnh/Thành phố --</option>
             <option *ngFor="let p of provinces" [value]="p.id">
               {{ p.title }}
             </option>
           </select>
-          <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
-            <div *ngIf="f.province.errors.required">
-              Vui lòng nhập trường này
-            </div>
-          </div>
         </div>
       </div>
 
@@ -418,22 +388,12 @@
           >Quận/Huyện Tổ chức
         </label>
         <div class="col-md-9">
-          <select
-            formControlName="district"
-            id="home_district"
-            class="form-control"
-            (change)="onChangeDistrict($event)"
-          >
+          <select id="home_district" class="form-control">
             <option value="">--Chọn Quận/Huyện--</option>
             <option *ngFor="let p of districts" [value]="p.id">
               {{ p.title }}
             </option>
           </select>
-          <div *ngIf="submitted && f.district.errors" class="invalid-feedback">
-            <div *ngIf="f.district.errors.required">
-              Vui lòng nhập trường này
-            </div>
-          </div>
         </div>
       </div>
 
@@ -442,18 +402,12 @@
           >Phường/Xã Tổ chức</label
         >
         <div class="col-md-9">
-          <select name="" formControlName="commune" class="form-control">
+          <select name="" class="form-control">
             <option value="">--Chọn Phường/xã --</option>
             <option *ngFor="let p of commues" [value]="p.id">
               {{ p.title }}
             </option>
           </select>
-
-          <div *ngIf="submitted && f.commune.errors" class="invalid-feedback">
-            <div *ngIf="f.commune.errors.required">
-              Vui lòng nhập trường này
-            </div>
-          </div>
         </div>
       </div>
 
