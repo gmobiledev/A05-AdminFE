@@ -9,6 +9,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { id } from '@swimlane/ngx-datatable';
+import { CommonService } from 'app/utils/common.service';
 
 
 @Component({
@@ -74,7 +75,9 @@ export class SellChanelComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private telecomService: TelecomService,
-    private commonDataService: CommonDataService
+    private commonDataService: CommonDataService,
+    private commonService: CommonService,
+
 
 
   ) {
@@ -85,6 +88,23 @@ export class SellChanelComponent implements OnInit {
 
       this.getData();
     })
+  }
+
+  public dataSell = {
+    parent_id: '',
+    name: '',
+    code: 0,
+    desc: '',
+    type: 0,
+    status: 0,
+    business_id: 0,
+    admin_id: 0,
+    province_id: 0,
+    commune_id: 0,
+    address: '',
+    attached_file_name: '',
+    attached_file_content: '',
+    customer_id: 0
   }
 
   loadPage(page): void {
@@ -233,6 +253,20 @@ export class SellChanelComponent implements OnInit {
     }
   }
 
+  async onFileChangeAttach(event) {
+    if (event.target.files && event.target.files[0]) {
+      const ext = event.target.files[0].type;
+      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.dataSell.attached_file_name = 'png';
+        let img = await this.commonService.resizeImage(event.target.files[0]);
+        this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
+      } else if (ext.includes('pdf')) {
+        this.dataSell.attached_file_name = 'pdf';
+        this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+      }
+    }
+  }
+
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
     // const daterangeString = this.dateRange.startDate && this.dateRange.endDate
@@ -250,6 +284,26 @@ export class SellChanelComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     })
+  }
+
+  async onSubmitUploadSell() {
+
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+      this.submittedUpload = true; 
+      this.inventoryService.uploadSellChanel(this.dataSell).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
   }
 
   ngOnInit(): void {
@@ -288,7 +342,7 @@ export class SellChanelComponent implements OnInit {
     this.commonDataService.getDistricts(id).subscribe((res: any) => {
       if (res.status == 1) {
         this.districts = res.data
-        
+
       }
     })
   }
@@ -306,12 +360,6 @@ export class SellChanelComponent implements OnInit {
     this.commonDataService.getProvinces().subscribe((res: any) => {
       if (res.status == 1) {
         this.provinces = res.data
-        this.commonDataService.getDistricts(res.dataid).subscribe((res: any) => {
-          if (res.status == 1) {
-            this.districts = res.data
-          }
-        })
-
       }
     })
 

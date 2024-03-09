@@ -43,7 +43,7 @@ export class InventoryService {
   }
 
   exportExcelReport(dto: any): Observable<any> {
-    return this._http.post(`${environment.apiTelecomUrl}/admin/inventory/export-excel-report`, dto, { observe: 'response', responseType: 'blob' });
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/ExportSell_channelList`, dto, { observe: 'response', responseType: 'blob' });
   }
 
   getAllSim(params = null, inventoryType = "") {
@@ -53,6 +53,11 @@ export class InventoryService {
   uploadBatchSim(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch`, data);
   }
+
+  uploadSellChanel(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/AddSell_Channel`, data);
+  }
+
 
   detailBatchSim(id) {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/batch/${id}`);
