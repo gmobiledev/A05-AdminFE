@@ -35,11 +35,12 @@ export class InventoryService {
   }
 
   lockSell(id: number, status: number, note: string){
-    return this._http.get<any>(`${environment.apiGtalkUrl}/admin/inventory/mcs/channel/UpdateSell_ChannelStatus`);
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`);
   }
 
   activeSell(id: number, status: number, note: string){
-    return this._http.get<any>(`${environment.apiGtalkUrl}/admin/inventory/mcs/channel/UpdateSell_ChannelStatus`);
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus
+    `);
   }
 
   exportExcelReport(dto: any): Observable<any> {
@@ -54,10 +55,13 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch`, data);
   }
 
-  uploadSellChanel(data) {
+  addSellChanel(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/AddSell_Channel`, data);
   }
 
+  updateSellChanel(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_Channel`, data);
+  }
 
   detailBatchSim(id) {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/batch/${id}`);

@@ -290,7 +290,7 @@ export class SellChanelComponent implements OnInit {
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
       this.submittedUpload = true; 
-      this.inventoryService.uploadSellChanel(this.dataSell).subscribe(res => {
+      this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
           this.alertService.showError(res.message);
