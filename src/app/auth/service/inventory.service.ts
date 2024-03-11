@@ -30,16 +30,16 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/channel`, { params: params });
   }
 
-  findSellChannelAll(params = null, inventoryType = "") {
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, { params: params });
+  findSellChannelAll(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, data );
   }
 
-  lockSell(id: number, status: number, params = null){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { params: params });
+  lockSell(id: number, status: number){
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { sell_channelid: id , status: status});
   }
 
-  activeSell(id: number, status: number, params = null){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { params: params });
+  activeSell(id: number, status: number){
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { sell_channelid: id , status: status});
   }
 
   exportExcelReport(dto: any): Observable<any> {

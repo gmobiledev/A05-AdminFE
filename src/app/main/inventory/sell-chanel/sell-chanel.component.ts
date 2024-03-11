@@ -25,12 +25,13 @@ export class SellChanelComponent implements OnInit {
   public page: number = 1;
   public pageSize: number;
   public searchForm = {
-    keyword: '',
+    name: '',
+    code: '',
+    customer_id : '',
+    city_id : '',
+    district_id : '',
+    ward_id: '',
     status: '',
-    nameSell: '',
-    nameChanel: '',
-    codeSell: '',
-
     page: 1
   }
   public selectedItem: any
@@ -82,7 +83,12 @@ export class SellChanelComponent implements OnInit {
 
   ) {
     this.route.queryParams.subscribe(params => {
-      this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
+      this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
+      this.searchForm.code = params['code'] && params['code'] != undefined ? params['code'] : '';
+      this.searchForm.customer_id = params['customer_id'] && params['customer_id'] != undefined ? params['customer_id'] : '';
+      this.searchForm.city_id = params['city_id'] && params['city_id'] != undefined ? params['city_id'] : '';
+      this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
+      this.searchForm.ward_id = params['ward_id'] && params['ward_id'] != undefined ? params['ward_id'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
 
@@ -165,7 +171,7 @@ export class SellChanelComponent implements OnInit {
   async onSubmitLock(id, status) {
     const confirmMessage = status ? "Bạn có đồng ý khóa kho?" : "Bạn có đồng ý mở khóa kho?";
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.lockSell(id, status, "").subscribe(res => {
+      this.inventoryService.lockSell(id, status).subscribe(res => {
         if (!res.status) {
           this.alertService.showError(res.message);
           return;

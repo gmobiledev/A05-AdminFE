@@ -60,6 +60,7 @@
                       id="province"
                       class="form-control"
                       (change)="onChangeProvince($event)"
+                      [(ngModel)]="dataSell.province_id"
                     >
                       <option value="">-- Chọn Tỉnh/Thành phố --</option>
                       <option *ngFor="let p of provinces" [value]="p.id">
@@ -78,6 +79,7 @@
                       id="home_district"
                       class="form-control"
                       (change)="onChangeDistrict($event)"
+                      [(ngModel)]="dataSell.district_id"
                     >
                       <option value="">--Chọn Quận/Huyện--</option>
                       <option *ngFor="let p of districts" [value]="p.id">
@@ -92,7 +94,8 @@
                     >Phường/Xã Tổ chức</label
                   >
                   <div class="col-md-9">
-                    <select name="" class="form-control">
+                    <select name="" class="form-control" [(ngModel)]="dataSell.commune_id"
+                    >
                       <option value="">--Chọn Phường/xã --</option>
                       <option *ngFor="let p of commues" [value]="p.id">
                         {{ p.title }}
@@ -112,6 +115,8 @@
                       type="text"
                       class="form-control"
                       placeholder="Địa chỉ cụ thể"
+                      [(ngModel)]="dataSell.address"
+
                     />
                   </div>
                 </div>
@@ -123,8 +128,8 @@
                   <div class="col-md-9">
                     <select name="" class="form-control">
                       <option value="">--Chọn đại lý --</option>
-                      <option *ngFor="let p of commues" [value]="p.id">
-                        {{ p.title }}
+                      <option *ngFor="let p of listCustomer" [value]="p.id">
+                        {{ p.name }}
                       </option>
                     </select>
                   </div>
@@ -137,8 +142,8 @@
                   <div class="col-md-9">
                     <select name="" class="form-control">
                       <option value="">--Chọn quản lý kho --</option>
-                      <option *ngFor="let p of commues" [value]="p.id">
-                        {{ p.title }}
+                      <option *ngFor="let p of listAdmin" [value]="p.id">
+                        {{ p.username }}
                       </option>
                     </select>
                   </div>

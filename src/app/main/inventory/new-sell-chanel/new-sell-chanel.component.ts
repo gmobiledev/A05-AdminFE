@@ -10,6 +10,8 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { id } from '@swimlane/ngx-datatable';
 import { CommonService } from 'app/utils/common.service';
+import { TaskService } from 'app/auth/service/task.service';
+
 @Component({
   selector: 'app-new-sell-chanel',
   templateUrl: './new-sell-chanel.component.html',
@@ -47,6 +49,9 @@ export class NewSellChanelComponent implements OnInit {
   count: any;
   public contentHeader: any;
   public list: any;
+  public listCustomer: any;
+  public listAdmin: any;
+
   public totalPage: number;
   public page: number = 1;
   public pageSize: number;
@@ -60,8 +65,9 @@ export class NewSellChanelComponent implements OnInit {
     status: 0,
     business_id: 0,
     admin_id: 0,
-    province_id: 0,
-    commune_id: 0,
+    province_id: '',
+    commune_id: '',
+    district_id:'',
     address: '',
     attached_file_name: '',
     attached_file_content: '',
@@ -79,8 +85,7 @@ export class NewSellChanelComponent implements OnInit {
     private telecomService: TelecomService,
     private commonDataService: CommonDataService,
     private commonService: CommonService,
-
-
+    private taskService: TaskService,
 
   ) {
     this.getData();
@@ -107,6 +112,26 @@ export class NewSellChanelComponent implements OnInit {
     };
 
     this.initForm();
+  }
+
+  async listUser() {
+    this.taskService.getListCustomer(this.searchForm).subscribe(res => {
+      this.listCustomer = res.data.items;
+      // this.total = res.data.count;
+      this.pageSize = res.data.pageSize;
+    }, error => {
+      console.log("ERRRR");
+      console.log(error);
+    })
+
+    this.taskService.getListAdmin(this.searchForm).subscribe(res => {
+      this.listAdmin = res.data.items;
+      // this.total = res.data.count;
+      this.pageSize = res.data.pageSize;
+    }, error => {
+      console.log("ERRRR");
+      console.log(error);
+    })
   }
 
 
@@ -173,6 +198,9 @@ export class NewSellChanelComponent implements OnInit {
   }
 
   getData() {
+    
+    this.listUser()
+
     this.commonDataService.getProvinces().subscribe((res: any) => {
       if (res.status == 1) {
         this.provinces = res.data

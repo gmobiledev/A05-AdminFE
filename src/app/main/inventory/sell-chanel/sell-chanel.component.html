@@ -73,8 +73,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="codeSell"
-                      [(ngModel)]="searchForm.codeSell"
+                      name="code"
+                      [(ngModel)]="searchForm.code"
                       class="form-control"
                       placeholder="Mã kho"
                     />
@@ -85,8 +85,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="nameSell"
-                      [(ngModel)]="searchForm.nameSell"
+                      name="customer_id"
+                      [(ngModel)]="searchForm.customer_id"
                       class="form-control"
                       placeholder="Tên kho"
                     />
@@ -97,8 +97,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="nameChanel"
-                      [(ngModel)]="searchForm.nameChanel"
+                      name="name"
+                      [(ngModel)]="searchForm.name"
                       class="form-control"
                       placeholder="Tên đại lý"
                     />
@@ -191,7 +191,7 @@
 
                       <a
                         class="ml-1"
-                        (click)="onSubmitLock(item.id, 0)"
+                        (click)="onSubmitLock(item.id, -2)"
                         *ngIf="item.status"
                         title="Khóa kho"
                       >
@@ -203,7 +203,7 @@
 
                       <a
                         class="ml-1"
-                        (click)="onSubmitLock(item.id, 1)"
+                        (click)="onSubmitLock(item.id, -1)"
                         *ngIf="!item.status"
                         title="Mở kho"
                       >
@@ -215,7 +215,7 @@
 
                       <a
                         class="ml-1"
-                        (click)="onAcivteSell(item.id, 1)"
+                        (click)="onAcivteSell(item.id, 0)"
                         *ngIf="!item.status"
                         title="Kích hoạt kho"
                       >
@@ -227,7 +227,7 @@
 
                       <a
                         class="ml-1"
-                        (click)="onAcivteSell(item.id, 0)"
+                        (click)="onAcivteSell(item.id, 1)"
                         *ngIf="item.status"
                         title="Dừng kích hoạt kho"
                       >
