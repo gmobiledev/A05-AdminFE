@@ -133,10 +133,10 @@
               <div class="pull-right">
                 <button
                   type="button"
-                  (click)="modalOpen(modalCreateSell)"
                   class="btn btn-success mr-25"
                 >
-                  Thêm kho
+                <span routerLink="/inventory/new-sell-chanel">Thêm kho</span>
+                  
                 </button>
               </div>
             </div>
@@ -415,19 +415,25 @@
           <input
             type="text"
             class="form-control"
-            formControlName="residence_full_address"
             placeholder="Địa chỉ cụ thể"
           />
-          <div
-            *ngIf="submitted && f.residence_full_address.errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f.residence_full_address.errors.required">
-              Vui lòng nhập trường này
-            </div>
-          </div>
         </div>
       </div>
+
+      <div class="form-group row mt-1">
+        <label for="commune" class="col-md-3 col-form-label"
+          >Đại lý</label
+        >
+        <div class="col-md-9">
+          <select name="" class="form-control">
+            <option value="">--Chọn đại lý --</option>
+            <option *ngFor="let p of commues" [value]="p.id">
+              {{ p.title }}
+            </option>
+          </select>
+        </div>
+      </div>
+
     </div>
   </div>
   <div class="modal-footer">
