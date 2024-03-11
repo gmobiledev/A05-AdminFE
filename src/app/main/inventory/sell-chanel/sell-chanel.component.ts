@@ -163,7 +163,7 @@ export class SellChanelComponent implements OnInit {
   }
 
   async onSubmitLock(id, status) {
-    const confirmMessage = status ? "Bạn có đồng ý mở khóa kho?" : "Bạn có đồng ý khóa kho?";
+    const confirmMessage = status ? "Bạn có đồng ý khóa kho?" : "Bạn có đồng ý mở khóa kho?";
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.inventoryService.lockSell(id, status, "").subscribe(res => {
         if (!res.status) {
@@ -181,7 +181,7 @@ export class SellChanelComponent implements OnInit {
   async onAcivteSell(id, status) {
     const confirmMessage = status ? "Bạn có đồng ý kích hoạt kho?" : "Bạn có đồng ý dừng kích hoạt kho?";
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.activeSell(id, status, "").subscribe(res => {
+      this.inventoryService.activeSell(id, status).subscribe(res => {
         if (!res.status) {
           this.alertService.showError(res.message);
           return;

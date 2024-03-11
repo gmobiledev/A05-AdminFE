@@ -34,13 +34,12 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, { params: params });
   }
 
-  lockSell(id: number, status: number, note: string){
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`);
+  lockSell(id: number, status: number, params = null){
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { params: params });
   }
 
-  activeSell(id: number, status: number, note: string){
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus
-    `);
+  activeSell(id: number, status: number, params = null){
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { params: params });
   }
 
   exportExcelReport(dto: any): Observable<any> {

@@ -83,7 +83,7 @@ export class NewSellChanelComponent implements OnInit {
 
 
   ) {
-
+    this.getData();
   }
 
   ngOnInit(): void {
@@ -113,13 +113,13 @@ export class NewSellChanelComponent implements OnInit {
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
       const ext = event.target.files[0].type;
-      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+      if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
         this.dataSell.attached_file_name = 'png';
         let img = await this.commonService.resizeImage(event.target.files[0]);
         this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
       } else if (ext.includes('pdf')) {
         this.dataSell.attached_file_name = 'pdf';
-        this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+        this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
       }
     }
   }
@@ -145,7 +145,7 @@ export class NewSellChanelComponent implements OnInit {
   async onSubmitUploadSell() {
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
-      this.submittedUpload = true; 
+      this.submittedUpload = true;
       this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
@@ -167,7 +167,7 @@ export class NewSellChanelComponent implements OnInit {
     this.initForm();
   }
 
-  
+
   initForm() {
 
   }
@@ -199,6 +199,43 @@ export class NewSellChanelComponent implements OnInit {
     })
   }
 
+  modalOpen(modal, item = null) {
+  //     if(item) {
+  //       this.titleModal = "Cập nhật user";
+  //       this.isCreate = false;
+  //       this.selectedUserId = item.id;
+  //       this.userService.getAgentServices(item.id).subscribe(res => {
 
+
+  //         this.currentService = res.data.map( x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
+  //         let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
+  //         for (let i = 0; i < this.currentService.length; i++ ) {
+  //           const newGroup = this.formBuilder.group({
+  //             id: [{value:this.currentService[i]['id'], disabled: true}],
+  //             status: [{value:this.currentService[i]['status'], disabled: true}],
+  //             ref_code: [{value: this.currentService[i]['ref_code'], disabled: true}],
+  //             service_code: [{value: this.currentService[i]['service_code'], disabled: true}]
+  //           });
+  //           const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
+  //           this.listServiceFilter[index]['disabled'] = 'disabled';
+  //           arrayControl.push(newGroup);
+  //         }
+
+  //         this.modalRef = this.modalService.open(modal, {
+  //           centered: true,
+  //           windowClass: 'modal modal-primary',
+  //           size: 'lg'
+  //         });
+  //       })
+  //     } else {
+  //       this.titleModal = "Thêm đại lý";
+  //       this.isCreate = true;
+  //       this.modalRef = this.modalService.open(modal, {
+  //         centered: true,
+  //         windowClass: 'modal modal-primary',
+  //         size: 'lg'
+  //       });
+  //     }
+  }
 
 }
