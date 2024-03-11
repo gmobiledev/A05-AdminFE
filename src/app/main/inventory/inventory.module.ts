@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'edit-sell-chanel',
-    component: NewSellChanelComponent
+    component: EditSellChanelComponent
   }
 ];
 

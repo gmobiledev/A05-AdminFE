@@ -18,6 +18,7 @@
                       id="province"
                       class="form-control"
                       (change)="onChangeProvince($event)"
+                      [(ngModel)]="searchForm.city_id"
                     >
                       <option value="">-- Chọn Tỉnh/Thành phố --</option>
                       <option *ngFor="let p of provinces" [value]="p.id">
@@ -33,6 +34,7 @@
                       id="home_district"
                       class="form-control"
                       (change)="onChangeDistrict($event)"
+                      [(ngModel)]="searchForm.district_id"
                     >
                       <option value="">--Chọn Quận/Huyện--</option>
                       <option *ngFor="let p of districts" [value]="p.id">
@@ -44,7 +46,8 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select name="" class="form-control">
+                    <select name="" class="form-control" [(ngModel)]="searchForm.ward_id"
+                    >
                       <option value="">--Chọn Phường/xã --</option>
                       <option *ngFor="let p of commues" [value]="p.id">
                         {{ p.title }}
@@ -180,8 +183,8 @@
                     <td class="overflow-auto">
                       <a
                         class="ml-1"
-                        (click)="modalOpen(modalCreateSell, item)"
                         title="Chỉnh sửa kho"
+                        [routerLink]="['/inventory/edit-sell-chanel']"
                       >
                         <i
                           data-feather="edit-3"
