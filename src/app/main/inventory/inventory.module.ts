@@ -14,6 +14,7 @@ import { ChannelComponent } from './channel/channel.component';
 import { ListBatchSimComponent } from './list-batch-sim/list-batch-sim.component';
 import { SellChanelComponent } from './sell-chanel/sell-chanel.component';
 import { NewSellChanelComponent } from './new-sell-chanel/new-sell-chanel.component';
+import { EditSellChanelComponent } from './edit-sell-chanel/edit-sell-chanel.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'new-sell-chanel',
     component: NewSellChanelComponent
+  },
+  {
+    path: 'edit-sell-chanel',
+    component: NewSellChanelComponent
   }
 ];
 
@@ -50,7 +55,8 @@ const routes: Routes = [
     ChannelComponent,
     ListBatchSimComponent,
     SellChanelComponent,
-    NewSellChanelComponent
+    NewSellChanelComponent,
+    EditSellChanelComponent
   ],
   imports: [
     CommonModule,
