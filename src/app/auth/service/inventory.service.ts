@@ -47,4 +47,16 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch/update-status`, data);
   }
 
+  kdCreateBatch(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/kinh-doanh`, data);
+  }
+
+  vpUpdateStatusBatch(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/van-phong/update-status`, data);
+  }
+
+  ktUpdateStatusBatch(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/ke-toan/update-status`, data);
+  }
+
 }

@@ -45,7 +45,9 @@ export enum BatchStatus {
     INIT = 0, // lô mới khởi tạo
     APPORVED = 2, // lô đã duyệt
     COMPLETED = 1, // số đã được duyệt
-    CANCEL = -1 //lô không được duyệt
+    CANCEL = -1, //lô không được duyệt
+    APPROVED_BY_OFFICE = 11,
+
 }
 
 export enum TelecomAction {

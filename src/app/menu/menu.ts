@@ -400,6 +400,22 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/search-subscription'
       },
+      // {
+      //   id: 'search-topup',
+      //   title: 'Lịch sử TOPUP',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'search',
+      //   url: 'sim-so/msisdn/topup'
+      // },
+      // {
+      //   id: 'search-balance-changes',
+      //   title: 'Tra cứu cước',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'search',
+      //   url: 'sim-so/msisdn/balance-changes'
+      // },
       {
         id: 'search',
         title: 'Tìm Sim Số',

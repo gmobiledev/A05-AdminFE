@@ -11,7 +11,7 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-3">
                   <div class="form-group">
                     <input
                       type="text"
@@ -22,18 +22,30 @@
                     />
                   </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                   <div class="form-group">
                     <select
                       class="form-control"
-                      name="ekyc_status"
+                      name="type"
+                      [(ngModel)]="searchForm.type"
+                    >
+                      <option value="">Chọn loại</option>
+                      <option value="1">Nhập kho</option>
+                      <option value="-1">Xuất kho</option>                      
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="_all">Chọn trạng thái</option>
-                      <option value="APPROVED">Tải hoàn tất</option>
-                      <option value="APPROVED">Khởi tạo</option>
-                      <option value="APPROVED">Tải lên 1 phẩn</option>
                       <option value="">Chọn trạng thái</option>
+                      <option value="{{batchStatus.INIT}}">Mới khởi thạo</option>
+                      <option value="{{batchStatus.APPROVED_BY_OFFICE}}">Duyệt bởi VP</option>
+                      <option value="{{batchStatus.APPORVED}}">Duyệt bởi KT</option>                      
                     </select>
                   </div>
                 </div>
@@ -52,18 +64,23 @@
               </div>
               <div class="pull-right">
                 <button
+                  *ngIf="checkAction('batch/kinh-doanh')"
                   type="button"
-                  (click)="modalOpen(modalUploadAccount)"
+                  (click)="modalOpen(modalCreate)"
                   class="btn btn-success mr-2"
                 >
-                  Thêm lô
+                
+                  Nhập kho <span [data-feather]="'upload'"></span>
                 </button>
+
+                <a href="/inventory/new-batch-export" class="btn btn-success mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
               </div>
             </div>
             <div class="table-responsive" *blockUI="'section-block'">
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>Loại</th>
                     <th>Mã Lô</th>
                     <th>Tên lô</th>
                     <th>Số lượng</th>
@@ -76,6 +93,9 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list">
+                    <td>
+                      {{ item.type | typeBatchForm }}
+                    </td>
                     <td>
                       {{ item?.id }}
                     </td>
@@ -189,21 +209,6 @@
   </div>
 </div>
 
-<ng-template #modalCreate let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <!-- <div>Xem ở main/agent</div> -->
-  <div>Tính năng đang phát triển</div>
-</ng-template>
 
 <ng-template #modalUploadData let-modal>
   <div class="modal-header">
@@ -246,9 +251,9 @@
   </div>
 </ng-template>
 
-<ng-template #modalUploadAccount let-modal>
+<ng-template #modalCreate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Thêm Lô</h5>
+    <h5 class="modal-title" id="myModalLabel160">Nhập kho</h5>
     <button
       type="button"
       class="close"
@@ -260,7 +265,7 @@
   </div>
   <div class="modal-body" tabindex="0">
     <div class="form-group" *ngIf="isAdmin">
-      <label for="">Tên lô</label>
+      <label for="">Tiêu đề</label>
       <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
     </div>
 
@@ -276,14 +281,14 @@
       />
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="">Kênh bán</label>
       <select [(ngModel)]="dataLo.channel_id" id="" class="form-control">
         <option [value]="item.id" *ngFor="let item of listChannel">
           {{ item.name }}
         </option>
       </select>
-    </div>
+    </div> -->
 
     <div class="form-group" *ngIf="isAdmin">
       <label for="">Ghi chú</label>
@@ -367,29 +372,32 @@
     <div>
       
       <button
-        *ngIf="batchdDetail?.status == 0"
-        (click)="onUpdateStatus(batchdDetail, 2)"
+        *ngIf="batchdDetail?.status == batchStatus.INIT
+        && checkAction('batch/van-phong/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED_BY_OFFICE)"
         class="btn btn-info btn-sm mb-2"
       >
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
       </button>
 
-      <button
-        *ngIf="itemBatch.status == 0"
+      <!-- <button
+        *ngIf="itemBatch.status == batchStatus.INIT"
         (click)="onUpdateStatus(batchdDetail, -1)"
         class="ml-2 btn btn-warning btn-sm mb-2"
       >
         <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
         Từ chối duyệt
-      </button>
+      </button> -->
 
       <button
-        *ngIf="itemBatch.status == 2"
-        (click)="onUpdateStatus(batchdDetail, 1)"
+        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_OFFICE
+        && checkAction('batch/ke-toan/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED)"
         class="ml-2 btn btn-facebook btn-sm mb-2"
       >
-        <i data-feather="archive" class="text-white cursor-pointer"></i>
-        Duyệt Số
+      <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
       </button>
     </div>
   </div>

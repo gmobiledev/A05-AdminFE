@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA , NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BatchComponent } from './batch/batch.component';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreCommonModule } from '@core/common.module';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
@@ -13,6 +13,9 @@ import { BatchGtalkComponent } from './batch-gtalk/batch-gtalk.component';
 import { ChannelComponent } from './channel/channel.component';
 import { ListBatchSimComponent } from './list-batch-sim/list-batch-sim.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { NewBatchExportComponent } from './new-batch-export/new-batch-export.component';
 
 const routes: Routes = [
   {
@@ -30,6 +33,14 @@ const routes: Routes = [
   {
     path: 'list-batch',
     component: ListBatchSimComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
+  {
+    path: 'new-batch-export',
+    component: NewBatchExportComponent
   }
 ];
 
@@ -39,7 +50,9 @@ const routes: Routes = [
     BatchSimComponent,
     BatchGtalkComponent,
     ChannelComponent,
-    ListBatchSimComponent
+    ListBatchSimComponent,
+    DashboardComponent,
+    NewBatchExportComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +64,12 @@ const routes: Routes = [
     ContentHeaderModule,
     BlockUIModule.forRoot(),
     PdfViewerModule,
+    HighchartsChartModule,
+    NgbAccordionModule,
     NgxDaterangepickerMd.forRoot()
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA
   ]
 })
 export class InventoryModule { }

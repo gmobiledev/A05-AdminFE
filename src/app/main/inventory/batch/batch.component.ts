@@ -7,6 +7,7 @@ import { CreateAgentDto } from 'app/auth/service/dto/user.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonService } from 'app/utils/common.service';
+import { BatchStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -27,6 +28,7 @@ export class BatchComponent implements OnInit {
   public searchForm = {
     keyword: '',
     status: '',
+    type: '',
     page: 1,
     page_size: 20,
   }
@@ -44,12 +46,14 @@ export class BatchComponent implements OnInit {
 
   public batchdDetail: any
   public itemBatch: any
+  batchStatus = BatchStatus;
+  public listCurrentAction: any;
 
 
   public dataLo = {
     title: '',
     quantility: 0,
-    channel_id: 0,
+    // channel_id: 0,
     files: '',
     file_ext: '',
     note: ''
@@ -104,7 +108,7 @@ export class BatchComponent implements OnInit {
       });
 
     } else {
-      this.titleModal = "Thêm lô";
+      this.titleModal = "Thêm lô nhập";
       this.isCreate = true;
       this.modalRef = this.modalService.open(modal, {
         centered: true,
@@ -117,7 +121,6 @@ export class BatchComponent implements OnInit {
   modalClose() {
     this.modalRef.close();
     this.getData();
-    this.initForm();
   }
 
   onViewDetail(modal, item) {
@@ -140,31 +143,42 @@ export class BatchComponent implements OnInit {
     let data = {
       id: item.id,
       status: status,
-      note: ''
     }
 
     let confirmMessage = "";
-    if (status == 1) {
-      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt số?'
-    } else if (status == 2) {
-      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt lô?'
-    } else if (status == -1) {
-      confirmMessage = 'Bạn có đồng ý Hủy duyệt lô?'
+    if (status == this.batchStatus.APPORVED || status == this.batchStatus.APPROVED_BY_OFFICE) {
+      confirmMessage = 'Bạn có đồng ý Xác nhận duyệt?'
     }
 
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.updateBatchSim(data).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showMess(res.message);
+      if(status == this.batchStatus.APPROVED_BY_OFFICE) {
+        this.inventoryService.vpUpdateStatusBatch(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.modalClose();
+          this.getData();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
           return;
-        }
-        this.modalClose();
-        this.getData();
-        this.alertService.showSuccess(res.message);
-      }, error => {
-        this.alertService.showMess(error);
-        return;
-      })
+        })
+      }
+      if(status == this.batchStatus.APPORVED) {
+        this.inventoryService.ktUpdateStatusBatch(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.modalClose();
+          this.getData();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
+          return;
+        })
+      }
     }
 
   }
@@ -235,7 +249,7 @@ export class BatchComponent implements OnInit {
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
       this.submittedUpload = true;
-      this.inventoryService.uploadBatchSim(this.dataLo).subscribe(res => {
+      this.inventoryService.kdCreateBatch(this.dataLo).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
           this.alertService.showError(res.message);
@@ -271,67 +285,10 @@ export class BatchComponent implements OnInit {
       }
     };
 
-    this.initForm();
   }
 
   get f() {
     return this.formGroup.controls;
-  }
-
-  async onSubmitUploadFileAccount() {
-    if (!this.fileAccount || !this.adminId) {
-      this.alertService.showError("Vui lòng nhập đủ dữ liệu");
-      return;
-    }
-    if (!this.channelId) {
-      this.alertService.showError("Vui lòng chọn kênh bán");
-      return;
-    }
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
-      this.submittedUpload = true;
-      const formData = new FormData();
-      formData.append("files", this.fileAccount);
-      formData.append("admin_id", this.adminId ? this.adminId : null);
-      formData.append("ref_code", this.refCode ? this.refCode : null);
-
-      this.userService.createAgentBatchAccount(formData).subscribe(async res => {
-        this.submittedUpload = false;
-        if (!res.status) {
-          await this.alertService.showMess(res.message);
-          return;
-        }
-        this.fileAccount = null;
-        const dataSellChannel = {
-          channel_id: this.channelId,
-          user_id: res.data.user_id
-        }
-        this.telecomService.sellChannelAddUser(dataSellChannel).subscribe(resS => {
-          if (!resS.status) {
-            this.alertService.showError(resS.message);
-            return;
-          }
-        })
-        this.modalClose();
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, error => {
-        this.submittedUpload = false;
-        this.alertService.showError(error);
-      })
-    }
-  }
-
-  initForm() {
-    this.formGroup = this.formBuilder.group({
-      mobile: ['', Validators.required],
-      password: ['', Validators.required],
-      // ref_code: [],
-      // service_code: new FormArray([]),
-      agents_service: this.formBuilder.array([]),
-      new_agents_service: this.formBuilder.array([])
-    });
-    this.exitsUser = false;
-    this.isCreate = true;
   }
 
   async onListChannel() {
@@ -352,6 +309,7 @@ export class BatchComponent implements OnInit {
         this.isAdmin = true;
       }
     }
+    this.listCurrentAction = this.currentUser.actions;
     this.sectionBlockUI.start();
     this.inventoryService.findBatchAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
@@ -365,6 +323,10 @@ export class BatchComponent implements OnInit {
 
     this.onListChannel();
 
+  }
+
+  checkAction(item) {
+    return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
 

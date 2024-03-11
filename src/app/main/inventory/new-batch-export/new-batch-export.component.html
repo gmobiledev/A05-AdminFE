@@ -1,0 +1,189 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+        
+
+        <div class="row" >
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select name="" id="" class="form-control">
+                                <option value="">-- Chọn kho nguồn --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <select name="" id="" class="form-control">
+                                <option value="">-- Chọn kho đích --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Số lượng sản phẩm</label>
+                                <input type="text" class="form-control" placeholder="Số lượng sản phẩm">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Hạng số</label>
+                                <select name="" id="" class="form-control">
+                                    <option value="">BRONE</option>
+                                    <option value="">GOLD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Loại SIM</label>
+                                <select name="" id="" class="form-control">
+                                    <option value="">SIM trắng</option>
+                                    <option value="">SIM KIT</option>
+                                </select>
+                            </div>
+                        </div>                                                                        
+                    </div>
+                    <div class="row">
+                        <ngb-accordion [destroyOnHide]='false' [closeOthers]="true"  #shadow class="w-100">
+                            <ngb-panel id="panel1">
+                               <ng-template ngbPanelTitle>
+                                  <a class="pull-right">Lọc thêm <span [data-feather]="'chevron-down'"
+                                    [class]="'mr-25'"></span></a>
+                               </ng-template>
+                               <ng-template ngbPanelContent>
+                                 <div class="row">
+                                  <div class="col-md-12">
+                                    <h6>Chọn dải số/serial</h6>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="">Từ</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label for="">Đến</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                               </ng-template>
+                            </ngb-panel>
+                            
+                         </ngb-accordion>
+                </div>
+              </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="text" placeholder="Số điện thoại" class="form-control">
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>09969801533</td>
+                                    <td>BRONE</td>
+                                    <td>VMS</td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>09969801533</td>
+                                    <td>BRONE</td>
+                                    <td>VMS</td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>09969801533</td>
+                                    <td>BRONE</td>
+                                    <td>VMS</td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>09969801533</td>
+                                    <td>BRONE</td>
+                                    <td>VMS</td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label></label>
+                            <button type="button" class="btn btn-info mb-1" rippleEffect><span [data-feather]="'chevrons-right'"
+                                    [class]="'mr-25'"></span>Thêm</button>
+                            <br />
+                            <button type="button" class="btn btn-danger" rippleEffect><span [data-feather]="'chevrons-left'"
+                                    [class]="'mr-25'"></span>Gỡ</button>
+                        </div>
+                    
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>09969801533</td>
+                                    <td>BRONE</td>
+                                    <td>VMS</td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>09969801533</td>
+                                    <td>BRONE</td>
+                                    <td>VMS</td>
+                                    <td><input type="checkbox"></td>
+                                </tr>                                
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-success mb-1 pull-right" rippleEffect><span [data-feather]="'save'"
+                            [class]="'mr-25'"></span>Tạo</button>
+                    </div>
+                </div>
+            </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
