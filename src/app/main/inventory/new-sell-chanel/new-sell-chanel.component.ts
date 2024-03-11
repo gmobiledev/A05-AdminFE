@@ -11,6 +11,7 @@ import { CommonDataService } from 'app/auth/service/common-data.service';
 import { id } from '@swimlane/ngx-datatable';
 import { CommonService } from 'app/utils/common.service';
 import { TaskService } from 'app/auth/service/task.service';
+import { GtalkService } from 'app/auth/service/gtalk.service';
 
 @Component({
   selector: 'app-new-sell-chanel',
@@ -51,6 +52,7 @@ export class NewSellChanelComponent implements OnInit {
   public list: any;
   public listCustomer: any;
   public listAdmin: any;
+  public listSellUser: any;
 
   public totalPage: number;
   public page: number = 1;
@@ -86,6 +88,7 @@ export class NewSellChanelComponent implements OnInit {
     private commonDataService: CommonDataService,
     private commonService: CommonService,
     private taskService: TaskService,
+    private gtalkService: GtalkService,
 
   ) {
     this.getData();
@@ -117,8 +120,6 @@ export class NewSellChanelComponent implements OnInit {
   async listUser() {
     this.taskService.getListCustomer(this.searchForm).subscribe(res => {
       this.listCustomer = res.data.items;
-      // this.total = res.data.count;
-      this.pageSize = res.data.pageSize;
     }, error => {
       console.log("ERRRR");
       console.log(error);
@@ -126,9 +127,16 @@ export class NewSellChanelComponent implements OnInit {
 
     this.taskService.getListAdmin(this.searchForm).subscribe(res => {
       this.listAdmin = res.data.items;
-      // this.total = res.data.count;
-      this.pageSize = res.data.pageSize;
     }, error => {
+      console.log("ERRRR");
+      console.log(error);
+    })
+
+    this.userService.getAll(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.listSellUser = res.data.items;
+    }, error => {
+      this.sectionBlockUI.stop();
       console.log("ERRRR");
       console.log(error);
     })

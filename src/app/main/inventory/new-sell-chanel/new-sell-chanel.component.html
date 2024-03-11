@@ -152,15 +152,15 @@
                   <label for="commune" class="col-md-3 col-form-label"
                     >Chọn người bán hàng</label
                   >
-                  <div class="col-md-2">
-                    <button
-                      type="button"
-                      (click)="modalOpen(modalCreate)"
-                      class="btn btn-block btn-success"
-                    >
-                      Thêm<span [data-feather]="'add'"></span>
-                    </button>
+                  <div class="col-md-9">
+                    <select name="" class="form-control">
+                      <option value="">--Chọn đại lý --</option>
+                      <option *ngFor="let p of listSellUser" [value]="p.id">
+                        {{ p.full_name }}
+                      </option>
+                    </select>
                   </div>
+
                 </div>
               </div>
             </div>
