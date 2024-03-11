@@ -224,17 +224,6 @@ export class EditSellChanelComponent implements OnInit {
         this.isAdmin = true;
       }
     }
-    this.sectionBlockUI.start();
-    this.inventoryService.findSellChannelAll(this.searchForm).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.list = res.data.items;
-      this.totalPage = res.data.count;
-      this.pageSize = res.data.pageSize;
-    }, error => {
-      this.sectionBlockUI.stop();
-      console.log("ERRRR");
-      console.log(error);
-    })
   }
 
   modalOpen(modal, item = null) {

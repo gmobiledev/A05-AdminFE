@@ -377,7 +377,7 @@ export class SellChanelComponent implements OnInit {
       }
     }
     this.sectionBlockUI.start();
-    this.inventoryService.findSellChannelAll(this.searchForm).subscribe(res => {
+    this.inventoryService.searchSellChannelAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalPage = res.data.count;

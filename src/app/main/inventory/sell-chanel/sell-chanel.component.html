@@ -167,7 +167,7 @@
                       {{ item.desc }}
                     </td>
                     <td>
-                      {{ item.name }}
+                      {{ item.customer_id}}
                     </td>
                     <td>
                       {{ item.type }}
@@ -177,7 +177,7 @@
                     </td>
 
                     <td>
-                      <div [innerHTML]="item.status | showStatus"></div>
+                      <div [innerHTML]="item.status | showStatusSell "></div>
                     </td>
 
                     <td class="overflow-auto">
