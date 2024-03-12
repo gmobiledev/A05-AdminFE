@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'app/auth/service/admin.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
-import { MsisdnStatus, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { MsisdnStatus, TaskAction, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import JSZip from 'jszip';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -177,7 +177,7 @@ export class TaskItemComponent implements OnInit {
       }
 
       if ((await this.alertService.showConfirm(confirmMessage)).value) {
-        this.telecomService.updateTaskStatusV2(item.action,item.id, { status: status }).subscribe(res => {
+        this.telecomService.updateTaskStatusV2(item.action, item.id, { status: status }).subscribe(res => {
           if (!res.status) {
             this.alertService.showError(res.message);
             return;
@@ -915,8 +915,7 @@ export class TaskItemComponent implements OnInit {
         this.actionText = 'Cập nhật TTTB';
         this.titleDocumentImage = 'Ảnh phiếu thay đổi thông tin';
         this.titleModal = 'Cập nhật TTTB'
-      } else
-       {
+      } else {
         this.titleModal = 'Đấu nối sim mới';
       }
       this.getData(1);
@@ -949,23 +948,35 @@ export class TaskItemComponent implements OnInit {
 
   }
 
-  async modalOpen(modal, item = null) {
+  async modalOpen(modal, item = null, size = 'lg') {
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: 'modal modal-primary',
-      size: 'lg',
+      size: size,
       backdrop: 'static',
       keyboard: false
     });
   }
 
   async modalClose() {
-    // this.getData();
     this.modalRef.close();
   }
 
-  isValidAsyncBy(task){
-    return this.currentUserId == task.sync_by && task.status != TaskTelecomStatus.STATUS_SUCCESS &&  this.typeDetail != 'msisdn'
+  isValidAsyncBy(task) {
+    if (this.data.task.sub_action == this.listTaskAction['_4G_VNM_TO_VMS']["value"] && task.status != TaskTelecomStatus.STATUS_SUCCESS)
+      return true;
+    return this.currentUserId == task.sync_by && task.status != TaskTelecomStatus.STATUS_SUCCESS && this.typeDetail != 'msisdn'
+  }
+
+  isShowButtonApprove() {
+    if (this.checkAction('telecom-admin/task/approve-2g-conversion') &&
+      this.data.task.sub_action == this.listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+      this.data.task.sub_action == this.listTaskAction['GSIM_TO_SIM']['value'] ||
+      this.data.task.sub_action == this.listTaskAction['_4G_VNM_TO_VMS']["value"]
+    ) {
+      return true;
+    }
+    return false;
   }
 
   onUploadImages() {
@@ -1024,5 +1035,9 @@ export class TaskItemComponent implements OnInit {
       });
   }
 
+  checkMsisdnTaskGsim(data) {
+    return data.task.action == this.listTaskAction.CANCEL_SUBCRIBER.value &&
+      data.msisdn.msisdns[0] && data.msisdn.msisdns[0].mno == 'GSIM' ? true : false;
+  }
 
 }

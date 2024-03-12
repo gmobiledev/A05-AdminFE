@@ -20,6 +20,7 @@ export class ThongTinThueBaoComponent implements OnInit {
   public viewImage;
   public modalRef: any;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  @Input() view;
   @Input() msisdn: any
   @Input() service: any;
 

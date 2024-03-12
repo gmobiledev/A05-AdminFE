@@ -1,0 +1,17 @@
+<div class="row" *ngIf="listFiles && listFiles.length > 0">
+<div class="col-6 mb-1" *ngFor="let item of listFiles">
+    <img *ngIf="item.ext.includes('png') || item.ext.includes('jpg') || item.ext.includes('jpeg')" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+    <div *ngIf="item.ext.includes('pdf') && item.base64">
+      <pdf-viewer [src]="'data:application/pdf;base64,'+item.base64"
+          [render-text]="true"
+          [original-size]="false"
+          [external-link-target]="'blank'"
+          style="height: 450px"
+        ></pdf-viewer>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="!listFiles || listFiles.length < 1">
+  <p>Không có tệp đính kèm</p>
+</div>

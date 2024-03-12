@@ -30,8 +30,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Khoảng thời gian"
-                                            autocomplete="off"
+                                        <input type="text" placeholder="Khoảng thời gian" autocomplete="off"
                                             [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
                                             [(ngModel)]="dateRange" [ranges]="ranges"
                                             [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
@@ -44,8 +43,8 @@
                                     <div class="form-group">
                                         <select class="form-control" name="status" [(ngModel)]="searchForm.action">
                                             <option value="">Chọn loại</option>
-                                            <option *ngFor="let item of telecomActions | keyvalue"
-                                                [value]="item.value" [id]="item.key">
+                                            <option *ngFor="let item of telecomActions | keyvalue" [value]="item.value"
+                                                [id]="item.key">
                                                 <span [innerHTML]="item.value"></span>
                                             </option>
                                         </select>
@@ -104,7 +103,8 @@
                                             {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
                                         </td>
                                         <td>
-                                            {{ item.id }}
+                                            <a placement="right" ngbTooltip="'Copy {{item.code}}'" (click)="copyTextClipboard(item.code)"><i
+                                                data-feather="copy" class="cursor-pointer"></i>{{ item.id }}</a>
                                         </td>
                                         <td>
                                             {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] :

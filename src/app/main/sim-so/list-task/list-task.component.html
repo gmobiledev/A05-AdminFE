@@ -1,109 +1,6 @@
 <div class="content-wrapper container-xxl p-0">
   <div class="content-body">
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
-
-    <!-- <div class="row box-summary">
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxNewInit}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_new_sim }} đấu nối sim mới</h5>
-                <p class="card-text font-small-3 mb-1">Mới khởi tạo</p>
-                <a (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.new_sim.value)">Xem
-                  chi
-                  tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxNewProcessing}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                  
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_new_sim }} đấu nối sim mới</h5>
-                <p class="card-text font-small-3 mb-1">Đang xử lý</p>
-                <a
-                  (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.new_sim.value)">Xem
-                  chi tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxChangeSimInit}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                  
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.init_change_info }} đổi sim</h5>
-                <p class="card-text font-small-3 mb-1">Mới tạo</p>
-                <a (click)="viewDetailSummary([taskTelecomStatus.STATUS_NEW_ORDER], listTaskAction.change_info.value)">Xem
-                  chi tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-xl-3 mb-2 mb-xl-0">
-        <div class="card" [ngClass]="{'active': isActivedBoxChangeSimProcessing}">
-          <div class="card-header">
-
-          </div>
-          <div class="card-body statistics-body">
-            <div class="media">
-              <div class="avatar bg-light-primary mr-2">
-                <div class="avatar-content">
-                 
-                </div>
-              </div>
-              <div class="media-body my-auto">
-                <h5 class="font-weight-bolder mb-0">{{ summaryTask?.processing_change_info }} đổi sim</h5>
-                <p class="card-text font-small-3 mb-1">Đang xử lý</p>
-                <a
-                  (click)="viewDetailSummary([taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO], listTaskAction.change_info.value)">Xem
-                  chi tiết</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="row mb-2">
-      <div class="col-md-3">
-        <button type="button" (click)="onGetAvaiable(modalItem)" class="btn btn-block btn-info">Tiếp nhận yêu cầu
-          mới<span [data-feather]="'arrow-up-circle'"></span></button>
-      </div>
-    </div> -->
-
     <div class="row" id="table-striped">
       <div class="col-12">
         <div class="card">
@@ -121,8 +18,11 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" name="cccd" [(ngModel)]="searchForm.cccd" class="form-control"
-                      placeholder="Số CCCD của KH">
+                    <select class="form-control" name="action" [(ngModel)]="searchForm.customer_type">
+                      <option value=""> -- Loại khách hàng --</option>
+                      <option value="PERSONAL">Cá nhân</option>
+                      <option value="ORGANIZATION">Doanh nghiệp</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -132,9 +32,8 @@
                       <option value="new_sim">Đấu nối mới</option>
                       <option value="change_sim">Đổi sim</option>
                       <option value="change_info">Cập nhật TTTB</option>
+                      <option value="cancel_subcriber">Hủy SIM</option>
                     </select>
-                    <!-- <input type="text" name="customer_name" [(ngModel)]="searchForm.customer_name" class="form-control"
-                      placeholder="Tên khách hàng"> -->
                   </div>
                 </div>
 
@@ -171,20 +70,13 @@
                     <select class="form-control" name="telco" [(ngModel)]="searchForm.sub_action">
                       <option value="">-- Lọc thêm --</option>
                       <option value="GSIM_TO_SIM">Gsim sang SIM</option>
-                      <option value="2G_CONVERSION">2G sang 4G</option>                      
-                      <option value="S198">S198</option>                      
+                      <option value="2G_CONVERSION">2G sang 4G</option>
+                      <option value="S198">S198</option>
+                      <option value="MY_GMOBILE">My Gmobile</option>
+                      <option value="4G_VNM_TO_VMS">4G VNM sang Mobifone</option>
                     </select>
                   </div>
                 </div>
-                <!-- <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" name="status" [(ngModel)]="searchForm.action">
-                    <option value="">Chọn trạng thái</option>
-                    <option value="1">Đang hoạt động</option>
-                    <option value="0">Đang khóa</option>
-                  </select>
-                </div>
-              </div> -->
                 <div class="col-md-2">
                   <div class="">
                     <label for="" style="font-size: 1rem">Tôi đang thực hiện</label>
@@ -217,7 +109,7 @@
                   <tr>
                     <th>STT</th>
                     <th>ID</th>
-                    <th>Yêu cầu|Loại KH</th>                    
+                    <th>Yêu cầu|Loại KH</th>
                     <th>Số thuê bao | Serial | Nhà mạng</th>
                     <th>Số tiền</th>
                     <!-- <th>Serial sim</th>
@@ -236,10 +128,12 @@
                       {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
                     </td>
                     <td>
-                      {{ item.id }}
-                    </td>                    
+                      <a placement="right" ngbTooltip="'Copy {{item.code}}'" (click)="copyTextClipboard(item.code)"><i
+                          data-feather="copy" class="cursor-pointer"></i>{{ item.id }}</a>
+                    </td>
                     <td>
-                      {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }} -  {{ item.customer_type }}
+                      {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }} - {{
+                      item.customer_type }}
                       <br>
                       {{ item.sub_action ? item.sub_action : '' }}
                     </td>
@@ -294,7 +188,8 @@
                       </div>
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
 
-                        <div  *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+item.action+'/update-status')
+                        <div
+                          *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+item.action+'/update-status')
                         && item.status == taskTelecomStatus.STATUS_NEW_ORDER && !checkAction('telecom-admin/task/:slug(\\d+)/update-status') ">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
@@ -303,8 +198,14 @@
                         </div>
 
                         <div *ngIf="(
-                          (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])  && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
-                        || (item.status == taskTelecomStatus.STATUS_NEW_ORDER && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
+                          (
+                            (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
+                            || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value']
+                          )
+                            && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
+                        || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
+                        || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
+                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
                             Tiếp nhận yêu cầu
@@ -328,10 +229,9 @@
                             Xem chi tiết
                           </a>
                         </div>
-                        <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT
-                          || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION">
+                          ">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-white cursor-pointer"></i>
                             Xem chi tiết
@@ -340,71 +240,64 @@
                       </div>
 
                       <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalApproveInfo, item)"
-                      *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
-                
-                       && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)"
-                      >
+                        *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
+                        && item.sub_action != listTaskAction['_4G_VNM_TO_VMS']['value'] 
+                       && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)">
                         <i data-feather="user-check" class="text-white cursor-pointer"></i>
                         {{ showApproveText(item.status) }}
                       </a>
 
-                      <div *ngIf="((item.status == taskTelecomStatus.STATUS_APPROVED 
+                      <div
+                        *ngIf="((item.status == taskTelecomStatus.STATUS_APPROVED 
                       &&
-                      item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']) || item.status == taskTelecomStatus.STATUS_WAITING_SIM )">
+                      (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']
+                      || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
+                      ) || item.status == taskTelecomStatus.STATUS_WAITING_SIM )">
                         <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                           Tiếp tục thực hiện
                         </a>
                       </div>
 
-                      <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalUpload, item)" 
-                      *ngIf="[taskTelecomStatus.STATUS_APPROVED_2, taskTelecomStatus.STATUS_DVKHKD_REJECT].includes(item.status)">
+                      <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalUpload, item)"
+                        *ngIf="[taskTelecomStatus.STATUS_APPROVED_2, taskTelecomStatus.STATUS_DVKHKD_REJECT].includes(item.status)">
                         <i data-feather="upload" class="text-white cursor-pointer"></i>
                         Upload ảnh CMT cũ
                       </a>
 
-                            
-                        <a *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
-                         class="btn btn-info mt-1" (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')" >
-                            <i data-feather="info" class="text-white cursor-pointer"></i>                
-                            Thông tin Ship
-                        </a>  
-                        
-                        <a ngbTooltip="Lưu note" *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
-                         class="btn btn-sm btn-icon btn-info mt-1" (click)="modalApprovalOpen(modaNote, item, 'lg')" >
-                            <i data-feather="pen-tool" class="text-white cursor-pointer"></i>
-                        </a>
+
+                      <a *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
+                        class="btn btn-info mt-1" (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')">
+                        <i data-feather="info" class="text-white cursor-pointer"></i>
+                        Thông tin Ship
+                      </a>
+
+                      <a ngbTooltip="Lưu note"
+                        *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
+                        class="btn btn-sm btn-icon btn-info mt-1" (click)="modalApprovalOpen(modaNote, item, 'lg')">
+                        <i data-feather="pen-tool" class="text-white cursor-pointer"></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
               </table>
 
               <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
-                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" 
-                [boundaryLinks]="true"
-                (pageChange)="loadPage($event)"
-                >
+                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                (pageChange)="loadPage($event)">
                 <ng-template ngbPaginationPages let-page let-pages="pages">
-                <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
-                  <div class="mb-3 d-flex flex-nowrap px-2">
-                    <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Trang</label>
-                    <input
-                      #i
-                      type="text"
-                      inputmode="numeric"
-                      pattern="[0-9]*"
-                      class="form-control custom-pages-input"
-                      id="paginationInput"
-                      [value]="searchForm.page"
-                      (keyup.enter)="loadPage(i.value)"
-                      (blur)="loadPage(i.value)"
-                      (input)="formatInput($any($event).target)"
-                      aria-labelledby="paginationInputLabel paginationDescription"
-                      style="width: 2.5rem"
-                    />
-                    <span id="paginationDescription" class="col-form-label text-nowrap px-2"> của {{pages.length}}</span>
-                  </div>
-                </li>
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Trang</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2"> của
+                        {{pages.length}}</span>
+                    </div>
+                  </li>
                 </ng-template>
               </ngb-pagination>
             </div>
@@ -423,10 +316,9 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" >
+  <div class="modal-body" tabindex="0">
     <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)"
-    (createNewTask)="onCreateTaskNewSim($event)"
-    [currentUser]="currentUser"
+      (createNewTask)="onCreateTaskNewSim($event)" [currentUser]="currentUser"
       [currentUserId]="currentUser.id"></app-task-item>
   </div>
 </ng-template>
@@ -453,49 +345,47 @@
 
 <ng-template #modalApproveInfo let-modal>
   <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160"></h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h5 class="modal-title" id="myModalLabel160"></h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <app-approve-convert2g-item [item]="selectedItem" 
-          [currentUserId]="currentUser.id"></app-approve-convert2g-item>
+    <app-approve-convert2g-item [item]="selectedItem" [currentUserId]="currentUser.id"></app-approve-convert2g-item>
   </div>
 </ng-template>
 
 <ng-template #modalUpload let-modal>
   <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160"></h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h5 class="modal-title" id="myModalLabel160"></h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <app-approve-convert2g-identification [item]="selectedItem"
-          [currentUserId]="currentUser.id"></app-approve-convert2g-identification>
+    <app-approve-convert2g-identification [item]="selectedItem"
+      [currentUserId]="currentUser.id"></app-approve-convert2g-identification>
   </div>
 </ng-template>
 
 <ng-template #modalUpdateShipTracking let-modal>
   <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Thông tin Ship</h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h5 class="modal-title" id="myModalLabel160">Thông tin Ship</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-      <app-ship-info [item]="selectedItem"
-          ></app-ship-info>
+    <app-ship-info [item]="selectedItem"></app-ship-info>
   </div>
 </ng-template>
 
 <ng-template #modaNote let-modal>
   <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Lưu note</h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h5 class="modal-title" id="myModalLabel160">Lưu note</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <div class="form-group">

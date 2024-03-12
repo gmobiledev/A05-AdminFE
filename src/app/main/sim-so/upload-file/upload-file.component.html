@@ -1,0 +1,20 @@
+<div class="row" *blockUI="'section-block'">
+    <div class="col-12" >
+        <p>Note: <i>{{item.msisdn.msisdn}}</i></p>
+    </div>
+    <div class="col-4">
+        <label for="">Upload tờ trình</label>
+        <input id="file-front-input" type="file" (change)="onSelectFile($event, 'to-trinh')"  accept="image/gif, image/jpeg, image/png, application/pdf" />
+
+        <div class="image-preview" *ngIf="imageToTrinhBase64">
+            <img [src]="imageToTrinhBase64" alt="" class="img-fluid" >
+        </div>
+    </div>
+    
+    <div class="col-12 mt-2">
+        <a class="btn btn-success" (click)="onSubmitUpload()">
+            <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+            Gửi
+        </a>
+    </div>
+</div>

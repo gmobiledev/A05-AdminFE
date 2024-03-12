@@ -21,6 +21,15 @@ export class ShowStatusTaskPipe implements PipeTransform {
       case 20:
         html = '<span class="badge badge-pill badge-light-info mr-1">Chờ thanh toán</span>'
         break;
+      case 25:
+        html = '<span class="badge badge-pill badge-light-info mr-1">Đã thanh toán</span>'
+        break;
+      case 26:
+        html = '<span class="badge badge-pill badge-light-warning mr-1">Đã Thanh toán & Đình chỉ</span>'
+        break;
+      case 27:
+        html = '<span class="badge badge-pill badge-light-warning mr-1">Đã Thanh toán & Thu hồi</span>'
+        break;
       case 30:
         html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ KT duyệt</span>'
         break;

@@ -1,0 +1,248 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control"
+                      placeholder="Nhập số điện thoại" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="id_no" [(ngModel)]="searchForm.id_no" class="form-control"
+                      placeholder="Mã CTV" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="name" [(ngModel)]="searchForm.name" class="form-control"
+                      placeholder="Tên CTV" />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-block btn-info" (click)="onSubmitSearch()">
+                      Lọc kết quả
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+
+            <div class="mt-3 mb-3 overflow-hidden">
+                <div class="pull-left">
+                  Tổng: <b>{{total}}</b>
+                </div>
+                <div class="pull-right">
+                  <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Thêm CTV</button>
+                 
+                </div>
+              </div>
+
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Mã</th>
+                    <th>Tên CTV</th>
+                    <th>Trạng thái</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list">
+                    <td>{{ item?.code }}</td>
+                    <td>{{ item?.name }}</td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatus"></div>
+                    </td>
+                    <td>
+                      {{ item?.contact?.phone_mobile }}
+                    </td>
+                    <td>{{item?.contact?.address_street }}</td>
+
+                    <td>
+                      <a class="ml-2" ngbTooltip="Cập nhật thông tin" (click)="modalOpen(modalCreate, item)">
+                        <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                      </a>
+
+                      <!-- <a
+                        class="ml-2"
+                        (click)="onSubmitDelete(item.id)"                       
+                      >
+                        <i
+                          data-feather="trash"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a> -->
+
+                      <a
+                        class="ml-2"
+                        (click)="onSubmitLock(item.id, 0)"
+                        *ngIf="item.status"
+                      >
+                        <i
+                          data-feather="lock"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+                      <a
+                        class="ml-2"
+                        (click)="onSubmitLock(item.id, 1)"
+                        *ngIf="!item.status"
+                      >
+                        <i
+                          data-feather="unlock"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="total"
+                [(page)]="searchForm.page" [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Trang</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        của {{ pages.length }}</span>
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCreate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
+    <div class="modal-body" tabindex="0">
+
+      <div class="form-group" *ngIf="isCreate">
+        <label for="basicInput">Số điện thoại</label>
+        <input type="tel" class="form-control" placeholder="" 
+          mask="0000000000" name="phone_mobile" formControlName="phone_mobile"
+          [ngClass]="{ 'is-invalid': submitted && f.phone_mobile.errors }" />
+        <div *ngIf="submitted && f.phone_mobile.errors" class="invalid-feedback">
+          <div *ngIf="f.phone_mobile.errors.required">Vui lòng số điện thoại</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="basicInput">Họ và tên</label>
+        <input type="text" class="form-control" placeholder="" name="name" formControlName="name"
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Vui lòng nhập họ và tên</div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="basicInput">Mã </label>
+        <input type="text" class="form-control" placeholder="" name="code" formControlName="code"
+          [ngClass]="{ 'is-invalid': submitted && f.code.errors }" />
+      </div>
+
+      
+        <div class="form-group">
+          <label for="province" >Tỉnh/Thành Phố</label>
+         
+            <ng-select formControlName="province" (clear)="onClearHomeProvince()"
+              (change)="onChangeHomeProvince($event)">
+              <ng-option *ngFor="let p of provinces" [value]="p.id">{{
+                p.title
+                }}</ng-option>
+            </ng-select>
+
+            <div *ngIf="submitted && f.province.errors" class="invalid-feedback">
+              <div *ngIf="f.province.errors.required">
+                Vui lòng nhập trường này
+              </div>
+            </div>
+   
+        </div>
+            
+        <div class="form-group ">
+          <label for="district" >Quận/Huyện</label>
+          
+            <ng-select formControlName="district" (clear)="onClearHomeDistrict()"
+              (change)="onChangeHomeDistrict($event)">
+              <ng-option *ngFor="let p of districts" [value]="p.id">{{
+                p.title
+                }}</ng-option>
+            </ng-select>
+
+            <div *ngIf="submitted && f.district.errors" class="invalid-feedback">
+              <div *ngIf="f.district.errors.required">
+                Vui lòng nhập trường này
+              </div>
+            </div>
+          
+        </div>
+
+        <div class="form-group">
+          <label for="commune">Phường/Xã</label>
+          
+            <ng-select formControlName="commune">
+              <ng-option *ngFor="let p of commues" [value]="p.id">{{
+                p.title
+                }}</ng-option>
+            </ng-select>
+            <div *ngIf="submitted && f.commune.errors" class="invalid-feedback">
+              <div *ngIf="f.commune.errors.required">
+                Vui lòng nhập trường này
+              </div>
+            </div>
+         
+        </div>
+
+        <div class="form-group">
+          <label for="basicInput">Số nhà, tên đường</label>
+          <input type="text" class="form-control" placeholder="" name="address_street" formControlName="address_street"
+            [ngClass]="{ 'is-invalid': submitted && f.address_street.errors }" />
+          <div *ngIf="submitted && f.address_street.errors" class="invalid-feedback">
+            <div *ngIf="f.address_street.errors.required">Vui lòng nhập số nhà tên đường</div>
+          </div>
+        </div>
+      </div>              
+      
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Lưu
+      </button>
+    </div>
+  </form>
+</ng-template>

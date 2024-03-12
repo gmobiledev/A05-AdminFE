@@ -28,7 +28,11 @@ import { ViewTaskOrganizationComponent } from './view-task-organization/view-tas
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ShipInfoComponent } from './ship-info/ship-info.component';
 import { SearchSubscriptionComponent } from './search-subscription/search-subscription.component';
-
+import { TaskAttachmentsComponent } from './task-attachments/task-attachments.component';
+import { UploadFileComponent } from './upload-file/upload-file.component';
+import { TopupComponent } from './history/topup/topup.component';
+import { BalanceChangesComponent } from './history/balance-changes/balance-changes.component';
+import { MsisdnComponent as TTTBMsisdnComponent } from './history/msisdn/msisdn.component';
 const routes: Routes = [
   {
     path: '',
@@ -68,8 +72,20 @@ const routes: Routes = [
   },
   {
     path: 'client2g',
-    component:Client2gComponent
-  }
+    component: Client2gComponent
+  },
+  {
+    path: 'msisdn/topup',
+    component: TopupComponent
+  },
+  {
+    path: 'msisdn/balance-changes',
+    component: BalanceChangesComponent
+  },
+  {
+    path: 'msisdn/TTTB',
+    component: TTTBMsisdnComponent
+  },
 ];
 
 @NgModule({
@@ -89,7 +105,12 @@ const routes: Routes = [
     ApproveConvert2gIdentificationComponent,
     ViewTaskOrganizationComponent,
     ShipInfoComponent,
-    SearchSubscriptionComponent
+    SearchSubscriptionComponent,
+    TaskAttachmentsComponent,
+    UploadFileComponent,
+    TopupComponent,
+    BalanceChangesComponent,
+    TTTBMsisdnComponent
   ],
   imports: [
     CommonModule, 

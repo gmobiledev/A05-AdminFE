@@ -17,12 +17,13 @@ export class ChannelComponent implements OnInit {
 
   public contentHeader: any;
   public list: any;
-  public totalPage: number;
+  public totalItems: number;
   public page: number = 1;
   public pageSize: number;
   public searchForm = {
     keyword: '',
     status: '',
+    page_size: 15,
     page: 1
   }
   public selectedItem: any
@@ -223,8 +224,7 @@ export class ChannelComponent implements OnInit {
     this.inventoryService.findChannelAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
-      this.totalPage = res.data.count;
-      this.pageSize = res.data.pageSize;
+      this.totalItems = res.data.count;
     }, error => {
       this.sectionBlockUI.stop();
       console.log("ERRRR");
