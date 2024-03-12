@@ -25,16 +25,25 @@ export class SellChanelComponent implements OnInit {
   public page: number = 1;
   public pageSize: number;
   public searchForm = {
+    id:'',
     name: '',
     code: '',
-    customer_id : '',
-    city_id : '',
-    district_id : '',
-    ward_id: '',
+    desc : '',
+    parent_id : '',
+    type : '',
     status: '',
-    // commune_id: '',
-    // province_id: '',
-
+    business_id: '',
+    admin_id:'',
+    province_id: '',
+    district_id: '',
+    commune_id : '',
+    city_id : '',
+    address : '',
+    attach_file_name: '',
+    customer_id: '',
+    user_sell_channels: '',
+    business: {},
+  
     page: 1
   }
   public selectedItem: any
@@ -88,14 +97,13 @@ export class SellChanelComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
       this.searchForm.code = params['code'] && params['code'] != undefined ? params['code'] : '';
-      this.searchForm.customer_id = params['customer_id'] && params['customer_id'] != undefined ? params['customer_id'] : '';
-      this.searchForm.city_id = params['city_id'] && params['city_id'] != undefined ? params['city_id'] : '';
+      this.searchForm.business = params['business'] && params['business'] != undefined ? params['business'] : '';
+      this.searchForm.admin_id = params['admin_id'] && params['admin_id'] != undefined ? params['admin_id'] : '';
       this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
-      this.searchForm.ward_id = params['ward_id'] && params['ward_id'] != undefined ? params['ward_id'] : '';
+      this.searchForm.commune_id = params['commune_id'] && params['commune_id'] != undefined ? params['commune_id'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
-      // this.searchForm.commune_id = params['commune_id'] && params['commune_id'] != undefined ? params['commune_id'] : '';
-      // this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
+      this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
 
       this.dateRange = null;
 
@@ -403,7 +411,7 @@ export class SellChanelComponent implements OnInit {
       }
     }
     this.sectionBlockUI.start();
-    this.inventoryService.searchSellChannelAll(this.searchForm).subscribe(res => {
+    this.inventoryService.listSellChannelAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalPage = res.data.count;

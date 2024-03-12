@@ -13,6 +13,9 @@ import { getMessaging, getToken } from "firebase/messaging";
 import dayjs from 'dayjs';
 import { GtalkService } from 'app/auth/service/gtalk.service';
 import { InventoryService } from 'app/auth/service/inventory.service';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CreateAgentDto, CreateAgentServiceDto, CreateUserDto, UpdateStatusAgentDto } from 'app/auth/service/dto/user.dto';
+import { UserService } from 'app/auth/service';
 
 @Component({
   selector: 'app-view-sell-chanel',
@@ -59,6 +62,17 @@ export class ViewSellChanelComponent implements OnInit {
   public isAdmin: boolean = false;
   public mnos: any = []
 
+  public exitsUser: boolean = false;
+  public formGroup: FormGroup;
+  public isCreate: boolean = false;
+  public submitted: boolean = false;
+  public titleModal: string;
+  public formGroupUserCode: FormGroup;
+  public selectedUserId: number;
+  public currentService: any;
+  public listServiceFilter: any;
+
+
   public searchForm: any = {
     keysearch: '',
     action: '',
@@ -97,6 +111,9 @@ export class ViewSellChanelComponent implements OnInit {
     private authenticaionService: AuthenticationService,
     private alertService: SweetAlertService,
     private inventoryService: InventoryService,
+    private userService: UserService,
+    private formBuilder: FormBuilder
+
 
   ) {
     this.dateRange = null;
@@ -113,7 +130,7 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.batch_id = params['batch_id'] && params['batch_id'] != undefined ? params['batch_id'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
-      
+
       this.contentHeader.headerTitle = 'Danh sách số';
       this.contentHeader.breadcrumb.links[1] = 'Danh sách số';
 
@@ -122,18 +139,47 @@ export class ViewSellChanelComponent implements OnInit {
 
   }
 
-  async modalOpen(modal, item = null) {
-    this.itemBlockUI.start();
-    this.selectedItem = item;
+  onFocusMobile() {
+    this.exitsUser = false;
+    this.titleModal = "Thêm người bán hàng";
+  }
 
-    this.itemBlockUI.stop();
-    this.modalRef = this.modalService.open(modal, {
-      centered: true,
-      windowClass: 'modal modal-primary',
-      size: 'xl',
-      backdrop: 'static',
-      keyboard: false
-    });
+  async modalOpen(modal, item = null) {
+    if (item) {
+      this.titleModal = "Cập nhật đại lý";
+      this.isCreate = false;
+      this.selectedUserId = item.id;
+      this.userService.getAgentServices(item.id).subscribe(res => {
+
+        this.currentService = res.data.map(x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
+        let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
+        for (let i = 0; i < this.currentService.length; i++) {
+          const newGroup = this.formBuilder.group({
+            id: [{ value: this.currentService[i]['id'], disabled: true }],
+            status: [{ value: this.currentService[i]['status'], disabled: true }],
+            ref_code: [{ value: this.currentService[i]['ref_code'], disabled: true }],
+            service_code: [{ value: this.currentService[i]['service_code'], disabled: true }]
+          });
+          const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
+          this.listServiceFilter[index]['disabled'] = 'disabled';
+          arrayControl.push(newGroup);
+        }
+
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'lg'
+        });
+      })
+    } else {
+      this.titleModal = "Thêm người bán hàng";
+      this.isCreate = true;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    }
   }
 
   modalClose() {
@@ -141,6 +187,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.getData();
     this.modalRef.close();
   }
+
   async modalViewAgentOpen(modal, item = null) {
     if (item) {
       this.itemBlockUI.start();
@@ -257,6 +304,7 @@ export class ViewSellChanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initForm();
   }
 
 
@@ -270,6 +318,89 @@ export class ViewSellChanelComponent implements OnInit {
       this.totalItems = res.data.data.count;
     });
 
+  }
+
+  async onSubmitCreate() {
+    console.log(this.formGroup.controls['new_agents_service'].value);
+    if (!this.exitsUser && this.isCreate) {
+      this.submitted = true;
+      if (this.formGroup.invalid) {
+        return;
+      }
+      const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => {
+        return { ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value }
+      })
+      const data: CreateAgentDto = {
+        name: this.formGroup.controls['name'].value,
+        username: this.formGroup.controls['mobile'].value,
+        mobile: this.formGroup.controls['mobile'].value,
+        agent_service: dataAgentServices,
+        password: this.formGroup.controls['password'].value,
+      }
+      if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
+        this.userService.createAgent(data).subscribe(res => {
+          if (!res.status) {
+
+            this.alertService.showError(res.message);
+            this.submitted = false;
+            return;
+          }
+
+          // //them user vua tao vao kenh ban
+          // this.telecomService.sellChannelAddChannelToUser({
+          //   channel_id: this.formGroup.controls['channel_id'].value,
+          //   user_id: res.data.id
+          // }).subscribe(res => {
+
+          // })
+
+          this.modalRef.close();
+          this.initForm();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
+        })
+      }
+    } else {
+      this.userService.addServicesToAgent(this.selectedUserId, this.formGroup.controls['new_agents_service'].value).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          this.submitted = false;
+          return;
+        }
+        this.modalRef.close();
+        this.initForm();
+        this.alertService.showSuccess(res.message);
+      })
+    }
+  }
+
+  initForm() {
+    this.formGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      mobile: ['', Validators.required],
+      password: ['', Validators.required],
+      partner_user_code: [''],
+      channel_id: [''],
+      // ref_code: [],
+      // service_code: new FormArray([]),
+      agents_service: this.formBuilder.array([]),
+      new_agents_service: this.formBuilder.array([])
+    });
+
+    this.formGroupUserCode = this.formBuilder.group({
+      partner_user_code: [''],
+      channel_id: [''],
+    });
+
+    this.exitsUser = false;
+    this.isCreate = true;
+  }
+
+  onCompletedInputPassword(value) {
+    this.formGroup.patchValue({
+      password: value
+    })
   }
 
 }

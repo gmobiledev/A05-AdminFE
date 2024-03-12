@@ -30,6 +30,10 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/channel`, { params: params });
   }
 
+  listSellChannelAll(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel`, { params: params });
+  }
+
   searchSellChannelAll(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, data );
   }

@@ -14,11 +14,11 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <select
-                      name="city_id"
+                      name="province_id"
                       id="province"
                       class="form-control"
                       (change)="onChangeProvince($event)"
-                      [(ngModel)]="searchForm.city_id"
+                      [(ngModel)]="searchForm.province_id"
                     >
                       <option value="">-- Chọn Tỉnh/Thành phố --</option>
                       <option *ngFor="let p of provinces" [value]="p.id">
@@ -47,7 +47,7 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select name="ward_id" class="form-control" [(ngModel)]="searchForm.ward_id "
+                    <select name="commune_id" class="form-control" [(ngModel)]="searchForm.commune_id "
                     >
                       <option value="">--Chọn Phường/xã --</option>
                       <option *ngFor="let p of commues" [value]="p.id">
@@ -101,8 +101,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="customer_id"
-                      [(ngModel)]="searchForm.customer_id"
+                      name="admin_id"
+                      [(ngModel)]="searchForm.admin_id"
                       class="form-control"
                       placeholder="Tên đại lý"
                     />
@@ -168,7 +168,7 @@
                       {{ item.desc }}
                     </td>
                     <td>
-                      {{ item.customer_id}}
+                      {{ item.business.name}}
                     </td>
                     <td>
                       {{ item.type }}
