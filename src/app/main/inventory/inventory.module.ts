@@ -22,6 +22,7 @@ import { SellChanelComponent } from './sell-chanel/sell-chanel.component';
 import { NewSellChanelComponent } from './new-sell-chanel/new-sell-chanel.component';
 import { EditSellChanelComponent } from './edit-sell-chanel/edit-sell-chanel.component';
 import { ViewSellChanelComponent } from './view-sell-chanel/view-sell-chanel.component';
+import { ViewBatchExportComponent } from './view-batch-export/view-batch-export.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
   {
     path: 'view-sell-chanel',
     component: ViewSellChanelComponent
+  },
+  {
+    path: 'batch-export/:id',
+    component: ViewBatchExportComponent
   }
 ];
 
@@ -78,7 +83,8 @@ const routes: Routes = [
     SellChanelComponent,
     NewSellChanelComponent,
     EditSellChanelComponent,
-    ViewSellChanelComponent
+    ViewSellChanelComponent,
+    ViewBatchExportComponent
   ],
   imports: [
     CommonModule,

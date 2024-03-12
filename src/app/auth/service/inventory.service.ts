@@ -108,6 +108,10 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/create`, data);
   }
 
+  findOneBatchExport(id) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/find-one?batch_id=${id}`);
+  }
+
   updateBatchExport(data: UpdateBatchExportDto) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/edit`, data);
   }
@@ -118,6 +122,14 @@ export class InventoryService {
 
   vanphongDuyet(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/van-phong/approve`, data);
+  }
+
+  ketoanReject(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/ke-toan/reject`, data);
+  }
+
+  vanPhongReject(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/van-phong/reject`, data);
   }
 
 }

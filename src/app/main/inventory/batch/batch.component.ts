@@ -7,7 +7,7 @@ import { CreateAgentDto } from 'app/auth/service/dto/user.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchStatus } from 'app/utils/constants';
+import { BatchStatus, BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -46,7 +46,8 @@ export class BatchComponent implements OnInit {
 
   public batchdDetail: any
   public itemBatch: any
-  batchStatus = BatchStatus;
+  public batchStatus = BatchStatus;
+  public batchType = BatchType;
   public listCurrentAction: any;
 
 
@@ -146,12 +147,12 @@ export class BatchComponent implements OnInit {
     }
 
     let confirmMessage = "";
-    if (status == this.batchStatus.APPORVED || status == this.batchStatus.APPROVED_BY_OFFICE) {
+    if (status == this.batchStatus.APPORVED || status == this.batchStatus.APPORVED_BY_ACCOUNTANT) {
       confirmMessage = 'Bạn có đồng ý Xác nhận duyệt?'
     }
 
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      if(status == this.batchStatus.APPROVED_BY_OFFICE) {
+      if(status == this.batchStatus.APPORVED_BY_ACCOUNTANT) {
         this.inventoryService.vpUpdateStatusBatch(data).subscribe(res => {
           if (!res.status) {
             this.alertService.showMess(res.message);

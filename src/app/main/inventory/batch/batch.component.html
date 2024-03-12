@@ -44,7 +44,7 @@
                     >
                       <option value="">Chọn trạng thái</option>
                       <option value="{{batchStatus.INIT}}">Mới khởi thạo</option>
-                      <option value="{{batchStatus.APPROVED_BY_OFFICE}}">Duyệt bởi VP</option>
+                      <option value="{{batchStatus.APPORVED_BY_ACCOUNTANT}}">Duyệt bởi VP</option>
                       <option value="{{batchStatus.APPORVED}}">Duyệt bởi KT</option>                      
                     </select>
                   </div>
@@ -73,7 +73,7 @@
                   Nhập kho <span [data-feather]="'upload'"></span>
                 </button>
 
-                <a href="/inventory/new-batch-export" class="btn btn-success mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
+                <a routerLink="/inventory/new-batch-export" class="btn btn-success mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
               </div>
             </div>
             <div class="table-responsive" *blockUI="'section-block'">
@@ -122,7 +122,7 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a> -->
-
+                      <ng-container *ngIf="item.type == batchType.INPUT" >
                       <a
                         class="ml-0"
                         (click)="onViewDetail(modalDetail, item)"
@@ -155,6 +155,16 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
+                    </ng-container>
+                    <ng-container *ngIf="item.type == batchType.OUTPUT" >
+                      <a
+                      class="ml-0"  routerLink="/inventory/batch-export/{{item.id}}">
+                      <i
+                        data-feather="eye"
+                        class="text-primary cursor-pointer"
+                      ></i>
+                    </a>
+                    </ng-container>
                     </td>
                   </tr>
                 </tbody>
@@ -373,9 +383,9 @@
       
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
-        && checkAction('batch/van-phong/update-status')
+        && checkAction('batch/ke-toan/update-status')
         "
-        (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED_BY_OFFICE)"
+        (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED_BY_ACCOUNTANT)"
         class="btn btn-info btn-sm mb-2"
       >
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
@@ -391,8 +401,8 @@
       </button> -->
 
       <button
-        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_OFFICE
-        && checkAction('batch/ke-toan/update-status')
+        *ngIf="itemBatch.status == batchStatus.APPORVED_BY_ACCOUNTANT
+        && checkAction('batch/van-phong/update-status')
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED)"
         class="ml-2 btn btn-facebook btn-sm mb-2"

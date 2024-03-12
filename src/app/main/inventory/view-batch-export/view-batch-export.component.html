@@ -1,0 +1,93 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row">
+            <div class="col-7">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Loại sản phẩm</th>
+                            <th>Sản phẩm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of data?.products; let i = index">
+                            <td>{{ i+1}}</td>
+                            <td>{{ item.category_id }}</td>
+                            <td>{{ item.name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-5">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button *ngIf="data?.batch?.status == batchStatus.INIT
+                                && checkAction('batch/export/ke-toan/approve')
+                                " (click)="onViewModalApprove(modalApprove)"
+                    class="btn btn-info  mb-2 mr-2">
+                    <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+                </button>
+
+                <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/ke-toan/reject')
+                                " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_ACCOUNTANT, 'ketoan')"
+                    class="btn btn-danger  mb-2 mr-2">
+                    <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
+                </button>
+
+                <button *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT
+                                && checkAction('batch/export/van-phong/approve')
+                                " (click)="onViewModalApprove(modalApprove)"
+                    class="btn btn-info  mb-2 mr-2">
+                    <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+                </button>
+
+                <button *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT && checkAction('batch/export/van-phong/reject')
+                        " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
+                    class="btn btn-danger  mb-2 mr-2">
+                    <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #modalApprove let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Bạn có đồng ý duyệt yêu cầu xuất kho?</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" >
+        <div class="form-group" *ngIf="checkAction('batch/export/van-phong/approve')">
+            <label for="">Đính kèm</label>
+            <input type="file" class="form-control">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <ng-container *ngIf="data?.batch?.status == batchStatus.INIT">
+            <button *ngIf="checkAction('batch/export/ke-toan/approve')
+                                            " (click)="onApprove(data?.batch, batchStatus.APPORVED_BY_ACCOUNTANT, 'ketoan')"
+                class="btn btn-info  mb-2">
+                <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+            </button>
+            
+        </ng-container>
+
+        <ng-container *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT">
+            <button *ngIf="checkAction('batch/export/van-phong/approve') "
+                (click)="onApprove(data?.batch, batchStatus.APPROVED, 'vanphong')" class="btn btn-info  mb-2">
+                <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+            </button>
+                    
+        </ng-container>
+    </div>
+</ng-template>

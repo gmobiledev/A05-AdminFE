@@ -41,12 +41,19 @@ export enum ProductStatus {
     STATUS_INIT = 0,
 }
 
+export enum BatchType {
+    INPUT = 1,
+    OUTPUT = -1
+}
+
 export enum BatchStatus {
     INIT = 0, // lô mới khởi tạo
     APPORVED = 2, // lô đã duyệt
     COMPLETED = 1, // số đã được duyệt
     CANCEL = -1, //lô không được duyệt
-    APPROVED_BY_OFFICE = 11,
+    APPORVED_BY_ACCOUNTANT = 11,
+    CANCEL_BY_OFFICE = -2,
+    CANCEL_BY_ACCOUNTANT = -11
 
 }
 
