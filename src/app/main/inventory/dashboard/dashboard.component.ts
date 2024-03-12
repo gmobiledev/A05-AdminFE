@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import Highcharts from "highcharts/highmaps";
@@ -7,18 +8,24 @@ const mapData = require('../data/province_vn_2.json');
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+
   isHighcharts = typeof Highcharts === 'object';
   chartConstructor = "mapChart";
   Highcharts: typeof Highcharts = Highcharts;
   chartMap ;
   data;
   listData;
+  listDataTmp;
   searchForm = {
     date: ''
   }
+  basicSelectedOption: number = 10;
   isUpdate: boolean = false;
   constructor(
     private readonly inventoryService: InventoryService,
@@ -144,10 +151,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.listData = res.data.items;
       console.log(this.listData);
       this.listData = res.data.items.map(x => { return {name: x.name, value: x.value * 10, key: x.key} });
+      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value: x.value * 10, key: x.key} });
       this.data = this.listData.map(x => { return { id: x.key, value: x.value } });
     } catch (error) {
       console.log("error", error);
     }
+  }
+
+  filterList(event) {
+    const val = event.target.value.toLowerCase();
+    // filter our data
+    const temp = this.listData.filter(function (d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.listDataTmp = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
   }
 
 }

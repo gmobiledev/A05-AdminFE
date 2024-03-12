@@ -163,6 +163,14 @@ export const menu: CoreMenu[] = [
       classes: 'badge-light-warning badge-pill'
     },
     children: [
+      {
+        id: 'dashboard',
+        title: 'Thống kê',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/dashboard'
+      },
 
       {
         id: 'batch-sim',
