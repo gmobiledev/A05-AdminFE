@@ -17,7 +17,7 @@
             "scale": 0.000427553248096,
             "jsonres": 15.5,
             "jsonmarginX": -999,
-            "jsonmarginY": 9851.0,
+            "jsonmarginY": 9851,
             "xoffset": 203331.8992,
             "yoffset": 2584050.23556
         }
@@ -562,7 +562,7 @@
             },
             "properties": {
                 "name": "Lai Châu",
-                "id": "VN-01",
+                "id": 39,
                 "NAME_ENG": "Lai Chau",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -965,7 +965,7 @@
             },
             "properties": {
                 "name": "Lào Cai",
-                "id": "VN-02",
+                "id": 33,
                 "NAME_ENG": "Lao Cai",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -1468,7 +1468,7 @@
             },
             "properties": {
                 "name": "Hà Giang",
-                "id": "VN-03",
+                "id": 31,
                 "NAME_ENG": "Ha Giang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -1943,7 +1943,7 @@
             },
             "properties": {
                 "name": "Cao Bằng",
-                "id": "VN-04",
+                "id": 27,
                 "NAME_ENG": "Cao Bang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -2590,7 +2590,7 @@
             },
             "properties": {
                 "name": "Sơn La",
-                "id": "VN-05",
+                "id": 36,
                 "NAME_ENG": "Son La",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -3041,7 +3041,7 @@
             },
             "properties": {
                 "name": "Yên Bái",
-                "id": "VN-06",
+                "id": 32,
                 "NAME_ENG": "Yen Bai",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -3436,7 +3436,7 @@
             },
             "properties": {
                 "name": "Tuyên Quang",
-                "id": "VN-07",
+                "id": 30,
                 "NAME_ENG": "Tuyen Quang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -3963,7 +3963,7 @@
             },
             "properties": {
                 "name": "Lạng Sơn",
-                "id": "VN-09",
+                "id": 24,
                 "NAME_ENG": "Lang Son",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -4776,7 +4776,7 @@
             },
             "properties": {
                 "name": "Quảng Ninh",
-                "id": "VN-13",
+                "id": 20,
                 "NAME_ENG": "Quang Ninh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -5110,15 +5110,15 @@
                 ]
             },
             "properties": {
-                "name": "Hòa Bình",
-                "id": "VN-14",
+                "name": "Hoà Bình",
+                "id": 35,
                 "NAME_ENG": "Hoa Binh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
                 "TYPE_ENG": "Province"
             },
             "id": "VN-14"
-        }        ,
+        },
         {
             "type": "Feature",
             "geometry": {
@@ -5330,7 +5330,7 @@
             },
             "properties": {
                 "name": "Ninh Bình",
-                "id": "VN-18",
+                "id": 43,
                 "NAME_ENG": "Ninh Binh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -5521,7 +5521,7 @@
             },
             "properties": {
                 "name": "Thái Bình",
-                "id": "VN-20",
+                "id": 41,
                 "NAME_ENG": "Thai Binh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -6032,7 +6032,7 @@
             },
             "properties": {
                 "name": "Thanh Hóa",
-                "id": "VN-21",
+                "id": 44,
                 "NAME_ENG": "Thanh Hoa",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -6615,7 +6615,7 @@
             },
             "properties": {
                 "name": "Nghệ An",
-                "id": "VN-22",
+                "id": 46,
                 "NAME_ENG": "Nghe An",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -6986,7 +6986,7 @@
             },
             "properties": {
                 "name": "Hà Tĩnh",
-                "id": "VN-23",
+                "id": 48,
                 "NAME_ENG": "Ha Tinh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -7333,7 +7333,7 @@
             },
             "properties": {
                 "name": "Quảng Bình",
-                "id": "VN-24",
+                "id": 51,
                 "NAME_ENG": "Quang Binh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -7612,7 +7612,7 @@
             },
             "properties": {
                 "name": "Quảng Trị",
-                "id": "VN-25",
+                "id": 52,
                 "NAME_ENG": "Quang Tri",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -8052,8 +8052,8 @@
                 ]
             },
             "properties": {
-                "name": "Thừa Thiên–Huế",
-                "id": "VN-26",
+                "name": "Thừa Thiên Huế",
+                "id": 53,
                 "NAME_ENG": "Thua Thien - Hue",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -8492,7 +8492,7 @@
             },
             "properties": {
                 "name": "Quảng Nam",
-                "id": "VN-27",
+                "id": 56,
                 "NAME_ENG": "Quang Nam",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -8959,7 +8959,7 @@
             },
             "properties": {
                 "name": "Kon Tum",
-                "id": "VN-28",
+                "id": 58,
                 "NAME_ENG": "Kon Tum",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -9250,7 +9250,7 @@
             },
             "properties": {
                 "name": "Quảng Ngãi",
-                "id": "VN-29",
+                "id": 57,
                 "NAME_ENG": "Quang Ngai",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -9849,7 +9849,7 @@
             },
             "properties": {
                 "name": "Gia Lai",
-                "id": "VN-30",
+                "id": 60,
                 "NAME_ENG": "Gia Lai",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -10192,7 +10192,7 @@
             },
             "properties": {
                 "name": "Bình Định",
-                "id": "VN-31",
+                "id": 59,
                 "NAME_ENG": "Binh Dinh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -10543,7 +10543,7 @@
             },
             "properties": {
                 "name": "Phú Yên",
-                "id": "VN-32",
+                "id": 62,
                 "NAME_ENG": "Phu Yen",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -11006,7 +11006,7 @@
             },
             "properties": {
                 "name": "Đắk Lắk",
-                "id": "VN-33",
+                "id": 63,
                 "NAME_ENG": "Dak Lak|Dac Lac",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -11531,7 +11531,7 @@
             },
             "properties": {
                 "name": "Khánh Hòa",
-                "id": "VN-34",
+                "id": 65,
                 "NAME_ENG": "Khanh Hoa",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -12050,7 +12050,7 @@
             },
             "properties": {
                 "name": "Lâm Đồng",
-                "id": "VN-35",
+                "id": 67,
                 "NAME_ENG": "Lam Dong",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -12317,7 +12317,7 @@
             },
             "properties": {
                 "name": "Ninh Thuận",
-                "id": "VN-36",
+                "id": 66,
                 "NAME_ENG": "Ninh Thuan",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -12608,7 +12608,7 @@
             },
             "properties": {
                 "name": "Tây Ninh",
-                "id": "VN-37",
+                "id": 84,
                 "NAME_ENG": "Tay Ninh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -12979,7 +12979,7 @@
             },
             "properties": {
                 "name": "Đồng Nai",
-                "id": "VN-39",
+                "id": 81,
                 "NAME_ENG": "Dong Nai",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -13420,7 +13420,7 @@
             },
             "properties": {
                 "name": "Bình Thuận",
-                "id": "VN-40",
+                "id": 80,
                 "NAME_ENG": "Binh Thuan",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -13747,7 +13747,7 @@
             },
             "properties": {
                 "name": "Long An",
-                "id": "VN-41",
+                "id": 85,
                 "NAME_ENG": "Long An",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -14051,8 +14051,8 @@
                 ]
             },
             "properties": {
-                "name": "Bà Rịa–Vũng Tàu",
-                "id": "VN-43",
+                "name": "Bà Rịa - Vũng Tàu",
+                "id": 79,
                 "NAME_ENG": "Ba Ria-Vung Tau",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -14287,7 +14287,7 @@
             },
             "properties": {
                 "name": "An Giang",
-                "id": "VN-44",
+                "id": 88,
                 "NAME_ENG": "An Giang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -14546,7 +14546,7 @@
             },
             "properties": {
                 "name": "Đồng Tháp",
-                "id": "VN-45",
+                "id": 87,
                 "NAME_ENG": "Dong Thap",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -14761,7 +14761,7 @@
             },
             "properties": {
                 "name": "Tiền Giang",
-                "id": "VN-46",
+                "id": 86,
                 "NAME_ENG": "Tien Giang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -15218,7 +15218,7 @@
             },
             "properties": {
                 "name": "Kiên Giang",
-                "id": "VN-47",
+                "id": 92,
                 "NAME_ENG": "Kien Giang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -15397,7 +15397,7 @@
             },
             "properties": {
                 "name": "Vĩnh Long",
-                "id": "VN-49",
+                "id": 89,
                 "NAME_ENG": "Vinh Long",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -15576,7 +15576,7 @@
             },
             "properties": {
                 "name": "Bến Tre",
-                "id": "VN-50",
+                "id": 93,
                 "NAME_ENG": "Ben Tre",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -15755,7 +15755,7 @@
             },
             "properties": {
                 "name": "Trà Vinh",
-                "id": "VN-51",
+                "id": 94,
                 "NAME_ENG": "Tra Vinh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -15970,7 +15970,7 @@
             },
             "properties": {
                 "name": "Sóc Trăng",
-                "id": "VN-52",
+                "id": 95,
                 "NAME_ENG": "Soc Trang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -16325,7 +16325,7 @@
             },
             "properties": {
                 "name": "Bắc Kạn",
-                "id": "VN-53",
+                "id": 26,
                 "NAME_ENG": "Bac Kan",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -16692,7 +16692,7 @@
             },
             "properties": {
                 "name": "Bắc Giang",
-                "id": "VN-54",
+                "id": 23,
                 "NAME_ENG": "Bac Giang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -16919,7 +16919,7 @@
             },
             "properties": {
                 "name": "Bạc Liêu",
-                "id": "VN-55",
+                "id": 96,
                 "NAME_ENG": "Bac Lieu",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -17054,7 +17054,7 @@
             },
             "properties": {
                 "name": "Bắc Ninh",
-                "id": "VN-56",
+                "id": 22,
                 "NAME_ENG": "Bac Ninh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -17369,7 +17369,7 @@
             },
             "properties": {
                 "name": "Bình Dương",
-                "id": "VN-57",
+                "id": 82,
                 "NAME_ENG": "Binh Duong",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -17740,7 +17740,7 @@
             },
             "properties": {
                 "name": "Bình Phước",
-                "id": "VN-58",
+                "id": 83,
                 "NAME_ENG": "Binh Phuoc",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -17983,7 +17983,7 @@
             },
             "properties": {
                 "name": "Cà Mau",
-                "id": "VN-59",
+                "id": 97,
                 "NAME_ENG": "Ca Mau",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -18202,7 +18202,7 @@
             },
             "properties": {
                 "name": "Hải Dương",
-                "id": "VN-61",
+                "id": 17,
                 "NAME_ENG": "Hai Duong",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -18349,7 +18349,7 @@
             },
             "properties": {
                 "name": "Hà Nam",
-                "id": "VN-63",
+                "id": 40,
                 "NAME_ENG": "Ha Nam",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -18508,7 +18508,7 @@
             },
             "properties": {
                 "name": "Hưng Yên",
-                "id": "VN-66",
+                "id": 16,
                 "NAME_ENG": "Hung Yen",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -18765,7 +18765,7 @@
             },
             "properties": {
                 "name": "Nam Định",
-                "id": "VN-67",
+                "id": 42,
                 "NAME_ENG": "Nam Dinh",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -19012,7 +19012,7 @@
             },
             "properties": {
                 "name": "Phú Thọ",
-                "id": "VN-68",
+                "id": 29,
                 "NAME_ENG": "Phu Tho",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -19303,7 +19303,7 @@
             },
             "properties": {
                 "name": "Thái Nguyên",
-                "id": "VN-69",
+                "id": 25,
                 "NAME_ENG": "Thai Nguyen",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -19470,7 +19470,7 @@
             },
             "properties": {
                 "name": "Vĩnh Phúc",
-                "id": "VN-70",
+                "id": 28,
                 "NAME_ENG": "Vinh Phuc",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -20093,7 +20093,7 @@
             },
             "properties": {
                 "name": "Điện Biên",
-                "id": "VN-71",
+                "id": 38,
                 "NAME_ENG": "Dien Bien",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -20500,7 +20500,7 @@
             },
             "properties": {
                 "name": "Đắk Nông",
-                "id": "VN-72",
+                "id": 64,
                 "NAME_ENG": "Dac Nong",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -20675,7 +20675,7 @@
             },
             "properties": {
                 "name": "Hậu Giang",
-                "id": "VN-73",
+                "id": 91,
                 "NAME_ENG": "Hau Giang",
                 "CNTRY": "Vietnam",
                 "TYPE": "Tỉnh",
@@ -20814,7 +20814,7 @@
             },
             "properties": {
                 "name": "Cần Thơ",
-                "id": "VN-CT",
+                "id": 90,
                 "NAME_ENG": "Can Tho",
                 "CNTRY": "Vietnam",
                 "TYPE": "thành phố trực thuộc trung ương",
@@ -21009,7 +21009,7 @@
             },
             "properties": {
                 "name": "Đà Nẵng",
-                "id": "VN-DN",
+                "id": 55,
                 "NAME_ENG": "Da Nang",
                 "CNTRY": "Vietnam",
                 "TYPE": "thành phố trực thuộc trung ương",
@@ -21404,7 +21404,7 @@
             },
             "properties": {
                 "name": "Hà Nội",
-                "id": "VN-HN",
+                "id": 10,
                 "NAME_ENG": "Hanoi",
                 "CNTRY": "Vietnam",
                 "TYPE": "thành phố trực thuộc trung ương",
@@ -21657,7 +21657,7 @@
             },
             "properties": {
                 "name": "Hải Phòng",
-                "id": "VN-HP",
+                "id": 18,
                 "NAME_ENG": "Haiphong",
                 "CNTRY": "Vietnam",
                 "TYPE": "thành phố trực thuộc trung ương",
@@ -21972,7 +21972,7 @@
             },
             "properties": {
                 "name": "Hồ Chí Minh",
-                "id": "VN-SG",
+                "id": 70,
                 "NAME_ENG": "Ho Chi Minh",
                 "CNTRY": "Vietnam",
                 "TYPE": "thành phố trực thuộc trung ương",

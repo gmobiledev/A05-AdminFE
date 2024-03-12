@@ -16,6 +16,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { NewBatchExportComponent } from './new-batch-export/new-batch-export.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
@@ -66,7 +68,9 @@ const routes: Routes = [
     PdfViewerModule,
     HighchartsChartModule,
     NgbAccordionModule,
-    NgxDaterangepickerMd.forRoot()
+    NgxDaterangepickerMd.forRoot(),
+    NgxDatatableModule,
+    NgSelectModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA
