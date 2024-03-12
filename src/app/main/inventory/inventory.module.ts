@@ -12,6 +12,10 @@ import { BatchSimComponent } from './batch-sim/batch-sim.component';
 import { BatchGtalkComponent } from './batch-gtalk/batch-gtalk.component';
 import { ChannelComponent } from './channel/channel.component';
 import { ListBatchSimComponent } from './list-batch-sim/list-batch-sim.component';
+import { SellChanelComponent } from './sell-chanel/sell-chanel.component';
+import { NewSellChanelComponent } from './new-sell-chanel/new-sell-chanel.component';
+import { EditSellChanelComponent } from './edit-sell-chanel/edit-sell-chanel.component';
+import { ViewSellChanelComponent } from './view-sell-chanel/view-sell-chanel.component';
 
 const routes: Routes = [
   {
@@ -29,6 +33,22 @@ const routes: Routes = [
   {
     path: 'list-batch',
     component: ListBatchSimComponent
+  },
+  {
+    path: 'sell-chanel',
+    component: SellChanelComponent
+  },
+  {
+    path: 'new-sell-chanel',
+    component: NewSellChanelComponent
+  },
+  {
+    path: 'edit-sell-chanel',
+    component: EditSellChanelComponent
+  },
+  {
+    path: 'view-sell-chanel',
+    component: ViewSellChanelComponent
   }
 ];
 
@@ -38,7 +58,11 @@ const routes: Routes = [
     BatchSimComponent,
     BatchGtalkComponent,
     ChannelComponent,
-    ListBatchSimComponent
+    ListBatchSimComponent,
+    SellChanelComponent,
+    NewSellChanelComponent,
+    EditSellChanelComponent,
+    ViewSellChanelComponent
   ],
   imports: [
     CommonModule,
