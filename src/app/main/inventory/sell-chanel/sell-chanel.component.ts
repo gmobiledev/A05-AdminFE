@@ -319,6 +319,25 @@ export class SellChanelComponent implements OnInit {
     }
   }
 
+  async onViewSell(id) {
+
+      this.submittedUpload = true; 
+      this.inventoryService.viewDetailSell(id).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    
+  }
+
   ngOnInit(): void {
     this.contentHeader = {
       headerTitle: 'Danh sách kho sim số',
@@ -389,6 +408,7 @@ export class SellChanelComponent implements OnInit {
       this.list = res.data.items;
       this.totalPage = res.data.count;
       this.pageSize = res.data.pageSize;
+      this.onViewSell(res.data.id)   
     }, error => {
       this.sectionBlockUI.stop();
       console.log("ERRRR");

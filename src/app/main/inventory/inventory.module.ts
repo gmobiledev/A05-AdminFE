@@ -45,6 +45,10 @@ const routes: Routes = [
   {
     path: 'edit-sell-chanel',
     component: EditSellChanelComponent
+  },
+  {
+    path: 'view-sell-chanel',
+    component: ViewSellChanelComponent
   }
 ];
 
