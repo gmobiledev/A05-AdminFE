@@ -173,12 +173,20 @@ export const menu: CoreMenu[] = [
         url: 'inventory/batch-sim'
       },
       {
-        id: 'sell-channel',
+        id: 'channel',
         title: 'DS kênh bán hàng',
         translate: '',
         type: 'item',
         icon: 'database',
         url: 'inventory/channel'
+      },
+      {
+        id: 'sell-chanel',
+        title: 'DS kho sim số',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/sell-chanel'
       },
      
 

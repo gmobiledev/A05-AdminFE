@@ -18,6 +18,10 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { NewBatchExportComponent } from './new-batch-export/new-batch-export.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SellChanelComponent } from './sell-chanel/sell-chanel.component';
+import { NewSellChanelComponent } from './new-sell-chanel/new-sell-chanel.component';
+import { EditSellChanelComponent } from './edit-sell-chanel/edit-sell-chanel.component';
+import { ViewSellChanelComponent } from './view-sell-chanel/view-sell-chanel.component';
 
 const routes: Routes = [
   {
@@ -43,6 +47,22 @@ const routes: Routes = [
   {
     path: 'new-batch-export',
     component: NewBatchExportComponent
+  },
+  {
+    path: 'sell-chanel',
+    component: SellChanelComponent
+  },
+  {
+    path: 'new-sell-chanel',
+    component: NewSellChanelComponent
+  },
+  {
+    path: 'edit-sell-chanel',
+    component: EditSellChanelComponent
+  },
+  {
+    path: 'view-sell-chanel',
+    component: ViewSellChanelComponent
   }
 ];
 
@@ -54,7 +74,11 @@ const routes: Routes = [
     ChannelComponent,
     ListBatchSimComponent,
     DashboardComponent,
-    NewBatchExportComponent
+    NewBatchExportComponent,
+    SellChanelComponent,
+    NewSellChanelComponent,
+    EditSellChanelComponent,
+    ViewSellChanelComponent
   ],
   imports: [
     CommonModule,
