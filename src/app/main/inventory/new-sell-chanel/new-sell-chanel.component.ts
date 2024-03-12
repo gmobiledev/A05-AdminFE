@@ -177,7 +177,7 @@ export class NewSellChanelComponent implements OnInit {
 
   async onSubmitUploadSell() {
 
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo kho không?")).value) {
       this.submittedUpload = true;
       this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
         this.submittedUpload = false;
@@ -224,43 +224,5 @@ export class NewSellChanelComponent implements OnInit {
     }
   }
 
-  modalOpen(modal, item = null) {
-  //     if(item) {
-  //       this.titleModal = "Cập nhật user";
-  //       this.isCreate = false;
-  //       this.selectedUserId = item.id;
-  //       this.userService.getAgentServices(item.id).subscribe(res => {
-
-
-  //         this.currentService = res.data.map( x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
-  //         let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
-  //         for (let i = 0; i < this.currentService.length; i++ ) {
-  //           const newGroup = this.formBuilder.group({
-  //             id: [{value:this.currentService[i]['id'], disabled: true}],
-  //             status: [{value:this.currentService[i]['status'], disabled: true}],
-  //             ref_code: [{value: this.currentService[i]['ref_code'], disabled: true}],
-  //             service_code: [{value: this.currentService[i]['service_code'], disabled: true}]
-  //           });
-  //           const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
-  //           this.listServiceFilter[index]['disabled'] = 'disabled';
-  //           arrayControl.push(newGroup);
-  //         }
-
-  //         this.modalRef = this.modalService.open(modal, {
-  //           centered: true,
-  //           windowClass: 'modal modal-primary',
-  //           size: 'lg'
-  //         });
-  //       })
-  //     } else {
-  //       this.titleModal = "Thêm đại lý";
-  //       this.isCreate = true;
-  //       this.modalRef = this.modalService.open(modal, {
-  //         centered: true,
-  //         windowClass: 'modal modal-primary',
-  //         size: 'lg'
-  //       });
-  //     }
-  }
 
 }
