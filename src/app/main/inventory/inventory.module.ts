@@ -15,6 +15,7 @@ import { ListBatchSimComponent } from './list-batch-sim/list-batch-sim.component
 import { SellChanelComponent } from './sell-chanel/sell-chanel.component';
 import { NewSellChanelComponent } from './new-sell-chanel/new-sell-chanel.component';
 import { EditSellChanelComponent } from './edit-sell-chanel/edit-sell-chanel.component';
+import { ViewSellChanelComponent } from './view-sell-chanel/view-sell-chanel.component';
 
 const routes: Routes = [
   {
@@ -56,7 +57,8 @@ const routes: Routes = [
     ListBatchSimComponent,
     SellChanelComponent,
     NewSellChanelComponent,
-    EditSellChanelComponent
+    EditSellChanelComponent,
+    ViewSellChanelComponent
   ],
   imports: [
     CommonModule,
