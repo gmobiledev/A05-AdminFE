@@ -32,6 +32,9 @@ export class SellChanelComponent implements OnInit {
     district_id : '',
     ward_id: '',
     status: '',
+    // commune_id: '',
+    // province_id: '',
+
     page: 1
   }
   public selectedItem: any
@@ -53,6 +56,7 @@ export class SellChanelComponent implements OnInit {
   @Input() commues;
   @Input() countries;
 
+  dateRange: any;
 
   public residence_districts;
   public residence_commues;
@@ -80,7 +84,6 @@ export class SellChanelComponent implements OnInit {
     private commonService: CommonService,
 
 
-
   ) {
     this.route.queryParams.subscribe(params => {
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
@@ -91,6 +94,10 @@ export class SellChanelComponent implements OnInit {
       this.searchForm.ward_id = params['ward_id'] && params['ward_id'] != undefined ? params['ward_id'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
+      // this.searchForm.commune_id = params['commune_id'] && params['commune_id'] != undefined ? params['commune_id'] : '';
+      // this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
+
+      this.dateRange = null;
 
       this.getData();
     })

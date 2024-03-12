@@ -148,7 +148,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="form-group row mt-1">
+                  <!-- <div class="form-group row mt-1">
                     <label for="commune" class="col-md-3 col-form-label"
                       >Chọn người bán hàng</label
                     >
@@ -161,7 +161,7 @@
                       </select>
                     </div>
   
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="modal-footer">
@@ -298,22 +298,7 @@
           </div>
           <button *ngIf="isShowAddInput" type="button" class="btn btn-success btn-sm" (click)="addInput()">Thêm <span
               [data-feather]="'plus'"></span></button>
-  
-          <!-- <input type="text" class="form-control" (input)="onSearchService($event)" placeholder="Tìm kiếm" />
-        <div class="row pt-1" style="max-height:600px; overflow-y: auto">
-          <div class="col-md-6 mb-2" *ngFor="let item of listServiceFilter">
-  
-          
-          <div class="custom-control custom-checkbox" >
-            
-            <input [checked]="selectedService.includes(item.code)" id="{{item.code}}" type="checkbox" [value]="item.code" class="custom-control-input" (change)="onChangeService($event, item)" />
-            <label for="{{item.code}}"  class="custom-control-label" 
-           
-            >{{ item.desc }}</label>
-          
-          </div>
-        </div>
-        </div> -->
+
         </div>
   
         <ng-template *ngIf="isCreate">

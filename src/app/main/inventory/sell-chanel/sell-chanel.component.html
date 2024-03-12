@@ -14,7 +14,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <select
-                      name=""
+                      name="city_id"
                       id="province"
                       class="form-control"
                       (change)="onChangeProvince($event)"
@@ -31,6 +31,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <select
+                      name="district_id"
                       id="home_district"
                       class="form-control"
                       (change)="onChangeDistrict($event)"
@@ -46,7 +47,7 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select name="" class="form-control" [(ngModel)]="searchForm.ward_id"
+                    <select name="ward_id" class="form-control" [(ngModel)]="searchForm.ward_id "
                     >
                       <option value="">--Chọn Phường/xã --</option>
                       <option *ngFor="let p of commues" [value]="p.id">
@@ -60,7 +61,7 @@
                   <div class="form-group">
                     <select
                       class="form-control"
-                      name="sell_status"
+                      name="status"
                       [(ngModel)]="searchForm.status"
                     >
                       <option value="0">Khởi tạo</option>
@@ -88,8 +89,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="customer_id"
-                      [(ngModel)]="searchForm.customer_id"
+                      name="name"
+                      [(ngModel)]="searchForm.name"
                       class="form-control"
                       placeholder="Tên kho"
                     />
@@ -100,8 +101,8 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="name"
-                      [(ngModel)]="searchForm.name"
+                      name="customer_id"
+                      [(ngModel)]="searchForm.customer_id"
                       class="form-control"
                       placeholder="Tên đại lý"
                     />
@@ -160,7 +161,7 @@
                 <tbody>
                   <tr *ngFor="let item of list">
                     <td>
-                      {{ item.id }}
+                      {{ item.code }}
                     </td>
                     <td>{{ item.name }}</td>
                     <td>

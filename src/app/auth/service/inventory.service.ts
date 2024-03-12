@@ -42,8 +42,13 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { sell_channelid: id , status: status});
   }
 
+  viewDetailSell(id: number){
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetSell_channelDetails`,  { sell_channelid: id , status: status});
+  }
+
+
   exportExcelReport(dto: any): Observable<any> {
-    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/ExportSell_channelList`, dto, { observe: 'response', responseType: 'blob' });
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/exportSell_channelExcel`, dto, { observe: 'response', responseType: 'blob' });
   }
 
   getAllSim(params = null, inventoryType = "") {
