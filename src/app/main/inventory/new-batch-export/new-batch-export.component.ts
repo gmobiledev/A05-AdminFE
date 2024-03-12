@@ -40,7 +40,11 @@ export class NewBatchExportComponent implements OnInit {
   currentUser;
   public searchForm = {
     channel_id: '',
-    admin_id: ''
+    admin_id: '',
+    key_from: '',
+    key_to: '',
+    brand: '',
+    category_id: ''
   }
   seachMyChannel = {
     user_id: '',
@@ -64,6 +68,12 @@ export class NewBatchExportComponent implements OnInit {
   public listChannel;
   public listInputChannel;
   public submitted: boolean = false;
+  public listAttribute = [
+    {id: 1, name: 'BRONE'},
+    {id: 1, name: 'GOLD'},
+    {id: 1, name: 'PLATILUM'},
+  ]
+  selectedAttributes: any;
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly atlertService: SweetAlertService
@@ -150,7 +160,7 @@ export class NewBatchExportComponent implements OnInit {
   async onSubmitCreate() {
     this.submitted = true;
     const dataCreateBatchExport = new CreateBatchExportDto();
-    dataCreateBatchExport.title = 'Xuất kho';
+    dataCreateBatchExport.title = this.createBatchExport.title;
     dataCreateBatchExport.channel_id = parseInt(this.searchForm.channel_id);
     dataCreateBatchExport.to_channel_id  = parseInt(this.createBatchExport.to_channel_id );
     dataCreateBatchExport.user_id = parseInt(this.searchForm.admin_id);

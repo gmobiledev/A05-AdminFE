@@ -49,7 +49,7 @@ export class BatchComponent implements OnInit {
   public batchStatus = BatchStatus;
   public batchType = BatchType;
   public listCurrentAction: any;
-
+  public batchStatusShow
 
   public dataLo = {
     title: '',
@@ -99,7 +99,7 @@ export class BatchComponent implements OnInit {
 
   modalOpen(modal, item = null) {
     if (item) {
-      this.titleModal = "Tải dữ liệu của lô";
+      this.titleModal = "Tải dữ liệu";
       this.isCreate = false;
       this.selectedItem = item;
       this.modalRef = this.modalService.open(modal, {
@@ -109,7 +109,7 @@ export class BatchComponent implements OnInit {
       });
 
     } else {
-      this.titleModal = "Thêm lô nhập";
+      this.titleModal = "Tạo phiếu nhập";
       this.isCreate = true;
       this.modalRef = this.modalService.open(modal, {
         centered: true,
@@ -268,7 +268,7 @@ export class BatchComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách lô',
+      headerTitle: 'Danh sách phiếu',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -279,7 +279,7 @@ export class BatchComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách lô',
+            name: 'Danh sách phiếu',
             isLink: false
           }
         ]
@@ -303,6 +303,10 @@ export class BatchComponent implements OnInit {
   }
 
   getData() {
+    this.batchStatusShow = Object.keys(BatchStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
+      obj[key] = BatchStatus[key];
+      return obj;
+    }, {});
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });

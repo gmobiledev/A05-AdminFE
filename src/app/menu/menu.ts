@@ -166,7 +166,7 @@ export const menu: CoreMenu[] = [
 
       {
         id: 'batch-sim',
-        title: 'DS lô sim số',
+        title: 'Xuất/nhập kho',
         translate: '',
         type: 'item',
         icon: 'database',

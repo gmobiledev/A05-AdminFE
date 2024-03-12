@@ -2,31 +2,71 @@
     <div class="content-body">
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
         <div class="row">
-            <div class="col-7">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Loại sản phẩm</th>
-                            <th>Sản phẩm</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of data?.products; let i = index">
-                            <td>{{ i+1}}</td>
-                            <td>{{ item.category_id }}</td>
-                            <td>{{ item.name }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             <div class="col-5">
-
+                <div class="card">
+                    <div class="card-body">
+                    <p>Loại phiếu: {{ data?.batch?.type | typeBatchForm }}</p>
+                    <p>Xuất từ kho: {{ fromChannel.name }}</p>
+                    <p>Xuất tới kho: {{ toChannel.name }}</p>
+                    <p>Số lượng: {{ data?.batch.quantity }}</p>
+                    <p>Ngày tạo: {{ data?.batch?.created_at | date: 'dd/MM/yyyy H:mm':'GMT' }}</p>
+                    <p>Trạng thái: <span [innerHTML]="data?.batch?.status | showStatusBatch"></span></p>
+                </div>
+                </div>
             </div>
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h4 class="text-center">Danh sách sản phẩm</h4>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="d-flex justify-content-between align-items-center m-1">
+                                    <label class="d-flex align-items-center">Show
+                                        <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        entries</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                                <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                                            class="form-control ml-25" (keyup)="filterList($event)" /></label>
+                                </div>
+                            </div>
+                        </div>
+                        <ngx-datatable [rows]="listProducts" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                            [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+                            [limit]="basicSelectedOption">
+                            <ngx-datatable-column name="Name" prop="name">
+                                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                    <div class="d-flex align-items-center">
+                                        <div class="cell-line-height">
+                                            <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                                                {{ name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
+                            <ngx-datatable-column name="Hạng số" prop="price"></ngx-datatable-column>
+                        </ngx-datatable>
+            
+                    </div>
+                </div>
+            </div>
+            
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center">
                 <button *ngIf="data?.batch?.status == batchStatus.INIT
                                 && checkAction('batch/export/ke-toan/approve')
                                 " (click)="onViewModalApprove(modalApprove)"

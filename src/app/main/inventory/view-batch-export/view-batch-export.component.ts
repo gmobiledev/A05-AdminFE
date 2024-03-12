@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { BatchStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
@@ -8,10 +9,13 @@ import { SweetAlertService } from 'app/utils/sweet-alert.service';
 @Component({
   selector: 'app-view-batch-export',
   templateUrl: './view-batch-export.component.html',
-  styleUrls: ['./view-batch-export.component.scss']
+  styleUrls: ['./view-batch-export.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewBatchExportComponent implements OnInit {
 
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+  
   public contentHeader = {
     headerTitle: 'Chi tiết phiếu',
     actionButton: true,
@@ -36,12 +40,18 @@ export class ViewBatchExportComponent implements OnInit {
     }
   };
 
-  modalRef;
+  modalRef: any;
   batchStatus = BatchStatus;
-  listCurrentAction;
-  currentUser;
-  id;
-  data;
+  listCurrentAction: any;
+  currentUser: any;
+  id: any;
+  data: any;
+  fromChannel: any;
+  toChannel: any;
+  tempList: any;
+  listProducts: any;
+  public basicSelectedOption: number = 10;
+
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly route: ActivatedRoute,
@@ -59,7 +69,26 @@ export class ViewBatchExportComponent implements OnInit {
     this.listCurrentAction = this.currentUser.actions;
     this.inventoryService.findOneBatchExport(this.id).subscribe(res => {
       this.data = res.data;
+      this.listProducts = res.data.products;
+      this.tempList = res.data.products;
+      if(res.data.channels) {
+        this.fromChannel = res.data.channels.find(x => x.id == res.data.batch.channel_id);
+        this.toChannel = res.data.channels.find(x => x.id == res.data.batch.to_channel_id);
+      }
     })
+  }
+
+  filterList(event) {
+    const val = event.target.value.toLowerCase();
+    // filter our data
+    const temp = this.tempList.filter(function (d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.listProducts = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
   }
 
   checkAction(item) {

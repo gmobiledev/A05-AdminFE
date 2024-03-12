@@ -18,7 +18,7 @@
                       name="keyword"
                       [(ngModel)]="searchForm.keyword"
                       class="form-control"
-                      placeholder="Nhập tên lô, nội dung lô .."
+                      placeholder="Nhập tiêu đề"
                     />
                   </div>
                 </div>
@@ -29,7 +29,7 @@
                       name="type"
                       [(ngModel)]="searchForm.type"
                     >
-                      <option value="">Chọn loại</option>
+                      <option value="">-- Chọn loại --</option>
                       <option value="1">Nhập kho</option>
                       <option value="-1">Xuất kho</option>                      
                     </select>
@@ -42,10 +42,10 @@
                       name="status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="">Chọn trạng thái</option>
-                      <option value="{{batchStatus.INIT}}">Mới khởi thạo</option>
-                      <option value="{{batchStatus.APPORVED_BY_ACCOUNTANT}}">Duyệt bởi VP</option>
-                      <option value="{{batchStatus.APPORVED}}">Duyệt bởi KT</option>                      
+                      <option value="">-- Chọn trạng thái --</option>
+                      <option *ngFor="let item of batchStatusShow | keyvalue" [value]="item.value" [id]="item.key">
+                        <span [innerHTML]="item.value | showStatusBatch"></span>
+                      </option>                      
                     </select>
                   </div>
                 </div>
@@ -73,7 +73,7 @@
                   Nhập kho <span [data-feather]="'upload'"></span>
                 </button>
 
-                <a routerLink="/inventory/new-batch-export" class="btn btn-success mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
+                <a routerLink="/inventory/new-batch-export" class="btn btn-info mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
               </div>
             </div>
             <div class="table-responsive" *blockUI="'section-block'">
@@ -81,8 +81,8 @@
                 <thead>
                   <tr>
                     <th>Loại</th>
-                    <th>Mã Lô</th>
-                    <th>Tên lô</th>
+                    <th>Mã</th>
+                    <th>Tiêu đề</th>
                     <th>Số lượng</th>
                     <th>Số lượng đã đẩy</th>
                     <th>Kho</th>
@@ -136,7 +136,7 @@
                       <a
                         class="ml-1"
                         (click)="modalOpen(modalUploadData, item)"
-                        title="Tải dữ liệu lên lô"
+                        title="Tải dữ liệu lên"
                       >
                         <i
                           data-feather="upload"
@@ -223,7 +223,7 @@
 <ng-template #modalUploadData let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">
-      Tải lên dữ liệu lô lên kho - Mã lô: {{ selectedItem.id }}
+      Tải lên dữ liệu lên - Mã phiếu: {{ selectedItem.id }}
     </h5>
     <button
       type="button"
@@ -347,7 +347,7 @@
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <div class="row mb-2">
-      <div class="col-4"><span>Tên lô: </span> {{ batchdDetail?.title }}</div>
+      <div class="col-4"><span>Tiêu đề phiếu: </span> {{ batchdDetail?.title }}</div>
       <div class="col-4">
         <span>Số lượng: </span> {{ batchdDetail?.quantility }}
       </div>
@@ -379,7 +379,7 @@
   </div>
 
   <div class="modal-footer">
-    <div>
+    <div class="text-center">
       
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
@@ -389,6 +389,16 @@
         class="btn btn-info btn-sm mb-2"
       >
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+      </button>
+
+      <button
+        *ngIf="batchdDetail?.status == batchStatus.INIT
+        && checkAction('batch/ke-toan/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_ACCOUNTANT)"
+        class="btn btn-danger btn-sm mb-2"
+      >
+        <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
       </button>
 
       <!-- <button
@@ -405,9 +415,19 @@
         && checkAction('batch/van-phong/update-status')
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED)"
-        class="ml-2 btn btn-facebook btn-sm mb-2"
+        class="ml-2 btn btn-info btn-sm mb-2"
       >
       <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+      </button>
+
+      <button
+        *ngIf="itemBatch.status == batchStatus.APPORVED_BY_ACCOUNTANT
+        && checkAction('batch/van-phong/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_OFFICE)"
+        class="ml-2 btn btn-danger btn-sm mb-2"
+      >
+      <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
       </button>
     </div>
   </div>
