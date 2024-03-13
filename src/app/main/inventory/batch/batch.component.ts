@@ -293,13 +293,13 @@ export class BatchComponent implements OnInit {
   }
 
   async onListChannel() {
-    this.inventoryService.findChannelAll(this.searchForm).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.listChannel = res.data.items;
+    // this.inventoryService.findChannelAll(this.searchForm).subscribe(res => {
+    //   this.sectionBlockUI.stop();
+    //   this.listChannel = res.data.items;
 
-    }, error => {
-      this.sectionBlockUI.stop();
-    })
+    // }, error => {
+    //   this.sectionBlockUI.stop();
+    // })
   }
 
   getData() {
