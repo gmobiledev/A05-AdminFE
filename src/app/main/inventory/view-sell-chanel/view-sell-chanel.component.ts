@@ -409,7 +409,17 @@ export class ViewSellChanelComponent implements OnInit {
 
   onChangeUser(event) {
     console.log("id = ",event.target.value);
-    this.listSelectedUser.push(event.target.value);
+    const foundObject = this.listSellUser.find(obj => obj.id == event.target.value);
+    this.listSelectedUser.push(foundObject);
+
+    // const isDuplicate = this.listSellUser.some(obj => obj.id === foundObject.id);
+    // if(isDuplicate) {
+    //   this.listSelectedUser.push(foundObject);
+    // } else {
+    //   console.log('ĐÃ CHỌN NGƯỜI BÁN HÀNG!');
+    // }
+    // console.log("foundObject = ",foundObject);
+
   }
 
   onRemoveItem(item) {

@@ -434,11 +434,11 @@
         <select class="form-control" (change)="onChangeUser($event)">
           <option value="">Chọn người bán hàng</option>
           <option *ngFor="let p of listSellUser" [value]="p.id">
-            {{ p.full_name }}
+          {{ p.full_name}} - {{p.mobile}}
           </option>
         </select>
         <div class="mt-1" *ngFor="let item of listSelectedUser">
-          Mã ID khách hàng : {{ item }}
+          Thông tin khách hàng : {{ item.full_name }} - {{item.mobile}}
           <span class="pull-right" (click)="onRemoveElement(item)"
             ><b>X</b></span
           >
