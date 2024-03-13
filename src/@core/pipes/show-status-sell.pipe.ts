@@ -12,6 +12,8 @@ export class ShowStatusSellPipe implements PipeTransform {
       html = '<span class="badge badge-pill badge-light-info mr-1">Khoá</span>';
     } else if (value === -1) {
       html = '<span class="badge badge-pill badge-light-info mr-1">Huỷ</span>';
+    } else if (value === 3) {
+      html = '<span class="badge badge-pill badge-light-info mr-1">Tất cả</span>';
     } else {
       html = '<span class="badge badge-pill mr-1 badge-light-warning"> null </span>';
     }

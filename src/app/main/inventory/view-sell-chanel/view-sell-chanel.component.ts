@@ -16,6 +16,8 @@ import { InventoryService } from 'app/auth/service/inventory.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateAgentDto, CreateAgentServiceDto, CreateUserDto, UpdateStatusAgentDto } from 'app/auth/service/dto/user.dto';
 import { UserService } from 'app/auth/service';
+import { TaskService } from 'app/auth/service/task.service';
+
 
 @Component({
   selector: 'app-view-sell-chanel',
@@ -61,6 +63,7 @@ export class ViewSellChanelComponent implements OnInit {
   public currentUser: any;
   public isAdmin: boolean = false;
   public mnos: any = []
+  public listSellUser: any;
 
   public exitsUser: boolean = false;
   public formGroup: FormGroup;
@@ -71,7 +74,7 @@ export class ViewSellChanelComponent implements OnInit {
   public selectedUserId: number;
   public currentService: any;
   public listServiceFilter: any;
-
+  public listSelectedUser = [];
 
   public searchForm: any = {
     keysearch: '',
@@ -112,7 +115,8 @@ export class ViewSellChanelComponent implements OnInit {
     private alertService: SweetAlertService,
     private inventoryService: InventoryService,
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private taskService: TaskService,
 
 
   ) {
@@ -309,6 +313,15 @@ export class ViewSellChanelComponent implements OnInit {
 
 
   getData() {
+    this.userService.getAll(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.listSellUser = res.data.items;
+    }, error => {
+      this.sectionBlockUI.stop();
+      console.log("ERRRR");
+      console.log(error);
+    })
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.sectionBlockUI.start();
     this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
@@ -345,15 +358,6 @@ export class ViewSellChanelComponent implements OnInit {
             this.submitted = false;
             return;
           }
-
-          // //them user vua tao vao kenh ban
-          // this.telecomService.sellChannelAddChannelToUser({
-          //   channel_id: this.formGroup.controls['channel_id'].value,
-          //   user_id: res.data.id
-          // }).subscribe(res => {
-
-          // })
-
           this.modalRef.close();
           this.initForm();
           this.alertService.showSuccess(res.message);
@@ -403,5 +407,20 @@ export class ViewSellChanelComponent implements OnInit {
     })
   }
 
+  onChangeUser(event) {
+    console.log("id = ",event.target.value);
+    this.listSelectedUser.push(event.target.value);
+  }
+
+  onRemoveItem(item) {
+    console.log(item);
+  }
+
+  onRemoveElement(elementToRemove: number) {
+    const index = this.listSelectedUser.indexOf(elementToRemove);
+    if (index !== -1) {
+      this.listSelectedUser.splice(index, 1);
+    }
+  }
 }
 
