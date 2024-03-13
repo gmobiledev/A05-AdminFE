@@ -66,7 +66,8 @@
         </div>
 
         <div class="row">
-            <div class="col-12 text-center">
+            <!-- VP/KT duyệt -->
+            <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
                 <button *ngIf="data?.batch?.status == batchStatus.INIT
                                 && checkAction('batch/export/ke-toan/approve')
                                 " (click)="onViewModalApprove(modalApprove)"
@@ -89,6 +90,22 @@
 
                 <button *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT && checkAction('batch/export/van-phong/reject')
                         " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
+                    class="btn btn-danger  mb-2 mr-2">
+                    <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
+                </button>
+            </div>
+
+            <!-- User tự duyệt -->
+            <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
+                && (checkAction('batch/export/user/approve') || checkAction('batch/export/user/reject') )
+                ">
+                <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/user/approve')
+                                " (click)="onApprove(data?.batch, batchStatus.APPROVED, 'user')"
+                    class="btn btn-success mb-2 mr-2">
+                    <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+                </button>
+                <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/user/reject')
+                        " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'user')"
                     class="btn btn-danger  mb-2 mr-2">
                     <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                 </button>

@@ -152,6 +152,10 @@ export class NewBatchExportComponent implements OnInit {
     })
   }
 
+  onSearchParentChannel(event) {
+    console.log(event);
+  }
+
   // TÌm số trong kho
   searchProductStore() {
     if(!this.searchForm.channel_id) {

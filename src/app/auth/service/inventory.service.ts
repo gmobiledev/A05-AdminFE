@@ -132,12 +132,20 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/van-phong/approve`, data);
   }
 
+  userDuyet(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/user/approve`, data);
+  }
+
   ketoanReject(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/ke-toan/reject`, data);
   }
 
   vanPhongReject(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/van-phong/reject`, data);
+  }
+
+  userReject(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/user/reject`, data);
   }
 
 }

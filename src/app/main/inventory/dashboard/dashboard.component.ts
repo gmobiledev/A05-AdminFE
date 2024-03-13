@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   async searchData() {
-    this.isUpdate = true;
+    
     await this.getData();
     this.chartMap.series = [];
     this.chartMap.series.push({
@@ -139,12 +139,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     })
     // this.isUpdate = true;
     console.log(this.chartMap.series);
-    // this.isUpdate = false;
+    this.isUpdate = true;
   }
   
   async getData() {
     try {
       console.log('get data');
+      if(!this.searchForm.date) {
+        let cDate = new Date()
+        const offset = cDate.getTimezoneOffset()
+        cDate = new Date(cDate.getTime() - (offset*60*1000))
+        this.searchForm.date = cDate.toISOString().split('T')[0]
+      }
       console.log(this.searchForm);
       let res  = await this.inventoryService.dashboardHeatmap(this.searchForm).toPromise();
       console.log('success get');
@@ -152,7 +158,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log(this.listData);
       this.listData = res.data.items.map(x => { return {name: x.name, value: x.value * 10, key: x.key} });
       this.listDataTmp = res.data.items.map(x => { return {name: x.name, value: x.value * 10, key: x.key} });
-      this.data = this.listData.map(x => { return { id: x.key, value: x.value } });
+      this.data = [];
+      for(let item of mapData.features) {
+        const seData = this.listData.find(x => x.key == item.properties.id);
+        this.data.push({
+          id: item.properties.id,
+          value: seData ? seData.value : 0
+        })
+      }
+      // this.data = this.listData.map(x => { return { id: x.key, value: x.value } });
     } catch (error) {
       console.log("error", error);
     }

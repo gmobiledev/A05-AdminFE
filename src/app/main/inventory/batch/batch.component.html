@@ -98,8 +98,7 @@
                     <th>Mã</th>
                     <th>Tiêu đề</th>
                     <th>Số lượng</th>
-                    <th>Số lượng đã đẩy</th>
-                    <th>Kho</th>
+                    <th>Số lượng đã đẩy</th>                    
                     <th>Trạng thái</th>
                     <th>Thời gian</th>
                     <th>Thao tác</th>
@@ -117,8 +116,7 @@
                     <td>
                       {{ item?.quantility }}
                     </td>
-                    <td>{{ item?.imported_quantility }}</td>
-                    <td>{{ item?.business?.name }}</td>
+                    <td>{{ item?.imported_quantility }}</td>                    
                     <td>
                       <div [innerHTML]="item?.status | showStatusBatch"></div>
                     </td>

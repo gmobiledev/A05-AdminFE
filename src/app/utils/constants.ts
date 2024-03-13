@@ -53,7 +53,8 @@ export enum BatchStatus {
     CANCEL = -1, //lô không được duyệt
     APPORVED_BY_ACCOUNTANT = 11,
     CANCEL_BY_OFFICE = -2,
-    CANCEL_BY_ACCOUNTANT = -11
+    CANCEL_BY_ACCOUNTANT = -11,
+    CANCEL_BY_USER = -12
 
 }
 
