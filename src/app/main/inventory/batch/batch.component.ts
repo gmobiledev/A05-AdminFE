@@ -31,6 +31,8 @@ export class BatchComponent implements OnInit {
     type: '',
     page: 1,
     page_size: 20,
+    from_date: '',
+    to_date: ''
   }
   public selectedItem: any
   public isCreate: boolean = false;
@@ -315,16 +317,35 @@ export class BatchComponent implements OnInit {
       }
     }
     this.listCurrentAction = this.currentUser.actions;
+    let paramSearch = {...this.searchForm};
+    for(let key in paramSearch) {
+      if(paramSearch[key] === '') {
+        delete paramSearch[key];
+      }
+    }
     this.sectionBlockUI.start();
-    this.inventoryService.findBatchAll(this.searchForm).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.list = res.data.items;
-      this.totalItems = res.data.count;
-    }, error => {
-      this.sectionBlockUI.stop();
-      console.log("ERRRR");
-      console.log(error);
-    })
+    if(this.checkAction('batch/ke-toan/update-status') || this.checkAction('batch/van-phong/update-status')) {
+      this.inventoryService.findBatchStaff(paramSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.list = res.data.items;
+        this.totalItems = res.data.count;
+      }, error => {
+        this.sectionBlockUI.stop();
+        console.log("ERRRR");
+        console.log(error);
+      })
+    } else {
+      this.inventoryService.findBatchUser(paramSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.list = res.data.items;
+        this.totalItems = res.data.count;
+      }, error => {
+        this.sectionBlockUI.stop();
+        console.log("ERRRR");
+        console.log(error);
+      })
+    }
+    
 
     this.onListChannel();
 

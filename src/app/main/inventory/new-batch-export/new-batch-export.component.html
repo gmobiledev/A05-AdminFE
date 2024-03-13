@@ -1,4 +1,4 @@
-<div class="content-wrapper container-xxl p-0">
+<div class="content-wrapper container-xxl p-0" *blockUI="'section-block'">
     <div class="content-body">
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
         <div class="row">
@@ -250,14 +250,14 @@
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
                     <ngx-datatable-column name="Hạng số" prop="price" ></ngx-datatable-column>                    
-                    <ngx-datatable-column name="Actions"  [sortable]="false">
+                    <!-- <ngx-datatable-column name="Actions"  [sortable]="false">
                       <ng-template ngx-datatable-cell-template>
                         <div class="d-flex align-items-center">
                                   
                           <i data-feather="edit" class="text-primary cursor-pointer"></i>
                         </div>
                       </ng-template>
-                    </ngx-datatable-column>
+                    </ngx-datatable-column> -->
                   </ngx-datatable>
 
                 </div>

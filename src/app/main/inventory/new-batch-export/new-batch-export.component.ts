@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CreateBatchExportDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-new-batch-export',
@@ -13,7 +15,8 @@ import { SweetAlertService } from 'app/utils/sweet-alert.service';
 export class NewBatchExportComponent implements OnInit {
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
-
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  
   public contentHeader = {
     headerTitle: 'Tạo phiếu xuất kho',
     actionButton: true,
@@ -76,7 +79,8 @@ export class NewBatchExportComponent implements OnInit {
   selectedAttributes: any;
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly atlertService: SweetAlertService
+    private readonly alertService: SweetAlertService,
+    private readonly router: Router
   ) { }
 
   onSelect({ selected }) {
@@ -150,10 +154,23 @@ export class NewBatchExportComponent implements OnInit {
 
   // TÌm số trong kho
   searchProductStore() {
+    if(!this.searchForm.channel_id) {
+      this.alertService.showMess("Vui lòng chọn kho xuất đi");
+      return;
+    }
+    this.sectionBlockUI.start();
     this.inventoryService.searchProductStore(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
+      if(!res.status) {
+        this.alertService.showMess(res.message);
+        return;
+      }
       const data = res.data;
       this.tempList = data.items;
       this.list = data.items;
+    },error => {
+      this.alertService.showMess(error);
+      this.sectionBlockUI.stop();
     })
   }
 
@@ -170,19 +187,22 @@ export class NewBatchExportComponent implements OnInit {
     //   return;
     // }
     if(this.selectedItems.length < 1) {
-      this.atlertService.showMess("Vui lòng chọn sản phẩm");
+      this.alertService.showMess("Vui lòng chọn sản phẩm");
       return;
     }
     let resCreateBatch, resUpdateBatch;
     this.submitted = true;
+    this.sectionBlockUI.start();
     try {
       resCreateBatch = await this.inventoryService.createBatchExport(dataCreateBatchExport).toPromise();
       if(!resCreateBatch.status) {
-        this.atlertService.showMess(resCreateBatch.message);
+        this.alertService.showMess(resCreateBatch.message);
+        this.sectionBlockUI.stop();
         return;
       }
     } catch (error) {
-      this.atlertService.showMess(error);
+      this.alertService.showMess(error);
+      this.sectionBlockUI.stop();
     }
     let dataUpdateBatch = new UpdateBatchExportDto();
     dataUpdateBatch.products = this.selectedItems.map(x => {return x.id});
@@ -192,13 +212,17 @@ export class NewBatchExportComponent implements OnInit {
     try {
       resUpdateBatch = await this.inventoryService.updateBatchExport(dataUpdateBatch).toPromise();
       if(!resUpdateBatch.status) {
-        this.atlertService.showMess(resUpdateBatch.message);
+        this.alertService.showMess(resUpdateBatch.message);
+        this.sectionBlockUI.stop();
         return;
       }
-      this.atlertService.showSuccess(resUpdateBatch.message);
+      this.alertService.showSuccess(resUpdateBatch.message);
+      this.sectionBlockUI.stop();
+      this.router.navigate(['/inventory/batch']);
       return;
     } catch (error) {
-      this.atlertService.showMess(error);
+      this.alertService.showMess(error);
+      this.sectionBlockUI.stop();
     }
   }
 

@@ -11,19 +11,31 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
+                    <label>Từ ngày</label>
                     <input
-                      type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
-                      class="form-control"
-                      placeholder="Nhập tiêu đề"
+                      type="date"
+                      name="from_date"
+                      [(ngModel)]="searchForm.from_date"
+                      class="form-control"                 
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Tới ngày</label>
+                    <input
+                      type="date"
+                      name="to_date"
+                      [(ngModel)]="searchForm.to_date"
+                      class="form-control"                      
                     />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
+                    <label>Loại phiếu</label>
                     <select
                       class="form-control"
                       name="type"
@@ -37,6 +49,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
+                    <label>Trạng thái</label>
                     <select
                       class="form-control"
                       name="status"
@@ -51,6 +64,7 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
+                    <label for=""></label>
                     <button type="submit" class="btn btn-block btn-info">
                       Lọc kết quả <span [data-feather]="'search'"></span>
                     </button>

@@ -22,6 +22,14 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/batch`, { params: params });
   }
 
+  findBatchUser(params = null, inventoryType = "") {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/user/list`, { params: params });
+  }
+
+  findBatchStaff(params = null, inventoryType = "") {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/staff/list`, { params: params });
+  }
+
   uploadFileBatch(data) {
     console.log("uploadFileBatch", data);
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/upload-file-batch`, data);
