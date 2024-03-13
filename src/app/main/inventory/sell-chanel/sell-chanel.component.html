@@ -140,7 +140,7 @@
               </div>
               <div class="pull-right">
                 <button type="button" class="btn btn-success mr-25">
-                  <span routerLink="/inventory/new-sell-chanel">Thêm kho</span>
+                  <span routerLink="/inventory/new-sell-chanel">Tạo kho</span>
                 </button>
               </div>
             </div>
@@ -168,7 +168,7 @@
                       {{ item.desc }}
                     </td>
                     <td>
-                      {{ item.business.name }}
+                      {{ item.admin_id }}
                     </td>
                     <td>
                       {{ item.type }}
@@ -261,7 +261,7 @@
                 class="d-flex justify-content-end pr-3 pt-2"
                 [collectionSize]="totalPage"
                 [(page)]="page"
-                [pageSize]="pageSize"
+                [pageSize]="searchForm.page_size"
                 [directionLinks]="false"
                 (pageChange)="loadPage($event)"
               ></ngb-pagination>

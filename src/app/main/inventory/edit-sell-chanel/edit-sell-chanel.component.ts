@@ -37,6 +37,7 @@ export class EditSellChanelComponent implements OnInit {
   public home_commues;
   public residence;
   public isAdmin: boolean = false;
+  public listMyChanel: any;
 
   public searchForm = {
     keyword: '',
@@ -208,6 +209,14 @@ export class EditSellChanelComponent implements OnInit {
   }
 
   getData() {
+
+    this.inventoryService.getMyChannel(this.searchForm).subscribe(res => {
+      this.listMyChanel = res.data.items;
+      this.dataSell.parent_id = res.data.parent_id
+    }, error => {
+      console.log("ERRRR");
+      console.log(error);
+    })
     
     this.listUser()
 

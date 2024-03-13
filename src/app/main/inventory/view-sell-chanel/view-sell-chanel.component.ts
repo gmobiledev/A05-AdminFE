@@ -135,8 +135,8 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
 
-      this.contentHeader.headerTitle = 'Danh sách số';
-      this.contentHeader.breadcrumb.links[1] = 'Danh sách số';
+      this.contentHeader.headerTitle = 'Xem chi tiết kho số';
+      this.contentHeader.breadcrumb.links[1] = 'Xem chi tiết kho số';
 
       this.getData();
     })

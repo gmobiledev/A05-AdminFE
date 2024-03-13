@@ -242,7 +242,8 @@
         [ngClass]="{ 'is-invalid': submitted && f.ref_code.errors }"
         />
     </div>  -->
-      <div class="form-group mt-2">
+
+      <!-- <div class="form-group mt-2">
         <label>Chọn dịch vụ</label>
         <div class="" formArrayName="agents_service">
           <div
@@ -362,23 +363,7 @@
         >
           Thêm <span [data-feather]="'plus'"></span>
         </button>
-
-        <!-- <input type="text" class="form-control" (input)="onSearchService($event)" placeholder="Tìm kiếm" />
-      <div class="row pt-1" style="max-height:600px; overflow-y: auto">
-        <div class="col-md-6 mb-2" *ngFor="let item of listServiceFilter">
-
-        
-        <div class="custom-control custom-checkbox" >
-          
-          <input [checked]="selectedService.includes(item.code)" id="{{item.code}}" type="checkbox" [value]="item.code" class="custom-control-input" (change)="onChangeService($event, item)" />
-          <label for="{{item.code}}"  class="custom-control-label" 
-         
-          >{{ item.desc }}</label>
-        
-        </div>
-      </div>
       </div> -->
-      </div>
 
       <ng-template *ngIf="isCreate">
         <div class="form-group">

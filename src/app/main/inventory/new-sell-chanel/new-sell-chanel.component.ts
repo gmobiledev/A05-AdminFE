@@ -50,9 +50,11 @@ export class NewSellChanelComponent implements OnInit {
   count: any;
   public contentHeader: any;
   public list: any;
+
   public listCustomer: any;
   public listAdmin: any;
   public listSellUser: any;
+  public listMyChanel: any;
 
   public totalPage: number;
   public page: number = 1;
@@ -96,7 +98,7 @@ export class NewSellChanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Thêm kho',
+      headerTitle: 'Tạo kho',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -107,7 +109,7 @@ export class NewSellChanelComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Thêm kho',
+            name: 'Tạo kho',
             isLink: false
           }
         ]
@@ -127,6 +129,14 @@ export class NewSellChanelComponent implements OnInit {
 
     this.taskService.getListAdmin(this.searchForm).subscribe(res => {
       this.listAdmin = res.data.items;
+    }, error => {
+      console.log("ERRRR");
+      console.log(error);
+    })
+
+    this.inventoryService.getMyChannel(this.searchForm).subscribe(res => {
+      this.listMyChanel = res.data.items;
+      this.dataSell.parent_id = res.data.parent_id
     }, error => {
       console.log("ERRRR");
       console.log(error);
@@ -185,8 +195,11 @@ export class NewSellChanelComponent implements OnInit {
           this.alertService.showError(res.message);
           return;
         }
-        this.modalClose();
+        // this.modalClose();
         this.alertService.showSuccess(res.message);
+        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
+
+        
         this.getData();
       }, error => {
         this.submittedUpload = false;
