@@ -77,6 +77,8 @@ export class NewBatchExportComponent implements OnInit {
     {id: 1, name: 'PLATILUM'},
   ]
   selectedAttributes: any;
+  disableSelectParent: boolean = false;
+
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly alertService: SweetAlertService,
@@ -102,7 +104,8 @@ export class NewBatchExportComponent implements OnInit {
     this.tempList = [...this.list];
     console.log(this.selectedItems);
     console.log(this.list);
-    this.tempSelectedItems =[...this.selectedItems] 
+    this.tempSelectedItems =[...this.selectedItems];
+    this.disableSelectParent = true;
   }
 
   onSelectToRemove({ selected }) {
@@ -117,6 +120,9 @@ export class NewBatchExportComponent implements OnInit {
     console.log(item);
     this.selectedItems.splice(index, 1);
     this.tempSelectedItems = [...this.selectedItems];
+    if(this.selectedItems.length < 1) {
+      this.disableSelectParent = false;
+    }
   }
 
   filterList(event) {

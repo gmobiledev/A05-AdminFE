@@ -8,7 +8,19 @@
                     <div class="card-body">
                         <h3 class="text-center">Tìm kiếm</h3>
                         <div class="row">
-                            <div class="col-md-6">
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label for="">Kho xuất đi</label>
+                              <ng-select [disabled]="disableSelectParent" [(ngModel)]="searchForm.channel_id"
+                                (search)="onSearchParentChannel($event)" (change)="onChangeParentChannel()">
+                                <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
+                                  p.name
+                                  }}</ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Loại sản phẩm</label>
                                     <select name="" id="" class="form-control"
@@ -83,30 +95,7 @@
 
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-body">
-                      <div class="row mb-1">
-                        <div class="col-md-4">Tiêu đề:</div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" [(ngModel)]="createBatchExport.title">
-                        </div>
-                      </div>
-                      <div class="row mb-1">                        
-                       <div class="col-4">Kho xuất đi: </div>
-                        <div class="col-8">
-                          <ng-select   
-                        [(ngModel)]="searchForm.channel_id"
-                        (search)="onSearchParentChannel($event)"
-                        (change)="onChangeParentChannel()"                          
-                            >
-                              <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
-                                p.name
-                              }}</ng-option>
-                            </ng-select>
-                        </div> 
-                        <!-- <small *ngIf="submitted && !createBatchExport.channel_id" class="invalid-feedback">
-                          Vui lòng chọn trường này
-                        </small>                        -->
-                          </div>
+                    <div class="card-body">                      
                         <p>Người tạo: <b>{{ currentUser.full_name }}</b></p>
                         <p>Mã xuất đơn hàng: <b>Tự sinh</b></p>
                         <p>Số lượng: <b>{{ selectedItems.length | number }}</b></p>
