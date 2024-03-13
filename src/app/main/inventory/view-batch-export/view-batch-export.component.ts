@@ -169,29 +169,31 @@ export class ViewBatchExportComponent implements OnInit {
       }
     } else if(type == 'user') {
       let confirmMess = status == this.batchStatus.CANCEL_BY_USER ? 'Bạn có đồng ý từ chối yêu cầu này?' : 'Bạn có đồng ý duyệt yêu cầu này?';
-      if(status == this.batchStatus.APPORVED) {
-        this.inventoryService.userDuyet(data).subscribe(res => {
-          if(!res.status) {
-            this.alertService.showMess(res.message);
-            return;
-          }
-          this.alertService.showSuccess(res.message);
-          this.getData();
-          this.modalClose();
-        },error => {
-          this.alertService.showMess(error)
-        })
-      } else if (status == this.batchStatus.CANCEL_BY_USER) {
-          this.inventoryService.userReject(data).subscribe(res => {
-            if(!res.status) {
+      if ((await this.alertService.showConfirm(confirmMess)).value) {
+        if (status == this.batchStatus.APPORVED) {
+          this.inventoryService.userDuyet(data).subscribe(res => {
+            if (!res.status) {
               this.alertService.showMess(res.message);
               return;
             }
             this.alertService.showSuccess(res.message);
             this.getData();
-          },error => {
+            this.modalClose();
+          }, error => {
             this.alertService.showMess(error)
-          })                
+          })
+        } else if (status == this.batchStatus.CANCEL_BY_USER) {
+          this.inventoryService.userReject(data).subscribe(res => {
+            if (!res.status) {
+              this.alertService.showMess(res.message);
+              return;
+            }
+            this.alertService.showSuccess(res.message);
+            this.getData();
+          }, error => {
+            this.alertService.showMess(error)
+          })
+        }
       }
     } else {
 

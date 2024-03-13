@@ -105,7 +105,7 @@
                     <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                 </button>
                 <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/user/reject')
-                        " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'user')"
+                        " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_USER, 'user')"
                     class="btn btn-danger  mb-2 mr-2">
                     <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                 </button>
