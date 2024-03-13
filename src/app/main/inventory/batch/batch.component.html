@@ -397,7 +397,7 @@
         *ngIf="batchdDetail?.status == batchStatus.INIT
         && checkAction('batch/ke-toan/update-status')
         "
-        (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED_BY_ACCOUNTANT)"
+        (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED_BY_ACCOUNTANT)"
         class="btn btn-info btn-sm mb-2"
       >
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
@@ -423,17 +423,17 @@
       </button> -->
 
       <button
-        *ngIf="itemBatch.status == batchStatus.APPORVED_BY_ACCOUNTANT
+        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
         && checkAction('batch/van-phong/update-status')
         "
-        (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED)"
+        (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED)"
         class="ml-2 btn btn-info btn-sm mb-2"
       >
       <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
       </button>
 
       <button
-        *ngIf="itemBatch.status == batchStatus.APPORVED_BY_ACCOUNTANT
+        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
         && checkAction('batch/van-phong/update-status')
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_OFFICE)"

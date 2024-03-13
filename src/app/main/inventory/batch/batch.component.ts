@@ -149,12 +149,12 @@ export class BatchComponent implements OnInit {
     }
 
     let confirmMessage = "";
-    if (status == this.batchStatus.APPORVED || status == this.batchStatus.APPORVED_BY_ACCOUNTANT) {
+    if (status == this.batchStatus.APPROVED || status == this.batchStatus.APPROVED_BY_ACCOUNTANT) {
       confirmMessage = 'Bạn có đồng ý Xác nhận duyệt?'
     }
 
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      if(status == this.batchStatus.APPORVED_BY_ACCOUNTANT) {
+      if(status == this.batchStatus.APPROVED_BY_ACCOUNTANT) {
         this.inventoryService.vpUpdateStatusBatch(data).subscribe(res => {
           if (!res.status) {
             this.alertService.showMess(res.message);
@@ -168,7 +168,7 @@ export class BatchComponent implements OnInit {
           return;
         })
       }
-      if(status == this.batchStatus.APPORVED) {
+      if(status == this.batchStatus.APPROVED) {
         this.inventoryService.ktUpdateStatusBatch(data).subscribe(res => {
           if (!res.status) {
             this.alertService.showMess(res.message);

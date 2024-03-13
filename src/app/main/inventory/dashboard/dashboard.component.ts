@@ -53,17 +53,37 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
   
       colorAxis: {
-        min: 0,
-        max: 100,
-        stops: [
-          [0, '#f51800'],
-          [0.3, '#e6dc2e'],
-          [0.7, '#d17e31'],
-          [
-            1,
-            '#2ee640'
-          ]
-        ]
+        dataClasses: [{
+          from: 0,
+          to: 30,
+          color: '#f51800',
+          name: '< 30%'
+      }, {
+          from: 30,
+          to: 70,
+          color: '#d17e31',
+          name: '30% - 70%'
+      }, {
+          from: 70,
+          to: 80,
+          color: '#e6dc2e',
+          name: '70% - 80%'
+      }, {
+          from: 81,
+          color: '#2ee640',
+          name: '> 80%'
+      }]
+        // min: 0,
+        // max: 100,
+        // stops: [
+        //   [0, '#f51800'],
+        //   [0.3, '#e6dc2e'],
+        //   [0.7, '#d17e31'],
+        //   [
+        //     1,
+        //     '#2ee640'
+        //   ]
+        // ]
       },
   
       legend: {
@@ -72,23 +92,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         verticalAlign: 'bottom'
       },
   
-      series: [ 
-        // {
-        //   type: "map",
-        //   allAreas: false,
-        //   // data: null,
-        //   // joinBy: ['hc-key', 'key'],
-        //   name: 'Random data',
-        //   states: {
-        //     hover: {
-        //       color: "#BADA55"
-        //     }
-        //   },
-        //   dataLabels: {
-        //     enabled: true,
-        //     format: '{point.name}'
-        //   }
-        // }
+      series: [
       ]
     };
         
@@ -156,8 +160,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log('success get');
       this.listData = res.data.items;
       console.log(this.listData);
-      this.listData = res.data.items.map(x => { return {name: x.name, value: x.value * 10, key: x.key} });
-      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value: x.value * 10, key: x.key} });
+      this.listData = res.data.items.map(x => { return {name: x.name, value: x.value * 100, key: x.key} });
+      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value: x.value * 100, key: x.key} });
       this.data = [];
       for(let item of mapData.features) {
         const seData = this.listData.find(x => x.key == item.properties.id);

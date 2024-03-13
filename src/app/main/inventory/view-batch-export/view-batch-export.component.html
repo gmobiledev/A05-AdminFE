@@ -6,9 +6,9 @@
                 <div class="card">
                     <div class="card-body">
                     <p>Loại phiếu: {{ data?.batch?.type | typeBatchForm }}</p>
-                    <p>Xuất từ kho: {{ fromChannel.name }}</p>
-                    <p>Xuất tới kho: {{ toChannel.name }}</p>
-                    <p>Số lượng: {{ data?.batch.quantity }}</p>
+                    <p>Xuất từ kho: {{ fromChannel?.name }}</p>
+                    <p>Xuất tới kho: {{ toChannel?.name }}</p>
+                    <p>Số lượng: {{ data?.batch?.quantity }}</p>
                     <p>Ngày tạo: {{ data?.batch?.created_at | date: 'dd/MM/yyyy H:mm':'GMT' }}</p>
                     <p>Trạng thái: <span [innerHTML]="data?.batch?.status | showStatusBatch"></span></p>
                 </div>
@@ -81,14 +81,14 @@
                     <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                 </button>
 
-                <button *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT
+                <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
                                 && checkAction('batch/export/van-phong/approve')
                                 " (click)="onViewModalApprove(modalApprove)"
                     class="btn btn-info  mb-2 mr-2">
                     <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                 </button>
 
-                <button *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT && checkAction('batch/export/van-phong/reject')
+                <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT && checkAction('batch/export/van-phong/reject')
                         " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
                     class="btn btn-danger  mb-2 mr-2">
                     <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
@@ -125,21 +125,24 @@
     <div class="modal-body" tabindex="0" >
         <div class="form-group" *ngIf="checkAction('batch/export/van-phong/approve')">
             <label for="">Đính kèm</label>
-            <input type="file" class="form-control">
+            <input type="file" class="form-control"
+            (change)="onSelectFileFront($event)"
+            accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
+            >
         </div>
     </div>
 
     <div class="modal-footer">
         <ng-container *ngIf="data?.batch?.status == batchStatus.INIT">
             <button *ngIf="checkAction('batch/export/ke-toan/approve')
-                                            " (click)="onApprove(data?.batch, batchStatus.APPORVED_BY_ACCOUNTANT, 'ketoan')"
+                                            " (click)="onApprove(data?.batch, batchStatus.APPROVED_BY_ACCOUNTANT, 'ketoan')"
                 class="btn btn-info  mb-2">
                 <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
             </button>
             
         </ng-container>
 
-        <ng-container *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT">
+        <ng-container *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT">
             <button *ngIf="checkAction('batch/export/van-phong/approve') "
                 (click)="onApprove(data?.batch, batchStatus.APPROVED, 'vanphong')" class="btn btn-info  mb-2">
                 <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt

@@ -9,9 +9,9 @@ export class ShowStatusBatchPipe implements PipeTransform {
         html = '<span class="badge badge-pill badge-light-success mr-1">Hoàn thành</span>' // ko 
     } else if (value === BatchStatus.INIT) {
         html = '<span class="badge badge-pill badge-light-warning mr-1">Chờ duyệt</span>' // 2 nút
-    } else if (value === BatchStatus.APPORVED) {
+    } else if (value === BatchStatus.APPROVED) {
       html = '<span class="badge badge-pill badge-light-info mr-1">Đã duyệt</span>' // 1 nút
-    }  else if (value === BatchStatus.APPORVED_BY_ACCOUNTANT) {
+    }  else if (value === BatchStatus.APPROVED_BY_ACCOUNTANT) {
       html = '<span class="badge badge-pill badge-light-info mr-1">KT duyệt</span>' // 1 nút
     } else if (value === BatchStatus.CANCEL_BY_ACCOUNTANT) {
       html = '<span class="badge badge-pill badge-light-info mr-1">KT từ chối</span>' // 1 nút

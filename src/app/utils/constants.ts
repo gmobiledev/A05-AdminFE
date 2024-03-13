@@ -48,10 +48,10 @@ export enum BatchType {
 
 export enum BatchStatus {
     INIT = 0, // lô mới khởi tạo
-    APPORVED = 2, // lô đã duyệt
+    APPROVED = 2, // lô đã duyệt
     COMPLETED = 1, // số đã được duyệt
     CANCEL = -1, //lô không được duyệt
-    APPORVED_BY_ACCOUNTANT = 11,
+    APPROVED_BY_ACCOUNTANT = 11,
     CANCEL_BY_OFFICE = -2,
     CANCEL_BY_ACCOUNTANT = -11,
     CANCEL_BY_USER = -12
