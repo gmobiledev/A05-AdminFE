@@ -11,34 +11,60 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-2">
                   <div class="form-group">
+                    <label>Từ ngày</label>
                     <input
-                      type="text"
-                      name="keyword"
-                      [(ngModel)]="searchForm.keyword"
-                      class="form-control"
-                      placeholder="Nhập tên lô, nội dung lô .."
+                      type="date"
+                      name="from_date"
+                      [(ngModel)]="searchForm.from_date"
+                      class="form-control"                 
                     />
                   </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-2">
                   <div class="form-group">
+                    <label>Tới ngày</label>
+                    <input
+                      type="date"
+                      name="to_date"
+                      [(ngModel)]="searchForm.to_date"
+                      class="form-control"                      
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Loại phiếu</label>
                     <select
                       class="form-control"
-                      name="ekyc_status"
+                      name="type"
+                      [(ngModel)]="searchForm.type"
+                    >
+                      <option value="">-- Chọn loại --</option>
+                      <option value="1">Nhập kho</option>
+                      <option value="-1">Xuất kho</option>                      
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select
+                      class="form-control"
+                      name="status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="_all">Chọn trạng thái</option>
-                      <option value="APPROVED">Tải hoàn tất</option>
-                      <option value="APPROVED">Khởi tạo</option>
-                      <option value="APPROVED">Tải lên 1 phẩn</option>
-                      <option value="">Chọn trạng thái</option>
+                      <option value="">-- Chọn trạng thái --</option>
+                      <option *ngFor="let item of batchStatusShow | keyvalue" [value]="item.value" [id]="item.key">
+                        <span [innerHTML]="item.value | showStatusBatch"></span>
+                      </option>                      
                     </select>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
+                    <label for=""></label>
                     <button type="submit" class="btn btn-block btn-info">
                       Lọc kết quả <span [data-feather]="'search'"></span>
                     </button>
@@ -52,23 +78,27 @@
               </div>
               <div class="pull-right">
                 <button
+                  *ngIf="checkAction('batch/kinh-doanh')"
                   type="button"
-                  (click)="modalOpen(modalUploadAccount)"
+                  (click)="modalOpen(modalCreate)"
                   class="btn btn-success mr-2"
                 >
-                  Thêm lô
+                
+                  Nhập kho <span [data-feather]="'upload'"></span>
                 </button>
+
+                <a routerLink="/inventory/new-batch-export" class="btn btn-info mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
               </div>
             </div>
             <div class="table-responsive" *blockUI="'section-block'">
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Mã Lô</th>
-                    <th>Tên lô</th>
+                    <th>Loại</th>
+                    <th>Mã</th>
+                    <th>Tiêu đề</th>
                     <th>Số lượng</th>
-                    <th>Số lượng đã đẩy</th>
-                    <th>Kho</th>
+                    <th>Số lượng đã đẩy</th>                    
                     <th>Trạng thái</th>
                     <th>Thời gian</th>
                     <th>Thao tác</th>
@@ -77,21 +107,23 @@
                 <tbody>
                   <tr *ngFor="let item of list">
                     <td>
+                      {{ item.type | typeBatchForm }}
+                    </td>
+                    <td>
                       {{ item?.id }}
                     </td>
                     <td>{{ item?.title }}</td>
                     <td>
                       {{ item?.quantility }}
                     </td>
-                    <td>{{ item?.imported_quantility }}</td>
-                    <td>{{ item?.business?.name }}</td>
+                    <td>{{ item?.imported_quantility }}</td>                    
                     <td>
-                      <div [innerHTML]="item?.status | showStatus"></div>
+                      <div [innerHTML]="item?.status | showStatusBatch"></div>
                     </td>
                     <td>
                       {{ item?.created_at | date : "dd/MM/yyyy" }}
                     </td>
-                    <td>
+                    <td class="d-inline-flex">
                       <!-- <a
                         class="ml-1"
                         (click)="modalOpen(modalCreate, item)"
@@ -102,10 +134,10 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a> -->
-
+                      <ng-container *ngIf="item.type == batchType.INPUT" >
                       <a
                         class="ml-0"
-                        (click)="modalOpen(modalCreate, item)"
+                        (click)="onViewDetail(modalDetail, item)"
                         title="Xem chi tiết"
                       >
                         <i
@@ -114,9 +146,9 @@
                         ></i>
                       </a>
                       <a
-                        class="ml-2"
+                        class="ml-1"
                         (click)="modalOpen(modalUploadData, item)"
-                        title="Tải dữ liệu lên lô"
+                        title="Tải dữ liệu lên"
                       >
                         <i
                           data-feather="upload"
@@ -125,7 +157,7 @@
                       </a>
 
                       <a
-                        class="ml-2"
+                        class="ml-1"
                         [routerLink]="['/inventory/list-batch']"
                         [queryParams]="{ batch_id: item.id }"
                         title="Xem danh sách"
@@ -135,6 +167,16 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
+                    </ng-container>
+                    <ng-container *ngIf="item.type == batchType.OUTPUT" >
+                      <a
+                      class="ml-0"  routerLink="/inventory/batch-export/{{item.id}}">
+                      <i
+                        data-feather="eye"
+                        class="text-primary cursor-pointer"
+                      ></i>
+                    </a>
+                    </ng-container>
                     </td>
                   </tr>
                 </tbody>
@@ -189,26 +231,11 @@
   </div>
 </div>
 
-<ng-template #modalCreate let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <!-- <div>Xem ở main/agent</div> -->
-  <div>Tính năng đang phát triển</div>
-</ng-template>
 
 <ng-template #modalUploadData let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">
-      Tải lên dữ liệu lô lên kho - Mã lô: {{ selectedItem.id }}
+      Tải lên dữ liệu lên - Mã phiếu: {{ selectedItem.id }}
     </h5>
     <button
       type="button"
@@ -246,9 +273,9 @@
   </div>
 </ng-template>
 
-<ng-template #modalUploadAccount let-modal>
+<ng-template #modalCreate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Thêm Lô</h5>
+    <h5 class="modal-title" id="myModalLabel160">Nhập kho</h5>
     <button
       type="button"
       class="close"
@@ -260,7 +287,7 @@
   </div>
   <div class="modal-body" tabindex="0">
     <div class="form-group" *ngIf="isAdmin">
-      <label for="">Tên lô</label>
+      <label for="">Tiêu đề</label>
       <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
     </div>
 
@@ -276,14 +303,14 @@
       />
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="">Kênh bán</label>
       <select [(ngModel)]="dataLo.channel_id" id="" class="form-control">
         <option [value]="item.id" *ngFor="let item of listChannel">
           {{ item.name }}
         </option>
       </select>
-    </div>
+    </div> -->
 
     <div class="form-group" *ngIf="isAdmin">
       <label for="">Ghi chú</label>
@@ -298,9 +325,6 @@
       />
       <label>Tải lên file chứng từ</label>
 
-      <!-- <a href="/assets/data_upload_account.xls" class="ml-2"
-        >File mẫu tại đây</a
-      > -->
     </div>
   </div>
   <div class="modal-footer">
@@ -318,5 +342,105 @@
       ></span>
       Submit
     </button>
+  </div>
+</ng-template>
+
+<ng-template #modalDetail let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Chi tiết</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="row mb-2">
+      <div class="col-4"><span>Tiêu đề phiếu: </span> {{ batchdDetail?.title }}</div>
+      <div class="col-4">
+        <span>Số lượng: </span> {{ batchdDetail?.quantility }}
+      </div>
+      <div class="col-4"><span>Note: </span> {{ batchdDetail?.note }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">File đính kèm</div>
+
+      <div class="col-12" *ngFor="let item of itemBatch.file">
+        <img
+        *ngIf="item.ext.includes('png') || item.ext.includes('jpg') || item.ext.includes('jpeg')"
+          src="data:image/png;base64,{{ item.base64 }}"
+          alt=""
+          class="img-fluid"
+        />
+
+        <div *ngIf="item.ext.includes('pdf') && item.base64">
+          <pdf-viewer [src]="'data:application/pdf;base64,'+item.base64"
+              [render-text]="true"
+              [original-size]="false"
+              [external-link-target]="'blank'"
+              style="height: 500px"
+            ></pdf-viewer>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="text-center">
+      
+      <button
+        *ngIf="batchdDetail?.status == batchStatus.INIT
+        && checkAction('batch/ke-toan/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED_BY_ACCOUNTANT)"
+        class="btn btn-info btn-sm mb-2"
+      >
+        <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+      </button>
+
+      <button
+        *ngIf="batchdDetail?.status == batchStatus.INIT
+        && checkAction('batch/ke-toan/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_ACCOUNTANT)"
+        class="btn btn-danger btn-sm mb-2"
+      >
+        <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
+      </button>
+
+      <!-- <button
+        *ngIf="itemBatch.status == batchStatus.INIT"
+        (click)="onUpdateStatus(batchdDetail, -1)"
+        class="ml-2 btn btn-warning btn-sm mb-2"
+      >
+        <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
+        Từ chối duyệt
+      </button> -->
+
+      <button
+        *ngIf="itemBatch.status == batchStatus.APPORVED_BY_ACCOUNTANT
+        && checkAction('batch/van-phong/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.APPORVED)"
+        class="ml-2 btn btn-info btn-sm mb-2"
+      >
+      <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+      </button>
+
+      <button
+        *ngIf="itemBatch.status == batchStatus.APPORVED_BY_ACCOUNTANT
+        && checkAction('batch/van-phong/update-status')
+        "
+        (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_OFFICE)"
+        class="ml-2 btn btn-danger btn-sm mb-2"
+      >
+      <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
+      </button>
+    </div>
   </div>
 </ng-template>

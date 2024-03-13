@@ -12,8 +12,11 @@ export enum TaskTelecomStatus {
     STATUS_NEW_ORDER = 5,
     STATUS_SUCCESS_PART = 11,  // THành công 1 phần
     STATUS_INIT_2G_GSIM = 20,
+    STATUS_PAID_WAITING_EKYC = 25, //Đã thanh toán Chờ ekyc
+    STATUS_PAID_SUSPENDING = 26, // Chuẩn bị thu hồi
+    STATUS_PAID_TERMINATED = 27, //Đã thu thồi
     STATUS_APPROVED = 30, //chấp nhận từ 30-39, duyệt từ lớn đến bé
-    STATUS_APPROVED_1 = 31, 
+    STATUS_APPROVED_1 = 31,
     STATUS_APPROVED_2 = 32,
     STATUS_APPROVED_3 = 33,
     STATUS_DVKHKD_REJECT = 40,
@@ -25,7 +28,10 @@ export enum MsisdnStatus {
     STATUS_NOT_PROCESS_MNO = 2,
     STATUS_PROCESSED_MNO_FAIL = 3,
     STATUS_PROCESSED_MNO_SUCCESS = 1,
-    STATUS_LOCKED = 30
+    STATUS_2G_VALID = 30,
+    STATUS_2G_WAITING = 31,
+    STATUS_2G_CASE_BY_CASE = 32,
+    STATUS_2G_PAID = 34,
 }
 
 export enum ProductStatus {
@@ -35,11 +41,21 @@ export enum ProductStatus {
     STATUS_INIT = 0,
 }
 
+export enum BatchType {
+    INPUT = 1,
+    OUTPUT = -1
+}
+
 export enum BatchStatus {
     INIT = 0, // lô mới khởi tạo
     APPORVED = 2, // lô đã duyệt
     COMPLETED = 1, // số đã được duyệt
-    CANCEL = -1 //lô không được duyệt
+    CANCEL = -1, //lô không được duyệt
+    APPORVED_BY_ACCOUNTANT = 11,
+    CANCEL_BY_OFFICE = -2,
+    CANCEL_BY_ACCOUNTANT = -11,
+    CANCEL_BY_USER = -12
+
 }
 
 export enum TelecomAction {
@@ -79,6 +95,14 @@ export class TaskTelecom {
         GSIM_TO_SIM: {
             value: 'GSIM_TO_SIM',
             label: 'GSIM sang SIM'
+        },
+        CANCEL_SUBCRIBER: {
+            value: 'cancel_subcriber',
+            label: 'Hủy sim'
+        },
+        _4G_VNM_TO_VMS: {
+            value: '4G_VNM_TO_VMS',
+            label: 'Chuyển VNM sang Mobifone'
         }
     };
 }

@@ -31,5 +31,9 @@ export class FileServive {
     return this._http.get(`${environment.apiUrl}/files/view/${id}`, {observe: 'response' , responseType: 'blob'});
   }
 
+  viewFiles(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/files/view-files`, data);
+  }
+
 
 }

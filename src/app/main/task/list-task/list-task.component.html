@@ -101,9 +101,12 @@
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
                         </a>
                       </ng-template>
-                      <button class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item.id)">
+                      <button title="View Webook" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item.id)">
                         <i data-feather="monitor" class="text-primary cursor-pointer"></i>
-                        View webhook
+                      </button>
+
+                        <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm" (click)="checkGatewayTransaction(item)">
+                        <i data-feather="info" class="text-primary cursor-pointer"></i>
                       </button>
                     </td>
                   </tr>

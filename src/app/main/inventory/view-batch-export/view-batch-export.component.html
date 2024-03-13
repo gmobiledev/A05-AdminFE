@@ -1,0 +1,150 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row">
+            <div class="col-5">
+                <div class="card">
+                    <div class="card-body">
+                    <p>Loại phiếu: {{ data?.batch?.type | typeBatchForm }}</p>
+                    <p>Xuất từ kho: {{ fromChannel.name }}</p>
+                    <p>Xuất tới kho: {{ toChannel.name }}</p>
+                    <p>Số lượng: {{ data?.batch.quantity }}</p>
+                    <p>Ngày tạo: {{ data?.batch?.created_at | date: 'dd/MM/yyyy H:mm':'GMT' }}</p>
+                    <p>Trạng thái: <span [innerHTML]="data?.batch?.status | showStatusBatch"></span></p>
+                </div>
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h4 class="text-center">Danh sách sản phẩm</h4>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="d-flex justify-content-between align-items-center m-1">
+                                    <label class="d-flex align-items-center">Show
+                                        <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        entries</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                                <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                                            class="form-control ml-25" (keyup)="filterList($event)" /></label>
+                                </div>
+                            </div>
+                        </div>
+                        <ngx-datatable [rows]="listProducts" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                            [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+                            [limit]="basicSelectedOption">
+                            <ngx-datatable-column name="Name" prop="name">
+                                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                                    <div class="d-flex align-items-center">
+                                        <div class="cell-line-height">
+                                            <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                                                {{ name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
+                            <ngx-datatable-column name="Hạng số" prop="price"></ngx-datatable-column>
+                        </ngx-datatable>
+            
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <!-- VP/KT duyệt -->
+            <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
+                <button *ngIf="data?.batch?.status == batchStatus.INIT
+                                && checkAction('batch/export/ke-toan/approve')
+                                " (click)="onViewModalApprove(modalApprove)"
+                    class="btn btn-info  mb-2 mr-2">
+                    <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+                </button>
+
+                <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/ke-toan/reject')
+                                " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_ACCOUNTANT, 'ketoan')"
+                    class="btn btn-danger  mb-2 mr-2">
+                    <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
+                </button>
+
+                <button *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT
+                                && checkAction('batch/export/van-phong/approve')
+                                " (click)="onViewModalApprove(modalApprove)"
+                    class="btn btn-info  mb-2 mr-2">
+                    <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+                </button>
+
+                <button *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT && checkAction('batch/export/van-phong/reject')
+                        " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
+                    class="btn btn-danger  mb-2 mr-2">
+                    <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
+                </button>
+            </div>
+
+            <!-- User tự duyệt -->
+            <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
+                && (checkAction('batch/export/user/approve') || checkAction('batch/export/user/reject') )
+                ">
+                <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/user/approve')
+                                " (click)="onApprove(data?.batch, batchStatus.APPROVED, 'user')"
+                    class="btn btn-success mb-2 mr-2">
+                    <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+                </button>
+                <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/user/reject')
+                        " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_USER, 'user')"
+                    class="btn btn-danger  mb-2 mr-2">
+                    <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #modalApprove let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Bạn có đồng ý duyệt yêu cầu xuất kho?</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" >
+        <div class="form-group" *ngIf="checkAction('batch/export/van-phong/approve')">
+            <label for="">Đính kèm</label>
+            <input type="file" class="form-control">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <ng-container *ngIf="data?.batch?.status == batchStatus.INIT">
+            <button *ngIf="checkAction('batch/export/ke-toan/approve')
+                                            " (click)="onApprove(data?.batch, batchStatus.APPORVED_BY_ACCOUNTANT, 'ketoan')"
+                class="btn btn-info  mb-2">
+                <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+            </button>
+            
+        </ng-container>
+
+        <ng-container *ngIf="data?.batch?.status == batchStatus.APPORVED_BY_ACCOUNTANT">
+            <button *ngIf="checkAction('batch/export/van-phong/approve') "
+                (click)="onApprove(data?.batch, batchStatus.APPROVED, 'vanphong')" class="btn btn-info  mb-2">
+                <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+            </button>
+                    
+        </ng-container>
+    </div>
+</ng-template>

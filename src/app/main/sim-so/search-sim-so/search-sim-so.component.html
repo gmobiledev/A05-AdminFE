@@ -12,13 +12,8 @@
               <div class="row">
                 <div class="col-md-10">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="keysearch"
-                      [(ngModel)]="searchSim.keysearch"
-                      class="form-control"
-                      placeholder="Tìm kiếm"
-                    />
+                    <input type="text" name="keysearch" [(ngModel)]="searchSim.keysearch" class="form-control"
+                      placeholder="Tìm kiếm" />
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -37,6 +32,7 @@
                   <tr>
                     <th>Số / Serial SIM</th>
                     <th>Nhà mạng</th>
+                    <th>Kho số</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
@@ -45,38 +41,23 @@
                 <tbody>
                   <tr>
                     <td>{{ item?.name }}</td>
-                    <td>{{ item?.brand }}</td>
+                    <td>{{ item?.brand }} - {{item?.category_id == 2 ? "Serial": item?.category_id == 3 ? "SĐT" :
+                      item?.category_id}}</td>
+                    <td>{{ getInvenstory() }}</td>
                     <td>
                       <div [innerHTML]="item.status | showStatusSim"></div>
                     </td>
 
                     <td>
                       <a (click)="modalOpen(modalTransWh, item)">
-                        <i
-                          data-feather="eye"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
                       </a>
 
-                      <a
-                        class="ml-2"
-                        (click)="onSubmitLock(item.id, 1, item?.name)"
-                        *ngIf="item.status"
-                      >
-                        <i
-                          data-feather="lock"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <a class="ml-2" (click)="onSubmitLock(item.id, 1, item?.name)" *ngIf="item.status">
+                        <i data-feather="lock" class="text-primary cursor-pointer"></i>
                       </a>
-                      <a
-                        class="ml-2"
-                        (click)="onSubmitLock(item.id, 2, item?.name)"
-                        *ngIf="!item.status"
-                      >
-                        <i
-                          data-feather="unlock"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <a class="ml-2" (click)="onSubmitLock(item.id, 2, item?.name)" *ngIf="!item.status">
+                        <i data-feather="unlock" class="text-primary cursor-pointer"></i>
                       </a>
                     </td>
                   </tr>
@@ -99,12 +80,7 @@
 <ng-template #modalTransWh let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Chi tiết thông tin Sim/Số</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -120,12 +96,7 @@
   </div>
 
   <div class="modal-footer">
-    <button
-      (click)="modalClose()"
-      type="submit"
-      class="btn btn-primary"
-      rippleEffect
-    >
+    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
       Đóng
     </button>
   </div>

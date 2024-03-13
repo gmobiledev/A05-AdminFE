@@ -63,12 +63,12 @@ export class ListTaskComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
-    this.router.navigate(['/task'], { queryParams: this.searchForm})
+    this.router.navigate(['/task'], { queryParams: this.searchForm })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/task'], { queryParams: this.searchForm})
+    this.router.navigate(['/task'], { queryParams: this.searchForm })
   }
 
   ngOnInit(): void {
@@ -89,8 +89,8 @@ export class ListTaskComponent implements OnInit {
           }
         ]
       }
-    };    
-    if(this.searchForm.service_code == 'BANK_LOAN_PVCOMBANK') {
+    };
+    if (this.searchForm.service_code == 'BANK_LOAN_PVCOMBANK') {
       this.contentHeader.headerTitle = "Danh sách khoản vay";
       this.contentHeader.breadcrumb.links[1].name = "Danh sách khoản vay";
     }
@@ -110,16 +110,42 @@ export class ListTaskComponent implements OnInit {
     })
   }
 
-  modalClose() {   
+  modalClose() {
     this.modalRef.close();
+  }
+
+  checkGatewayTransaction(item) {
+    let message = "Không xác định"
+    let self = this;
+    if (item.service_code == "AIRTIME_TOPUP") {
+      let dto = {
+        Account: `AIRTIME_TOPUP_${item.merchant_id}`,
+        TransactionId: item.id
+      }
+      this.taskService.checkGatewayTransaction(dto).subscribe(res => {
+        if (res.status == 1)
+          self.alertService.showMess(JSON.stringify(res), 20000)
+        else {
+          self.alertService.showError(JSON.stringify(res), 20000)
+        }
+      }, error => {
+        self.alertService.showError(error, 20000)
+      })
+
+    } else if (item.service_code == "CASH") {
+      message = "Hình thức thu tiền mặt"
+      self.alertService.showMess(message, 20000)
+    } else {
+      self.alertService.showMess(message, 20000)
+    }
   }
 
   getData(): void {
     this.taskService.getAllService().subscribe(res => {
-      this.listService = res.data.reduce(function(map, obj) {
+      this.listService = res.data.reduce(function (map, obj) {
         map[obj.code] = obj.desc;
         return map;
-    }, {});;
+      }, {});;
     })
     this.taskService.getAll(this.searchForm).subscribe(res => {
       this.list = res.data.items;

@@ -72,7 +72,7 @@ export class ListTaskComponent implements OnInit {
     date_range: '',
     telco: '',
     customer_name: '',
-    cccd: '',
+    customer_type: '',
     sub_action: ''
   }
   dateRange: any;
@@ -98,7 +98,6 @@ export class ListTaskComponent implements OnInit {
     private activeRouted: ActivatedRoute,
     private adminService: AdminService,
     private telecomService: TelecomService,
-    private authenticaionService: AuthenticationService,
     private alertService: SweetAlertService
   ) {
     this.dateRange = null;
@@ -149,7 +148,9 @@ export class ListTaskComponent implements OnInit {
       this.itemBlockDetailUI.start();
       //neu la task dau noi cho KH doanh nghiep, chuyen sang trang moi
       if(item.customer_id && item.customer_type == 'ORGANIZATION') {
-        if(item.status == TaskTelecomStatus.STATUS_NEW_ORDER) {
+        if((item.status == TaskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION || item.status == TaskTelecomStatus.STATUS_NEW_ORDER)
+          && (this.checkAction('telecom-admin/task/:slug(\\d+)/update-status') || this.checkAction('telecom-admin/task/:slug(\\d+)/'+ item.action+ '/update-status'))
+          ) {
           try {
             check = await this.telecomService.checkAvailabledTask(item.id);
             if(!check.status) { 
@@ -499,6 +500,21 @@ export class ListTaskComponent implements OnInit {
         this.alertService.showMess(err);
       })
     }  
+  }
+
+  copyTextClipboard(text: string) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = text;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.alertService.showSuccessToast("Đã copy thành công");
   }
 
   checkAction(item) {

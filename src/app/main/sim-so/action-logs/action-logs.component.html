@@ -8,25 +8,26 @@
                 <div class="card-body">
                     <form (ngSubmit)="onSubmitSearch()" class="mb-2">
                         <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="text" name="msisdn" [(ngModel)]="searchForm.msisdn"
+                                        class="form-control" placeholder="Số điện thoại">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="text" name="user_id" [(ngModel)]="searchForm.user_id" class="form-control"
+                                        placeholder="User">
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <input type="text" placeholder="Thời gian" [ngModelOptions]="{standalone: true}"
-                                        ngxDaterangepickerMd [(ngModel)]="dateRange" [ranges]="ranges"
+                                        ngxDaterangepickerMd [(ngModel)]="searchForm.dateRange" [ranges]="ranges"
                                         [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
                                         [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
                                         class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="text" name="id" [(ngModel)]="actionlogs.id" class="form-control"
-                                        placeholder="ID">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="text" name="user" [(ngModel)]="actionlogs.user" class="form-control"
-                                        placeholder="User">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -41,30 +42,47 @@
                         <table class="table table-striped text-nowrap" *ngIf="list">
                             <thead>
                                 <tr>
-                                    <!-- <th></th> -->
-                                    <th>Thời gian</th>
                                     <th>Đối tượng</th>
-                                    <th>ID</th>
+                                    <th>SĐT</th>
                                     <th>Hành động</th>
                                     <th>User</th>
                                     <th>Trạng thái</th>
                                     <th>Nội dung</th>
+                                    <th>Thời gian</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of list;index as i">
-                                    <!-- <td>
-                                        <input type="checkbox" (change)="onSubmitSearch($list, total)">
-                                    </td> -->
-                                    <td>{{item?.created_at}}</td>
                                     <td>{{ item?.object_type}}</td>
-                                    <td>{{ item?.object_id}}</td>
+                                    <td>{{ item?.msisdn}}</td>
                                     <td> {{item?.action}}</td>
                                     <td>{{ item?.user_id}}</td>
                                     <td>{{ item?.object_status}}</td>
                                     <td> {{item?.detail}}</td>
+                                    <td>{{item?.created_at}}</td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                            [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                            (pageChange)="loadPage($event)">
+                            <ng-template ngbPaginationPages let-page let-pages="pages">
+                                <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                    <div class="mb-3 d-flex flex-nowrap px-2">
+                                        <label id="paginationInputLabel" for="paginationInput"
+                                            class="col-form-label me-2 ms-1">Trang</label>
+                                        <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                            class="form-control custom-pages-input" id="paginationInput"
+                                            [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                            (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                            aria-labelledby="paginationInputLabel paginationDescription"
+                                            style="width: 3.5rem" />
+                                        <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                            của {{pages.length}}</span>
+                                    </div>
+                                </li>
+                            </ng-template>
+                        </ngb-pagination>
                     </div>

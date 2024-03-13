@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import dayjs from 'dayjs';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-action-logs',
   templateUrl: './action-logs.component.html',
@@ -8,19 +9,31 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 })
 export class ActionLogsComponent implements OnInit {
   public list: any;
-  public total: any;
-  public actionlogs: any = {
-    id: '',
-    detail
-    : '',
-    user: ''
+  public totalItems: number;
 
+  public searchForm: any = {
+    id: '',
+    detail: '',
+    user_id: '',
+    msisdn: '',
+    page: 1,
+    page_size: 20,
+    date_range: '',
   }
-  productListAll:any;
+  productListAll: any;
   constructor(
-     private telecomService: TelecomService
- ) {
- }
+    private telecomService: TelecomService,
+    private router: Router,
+    private activeRouted: ActivatedRoute
+  ) {
+    this.activeRouted.queryParams.subscribe(params => {
+      this.searchForm.msisdn = params['msisdn'] && params['msisdn'] != undefined ? params['msisdn'] : '';
+      this.searchForm.user_id = params['user_id'] && params['user_id'] != undefined ? params['user_id'] : '';
+      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
+      this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
+      this.onSubmitSearch();
+    })
+  }
   public contentHeader: any = {
     headerTitle: 'Nhật ký hoạt động',
     actionButton: true,
@@ -40,10 +53,9 @@ export class ActionLogsComponent implements OnInit {
     }
   };
   onSubmitSearch() {
-    console.log(this.actionlogs);
-    this.telecomService.actionLogs(this.actionlogs).subscribe(res => {
+    this.telecomService.actionLogs(this.searchForm).subscribe(res => {
       this.list = res.data.items;
-      this.total= res.data.count;
+      this.totalItems = res.data.count;
     })
   }
   dateRange: any;
@@ -54,11 +66,16 @@ export class ActionLogsComponent implements OnInit {
     'Tháng này': [dayjs().startOf('month'), dayjs().endOf('month')],
     'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
   }
-  
+
+  loadPage(page) {
+    console.log(page);
+    this.searchForm.page = page;
+    this.router.navigate(['/sim-so/action-logs'], { queryParams: this.searchForm });
+  }
+
   ngOnInit(): void {
     this.onSubmitSearch();
   }
-  getData(): void {
-    
-  }
+
+
 }

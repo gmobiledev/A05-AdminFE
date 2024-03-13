@@ -163,10 +163,18 @@ export const menu: CoreMenu[] = [
       classes: 'badge-light-warning badge-pill'
     },
     children: [
+      {
+        id: 'dashboard',
+        title: 'Thống kê',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/dashboard'
+      },
 
       {
         id: 'batch-sim',
-        title: 'DS lô sim số',
+        title: 'Xuất/nhập kho',
         translate: '',
         type: 'item',
         icon: 'database',
@@ -200,7 +208,7 @@ export const menu: CoreMenu[] = [
     title: 'Gtalk',
     translate: '',
     type: 'collapsible',
-    icon: 'package',
+    icon: 'phone-call',
     badge: {
       title: '4',
       translate: '',
@@ -212,7 +220,7 @@ export const menu: CoreMenu[] = [
         title: 'Task',
         translate: '',
         type: 'item',
-        icon: 'database',
+        icon: 'phone-call',
         url: 'gtalk/task'
       },
       {
@@ -247,7 +255,7 @@ export const menu: CoreMenu[] = [
     title: 'GIP',
     translate: '',
     type: 'collapsible',
-    icon: 'package',
+    icon: 'phone-outgoing',
     badge: {
       title: '4',
       translate: '',
@@ -259,7 +267,7 @@ export const menu: CoreMenu[] = [
         title: 'Merchant GIP',
         translate: '',
         type: 'item',
-        icon: 'database',
+        icon: 'phone-outgoing',
         url: 'gip/merchant'
       },
       {
@@ -369,6 +377,29 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+  {
+    id: 'users',
+    title: 'Cộng tác viên',
+    translate: '',
+    type: 'collapsible',
+    icon: 'users',
+    badge: {
+      title: '1',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'Cộng tác viên',
+        translate: '',
+        type: 'item',
+        icon: 'users',
+        url: 'collaborator'
+      }
+    ]
+  },
+ 
 
   {
     id: 'users',
@@ -385,6 +416,22 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/search-subscription'
       },
+      // {
+      //   id: 'search-topup',
+      //   title: 'Lịch sử TOPUP',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'search',
+      //   url: 'sim-so/msisdn/topup'
+      // },
+      // {
+      //   id: 'search-balance-changes',
+      //   title: 'Tra cứu cước',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'search',
+      //   url: 'sim-so/msisdn/balance-changes'
+      // },
       {
         id: 'search',
         title: 'Tìm Sim Số',

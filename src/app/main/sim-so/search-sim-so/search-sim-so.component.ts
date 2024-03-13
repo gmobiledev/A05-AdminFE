@@ -93,6 +93,10 @@ export class SearchSimSoComponent implements OnInit {
     // }
   }
 
+  getInvenstory(){
+    return this.item?.sell_channels ? this.item.sell_channels.map(x=>x.channel.name).join("-") : ""
+  }
+
 
   async modalOpen(modal, item) {
     if (item) {
