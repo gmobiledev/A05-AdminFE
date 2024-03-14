@@ -210,7 +210,7 @@
                 </div>
 
                 <div class="form-group row mt-1">
-                  <label for="admin_id" class="col-md-3 col-form-label"
+                  <label for="customer_id" class="col-md-3 col-form-label"
                     >Đại lý</label
                   >
                   <div class="col-md-9">
@@ -221,10 +221,10 @@
                       </option>
                     </select>
                     <div
-                      *ngIf="submitted && f.admin_id.errors"
+                      *ngIf="submitted && f.customer_id.errors"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="f.admin_id.required">
+                      <div *ngIf="f.customer_id.required">
                         Vui lòng nhập tên đại lý
                       </div>
                     </div>
@@ -232,7 +232,7 @@
                 </div>
 
                 <div class="form-group row mt-1">
-                  <label for="customer_id" class="col-md-3 col-form-label"
+                  <label for="admin_id" class="col-md-3 col-form-label"
                     >Người quản lý kho</label
                   >
                   <div class="col-md-9">
@@ -243,10 +243,10 @@
                       </option>
                     </select>
                     <div
-                      *ngIf="submitted && f.customer_id.errors"
+                      *ngIf="submitted && f.admin_id.errors"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="f.customer_id.required">
+                      <div *ngIf="f.admin_id.required">
                         Vui lòng nhập tên người quản lý kho
                       </div>
                     </div>

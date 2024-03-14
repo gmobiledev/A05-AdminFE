@@ -8,7 +8,6 @@
               <h4 class="modal-title" id="myModalLabel160">Tạo Kho</h4>
             </div>
             <div class="modal-body" tabindex="0">
-
               <div class="form-group">
                 <label>Mã kho</label>
                 <input
@@ -56,14 +55,15 @@
                 <label>Tải lên file chứng từ</label> -->
 
                 <div class="form-group row mt-1">
-                  <label
-                    for="commune"
-                    class="col-md-3 col-form-label"
-                    [(ngModel)]="dataSell.parent_id"
+                  <label for="commune" class="col-md-3 col-form-label"
                     >Kho nguồn</label
                   >
                   <div class="col-md-9">
-                    <select name="" class="form-control">
+                    <select
+                      name=""
+                      class="form-control"
+                      [(ngModel)]="dataSell.parent_id"
+                    >
                       <option value="">-- Chọn kho nguồn --</option>
                       <option *ngFor="let p of listMyChanel" [value]="p.id">
                         {{ p.name }}
@@ -146,14 +146,15 @@
                 </div>
 
                 <div class="form-group row mt-1">
-                  <label
-                    for="commune"
-                    class="col-md-3 col-form-label"
-                    [(ngModel)]="dataSell.admin_id"
+                  <label for="commune" class="col-md-3 col-form-label"
                     >Đại lý</label
                   >
                   <div class="col-md-9">
-                    <select name="" class="form-control">
+                    <select
+                      name=""
+                      class="form-control"
+                      [(ngModel)]="dataSell.customer_id"
+                    >
                       <option value="">-- Chọn đại lý --</option>
                       <option *ngFor="let p of listCustomer" [value]="p.id">
                         {{ p.name }}
@@ -163,14 +164,15 @@
                 </div>
 
                 <div class="form-group row mt-1">
-                  <label
-                    for="commune"
-                    class="col-md-3 col-form-label"
-                    [(ngModel)]="dataSell.customer_id"
+                  <label for="commune" class="col-md-3 col-form-label"
                     >Người quản lý kho</label
                   >
                   <div class="col-md-9">
-                    <select name="" class="form-control">
+                    <select
+                      name=""
+                      class="form-control"
+                      [(ngModel)]="dataSell.admin_id"
+                    >
                       <option value="">-- Chọn quản lý kho --</option>
                       <option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}
@@ -178,7 +180,6 @@
                     </select>
                   </div>
                 </div>
-
               </div>
             </div>
             <div class="modal-footer">
@@ -202,5 +203,3 @@
     </div>
   </div>
 </div>
-
-
