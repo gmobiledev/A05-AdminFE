@@ -59,6 +59,26 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="basicInput">Số lượng</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="quantity"
+                    formControlName="quantity"
+                    [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }"
+                  />
+                  <div
+                    *ngIf="submitted && f.quantity.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.quantity.errors.required">
+                      Vui lòng nhập tên kho
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label for="basicInput">Ghi chú</label>
                   <input
                     type="text"
@@ -88,7 +108,7 @@
                     >Kho nguồn</label
                   >
                   <div class="col-md-9">
-                    <select name="" class="form-control">
+                    <select name="parent_id" class="form-control">
                       <option value="">-- Chọn kho nguồn --</option>
                       <option *ngFor="let p of listMyChanel" [value]="p.id">
                         {{ p.name }}
@@ -96,10 +116,10 @@
                     </select>
 
                     <div
-                      *ngIf="submitted && f.admin_id.errors"
+                      *ngIf="submitted && f.parent_id.errors"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="f.province_id.admin_id.required">
+                      <div *ngIf="f.province_id.parent_id.required">
                         Vui lòng nhập trường này
                       </div>
                     </div>

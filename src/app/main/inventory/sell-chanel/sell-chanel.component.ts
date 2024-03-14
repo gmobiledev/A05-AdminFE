@@ -38,7 +38,6 @@ export class SellChanelComponent implements OnInit {
     province_id: '',
     district_id: '',
     commune_id: '',
-    quantity: '',
     address: '',
     attach_file_name: '',
     customer_id: '',
