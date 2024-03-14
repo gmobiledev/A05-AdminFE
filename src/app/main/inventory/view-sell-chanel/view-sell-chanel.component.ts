@@ -192,76 +192,9 @@ export class ViewSellChanelComponent implements OnInit {
     this.modalRef.close();
   }
 
-  async modalViewAgentOpen(modal, item = null) {
-    if (item) {
-      this.itemBlockUI.start();
-
-      try {
-        let res = await this.gtalkService.taskViewAgent(item);
-        if (!res.status) {
-          this.getData();
-          this.alertService.showMess(res.message);
-        }
-        this.selectedAgent = res.data;
-        this.itemBlockUI.stop();
-        this.modalRef = this.modalService.open(modal, {
-          centered: true,
-          windowClass: 'modal modal-primary',
-          size: 'sm',
-          backdrop: 'static',
-          keyboard: false
-        });
-      } catch (error) {
-        this.itemBlockUI.stop();
-        return;
-      }
-
-    }
-  }
-
-  modalViewAgentClose() {
-    this.selectedAgent = null;
-    this.getData();
-    this.modalRef.close();
-  }
-
-
   loadPage(page) {
     this.searchForm.page = page;
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
-  }
-
-  viewDetailSummary(array_status, action) {
-    this.searchForm.action = action;
-    this.searchForm.array_status = array_status;
-    this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
-  }
-
-  initActiveBoxSummary() {
-    this.isActivedBoxChangeSimInit = false;
-    this.isActivedBoxChangeSimProcessing = false;
-    this.isActivedBoxNewInit = false;
-    this.isActivedBoxNewProcessing = false;
-    this.isActivedBoxUpdateInit = false;
-    this.isActivedBoxUpdateProcessing = false;
-  }
-
-  setActiveBoxSummary(array_status, action) {
-    if (action == this.listTaskAction.new_sim.value) {
-      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_NEW_ORDER + ""])) {
-        this.isActivedBoxNewInit = true;
-      }
-      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_PROCESSING + "", "" + this.taskTelecomStatus.STATUS_PROCESS_TO_MNO])) {
-        this.isActivedBoxNewProcessing = true;
-      }
-    } else if (action == this.listTaskAction.change_info.value) {
-      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_NEW_ORDER + ""])) {
-        this.isActivedBoxChangeSimInit = true;
-      }
-      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_PROCESSING + "", "" + this.taskTelecomStatus.STATUS_PROCESS_TO_MNO])) {
-        this.isActivedBoxChangeSimProcessing = true;
-      }
-    }
   }
 
   showDate(date, timeZone, diff) {
@@ -280,31 +213,6 @@ export class ViewSellChanelComponent implements OnInit {
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
-  }
-
-  onSubmitExportExcelReport() {
-    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
-      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
-    this.searchForm.date_range = daterangeString;
-    this.gtalkService.exportExcelReport(this.searchForm).subscribe(res => {
-      var newBlob = new Blob([res.body], { type: res.body.type });
-      let url = window.URL.createObjectURL(newBlob);
-      let a = document.createElement('a');
-      document.body.appendChild(a);
-      a.setAttribute('style', 'display: none');
-      a.href = url;
-      a.download = "Báo cáo đấu nối";
-      a.click();
-      window.URL.revokeObjectURL(url);
-      a.remove();
-    })
-  }
-  onUpdateStatusSuccess(eventData: { updated: boolean }) {
-    if (eventData.updated) {
-      this.getData();
-      // this.modalRef.close();
-    }
   }
 
   ngOnInit(): void {

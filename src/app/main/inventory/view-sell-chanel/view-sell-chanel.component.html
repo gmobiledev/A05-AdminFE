@@ -71,7 +71,7 @@
                     class="btn btn-success mr-25"
                     (click)="modalOpen(modalAddUser)"
                   >
-                    Thêm khách hàng
+                    Chọn người bán hàng
                   </button>
                 </div>
               </div>
@@ -234,136 +234,6 @@
           user làm đại lý?</i
         >
       </div>
-      <!-- <div class="form-group" >
-      <label for="basicInput">Mã giới thiệu</label>
-        <input type="text" class="form-control"  placeholder=""
-        name="ref_code"
-        formControlName="ref_code"
-        [ngClass]="{ 'is-invalid': submitted && f.ref_code.errors }"
-        />
-    </div>  -->
-
-      <!-- <div class="form-group mt-2">
-        <label>Chọn dịch vụ</label>
-        <div class="" formArrayName="agents_service">
-          <div
-            *ngFor="
-              let control of formGroup.controls['agents_service'].controls;
-              let i = index
-            "
-            class="row"
-          >
-            <div class="col-8">
-              <div [formGroup]="formGroup.controls.agents_service.controls[i]">
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    formControlName="service_code"
-                    (change)="onSelectService($event.target.value)"
-                  >
-                    <option
-                      id="{{ item.code }}"
-                      *ngFor="let item of listServiceFilter"
-                      [value]="item.code"
-                    >
-                      {{ item.desc }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="">Mã giới thiệu</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="ref_code"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="col-4">
-              <button
-                *ngIf="
-                  !isCreate &&
-                  formGroup.controls['agents_service'].value[i]['status'] == 1
-                "
-                type="button"
-                class="btn btn-warning btn-sm"
-                (click)="updateStatusAgentService(i, 0)"
-              >
-                Khóa <span [data-feather]="'lock'"></span>
-              </button>
-              <button
-                *ngIf="
-                  !isCreate &&
-                  formGroup.controls['agents_service'].value[i]['status'] == 0
-                "
-                type="button"
-                class="btn btn-warning btn-sm"
-                (click)="updateStatusAgentService(i, 1)"
-              >
-                Mở <span [data-feather]="'unlock'"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="" formArrayName="new_agents_service">
-          <div
-            *ngFor="
-              let control of formGroup.controls['new_agents_service'].controls;
-              let i = index
-            "
-            class="row"
-          >
-            <div class="col-8">
-              <div
-                [formGroup]="formGroup.controls.new_agents_service.controls[i]"
-              >
-                <div class="form-group">
-                  <select
-                    class="form-control"
-                    formControlName="service_code"
-                    (change)="onSelectService($event.target.value)"
-                  >
-                    <option
-                      [disabled]="item.disabled"
-                      id="{{ item.code }}"
-                      *ngFor="let item of listServiceFilter"
-                      [value]="item.code"
-                    >
-                      {{ item.desc }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="">Mã giới thiệu</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="ref_code"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="col-4">
-              <button
-                type="button"
-                class="btn btn-danger btn-sm"
-                (click)="removeInput(i)"
-              >
-                Xóa <span [data-feather]="'trash'"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <button
-          *ngIf="isShowAddInput"
-          type="button"
-          class="btn btn-success btn-sm"
-          (click)="addInput()"
-        >
-          Thêm <span [data-feather]="'plus'"></span>
-        </button>
-      </div> -->
 
       <ng-template *ngIf="isCreate">
         <div class="form-group">
@@ -408,22 +278,22 @@
       <div class="pull-right">
         <button
           type="button"
-          class="btn btn-info mb-1"
+          class="btn btn-primary mb-1"
           (click)="modalOpen(modalCreate)"
           title="Thêm người bán khách hàng"
         >
-          <span [data-feather]="'plus'"></span> Thêm
+          <span [data-feather]="'plus'"></span>
         </button>
       </div>
       <div>
         <select class="form-control" (change)="onChangeUser($event)">
           <option value="">Chọn người bán hàng</option>
           <option *ngFor="let p of listSellUser" [value]="p.id">
-          {{ p.full_name}} - {{p.mobile}}
+            {{ p.full_name }} - {{ p.mobile }}
           </option>
         </select>
         <div class="mt-1" *ngFor="let item of listSelectedUser">
-          Thông tin khách hàng : {{ item.full_name }} - {{item.mobile}}
+          Thông tin khách hàng : {{ item.full_name }} - {{ item.mobile }}
           <span class="pull-right" (click)="onRemoveElement(item)"
             ><b>X</b></span
           >

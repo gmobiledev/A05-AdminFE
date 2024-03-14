@@ -106,16 +106,7 @@ export class SellChanelComponent implements OnInit {
       this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
       this.searchForm.page_size  = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : '';
 
-
-      // if(this.searchForm.name || this.searchForm.code) {
-      //   this.searchSell()
-      // } else {
-      //   this.getData();
-      // }
       this.getData();
-
-      this.dateRange = null;
-
 
     })
   }
@@ -436,20 +427,6 @@ export class SellChanelComponent implements OnInit {
       console.log(error);
     })
   }
-
-  // searchSell() {
-  //   this.inventoryService.searchSellChannelAll(this.searchForm).subscribe(res => {
-  //     this.sectionBlockUI.stop();
-  //     this.list = res.data.items;
-  //     this.totalPage = res.data.count;
-  //     this.pageSize = res.data.pageSize;
-  //     this.onViewSell(res.data.id)   
-  //   }, error => {
-  //     this.sectionBlockUI.stop();
-  //     console.log("ERRRR");
-  //     console.log(error);
-  //   })
-  // }
 
 
 }
