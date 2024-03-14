@@ -182,23 +182,23 @@
                     <div class="col-md-6 col-12">
                       <ng-container>
                         <div class="d-flex justify-content-between align-items-center m-1">
-                          <label class="d-flex align-items-center">Show
+                          <label class="d-flex align-items-center">Xem
                             <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
                               <option value="10">10</option>
                               <option value="25">25</option>
                               <option value="50">50</option>
                               <option value="100">100</option>
                             </select>
-                            entries</label>
+                            dòng</label>
                         </div>
                       </ng-container>
                     </div>
                     <div class="col-md-6 col-12 d-flex justify-content-md-end">
                       <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
                         <label class="d-flex align-items-center"
-                          >Search<input
+                          >Tìm<input
                             type="text"
-                            placeholder="Search"
+                            placeholder="Nhập từ khóa ..."
                             class="form-control ml-25"
                             (keyup)="filterList($event)"
                         /></label>
@@ -206,7 +206,7 @@
                     </div>
                   </div>
                   <ngx-datatable
-                    [rows]="list"
+                    [rows]="tempList"
                     [rowHeight]="58"
                     class="bootstrap core-bootstrap"
                     [limit]="10"
@@ -217,6 +217,7 @@
                     [selectionType]="'checkbox'"
                     [limit]="basicSelectedOption"
                     (select)="onSelect($event)"
+                    [messages]="{emptyMessage: 'Chưa có dữ liệu'}"
                   >
                     <ngx-datatable-column
                       [width]="50"
@@ -261,7 +262,7 @@
                         </div>
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Name" prop="name" >
+                    <ngx-datatable-column name="Tên" prop="name" >
                       <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                         <div class="d-flex align-items-center">                          
                           <div class="cell-line-height">
@@ -273,7 +274,7 @@
                       </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
-                    <ngx-datatable-column name="Hạng số" prop="price" ></ngx-datatable-column>                    
+                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>                    
                     <!-- <ngx-datatable-column name="Actions"  [sortable]="false">
                       <ng-template ngx-datatable-cell-template>
                         <div class="d-flex align-items-center">
@@ -308,23 +309,23 @@
                     <div class="col-md-6 col-12">
                       <div class="d-flex justify-content-between align-items-center m-1">
                         <label class="d-flex align-items-center"
-                          >Show
+                          >Xem
                           <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
                           </select>
-                          entries</label
+                          dòng</label
                         >
                       </div>
                     </div>
                     <div class="col-md-6 col-12 d-flex justify-content-md-end">
                       <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
                         <label class="d-flex align-items-center"
-                          >Search<input
+                          >Tìm<input
                             type="search"
-                            placeholder="Search"
+                            placeholder="Nhập từ khóa..."
                             class="form-control ml-25"
                             (keyup)="filterListSeleted($event)"
                         /></label>
@@ -344,6 +345,7 @@
                     [selectionType]="'checkbox'"
                     [limit]="basicSelectedOption" 
                     (select)="onSelectToRemove($event)"
+                    [messages]="{emptyMessage: 'Chưa có dữ liệu'}"
                   >
                     <ngx-datatable-column
                       [width]="50"
@@ -388,7 +390,7 @@
                         </div>
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Name" prop="name" >
+                    <ngx-datatable-column name="Tên" prop="name" >
                       <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                         <div class="d-flex align-items-center">                          
                           <div class="cell-line-height">
@@ -400,8 +402,8 @@
                       </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
-                    <ngx-datatable-column name="Hạng số" prop="price" ></ngx-datatable-column>                    
-                    <ngx-datatable-column name="Actions"  [sortable]="false" prop="name">
+                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>                    
+                    <ngx-datatable-column name="Thao tác"  [sortable]="false" prop="name">
                       <ng-template ngx-datatable-cell-template let-value="value">
                         <div class="d-flex align-items-center">
                             <a (click)="onRemove(value)"><i data-feather="trash"  class="text-primary cursor-pointer"></i></a>

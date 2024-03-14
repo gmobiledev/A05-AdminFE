@@ -83,6 +83,8 @@ export class NewBatchExportComponent implements OnInit {
   public list;
   tempList;
   tempSelectedItems;
+  isResetTempList: boolean = true;
+  isResetTempSelected: boolean = true;
   public listChannel;
   public listInputChannel;
   public submitted: boolean = false;
@@ -131,7 +133,9 @@ export class NewBatchExportComponent implements OnInit {
       this.selectedItems = [...this.selectedItems]  
       const arrayNameProduct = this.tmpSelected.map(x => {return x.id});
       this.list = this.list.filter(x => !arrayNameProduct.includes(x.id));
-      this.tempList = [...this.list];
+      this.tempList = this.tempList.filter(x => !arrayNameProduct.includes(x.id));
+      this.tempList = [...this.tempList];
+      // this.tempList = this.isResetTempList  ? [...this.list] : [...this.tempList];
       this.list = [...this.list];
       console.log(this.selectedItems);
       console.log(this.list);
@@ -165,15 +169,19 @@ export class NewBatchExportComponent implements OnInit {
   }
 
   filterList(event) {
-    console.log(this.tempList);
+    console.log(this.list);
+    
     const val = event.target.value.toLowerCase();
+    if(val) {
+      this.isResetTempList = false;
+    }
     // filter our data
-    const temp = this.tempList.filter(function (d) {
+    const temp = this.list.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows
-    this.list = temp;
+    this.tempList = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
