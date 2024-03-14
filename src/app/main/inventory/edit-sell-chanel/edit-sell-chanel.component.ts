@@ -233,26 +233,6 @@ export class EditSellChanelComponent implements OnInit {
     })
   }
 
-  // async onSubmitUploadSell() {
-
-  //   if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
-  //     this.submittedUpload = true;
-  //     this.inventoryService.updateSellChanel(this.dataSell).subscribe(res => {
-  //       this.submittedUpload = false;
-  //       if (!res.status) {
-  //         this.alertService.showError(res.message);
-  //         return;
-  //       }
-  //       this.modalClose();
-  //       this.alertService.showSuccess(res.message);
-  //       this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
-  //     }, error => {
-  //       this.submittedUpload = false;
-  //       this.alertService.showError(error);
-  //     })
-  //   }
-  // }
-
   modalClose() {
     this.modalRef.close();
     this.initForm();
@@ -317,10 +297,21 @@ export class EditSellChanelComponent implements OnInit {
       }
 
       this.formGroup.patchValue({
+        
         name: res.data.items[0].name,
         code: res.data.items[0].code,
         desc: res.data.items[0].desc,
+        parent_id: res.data.items[0].parent_id,
         quantity: res.data.items[0].quantity,
+        admin_id: res.data.items[0].admin_id,
+        attached_file_content: res.data.items[0].attached_file_content,
+        attached_file_name: res.data.items[0].attached_file_name,
+        business_id: res.data.items[0].business_id,
+        customer_id: res.data.items[0].customer_id,
+        isFileChanged: res.data.items[0].isFileChanged,
+        level: res.data.items[0].level,
+        status: res.data.items[0].status,
+        type: res.data.items[0].type,
         province_id: res.data.items[0] && res.data.items[0].province_id ? parseInt(res.data.items[0].province_id) : '',
         district_id: res.data.items[0] && res.data.items[0].district_id ? parseInt(res.data.items[0].district_id) : '',
         commune_id: res.data.items[0] && res.data.items[0].commune_id ? parseInt(res.data.items[0].commune_id) : '',
@@ -345,10 +336,10 @@ export class EditSellChanelComponent implements OnInit {
   }
 
   async onSubmitCreate() {
-    this.submitted = true;
-    if (this.formGroup.invalid) {
-      return;
-    }
+    // this.submitted = true;
+    // if (this.formGroup.invalid) {
+    //   return;
+    // }
     let dataPost = {
       sell_channelid: this.formGroup.controls['sell_channelid'].value,
       parent_id: this.formGroup.controls['parent_id'].value,
@@ -371,25 +362,44 @@ export class EditSellChanelComponent implements OnInit {
       customer_id: this.formGroup.controls['customer_id'].value,
 
     }
-    if (this.isCreate) {
-      if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
-        this.submittedUpload = true;
-        this.inventoryService.updateSellChanel(dataPost).subscribe(res => {
-          this.submittedUpload = false;
-          if (!res.status) {
-            this.alertService.showError(res.message);
-            return;
-          }
-          this.modalClose();
-          this.alertService.showSuccess(res.message);
-          this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
-        }, error => {
-          this.submittedUpload = false;
-          this.alertService.showError(error);
-        })
-      }
-    } 
+    if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
+      this.submittedUpload = true;
+      this.inventoryService.updateSellChanel(dataPost).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
 
+
+  }
+
+  async onSubmitUploadSell() {
+
+    if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
+      this.submittedUpload = true;
+      this.inventoryService.updateSellChanel(this.formGroup).subscribe(res => {
+        this.submittedUpload = false;
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.modalClose();
+        this.alertService.showSuccess(res.message);
+        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
+      }, error => {
+        this.submittedUpload = false;
+        this.alertService.showError(error);
+      })
+    }
   }
 
 }

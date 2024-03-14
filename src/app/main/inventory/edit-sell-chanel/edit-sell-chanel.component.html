@@ -3,9 +3,6 @@
     <div class="row" id="table-striped">
       <div class="col-12">
         <div class="card">
-          <!-- <div class="card-header">
-              <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
-            </div> -->
           <div class="card-body">
             <div class="modal-header">
               <h4 class="modal-title" id="myModalLabel160">Sửa Kho</h4>
@@ -115,14 +112,14 @@
                       </option>
                     </select>
 
-                    <div
+                    <!-- <div
                       *ngIf="submitted && f.parent_id.errors"
                       class="invalid-feedback"
                     >
                       <div *ngIf="f.province_id.parent_id.required">
                         Vui lòng nhập trường này
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
 
@@ -162,14 +159,14 @@
                     }}</ng-option>
                   </ng-select>
 
-                  <div
+                  <!-- <div
                     *ngIf="submitted && f.district_id.errors"
                     class="invalid-feedback"
                   >
                     <div *ngIf="f.district_id.errors.required">
                       Vui lòng nhập trường này
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="form-group">
@@ -180,14 +177,14 @@
                       p.title
                     }}</ng-option>
                   </ng-select>
-                  <div
+                  <!-- <div
                     *ngIf="submitted && f.commune_id.errors"
                     class="invalid-feedback"
                   >
                     <div *ngIf="f.commune_id.errors.required">
                       Vui lòng nhập trường này
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="form-group">
@@ -213,7 +210,7 @@
                 </div>
 
                 <div class="form-group row mt-1">
-                  <label for="admin_id" class="col-md-3 col-form-label"
+                  <label for="customer_id" class="col-md-3 col-form-label"
                     >Đại lý</label
                   >
                   <div class="col-md-9">
@@ -224,10 +221,10 @@
                       </option>
                     </select>
                     <div
-                      *ngIf="submitted && f.admin_id.errors"
+                      *ngIf="submitted && f.customer_id.errors"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="f.admin_id.required">
+                      <div *ngIf="f.customer_id.required">
                         Vui lòng nhập tên đại lý
                       </div>
                     </div>
@@ -235,7 +232,7 @@
                 </div>
 
                 <div class="form-group row mt-1">
-                  <label for="customer_id" class="col-md-3 col-form-label"
+                  <label for="admin_id" class="col-md-3 col-form-label"
                     >Người quản lý kho</label
                   >
                   <div class="col-md-9">
@@ -246,10 +243,10 @@
                       </option>
                     </select>
                     <div
-                      *ngIf="submitted && f.customer_id.errors"
+                      *ngIf="submitted && f.admin_id.errors"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="f.customer_id.required">
+                      <div *ngIf="f.admin_id.required">
                         Vui lòng nhập tên người quản lý kho
                       </div>
                     </div>
@@ -259,6 +256,7 @@
 
               <div class="modal-footer">
                 <button
+                  (click)="onSubmitCreate()"
                   type="submit"
                   class="btn btn-primary"
                   rippleEffect

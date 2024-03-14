@@ -76,7 +76,7 @@ export class NewSellChanelComponent implements OnInit {
     address: '',
     attached_file_name: '',
     attached_file_content: '',
-    customer_id: 0
+    customer_id: 0,
   }
 
   constructor(
@@ -121,34 +121,35 @@ export class NewSellChanelComponent implements OnInit {
   }
 
   async listUser() {
+
     this.taskService.getListCustomer(this.searchForm).subscribe(res => {
       this.listCustomer = res.data.items;
     }, error => {
-      console.log("ERRRR");
+      console.log("ERRRR4");
       console.log(error);
     })
 
     this.taskService.getListAdmin(this.searchForm).subscribe(res => {
       this.listAdmin = res.data.items;
     }, error => {
-      console.log("ERRRR");
+      console.log("ERRRR3");
       console.log(error);
     })
 
     this.inventoryService.getMyChannel(this.searchForm).subscribe(res => {
       this.listMyChanel = res.data.items;
-      this.dataSell.parent_id = res.data.parent_id
     }, error => {
-      console.log("ERRRR");
+      console.log("ERRRR2");
       console.log(error);
     })
+
 
     this.userService.getAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
     }, error => {
       this.sectionBlockUI.stop();
-      console.log("ERRRR");
+      console.log("ERRRR1");
       console.log(error);
     })
   }
@@ -190,6 +191,7 @@ export class NewSellChanelComponent implements OnInit {
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo kho không?")).value) {
       this.submittedUpload = true;
+      console.log("data Sell = ",this.dataSell);
       this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
@@ -198,7 +200,7 @@ export class NewSellChanelComponent implements OnInit {
         }
         // this.modalClose();
         this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
+        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.dataSell })
 
         
         this.getData();
