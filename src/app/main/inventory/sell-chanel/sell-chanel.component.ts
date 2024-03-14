@@ -23,27 +23,27 @@ export class SellChanelComponent implements OnInit {
   public list: any;
   public totalPage: number;
   public page: number = 1;
-  public pageSize: number;
+  public pageSize = 10;
+
   public searchForm = {
-    id:'',
+    id: '',
     name: '',
     code: '',
-    desc : '',
-    parent_id : '',
-    type : '',
+    desc: '',
+    parent_id: '',
+    type: '',
     status: '',
     business_id: '',
-    admin_id:'',
+    admin_id: '',
     province_id: '',
     district_id: '',
-    commune_id : '',
-    city_id : '',
-    address : '',
+    commune_id: '',
+    address: '',
     attach_file_name: '',
     customer_id: '',
     user_sell_channels: '',
-    business: {},
-  
+    business: '',
+    page_size: 10,
     page: 1
   }
   public selectedItem: any
@@ -104,10 +104,19 @@ export class SellChanelComponent implements OnInit {
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
       this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
+      this.searchForm.page_size  = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : '';
+
+
+      // if(this.searchForm.name || this.searchForm.code) {
+      //   this.searchSell()
+      // } else {
+      //   this.getData();
+      // }
+      this.getData();
 
       this.dateRange = null;
 
-      this.getData();
+
     })
   }
 
@@ -277,13 +286,13 @@ export class SellChanelComponent implements OnInit {
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
       const ext = event.target.files[0].type;
-      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+      if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
         this.dataSell.attached_file_name = 'png';
         let img = await this.commonService.resizeImage(event.target.files[0]);
         this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
       } else if (ext.includes('pdf')) {
         this.dataSell.attached_file_name = 'pdf';
-        this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+        this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
       }
     }
   }
@@ -310,7 +319,7 @@ export class SellChanelComponent implements OnInit {
   async onSubmitUploadSell() {
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
-      this.submittedUpload = true; 
+      this.submittedUpload = true;
       this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
@@ -329,21 +338,21 @@ export class SellChanelComponent implements OnInit {
 
   async onViewSell(id) {
 
-      this.submittedUpload = true; 
-      this.inventoryService.viewDetailSell(id).subscribe(res => {
-        this.submittedUpload = false;
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.modalClose();
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, error => {
-        this.submittedUpload = false;
-        this.alertService.showError(error);
-      })
-    
+    this.submittedUpload = true;
+    this.inventoryService.viewDetailSell(id).subscribe(res => {
+      this.submittedUpload = false;
+      if (!res.status) {
+        this.alertService.showError(res.message);
+        return;
+      }
+      this.modalClose();
+      this.alertService.showSuccess(res.message);
+      this.getData();
+    }, error => {
+      this.submittedUpload = false;
+      this.alertService.showError(error);
+    })
+
   }
 
   ngOnInit(): void {
@@ -397,12 +406,15 @@ export class SellChanelComponent implements OnInit {
   }
 
   getData() {
-    this.commonDataService.getProvinces().subscribe((res: any) => {
-      if (res.status == 1) {
-        this.provinces = res.data
-      }
-    })
-
+   
+      this.commonDataService.getProvinces().subscribe((res: any) => {
+        if (res.status == 1) {
+          console.log(this.searchForm);
+          this.provinces = res.data
+        }
+      })
+    
+    
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
@@ -411,18 +423,33 @@ export class SellChanelComponent implements OnInit {
       }
     }
     this.sectionBlockUI.start();
-    this.inventoryService.listSellChannelAll(this.searchForm).subscribe(res => {
+
+    this.inventoryService.searchSellChannelAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalPage = res.data.count;
-      this.pageSize = res.data.pageSize;
-      this.onViewSell(res.data.id)   
+      this.searchForm.page_size   = res.data.page_size;
+      this.onViewSell(res.data.id)
     }, error => {
       this.sectionBlockUI.stop();
       console.log("ERRRR");
       console.log(error);
     })
   }
+
+  // searchSell() {
+  //   this.inventoryService.searchSellChannelAll(this.searchForm).subscribe(res => {
+  //     this.sectionBlockUI.stop();
+  //     this.list = res.data.items;
+  //     this.totalPage = res.data.count;
+  //     this.pageSize = res.data.pageSize;
+  //     this.onViewSell(res.data.id)   
+  //   }, error => {
+  //     this.sectionBlockUI.stop();
+  //     console.log("ERRRR");
+  //     console.log(error);
+  //   })
+  // }
 
 
 }

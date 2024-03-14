@@ -50,9 +50,11 @@ export class NewSellChanelComponent implements OnInit {
   count: any;
   public contentHeader: any;
   public list: any;
+
   public listCustomer: any;
   public listAdmin: any;
   public listSellUser: any;
+  public listMyChanel: any;
 
   public totalPage: number;
   public page: number = 1;
@@ -96,7 +98,7 @@ export class NewSellChanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Thêm kho',
+      headerTitle: 'Tạo kho',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -107,7 +109,7 @@ export class NewSellChanelComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Thêm kho',
+            name: 'Tạo kho',
             isLink: false
           }
         ]
@@ -127,6 +129,14 @@ export class NewSellChanelComponent implements OnInit {
 
     this.taskService.getListAdmin(this.searchForm).subscribe(res => {
       this.listAdmin = res.data.items;
+    }, error => {
+      console.log("ERRRR");
+      console.log(error);
+    })
+
+    this.inventoryService.getMyChannel(this.searchForm).subscribe(res => {
+      this.listMyChanel = res.data.items;
+      this.dataSell.parent_id = res.data.parent_id
     }, error => {
       console.log("ERRRR");
       console.log(error);
@@ -177,7 +187,7 @@ export class NewSellChanelComponent implements OnInit {
 
   async onSubmitUploadSell() {
 
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo kho không?")).value) {
       this.submittedUpload = true;
       this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
         this.submittedUpload = false;
@@ -185,8 +195,11 @@ export class NewSellChanelComponent implements OnInit {
           this.alertService.showError(res.message);
           return;
         }
-        this.modalClose();
+        // this.modalClose();
         this.alertService.showSuccess(res.message);
+        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
+
+        
         this.getData();
       }, error => {
         this.submittedUpload = false;
@@ -224,43 +237,5 @@ export class NewSellChanelComponent implements OnInit {
     }
   }
 
-  modalOpen(modal, item = null) {
-  //     if(item) {
-  //       this.titleModal = "Cập nhật user";
-  //       this.isCreate = false;
-  //       this.selectedUserId = item.id;
-  //       this.userService.getAgentServices(item.id).subscribe(res => {
-
-
-  //         this.currentService = res.data.map( x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
-  //         let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
-  //         for (let i = 0; i < this.currentService.length; i++ ) {
-  //           const newGroup = this.formBuilder.group({
-  //             id: [{value:this.currentService[i]['id'], disabled: true}],
-  //             status: [{value:this.currentService[i]['status'], disabled: true}],
-  //             ref_code: [{value: this.currentService[i]['ref_code'], disabled: true}],
-  //             service_code: [{value: this.currentService[i]['service_code'], disabled: true}]
-  //           });
-  //           const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
-  //           this.listServiceFilter[index]['disabled'] = 'disabled';
-  //           arrayControl.push(newGroup);
-  //         }
-
-  //         this.modalRef = this.modalService.open(modal, {
-  //           centered: true,
-  //           windowClass: 'modal modal-primary',
-  //           size: 'lg'
-  //         });
-  //       })
-  //     } else {
-  //       this.titleModal = "Thêm đại lý";
-  //       this.isCreate = true;
-  //       this.modalRef = this.modalService.open(modal, {
-  //         centered: true,
-  //         windowClass: 'modal modal-primary',
-  //         size: 'lg'
-  //       });
-  //     }
-  }
 
 }
