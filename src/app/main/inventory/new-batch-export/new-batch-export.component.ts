@@ -120,21 +120,26 @@ export class NewBatchExportComponent implements OnInit {
     
     this.tmpSelected.splice(0, this.tmpSelected.length);
     Array.prototype.push.apply(this.tmpSelected, selected);   
-    console.log(this.tmpSelected);
-    
-    
+    event.selected = [];
+    console.log(this.tmpSelected);        
   }
 
   onAddItems() {
-    Array.prototype.push.apply(this.selectedItems,this.tmpSelected);  
-    this.selectedItems = [...this.selectedItems]  
-    const arrayNameProduct = this.tmpSelected.map(x => {return x.name});
-    this.list = this.list.filter(x => !arrayNameProduct.includes(x.name));
-    this.tempList = [...this.list];
-    console.log(this.selectedItems);
-    console.log(this.list);
-    this.tempSelectedItems =[...this.selectedItems];
-    this.disableSelectParent = true;
+    console.log(this.list, this.tmpSelected);
+    if(this.tmpSelected.length > 0) {
+      Array.prototype.push.apply(this.selectedItems,this.tmpSelected);  
+      this.selectedItems = [...this.selectedItems]  
+      const arrayNameProduct = this.tmpSelected.map(x => {return x.id});
+      this.list = this.list.filter(x => !arrayNameProduct.includes(x.id));
+      this.tempList = [...this.list];
+      this.list = [...this.list];
+      console.log(this.selectedItems);
+      console.log(this.list);
+      this.tempSelectedItems =[...this.selectedItems];
+      this.disableSelectParent = true;
+      this.tmpSelected = [];      
+    }    
+    this.table.selected = [];
   }
 
   onSelectToRemove({ selected }) {
@@ -142,19 +147,25 @@ export class NewBatchExportComponent implements OnInit {
   }
 
   onRemove(item) {
-    const index = this.selectedItems.find(x => x.name == item);
+    this.tmpSelected = [];
+    
+    const index = this.selectedItems.findIndex(x => x.name == item.toString());
+    console.log(item, this.selectedItems, index, this.selectedItems[index]);
     this.list.push(this.selectedItems[index]);
     this.list = [...this.list];
     this.tempList = [...this.list];
-    console.log(item);
+    console.log(this.tempList);
     this.selectedItems.splice(index, 1);
     this.tempSelectedItems = [...this.selectedItems];
     if(this.selectedItems.length < 1) {
+      this.selectedItems = [];
+      this.tempSelectedItems = [];      
       this.disableSelectParent = false;
     }
   }
 
   filterList(event) {
+    console.log(this.tempList);
     const val = event.target.value.toLowerCase();
     // filter our data
     const temp = this.tempList.filter(function (d) {
@@ -170,12 +181,12 @@ export class NewBatchExportComponent implements OnInit {
   filterListSeleted(event) {
     const val = event.target.value.toLowerCase();
     // filter our data
-    const temp = this.tmpSelected.filter(function (d) {
+    const temp = this.selectedItems.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows
-    this.selectedItems = temp;
+    this.tempSelectedItems = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }

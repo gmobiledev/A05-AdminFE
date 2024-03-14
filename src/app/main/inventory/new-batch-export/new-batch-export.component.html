@@ -289,7 +289,7 @@
             </div>
 
             <div class="col-md-2">
-                <div class="form-group text-center">
+                <div class="form-group text-center mt-5">
                     <label></label>
                     <button (click)="onAddItems()" type="button" class="btn btn-info mb-1" rippleEffect><span [data-feather]="'chevrons-right'"
                             [class]="'mr-25'"></span>Thêm</button>                    
@@ -333,7 +333,7 @@
                   </div>
                   <ngx-datatable
                   
-                    [rows]="selectedItems"
+                    [rows]="tempSelectedItems"
                     [rowHeight]="58"
                     class="bootstrap core-bootstrap"
                     [limit]="10"

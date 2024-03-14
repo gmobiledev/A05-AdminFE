@@ -9,7 +9,9 @@ export class TypeBatchFormPipe implements PipeTransform {
         html = 'Nhập kho'
     } else if(value == BatchType.OUTPUT) {
         html = 'Xuất kho'
-    }
+    } else if(value == BatchType.RETRIEVE) {
+      html = 'Thu hồi'
+  }
     return html;
   }
 }

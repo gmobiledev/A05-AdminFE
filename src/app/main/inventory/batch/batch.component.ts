@@ -271,8 +271,11 @@ export class BatchComponent implements OnInit {
   }
 
   async onSubmitUploadLo() {
-
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+    if(!this.dataLo.files) {
+      this.alertService.showMess("Vui lòng đính kèm chứng từ");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu nhập kho")).value) {
       this.submittedUpload = true;
       this.inventoryService.kdCreateBatchInput(this.dataLo).subscribe(res => {
         this.submittedUpload = false;

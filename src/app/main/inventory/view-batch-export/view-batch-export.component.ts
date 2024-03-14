@@ -147,6 +147,10 @@ export class ViewBatchExportComponent implements OnInit {
       }
     } else if (type == 'vanphong') {
       if(status == this.batchStatus.APPROVED) {
+        if(!this.dataApprove.attached_file_content) {
+          this.alertService.showMess("Vui lòng đính kèm chứng từ");
+          return;
+        }
         this.inventoryService.vanphongDuyet({...data, ...this.dataApprove}).subscribe(res => {
           if(!res.status) {
             this.alertService.showMess(res.message);
