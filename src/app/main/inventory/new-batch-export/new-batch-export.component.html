@@ -8,9 +8,9 @@
                     <div class="card-body">
                         <h3 class="text-center">Tìm kiếm</h3>
                         <div class="row">
-                          <div class="col-md-3">
+                          <div class="col-md-4">
                             <div class="form-group">
-                              <label for="">Kho xuất đi</label>
+                              <label for="">{{ titleFromChannel }}</label>
                               <ng-select [disabled]="disableSelectParent" [(ngModel)]="searchForm.channel_id"
                                 (search)="onSearchParentChannel($event)" (change)="onChangeParentChannel()">
                                 <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
@@ -18,9 +18,31 @@
                                   }}</ng-option>
                               </ng-select>
                             </div>
-                          </div>
+                          </div>    
 
-                            <div class="col-md-3">
+                          <div class="col-md-4" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE">
+                            <div class="form-group">
+                              <label></label>
+                              <div>
+                                Thu hồi tất cả
+                              <input type="checkbox"                             
+                              [(ngModel)]="retrieveForm.retrieve_all">
+                              </div>
+                              
+                            </div>
+                          </div> 
+                          
+                          <div class="col-md-4" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE
+                          && !retrieveForm.retrieve_all
+                          ">
+                            <div class="form-group">
+                              <label for="">Số lượng tối đa lấy ra</label>
+                              <input type="text" class="form-control" [(ngModel)]="searchFormProduct.take">
+                            </div>
+                          </div> 
+
+                          <ng-container *ngIf="typeCurrentBatch && typeCurrentBatch != listBatchType.RETRIEVE" >
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Loại sản phẩm</label>
                                     <select name="" id="" class="form-control"
@@ -32,7 +54,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Thuộc tính</label>
                                     <ng-select
@@ -79,12 +101,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Số lượng</label>
-                                    <input type="number" class="form-control" >
+                                    <input type="number" class="form-control" [(ngModel)]="searchForm.take" >
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                          </ng-container>
+                            <div class="col-md-4" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE || !retrieveForm.retrieve_all">
                               <div class="form-group">
-                                <button type="button" (click)="searchProductStore()" class="btn btn-info mb-1" rippleEffect><span [data-feather]="'search'"
+                                <label></label>
+                                <button type="button" (click)="searchProductStore()" class="btn btn-block btn-info mb-1" rippleEffect><span [data-feather]="'search'"
                                   [class]="'mr-25'"></span>Lọc</button>
                               </div>
                             </div>
@@ -95,17 +119,19 @@
 
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-body">                      
+                    <div class="card-body">  
+                      <ng-container *ngIf="typeCurrentBatch && typeCurrentBatch != listBatchType.RETRIEVE" >
                         <p>Người tạo: <b>{{ currentUser.full_name }}</b></p>
                         <p>Mã xuất đơn hàng: <b>Tự sinh</b></p>
+                      </ng-container>
                         <p>Số lượng: <b>{{ selectedItems.length | number }}</b></p>
-                        <p class="ml-3">Số điện thoại: <b></b></p>
-                        <p class="ml-3">SIM trắng: <b></b></p>
-                        <div class="row  mb-1">
-                          <div class="col-4">Xuất cho kho: </div>
+                        <!-- <p class="ml-3">Số điện thoại: <b></b></p>
+                        <p class="ml-3">SIM trắng: <b></b></p> -->
+                        <div class="row  mb-1" *ngIf="typeCurrentBatch && typeCurrentBatch != listBatchType.RETRIEVE">
+                          <div class="col-4">Kho xuất đến: </div>
                           <div class="col-8">
                           <ng-select     
-                          [(ngModel)]="createBatchExport.to_channel_id"                        
+                          [(ngModel)]="createBatchExportForm.to_channel_id"                        
                             >
                               <ng-option *ngFor="let p of listInputChannel" [value]="p.id">{{
                                 p.name
@@ -118,6 +144,14 @@
                                 <option></option>
                             </select> -->
                           </div>
+                          </div>
+                          <div class="row mb-1" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE">
+                            <div class="col-4">
+                              File chứng từ
+                            </div>
+                            <div class="col-8">
+                              <input type="file" class="form-control" (change)="onSelectFileFront($event)">
+                            </div>
                           </div>
                         <div class="row mb-1">
                           <div class="col-4">
@@ -136,7 +170,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE || !retrieveForm.retrieve_all">
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
@@ -146,24 +180,24 @@
                 
                 <div class="row">                    
                     <div class="col-md-6 col-12">
-                      <div class="d-flex justify-content-between align-items-center m-1">
-                        <label class="d-flex align-items-center"
-                          >Show
-                          <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                          </select>
-                          entries</label
-                        >
-                      </div>
+                      <ng-container>
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                          <label class="d-flex align-items-center">Show
+                            <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                              <option value="10">10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                              <option value="100">100</option>
+                            </select>
+                            entries</label>
+                        </div>
+                      </ng-container>
                     </div>
                     <div class="col-md-6 col-12 d-flex justify-content-md-end">
                       <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
                         <label class="d-flex align-items-center"
                           >Search<input
-                            type="search"
+                            type="text"
                             placeholder="Search"
                             class="form-control ml-25"
                             (keyup)="filterList($event)"

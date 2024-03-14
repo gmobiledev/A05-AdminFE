@@ -24,6 +24,7 @@ import { EditSellChanelComponent } from './edit-sell-chanel/edit-sell-chanel.com
 import { ViewSellChanelComponent } from './view-sell-chanel/view-sell-chanel.component';
 import { ViewBatchExportComponent } from './view-batch-export/view-batch-export.component';
 import { CodeInputModule } from 'angular-code-input';
+import { BatchType } from 'app/utils/constants';
 
 const routes: Routes = [
   {
@@ -69,6 +70,13 @@ const routes: Routes = [
   {
     path: 'batch-export/:id',
     component: ViewBatchExportComponent
+  },
+  {
+    path: 'batch/retrieve',
+    data: {
+      type: BatchType.RETRIEVE
+    },
+    component: NewBatchExportComponent
   }
 ];
 

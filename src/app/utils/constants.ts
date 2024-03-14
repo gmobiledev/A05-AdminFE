@@ -43,7 +43,8 @@ export enum ProductStatus {
 
 export enum BatchType {
     INPUT = 1,
-    OUTPUT = -1
+    OUTPUT = -1,
+    RETRIEVE = 3    
 }
 
 export enum BatchStatus {
