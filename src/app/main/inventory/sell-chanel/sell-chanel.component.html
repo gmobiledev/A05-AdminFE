@@ -154,6 +154,7 @@
                     <th>Đại lý</th>
                     <th>Kênh</th>
                     <th>Địa điểm</th>
+                    <th>Chất lượng</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
@@ -176,7 +177,9 @@
                     <td>
                       {{ item.address }}
                     </td>
-
+                    <td>
+                      {{ item.quantity }}
+                    </td>
                     <td>
                       <div [innerHTML]="item.status | showStatusSell"></div>
                     </td>

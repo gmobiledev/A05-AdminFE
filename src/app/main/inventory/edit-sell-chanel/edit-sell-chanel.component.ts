@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'app/auth/service';
@@ -12,15 +12,24 @@ import { id } from '@swimlane/ngx-datatable';
 import { CommonService } from 'app/utils/common.service';
 import { TaskService } from 'app/auth/service/task.service';
 import { GtalkService } from 'app/auth/service/gtalk.service';
+import { CollaboratorService } from 'app/auth/service/collaborator.service';
 
 @Component({
   selector: 'app-edit-sell-chanel',
   templateUrl: './edit-sell-chanel.component.html',
-  styleUrls: ['./edit-sell-chanel.component.scss']
+  styleUrls: ['./edit-sell-chanel.component.scss'],
+  encapsulation: ViewEncapsulation.None
+
 })
 
 
 export class EditSellChanelComponent implements OnInit {
+  onClearHomeProvince() {
+    throw new Error('Method not implemented.');
+  }
+  onClearHomeDistrict() {
+    throw new Error('Method not implemented.');
+  }
 
   public modalRef: any;
   @Input() provinces;
@@ -39,6 +48,11 @@ export class EditSellChanelComponent implements OnInit {
   public isAdmin: boolean = false;
   public listMyChanel: any;
 
+  public formGroup;
+  public isCreate: boolean = false;
+  public submitted: boolean = false;
+
+
   public searchForm = {
     keyword: '',
     status: '',
@@ -56,8 +70,10 @@ export class EditSellChanelComponent implements OnInit {
   public listCustomer: any;
   public listAdmin: any;
   public listSellUser: any;
+  public titleModal: string;
+  public selectedItem: number;
 
-  public listEdit :any;
+  public listEdit: any;
 
   public totalPage: number;
   public page: number = 1;
@@ -75,7 +91,7 @@ export class EditSellChanelComponent implements OnInit {
     admin_id: 0,
     province_id: '',
     commune_id: '',
-    district_id:'',
+    district_id: '',
     address: '',
     attached_file_name: '',
     attached_file_content: '',
@@ -95,6 +111,9 @@ export class EditSellChanelComponent implements OnInit {
     private commonService: CommonService,
     private taskService: TaskService,
     private gtalkService: GtalkService,
+    private fb: FormBuilder,
+    private collaboratorSerivce: CollaboratorService,
+
 
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -163,6 +182,38 @@ export class EditSellChanelComponent implements OnInit {
       }
     }
   }
+
+  async onChangeHomeProvince(id, init = null) {
+
+    try {
+      const res = await this.commonDataService.getDistricts(id).toPromise();
+      if (res.status == 1) {
+        if (!init) {
+          this.formGroup.controls['district'].setValue('');
+        }
+        this.districts = res.data;
+        this.commues = []
+      }
+    } catch (error) {
+
+    }
+  }
+
+  async onChangeHomeDistrict(id, init = null) {
+
+    try {
+      const res = await this.commonDataService.getCommunes(id).toPromise();
+      if (res.status == 1) {
+        if (!init) {
+          this.formGroup.controls['commune'].setValue('');
+        }
+        this.commues = res.data
+      }
+    } catch (error) {
+
+    }
+  }
+
   onChangeProvince(event) {
     let id = event.target.value
     this.commonDataService.getDistricts(id).subscribe((res: any) => {
@@ -194,7 +245,7 @@ export class EditSellChanelComponent implements OnInit {
         }
         this.modalClose();
         this.alertService.showSuccess(res.message);
-        this.getData();
+        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
       }, error => {
         this.submittedUpload = false;
         this.alertService.showError(error);
@@ -210,9 +261,37 @@ export class EditSellChanelComponent implements OnInit {
 
   initForm() {
 
+    this.formGroup = this.fb.group({
+      sell_channelid: ['', Validators.required],
+      parent_id: ['', Validators.required],
+      name: ['', Validators.required],
+      code: ['', Validators.required],
+      desc: ['', Validators.required],
+      type: ['', Validators.required],
+      status: ['', Validators.required],
+      level: ['', Validators.required],
+      business_id: ['', Validators.required],
+      admin_id: ['', Validators.required],
+      province_id: ['', Validators.required],
+      district_id: ['', Validators.required],
+      commune_id: ['', Validators.required],
+      address: ['', Validators.required],
+      isFileChanged: ['', Validators.required],
+      attached_file_name: ['', Validators.required],
+      attached_file_content: ['', Validators.required],
+      customer_id: ['', Validators.required],
+    })
   }
 
+
+
   getData() {
+
+    this.commonDataService.getProvinces().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.provinces = res.data
+      }
+    })
 
     this.inventoryService.getMyChannel(this.searchForm).subscribe(res => {
       this.listMyChanel = res.data.items;
@@ -229,31 +308,87 @@ export class EditSellChanelComponent implements OnInit {
         this.alertService.showError(res.message);
         return;
       }
-      this.listEdit = res.data.items;
+      if (res.data.items[0] && res.data.items[0].province_id) {
+        this.onChangeHomeProvince(parseInt(res.data.items[0].province_id), true);
+      }
+      if (res.data.items[0] && res.data.items[0].district_id) {
+        this.onChangeHomeDistrict(parseInt(res.data.items[0].district_id), true);
+      }
 
-      // this.modalClose();
-      this.alertService.showSuccess(res.message);
+      this.formGroup.patchValue({
+        name: res.data.items[0].name,
+        code: res.data.items[0].code,
+        desc: res.data.items[0].desc,
+        province_id: res.data.items[0] && res.data.items[0].province_id ? parseInt(res.data.items[0].province_id) : '',
+        district_id: res.data.items[0] && res.data.items[0].district_id ? parseInt(res.data.items[0].district_id) : '',
+        commune_id: res.data.items[0] && res.data.items[0].commune_id ? parseInt(res.data.items[0].commune_id) : '',
+        address: res.data.items[0].address,
+
+      })
+
+      this.listEdit = res.data.items;
+      this.listUser()
+
 
     }, error => {
       this.submittedUpload = false;
       this.alertService.showError(error);
     })
-    
-    this.listUser()
 
-    this.commonDataService.getProvinces().subscribe((res: any) => {
-      if (res.status == 1) {
-        this.provinces = res.data
-      }
-    })
 
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    if (this.currentUser && this.currentUser.roles) {
-      const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
-      if (arrayRoles.includes("admin") || arrayRoles.includes("root")) {
-        this.isAdmin = true;
-      }
+  }
+
+  get f() {
+    return this.formGroup.controls;
+  }
+
+  async onSubmitCreate() {
+    this.submitted = true;
+    if (this.formGroup.invalid) {
+      return;
     }
+    let dataPost = {
+      sell_channelid: this.formGroup.controls['sell_channelid'].value,
+      parent_id: this.formGroup.controls['parent_id'].value,
+      name: this.formGroup.controls['name'].value,
+      code: this.formGroup.controls['code'].value,
+      desc: this.formGroup.controls['desc'].value,
+      type: this.formGroup.controls['type'].value,
+      status: this.formGroup.controls['status'].value,
+      level: this.formGroup.controls['level'].value,
+      business_id: this.formGroup.controls['business_id'].value,
+      admin_id: this.formGroup.controls['admin_id'].value,
+      province_id: this.formGroup.controls['province_id'].value,
+      district_id: this.formGroup.controls['district_id'].value,
+      commune_id: this.formGroup.controls['commune_id'].value,
+      address: this.formGroup.controls['address'].value,
+      isFileChanged: this.formGroup.controls['isFileChanged'].value,
+      attached_file_name: this.formGroup.controls['attached_file_name'].value,
+      attached_file_content: this.formGroup.controls['attached_file_content'].value,
+      customer_id: this.formGroup.controls['customer_id'].value,
+
+    }
+    if (this.isCreate) {
+
+    } else { 
+      // if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
+      //   this.submittedUpload = true;
+      //   this.inventoryService.updateSellChanel(dataPost).subscribe(res => {
+      //     this.submittedUpload = false;
+      //     if (!res.status) {
+      //       this.alertService.showError(res.message);
+      //       return;
+      //     }
+      //     this.modalClose();
+      //     this.alertService.showSuccess(res.message);
+      //     this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
+      //   }, error => {
+      //     this.submittedUpload = false;
+      //     this.alertService.showError(error);
+      //   })
+      // }
+    }
+    
   }
 
 }
