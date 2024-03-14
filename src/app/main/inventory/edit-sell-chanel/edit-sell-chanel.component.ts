@@ -57,9 +57,12 @@ export class EditSellChanelComponent implements OnInit {
   public listAdmin: any;
   public listSellUser: any;
 
+  public listEdit :any;
+
   public totalPage: number;
   public page: number = 1;
   public pageSize: number;
+  id;
 
   public dataSell = {
     parent_id: '',
@@ -94,6 +97,7 @@ export class EditSellChanelComponent implements OnInit {
     private gtalkService: GtalkService,
 
   ) {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.getData();
   }
 
@@ -216,6 +220,23 @@ export class EditSellChanelComponent implements OnInit {
     }, error => {
       console.log("ERRRR");
       console.log(error);
+    })
+
+    console.log(this.id);
+    this.inventoryService.viewDetailSell(this.id).subscribe(res => {
+      this.submittedUpload = false;
+      if (!res.status) {
+        this.alertService.showError(res.message);
+        return;
+      }
+      this.listEdit = res.data.items;
+
+      // this.modalClose();
+      this.alertService.showSuccess(res.message);
+
+    }, error => {
+      this.submittedUpload = false;
+      this.alertService.showError(error);
     })
     
     this.listUser()

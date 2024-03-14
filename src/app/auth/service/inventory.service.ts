@@ -56,7 +56,7 @@ export class InventoryService {
   }
 
   viewDetailSell(id: number){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetSell_channelDetails`,  { sell_channelid: id , status: status});
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetSell_channelDetails`,  { id: id , status: status});
   }
 
 
