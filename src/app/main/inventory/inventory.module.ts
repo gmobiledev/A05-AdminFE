@@ -23,6 +23,7 @@ import { NewSellChanelComponent } from './new-sell-chanel/new-sell-chanel.compon
 import { EditSellChanelComponent } from './edit-sell-chanel/edit-sell-chanel.component';
 import { ViewSellChanelComponent } from './view-sell-chanel/view-sell-chanel.component';
 import { ViewBatchExportComponent } from './view-batch-export/view-batch-export.component';
+import { CodeInputModule } from 'angular-code-input';
 
 const routes: Routes = [
   {
@@ -100,7 +101,9 @@ const routes: Routes = [
     NgbAccordionModule,
     NgxDaterangepickerMd.forRoot(),
     NgxDatatableModule,
-    NgSelectModule
+    NgSelectModule,
+    CodeInputModule
+
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA
