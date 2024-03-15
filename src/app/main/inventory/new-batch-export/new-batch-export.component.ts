@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { CommonDataService } from 'app/auth/service/common-data.service';
 import { CreateBatchExportDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
 import { BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'app-new-batch-export',
@@ -54,7 +56,8 @@ export class NewBatchExportComponent implements OnInit {
   }
   seachMyChannel = {
     user_id: '',
-    channel_id: ''
+    channel_id: '',
+    page_size: 1000
   }
 
   public searchFormProduct = {
@@ -111,7 +114,8 @@ export class NewBatchExportComponent implements OnInit {
     private readonly alertService: SweetAlertService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly commonService: CommonService
+    private readonly commonService: CommonService,
+    private readonly commonDataService: CommonDataService
   ) { }
 
   onSelect(event) {
@@ -356,7 +360,8 @@ export class NewBatchExportComponent implements OnInit {
       let dataRetrieve = new RetrieveAllSellChannelDto();
       dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
       dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      dataRetrieve.channel_id = parseInt(this.searchFormProduct.channel_id);      
+      dataRetrieve.channel_id = parseInt(this.searchFormProduct.channel_id);  
+      dataRetrieve.user_id = this.currentUser.id;    
       this.inventoryService.retrieveChannel(dataRetrieve).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
@@ -376,6 +381,7 @@ export class NewBatchExportComponent implements OnInit {
       dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
       dataRetrieve.channel_id = parseInt(this.searchFormProduct.channel_id);
       dataRetrieve.product_ids = this.selectedItems.map(x => { return parseInt(x.id) });
+      dataRetrieve.user_id = this.currentUser.id;
       this.inventoryService.retrieveProductOfChannel(dataRetrieve).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {

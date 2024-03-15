@@ -18,6 +18,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isHighcharts = typeof Highcharts === 'object';
   chartConstructor = "mapChart";
   Highcharts: typeof Highcharts = Highcharts;
+  
+  BarHighcharts: typeof Highcharts = Highcharts;
+  chartBarOptions = {
+    plotOptions: {
+      series: {
+        stacking: 'normal'
+      }
+    },
+    xAxis: {
+      categories: ['A05', 'Gtel', 'GTS', 'C06'],
+      title: {
+        text: null
+      },
+      gridLineWidth: 1,
+      lineWidth: 0
+    },
+    series: [
+      {
+        type: 'bar',
+        data: [10, 30, 5, 58]
+      }
+      
+    ]
+  }
   chartMap ;
   data;
   listData;
@@ -147,6 +171,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   
   async getData() {
+    
     try {
       console.log('get data');
       if(!this.searchForm.date) {
