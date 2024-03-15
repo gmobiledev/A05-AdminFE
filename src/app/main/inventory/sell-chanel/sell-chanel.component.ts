@@ -215,29 +215,6 @@ export class SellChanelComponent implements OnInit {
     this.filesData = event.target.files[0];
   }
 
-  async onSubmitUploadCCCD() {
-
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
-      this.submittedUpload = true;
-
-      const formData = new FormData();
-      formData.append("file", this.filesData);
-
-      this.telecomService.assignNumberBatch(formData).subscribe(res => {
-        this.submittedUpload = false;
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.modalClose();
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, error => {
-        this.submittedUpload = false;
-        this.alertService.showError(error);
-      })
-    }
-  }
 
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
@@ -270,26 +247,6 @@ export class SellChanelComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     })
-  }
-
-  async onSubmitUploadSell() {
-
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
-      this.submittedUpload = true;
-      this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
-        this.submittedUpload = false;
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.modalClose();
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, error => {
-        this.submittedUpload = false;
-        this.alertService.showError(error);
-      })
-    }
   }
 
   async onViewSell(id) {
