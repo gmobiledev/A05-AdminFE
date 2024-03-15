@@ -241,7 +241,7 @@
 
                 <div class="form-group row mt-1">
                   <label for="admin_id" class="col-md-3 col-form-label"
-                    >Người quản lý kho</label
+                    >Tài khoản quản lý kho</label
                   >
                   <div class="col-md-9">
                     <select
@@ -249,7 +249,7 @@
                       class="form-control"
                       formControlName="admin_id"
                     >
-                      <option value="">-- Chọn quản lý kho --</option>
+                      <option value="">-- Chọn tài khoản quản lý kho --</option>
                       <option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}
                       </option>

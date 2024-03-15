@@ -197,29 +197,6 @@ export class EditSellChanelComponent implements OnInit {
     }
   }
 
-  // onChangeProvince(event) {
-  //   let id = event.target.value
-  //   this.commonDataService.getDistricts(id).subscribe((res: any) => {
-  //     if (res.status == 1) {
-  //       this.districts = res.data
-
-  //     }
-  //   })
-  // }
-
-  // onChangeDistrict(event) {
-  //   let id = event.target.value
-  //   this.commonDataService.getCommunes(id).subscribe((res: any) => {
-  //     if (res.status == 1) {
-  //       this.commues = res.data
-  //     }
-  //   })
-  // }
-
-  // modalClose() {
-  //   this.modalRef.close();
-  //   this.initForm();
-  // }
 
 
   initForm() {

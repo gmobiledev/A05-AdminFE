@@ -71,7 +71,7 @@
                     class="btn btn-success mr-25"
                     (click)="modalOpen(modalAddUser)"
                   >
-                    Chọn người bán hàng
+                    Chọn tài khoản bán hàng
                   </button>
                 </div>
               </div>
@@ -167,7 +167,7 @@
 
 <ng-template #modalCreate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Thêm người bán hàng</h5>
+    <h5 class="modal-title" id="myModalLabel160">Thêm tài khoản bán hàng</h5>
     <button
       type="button"
       class="close"
@@ -263,7 +263,7 @@
 
 <ng-template #modalAddUser let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Chọn người bán hàng</h5>
+    <h5 class="modal-title" id="myModalLabel160">Chọn tài khoản bán hàng</h5>
     <button
       type="button"
       class="close"
@@ -287,7 +287,7 @@
       </div>
       <div>
         <select class="form-control" (change)="onChangeUser($event)">
-          <option value="">Chọn người bán hàng</option>
+          <option value="">Chọn tài khoản bán hàng</option>
           <option *ngFor="let p of listSellUser" [value]="p.id">
             {{ p.full_name }} - {{ p.mobile }}
           </option>
