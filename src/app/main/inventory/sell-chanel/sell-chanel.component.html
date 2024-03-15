@@ -71,7 +71,7 @@
                       <option value="0">Khởi tạo</option>
                       <option value="1">Kích hoạt</option>
                       <option value="-2">Khóa</option>
-                      <option value="-1">Hủy</option>
+                      <option value="-1">Từ chối</option>
                     </select>
                   </div>
                 </div>
@@ -208,7 +208,7 @@
                         class="ml-1"
                         (click)="onSubmitLock(item.id, -1)"
                         *ngIf="item.status == 0 || item.status == 1 || item.status == -2"
-                        title="Huỷ kho"
+                        title="Từ chối kho"
                       >
                         <i
                           data-feather="x-square"
