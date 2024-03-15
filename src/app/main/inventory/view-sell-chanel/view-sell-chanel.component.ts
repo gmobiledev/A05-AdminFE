@@ -280,10 +280,6 @@ export class ViewSellChanelComponent implements OnInit {
     }
   }
 
-  /**
- * Check ton tai so mobile
- * 
- */
   onCheckExits() {
     if (this.formGroup.controls['mobile'].value && this.formGroup.controls['mobile'].value != '') {
       this.userService.getByMobile(this.formGroup.controls['mobile'].value).subscribe(async res => {
@@ -353,12 +349,7 @@ export class ViewSellChanelComponent implements OnInit {
 
 
   getData() {
-
-    // const formData = new FormData();
-    // formData.append("full_name", this.searchForm.full_name);
-    // formData.append("mobile", this.searchForm.mobile);
-
-    this.userService.getAllChanel(this.searchForm.channel_id).subscribe(res => {
+    this.inventoryService.getListCustomer(this.searchForm.channel_id).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
     }, error => {
@@ -489,8 +480,7 @@ export class ViewSellChanelComponent implements OnInit {
   }
 
   onRemoveItem(item) {
-    console.log(item);
-    this.userService.removeUserChanel(this.searchForm.user_id, this.searchForm.channel_id).subscribe(res => {
+    this.inventoryService.removeUserChanel(this.searchForm.user_id, this.searchForm.channel_id).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
     }, error => {

@@ -51,6 +51,15 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { id: id , status: status});
   }
 
+  getListCustomer(channel_id: number){
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/FindUserBySellChannelId`,  { channel_id: channel_id });
+  }
+
+  removeUserChanel(channel_id, user_id){
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/DeleteUserBySellChannelIDAndUserId`,  { channel_id: channel_id, user_id: user_id});
+  }
+
+
   activeSell(id: number, status: number){
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { sell_channelid: id , status: status});
   }
