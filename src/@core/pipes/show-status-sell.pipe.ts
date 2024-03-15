@@ -11,7 +11,7 @@ export class ShowStatusSellPipe implements PipeTransform {
     } else if (value === -2) {
       html = '<span class="badge badge-pill badge-light-info mr-1">Khoá</span>';
     } else if (value === -1) {
-      html = '<span class="badge badge-pill badge-light-danger mr-1">Từ chối</span>';
+      html = '<span class="badge badge-pill badge-light-danger mr-1">Hủy</span>';
     } else {
       html = '<span class="badge badge-pill mr-1 badge-light-warning">' + value + '</span>'
     }

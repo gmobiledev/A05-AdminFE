@@ -193,7 +193,7 @@ export class SellChanelComponent implements OnInit {
     } else if (status == -2) {
       confirmMessage = "Bạn có đồng ý khóa kho?"
     } else if (status == -1) {
-      confirmMessage = "Bạn có đồng ý huỷ kho?"
+      confirmMessage = "Bạn có đồng ý hủy kho này không?"
     }
 
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
