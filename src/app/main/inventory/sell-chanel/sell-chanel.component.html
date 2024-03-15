@@ -183,8 +183,9 @@
                       <a
                         class="ml-1"
                         title="Chỉnh sửa kho"
-                        [routerLink]="['/inventory/edit-sell-chanel/'+item.id]"
-                       
+                        [routerLink]="[
+                          '/inventory/edit-sell-chanel/' + item.id
+                        ]"
                       >
                         <i
                           data-feather="edit-3"
@@ -207,14 +208,18 @@
                       <a
                         class="ml-1"
                         (click)="onSubmitLock(item.id, -1)"
-                        *ngIf="item.status == 0 || item.status == 1 || item.status == -2"
+                        *ngIf="
+                          item.status == 0 ||
+                          item.status == 1 ||
+                          item.status == -2
+                        "
                         title="Từ chối kho"
                       >
                         <i
                           data-feather="x-square"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </a> 
+                      </a>
 
                       <a
                         class="ml-1"
@@ -272,183 +277,4 @@
   </div>
 </div>
 
-<ng-template #modalUploadAccount let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">
-      Gán số và CCCD theo file excel có sẵn
-    </h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body" tabindex="0">
-    <div class="form-group">
-      <i class="fa fa-upload" aria-hidden="true"></i>
-      <input type="file" (change)="onSelectFileAccount($event)" />
-      <label>Tải lên file excel</label>
 
-      <a href="/assets/data_upload_account.xls" class="ml-2"
-        >File mẫu tại đây</a
-      >
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button
-      (click)="onSubmitUploadCCCD()"
-      type="submit"
-      class="btn btn-primary"
-      rippleEffect
-    >
-      <span
-        class="spinner-border spinner-border-sm"
-        role="ekyc_status"
-        aria-hidden="true"
-        *ngIf="submittedUpload"
-      ></span>
-      Submit
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #modalCreateSell let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Thêm Kho</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body" tabindex="0">
-    <div class="form-group">
-      <label>Mã kho</label>
-      <input
-        class="form-control"
-        type="number"
-        placeholder="100"
-        mask="separator"
-        thousandSeparator=","
-        [(ngModel)]="dataSell.code"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="">Tên kho</label>
-      <input type="text" class="form-control" [(ngModel)]="dataSell.name" />
-    </div>
-
-    <div class="form-group">
-      <label for="">Ghi chú</label>
-      <input type="text" class="form-control" [(ngModel)]="dataSell.desc" />
-    </div>
-
-    <div class="form-group">
-      <i class="fa fa-upload" aria-hidden="true"></i>
-      <input
-        type="file"
-        (change)="onFileChangeAttach($event)"
-        accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
-      />
-      <label>Tải lên file chứng từ</label>
-
-      <div class="form-group row mt-1">
-        <label for="province" class="col-md-3 col-form-label"
-          >Tỉnh/TP Tổ chức</label
-        >
-        <div class="col-md-9">
-          <select
-            name=""
-            id="province"
-            class="form-control"
-            (change)="onChangeProvince($event)"
-          >
-            <option value="">-- Chọn Tỉnh/Thành phố --</option>
-            <option *ngFor="let p of provinces" [value]="p.id">
-              {{ p.title }}
-            </option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group row mt-1">
-        <label for="district" class="col-md-3 col-form-label"
-          >Quận/Huyện Tổ chức
-        </label>
-        <div class="col-md-9">
-          <select
-            id="home_district"
-            class="form-control"
-            (change)="onChangeDistrict($event)"
-          >
-            <option value="">--Chọn Quận/Huyện--</option>
-            <option *ngFor="let p of districts" [value]="p.id">
-              {{ p.title }}
-            </option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group row mt-1">
-        <label for="commune" class="col-md-3 col-form-label"
-          >Phường/Xã Tổ chức</label
-        >
-        <div class="col-md-9">
-          <select name="" class="form-control">
-            <option value="">--Chọn Phường/xã --</option>
-            <option *ngFor="let p of commues" [value]="p.id">
-              {{ p.title }}
-            </option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="residence_full_address" class="col-md-3 col-form-label"
-          >Địa chỉ cụ thể</label
-        >
-        <div class="col-md-9">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Địa chỉ cụ thể"
-          />
-        </div>
-      </div>
-
-      <div class="form-group row mt-1">
-        <label for="commune" class="col-md-3 col-form-label">Đại lý</label>
-        <div class="col-md-9">
-          <select name="" class="form-control">
-            <option value="">--Chọn đại lý --</option>
-            <option *ngFor="let p of commues" [value]="p.id">
-              {{ p.title }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button
-      (click)="onSubmitUploadSell()"
-      type="submit"
-      class="btn btn-primary"
-      rippleEffect
-    >
-      <span
-        class="spinner-border spinner-border-sm"
-        aria-hidden="true"
-        *ngIf="submittedUpload"
-      ></span>
-      Submit
-    </button>
-  </div>
-</ng-template>

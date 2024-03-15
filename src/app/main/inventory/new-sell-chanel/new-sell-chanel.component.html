@@ -150,16 +150,15 @@
                     >Đại lý</label
                   >
                   <div class="col-md-9">
-                    <select
+                    <ng-select
                       name=""
-                      class="form-control"
                       [(ngModel)]="dataSell.customer_id"
                     >
-                      <option value="">-- Chọn đại lý --</option>
-                      <option *ngFor="let p of listCustomer" [value]="p.id">
+                      <ng-option value="">-- Chọn đại lý --</ng-option>
+                      <ng-option *ngFor="let p of listCustomer" [value]="p.id">
                         {{ p.name }}
-                      </option>
-                    </select>
+                      </ng-option>
+                    </ng-select>
                   </div>
                 </div>
 
@@ -168,16 +167,15 @@
                     >Người quản lý kho</label
                   >
                   <div class="col-md-9">
-                    <select
+                    <ng-select
                       name=""
-                      class="form-control"
                       [(ngModel)]="dataSell.admin_id"
                     >
-                      <option value="">-- Chọn quản lý kho --</option>
-                      <option *ngFor="let p of listAdmin" [value]="p.id">
+                      <ng-option value="">-- Chọn quản lý kho --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}
-                      </option>
-                    </select>
+                      </ng-option>
+                    </ng-select>
                   </div>
                 </div>
               </div>

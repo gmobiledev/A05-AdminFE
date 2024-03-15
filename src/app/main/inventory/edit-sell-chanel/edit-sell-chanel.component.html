@@ -163,14 +163,14 @@
                     }}</ng-option>
                   </ng-select>
 
-                  <!-- <div
+                  <div
                     *ngIf="submitted && f.district_id.errors"
                     class="invalid-feedback"
                   >
                     <div *ngIf="f.district_id.errors.required">
                       Vui lòng nhập trường này
                     </div>
-                  </div> -->
+                  </div>
                 </div>
 
                 <div class="form-group">
@@ -181,14 +181,14 @@
                       p.title
                     }}</ng-option>
                   </ng-select>
-                  <!-- <div
+                  <div
                     *ngIf="submitted && f.commune_id.errors"
                     class="invalid-feedback"
                   >
                     <div *ngIf="f.commune_id.errors.required">
                       Vui lòng nhập trường này
                     </div>
-                  </div> -->
+                  </div>
                 </div>
 
                 <div class="form-group">
@@ -218,16 +218,15 @@
                     >Đại lý</label
                   >
                   <div class="col-md-9">
-                    <select
+                    <ng-select
                       name=""
-                      class="form-control"
                       formControlName="customer_id"
                     >
-                      <option value="">-- Chọn đại lý --</option>
-                      <option *ngFor="let p of listCustomer" [value]="p.id">
+                      <ng-option value="">-- Chọn đại lý --</ng-option>
+                      <ng-option *ngFor="let p of listCustomer" [value]="p.id">
                         {{ p.name }}
-                      </option>
-                    </select>
+                      </ng-option>
+                    </ng-select>
                     <div
                       *ngIf="submitted && f.customer_id.errors"
                       class="invalid-feedback"
@@ -244,16 +243,15 @@
                     >Tài khoản quản lý kho</label
                   >
                   <div class="col-md-9">
-                    <select
+                    <ng-select
                       name=""
-                      class="form-control"
                       formControlName="admin_id"
                     >
-                      <option value="">-- Chọn tài khoản quản lý kho --</option>
-                      <option *ngFor="let p of listAdmin" [value]="p.id">
+                      <ng-option value="">-- Chọn tài khoản quản lý kho --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}
-                      </option>
-                    </select>
+                      </ng-option>
+                    </ng-select>
                     <div
                       *ngIf="submitted && f.admin_id.errors"
                       class="invalid-feedback"
