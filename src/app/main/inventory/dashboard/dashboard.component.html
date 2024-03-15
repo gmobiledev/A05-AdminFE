@@ -25,7 +25,8 @@
                                 <!-- <div>
                                     <h4 class="text-center">Danh sách sản phẩm</h4>
                                 </div> -->
-                    
+                                <ng-container *ngIf="!isShowBarChart">
+                                
                                 <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="d-flex justify-content-between align-items-center m-1">
@@ -47,7 +48,7 @@
                                     </div>
                                 </div>
                                 <ngx-datatable [rows]="listDataTmp" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
-                                    [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+                                    [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"                                    
                                     [limit]="basicSelectedOption">
                                     <ngx-datatable-column name="Name" prop="name">
                                         <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
@@ -60,11 +61,31 @@
                                             </div>
                                         </ng-template>
                                     </ngx-datatable-column>
-                                    <ngx-datatable-column name="Độ phủ(%)" prop="value"></ngx-datatable-column>                                    
+                                    <ngx-datatable-column name="Độ phủ(%)" prop="value"></ngx-datatable-column>   
+                                    
+                                    <ngx-datatable-column name="Thao tác" prop="key">
+                                        <ng-template let-value="value" ngx-datatable-cell-template>
+                                            <div class="d-flex align-items-center">
+                                                <div class="cell-line-height">
+                                                    <p (click)="onClick(value)" class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                                                        Xem
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
                                 </ngx-datatable>
-                    
+                            </ng-container>
                                 <!-- Bar chart -->
-                                <!-- <highcharts-chart [Highcharts]="BarHighcharts" [options]="chartBarOptions"></highcharts-chart> -->
+                                <ng-container *ngIf="isShowBarChart">
+                                    <button type="button" class="close" (click)="closeBarcharts()" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <highcharts-chart
+                                    [(update)]="isUpdateBarChart"
+                                    [Highcharts]="BarHighcharts" [options]="chartBarOptions"></highcharts-chart>
+                                </ng-container>
+                                
                             </div>
                         </div>                      
                     </div>

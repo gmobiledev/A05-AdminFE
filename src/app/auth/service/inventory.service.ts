@@ -160,4 +160,7 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/update-status-complete`, data);
   }
 
+  getChildHeatmapStatus(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetDirectChildSellChannelListHeatmapByProvinceId`, data);
+  }
 }

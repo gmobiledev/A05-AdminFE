@@ -17,8 +17,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   isHighcharts = typeof Highcharts === 'object';
   chartConstructor = "mapChart";
+
+  isShowBarChart: boolean = false;
   Highcharts: typeof Highcharts = Highcharts;
-  
   BarHighcharts: typeof Highcharts = Highcharts;
   chartBarOptions = {
     plotOptions: {
@@ -27,18 +28,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     },
     xAxis: {
-      categories: ['A05', 'Gtel', 'GTS', 'C06'],
+      categories: [],
       title: {
-        text: null
+        text: 'Biểu đồ tỉ lệ thuê bao kích hoạt/tổng số'
       },
       gridLineWidth: 1,
       lineWidth: 0
     },
     series: [
-      {
-        type: 'bar',
-        data: [10, 30, 5, 58]
-      }
+      
       
     ]
   }
@@ -51,6 +49,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   basicSelectedOption: number = 10;
   isUpdate: boolean = false;
+  isUpdateBarChart: boolean = false;
   constructor(
     private readonly inventoryService: InventoryService,
     private readonly commonDataService: CommonDataService
@@ -171,7 +170,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   
   async getData() {
-    
+    this.commonDataService.getProvinces().subscribe(res => {
+      console.log(res.data);
+      let datatmp = {...mapData}
+      let i = 0;
+      for(let item of datatmp.features) {
+        const se = res.data.find(x => x.title.includes(item.properties.name));
+        if(se) {
+          datatmp.features[i].properties.id = se.id;
+        } else {
+          console.log(item.properties.name)
+        }
+        i++;
+      }
+      console.log(datatmp);
+    })
     try {
       console.log('get data');
       if(!this.searchForm.date) {
@@ -212,6 +225,42 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.listDataTmp = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
+  }
+
+  async onClick(event) {
+    console.log(event);
+    this.chartBarOptions.xAxis.categories = [];
+    this.chartBarOptions.series = [];
+    this.isUpdateBarChart = true;
+    let dataPost = { province_id: event };
+    let res;
+    try {
+      res = await this.inventoryService.getChildHeatmapStatus(dataPost).toPromise();
+      let i = 0;
+      let data=  {
+        type: 'bar',
+        name: 'Độ phủ',
+        data: []
+      }
+      let categories = [];
+      for(let item of res) {
+        const percent = 100* item.totalActive / item.totalProduct
+        categories[i] = item.name;
+        data.data[i] = percent;
+        i++;
+      }
+      this.chartBarOptions.xAxis.categories = [...categories];
+      this.chartBarOptions.series.push(data);
+      this.isShowBarChart = true;
+      this.isUpdateBarChart = true;
+    } catch (error) {
+      
+    }
+    
+  }
+
+  closeBarcharts() {
+    this.isShowBarChart = false;
   }
 
 }
