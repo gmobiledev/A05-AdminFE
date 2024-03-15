@@ -210,52 +210,6 @@ export class SellChanelComponent implements OnInit {
     }
   }
 
-  // async onAcivteSell(id, status) {
-  //   const confirmMessage = status ? "Bạn có đồng ý kích hoạt kho?" : "Bạn có đồng ý dừng kích hoạt kho?";
-  //   if ((await this.alertService.showConfirm(confirmMessage)).value) {
-  //     this.inventoryService.activeSell(id, status).subscribe(res => {
-  //       if (!res.status) {
-  //         this.alertService.showError(res.message);
-  //         return;
-  //       }
-  //       this.alertService.showSuccess(res.message);
-  //       this.getData();
-  //     }, err => {
-  //       this.alertService.showError(err);
-  //     })
-  //   }
-  // }
-
-
-  async onSubmitUpload() {
-    if (!this.filesData || !this.filesImages || !this.adminId) {
-      this.alertService.showError("Vui lòng nhập đủ dữ liệu");
-    }
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
-      this.submittedUpload = true;
-      const formData = new FormData();
-      formData.append("files", this.filesData);
-      formData.append("batch_id", this.selectedItem.id);
-
-      console.log(this.filesData, this.selectedItem.id, formData)
-
-      this.inventoryService.uploadFileBatch(formData).subscribe(res => {
-        this.submittedUpload = false;
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.filesData = null;
-        this.filesImages = null;
-        this.modalClose();
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, error => {
-        this.submittedUpload = false;
-        this.alertService.showError(error);
-      })
-    }
-  }
 
   async onSelectFileAccount(event) {
     this.filesData = event.target.files[0];
@@ -393,6 +347,7 @@ export class SellChanelComponent implements OnInit {
     this.commonDataService.getDistricts(id).subscribe((res: any) => {
       if (res.status == 1) {
         this.districts = res.data
+        this.commues = res.data
 
       }
     })
