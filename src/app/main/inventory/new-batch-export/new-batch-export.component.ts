@@ -8,7 +8,6 @@ import { CommonService } from 'app/utils/common.service';
 import { BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'app-new-batch-export',

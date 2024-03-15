@@ -25,6 +25,7 @@ import { ViewSellChanelComponent } from './view-sell-chanel/view-sell-chanel.com
 import { ViewBatchExportComponent } from './view-batch-export/view-batch-export.component';
 import { CodeInputModule } from 'angular-code-input';
 import { BatchType } from 'app/utils/constants';
+import { ListBatchProductsComponent } from './list-batch-products/list-batch-products.component';
 
 const routes: Routes = [
   {
@@ -77,7 +78,11 @@ const routes: Routes = [
       type: BatchType.RETRIEVE
     },
     component: NewBatchExportComponent
-  }
+  },
+  {
+    path: 'list-batch-products',
+    component: ListBatchProductsComponent
+  },
 ];
 
 @NgModule({
@@ -93,7 +98,8 @@ const routes: Routes = [
     NewSellChanelComponent,
     EditSellChanelComponent,
     ViewSellChanelComponent,
-    ViewBatchExportComponent
+    ViewBatchExportComponent,
+    ListBatchProductsComponent
   ],
   imports: [
     CommonModule,

@@ -22,18 +22,33 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   Highcharts: typeof Highcharts = Highcharts;
   BarHighcharts: typeof Highcharts = Highcharts;
   chartBarOptions = {
+    title: {
+      text: 'Biểu đồ tỉ lệ kích hoạt/tổng số'
+    },
     plotOptions: {
       series: {
         stacking: 'normal'
-      }
+      },
     },
     xAxis: {
       categories: [],
       title: {
-        text: 'Biểu đồ tỉ lệ thuê bao kích hoạt/tổng số'
+        text: 'Đơn vị'
       },
       gridLineWidth: 1,
       lineWidth: 0
+    },
+    yAxis: {
+      min: 0,
+      max: 100,
+      title: {
+        text: '%',
+        align: 'high'
+      },
+      labels: {
+        overflow: 'justify'
+      },
+      gridLineWidth: 0
     },
     series: [
       
@@ -145,7 +160,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   async searchData() {
-    
+    this.isShowBarChart = false;
     await this.getData();
     this.chartMap.series = [];
     this.chartMap.series.push({
@@ -170,21 +185,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   
   async getData() {
-    this.commonDataService.getProvinces().subscribe(res => {
-      console.log(res.data);
-      let datatmp = {...mapData}
-      let i = 0;
-      for(let item of datatmp.features) {
-        const se = res.data.find(x => x.title.includes(item.properties.name));
-        if(se) {
-          datatmp.features[i].properties.id = se.id;
-        } else {
-          console.log(item.properties.name)
-        }
-        i++;
-      }
-      console.log(datatmp);
-    })
+    // this.commonDataService.getProvinces().subscribe(res => {
+    //   console.log(res.data);
+    //   let datatmp = {...mapData}
+    //   let i = 0;
+    //   for(let item of datatmp.features) {
+    //     const se = res.data.find(x => x.title.includes(item.properties.name));
+    //     if(se) {
+    //       datatmp.features[i].properties.id = se.id;
+    //     } else {
+    //       console.log(item.properties.name)
+    //     }
+    //     i++;
+    //   }
+    //   console.log(datatmp);
+    // })
     try {
       console.log('get data');
       if(!this.searchForm.date) {
@@ -229,9 +244,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   async onClick(event) {
     console.log(event);
-    this.chartBarOptions.xAxis.categories = [];
-    this.chartBarOptions.series = [];
-    this.isUpdateBarChart = true;
+    
+    // this.isUpdateBarChart = true;
     let dataPost = { province_id: event };
     let res;
     try {
@@ -261,6 +275,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   closeBarcharts() {
     this.isShowBarChart = false;
+    this.chartBarOptions.xAxis.categories = [];
+    this.chartBarOptions.series = [];
   }
 
 }
