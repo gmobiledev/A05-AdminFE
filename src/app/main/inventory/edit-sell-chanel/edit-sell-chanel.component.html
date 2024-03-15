@@ -105,21 +105,25 @@
                     >Kho nguồn</label
                   >
                   <div class="col-md-9">
-                    <select name="parent_id" class="form-control">
+                    <select
+                      name="parent_id"
+                      class="form-control"
+                      formControlName="parent_id"
+                    >
                       <option value="">-- Chọn kho nguồn --</option>
                       <option *ngFor="let p of listMyChanel" [value]="p.id">
                         {{ p.name }}
                       </option>
                     </select>
 
-                    <!-- <div
+                    <div
                       *ngIf="submitted && f.parent_id.errors"
                       class="invalid-feedback"
                     >
                       <div *ngIf="f.province_id.parent_id.required">
                         Vui lòng nhập trường này
                       </div>
-                    </div> -->
+                    </div>
                   </div>
                 </div>
 
@@ -214,7 +218,11 @@
                     >Đại lý</label
                   >
                   <div class="col-md-9">
-                    <select name="" class="form-control">
+                    <select
+                      name=""
+                      class="form-control"
+                      formControlName="customer_id"
+                    >
                       <option value="">-- Chọn đại lý --</option>
                       <option *ngFor="let p of listCustomer" [value]="p.id">
                         {{ p.name }}
@@ -236,7 +244,11 @@
                     >Người quản lý kho</label
                   >
                   <div class="col-md-9">
-                    <select name="" class="form-control">
+                    <select
+                      name=""
+                      class="form-control"
+                      formControlName="admin_id"
+                    >
                       <option value="">-- Chọn quản lý kho --</option>
                       <option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}

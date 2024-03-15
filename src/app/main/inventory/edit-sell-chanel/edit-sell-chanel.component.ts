@@ -35,7 +35,6 @@ export class EditSellChanelComponent implements OnInit {
   @Input() provinces;
   @Input() districts;
   @Input() commues;
-  @Input() countries;
 
   public submittedUpload: boolean = false;
   public currentUser: any;
@@ -53,15 +52,15 @@ export class EditSellChanelComponent implements OnInit {
   public submitted: boolean = false;
 
 
-  // public searchForm = {
-  //   keyword: '',
-  //   status: '',
-  //   nameSell: '',
-  //   nameChanel: '',
-  //   codeSell: '',
+  public searchForm = {
+    keyword: '',
+    status: '',
+    nameSell: '',
+    nameChanel: '',
+    codeSell: '',
 
-  //   page: 1
-  // }
+    page: 1
+  }
 
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   count: any;
@@ -79,24 +78,6 @@ export class EditSellChanelComponent implements OnInit {
   public page: number = 1;
   public pageSize: number;
   id;
-
-  // public dataSell = {
-  //   parent_id: '',
-  //   name: '',
-  //   code: 0,
-  //   desc: '',
-  //   type: 0,
-  //   status: 0,
-  //   business_id: 0,
-  //   admin_id: 0,
-  //   province_id: '',
-  //   commune_id: '',
-  //   district_id: '',
-  //   address: '',
-  //   attached_file_name: '',
-  //   attached_file_content: '',
-  //   customer_id: 0
-  // }
 
   constructor(
     private route: ActivatedRoute,
@@ -151,7 +132,7 @@ export class EditSellChanelComponent implements OnInit {
       console.log(error);
     })
 
-    this.taskService.getListAdmin(this.formGroup).subscribe(res => {
+    this.taskService.getListAdmin(this.searchForm).subscribe(res => {
       this.listAdmin = res.data.items;
     }, error => {
       console.log("ERRRR");
@@ -189,10 +170,12 @@ export class EditSellChanelComponent implements OnInit {
       const res = await this.commonDataService.getDistricts(id).toPromise();
       if (res.status == 1) {
         if (!init) {
-          this.formGroup.controls['district'].setValue('');
+          this.formGroup.controls['district_id'].setValue('');
+          this.formGroup.controls['commune_id'].setValue('');
+
         }
         this.districts = res.data;
-        this.commues = []
+        // this.commues = []
       }
     } catch (error) {
 
@@ -205,7 +188,7 @@ export class EditSellChanelComponent implements OnInit {
       const res = await this.commonDataService.getCommunes(id).toPromise();
       if (res.status == 1) {
         if (!init) {
-          this.formGroup.controls['commune'].setValue('');
+          this.formGroup.controls['commune_id'].setValue('');
         }
         this.commues = res.data
       }
@@ -214,34 +197,35 @@ export class EditSellChanelComponent implements OnInit {
     }
   }
 
-  onChangeProvince(event) {
-    let id = event.target.value
-    this.commonDataService.getDistricts(id).subscribe((res: any) => {
-      if (res.status == 1) {
-        this.districts = res.data
+  // onChangeProvince(event) {
+  //   let id = event.target.value
+  //   this.commonDataService.getDistricts(id).subscribe((res: any) => {
+  //     if (res.status == 1) {
+  //       this.districts = res.data
 
-      }
-    })
-  }
+  //     }
+  //   })
+  // }
 
-  onChangeDistrict(event) {
-    let id = event.target.value
-    this.commonDataService.getCommunes(id).subscribe((res: any) => {
-      if (res.status == 1) {
-        this.commues = res.data
-      }
-    })
-  }
+  // onChangeDistrict(event) {
+  //   let id = event.target.value
+  //   this.commonDataService.getCommunes(id).subscribe((res: any) => {
+  //     if (res.status == 1) {
+  //       this.commues = res.data
+  //     }
+  //   })
+  // }
 
-  modalClose() {
-    this.modalRef.close();
-    this.initForm();
-  }
+  // modalClose() {
+  //   this.modalRef.close();
+  //   this.initForm();
+  // }
 
 
   initForm() {
 
     this.formGroup = this.fb.group({
+      id: ['', Validators.required],
       sell_channelid: ['', Validators.required],
       quantity: ['', Validators.required],
       parent_id: ['', Validators.required],
@@ -297,7 +281,7 @@ export class EditSellChanelComponent implements OnInit {
       }
 
       this.formGroup.patchValue({
-        
+        id: res.data.items[0].id,
         name: res.data.items[0].name,
         code: res.data.items[0].code,
         desc: res.data.items[0].desc,
@@ -336,11 +320,13 @@ export class EditSellChanelComponent implements OnInit {
   }
 
   async onSubmitCreate() {
-    // this.submitted = true;
+    this.submitted = true;
     // if (this.formGroup.invalid) {
+    //   console.log('validate')
     //   return;
     // }
     let dataPost = {
+      id: this.formGroup.controls['id'].value,
       sell_channelid: this.formGroup.controls['sell_channelid'].value,
       parent_id: this.formGroup.controls['parent_id'].value,
       name: this.formGroup.controls['name'].value,
@@ -370,7 +356,6 @@ export class EditSellChanelComponent implements OnInit {
           this.alertService.showError(res.message);
           return;
         }
-        this.modalClose();
         this.alertService.showSuccess(res.message);
         this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
       }, error => {
@@ -382,25 +367,25 @@ export class EditSellChanelComponent implements OnInit {
 
   }
 
-  async onSubmitUploadSell() {
+  // async onSubmitUploadSell() {
 
-    if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
-      this.submittedUpload = true;
-      this.inventoryService.updateSellChanel(this.formGroup).subscribe(res => {
-        this.submittedUpload = false;
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.modalClose();
-        this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
-      }, error => {
-        this.submittedUpload = false;
-        this.alertService.showError(error);
-      })
-    }
-  }
+  //   if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
+  //     this.submittedUpload = true;
+  //     this.inventoryService.updateSellChanel(this.formGroup).subscribe(res => {
+  //       this.submittedUpload = false;
+  //       if (!res.status) {
+  //         this.alertService.showError(res.message);
+  //         return;
+  //       }
+  //       this.modalClose();
+  //       this.alertService.showSuccess(res.message);
+  //       this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
+  //     }, error => {
+  //       this.submittedUpload = false;
+  //       this.alertService.showError(error);
+  //     })
+  //   }
+  // }
 
 }
 
