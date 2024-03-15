@@ -67,12 +67,11 @@
                       name="status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="">Chọn trạng thái</option>
+                      <option value="">Tất cả</option>
                       <option value="0">Khởi tạo</option>
-                      <option value="1">Đã duyệt</option>
+                      <option value="1">Kích hoạt</option>
                       <option value="-2">Khóa</option>
                       <option value="-1">Hủy</option>
-                      <option value="3">Tất cả</option>
                     </select>
                   </div>
                 </div>
@@ -196,7 +195,7 @@
                       <a
                         class="ml-1"
                         (click)="onSubmitLock(item.id, -2)"
-                        *ngIf="item.status"
+                        *ngIf="item.status == 1"
                         title="Khóa kho"
                       >
                         <i
@@ -208,38 +207,38 @@
                       <a
                         class="ml-1"
                         (click)="onSubmitLock(item.id, -1)"
-                        *ngIf="!item.status"
-                        title="Mở kho"
+                        *ngIf="item.status == 0 || item.status == 1 || item.status == -2"
+                        title="Huỷ kho"
                       >
                         <i
-                          data-feather="unlock"
+                          data-feather="x-square"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </a>
+                      </a> 
 
                       <a
                         class="ml-1"
-                        (click)="onAcivteSell(item.id, 0)"
-                        *ngIf="!item.status"
+                        (click)="onSubmitLock(item.id, 1)"
+                        *ngIf="item.status == 0 || item.status == -2"
                         title="Kích hoạt kho"
                       >
                         <i
-                          data-feather="check"
+                          data-feather="plus-circle"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
 
-                      <a
+                      <!-- <a
                         class="ml-1"
-                        (click)="onAcivteSell(item.id, 1)"
-                        *ngIf="item.status"
-                        title="Dừng kích hoạt kho"
+                        (click)="onSubmitLock(item.id, 0)"
+                        *ngIf="!item.status == 0"
+                        title="Khởi tạo kho"
                       >
                         <i
-                          data-feather="check-circle"
+                          data-feather="log-in"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </a>
+                      </a> -->
 
                       <a
                         class="ml-1"

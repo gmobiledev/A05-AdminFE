@@ -104,7 +104,7 @@ export class SellChanelComponent implements OnInit {
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
       this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
-      this.searchForm.page_size  = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : '';
+      this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : '';
 
       this.getData();
 
@@ -184,7 +184,18 @@ export class SellChanelComponent implements OnInit {
   }
 
   async onSubmitLock(id, status) {
-    const confirmMessage = status ? "Bạn có đồng ý khóa kho?" : "Bạn có đồng ý mở khóa kho?";
+    let confirmMessage = status;
+
+    if (status == 0) {
+      confirmMessage = "Bạn có khởi tạọ kho?"
+    } else if (status == 1) {
+      confirmMessage = "Bạn có đồng ý kích hoạt kho?"
+    } else if (status == -2) {
+      confirmMessage = "Bạn có đồng ý khóa kho?"
+    } else if (status == -1) {
+      confirmMessage = "Bạn có đồng ý huỷ kho?"
+    }
+
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.inventoryService.lockSell(id, status).subscribe(res => {
         if (!res.status) {
@@ -199,21 +210,21 @@ export class SellChanelComponent implements OnInit {
     }
   }
 
-  async onAcivteSell(id, status) {
-    const confirmMessage = status ? "Bạn có đồng ý kích hoạt kho?" : "Bạn có đồng ý dừng kích hoạt kho?";
-    if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.activeSell(id, status).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, err => {
-        this.alertService.showError(err);
-      })
-    }
-  }
+  // async onAcivteSell(id, status) {
+  //   const confirmMessage = status ? "Bạn có đồng ý kích hoạt kho?" : "Bạn có đồng ý dừng kích hoạt kho?";
+  //   if ((await this.alertService.showConfirm(confirmMessage)).value) {
+  //     this.inventoryService.activeSell(id, status).subscribe(res => {
+  //       if (!res.status) {
+  //         this.alertService.showError(res.message);
+  //         return;
+  //       }
+  //       this.alertService.showSuccess(res.message);
+  //       this.getData();
+  //     }, err => {
+  //       this.alertService.showError(err);
+  //     })
+  //   }
+  // }
 
 
   async onSubmitUpload() {
@@ -397,15 +408,15 @@ export class SellChanelComponent implements OnInit {
   }
 
   getData() {
-   
-      this.commonDataService.getProvinces().subscribe((res: any) => {
-        if (res.status == 1) {
-          console.log(this.searchForm);
-          this.provinces = res.data
-        }
-      })
-    
-    
+
+    this.commonDataService.getProvinces().subscribe((res: any) => {
+      if (res.status == 1) {
+        console.log(this.searchForm);
+        this.provinces = res.data
+      }
+    })
+
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
@@ -414,12 +425,18 @@ export class SellChanelComponent implements OnInit {
       }
     }
     this.sectionBlockUI.start();
+    let paramSerch = { ...this.searchForm }
+    for (const key in paramSerch) {
+      if (paramSerch[key] == '') {
+        delete paramSerch[key];
+      }
+    }
 
-    this.inventoryService.searchSellChannelAll(this.searchForm).subscribe(res => {
+    this.inventoryService.searchSellChannelAll(paramSerch).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalPage = res.data.count;
-      this.searchForm.page_size   = res.data.page_size;
+      this.searchForm.page_size = res.data.page_size;
       this.onViewSell(res.data.id)
     }, error => {
       this.sectionBlockUI.stop();

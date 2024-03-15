@@ -48,7 +48,7 @@ export class InventoryService {
   }
 
   lockSell(id: number, status: number){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { sell_channelid: id , status: status});
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { id: id , status: status});
   }
 
   activeSell(id: number, status: number){
