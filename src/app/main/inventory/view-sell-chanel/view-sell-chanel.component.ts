@@ -145,7 +145,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   onFocusMobile() {
     this.exitsUser = false;
-    this.titleModal = "Thêm người bán hàng";
+    this.titleModal = "Thêm tài khoản bán hàng";
   }
 
   async modalOpen(modal, item = null) {
@@ -176,7 +176,7 @@ export class ViewSellChanelComponent implements OnInit {
         });
       })
     } else {
-      this.titleModal = "Thêm người bán hàng";
+      this.titleModal = "Thêm tài khoản bán hàng";
       this.isCreate = true;
       this.modalRef = this.modalService.open(modal, {
         centered: true,
@@ -268,6 +268,7 @@ export class ViewSellChanelComponent implements OnInit {
           }
           this.modalRef.close();
           this.initForm();
+          this.getData();
           this.alertService.showSuccess(res.message);
         }, error => {
           this.alertService.showMess(error);
