@@ -97,6 +97,7 @@ export class ViewSellChanelComponent implements OnInit {
     batch_id: '',
     keyword: '',
     ekyc_status: '',
+    level: ''
   }
 
   dateRange: any;

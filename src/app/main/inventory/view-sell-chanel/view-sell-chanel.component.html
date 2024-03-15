@@ -13,50 +13,35 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="keysearch"
-                      [(ngModel)]="searchForm.keysearch"
-                      class="form-control"
-                      placeholder="Nhập số/serial"
-                    />
+                    <input type="text" name="keysearch" [(ngModel)]="searchForm.keysearch" class="form-control"
+                      placeholder="Nhập số/serial" />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select
-                      class="form-control"
-                      name="status"
-                      [(ngModel)]="searchForm.status"
-                    >
+                    <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                       <option value="">Chọn trạng thái</option>
-                      <option
-                        *ngFor="let item of taskTelecomStatus | keyvalue"
-                        [value]="item.value"
-                        [id]="item.key"
-                      >
+                      <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value" [id]="item.key">
                         <span [innerHTML]="item.value | showStatusSim"></span>
                       </option>
                     </select>
                   </div>
                 </div>
+
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      placeholder="Khoảng thời gian"
-                      [ngModelOptions]="{ standalone: true }"
-                      ngxDaterangepickerMd
-                      [(ngModel)]="dateRange"
-                      [ranges]="ranges"
-                      [locale]="{ applyLabel: 'Chọn', format: 'DD/MM/YYYY' }"
-                      [showCustomRangeLabel]="true"
-                      [alwaysShowCalendars]="true"
-                      name="daterange"
-                      class="form-control"
-                    />
+                    <select class="form-control" name="level" [(ngModel)]="searchForm.level">
+                      <option value="">Chọn hạng số</option>
+                      <option value="NORMAL">NORMAL</option>
+                      <option value="QUASI">QUASI</option>
+                      <option value="BRONZE">BRONZE </option>
+                      <option value="SILVER">SILVER </option>
+                      <option value="GOLD">GOLD </option>
+
+                    </select>
                   </div>
                 </div>
+
               </div>
 
               <div class="mt-1 overflow-hidden">
@@ -66,11 +51,7 @@
                   </button>
                 </div>
                 <div class="pull-right">
-                  <button
-                    type="button"
-                    class="btn btn-success mr-25"
-                    (click)="modalOpen(modalAddUser)"
-                  >
+                  <button type="button" class="btn btn-success mr-25" (click)="modalOpen(modalAddUser)">
                     Chọn tài khoản bán hàng
                   </button>
                 </div>
@@ -116,43 +97,20 @@
                 </tbody>
               </table>
 
-              <ngb-pagination
-                class="d-flex justify-content-end pr-3 pt-2"
-                [collectionSize]="totalItems"
-                [(page)]="searchForm.page"
-                [pageSize]="searchForm.take"
-                [boundaryLinks]="true"
-                (pageChange)="loadPage($event)"
-              >
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                [(page)]="searchForm.page" [pageSize]="searchForm.take" [boundaryLinks]="true"
+                (pageChange)="loadPage($event)">
                 <ng-template ngbPaginationPages let-page let-pages="pages">
                   <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
                     <div class="mb-3 d-flex flex-nowrap px-2">
-                      <label
-                        id="paginationInputLabel"
-                        for="paginationInput"
-                        class="col-form-label me-2 ms-1"
-                        >Trang</label
-                      >
-                      <input
-                        #i
-                        type="text"
-                        inputmode="numeric"
-                        pattern="[0-9]*"
-                        class="form-control custom-pages-input"
-                        id="paginationInput"
-                        [value]="searchForm.page"
-                        (keyup.enter)="loadPage(i.value)"
-                        (blur)="loadPage(i.value)"
-                        (input)="formatInput($any($event).target)"
-                        aria-labelledby="paginationInputLabel paginationDescription"
-                        style="width: 2.5rem"
-                      />
-                      <span
-                        id="paginationDescription"
-                        class="col-form-label text-nowrap px-2"
-                      >
-                        của {{ pages.length }}</span
-                      >
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Trang</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        của {{ pages.length }}</span>
                     </div>
                   </li>
                 </ng-template>
@@ -173,13 +131,13 @@
     </button>
   </div>
   <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
-    <div class="modal-body" tabindex="0" >
+    <div class="modal-body" tabindex="0">
 
       <div class="form-group" *ngIf="isCreate">
         <label for="basicInput">Số điện thoại</label>
         <input type="tel" class="form-control" placeholder="" (focusout)="onCheckExits()" (focus)="onFocusMobile()"
-        mask="0000000000"
-          name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+          mask="0000000000" name="mobile" formControlName="mobile"
+          [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
         <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
           <div *ngIf="f.mobile.errors.required">Vui lòng số điện thoại</div>
         </div>
@@ -187,9 +145,8 @@
 
       <div class="form-group" *ngIf="isCreate">
         <label for="basicInput">Họ và tên</label>
-        <input type="text" class="form-control" placeholder=""
-       
-          name="mobile" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <input type="text" class="form-control" placeholder="" name="mobile" formControlName="name"
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
         <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
           <div *ngIf="f.name.errors.required">Vui lòng nhập họ và tên</div>
         </div>
@@ -197,12 +154,8 @@
 
       <div class="form-group" *ngIf="!exitsUser && isCreate">
         <label for="basicInput">Mật khẩu đăng nhập</label>
-        <code-input 
-        style="width: 350px;"
-        [isCodeHidden]="true"
-            [isCharsCode]="false"
-              [codeLength]="6"
-              (codeCompleted)="onCompletedInputPassword($event)"></code-input>
+        <code-input style="width: 350px;" [isCodeHidden]="true" [isCharsCode]="false" [codeLength]="6"
+          (codeCompleted)="onCompletedInputPassword($event)"></code-input>
 
         <!-- <input type="password" class="form-control" placeholder="" name="password" formControlName="password"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }" /> -->
@@ -241,11 +194,11 @@
               </div>
             </div>
             <div class="col-4">
-              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 1"
-                type="button" class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 0)">Khóa <span
+              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 1" type="button"
+                class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 0)">Khóa <span
                   [data-feather]="'lock'"></span></button>
-              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 0"
-                type="button" class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 1)">Mở <span
+              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 0" type="button"
+                class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 1)">Mở <span
                   [data-feather]="'unlock'"></span></button>
             </div>
           </div>
@@ -265,7 +218,7 @@
                   <label for="">Mã giới thiệu</label>
                   <input type="text" class="form-control" formControlName="ref_code">
                 </div>
-               
+
               </div>
             </div>
             <div class="col-4">
@@ -295,21 +248,21 @@
       </div>
 
       <ng-template *ngIf="isCreate">
-      <div class="form-group">
-        <label for="">Partner code</label>
-        <input type="text" class="form-control" formControlName="partner_user_code">
-      </div>
+        <div class="form-group">
+          <label for="">Partner code</label>
+          <input type="text" class="form-control" formControlName="partner_user_code">
+        </div>
 
-      <div class="form-group">
-        <label for="">Kênh bán</label>
-        <select formControlName="channel_id" id="" class="form-control">
-          <option [value]="item.id" *ngFor="let item of listSellChannel">
-            {{ item.code }}
-          </option>
-        </select>
-        
-      </div>
-    </ng-template>
+        <div class="form-group">
+          <label for="">Kênh bán</label>
+          <select formControlName="channel_id" id="" class="form-control">
+            <option [value]="item.id" *ngFor="let item of listSellChannel">
+              {{ item.code }}
+            </option>
+          </select>
+
+        </div>
+      </ng-template>
 
     </div>
     <div class="modal-footer">
@@ -324,24 +277,15 @@
 <ng-template #modalAddUser let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Chọn tài khoản bán hàng</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose1()"
-      aria-label="Close"
-    >
+    <button type="button" class="close" (click)="modalClose1()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
     <div class="modal-body" tabindex="0">
       <div class="pull-right">
-        <button
-          type="button"
-          class="btn btn-primary mb-1"
-          (click)="modalOpen(modalCreate)"
-          title="Thêm người bán khách hàng"
-        >
+        <button type="button" class="btn btn-primary mb-1" (click)="modalOpen(modalCreate)"
+          title="Thêm người bán khách hàng">
           <span [data-feather]="'plus'"></span>
         </button>
       </div>
@@ -361,9 +305,7 @@
         </select>
         <div class="mt-1" *ngFor="let item of listSelectedUser">
           Thông tin khách hàng : {{ item.full_name }} - {{ item.mobile }}
-          <span class="pull-right" (click)="onRemoveElement(item)"
-            ><b>X</b></span
-          >
+          <span class="pull-right" (click)="onRemoveElement(item)"><b>X</b></span>
         </div>
 
       </div>
