@@ -65,7 +65,8 @@ export class NewBatchExportComponent implements OnInit {
     page: 1,
     skip: 0,
     take: 1000,
-    channel_id: ''
+    channel_id: '',
+    status_array: []
   }
 
   public createBatchExportForm = {
@@ -242,7 +243,7 @@ export class NewBatchExportComponent implements OnInit {
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;
-      
+      this.searchFormProduct.status_array = [0,2];
       this.inventoryService.getAllSim(this.searchFormProduct).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
@@ -251,8 +252,8 @@ export class NewBatchExportComponent implements OnInit {
         }
         const data = res.data.data;
         this.serverPaging.total_items = data.count;
-        this.tempList = data.items;
-        this.list = data.items;
+        this.tempList = data.items.filter(x => x.status != 1);
+        this.list = data.items.filter(x => x.status != 1);
       }, error => {
         this.alertService.showMess(error);
         this.sectionBlockUI.stop();

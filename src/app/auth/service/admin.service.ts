@@ -76,4 +76,8 @@ export class AdminService {
   getCommunes(districtId: number){
     return this._http.get<any>(`${environment.apiUrl}/area/get-communes/${districtId}`);
   }
+
+  getListAdmin(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/search`, {params: params});
+  }
 }
