@@ -258,7 +258,7 @@ export class NewBatchExportComponent implements OnInit {
         this.sectionBlockUI.stop();
       })
     } else {
-      this.searchForm.level = this.selectedAttributes !== null ? this.selectedAttributes : '';
+      this.searchForm.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
       console.log(this.selectedAttributes);
       let paramSearch = {...this.searchForm}
       for(let key in paramSearch) {
