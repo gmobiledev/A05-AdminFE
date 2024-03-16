@@ -51,7 +51,8 @@ export class NewBatchExportComponent implements OnInit {
     key_to: '',
     brand: '',
     category_id: '',
-    take: ''
+    take: '',
+    level: ''
   }
   seachMyChannel = {
     user_id: '',
@@ -91,9 +92,7 @@ export class NewBatchExportComponent implements OnInit {
   public listInputChannel;
   public submitted: boolean = false;
   public listAttribute = [
-    {id: 1, name: 'BRONE'},
-    {id: 1, name: 'GOLD'},
-    {id: 1, name: 'PLATILUM'},
+    
   ]
   selectedAttributes: any;
   disableSelectParent: boolean = false;
@@ -127,6 +126,21 @@ export class NewBatchExportComponent implements OnInit {
     Array.prototype.push.apply(this.tmpSelected, selected);   
     event.selected = [];
     console.log(this.tmpSelected);        
+  }
+
+  onChangeCategory(event) {
+    if(event.target.value == 2) {
+      this.listAttribute = [];
+    } else if (event.target.value == 3) {
+      this.listAttribute = [
+        { id: 'NORMAL', name: 'NORMAL' },
+        { id: 'QUASI', name: 'QUASI' },
+        { id: 'BRONE', name: 'BRONE' },
+        { id: 'SILVER', name: 'SILVER' },
+        { id: 'GOLD', name: 'GOLD' },
+        { id: 'PLATILUM', name: 'PLATILUM' },
+      ]
+    }
   }
 
   onAddItems() {
@@ -244,6 +258,8 @@ export class NewBatchExportComponent implements OnInit {
         this.sectionBlockUI.stop();
       })
     } else {
+      this.searchForm.level = this.selectedAttributes !== null ? this.selectedAttributes : '';
+      console.log(this.selectedAttributes);
       let paramSearch = {...this.searchForm}
       for(let key in paramSearch) {
         if(paramSearch[key] === '') {
