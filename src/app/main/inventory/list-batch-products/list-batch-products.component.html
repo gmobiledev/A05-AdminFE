@@ -9,45 +9,105 @@
                         <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="d-flex justify-content-between align-items-center m-1">
-                                    <label class="d-flex align-items-center">Show
-                                        <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                        entries</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12 d-flex justify-content-md-end">
-                                <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                                    <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
-                                            class="form-control ml-25" (keyup)="filterList($event)" /></label>
-                                </div>
-                            </div>
-                        </div>
-                        <ngx-datatable [rows]="listProducts" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
-                            [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
-                            [limit]="basicSelectedOption">
-                            <ngx-datatable-column name="Name" prop="name">
-                                <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
-                                    <div class="d-flex align-items-center">
-                                        <div class="cell-line-height">
-                                            <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
-                                                {{ name }}
-                                            </p>
-                                        </div>
+                        <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" name="keysearch" [(ngModel)]="searchForm.keysearch"
+                                            class="form-control" placeholder="Nhập số/serial">
                                     </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                                            <option value="">Chọn trạng thái</option>
+                                            <option *ngFor="let item of taskTelecomStatus | keyvalue"
+                                                [value]="item.value" [id]="item.key">
+                                                <span [innerHTML]="item.value | showStatusSim"></span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Khoảng thời gian"
+                                            [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
+                                            [(ngModel)]="dateRange" [ranges]="ranges"
+                                            [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
+                                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                                                [data-feather]="'search'"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <span>Tổng số:</span> <b>{{ totalItems }}</b>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên</th>
+                                        <th>Nhà mạng</th>
+                                        <th>Hạng số</th>
+                                        <!-- <th>Trạng thái</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                                        </td>
+
+                                        <td>
+                                            {{item.name}}
+                                        </td>
+                                        <td>
+                                            {{item.brand}}
+                                        </td>
+                                        <td>
+                                            {{item.level}}
+                                        </td>
+                                        <!-- <td>
+                                            <div [innerHTML]="item.status | showStatusSim"></div>
+                                        </td> -->                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                                (pageChange)="loadPage($event)">
+                                <ng-template ngbPaginationPages let-page let-pages="pages">
+                                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                        <div class="mb-3 d-flex flex-nowrap px-2">
+                                            <label id="paginationInputLabel" for="paginationInput"
+                                                class="col-form-label me-2 ms-1">Trang</label>
+                                            <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                                class="form-control custom-pages-input" id="paginationInput"
+                                                [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                                (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                                aria-labelledby="paginationInputLabel paginationDescription"
+                                                style="width: 2.5rem" />
+                                            <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                                của {{pages.length}}</span>
+                                        </div>
+                                    </li>
                                 </ng-template>
-                            </ngx-datatable-column>
-                            <ngx-datatable-column name="Nhà mạng" prop="mno"></ngx-datatable-column>
-                            <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
-                            <ngx-datatable-column name="Hạng số" prop="level"></ngx-datatable-column>
-                        </ngx-datatable>
+                            </ngb-pagination>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

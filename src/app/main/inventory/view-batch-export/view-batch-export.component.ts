@@ -78,8 +78,8 @@ export class ViewBatchExportComponent implements OnInit {
     this.listCurrentAction = this.currentUser.actions;
     this.inventoryService.findOneBatchExport(this.id).subscribe(res => {
       this.data = res.data;
-      this.listProducts = res.data.products;
-      this.tempList = res.data.products;
+      this.listProducts = res.data.products.items;
+      this.tempList = res.data.products.items;
       if(res.data.channels) {
         this.fromChannel = res.data.channels.find(x => x.id == res.data.batch.channel_id);
         this.toChannel = res.data.channels.find(x => x.id == res.data.batch.to_channel_id);

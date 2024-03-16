@@ -126,7 +126,7 @@ export class InventoryService {
   }
 
   findOneBatchExport(id) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/find-one?batch_id=${id}`);
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/find-one?batch_id=${id}`);
   }
 
   updateBatchExport(data: UpdateBatchExportDto) {

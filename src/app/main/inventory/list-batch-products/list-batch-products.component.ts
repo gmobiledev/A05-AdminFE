@@ -68,7 +68,7 @@ export class ListBatchProductsComponent implements OnInit {
     page: 1,
     array_status: [],
     skip: 0,
-    take: 20,
+    page_size: 20,
     date_range: '',
     telco: '',
     channel_id: '',
@@ -181,13 +181,13 @@ export class ListBatchProductsComponent implements OnInit {
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/inventory/list-batch'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/list-batch-products'], { queryParams: this.searchForm });
   }
 
   viewDetailSummary(array_status, action) {
     this.searchForm.action = action;
     this.searchForm.array_status = array_status;
-    this.router.navigate(['/inventory/list-batch'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/list-batch-products'], { queryParams: this.searchForm });
   }
 
   initActiveBoxSummary() {
@@ -232,7 +232,7 @@ export class ListBatchProductsComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
-    this.router.navigate(['/inventory/list-batch'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/list-batch-products'], { queryParams: this.searchForm });
   }
 
   onSubmitExportExcelReport() {
@@ -267,33 +267,19 @@ export class ListBatchProductsComponent implements OnInit {
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.sectionBlockUI.start();
-    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
+    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
 
     this.inventoryService.findOneBatchExport(this.searchForm.batch_id).subscribe(res => {
       this.sectionBlockUI.stop();
      
       const data = res.data;
-      this.listProducts = data.products;
-      this.list = data.products;
-      this.tempList = res.data.products;
+      this.list = data.products.items;
+      this.totalItems = data.products.count;
       // if(res.data.channels) {
       //   this.fromChannel = res.data.channels.find(x => x.id == res.data.batch.channel_id);
       //   this.toChannel = res.data.channels.find(x => x.id == res.data.batch.to_channel_id);
       // }
     })
-  }
-
-  filterList(event) {
-    const val = event.target.value.toLowerCase();
-    // filter our data
-    const temp = this.tempList.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-    // update the rows
-    this.listProducts = temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
   }
 
 }
