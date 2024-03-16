@@ -190,22 +190,35 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'sell-chanel',
-        title: 'DS kho sim số',
+        title: 'Danh sách kho',
         translate: '',
         type: 'item',
         icon: 'database',
         url: 'inventory/sell-chanel'
       },
-     
-
-
+      {
+        id: 'report-business',
+        title: 'Báo ',
+        translate: '',
+        type: 'item',
+        icon: 'chart',
+        url: 'invenstory/report/kinh-doanh'
+      },
+      {
+        id: 'report-doanh-thu',
+        title: 'Báo ',
+        translate: '',
+        type: 'item',
+        icon: 'chart',
+        url: 'invenstory/report/doanh-thu'
+      }
     ]
   },
 
 
   {
     id: 'users',
-    title: 'Gtalk',
+    title: 'GSIM',
     translate: '',
     type: 'collapsible',
     icon: 'phone-call',
@@ -286,7 +299,7 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'gip/call-history'
       },
-     
+
       {
         id: 'g-task',
         title: 'Task',
@@ -399,7 +412,7 @@ export const menu: CoreMenu[] = [
       }
     ]
   },
- 
+
 
   {
     id: 'users',
