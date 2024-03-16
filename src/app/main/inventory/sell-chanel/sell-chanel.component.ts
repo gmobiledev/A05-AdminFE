@@ -66,15 +66,9 @@ export class SellChanelComponent implements OnInit {
   @Input() provinces;
   @Input() districts;
   @Input() commues;
-  @Input() countries;
 
   dateRange: any;
 
-  public residence_districts;
-  public residence_commues;
-  public home_districts;
-  public home_commues;
-  public residence;
 
   public modalRef: any;
   public titleModal: string;
@@ -326,7 +320,6 @@ export class SellChanelComponent implements OnInit {
 
     this.commonDataService.getProvinces().subscribe((res: any) => {
       if (res.status == 1) {
-        console.log(this.searchForm);
         this.provinces = res.data
       }
     })

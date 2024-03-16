@@ -44,28 +44,28 @@ export class InventoryService {
   }
 
   searchSellChannelAll(data) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, data );
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, data);
   }
 
-  lockSell(id: number, status: number){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { id: id , status: status});
+  lockSell(id: number, status: number) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`, { id: id, status: status });
   }
 
-  getListCustomer(channel_id: number){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/FindUserBySellChannelId`,  { channel_id: channel_id });
+  getListCustomer(channel_id: number) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/FindUserBySellChannelId`, { channel_id: channel_id });
   }
 
-  removeUserChanel(channel_id, user_id){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/DeleteUserBySellChannelIDAndUserId`,  { channel_id: channel_id, user_id: user_id});
+  removeUserChanel(channel_id, user_id) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/DeleteUserBySellChannelIDAndUserId`, { user_id: user_id, channel_id: channel_id });
   }
 
 
-  activeSell(id: number, status: number){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`,  { sell_channelid: id , status: status});
+  activeSell(id: number, status: number) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`, { sell_channelid: id, status: status });
   }
 
-  viewDetailSell(id: number){
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetSell_channelDetails`,  { id: id , status: status});
+  viewDetailSell(id: number) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetSell_channelDetails`, { id: id, status: status });
   }
 
 
