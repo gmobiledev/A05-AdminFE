@@ -55,6 +55,7 @@
     "chart.js": "3.0.2",
     "core-js": "3.14.0",
     "dayjs": "^1.11.4",
+    "exceljs": "^4.4.0",
     "feather-icons": "4.28.0",
     "firebase": "^9.14.0",
     "flatpickr": "4.6.9",

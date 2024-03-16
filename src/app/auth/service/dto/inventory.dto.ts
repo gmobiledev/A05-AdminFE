@@ -17,3 +17,24 @@ export class ApproveBatch {
     batch_id: number;
     user_id: number;
 }
+
+export class RetrieveSellChannelDto {
+
+    user_id: number;
+    channel_id: number;
+    product_ids: number[];
+    note: string;
+    attached_file_name: string;
+    attached_file_content: string;
+    
+}
+
+export class RetrieveAllSellChannelDto {
+
+    user_id: number;
+    channel_id: number;
+    note: string;
+    attached_file_name: string;
+    attached_file_content: string;
+
+}

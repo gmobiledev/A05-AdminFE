@@ -24,4 +24,8 @@ export class CommonDataService {
     getCommunes(districtId: number) {
         return this._http.get<any>(`${environment.apiUrl}/area/get-communes/${districtId}`);
     }
+
+    readFile(link) {
+        return this._http.get(link, { responseType: 'arraybuffer' })      
+    }
 }

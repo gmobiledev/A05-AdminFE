@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { User } from 'app/auth/models';
 import { Observable } from 'rxjs';
 import { CreateAgentDto, CreateUserDto, UpdateStatusAgentDto } from './dto/user.dto';
-import { CreateBatchExportDto, UpdateBatchExportDto } from './dto/inventory.dto';
+import { CreateBatchExportDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchExportDto } from './dto/inventory.dto';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
@@ -97,15 +97,15 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch/update-status`, data);
   }
 
-  kdCreateBatch(data) {
+  kdCreateBatchInput(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/kinh-doanh`, data);
   }
 
-  vpUpdateStatusBatch(data) {
+  vpUpdateStatusBatchInput(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/van-phong/update-status`, data);
   }
 
-  ktUpdateStatusBatch(data) {
+  ktUpdateStatusBatchInput(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/ke-toan/update-status`, data);
   }
 
@@ -157,4 +157,19 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/user/reject`, data);
   }
 
+  retrieveProductOfChannel(data: RetrieveSellChannelDto) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve-channel`, data);
+  }
+
+  retrieveChannel(data: RetrieveAllSellChannelDto) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve-all-channel`, data);
+  }
+
+  updateStatusBatchInputComplete(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/update-status-complete`, data);
+  }
+
+  getChildHeatmapStatus(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetDirectChildSellChannelListHeatmapByProvinceId`, data);
+  }
 }

@@ -149,13 +149,19 @@ export class BatchComponent implements OnInit {
     }
 
     let confirmMessage = "";
-    if (status == this.batchStatus.APPORVED || status == this.batchStatus.APPORVED_BY_ACCOUNTANT) {
+    if (status == this.batchStatus.APPROVED || status == this.batchStatus.APPROVED_BY_ACCOUNTANT) {
       confirmMessage = 'Bạn có đồng ý Xác nhận duyệt?'
+    } else if (status == this.batchStatus.COMPLETED) {
+      confirmMessage = 'Bạn có đồng ý Xác đã hoành thành?'
+    } else if (status == this.batchStatus.CANCEL_BY_ACCOUNTANT || status == this.batchStatus.CANCEL_BY_OFFICE) {
+      confirmMessage = 'Bạn có đồng ý từ chối?'
     }
 
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      if(status == this.batchStatus.APPORVED_BY_ACCOUNTANT) {
-        this.inventoryService.vpUpdateStatusBatch(data).subscribe(res => {
+      if(status == this.batchStatus.APPROVED_BY_ACCOUNTANT
+        || status == this.batchStatus.CANCEL_BY_ACCOUNTANT
+        ) {
+        this.inventoryService.ktUpdateStatusBatchInput(data).subscribe(res => {
           if (!res.status) {
             this.alertService.showMess(res.message);
             return;
@@ -168,8 +174,24 @@ export class BatchComponent implements OnInit {
           return;
         })
       }
-      if(status == this.batchStatus.APPORVED) {
-        this.inventoryService.ktUpdateStatusBatch(data).subscribe(res => {
+      if(status == this.batchStatus.APPROVED
+        || status == this.batchStatus.CANCEL_BY_OFFICE
+        ) {
+        this.inventoryService.vpUpdateStatusBatchInput(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.modalClose();
+          this.getData();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
+          return;
+        })
+      } 
+      if(status == this.batchStatus.COMPLETED) {
+        this.inventoryService.updateStatusBatchInputComplete(data).subscribe(res => {
           if (!res.status) {
             this.alertService.showMess(res.message);
             return;
@@ -249,10 +271,13 @@ export class BatchComponent implements OnInit {
   }
 
   async onSubmitUploadLo() {
-
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tải lên dữ liệu của file excel")).value) {
+    if(!this.dataLo.files) {
+      this.alertService.showMess("Vui lòng đính kèm chứng từ");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu nhập kho")).value) {
       this.submittedUpload = true;
-      this.inventoryService.kdCreateBatch(this.dataLo).subscribe(res => {
+      this.inventoryService.kdCreateBatchInput(this.dataLo).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
           this.alertService.showError(res.message);
