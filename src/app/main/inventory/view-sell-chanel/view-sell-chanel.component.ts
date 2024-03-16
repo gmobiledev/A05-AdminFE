@@ -81,6 +81,7 @@ export class ViewSellChanelComponent implements OnInit {
   public listServiceTmp: any;
 
   public listSellChannel: any;
+  public isShowAddInput: boolean = true;
 
   public searchForm: any = {
     keysearch: '',
@@ -148,14 +149,14 @@ export class ViewSellChanelComponent implements OnInit {
 
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.ekyc_status = params['ekyc_status'] != undefined ? params['ekyc_status'] : '_all';
-      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
+      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
       this.contentHeader.headerTitle = 'Xem chi tiết kho số';
       this.contentHeader.breadcrumb.links[1] = 'Xem chi tiết kho số';
 
       // this.getData();
       this.getService();
-      this.getSellChannel();
+      // this.getSellChannel();
 
     })
 
@@ -208,6 +209,18 @@ export class ViewSellChanelComponent implements OnInit {
   modalClose1() {
     this.modalRef.close();
     this.initForm();
+  }
+
+  addInput() {
+    let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
+    let newGroup = this.formBuilder.group({
+      ref_code: [],
+      service_code: []
+    });
+    arrayControl.push(newGroup);
+    if(arrayControl.length == this.listAllService.length) {
+      this.isShowAddInput = false;
+    }
   }
 
   async openModalUserCode(modal, item) {
@@ -394,16 +407,29 @@ export class ViewSellChanelComponent implements OnInit {
       if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
         this.userService.createAgent(data).subscribe(res => {
           if (!res.status) {
-
             this.alertService.showError(res.message);
             this.submitted = false;
             return;
           }
-          this.getData()
 
-          this.modalRef.close();
-          this.initForm();
-          this.alertService.showSuccess(res.message);
+          //add nguoi ban hang vao kho
+          this.telecomService.sellChannelAddChannelToUser({
+            channel_id: [this.searchForm.channel_id],
+            user_id: res.data.id
+          }).subscribe(res2 => {
+            if (!res2.status) {
+              this.alertService.showMess(res2.message);
+              return;
+            }
+            this.modalRef.close();
+            this.initForm();
+            this.alertService.showSuccess(res2.message);
+            this.getData()
+          }, error => {
+            this.alertService.showMess(error);
+            return;
+          }
+          )
         }, error => {
           this.alertService.showMess(error);
         })
@@ -444,8 +470,6 @@ export class ViewSellChanelComponent implements OnInit {
       password: ['', Validators.required],
       partner_user_code: [''],
       channel_id: [''],
-      // ref_code: [],
-      // service_code: new FormArray([]),
       agents_service: this.formBuilder.array([]),
       new_agents_service: this.formBuilder.array([])
     });
@@ -465,21 +489,6 @@ export class ViewSellChanelComponent implements OnInit {
     })
   }
 
-  onChangeUser(event) {
-    console.log("id = ", event.target.value);
-    const foundObject = this.listSellUser.find(obj => obj.id == event.target.value);
-    this.listSelectedUser.push(foundObject);
-
-    // const isDuplicate = this.listSellUser.some(obj => obj.id === foundObject.id);
-    // if(isDuplicate) {
-    //   this.listSelectedUser.push(foundObject);
-    // } else {
-    //   console.log('ĐÃ CHỌN NGƯỜI BÁN HÀNG!');
-    // }
-    // console.log("foundObject = ",foundObject);
-
-  }
-
   async onRemoveItem(item) {
     if ((await this.alertService.showConfirm("Bạn có đồng ý xoá tài khoản bán hàng này không?")).value) {
       this.inventoryService.removeUserChanel(this.searchForm.user_id, this.searchForm.channel_id).subscribe(res => {
@@ -493,11 +502,5 @@ export class ViewSellChanelComponent implements OnInit {
     }
   }
 
-  onRemoveElement(elementToRemove: number) {
-    const index = this.listSelectedUser.indexOf(elementToRemove);
-    if (index !== -1) {
-      this.listSelectedUser.splice(index, 1);
-    }
-  }
 }
 

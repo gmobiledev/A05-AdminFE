@@ -37,6 +37,8 @@ export class SellChanelComponent implements OnInit {
     admin_id: '',
     province_id: '',
     district_id: '',
+    skip: 0,
+    take: 20,
     commune_id: '',
     address: '',
     attach_file_name: '',
@@ -56,6 +58,7 @@ export class SellChanelComponent implements OnInit {
   public filesImages: any;
   public adminId: any;
   public refCode: any;
+  public totalItems: number;
 
   public currentUser: any;
   public isAdmin: boolean = false;
@@ -330,6 +333,7 @@ export class SellChanelComponent implements OnInit {
 
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
       if (arrayRoles.includes("admin") || arrayRoles.includes("root")) {
@@ -349,6 +353,7 @@ export class SellChanelComponent implements OnInit {
       this.list = res.data.items;
       this.totalPage = res.data.count;
       this.searchForm.page_size = res.data.page_size;
+      this.totalItems = res.data.count;
       this.onViewSell(res.data.id)
     }, error => {
       this.sectionBlockUI.stop();
