@@ -30,6 +30,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         stacking: 'normal'
       },
     },
+    tooltip: {
+      formatter: function () {
+               
+        return  'Độ phủ: ' + this.y + ' %' + '</br>' +
+          'Số thuê bao kích hoạt: ' + this.point.options.total_active + '</br>' +
+          'Tổng số thuê bao: ' + this.point.options.total_product          
+      }
+    },
     xAxis: {
       categories: [],
       title: {
@@ -213,8 +221,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log('success get');
       this.listData = res.data.items;
       console.log(this.listData);
-      this.listData = res.data.items.map(x => { return {name: x.name, value: x.value * 100, key: x.key} });
-      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value: x.value * 100, key: x.key} });
+      this.listData = res.data.items.map(x => { return {name: x.name, value: (x.value * 100).toFixed(2), key: x.key} });
+      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value: (x.value * 100).toFixed(2), key: x.key} });
       this.data = [];
       for(let item of mapData.features) {
         const seData = this.listData.find(x => x.key == item.properties.id);
@@ -258,9 +266,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
       let categories = [];
       for(let item of res) {
-        const percent = 100* item.totalActive / item.totalProduct
+        // const percent = 100* item.totalActive / item.totalProduct
         categories[i] = item.name;
-        data.data[i] = percent;
+        data.data[i] = {
+          y: item.value  ? parseFloat((100 * item.value).toFixed(2)) : 0,
+          total_active: item.totalActive,
+          total_product: item.totalProduct,
+        };
+        // data.data[i] = percent;
         i++;
       }
       this.chartBarOptions.xAxis.categories = [...categories];
