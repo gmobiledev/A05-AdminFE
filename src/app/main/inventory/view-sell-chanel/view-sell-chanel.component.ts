@@ -491,14 +491,29 @@ export class ViewSellChanelComponent implements OnInit {
 
   async onRemoveItem(item) {
     if ((await this.alertService.showConfirm("Bạn có đồng ý xoá tài khoản bán hàng này không?")).value) {
-      this.inventoryService.removeUserChanel(this.searchForm.user_id, this.searchForm.channel_id).subscribe(res => {
+      this.inventoryService.removeUserChanel(this.searchForm.channel_id, item.id).subscribe(res => {
         this.sectionBlockUI.stop();
         this.listSellUser = res.data.items;
+        this.getData()
+        console.log(item)
       }, error => {
         this.sectionBlockUI.stop();
         console.log("ERRRR");
         console.log(error);
       })
+    }
+  }
+
+
+  async removeInput(index) {
+    let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
+    const i = this.listSellUser.findIndex(item => item.code == this.formGroup.controls['user_id'].value[index]['channel_id']);
+    if(i != -1) {
+      this.listSellUser[i]['disabled'] = '';
+    }    
+    arrayControl.removeAt(index);
+    if(arrayControl.length < this.listAllService.length) {
+      this.isShowAddInput = true;
     }
   }
 
