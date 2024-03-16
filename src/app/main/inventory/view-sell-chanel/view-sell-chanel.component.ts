@@ -147,7 +147,7 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
 
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
-      this.searchForm.ekyc_status = params['ekyc_status'] != undefined ? params['ekyc_status'] : '_all';   
+      this.searchForm.ekyc_status = params['ekyc_status'] != undefined ? params['ekyc_status'] : '_all';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
 
       this.contentHeader.headerTitle = 'Xem chi tiết kho số';
@@ -247,9 +247,9 @@ export class ViewSellChanelComponent implements OnInit {
     let data = {
       partner_user_code: this.formGroupUserCode.controls['partner_user_code'].value
     }
-    if((await this.alertService.showConfirm("Bạn có đồng ý lưu dữ liệu")).value) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý lưu dữ liệu")).value) {
       this.userService.updateAgentInfo(this.selectedUserId, data).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
@@ -273,7 +273,7 @@ export class ViewSellChanelComponent implements OnInit {
           this.alertService.showSuccess(res.message);
           this.modalUserCodeClose();
         }
-        
+
       }, error => {
         this.alertService.showMess(error);
         return;
@@ -281,10 +281,6 @@ export class ViewSellChanelComponent implements OnInit {
     }
   }
 
-  /**
- * Check ton tai so mobile
- * 
- */
   onCheckExits() {
     if (this.formGroup.controls['mobile'].value && this.formGroup.controls['mobile'].value != '') {
       this.userService.getByMobile(this.formGroup.controls['mobile'].value).subscribe(async res => {
@@ -354,12 +350,7 @@ export class ViewSellChanelComponent implements OnInit {
 
 
   getData() {
-
-    // const formData = new FormData();
-    // formData.append("full_name", this.searchForm.full_name);
-    // formData.append("mobile", this.searchForm.mobile);
-
-    this.userService.getAllChanel(this.searchForm.channel_id).subscribe(res => {
+    this.inventoryService.getListCustomer(this.searchForm.channel_id).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
     }, error => {
@@ -390,8 +381,8 @@ export class ViewSellChanelComponent implements OnInit {
       if (this.formGroup.invalid) {
         return;
       }
-      const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => 
-        {return {ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value}
+      const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => {
+        return { ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value }
       })
       const data: CreateAgentDto = {
         name: this.formGroup.controls['name'].value,
@@ -403,7 +394,7 @@ export class ViewSellChanelComponent implements OnInit {
       if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
         this.userService.createAgent(data).subscribe(res => {
           if (!res.status) {
-           
+
             this.alertService.showError(res.message);
             this.submitted = false;
             return;
@@ -418,7 +409,7 @@ export class ViewSellChanelComponent implements OnInit {
         })
       }
     } else {
-      this.userService.addServicesToAgent(this.selectedUserId,  this.formGroup.controls['new_agents_service'].value).subscribe(res => {
+      this.userService.addServicesToAgent(this.selectedUserId, this.formGroup.controls['new_agents_service'].value).subscribe(res => {
         if (!res.status) {
           this.alertService.showError(res.message);
           this.submitted = false;
@@ -434,7 +425,7 @@ export class ViewSellChanelComponent implements OnInit {
   getService() {
     this.userService.getAgentTypes().subscribe(res => {
       this.listAllService = res.data;
-      this.listServiceFilter = res.data.map( x => {return { disabled: '', code: x.code, desc: x.desc }} );
+      this.listServiceFilter = res.data.map(x => { return { disabled: '', code: x.code, desc: x.desc } });
       this.listServiceTmp = res.data;
     })
   }
@@ -489,16 +480,17 @@ export class ViewSellChanelComponent implements OnInit {
 
   }
 
-  onRemoveItem(item) {
-    console.log(item);
-    this.userService.removeUserChanel(this.searchForm.user_id, this.searchForm.channel_id).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.listSellUser = res.data.items;
-    }, error => {
-      this.sectionBlockUI.stop();
-      console.log("ERRRR");
-      console.log(error);
-    })
+  async onRemoveItem(item) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý xoá tài khoản bán hàng này không?")).value) {
+      this.inventoryService.removeUserChanel(this.searchForm.user_id, this.searchForm.channel_id).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.listSellUser = res.data.items;
+      }, error => {
+        this.sectionBlockUI.stop();
+        console.log("ERRRR");
+        console.log(error);
+      })
+    }
   }
 
   onRemoveElement(elementToRemove: number) {

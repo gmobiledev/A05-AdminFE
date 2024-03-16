@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +16,9 @@ import { GtalkService } from 'app/auth/service/gtalk.service';
 @Component({
   selector: 'app-new-sell-chanel',
   templateUrl: './new-sell-chanel.component.html',
-  styleUrls: ['./new-sell-chanel.component.scss']
+  styleUrls: ['./new-sell-chanel.component.scss'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class NewSellChanelComponent implements OnInit {
 
