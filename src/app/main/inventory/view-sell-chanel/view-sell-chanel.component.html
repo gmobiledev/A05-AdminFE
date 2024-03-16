@@ -71,7 +71,7 @@
                     class="btn btn-success mr-25"
                     (click)="modalOpen(modalAddUser)"
                   >
-                    Chọn tài khoản bán hàng
+                    Tài khoản bán hàng
                   </button>
                 </div>
               </div>
@@ -408,7 +408,7 @@
 
 <ng-template #modalAddUser let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Chọn tài khoản bán hàng</h5>
+    <h5 class="modal-title" id="myModalLabel160">Tài khoản bán hàng</h5>
     <button
       type="button"
       class="close"
@@ -425,22 +425,19 @@
           type="button"
           class="btn btn-primary"
           (click)="modalOpen(modalCreate)"
-          title="Thêm người bán khách hàng"
         >
-          <span [data-feather]="'plus'"></span>
+          Thêm người bán hàng
         </button>
       </div>
 
       <div class="m-1" *ngFor="let item of listSellUser">
-        <li>
-          Thông tin khách hàng : {{ item.full_name }} - {{ item.mobile }}
-          <span class="pull-right" (click)="onRemoveItem(item)"><b>X</b></span>
-        </li>
+        <span class="mr-2" (click)="onRemoveItem(item)"><b class="text-danger">X</b> </span>
+        <span class="">{{ item.full_name }} - {{ item.mobile }}</span>
       </div>
     </div>
 
-    <div class="modal-footer">
+    <!-- <div class="modal-footer">
       <button type="submit" class="btn btn-primary" rippleEffect>Lưu</button>
-    </div>
+    </div> -->
   </form>
 </ng-template>
