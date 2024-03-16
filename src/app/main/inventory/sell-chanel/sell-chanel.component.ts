@@ -320,7 +320,6 @@ export class SellChanelComponent implements OnInit {
 
     this.commonDataService.getProvinces().subscribe((res: any) => {
       if (res.status == 1) {
-        console.log(this.searchForm);
         this.provinces = res.data
       }
     })

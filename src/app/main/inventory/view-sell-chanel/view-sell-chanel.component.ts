@@ -208,6 +208,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   modalClose1() {
     this.modalRef.close();
+    this.getData();
     this.initForm();
   }
 
@@ -443,6 +444,7 @@ export class ViewSellChanelComponent implements OnInit {
         }
         this.modalRef.close();
         this.initForm();
+        this.getData()
         this.alertService.showSuccess(res.message);
       })
     }
