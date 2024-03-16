@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { InventoryService } from 'app/auth/service/inventory.service';
+import { TelecomService } from 'app/auth/service/telecom.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -10,7 +12,7 @@ export class DoanhThuComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   public contentHeader = {
-    headerTitle: 'Tạo phiếu xuất kho',
+    headerTitle: 'Báo cáo doanh thu',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -27,11 +29,32 @@ export class DoanhThuComponent implements OnInit {
       ]
     }
   };
+  list = [];
+  searchForm = {
+    page: 1,
+    page_size: 15
+  }
+  totalItems;
 
-  constructor() { }
+  constructor(
+    private readonly telecomService: TelecomService
+  ) { }
 
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  loadPage(page) {
+    this.searchForm.page = page;
+    this.getData();
+  }
+
+  getData() {
+    this.telecomService.getSimReport(this.searchForm).subscribe(res => {
+      this.list = res.data.items;
+      this.totalItems = res.data.count;
+    })
   }
 
 }

@@ -2,6 +2,114 @@
     <div class="content-body">
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
         <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                    
+                    <div class="table-responsive" *blockUI="'section-block'">
+                        <div class="mb-1">
+                            <span>Tổng số:</span> <b>{{ totalItems }}</b>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tổ</th>
+                                    <th>Số thuê bao</th>
+                                    <th>Số serial</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Đơn vị</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Loại thuê bao</th>
+                                    <th>Loại SIM</th>
+                                    <th>Mã gói</th>
+                                    <th>Trạng thái</th>
+                                    <th>Doanh thu SIM</th>
+                                    <th>Hình thức thanh toán</th>
+                                    <th>Ngày kích hoạt của KH</th>
+                                    <!-- <th>Trạng thái</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of list;let i = index">
+                                    <td>
+                                        {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                                    </td>
+
+                                    <td>
+                                        {{item.reference_id}}
+                                    </td>
+                                    <td>
+                                        {{item.msisdn}}
+                                    </td>
+                                    <td>
+                                        {{item.serial}}
+                                    </td>
+                                    <td>
+                                        {{ item.customer_name }}
+                                    </td>
+                                    <td>
+                                        {{ item.sellChannelInfo }}
+                                    </td>
+                                    <td>
+                                        {{ item.addressInfo }}
+                                    </td>
+                                    <td>
+                                        {{ item.subscription_type }}
+                                    </td>
+                                    <td>
+                                        {{ item.sim_type }}
+                                    </td>
+                                    <td>
+                                        {{ item.package_code }}
+                                    </td>
+                                    <td>
+                                        {{ item.activation_status }}
+                                    </td>
+                                    <td>
+                                        {{ item.sim_revenue }}
+                                    </td>
+                                    <td>
+                                        {{ item.charge_amount_revenue }}
+                                    </td>
+                                    <td>
+                                        {{ item.payment_method }}
+                                    </td>
+                                    <td>
+                                        {{ item.customer_sync_time }}
+                                    </td>
+
+                                    <!-- <td>
+                                <div [innerHTML]="item.status | showStatusSim"></div>
+                            </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                            [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                            (pageChange)="loadPage($event)">
+                            <ng-template ngbPaginationPages let-page let-pages="pages">
+                                <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                    <div class="mb-3 d-flex flex-nowrap px-2">
+                                        <label id="paginationInputLabel" for="paginationInput"
+                                            class="col-form-label me-2 ms-1">Trang</label>
+                                        <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                            class="form-control custom-pages-input" id="paginationInput"
+                                            [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                            (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                            aria-labelledby="paginationInputLabel paginationDescription"
+                                            style="width: 2.5rem" />
+                                        <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                            của {{pages.length}}</span>
+                                    </div>
+                                </li>
+                            </ng-template>
+                        </ngb-pagination>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

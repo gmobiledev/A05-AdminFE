@@ -42,8 +42,9 @@
                       [(ngModel)]="searchForm.type"
                     >
                       <option value="">-- Chọn loại --</option>
-                      <option value="1">Nhập kho</option>
-                      <option value="-1">Xuất kho</option>                      
+                      <option value="{{batchType.INPUT}}">Nhập kho</option>
+                      <option value="{{batchType.OUTPUT}}">Xuất kho</option>                      
+                      <option value="{{batchType.RETRIEVE}}">Thu hồi</option>                      
                     </select>
                   </div>
                 </div>
@@ -172,7 +173,7 @@
                         ></i>
                       </a>
                     </ng-container>
-                    <ng-container *ngIf="item.type == batchType.OUTPUT" >
+                    <ng-container *ngIf="item.type == batchType.OUTPUT || item.type == batchType.RETRIEVE" >
                       <a
                       class="ml-0"  routerLink="/inventory/batch-export/{{item.id}}">
                       <i

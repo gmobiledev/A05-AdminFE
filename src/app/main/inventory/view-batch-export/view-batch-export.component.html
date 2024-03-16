@@ -94,7 +94,7 @@
                     <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                 </button>
 
-                <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2">
+                <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2" *ngIf="data?.batch?.type == batchType.RETRIEVE">
                     <i data-feather="file" class="text-white cursor-pointer"></i>
                     Xuất excel</button>
             </div>

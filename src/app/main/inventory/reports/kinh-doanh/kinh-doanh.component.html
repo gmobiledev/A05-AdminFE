@@ -2,6 +2,80 @@
     <div class="content-body">
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
         <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <span>Tổng số:</span> <b>{{ totalItems }}</b>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên đơn vị</th>
+                                        <th>Mã tỉnh</th>
+                                        <th>Tổng số quân đăng ký</th>
+                                        <th>Số SIM bàn giao</th>
+                                        <th>Số TB hoàn thiện TTTB thành công</th>
+                                        <th>Số TB đăng ký gói cước thành công</th>
+                                        <th>Số TB hoạt động</th>
+                                        <th>Số TB khóa 1 chiều</th>
+                                        <th>Số TB khóa 2 chiều</th>
+                                        <th>Số TB thu hồi</th>
+                                        <!-- <th>Trạng thái</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                                        </td>
+                                        <td>
+                                            {{item.sell_channel_code}}
+                                        </td>
+                                        <td>
+                                            {{item.province_id}}
+                                        </td>
+                                        <td>{{ item.total_user }}</td>
+                                        <td>{{ item.imported_quantility }}</td>
+                                        <td>{{ item.sum_completed_infor_sim }}</td>
+                                        <td>{{ item.sum_enable_package }}</td>
+                                        <td>{{ item.sum_active }}</td>
+                                        <td>{{ item.sum_lock_1_way }}</td>
+                                        <td>{{ item.sum_lock_2_way }}</td>
+                                        <td>{{ item.sum_revoke }}</td>
+                                        <!-- <td>
+                                <div [innerHTML]="item.status | showStatusSim"></div>
+                            </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                                (pageChange)="loadPage($event)">
+                                <ng-template ngbPaginationPages let-page let-pages="pages">
+                                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                        <div class="mb-3 d-flex flex-nowrap px-2">
+                                            <label id="paginationInputLabel" for="paginationInput"
+                                                class="col-form-label me-2 ms-1">Trang</label>
+                                            <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                                class="form-control custom-pages-input" id="paginationInput"
+                                                [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                                (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                                aria-labelledby="paginationInputLabel paginationDescription"
+                                                style="width: 2.5rem" />
+                                            <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                                của {{pages.length}}</span>
+                                        </div>
+                                    </li>
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

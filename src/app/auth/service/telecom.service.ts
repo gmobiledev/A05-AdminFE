@@ -268,11 +268,11 @@ export class TelecomService {
   }
 
   //doanh thu theo kho
-  getSimReport(params) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/telecom-logs/simReport`, { params: params });
+  getSimReport(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/telecom-logs/simReport`, data);
   }
 
-  getBussinessReport(params) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/telecom-logs/simReport`, { params: params });
+  getBussinessReport(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/telecom-logs/incurredChargesReport`, data);
   }
 }

@@ -7,7 +7,7 @@ import { AdminService } from 'app/auth/service/admin.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchStatus } from 'app/utils/constants';
+import { BatchStatus, BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 const ExcelJS = require('exceljs');
 
@@ -62,6 +62,7 @@ export class ViewBatchExportComponent implements OnInit {
     attached_file_name: '',
     attached_file_content: ''
   }
+  batchType = BatchType;
 
   constructor(
     private readonly inventoryService: InventoryService,
