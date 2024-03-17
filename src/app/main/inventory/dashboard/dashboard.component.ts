@@ -2,7 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { InventoryService } from 'app/auth/service/inventory.service';
+import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import Highcharts from "highcharts/highmaps";
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 const mapDataRaw = require('../data/province_vn_2.json');
 
 @Component({
@@ -14,6 +16,7 @@ const mapDataRaw = require('../data/province_vn_2.json');
 export class DashboardComponent implements OnInit, AfterViewInit {
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   isHighcharts = typeof Highcharts === 'object';
   chartConstructor = "mapChart";
@@ -87,7 +90,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   isUpdateBarChart: boolean = false;  
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly commonDataService: CommonDataService
+    private readonly commonDataService: CommonDataService,
+    private readonly alertService: SweetAlertService
   ) { 
     
   }
@@ -252,6 +256,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           })
         }        
       }
+      if(this.searchForm.province_id && this.searchForm.province_id != undefined) {
+        var id = this.searchForm.province_id;
+        const temp = this.listData.filter(function (d) {
+          return d.key == id;
+        });
+    
+        // update the rows
+        this.listDataTmp = temp;
+        console.log(this.listDataTmp);
+        // this.showBarChartAll();
+      }   
       // this.data = this.listData.map(x => { return { id: x.key, value: x.value } });
     } catch (error) {
       console.log("error", error);
@@ -290,14 +305,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   async onClick(event) {
-    console.log(event);
-    
+    this.sectionBlockUI.start();
     // this.isUpdateBarChart = true;
     let dataPost = { province_id: event };
     let res;
     try {
-      res = await this.inventoryService.getChildHeatmapStatus(dataPost).toPromise();      
-      this.listDataChild = res.data.map(x => { return {name: x.name, value:  x.value ? (x.value * 100).toFixed(2) : 0, key: x.key} });
+      res = await this.inventoryService.getChildHeatmapStatus(dataPost).toPromise();  
+      this.sectionBlockUI.stop();    
+      this.listDataChild = res.map(x => { return {name: x.name, value:  x.value ? (x.value * 100).toFixed(2) : 0, key: x.key} });
+      console.log(this.listDataChild);
+      this.listDataChild = [...this.listDataChild];
+      this.isShowBarChart = true;
       // let i = 0;
       // let data=  {
       //   type: 'bar',
@@ -319,11 +337,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       // data.data.sort((a,b) => a.y - b.y);
       // this.chartBarOptions.xAxis.categories = [...categories];
       // this.chartBarOptions.series.push(data);      
-      // this.isUpdateBarChart = true;
-
-      this.isShowBarChart = true;
+      // this.isUpdateBarChart = true;      
     } catch (error) {
-      
+      this.sectionBlockUI.stop();
+      console.log(error);
+      this.alertService.showMess("Vui lòng thử lại sau");
+      return;
     }
     
   }
