@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -37,7 +38,8 @@ export class DoanhThuComponent implements OnInit {
   totalItems;
 
   constructor(
-    private readonly telecomService: TelecomService
+    private readonly telecomService: TelecomService,
+    private readonly alertService: SweetAlertService
   ) { }
 
 
@@ -51,9 +53,14 @@ export class DoanhThuComponent implements OnInit {
   }
 
   getData() {
+    this.sectionBlockUI.start();
     this.telecomService.getSimReport(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
+    }, error => {
+      this.sectionBlockUI.stop();
+      this.alertService.showMess(error);      
     })
   }
 

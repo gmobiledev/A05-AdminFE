@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -37,7 +38,8 @@ export class KinhDoanhComponent implements OnInit {
   totalItems;
 
   constructor(
-    private readonly telecomService: TelecomService
+    private readonly telecomService: TelecomService,
+    private readonly alertService: SweetAlertService
   ) { }
 
   ngOnInit(): void {
@@ -50,9 +52,14 @@ export class KinhDoanhComponent implements OnInit {
   }
 
   getData() {
+    this.sectionBlockUI.start();
     this.telecomService.getBussinessReport(null).subscribe(res => {
+      this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
+    }, error => {
+      this.sectionBlockUI.stop();
+      this.alertService.showMess(error);
     })
   }
 
