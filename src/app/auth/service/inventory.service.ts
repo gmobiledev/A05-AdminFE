@@ -172,4 +172,8 @@ export class InventoryService {
   getChildHeatmapStatus(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetDirectChildSellChannelListHeatmapByProvinceId`, data);
   }
+
+  summaryReport(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports`, data);
+  }
 }

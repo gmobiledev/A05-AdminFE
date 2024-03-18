@@ -376,7 +376,8 @@ export class NewBatchExportComponent implements OnInit {
       let dataRetrieve = new RetrieveAllSellChannelDto();
       dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
       dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      dataRetrieve.channel_id = parseInt(this.searchFormProduct.channel_id);  
+      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
+      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
       dataRetrieve.user_id = this.currentUser.id;    
       this.inventoryService.retrieveChannel(dataRetrieve).subscribe(res => {
         this.sectionBlockUI.stop();
@@ -395,7 +396,8 @@ export class NewBatchExportComponent implements OnInit {
       let dataRetrieve = new RetrieveSellChannelDto();
       dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
       dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      dataRetrieve.channel_id = parseInt(this.searchFormProduct.channel_id);
+      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
+      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
       dataRetrieve.product_ids = this.selectedItems.map(x => { return parseInt(x.id) });
       dataRetrieve.user_id = this.currentUser.id;
       this.inventoryService.retrieveProductOfChannel(dataRetrieve).subscribe(res => {
