@@ -89,6 +89,8 @@ export class BatchComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+      this.searchForm.from_date = params['from_date'] && params['from_date'] != undefined ? params['from_date'] : '';
+      this.searchForm.to_date = params['to_date'] && params['to_date'] != undefined ? params['to_date'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
       this.getData();

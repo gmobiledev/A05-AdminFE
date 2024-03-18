@@ -22,7 +22,8 @@ export class ListAdminComponent implements OnInit {
   public searchForm = {
     keyword: '',
     status: '',
-    page: 1
+    page: 1,
+    pageSize: 10
   }
   public listAllService: any;
   public listServiceFilter: any;
@@ -33,6 +34,8 @@ export class ListAdminComponent implements OnInit {
   public modalRef: any;
   public isCreate: any;
   public submitted: boolean = false;
+  currentUser;
+  listCurrentAction;
 
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
@@ -48,7 +51,8 @@ export class ListAdminComponent implements OnInit {
     this.activeRouted.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
-      this.page = params['page'] && params['page'] != undefined ? params['page'] : '';
+      this.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
+      this.searchForm.pageSize = params['pageSize'] && params['pageSize'] != undefined ? params['page'] : 10;
       this.searchForm.page = this.page;
       this.getData();
       this.getService();
@@ -185,6 +189,9 @@ export class ListAdminComponent implements OnInit {
   }
 
   getData(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.listCurrentAction = this.currentUser.actions;
+
     this.sectionBlockUI.start();
     this._adminService.getAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
@@ -228,6 +235,10 @@ export class ListAdminComponent implements OnInit {
       }
     };
     this.getData();
+  }
+
+  checkAction(item) {
+    return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX == item) : false;
   }
 
 }
