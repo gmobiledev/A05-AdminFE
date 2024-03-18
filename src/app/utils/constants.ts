@@ -159,5 +159,14 @@ export enum HANG_SO_THUE_BAO {
     NORMAL = 'NORMAL',
     SILVER = 'SILVER',
     GOLD = 'GOLD',
-    PLATIUM = 'PLATIUM'
+    PLATIUM = 'PLATIUM',
+    BRONZE = 'BRONZE',
+    QUASI ='QUASI'
+//     + Hạng số Bạch Kim/Platinum (P)
+// + Hạng số Vàng/Gold (G)
+// + Hạng số Bạc/Silver (S)
+// + Hạng số Đồng/Bronze (B)
+// + Hạng số Chọn/Quasi (Q)
+// + Hạng số Thường/Normal (N)
+
 }

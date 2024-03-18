@@ -26,6 +26,7 @@ import { ViewBatchExportComponent } from './view-batch-export/view-batch-export.
 import { CodeInputModule } from 'angular-code-input';
 import { BatchType } from 'app/utils/constants';
 import { ListBatchProductsComponent } from './list-batch-products/list-batch-products.component';
+import { ViewDetailTotalSellComponent } from './view-detail-total-sell/view-detail-total-sell.component';
 
 const routes: Routes = [
   {
@@ -83,6 +84,11 @@ const routes: Routes = [
     path: 'list-batch-products',
     component: ListBatchProductsComponent
   },
+
+  {
+    path: 'view-detail-totalSell',
+    component: ViewDetailTotalSellComponent
+  },
 ];
 
 @NgModule({
@@ -99,7 +105,8 @@ const routes: Routes = [
     EditSellChanelComponent,
     ViewSellChanelComponent,
     ViewBatchExportComponent,
-    ListBatchProductsComponent
+    ListBatchProductsComponent,
+    ViewDetailTotalSellComponent
   ],
   imports: [
     CommonModule,

@@ -158,7 +158,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '3',
+      title: '5',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
@@ -196,8 +196,16 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'inventory/sell-chanel'
       },
-     
 
+      {
+        id: 'sell-chanel',
+        title: 'Chi tiết kho tổng',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/view-detail-totalSell'
+      },
+      
 
     ]
   },

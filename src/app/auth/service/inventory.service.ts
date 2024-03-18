@@ -77,6 +77,11 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/product`, { params: params });
   }
 
+  getAllSimSO(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchProductStore`, data);
+  }
+  
+
   uploadBatchSim(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/inventory/batch`, data);
   }
