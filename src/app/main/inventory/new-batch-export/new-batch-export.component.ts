@@ -443,11 +443,29 @@ export class NewBatchExportComponent implements OnInit {
       this.seachMyChannel.user_id = this.currentUser.id;
       this.searchForm.admin_id = this.currentUser.id;
     }
-    this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(res => {
+    this.sectionBlockUI.start();
+    this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(async res => {
       this.listChannel = res.data.items;
       if(this.typeCurrentBatch == BatchType.RETRIEVE) {
+        let childChannels = [];
+        let params = {
+          page_size: 1000,
+          channel_ids: this.listChannel.map(x => x.id)
+        }
+        let res = await this.inventoryService.getMyChannel(params).toPromise();
+        Array.prototype.push.apply(childChannels,res.data.items);
+        // for(let item of this.listChannel) {
+        //   let params = {
+        //     page_size: 1000,
+        //     channel_id: this.listChannel
+        //   }
+        //   let res = await this.inventoryService.getMyChannel({channel_id: item.id, page_size: 1000}).toPromise();
+        //   Array.prototype.push.apply(childChannels,res.data.items); 
+        // }
+        this.listChannel = [...childChannels];
         this.listChannel = this.listChannel.filter(x => x.parent_id != null)
       }
+      this.sectionBlockUI.stop();
     })
   }
 
