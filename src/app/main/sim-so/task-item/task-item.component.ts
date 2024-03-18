@@ -989,6 +989,10 @@ export class TaskItemComponent implements OnInit {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
+  allowChangeCmndToCccd(task) {
+    return [TaskTelecomStatus.STATUS_PROCESSING, TaskTelecomStatus.STATUS_APPROVED, TaskTelecomStatus.STATUS_WAITING_SIM].includes(task.status)
+      && ['GSIM_TO_SIM', '2G_CONVERSION', '4G_VNM_TO_VMS'].includes(task.sub_action) && this.checkAction('telecom-admin/task/2g-convert-cmnd-to-cccd')
+  }
 
   onChangeCmndToCccd() {
     let self = this
