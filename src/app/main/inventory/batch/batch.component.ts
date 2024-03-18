@@ -91,6 +91,7 @@ export class BatchComponent implements OnInit {
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.from_date = params['from_date'] && params['from_date'] != undefined ? params['from_date'] : '';
       this.searchForm.to_date = params['to_date'] && params['to_date'] != undefined ? params['to_date'] : '';
+      this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
       this.getData();

@@ -28,6 +28,7 @@ import { BatchType } from 'app/utils/constants';
 import { ListBatchProductsComponent } from './list-batch-products/list-batch-products.component';
 import { KinhDoanhComponent } from './reports/kinh-doanh/kinh-doanh.component';
 import { DoanhThuComponent } from './reports/doanh-thu/doanh-thu.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 const routes: Routes = [
   {
@@ -128,8 +129,8 @@ const routes: Routes = [
     NgxDaterangepickerMd.forRoot(),
     NgxDatatableModule,
     NgSelectModule,
-    CodeInputModule
-
+    CodeInputModule,
+    NgxMaskModule.forRoot(),
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA

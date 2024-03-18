@@ -34,7 +34,7 @@ export class ViewBatchExportComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Danh sách phiếu xuất',
+          name: 'Danh sách phiếu',
           isLink: true,
           link: '/inventory/batch'
         },
@@ -66,8 +66,8 @@ export class ViewBatchExportComponent implements OnInit {
   batchType = BatchType;
   listFiles = [];
   htmlHeadingText = {
-    fromChannel: 'Xuất từ kho',
-    toChannel: 'Xuất tới kho'
+    fromChannel: '',
+    toChannel: ''
   }
 
   constructor(
@@ -103,13 +103,21 @@ export class ViewBatchExportComponent implements OnInit {
       })
 
       //thông tin kho xuất tới
-      if(this.toChannel.customer_id) {
+      if(this.toChannel && this.toChannel.customer_id) {
         this.userService.searchCustomer({id: this.toChannel.customer_id}).subscribe(res => {
           this.reciever = res.data.items[0];
         })
       }
       if(this.data.batch.type == this.batchType.RETRIEVE) {
-        this.htmlHeadingText.fromChannel = 'Thu hồi từ kho'
+        this.htmlHeadingText = {
+          fromChannel: 'Thu hồi về kho',
+          toChannel: 'Thu hồi từ kho'
+        }
+      } else if(this.data.batch.type == this.batchType.OUTPUT) {
+        this.htmlHeadingText = {
+          fromChannel: 'Xuất từ kho',
+          toChannel: 'Xuất tới kho'
+        }
       }
       
     })

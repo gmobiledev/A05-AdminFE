@@ -87,7 +87,11 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Dải từ</label>
-                                    <input type="text" class="form-control" placeholder="09969****0"
+                                    <input type="text"                                     
+                                    [specialCharacters]="['*']"                                                         
+                                    mask="9999999999"
+                                    [dropSpecialCharacters]="false"
+                                    class="form-control" placeholder="099697****"
                                     [(ngModel)]="searchForm.key_from"
                                     >
                                 </div>
@@ -95,7 +99,11 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Dải đến</label>
-                                    <input type="text" class="form-control" [(ngModel)]="searchForm.key_to" placeholder="09969**000">
+                                    <input type="text" 
+                                    [specialCharacters]="['*']"                                    
+                                    mask="9999999999"
+                                    [dropSpecialCharacters]="false"
+                                    class="form-control" [(ngModel)]="searchForm.key_to" placeholder="099698****">
                                 </div>
                             </div>
                             <div class="col-md-4">

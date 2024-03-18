@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
@@ -7,7 +7,8 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 @Component({
   selector: 'app-doanh-thu',
   templateUrl: './doanh-thu.component.html',
-  styleUrls: ['./doanh-thu.component.scss']
+  styleUrls: ['./doanh-thu.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DoanhThuComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
@@ -31,7 +32,7 @@ export class DoanhThuComponent implements OnInit {
     }
   };
   list = [];
-  searchForm = {
+  public searchForm = {
     page: 1,
     page_size: 15,
     startDate: '',
@@ -39,15 +40,18 @@ export class DoanhThuComponent implements OnInit {
     sell_channel_id: ''
   }
   totalItems;
+  listChannel;
 
   constructor(
     private readonly telecomService: TelecomService,
-    private readonly alertService: SweetAlertService
+    private readonly alertService: SweetAlertService,
+    private readonly inventoryService: InventoryService
   ) { }
 
 
   ngOnInit(): void {
     this.getData();
+    this.getChannel();
   }
 
   loadPage(page) {
@@ -55,7 +59,7 @@ export class DoanhThuComponent implements OnInit {
     this.getData();
   }
 
-  getData() {
+  getData() {    
     this.sectionBlockUI.start();
     this.telecomService.getSimReport(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
@@ -64,6 +68,12 @@ export class DoanhThuComponent implements OnInit {
     }, error => {
       this.sectionBlockUI.stop();
       this.alertService.showMess(error);      
+    });    
+  }
+
+  getChannel() {
+    this.inventoryService.getMyChannel(null).subscribe(res => {
+      this.listChannel = res.data.items;
     })
   }
 

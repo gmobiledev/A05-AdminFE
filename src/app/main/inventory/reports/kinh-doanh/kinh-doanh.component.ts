@@ -14,7 +14,7 @@ export class KinhDoanhComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   public contentHeader = {
-    headerTitle: 'Báo cáo tiêu dùng',
+    headerTitle: 'Báo cáo tổng hợp',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -25,7 +25,7 @@ export class KinhDoanhComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Báo cáo tiêu dùng',
+          name: 'Báo cáo tổng hợp',
           isLink: false
         }
       ]
