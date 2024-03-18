@@ -176,4 +176,8 @@ export class InventoryService {
   summaryReport(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports`, data);
   }
+
+  viewFile(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/common/file/get-file`, data);
+  }
 }

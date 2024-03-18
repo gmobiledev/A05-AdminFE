@@ -198,19 +198,19 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'report-business',
-        title: 'Báo ',
+        title: 'Báo cáo tổng hợp',
         translate: '',
         type: 'item',
-        icon: 'chart',
-        url: 'invenstory/report/kinh-doanh'
+        icon: 'circle',
+        url: 'inventory/report/kinh-doanh'
       },
       {
         id: 'report-doanh-thu',
-        title: 'Báo ',
+        title: 'Báo cáo doanh thu',
         translate: '',
         type: 'item',
-        icon: 'chart',
-        url: 'invenstory/report/doanh-thu'
+        icon: 'circle',
+        url: 'inventory/report/doanh-thu'
       }
     ]
   },

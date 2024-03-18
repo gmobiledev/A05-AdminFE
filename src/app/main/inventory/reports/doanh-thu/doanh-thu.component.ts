@@ -33,7 +33,10 @@ export class DoanhThuComponent implements OnInit {
   list = [];
   searchForm = {
     page: 1,
-    page_size: 15
+    page_size: 15,
+    startDate: '',
+    endDate: '',
+    sell_channel_id: ''
   }
   totalItems;
 

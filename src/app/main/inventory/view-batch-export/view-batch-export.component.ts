@@ -20,7 +20,8 @@ const ExcelJS = require('exceljs');
 export class ViewBatchExportComponent implements OnInit {
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
-  
+  @ViewChild('modalAttachments') modalAttachments;
+
   public contentHeader = {
     headerTitle: 'Chi tiết phiếu',
     actionButton: true,
@@ -63,6 +64,11 @@ export class ViewBatchExportComponent implements OnInit {
     attached_file_content: ''
   }
   batchType = BatchType;
+  listFiles = [];
+  htmlHeadingText = {
+    fromChannel: 'Xuất từ kho',
+    toChannel: 'Xuất tới kho'
+  }
 
   constructor(
     private readonly inventoryService: InventoryService,
@@ -101,6 +107,9 @@ export class ViewBatchExportComponent implements OnInit {
         this.userService.searchCustomer({id: this.toChannel.customer_id}).subscribe(res => {
           this.reciever = res.data.items[0];
         })
+      }
+      if(this.data.batch.type == this.batchType.RETRIEVE) {
+        this.htmlHeadingText.fromChannel = 'Thu hồi từ kho'
       }
       
     })
@@ -265,29 +274,29 @@ export class ViewBatchExportComponent implements OnInit {
       console.log("workSheet", workSheet);
       let dataBrand = this.listProducts.map(x => x.brand);
       let dataInput = [];
-      for (let i = 0; i < dataBrand.length; i++) {
-        for (let j = 0; j < this.listProducts.length; j++) {
-          let typeProduct = 'SIM';
-          if (this.listProducts[j].category_id == 3) {
-            typeProduct = 'SỐ'
-          } else if (this.listProducts[j].category_id == 2) {
-            typeProduct = 'SIM'
-          }
-          let name = typeProduct + ' ' + dataBrand[i];
-          const index = dataInput.findIndex(x => x.name == name);          
-          if (index != -1) {
-            dataInput[index].quantity++;
-          } else {
-            dataInput.push({
-              sku: '',
-              name: name,
-              quantity: 1,
-              note: 'Danh sách tại Phụ Lục'
-            })
-          }
 
+      for (let j = 0; j < this.listProducts.length; j++) {
+        let typeProduct = 'SIM';
+        if (this.listProducts[j].category_id == 3) {
+          typeProduct = 'SỐ'
+        } else if (this.listProducts[j].category_id == 2) {
+          typeProduct = 'SIM'
         }
+        let name = typeProduct + ' ' + this.listProducts[j].brand;
+        const index = dataInput.findIndex(x => x.name == name);
+        if (index != -1) {
+          dataInput[index].quantity++;
+        } else {
+          dataInput.push({
+            sku: '',
+            name: name,
+            quantity: 1,
+            note: 'Danh sách tại Phụ Lục'
+          })
+        }
+
       }
+      
 
       const startRow = 20;
       let index = 0;
@@ -323,9 +332,10 @@ export class ViewBatchExportComponent implements OnInit {
         { letter: 'B', header: 'LOẠI SP', key: 'category_id' },
         { letter: 'C', header: 'GIÁ', key: 'price' },
         { letter: 'D', header: 'HẠNG', key: 'level' },
+        { letter: 'E', header: 'NHÀ MẠNG', key: 'brand' },
       ];
 
-      worksheet.addRows(this.listProducts.map(x => { return { name: x.name, } }));
+      worksheet.addRows(this.listProducts.map(x => { return { name: x.name, category_id: x.category_id, price: x.price, level: x.level, brand: x.brand } }));
       
       const buffer = await wb.xlsx.writeBuffer();
       var newBlob = new Blob([buffer], { type: 'application/octet-stream' });
@@ -342,4 +352,26 @@ export class ViewBatchExportComponent implements OnInit {
     })
   }
 
+  onViewAttachments() {
+    let files = JSON.parse(this.data.batch.attachments);
+    if(files.file) {
+      this.inventoryService.viewFile({
+        file: files.file
+      }).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.listFiles = [
+          {ext: res.data.ext, base64: res.data.base64}
+        ];
+        this.onViewModalApprove(this.modalAttachments);
+      },error => {
+        this.alertService.showMess(error);
+      })
+    } else {
+      this.onViewModalApprove(this.modalAttachments);
+    }    
+    
+  }
 }

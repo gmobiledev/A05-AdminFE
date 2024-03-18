@@ -34,7 +34,8 @@ export class KinhDoanhComponent implements OnInit {
   public list = [];
   searchForm = {
     page: 1,
-    page_size: 15
+    page_size: 15,
+    reference_code: ''
   }
   totalItems;
 
