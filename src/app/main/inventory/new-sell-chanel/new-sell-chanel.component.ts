@@ -31,11 +31,6 @@ export class NewSellChanelComponent implements OnInit {
   public submittedUpload: boolean = false;
   public currentUser: any;
 
-  public residence_districts;
-  public residence_commues;
-  public home_districts;
-  public home_commues;
-  public residence;
   public isAdmin: boolean = false;
 
   public searchForm = {
@@ -44,7 +39,6 @@ export class NewSellChanelComponent implements OnInit {
     nameSell: '',
     nameChanel: '',
     codeSell: '',
-
     page: 1
   }
 
@@ -119,29 +113,28 @@ export class NewSellChanelComponent implements OnInit {
       }
     };
 
-    this.initForm();
   }
 
   async listUser() {
 
     this.taskService.getListCustomer(this.searchForm).subscribe(res => {
       this.listCustomer = res.data.items;
+      console.log("1",this.listCustomer);
     }, error => {
-      console.log("ERRRR4");
       console.log(error);
     })
 
     this.taskService.getListAdmin(this.searchForm).subscribe(res => {
       this.listAdmin = res.data.items;
+      console.log("2",this.listAdmin);
     }, error => {
-      console.log("ERRRR3");
       console.log(error);
     })
 
     this.inventoryService.getMyChannel(this.searchForm).subscribe(res => {
       this.listMyChanel = res.data.items;
+      console.log("3",this.listMyChanel);
     }, error => {
-      console.log("ERRRR2");
       console.log(error);
     })
 
@@ -149,9 +142,9 @@ export class NewSellChanelComponent implements OnInit {
     this.userService.getAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
+      console.log("4",this.listSellUser);
     }, error => {
       this.sectionBlockUI.stop();
-      console.log("ERRRR1");
       console.log(error);
     })
   }
@@ -170,6 +163,7 @@ export class NewSellChanelComponent implements OnInit {
       }
     }
   }
+
   onChangeProvince(event) {
     let id = event.target.value
     this.commonDataService.getDistricts(id).subscribe((res: any) => {
@@ -200,9 +194,9 @@ export class NewSellChanelComponent implements OnInit {
           this.alertService.showError(res.message);
           return;
         }
-        // this.modalClose();
+
         this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.dataSell })
+        this.router.navigate(['/inventory/sell-chanel'])
 
         
         this.getData();
@@ -215,13 +209,9 @@ export class NewSellChanelComponent implements OnInit {
 
   modalClose() {
     this.modalRef.close();
-    this.initForm();
   }
 
 
-  initForm() {
-
-  }
 
   getData() {
     

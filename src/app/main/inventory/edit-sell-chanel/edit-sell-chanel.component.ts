@@ -38,12 +38,6 @@ export class EditSellChanelComponent implements OnInit {
 
   public submittedUpload: boolean = false;
   public currentUser: any;
-
-  public residence_districts;
-  public residence_commues;
-  public home_districts;
-  public home_commues;
-  public residence;
   public isAdmin: boolean = false;
   public listMyChanel: any;
 

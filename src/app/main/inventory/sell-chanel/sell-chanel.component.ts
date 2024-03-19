@@ -154,7 +154,6 @@ export class SellChanelComponent implements OnInit {
 
   modalClose() {
     this.modalRef.close();
-    this.initForm();
   }
 
 
@@ -246,24 +245,23 @@ export class SellChanelComponent implements OnInit {
     })
   }
 
-  async onViewSell(id) {
+  // async onViewSell(id) {
 
-    this.submittedUpload = true;
-    this.inventoryService.viewDetailSell(id).subscribe(res => {
-      this.submittedUpload = false;
-      if (!res.status) {
-        this.alertService.showError(res.message);
-        return;
-      }
-      this.modalClose();
-      this.alertService.showSuccess(res.message);
-      this.getData();
-    }, error => {
-      this.submittedUpload = false;
-      this.alertService.showError(error);
-    })
+  //   this.submittedUpload = true;
+  //   this.inventoryService.viewDetailSell(id).subscribe(res => {
+  //     this.submittedUpload = false;
+  //     if (!res.status) {
+  //       this.alertService.showError(res.message);
+  //       return;
+  //     }
+  //     this.alertService.showSuccess(res.message);
+  //     this.getData();
+  //   }, error => {
+  //     this.submittedUpload = false;
+  //     this.alertService.showError(error);
+  //   })
 
-  }
+  // }
 
   ngOnInit(): void {
     this.contentHeader = {
@@ -284,15 +282,6 @@ export class SellChanelComponent implements OnInit {
         ]
       }
     };
-
-    this.initForm();
-  }
-
-  get f() {
-    return this.formGroup.controls;
-  }
-
-  initForm() {
 
   }
 
@@ -347,10 +336,9 @@ export class SellChanelComponent implements OnInit {
       this.totalPage = res.data.count;
       this.searchForm.page_size = res.data.page_size;
       this.totalItems = res.data.count;
-      this.onViewSell(res.data.id)
+      // this.onViewSell(res.data.id)
     }, error => {
       this.sectionBlockUI.stop();
-      console.log("ERRRR");
       console.log(error);
     })
   }
