@@ -69,7 +69,7 @@
                   <button
                     type="button"
                     class="btn btn-success mr-25"
-                    (click)="modalOpen(modalAddUser)"
+                    (click)="modalOpen(modalAddUser, null, true)"
                   >
                     Tài khoản bán hàng
                   </button>
@@ -412,7 +412,7 @@
     <button
       type="button"
       class="close"
-      (click)="modalClose1()"
+      (click)="modalCloseAdd()"
       aria-label="Close"
     >
       <span aria-hidden="true">&times;</span>
@@ -424,14 +424,16 @@
         <button
           type="button"
           class="btn btn-primary"
-          (click)="modalOpen(modalCreate)"
+          (click)="modalOpen(modalCreate, null, false)"
         >
           Thêm người bán hàng
         </button>
       </div>
 
       <div class="m-1" *ngFor="let item of listSellUser">
-        <span class="mr-2" (click)="onRemoveItem(item)"><b class="text-danger">X</b> </span>
+        <span class="mr-2" (click)="onRemoveItem(item)"
+          ><b class="text-danger">X</b>
+        </span>
         <span class="">{{ item.full_name }} - {{ item.mobile }}</span>
       </div>
     </div>

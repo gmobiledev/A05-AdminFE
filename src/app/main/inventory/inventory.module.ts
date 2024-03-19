@@ -26,6 +26,7 @@ import { ViewBatchExportComponent } from './view-batch-export/view-batch-export.
 import { CodeInputModule } from 'angular-code-input';
 import { BatchType } from 'app/utils/constants';
 import { ListBatchProductsComponent } from './list-batch-products/list-batch-products.component';
+import { ViewDetailTotalSellComponent } from './view-detail-total-sell/view-detail-total-sell.component';
 import { KinhDoanhComponent } from './reports/kinh-doanh/kinh-doanh.component';
 import { DoanhThuComponent } from './reports/doanh-thu/doanh-thu.component';
 import { NgxMaskModule } from 'ngx-mask';
@@ -86,6 +87,11 @@ const routes: Routes = [
     path: 'list-batch-products',
     component: ListBatchProductsComponent
   },
+
+  {
+    path: 'view-detail-totalSell',
+    component: ViewDetailTotalSellComponent
+
   {
     path: 'report/doanh-thu',
     component: DoanhThuComponent
@@ -93,6 +99,7 @@ const routes: Routes = [
   {
     path: 'report/kinh-doanh',
     component: KinhDoanhComponent
+
   },
 ];
 
@@ -111,6 +118,7 @@ const routes: Routes = [
     ViewSellChanelComponent,
     ViewBatchExportComponent,
     ListBatchProductsComponent,
+    ViewDetailTotalSellComponent
     KinhDoanhComponent,
     DoanhThuComponent
   ],
