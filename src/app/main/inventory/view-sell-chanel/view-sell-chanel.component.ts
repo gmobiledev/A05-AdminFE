@@ -112,6 +112,7 @@ export class ViewSellChanelComponent implements OnInit {
   }
 
   public modalRef: any;
+  public modalRefAdd: any;
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
@@ -154,7 +155,7 @@ export class ViewSellChanelComponent implements OnInit {
       this.contentHeader.headerTitle = 'Xem chi tiết kho số';
       this.contentHeader.breadcrumb.links[1] = 'Xem chi tiết kho số';
 
-      // this.getData();
+      this.getData();
       this.getService();
       // this.getSellChannel();
 
@@ -162,7 +163,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   }
 
-  modalOpen(modal, item = null) {
+  modalOpen(modal, item = null, checkAdd = true) {
     if (item) {
       this.titleModal = "Cập nhật đại lý";
       this.isCreate = false;
@@ -183,20 +184,39 @@ export class ViewSellChanelComponent implements OnInit {
           arrayControl.push(newGroup);
         }
 
+        if (checkAdd == true) {
+          this.modalRefAdd = this.modalService.open(modal, {
+            centered: true,
+            windowClass: 'modal modal-primary',
+            size: 'lg'
+          });
+        } else {
+          this.modalRef = this.modalService.open(modal, {
+            centered: true,
+            windowClass: 'modal modal-primary',
+            size: 'lg'
+          });
+        }
+
+
+      })
+    } else {
+      this.titleModal = "Thêm tài khoản bán hàng";
+      this.isCreate = true;
+
+      if (checkAdd == true) {
+        this.modalRefAdd = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'lg'
+        });
+      } else {
         this.modalRef = this.modalService.open(modal, {
           centered: true,
           windowClass: 'modal modal-primary',
           size: 'lg'
         });
-      })
-    } else {
-      this.titleModal = "Thêm tài khoản bán hàng";
-      this.isCreate = true;
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'lg'
-      });
+      }
     }
   }
 
@@ -206,8 +226,8 @@ export class ViewSellChanelComponent implements OnInit {
     this.modalRef.close();
   }
 
-  modalClose1() {
-    this.modalRef.close();
+  modalCloseAdd() {
+    this.modalRefAdd.close();
     this.getData();
     this.initForm();
   }
@@ -219,7 +239,7 @@ export class ViewSellChanelComponent implements OnInit {
       service_code: []
     });
     arrayControl.push(newGroup);
-    if(arrayControl.length == this.listAllService.length) {
+    if (arrayControl.length == this.listAllService.length) {
       this.isShowAddInput = false;
     }
   }
@@ -358,7 +378,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.titleModal = "Thêm tài khoản bán hàng";
   }
   ngOnInit(): void {
-    this.getData()
+    // this.getData()
     this.initForm();
   }
 
@@ -510,11 +530,11 @@ export class ViewSellChanelComponent implements OnInit {
   async removeInput(index) {
     let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
     const i = this.listSellUser.findIndex(item => item.code == this.formGroup.controls['user_id'].value[index]['channel_id']);
-    if(i != -1) {
+    if (i != -1) {
       this.listSellUser[i]['disabled'] = '';
-    }    
+    }
     arrayControl.removeAt(index);
-    if(arrayControl.length < this.listAllService.length) {
+    if (arrayControl.length < this.listAllService.length) {
       this.isShowAddInput = true;
     }
   }

@@ -62,7 +62,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
     name: '',
     level: '',
     status: '',
-    page_size: 1,
+    page_size: 20,
     page: 1,
   }
 
@@ -97,11 +97,12 @@ export class ViewDetailTotalSellComponent implements OnInit {
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
       this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
-      this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : 1;
+      this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : 20;
 
       this.contentHeader.headerTitle = 'Xem chi tiết kho tổng';
       this.contentHeader.breadcrumb.links[1] = 'Xem chi tiết kho tổng';
 
+      this.getData();
 
     })
 
@@ -114,14 +115,12 @@ export class ViewDetailTotalSellComponent implements OnInit {
   }
 
 
-
   onSubmitSearch() {
-    // this.searchForm.page = this.mineTask ? 1 : '';
-    this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: { name: this.searchForm.name, status: this.searchForm.status, level: this.searchForm.level } });
   }
 
   ngOnInit(): void {
-    this.getData()
+    // this.getData()
   }
 
 
@@ -132,7 +131,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
     this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
     this.inventoryService.getAllSimSO(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
-      this.list = res.data;
+      this.list = res.data.items;
       this.totalItems = res.data.count;
     });
 
