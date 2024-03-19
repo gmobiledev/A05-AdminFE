@@ -103,6 +103,7 @@
                   <tr>
                     <th>Loại</th>
                     <th>Mã</th>
+                    <th>Tiêu đề</th>
                     <th>Số lượng</th>
                     <th>Số lượng đã đẩy</th>                    
                     <th>Trạng thái</th>
@@ -117,7 +118,10 @@
                     </td>
                     <td>
                       {{ item?.id }}
-                    </td>                    
+                    </td>       
+                    <td>
+                      {{ item?.title }}
+                    </td>             
                     <td>
                       {{ item?.quantility }}
                     </td>
@@ -151,6 +155,7 @@
                         ></i>
                       </a>
                       <a
+                      *ngIf="this.currentUser == item.created_by"
                         class="ml-1"
                         (click)="modalOpen(modalUploadData, item)"
                         title="Tải dữ liệu lên"
@@ -291,7 +296,7 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0">
-    <div class="form-group" *ngIf="isAdmin">
+    <div class="form-group">
       <label for="">Tiêu đề</label>
       <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
     </div>
@@ -317,7 +322,7 @@
       </select>
     </div> -->
 
-    <div class="form-group" *ngIf="isAdmin">
+    <div class="form-group">
       <label for="">Ghi chú</label>
       <input type="text" class="form-control" [(ngModel)]="dataLo.note" />
     </div>
