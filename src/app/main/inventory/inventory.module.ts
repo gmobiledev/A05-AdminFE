@@ -91,7 +91,7 @@ const routes: Routes = [
   {
     path: 'view-detail-totalSell',
     component: ViewDetailTotalSellComponent
-
+  },
   {
     path: 'report/doanh-thu',
     component: DoanhThuComponent
@@ -118,7 +118,7 @@ const routes: Routes = [
     ViewSellChanelComponent,
     ViewBatchExportComponent,
     ListBatchProductsComponent,
-    ViewDetailTotalSellComponent
+    ViewDetailTotalSellComponent,
     KinhDoanhComponent,
     DoanhThuComponent
   ],
