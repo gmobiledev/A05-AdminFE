@@ -12,6 +12,7 @@ import { ListAdminComponent } from './list-admin/list-admin.component';
 import { ViewAdminComponent } from './view-admin/view-admin.component';
 import { CreateAdminComponent } from './create-admin/create-admin.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { CreateInventoryManagerComponent } from './create-inventory-manager/create-inventory-manager.component';
 
 
 // routing
@@ -28,6 +29,10 @@ const routes: Routes = [
     path: 'create',
     component: CreateAdminComponent
   },
+  {
+    path: 'create-inventory-manager',
+    component: CreateInventoryManagerComponent
+  },
 ];
 
 @NgModule({
@@ -35,6 +40,7 @@ const routes: Routes = [
     ListAdminComponent,
     ViewAdminComponent,
     CreateAdminComponent,
+    CreateInventoryManagerComponent,
   ],
   imports: [
     CommonModule, 

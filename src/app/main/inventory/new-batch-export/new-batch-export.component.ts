@@ -51,7 +51,8 @@ export class NewBatchExportComponent implements OnInit {
     key_to: '',
     brand: '',
     category_id: '',
-    take: ''
+    take: '',
+    level: ''
   }
   seachMyChannel = {
     user_id: '',
@@ -64,7 +65,8 @@ export class NewBatchExportComponent implements OnInit {
     page: 1,
     skip: 0,
     take: 1000,
-    channel_id: ''
+    channel_id: '',
+    status_array: []
   }
 
   public createBatchExportForm = {
@@ -91,9 +93,7 @@ export class NewBatchExportComponent implements OnInit {
   public listInputChannel;
   public submitted: boolean = false;
   public listAttribute = [
-    {id: 1, name: 'BRONE'},
-    {id: 1, name: 'GOLD'},
-    {id: 1, name: 'PLATILUM'},
+    
   ]
   selectedAttributes: any;
   disableSelectParent: boolean = false;
@@ -127,6 +127,21 @@ export class NewBatchExportComponent implements OnInit {
     Array.prototype.push.apply(this.tmpSelected, selected);   
     event.selected = [];
     console.log(this.tmpSelected);        
+  }
+
+  onChangeCategory(event) {
+    if(event.target.value == 2) {
+      this.listAttribute = [];
+    } else if (event.target.value == 3) {
+      this.listAttribute = [
+        { id: 'NORMAL', name: 'NORMAL' },
+        { id: 'QUASI', name: 'QUASI' },
+        { id: 'BRONE', name: 'BRONE' },
+        { id: 'SILVER', name: 'SILVER' },
+        { id: 'GOLD', name: 'GOLD' },
+        { id: 'PLATILUM', name: 'PLATILUM' },
+      ]
+    }
   }
 
   onAddItems() {
@@ -228,7 +243,7 @@ export class NewBatchExportComponent implements OnInit {
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;
-      
+      this.searchFormProduct.status_array = [0,2];
       this.inventoryService.getAllSim(this.searchFormProduct).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
@@ -237,13 +252,15 @@ export class NewBatchExportComponent implements OnInit {
         }
         const data = res.data.data;
         this.serverPaging.total_items = data.count;
-        this.tempList = data.items;
-        this.list = data.items;
+        this.tempList = data.items.filter(x => x.status != 1);
+        this.list = data.items.filter(x => x.status != 1);
       }, error => {
         this.alertService.showMess(error);
         this.sectionBlockUI.stop();
       })
     } else {
+      this.searchForm.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
+      console.log(this.selectedAttributes);
       let paramSearch = {...this.searchForm}
       for(let key in paramSearch) {
         if(paramSearch[key] === '') {
@@ -359,7 +376,8 @@ export class NewBatchExportComponent implements OnInit {
       let dataRetrieve = new RetrieveAllSellChannelDto();
       dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
       dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      dataRetrieve.channel_id = parseInt(this.searchFormProduct.channel_id);  
+      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
+      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
       dataRetrieve.user_id = this.currentUser.id;    
       this.inventoryService.retrieveChannel(dataRetrieve).subscribe(res => {
         this.sectionBlockUI.stop();
@@ -378,7 +396,8 @@ export class NewBatchExportComponent implements OnInit {
       let dataRetrieve = new RetrieveSellChannelDto();
       dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
       dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      dataRetrieve.channel_id = parseInt(this.searchFormProduct.channel_id);
+      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
+      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
       dataRetrieve.product_ids = this.selectedItems.map(x => { return parseInt(x.id) });
       dataRetrieve.user_id = this.currentUser.id;
       this.inventoryService.retrieveProductOfChannel(dataRetrieve).subscribe(res => {
@@ -424,11 +443,29 @@ export class NewBatchExportComponent implements OnInit {
       this.seachMyChannel.user_id = this.currentUser.id;
       this.searchForm.admin_id = this.currentUser.id;
     }
-    this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(res => {
+    this.sectionBlockUI.start();
+    this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(async res => {
       this.listChannel = res.data.items;
       if(this.typeCurrentBatch == BatchType.RETRIEVE) {
+        let childChannels = [];
+        let params = {
+          page_size: 1000,
+          channel_ids: this.listChannel.map(x => x.id)
+        }
+        let res = await this.inventoryService.getMyChannel(params).toPromise();
+        Array.prototype.push.apply(childChannels,res.data.items);
+        // for(let item of this.listChannel) {
+        //   let params = {
+        //     page_size: 1000,
+        //     channel_id: this.listChannel
+        //   }
+        //   let res = await this.inventoryService.getMyChannel({channel_id: item.id, page_size: 1000}).toPromise();
+        //   Array.prototype.push.apply(childChannels,res.data.items); 
+        // }
+        this.listChannel = [...childChannels];
         this.listChannel = this.listChannel.filter(x => x.parent_id != null)
       }
+      this.sectionBlockUI.stop();
     })
   }
 

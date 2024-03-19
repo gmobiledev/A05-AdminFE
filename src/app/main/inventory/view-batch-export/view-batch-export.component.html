@@ -5,10 +5,11 @@
             <div class="col-5">
                 <div class="card">
                     <div class="card-body">
+                        <p>Người tạo: {{ adminCreator?.username }} <span *ngIf="adminCreator?.full_name != null && adminCreator?.full_name != ''">({{ adminCreator?.full_name }})</span></p>
                     <p>Loại phiếu: {{ data?.batch?.type | typeBatchForm }}</p>
-                    <p>Xuất từ kho: {{ fromChannel?.name }}</p>
-                    <p>Xuất tới kho: {{ toChannel?.name }}</p>
-                    <p>Số lượng: {{ data?.batch?.quantity }}</p>
+                    <p>{{ htmlHeadingText?.fromChannel }}: {{ fromChannel?.name }}</p>
+                    <p *ngIf="data?.batch?.type != batchType.RETRIEVE">{{ htmlHeadingText?.toChannel }}: {{ toChannel?.name }}</p>
+                    <p>Số lượng: {{ data?.batch?.quantility }}</p>
                     <p>Ngày tạo: {{ data?.batch?.created_at | date: 'dd/MM/yyyy H:mm':'GMT' }}</p>
                     <p>Trạng thái: <span [innerHTML]="data?.batch?.status | showStatusBatch"></span></p>
                 </div>
@@ -56,7 +57,7 @@
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
-                            <ngx-datatable-column name="Hạng số" prop="price"></ngx-datatable-column>
+                            <ngx-datatable-column name="Hạng số" prop="level"></ngx-datatable-column>
                         </ngx-datatable>
             
                     </div>
@@ -94,9 +95,13 @@
                     <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                 </button>
 
-                <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2">
+                <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2" *ngIf="data?.batch?.type != batchType.RETRIEVE">
                     <i data-feather="file" class="text-white cursor-pointer"></i>
                     Xuất excel</button>
+
+                <button (click)="onViewAttachments()" class="btn btn-info mb-2 mr-2">
+                    <i data-feather="eye" class="text-white cursor-pointer"></i>
+                    Xem file đính kèm</button>
             </div>
 
             <!-- User tự duyệt -->
@@ -157,3 +162,31 @@
         </ng-container>
     </div>
 </ng-template>
+
+<ng-template #modalAttachments let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Tệp đính kèm</h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <div class="row" *ngIf="listFiles && listFiles.length > 0">
+            <div class="col-12 mb-1" *ngFor="let item of listFiles">
+                <img *ngIf="item.ext.includes('png') || item.ext.includes('jpg') || item.ext.includes('jpeg')" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+                <div *ngIf="item.ext.includes('pdf') && item.base64">
+                  <pdf-viewer [src]="'data:application/pdf;base64,'+item.base64"
+                      [render-text]="true"
+                      [original-size]="false"
+                      [external-link-target]="'blank'"
+                      style="height: 450px"
+                    ></pdf-viewer>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row" *ngIf="!listFiles || listFiles.length < 1">
+              <p>Không có tệp đính kèm</p>
+            </div>
+    </div>
+  </ng-template>

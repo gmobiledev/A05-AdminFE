@@ -190,7 +190,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'sell-chanel',
-        title: 'DS kho sim số',
+        title: 'Danh sách kho',
         translate: '',
         type: 'item',
         icon: 'database',
@@ -205,15 +205,30 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'inventory/view-detail-totalSell'
       },
-      
 
+      {
+        id: 'report-business',
+        title: 'Báo cáo tổng hợp',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/kinh-doanh'
+      },
+      {
+        id: 'report-doanh-thu',
+        title: 'Báo cáo doanh thu',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/doanh-thu'
+      }
     ]
   },
 
 
   {
     id: 'users',
-    title: 'Gtalk',
+    title: 'GSIM',
     translate: '',
     type: 'collapsible',
     icon: 'phone-call',
@@ -294,7 +309,7 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'gip/call-history'
       },
-     
+
       {
         id: 'g-task',
         title: 'Task',
@@ -407,7 +422,7 @@ export const menu: CoreMenu[] = [
       }
     ]
   },
- 
+
 
   {
     id: 'users',

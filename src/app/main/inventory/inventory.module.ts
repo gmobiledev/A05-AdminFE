@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA , NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BatchComponent } from './batch/batch.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -27,6 +27,9 @@ import { CodeInputModule } from 'angular-code-input';
 import { BatchType } from 'app/utils/constants';
 import { ListBatchProductsComponent } from './list-batch-products/list-batch-products.component';
 import { ViewDetailTotalSellComponent } from './view-detail-total-sell/view-detail-total-sell.component';
+import { KinhDoanhComponent } from './reports/kinh-doanh/kinh-doanh.component';
+import { DoanhThuComponent } from './reports/doanh-thu/doanh-thu.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 const routes: Routes = [
   {
@@ -88,6 +91,15 @@ const routes: Routes = [
   {
     path: 'view-detail-totalSell',
     component: ViewDetailTotalSellComponent
+
+  {
+    path: 'report/doanh-thu',
+    component: DoanhThuComponent
+  },
+  {
+    path: 'report/kinh-doanh',
+    component: KinhDoanhComponent
+
   },
 ];
 
@@ -107,14 +119,16 @@ const routes: Routes = [
     ViewBatchExportComponent,
     ListBatchProductsComponent,
     ViewDetailTotalSellComponent
+    KinhDoanhComponent,
+    DoanhThuComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes), 
-    NgbModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
-    CoreCommonModule, 
+    RouterModule.forChild(routes),
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreCommonModule,
     ContentHeaderModule,
     BlockUIModule.forRoot(),
     PdfViewerModule,
@@ -123,8 +137,8 @@ const routes: Routes = [
     NgxDaterangepickerMd.forRoot(),
     NgxDatatableModule,
     NgSelectModule,
-    CodeInputModule
-
+    CodeInputModule,
+    NgxMaskModule.forRoot(),
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA

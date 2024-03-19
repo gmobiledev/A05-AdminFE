@@ -2,10 +2,12 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { UserService } from 'app/auth/service';
+import { AdminService } from 'app/auth/service/admin.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchStatus } from 'app/utils/constants';
+import { BatchStatus, BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 const ExcelJS = require('exceljs');
 
@@ -18,7 +20,8 @@ const ExcelJS = require('exceljs');
 export class ViewBatchExportComponent implements OnInit {
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
-  
+  @ViewChild('modalAttachments') modalAttachments;
+
   public contentHeader = {
     headerTitle: 'Chi tiết phiếu',
     actionButton: true,
@@ -31,7 +34,7 @@ export class ViewBatchExportComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Danh sách phiếu xuất',
+          name: 'Danh sách phiếu',
           isLink: true,
           link: '/inventory/batch'
         },
@@ -53,10 +56,18 @@ export class ViewBatchExportComponent implements OnInit {
   toChannel: any;
   tempList: any;
   listProducts: any;
+  adminCreator: any;
+  reciever: any;
   public basicSelectedOption: number = 10;
   dataApprove = {
     attached_file_name: '',
     attached_file_content: ''
+  }
+  batchType = BatchType;
+  listFiles = [];
+  htmlHeadingText = {
+    fromChannel: '',
+    toChannel: ''
   }
 
   constructor(
@@ -65,7 +76,9 @@ export class ViewBatchExportComponent implements OnInit {
     private readonly modalService: NgbModal,
     private readonly alertService: SweetAlertService,
     private readonly commonService: CommonService,
-    private readonly commonDataService: CommonDataService
+    private readonly commonDataService: CommonDataService,
+    private readonly adminService: AdminService,
+    private readonly userService: UserService,    
   ) { }
 
   ngOnInit(): void {
@@ -78,13 +91,38 @@ export class ViewBatchExportComponent implements OnInit {
     this.listCurrentAction = this.currentUser.actions;
     this.inventoryService.findOneBatchExport(this.id).subscribe(res => {
       this.data = res.data;
-      this.listProducts = res.data.products;
-      this.tempList = res.data.products;
+      this.listProducts = res.data.products.items;
+      this.tempList = res.data.products.items;
       if(res.data.channels) {
         this.fromChannel = res.data.channels.find(x => x.id == res.data.batch.channel_id);
         this.toChannel = res.data.channels.find(x => x.id == res.data.batch.to_channel_id);
       }
+      //lay thong tin admin
+      this.adminService.getListAdmin({id: res.data.batch.created_by}).subscribe(res => {
+        this.adminCreator = res.data.items[0];
+      })
+
+      //thông tin kho xuất tới
+      if(this.toChannel && this.toChannel.customer_id) {
+        this.userService.searchCustomer({id: this.toChannel.customer_id}).subscribe(res => {
+          this.reciever = res.data.items[0];
+        })
+      }
+      if(this.data.batch.type == this.batchType.RETRIEVE) {
+        this.htmlHeadingText = {
+          fromChannel: 'Thu hồi về kho',
+          toChannel: 'Thu hồi từ kho'
+        }
+      } else if(this.data.batch.type == this.batchType.OUTPUT) {
+        this.htmlHeadingText = {
+          fromChannel: 'Xuất từ kho',
+          toChannel: 'Xuất tới kho'
+        }
+      }
+      
     })
+
+    
   }
 
   filterList(event) {
@@ -237,66 +275,64 @@ export class ViewBatchExportComponent implements OnInit {
     const wb = new ExcelJS.Workbook();
     let link = 'assets/template/phieu_xuat_kho.xlsx';
     this.commonDataService.readFile(link).subscribe(async res => {
+      
       let workbook = await wb.xlsx.load(res);
-        console.log(workbook, 'workbook instance')
-        let workSheet = workbook.getWorksheet('TM04');
-        console.log("workSheet", workSheet);
-        let dataBrand = this.listProducts.map(x => x.brand);
-        let dataInput = [];
-        for(let i = 0;i< dataBrand.length; i++) {
-          for(let j = 0; j< this.listProducts.length; j++) {
-            let typeProduct = 'SIM';
-            if(this.listProducts[j].category_id == 3) {
-              typeProduct = 'SỐ'
-            } else if(this.listProducts[j].category_id == 2) {
-              typeProduct = 'SIM'
-            }
-            let name = typeProduct + ' ' + dataBrand[i];
-            const index = dataInput.findIndex(x => x.name == name);
-            console.log("index", index);
-            if(index != -1) {
-              dataInput[index].quantity ++;
-            } else {
-              dataInput.push({
-                sku: '',
-                name: name,
-                quantity: 1,
-                note: 'Danh sách tại Phụ Lục'
-              })
-            }
-            
-          }
+      console.log(workbook, 'workbook instance')
+      let workSheet = workbook.getWorksheet('TM04');
+      console.log("workSheet", workSheet);
+      let dataBrand = this.listProducts.map(x => x.brand);
+      let dataInput = [];
+
+      for (let j = 0; j < this.listProducts.length; j++) {
+        let typeProduct = 'SIM';
+        if (this.listProducts[j].category_id == 3) {
+          typeProduct = 'SỐ'
+        } else if (this.listProducts[j].category_id == 2) {
+          typeProduct = 'SIM'
         }
-        // const dataI = [
-        //   {
-        //     sku: '123',
-        //     name: 'SIM MBF',
-        //     unit: 'cái',
-        //     quantity: 1000,
-        //     note: 'File đính kèm'
-        //   },
-        //   {
-        //     sku: '100',
-        //     name: 'SIM VNP',
-        //     unit: 'cái',
-        //     quantity: 1000,
-        //     note: 'File đính kèm'
-        //   }
-        // ]
-        
-        const startRow = 20;
-        let index =0;
-        for (let item of dataInput) {
-          var getRowInsert = workSheet.getRow(startRow + index);
-          getRowInsert.getCell('A').value = index + 1;
-          getRowInsert.getCell('B').value = item.sku;
-          getRowInsert.getCell('C').value = item.name;
-          getRowInsert.getCell('D').value = item.unit;
-          getRowInsert.getCell('E').value = item.quantity;
-          getRowInsert.getCell('H').value = item.note;
-          getRowInsert.commit();
-          index++;
+        let name = typeProduct + ' ' + this.listProducts[j].brand;
+        const index = dataInput.findIndex(x => x.name == name);
+        if (index != -1) {
+          dataInput[index].quantity++;
+        } else {
+          dataInput.push({
+            sku: '',
+            name: name,
+            quantity: 1,
+            note: 'Danh sách tại Phụ Lục'
+          })
         }
+
+      }
+      
+
+      const startRow = 20;
+      let index = 0;
+      for (let item of dataInput) {
+        var getRowInsert = workSheet.getRow(startRow + index);
+        getRowInsert.getCell('A').value = index + 1;
+        getRowInsert.getCell('B').value = item.sku;
+        getRowInsert.getCell('C').value = item.name;
+        getRowInsert.getCell('D').value = item.unit;
+        getRowInsert.getCell('E').value = item.quantity;
+        getRowInsert.getCell('H').value = item.note;
+        getRowInsert.commit();
+        index++;
+      }
+
+      let cDate = new Date()
+      const offset = cDate.getTimezoneOffset()
+      cDate = new Date(cDate.getTime() - (offset * 60 * 1000))
+      
+      //xuat di
+      workSheet.getCell('C8').value = this.adminCreator.full_name;
+      workSheet.getCell('C12').value = this.adminCreator.mobile;
+      workSheet.getCell('C13').value = cDate.toISOString().split('T')[0];
+
+      //nhan hang
+      workSheet.getCell('G8').value = this.reciever ? this.reciever.name : this.toChannel.name;
+      workSheet.getCell('G12').value = this.adminCreator.mobile;
+      // workSheet.getCell('G13').value = cDate.toISOString().split('T')[0];
 
       const worksheet = workbook.addWorksheet('Phụ Lục');
       worksheet.columns = [
@@ -304,9 +340,11 @@ export class ViewBatchExportComponent implements OnInit {
         { letter: 'B', header: 'LOẠI SP', key: 'category_id' },
         { letter: 'C', header: 'GIÁ', key: 'price' },
         { letter: 'D', header: 'HẠNG', key: 'level' },
+        { letter: 'E', header: 'NHÀ MẠNG', key: 'brand' },
       ];
+
+      worksheet.addRows(this.listProducts.map(x => { return { name: x.name, category_id: x.category_id, price: x.price, level: x.level, brand: x.brand } }));
       
-      worksheet.addRows(this.listProducts.map(x => { return {name: x.name, } }));
       const buffer = await wb.xlsx.writeBuffer();
       var newBlob = new Blob([buffer], { type: 'application/octet-stream' });
       const url = window.URL.createObjectURL(newBlob);
@@ -322,4 +360,26 @@ export class ViewBatchExportComponent implements OnInit {
     })
   }
 
+  onViewAttachments() {
+    let files = JSON.parse(this.data.batch.attachments);
+    if(files.file) {
+      this.inventoryService.viewFile({
+        file: files.file
+      }).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.listFiles = [
+          {ext: res.data.ext, base64: res.data.base64}
+        ];
+        this.onViewModalApprove(this.modalAttachments);
+      },error => {
+        this.alertService.showMess(error);
+      })
+    } else {
+      this.onViewModalApprove(this.modalAttachments);
+    }    
+    
+  }
 }

@@ -142,4 +142,8 @@ export class UserService {
   createCustomer(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/customer`, data);
   }
+
+  searchCustomer(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/customer/search`, {params: params});
+  }
 }

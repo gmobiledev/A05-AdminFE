@@ -30,9 +30,14 @@
             </div>
           </div>
         </form>
-          <a [routerLink]="['/admin/create']" routerLinkActive="router-link-active" class="btn btn-primary" >
+          <a *ngIf="checkAction('POST@/api/admin')" [routerLink]="['/admin/create']" routerLinkActive="router-link-active" class="btn btn-primary" >
             <span [data-feather]="'plus-circle'" [class]="'mr-25'"></span>
             Thêm admin</a>
+          
+            <a *ngIf="checkAction('POST@/api/admin/inventory-manager')" [routerLink]="['/admin/create-inventory-manager']" routerLinkActive="router-link-active"
+              class="btn btn-primary">
+              <span [data-feather]="'plus-circle'" [class]="'mr-25'"></span>
+              Thêm quản lý kho</a>
             <div class="table-responsive mt-3" *blockUI="'section-block'">
               <table class="table table-striped">
                 <thead>
@@ -57,17 +62,17 @@
                       
                     </td>                
                     <td class="overflow-hidden">
-                      <a [routerLink]="['/admin/view', item.id]" [state]="item">
+                      <a *ngIf="checkAction('POST@/api/admin')" [routerLink]="['/admin/view', item.id]" [state]="item">
                         <i data-feather="eye" class="text-primary cursor-pointer"></i>
                         </a>
-                        <a class="ml-2" (click)="onSubmitLock(item.id, 0)" *ngIf="item.status">
+                        <a *ngIf="checkAction('POST@/api/admin/lock') && item.status === 1" class="ml-2" (click)="onSubmitLock(item.id, 0)" >
                           <i data-feather="lock" class="text-primary cursor-pointer"></i>
                         </a>
-                        <a class="ml-2" (click)="onSubmitLock(item.id, 1)" *ngIf="!item.status">
+                        <a *ngIf="checkAction('POST@/api/admin/lock') && item.status === 0" class="ml-2" (click)="onSubmitLock(item.id, 1)" >
                           <i data-feather="unlock" class="text-primary cursor-pointer"></i>
                         </a>
 
-                        <a class="ml-2" (click)="modalOpen(modalCreate, item)" >
+                        <a *ngIf="checkAction('POST@/api/admin')" class="ml-2" (click)="modalOpen(modalCreate, item)" >
                           <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
                         </a>
 
@@ -85,7 +90,7 @@
 
                 
               <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalPage"
-                                [(page)]="page" [pageSize]="pageSize" [boundaryLinks]="true"
+                                [(page)]="page" [pageSize]="searchForm.pageSize" [boundaryLinks]="true"
                                 (pageChange)="loadPage($event)">
                                 <ng-template ngbPaginationPages let-page let-pages="pages">
                                     <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">

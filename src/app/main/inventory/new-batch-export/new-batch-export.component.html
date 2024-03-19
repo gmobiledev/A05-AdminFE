@@ -47,6 +47,7 @@
                                     <label for="">Loại sản phẩm</label>
                                     <select name="" id="" class="form-control"
                                     [(ngModel)]="searchForm.category_id"
+                                    (change)="onChangeCategory($event)"
                                     >
                                         <option value="">Chọn loại sản phẩm</option>
                                         <option value="2">SIM</option>
@@ -57,8 +58,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Thuộc tính</label>
-                                    <ng-select
-                                    multiple="true"
+                                    <ng-select                                    
                                     [(ngModel)]="selectedAttributes"
                                     >
                                       <ng-option *ngFor="let p of listAttribute" [value]="p.id">{{
@@ -87,7 +87,11 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Dải từ</label>
-                                    <input type="text" class="form-control" placeholder="09969****0"
+                                    <input type="text"                                     
+                                    [specialCharacters]="['*']"                                                         
+                                    mask="9999999999"
+                                    [dropSpecialCharacters]="false"
+                                    class="form-control" placeholder="099697****"
                                     [(ngModel)]="searchForm.key_from"
                                     >
                                 </div>
@@ -95,7 +99,11 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Dải đến</label>
-                                    <input type="text" class="form-control" [(ngModel)]="searchForm.key_to" placeholder="09969**000">
+                                    <input type="text" 
+                                    [specialCharacters]="['*']"                                    
+                                    mask="9999999999"
+                                    [dropSpecialCharacters]="false"
+                                    class="form-control" [(ngModel)]="searchForm.key_to" placeholder="099698****">
                                 </div>
                             </div>
                             <div class="col-md-4">

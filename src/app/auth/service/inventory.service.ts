@@ -131,7 +131,7 @@ export class InventoryService {
   }
 
   findOneBatchExport(id) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/find-one?batch_id=${id}`);
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/find-one?batch_id=${id}`);
   }
 
   updateBatchExport(data: UpdateBatchExportDto) {
@@ -176,5 +176,13 @@ export class InventoryService {
 
   getChildHeatmapStatus(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/GetDirectChildSellChannelListHeatmapByProvinceId`, data);
+  }
+
+  summaryReport(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports`, data);
+  }
+
+  viewFile(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/common/file/get-file`, data);
   }
 }
