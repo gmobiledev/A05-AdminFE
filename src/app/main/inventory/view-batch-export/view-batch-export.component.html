@@ -12,6 +12,7 @@
                     <p>Số lượng: {{ data?.batch?.quantility }}</p>
                     <p>Ngày tạo: {{ data?.batch?.created_at | date: 'dd/MM/yyyy H:mm':'GMT' }}</p>
                     <p>Trạng thái: <span [innerHTML]="data?.batch?.status | showStatusBatch"></span></p>
+                    <p *ngIf="data?.batch?.note != ''" >Note: {{ data?.batch?.note }}</p>
                 </div>
                 </div>
             </div>
@@ -56,7 +57,11 @@
                                     </div>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Giá" prop="price"></ngx-datatable-column>
+                            <ngx-datatable-column name="Giá" prop="price">
+                                <ng-template  let-value="value" ngx-datatable-cell-template>
+                                    {{ value | number  }}
+                                </ng-template>
+                            </ngx-datatable-column>
                             <ngx-datatable-column name="Hạng số" prop="level"></ngx-datatable-column>
                         </ngx-datatable>
             
@@ -95,7 +100,9 @@
                     <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                 </button>
 
-                <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2" *ngIf="data?.batch?.type != batchType.RETRIEVE">
+                <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2" *ngIf="data?.batch?.type != batchType.RETRIEVE
+                && ![batchStatus.CANCEL_BY_OFFICE, batchStatus.CANCEL_BY_ACCOUNTANT, batchStatus.CANCEL_BY_USER].includes(data?.batch?.status)
+                ">
                     <i data-feather="file" class="text-white cursor-pointer"></i>
                     Xuất excel</button>
 

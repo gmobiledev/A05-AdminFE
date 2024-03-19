@@ -10,6 +10,7 @@ import { CommonService } from 'app/utils/common.service';
 import { BatchStatus, BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 const ExcelJS = require('exceljs');
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-batch-export',
@@ -173,18 +174,40 @@ export class ViewBatchExportComponent implements OnInit {
           this.alertService.showMess(error)
         })
       } else if (status == this.batchStatus.CANCEL_BY_ACCOUNTANT) {
-        if ((await this.alertService.showConfirm('Bạn có chắc chắn từ chối yêu cầu này?')).value) {
-          this.inventoryService.ketoanReject(data).subscribe(res => {
-            if(!res.status) {
-              this.alertService.showMess(res.message);
+        Swal.fire({
+          title: 'Bạn có đồng ý từ chối yêu cầu? Nhập lý do',
+          input: 'textarea',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Gửi',
+          showLoaderOnConfirm: true,
+          preConfirm: (note) => {
+            if (!note || note == '') {
+              Swal.showValidationMessage(
+                "Vui lòng nhập nội dung"
+              )
               return;
             }
-            this.alertService.showSuccess(res.message);
-            this.getData();
-          },error => {
-            this.alertService.showMess(error)
-          })
-        }      
+            data['note'] = note;
+            this.inventoryService.ketoanReject(data).subscribe(res => {
+              if(!res.status) {
+                this.alertService.showMess(res.message);
+                return;
+              }
+              this.alertService.showSuccess(res.message);
+              this.getData();
+            },error => {
+              this.alertService.showMess(error)
+            })    
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+  
+          }
+        })  
       }
     } else if (type == 'vanphong') {
       if(status == this.batchStatus.APPROVED) {
@@ -204,19 +227,41 @@ export class ViewBatchExportComponent implements OnInit {
           this.alertService.showMess(error)
         })
       } else if (status == this.batchStatus.CANCEL_BY_OFFICE) {
-        if ((await this.alertService.showConfirm('Bạn có chắc chắn từ chối yêu cầu này?')).value) {
-          this.inventoryService.vanPhongReject(data).subscribe(res => {
-            if(!res.status) {
-              this.alertService.showMess(res.message);
+
+        Swal.fire({
+          title: 'Bạn có đồng ý từ chối yêu cầu? Nhập lý do',
+          input: 'textarea',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Gửi',
+          showLoaderOnConfirm: true,
+          preConfirm: (note) => {
+            if (!note || note == '') {
+              Swal.showValidationMessage(
+                "Vui lòng nhập nội dung"
+              )
               return;
             }
-            this.alertService.showSuccess(res.message);
-            this.getData();
-          },error => {
-            this.alertService.showMess(error)
-          })
-        }
-        
+            data['note'] = note;
+            this.inventoryService.vanPhongReject(data).subscribe(res => {
+              if(!res.status) {
+                this.alertService.showMess(res.message);
+                return;
+              }
+              this.alertService.showSuccess(res.message);
+              this.getData();
+            },error => {
+              this.alertService.showMess(error)
+            })  
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+  
+          }
+        })
       }
     } else if(type == 'user') {
       let confirmMess = status == this.batchStatus.CANCEL_BY_USER ? 'Bạn có đồng ý từ chối yêu cầu này?' : 'Bạn có đồng ý duyệt yêu cầu này?';
@@ -234,16 +279,41 @@ export class ViewBatchExportComponent implements OnInit {
             this.alertService.showMess(error)
           })
         } else if (status == this.batchStatus.CANCEL_BY_USER) {
-          this.inventoryService.userReject(data).subscribe(res => {
-            if (!res.status) {
-              this.alertService.showMess(res.message);
-              return;
+
+          Swal.fire({
+            title: 'Bạn có đồng ý từ chối yêu cầu? Nhập lý do',
+            input: 'textarea',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Gửi',
+            showLoaderOnConfirm: true,
+            preConfirm: (note) => {
+              if (!note || note == '') {
+                Swal.showValidationMessage(
+                  "Vui lòng nhập nội dung"
+                )
+                return;
+              }
+              data['note'] = note;
+              this.inventoryService.userReject(data).subscribe(res => {
+                if (!res.status) {
+                  this.alertService.showMess(res.message);
+                  return;
+                }
+                this.alertService.showSuccess(res.message);
+                this.getData();
+              }, error => {
+                this.alertService.showMess(error)
+              })  
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+          }).then((result) => {
+            if (result.isConfirmed) {
+    
             }
-            this.alertService.showSuccess(res.message);
-            this.getData();
-          }, error => {
-            this.alertService.showMess(error)
-          })
+          })          
         }
       }
     } else {
@@ -361,8 +431,8 @@ export class ViewBatchExportComponent implements OnInit {
   }
 
   onViewAttachments() {
-    let files = JSON.parse(this.data.batch.attachments);
-    if(files.file) {
+    let files = this.data.batch.attachments ? JSON.parse(this.data.batch.attachments) : null;
+    if(files && files.file) {
       this.inventoryService.viewFile({
         file: files.file
       }).subscribe(res => {
