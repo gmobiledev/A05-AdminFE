@@ -89,11 +89,12 @@ export class ListRoleComponent implements OnInit {
   }
 
   modalClose() {
-    this.formGroup.patchValue({
-      role_name: '',
-      role_description: '',
-      permission: []
-    });
+    // this.formGroup.patchValue({
+    //   role_name: '',
+    //   role_description: '',
+    //   permission: []
+    // });
+    this.initForm();
     this.selectedRoute = [];
     this.modalRef.close();
   }
@@ -134,8 +135,15 @@ export class ListRoleComponent implements OnInit {
     
     var isCreate = this.isCreate;
     let data = [];
-    data = this.selectedRoute.map(item => { return {parent: this.formGroup.controls['role_name'].value, child: item} });
-    
+    for(let item of this.selectedRoute) {
+      if(!this.currentRouteRole.includes(item)) {
+        data.push({
+          parent: this.formGroup.controls['role_name'].value,
+          child: item
+        })
+      }
+    }
+
     const dataCreateRole = {
       name: this.formGroup.controls['role_name'].value,
       type: 1,
@@ -156,7 +164,7 @@ export class ListRoleComponent implements OnInit {
             if(res.status) {
               this._alertService.showSuccess(res.message);
               this.getData();
-              this.modalRef.close();
+              this.modalClose();
               return;
             }
             this._alertService.showError(res.message)
@@ -177,9 +185,9 @@ export class ListRoleComponent implements OnInit {
         }
         this._roleService.addRouteToRole(dataCreateRole.name, data).subscribe(res => {
           if(res.status) {
-            this._alertService.showSuccess(res.message)
+            this._alertService.showSuccess(res.message);            
             this.getData();
-            this.modalRef.close();
+            this.modalClose();
             return;
           }
           this._alertService.showError(res.message)
@@ -246,13 +254,7 @@ export class ListRoleComponent implements OnInit {
    * On init
    */
   ngOnInit() {
-
-    this.formGroup = this.formBuiler.group({
-      role_name: ['', Validators.required],
-      role_description: [''],
-      permission: new FormArray([])
-    })
-    
+        
     // content header
     this.contentHeader = {
       headerTitle: 'Vai trò',
@@ -278,6 +280,8 @@ export class ListRoleComponent implements OnInit {
       }
     };
 
+    this.initForm();
+
     this.getData();
   }
 
@@ -295,6 +299,14 @@ export class ListRoleComponent implements OnInit {
 
   checkData(item) {
     return this.allRouteFilter.find(x => x.child == item.child) != undefined ? true : false;
+  }
+
+  initForm() {
+    this.formGroup = this.formBuiler.group({
+      role_name: ['', Validators.required],
+      role_description: [''],
+      permission: new FormArray([])
+    })
   }
 
 }
