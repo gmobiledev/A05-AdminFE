@@ -319,8 +319,13 @@ export class ViewSellChanelComponent implements OnInit {
     if (this.formGroup.controls['mobile'].value && this.formGroup.controls['mobile'].value != '') {
       this.userService.getByMobile(this.formGroup.controls['mobile'].value).subscribe(async res => {
         this.selectedUserId = res.data.id;
+        if(res.status && res.data){
+          this.exitsUser = true;
+          this.isCreate = false;
+        }
         if (res.status && res.data && !res.data.is_agent) {
           this.titleModal = "Đặt làm đại lý";
+          console.log("check isCreate = ",this.isCreate)
           this.exitsUser = true;
           return;
         } else if (res.status && res.data && res.data.is_agent) {
@@ -345,7 +350,6 @@ export class ViewSellChanelComponent implements OnInit {
           })
         }
         this.titleModal = this.isCreate ? "Thêm đại lý" : "Cập nhật đại lý";
-        this.exitsUser = false;
       })
     }
   }
@@ -488,6 +492,7 @@ export class ViewSellChanelComponent implements OnInit {
   initForm() {
     this.formGroup = this.formBuilder.group({
       name: ['', Validators.required],
+      full_name: ['', Validators.required],
       mobile: ['', Validators.required],
       password: ['', Validators.required],
       partner_user_code: [''],
