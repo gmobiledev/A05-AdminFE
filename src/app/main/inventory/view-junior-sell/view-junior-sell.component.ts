@@ -46,8 +46,8 @@ export class ViewJuniorSellComponent implements OnInit {
     business: '',
     page_size: 10,
     page: 1,
-    current_sell_channel_id: 138,
-    user_id: 1036,
+    current_sell_channel_id: '',
+    user_id: '',
   }
 
   public submittedUpload: boolean = false;
