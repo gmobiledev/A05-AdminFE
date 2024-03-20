@@ -151,7 +151,6 @@
                     <th>Tên</th>
                     <th>Nội dung</th>
                     <th>Đại lý</th>
-                    <th>Kênh</th>
                     <th>Địa điểm</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -168,9 +167,6 @@
                     </td>
                     <td>
                       {{ item.admin_id }}
-                    </td>
-                    <td>
-                      {{ item.type }}
                     </td>
                     <td>
                       {{ item.address }}
@@ -196,7 +192,7 @@
                       <a
                         class="ml-1"
                         (click)="onSubmitLock(item.id, -2)"
-                        *ngIf="item.status == 1"
+                        *ngIf="item.status == 1 && item.parent_id != null"
                         title="Khóa kho"
                       >
                         <i
@@ -209,9 +205,10 @@
                         class="ml-1"
                         (click)="onSubmitLock(item.id, -1)"
                         *ngIf="
-                          item.status == 0 ||
-                          item.status == 1 ||
-                          item.status == -2
+                          item.parent_id != null &&
+                          (item.status == 0 ||
+                            item.status == 1 ||
+                            item.status == -2)
                         "
                         title="Từ chối kho"
                       >
@@ -224,7 +221,10 @@
                       <a
                         class="ml-1"
                         (click)="onSubmitLock(item.id, 1)"
-                        *ngIf="item.status == 0 || item.status == -2"
+                        *ngIf="
+                          item.status == 0 ||
+                          (item.status == -2 && item.parent_id != null)
+                        "
                         title="Kích hoạt kho"
                       >
                         <i
@@ -234,7 +234,7 @@
                       </a>
                       <a
                         class="ml-1"
-                        [routerLink]="['/inventory/view-sell-chanel']"
+                        [routerLink]="['/inventory/view-junior-sell']"
                         [queryParams]="{ channel_id: item.id }"
                         title="Xem chi tiết"
                       >
@@ -243,32 +243,63 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
+
+                      <a
+                        class="ml-1"
+                        [routerLink]="['/inventory/view-detail-totalSell']"
+                        title="Danh sách sim số"
+                      >
+                        <i
+                          data-feather="list"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
-              [(page)]="searchForm.page" [pageSize]="searchForm.take" [boundaryLinks]="true"
-              (pageChange)="loadPage($event)">
-              <ng-template ngbPaginationPages let-page let-pages="pages">
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalItems"
+                [(page)]="searchForm.page"
+                [pageSize]="searchForm.take"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
+                <ng-template ngbPaginationPages let-page let-pages="pages">
                   <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
-                      <div class="mb-3 d-flex flex-nowrap px-2">
-                          <label id="paginationInputLabel" for="paginationInput"
-                              class="col-form-label me-2 ms-1">Trang</label>
-                          <input #i type="text" inputmode="numeric" pattern="[0-9]*"
-                              class="form-control custom-pages-input" id="paginationInput"
-                              [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
-                              (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
-                              aria-labelledby="paginationInputLabel paginationDescription"
-                              style="width: 2.5rem" />
-                          <span id="paginationDescription" class="col-form-label text-nowrap px-2">
-                              của {{pages.length}}</span>
-                      </div>
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 2.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
+                    </div>
                   </li>
-              </ng-template>
-          </ngb-pagination>
-          
+                </ng-template>
+              </ngb-pagination>
             </div>
           </div>
         </div>
@@ -276,5 +307,3 @@
     </div>
   </div>
 </div>
-
-

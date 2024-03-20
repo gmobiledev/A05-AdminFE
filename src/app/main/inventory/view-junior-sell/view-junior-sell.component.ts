@@ -13,11 +13,11 @@ import { CommonService } from 'app/utils/common.service';
 
 
 @Component({
-  selector: 'app-sell-chanel',
-  templateUrl: './sell-chanel.component.html',
-  styleUrls: ['./sell-chanel.component.scss']
+  selector: 'app-view-junior-sell',
+  templateUrl: './view-junior-sell.component.html',
+  styleUrls: ['./view-junior-sell.component.scss']
 })
-export class SellChanelComponent implements OnInit {
+export class ViewJuniorSellComponent implements OnInit {
 
   public contentHeader: any;
   public list: any;
@@ -38,7 +38,6 @@ export class SellChanelComponent implements OnInit {
     province_id: '',
     district_id: '',
     skip: 0,
-    take: 20,
     commune_id: '',
     address: '',
     attach_file_name: '',
@@ -46,20 +45,13 @@ export class SellChanelComponent implements OnInit {
     user_sell_channels: '',
     business: '',
     page_size: 10,
-    page: 1
+    page: 1,
+    current_sell_channel_id: 138,
+    user_id: 1036,
   }
-  public selectedItem: any
-  public isCreate: boolean = false;
-  public submitted: boolean = false;
-  public exitsUser: boolean = false;
 
   public submittedUpload: boolean = false;
-  public filesData: any;
-  public filesImages: any;
-  public adminId: any;
-  public refCode: any;
   public totalItems: number;
-
   public currentUser: any;
   public isAdmin: boolean = false;
 
@@ -67,15 +59,10 @@ export class SellChanelComponent implements OnInit {
   @Input() districts;
   @Input() commues;
 
-  dateRange: any;
 
 
-  public modalRef: any;
-  public titleModal: string;
-  public formGroup: FormGroup;
-  public subFormGroup: FormGroup;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
-  count: any;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -94,92 +81,33 @@ export class SellChanelComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
       this.searchForm.code = params['code'] && params['code'] != undefined ? params['code'] : '';
-      this.searchForm.business = params['business'] && params['business'] != undefined ? params['business'] : '';
-      this.searchForm.admin_id = params['admin_id'] && params['admin_id'] != undefined ? params['admin_id'] : '';
+      this.searchForm.current_sell_channel_id = params['current_sell_channel_id'] && params['current_sell_channel_id'] != undefined ? params['current_sell_channel_id'] : '';
       this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
       this.searchForm.commune_id = params['commune_id'] && params['commune_id'] != undefined ? params['commune_id'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
       this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
       this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : '';
+      this.searchForm.user_id = params['user_id'] && params['user_id'] != undefined ? params['user_id'] : '';
 
       this.getData();
 
     })
   }
 
-  // public dataSell = {
-  //   parent_id: '',
-  //   name: '',
-  //   code: 0,
-  //   desc: '',
-  //   type: 0,
-  //   status: 0,
-  //   business_id: 0,
-  //   admin_id: 0,
-  //   province_id: 0,
-  //   commune_id: 0,
-  //   address: '',
-  //   attached_file_name: '',
-  //   attached_file_content: '',
-  //   customer_id: 0
-  // }
-
   loadPage(page): void {
     this.searchForm.page = page;
-    this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
-  }
-
-  modalOpen(modal, item = null) {
-    if (item) {
-      this.titleModal = "Cập nhật kênh";
-      this.isCreate = false;
-      this.selectedItem = item;
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'lg'
-      });
-
-    } else {
-      this.titleModal = "Thêm kho";
-      this.isCreate = true;
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'lg'
-      });
-    }
-  }
-
-  modalClose() {
-    this.modalRef.close();
+    this.router.navigate(['/inventory/view-junior-sell'], { queryParams: this.searchForm })
   }
 
 
   onSubmitSearch(): void {
     this.searchForm.page = 1;
-    this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.searchForm })
+    this.router.navigate(['/inventory/sview-junior-sell'], { queryParams: this.searchForm })
   }
 
-  onFocusMobile() {
-    this.exitsUser = false;
-    this.titleModal = "Thêm đại lý";
-  }
 
-  async onSubmitCreate() {
-    console.log("onSubmitCreate");
-  }
-
-  async onFileChangeExcel(event) {
-    this.filesData = event.target.files[0];
-  }
-
-  async onFileChangeImages(event) {
-    this.filesImages = event.target.files[0];
-  }
-
-  async onSubmitLock(id, status, parent_id) {
+  async onSubmitLock(id, status) {
     let confirmMessage = status;
 
     if (status == 0) {
@@ -206,26 +134,6 @@ export class SellChanelComponent implements OnInit {
     }
   }
 
-
-  async onSelectFileAccount(event) {
-    this.filesData = event.target.files[0];
-  }
-
-
-  // async onFileChangeAttach(event) {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const ext = event.target.files[0].type;
-  //     if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-  //       this.dataSell.attached_file_name = 'png';
-  //       let img = await this.commonService.resizeImage(event.target.files[0]);
-  //       this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
-  //     } else if (ext.includes('pdf')) {
-  //       this.dataSell.attached_file_name = 'pdf';
-  //       this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
-  //     }
-  //   }
-  // }
-
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
     // const daterangeString = this.dateRange.startDate && this.dateRange.endDate
@@ -245,27 +153,9 @@ export class SellChanelComponent implements OnInit {
     })
   }
 
-  // async onViewSell(id) {
-
-  //   this.submittedUpload = true;
-  //   this.inventoryService.viewDetailSell(id).subscribe(res => {
-  //     this.submittedUpload = false;
-  //     if (!res.status) {
-  //       this.alertService.showError(res.message);
-  //       return;
-  //     }
-  //     this.alertService.showSuccess(res.message);
-  //     this.getData();
-  //   }, error => {
-  //     this.submittedUpload = false;
-  //     this.alertService.showError(error);
-  //   })
-
-  // }
-
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách kho cha',
+      headerTitle: 'Danh sách kho con',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -276,7 +166,7 @@ export class SellChanelComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách kho cha',
+            name: 'Danh sách kho con',
             isLink: false
           }
         ]
@@ -315,7 +205,7 @@ export class SellChanelComponent implements OnInit {
 
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
+    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
       if (arrayRoles.includes("admin") || arrayRoles.includes("root")) {
@@ -330,13 +220,12 @@ export class SellChanelComponent implements OnInit {
       }
     }
 
-    this.inventoryService.searchSellChannelAll(paramSerch).subscribe(res => {
+    this.inventoryService.searchSellChannelAll(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalPage = res.data.count;
       this.searchForm.page_size = res.data.page_size;
       this.totalItems = res.data.count;
-      // this.onViewSell(res.data.id)
     }, error => {
       this.sectionBlockUI.stop();
       console.log(error);
@@ -345,3 +234,4 @@ export class SellChanelComponent implements OnInit {
 
 
 }
+

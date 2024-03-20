@@ -56,8 +56,8 @@
 
                 <div class="form-group row mt-1">
                   <label for="commune" class="col-md-3 col-form-label"
-                    >Kho nguồn</label
-                  >
+                    >Kho cha
+                  </label>
                   <div class="col-md-9">
                     <select
                       name=""
@@ -150,10 +150,7 @@
                     >Đại lý</label
                   >
                   <div class="col-md-9">
-                    <ng-select
-                      name=""
-                      [(ngModel)]="dataSell.customer_id"
-                    >
+                    <ng-select name="" [(ngModel)]="dataSell.customer_id">
                       <ng-option value="">-- Chọn đại lý --</ng-option>
                       <ng-option *ngFor="let p of listCustomer" [value]="p.id">
                         {{ p.name }}
@@ -167,10 +164,7 @@
                     >Người quản lý kho</label
                   >
                   <div class="col-md-9">
-                    <ng-select
-                      name=""
-                      [(ngModel)]="dataSell.admin_id"
-                    >
+                    <ng-select name="" [(ngModel)]="dataSell.admin_id">
                       <ng-option value="">-- Chọn quản lý kho --</ng-option>
                       <ng-option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}

@@ -27,7 +27,7 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 export class ViewDetailTotalSellComponent implements OnInit {
 
   public contentHeader: any = {
-    headerTitle: 'Yêu cầu của đại lý',
+    headerTitle: 'Danh sách sim số',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -38,7 +38,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Yêu cầu của đại lý',
+          name: 'Danh sách sim số',
           isLink: false
         }
       ]
@@ -99,8 +99,8 @@ export class ViewDetailTotalSellComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : 20;
 
-      this.contentHeader.headerTitle = 'Xem chi tiết kho tổng';
-      this.contentHeader.breadcrumb.links[1] = 'Xem chi tiết kho tổng';
+      // this.contentHeader.headerTitle = 'Danh sách sim số';
+      // this.contentHeader.breadcrumb.links[1] = 'Danh sách sim số';
 
       this.getData();
 
