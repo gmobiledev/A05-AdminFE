@@ -225,7 +225,7 @@
                     [selectionType]="'checkbox'"
                     [limit]="basicSelectedOption"
                     (select)="onSelect($event)"
-                    [messages]="{emptyMessage: 'Chưa có dữ liệu'}"
+                    [messages]="{emptyMessage: 'Không tìm thấy'}"
                   >
                     <ngx-datatable-column
                       [width]="50"
@@ -286,7 +286,8 @@
                         {{ value | number  }}
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>                    
+                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>  
+                    <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>                  
                     <!-- <ngx-datatable-column name="Actions"  [sortable]="false">
                       <ng-template ngx-datatable-cell-template>
                         <div class="d-flex align-items-center">
@@ -357,7 +358,7 @@
                     [selectionType]="'checkbox'"
                     [limit]="basicSelectedOption" 
                     (select)="onSelectToRemove($event)"
-                    [messages]="{emptyMessage: 'Chưa có dữ liệu'}"
+                    [messages]="{emptyMessage: 'Không tìm thấy'}"
                   >
                     <ngx-datatable-column
                       [width]="50"
@@ -418,7 +419,8 @@
                         {{ value | number  }}
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>                    
+                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>
+                    <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>
                     <ngx-datatable-column name="Thao tác"  [sortable]="false" prop="name">
                       <ng-template ngx-datatable-cell-template let-value="value">
                         <div class="d-flex align-items-center">

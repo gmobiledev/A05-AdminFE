@@ -155,7 +155,7 @@
                         ></i>
                       </a>
                       <a
-                      *ngIf="this.currentUser == item.created_by"
+                      *ngIf="currentUser.id == item.created_by"
                         class="ml-1"
                         (click)="modalOpen(modalUploadData, item)"
                         title="Tải dữ liệu lên"
