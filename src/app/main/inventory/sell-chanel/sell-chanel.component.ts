@@ -38,7 +38,6 @@ export class SellChanelComponent implements OnInit {
     province_id: '',
     district_id: '',
     skip: 0,
-    take: 20,
     commune_id: '',
     address: '',
     attach_file_name: '',
@@ -108,22 +107,6 @@ export class SellChanelComponent implements OnInit {
     })
   }
 
-  // public dataSell = {
-  //   parent_id: '',
-  //   name: '',
-  //   code: 0,
-  //   desc: '',
-  //   type: 0,
-  //   status: 0,
-  //   business_id: 0,
-  //   admin_id: 0,
-  //   province_id: 0,
-  //   commune_id: 0,
-  //   address: '',
-  //   attached_file_name: '',
-  //   attached_file_content: '',
-  //   customer_id: 0
-  // }
 
   loadPage(page): void {
     this.searchForm.page = page;
@@ -315,7 +298,7 @@ export class SellChanelComponent implements OnInit {
 
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
+    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
       if (arrayRoles.includes("admin") || arrayRoles.includes("root")) {

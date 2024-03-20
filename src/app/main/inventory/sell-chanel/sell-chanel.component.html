@@ -210,7 +210,7 @@
                             item.status == 1 ||
                             item.status == -2)
                         "
-                        title="Từ chối kho"
+                        title="Hủy kho"
                       >
                         <i
                           data-feather="x-square"
@@ -235,7 +235,7 @@
                       <a
                         class="ml-1"
                         [routerLink]="['/inventory/view-junior-sell']"
-                        [queryParams]="{ channel_id: item.id }"
+                        [queryParams]="{ current_sell_channel_id: item.id }"
                         title="Xem chi tiết"
                       >
                         <i
