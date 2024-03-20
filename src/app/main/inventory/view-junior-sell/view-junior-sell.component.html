@@ -1,1 +1,277 @@
-<p>view-junior-sell works!</p>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  
+      <div class="row" id="table-striped">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+            </div>
+            <div class="card-body">
+              <form (ngSubmit)="onSubmitSearch()">
+                <div class="row">
+                  <!-- <div class="col-md-4">
+                    <div class="form-group">
+                      <select
+                        name="province_id"
+                        id="province"
+                        class="form-control"
+                        (change)="onChangeProvince($event)"
+                        [(ngModel)]="searchForm.province_id"
+                      >
+                        <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                        <option *ngFor="let p of provinces" [value]="p.id">
+                          {{ p.title }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <select
+                        name="district_id"
+                        id="home_district"
+                        class="form-control"
+                        (change)="onChangeDistrict($event)"
+                        [(ngModel)]="searchForm.district_id"
+                      >
+                        <option value="">--Chọn Quận/Huyện--</option>
+                        <option *ngFor="let p of districts" [value]="p.id">
+                          {{ p.title }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <select
+                        name="commune_id"
+                        class="form-control"
+                        [(ngModel)]="searchForm.commune_id"
+                      >
+                        <option value="">--Chọn Phường/xã --</option>
+                        <option *ngFor="let p of commues" [value]="p.id">
+                          {{ p.title }}
+                        </option>
+                      </select>
+                    </div>
+                  </div> -->
+  
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <select
+                        class="form-control"
+                        name="status"
+                        [(ngModel)]="searchForm.status"
+                      >
+                        <option value="">Tất cả</option>
+                        <option value="0">Khởi tạo</option>
+                        <option value="1">Kích hoạt</option>
+                        <option value="-2">Khóa</option>
+                        <option value="-1">Hủy</option>
+                      </select>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="code"
+                        [(ngModel)]="searchForm.code"
+                        class="form-control"
+                        placeholder="Mã kho"
+                      />
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="name"
+                        [(ngModel)]="searchForm.name"
+                        class="form-control"
+                        placeholder="Tên kho"
+                      />
+                    </div>
+                  </div>
+  
+                  <!-- <div class="col-md-3">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="admin_id"
+                        [(ngModel)]="searchForm.admin_id"
+                        class="form-control"
+                        placeholder="Tên đại lý"
+                      />
+                    </div>
+                  </div> -->
+  
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-block btn-info">
+                        Lọc kết quả <span [data-feather]="'search'"></span>
+                      </button>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <button
+                        type="button"
+                        (click)="onSubmitExportExcelReport()"
+                        class="btn btn-block btn-success"
+                      >
+                        Xuất báo cáo excel <span [data-feather]="'file'"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="mt-3 mb-3 overflow-hidden">
+                <div class="pull-left">
+                  Tổng: <b>{{ totalPage }}</b>
+                </div>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-success mr-25">
+                    <span routerLink="/inventory/new-sell-chanel">Tạo kho</span>
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive" *blockUI="'section-block'">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Mã</th>
+                      <th>Tên</th>
+                      <th>Nội dung</th>
+                      <th>Đại lý</th>
+                      <th>Địa điểm</th>
+                      <th>Trạng thái</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of list">
+                      <td>
+                        {{ item.code }}
+                      </td>
+                      <td>{{ item.name }}</td>
+                      <td>
+                        {{ item.desc }}
+                      </td>
+                      <td>
+                        {{ item.admin_id }}
+                      </td>
+                      <td>
+                        {{ item.address }}
+                      </td>
+                      <td>
+                        <div [innerHTML]="item.status | showStatusSell"></div>
+                      </td>
+  
+                      <td class="overflow-auto">
+                        <a
+                          class="ml-1"
+                          title="Chỉnh sửa kho"
+                          [routerLink]="[
+                            '/inventory/edit-sell-chanel/' + item.id
+                          ]"
+                        >
+                          <i
+                            data-feather="edit-3"
+                            class="text-primary cursor-pointer"
+                          ></i>
+                        </a>
+  
+                        <a
+                          class="ml-1"
+                          (click)="onSubmitLock(item.id, -2)"
+                          *ngIf="item.status == 1"
+                          title="Khóa kho"
+                        >
+                          <i
+                            data-feather="lock"
+                            class="text-primary cursor-pointer"
+                          ></i>
+                        </a>
+  
+                        <a
+                          class="ml-1"
+                          (click)="onSubmitLock(item.id, -1)"
+                          *ngIf="
+                            item.status == 0 ||
+                            item.status == 1 ||
+                            item.status == -2
+                          "
+                          title="Từ chối kho"
+                        >
+                          <i
+                            data-feather="x-square"
+                            class="text-primary cursor-pointer"
+                          ></i>
+                        </a>
+  
+                        <a
+                          class="ml-1"
+                          (click)="onSubmitLock(item.id, 1)"
+                          *ngIf="item.status == 0 || item.status == -2"
+                          title="Kích hoạt kho"
+                        >
+                          <i
+                            data-feather="plus-circle"
+                            class="text-primary cursor-pointer"
+                          ></i>
+                        </a>
+                        <a
+                          class="ml-1"
+                          [routerLink]="['/inventory/view-sell-chanel']"
+                          [queryParams]="{ channel_id: item.id }"
+                          title="Xem chi tiết"
+                        >
+                          <i
+                            data-feather="eye"
+                            class="text-primary cursor-pointer"
+                          ></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+                <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                [(page)]="searchForm.page" [pageSize]="searchForm.take" [boundaryLinks]="true"
+                (pageChange)="loadPage($event)">
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                        <div class="mb-3 d-flex flex-nowrap px-2">
+                            <label id="paginationInputLabel" for="paginationInput"
+                                class="col-form-label me-2 ms-1">Trang</label>
+                            <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                class="form-control custom-pages-input" id="paginationInput"
+                                [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                aria-labelledby="paginationInputLabel paginationDescription"
+                                style="width: 2.5rem" />
+                            <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                của {{pages.length}}</span>
+                        </div>
+                    </li>
+                </ng-template>
+            </ngb-pagination>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

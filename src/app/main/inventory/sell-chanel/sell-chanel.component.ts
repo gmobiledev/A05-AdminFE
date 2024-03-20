@@ -108,22 +108,22 @@ export class SellChanelComponent implements OnInit {
     })
   }
 
-  public dataSell = {
-    parent_id: '',
-    name: '',
-    code: 0,
-    desc: '',
-    type: 0,
-    status: 0,
-    business_id: 0,
-    admin_id: 0,
-    province_id: 0,
-    commune_id: 0,
-    address: '',
-    attached_file_name: '',
-    attached_file_content: '',
-    customer_id: 0
-  }
+  // public dataSell = {
+  //   parent_id: '',
+  //   name: '',
+  //   code: 0,
+  //   desc: '',
+  //   type: 0,
+  //   status: 0,
+  //   business_id: 0,
+  //   admin_id: 0,
+  //   province_id: 0,
+  //   commune_id: 0,
+  //   address: '',
+  //   attached_file_name: '',
+  //   attached_file_content: '',
+  //   customer_id: 0
+  // }
 
   loadPage(page): void {
     this.searchForm.page = page;
@@ -179,7 +179,7 @@ export class SellChanelComponent implements OnInit {
     this.filesImages = event.target.files[0];
   }
 
-  async onSubmitLock(id, status) {
+  async onSubmitLock(id, status, parent_id) {
     let confirmMessage = status;
 
     if (status == 0) {
@@ -212,19 +212,19 @@ export class SellChanelComponent implements OnInit {
   }
 
 
-  async onFileChangeAttach(event) {
-    if (event.target.files && event.target.files[0]) {
-      const ext = event.target.files[0].type;
-      if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-        this.dataSell.attached_file_name = 'png';
-        let img = await this.commonService.resizeImage(event.target.files[0]);
-        this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
-      } else if (ext.includes('pdf')) {
-        this.dataSell.attached_file_name = 'pdf';
-        this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
-      }
-    }
-  }
+  // async onFileChangeAttach(event) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const ext = event.target.files[0].type;
+  //     if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+  //       this.dataSell.attached_file_name = 'png';
+  //       let img = await this.commonService.resizeImage(event.target.files[0]);
+  //       this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
+  //     } else if (ext.includes('pdf')) {
+  //       this.dataSell.attached_file_name = 'pdf';
+  //       this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
+  //     }
+  //   }
+  // }
 
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -265,7 +265,7 @@ export class SellChanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách kho sim số',
+      headerTitle: 'Danh sách kho cha',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -276,7 +276,7 @@ export class SellChanelComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách kho sim số',
+            name: 'Danh sách kho cha',
             isLink: false
           }
         ]

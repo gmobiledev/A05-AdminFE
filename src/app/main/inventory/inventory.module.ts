@@ -100,7 +100,11 @@ const routes: Routes = [
   {
     path: 'report/kinh-doanh',
     component: KinhDoanhComponent
+  },
 
+  {
+    path: 'view-junior-sell',
+    component: ViewJuniorSellComponent
   },
 ];
 
