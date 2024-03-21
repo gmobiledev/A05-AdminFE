@@ -47,8 +47,8 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, data);
   }
 
-  lockSell(id: number, status: number) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`, { id: id, status: status });
+  lockSell(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`, data);
   }
 
   getListCustomer(channel_id: number) {

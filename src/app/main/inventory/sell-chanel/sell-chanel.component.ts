@@ -10,6 +10,7 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { id } from '@swimlane/ngx-datatable';
 import { CommonService } from 'app/utils/common.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -162,6 +163,63 @@ export class SellChanelComponent implements OnInit {
     this.filesImages = event.target.files[0];
   }
 
+  async onApprove(item, status ){
+    let data = {id : item, status}
+    let confirmMessage = status;
+    let title = "";
+
+
+    if (status == 0) {
+      confirmMessage = "Bạn có khởi tạo kho?"
+      title = "Bạn có đồng ý khởi tạo kho? Nhập lý do"
+    } else if (status == 1) {
+      confirmMessage = "Bạn có đồng ý kích hoạt kho?"
+      title = "Bạn có đồng ý kích hoạt kho? Nhập lý do"
+    } else if (status == -2) {
+      confirmMessage = "Bạn có đồng ý khóa kho?"
+      title = "Bạn có đồng ý khóa kho? Nhập lý do"
+    } else if (status == -1) {
+      confirmMessage = "Bạn có đồng ý hủy kho này không?"
+      title = "Bạn có đồng ý hủy kho? Nhập lý do"
+    }
+
+    Swal.fire({
+      title,
+      input: 'textarea',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Gửi',
+      showLoaderOnConfirm: true,
+      preConfirm: (note) => {
+        if (!note || note == '') {
+          Swal.showValidationMessage(
+            "Vui lòng nhập nội dung"
+          )
+          return;
+        }
+        data['note'] = note;
+        this.inventoryService.lockSell(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            return;
+          }
+          this.alertService.showSuccess(res.message);
+          this.getData();
+        }, err => {
+          this.alertService.showError(err);
+        })  
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+      }
+    })  
+
+  }
+
   async onSubmitLock(id, status, parent_id) {
     let confirmMessage = status;
 
@@ -176,16 +234,16 @@ export class SellChanelComponent implements OnInit {
     }
 
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.lockSell(id, status).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, err => {
-        this.alertService.showError(err);
-      })
+      // this.inventoryService.lockSell(id, status).subscribe(res => {
+      //   if (!res.status) {
+      //     this.alertService.showError(res.message);
+      //     return;
+      //   }
+      //   this.alertService.showSuccess(res.message);
+      //   this.getData();
+      // }, err => {
+      //   this.alertService.showError(err);
+      // })
     }
   }
 

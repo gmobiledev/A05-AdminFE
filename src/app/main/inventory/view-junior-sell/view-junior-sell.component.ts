@@ -120,18 +120,18 @@ export class ViewJuniorSellComponent implements OnInit {
       confirmMessage = "Bạn có đồng ý hủy kho này không?"
     }
 
-    if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.lockSell(id, status).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, err => {
-        this.alertService.showError(err);
-      })
-    }
+    // if ((await this.alertService.showConfirm(confirmMessage)).value) {
+    //   this.inventoryService.lockSell(id, status).subscribe(res => {
+    //     if (!res.status) {
+    //       this.alertService.showError(res.message);
+    //       return;
+    //     }
+    //     this.alertService.showSuccess(res.message);
+    //     this.getData();
+    //   }, err => {
+    //     this.alertService.showError(err);
+    //   })
+    // }
   }
 
   onSubmitExportExcelReport() {
