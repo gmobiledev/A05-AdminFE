@@ -15,7 +15,7 @@
                   <div class="form-group">
                     <select
                       name="province_id"
-                      id="province"
+                      id="provinces"
                       class="form-control"
                       (change)="onChangeProvince($event)"
                       [(ngModel)]="searchForm.province_id"
@@ -247,9 +247,22 @@
 
                       <a
                         class="ml-1"
+                        [routerLink]="['/inventory/view-detail-nomarlSell']"
+                        [queryParams]="{ channel_id: item.id }"
+                        *ngIf="item.parent_id != null"
+                        title="Danh sách sim số"
+                      >
+                        <i
+                          data-feather="list"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+
+                      <a
+                        class="ml-1"
                         [routerLink]="['/inventory/view-detail-totalSell']"
-                       
-                        [queryParams]="{ channel_id: item.id, type: item.parent_id != null ? 'KHOTHUONG' : 'KHOTONG' }"
+                        [queryParams]="{ channel_id: item.id }"
+                        *ngIf="item.parent_id == null"
                         title="Danh sách sim số"
                       >
                         <i
