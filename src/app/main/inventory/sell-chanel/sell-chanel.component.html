@@ -191,7 +191,7 @@
 
                       <a
                         class="ml-1"
-                        (click)="onSubmitLock(item.id, -2)"
+                        (click)="onApprove(item.id, -2)"
                         *ngIf="item.status == 1 && item.parent_id != null"
                         title="Khóa kho"
                       >
@@ -203,7 +203,7 @@
 
                       <a
                         class="ml-1"
-                        (click)="onSubmitLock(item.id, -1)"
+                        (click)="onApprove(item.id, -1)"
                         *ngIf="
                           item.parent_id != null &&
                           (item.status == 0 ||
@@ -220,7 +220,7 @@
 
                       <a
                         class="ml-1"
-                        (click)="onSubmitLock(item.id, 1)"
+                        (click)="onApprove(item.id, 1)"
                         *ngIf="
                           item.status == 0 ||
                           (item.status == -2 && item.parent_id != null)
@@ -247,6 +247,8 @@
                       <a
                         class="ml-1"
                         [routerLink]="['/inventory/view-detail-totalSell']"
+                       
+                        [queryParams]="{ channel_id: item.id, type: item.parent_id != null ? 'KHOTHUONG' : 'KHOTONG' }"
                         title="Danh sách sim số"
                       >
                         <i

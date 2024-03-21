@@ -47,8 +47,8 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/SearchSell_Channel`, data);
   }
 
-  lockSell(id: number, status: number) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`, { id: id, status: status });
+  lockSell(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/UpdateSell_ChannelStatus`, data);
   }
 
   getListCustomer(channel_id: number) {
@@ -73,7 +73,7 @@ export class InventoryService {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/exportSell_channelExcel`, dto, { observe: 'response', responseType: 'blob' });
   }
 
-  getAllSim(params = null, inventoryType = "") {
+  getAllSim(params = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/product`, { params: params });
   }
 

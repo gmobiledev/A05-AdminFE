@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'app/auth/service';
@@ -10,6 +10,8 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { id } from '@swimlane/ngx-datatable';
 import { CommonService } from 'app/utils/common.service';
+import Swal from 'sweetalert2';
+import { CreateAgentDto } from 'app/auth/service/dto/user.dto';
 
 
 @Component({
@@ -25,6 +27,43 @@ export class ViewJuniorSellComponent implements OnInit {
   public page: number = 1;
   public pageSize = 10;
 
+  public isActivedBoxNewInit: boolean = false;
+  public isActivedBoxNewProcessing: boolean = false;
+  public isActivedBoxUpdateInit: boolean = false;
+  public isActivedBoxUpdateProcessing: boolean = false;
+  public isActivedBoxChangeSimInit: boolean = false;
+  public isActivedBoxChangeSimProcessing: boolean = false;
+
+  public taskTelecomStatus;
+  public selectedItem: any;
+  public selectedAgent: any;
+  public mineTask = false;
+  public currentUser: any;
+  public isAdmin: boolean = false;
+  public mnos: any = []
+  public listSellUser: any;
+
+  public exitsUser: boolean = false;
+  public formGroup: FormGroup;
+  public isCreate: boolean = false;
+  public submitted: boolean = false;
+  public titleModal: string;
+  public formGroupUserCode: FormGroup;
+  public selectedUserId: number;
+  public currentService: any;
+  public listServiceFilter: any;
+  public listSelectedUser = [];
+  public modalUserCodeRef: any;
+
+  public listAllService: any;
+  public listServiceTmp: any;
+
+  public listSellChannel: any;
+  public isShowAddInput: boolean = true;
+
+  public modalRef: any;
+  public modalRefAdd: any;
+
   public searchForm = {
     id: '',
     name: '',
@@ -34,6 +73,7 @@ export class ViewJuniorSellComponent implements OnInit {
     type: '',
     status: '',
     business_id: '',
+    channel_id: '',
     admin_id: '',
     province_id: '',
     district_id: '',
@@ -52,8 +92,6 @@ export class ViewJuniorSellComponent implements OnInit {
 
   public submittedUpload: boolean = false;
   public totalItems: number;
-  public currentUser: any;
-  public isAdmin: boolean = false;
 
   @Input() provinces;
   @Input() districts;
@@ -107,31 +145,61 @@ export class ViewJuniorSellComponent implements OnInit {
   }
 
 
-  async onSubmitLock(id, status) {
+  async onApprove(item, status ){
+    let data = {id : item, status}
     let confirmMessage = status;
+    let title = "";
+
 
     if (status == 0) {
-      confirmMessage = "Bạn có khởi tạọ kho?"
+      confirmMessage = "Bạn có khởi tạo kho?"
+      title = "Bạn có đồng ý khởi tạo kho? Nhập lý do"
     } else if (status == 1) {
       confirmMessage = "Bạn có đồng ý kích hoạt kho?"
+      title = "Bạn có đồng ý kích hoạt kho? Nhập lý do"
     } else if (status == -2) {
       confirmMessage = "Bạn có đồng ý khóa kho?"
+      title = "Bạn có đồng ý khóa kho? Nhập lý do"
     } else if (status == -1) {
       confirmMessage = "Bạn có đồng ý hủy kho này không?"
+      title = "Bạn có đồng ý hủy kho? Nhập lý do"
     }
 
-    if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.lockSell(id, status).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showError(res.message);
+    Swal.fire({
+      title,
+      input: 'textarea',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Gửi',
+      showLoaderOnConfirm: true,
+      preConfirm: (note) => {
+        if (!note || note == '') {
+          Swal.showValidationMessage(
+            "Vui lòng nhập nội dung"
+          )
           return;
         }
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, err => {
-        this.alertService.showError(err);
-      })
-    }
+        data['note'] = note;
+        this.inventoryService.lockSell(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            return;
+          }
+          this.alertService.showSuccess(res.message);
+          this.getData();
+        }, err => {
+          this.alertService.showError(err);
+        })  
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+      }
+    })  
+
   }
 
   onSubmitExportExcelReport() {
@@ -175,6 +243,158 @@ export class ViewJuniorSellComponent implements OnInit {
 
   }
 
+  modalOpen(modal, item = null, checkAdd = true) {
+    if (item) {
+      this.titleModal = "Cập nhật đại lý";
+      this.isCreate = false;
+      this.selectedUserId = item.id;
+      this.userService.getAgentServices(item.id).subscribe(res => {
+
+        this.currentService = res.data.map(x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
+        let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
+        for (let i = 0; i < this.currentService.length; i++) {
+          const newGroup = this.formBuilder.group({
+            id: [{ value: this.currentService[i]['id'], disabled: true }],
+            status: [{ value: this.currentService[i]['status'], disabled: true }],
+            ref_code: [{ value: this.currentService[i]['ref_code'], disabled: true }],
+            service_code: [{ value: this.currentService[i]['service_code'], disabled: true }]
+          });
+          const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
+          this.listServiceFilter[index]['disabled'] = 'disabled';
+          arrayControl.push(newGroup);
+        }
+
+        if (checkAdd == true) {
+          this.modalRefAdd = this.modalService.open(modal, {
+            centered: true,
+            windowClass: 'modal modal-primary',
+            size: 'lg'
+          });
+        } else {
+          this.modalRef = this.modalService.open(modal, {
+            centered: true,
+            windowClass: 'modal modal-primary',
+            size: 'lg'
+          });
+        }
+
+
+      })
+    } else {
+      this.titleModal = "Thêm tài khoản bán hàng";
+      this.isCreate = true;
+
+      if (checkAdd == true) {
+        this.modalRefAdd = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'lg'
+        });
+      } else {
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'lg'
+        });
+      }
+    }
+  }
+
+  modalClose() {
+    this.selectedItem = null;
+    this.getData();
+    this.modalRef.close();
+  }
+
+  modalCloseAdd() {
+    this.modalRefAdd.close();
+    this.getData();
+    this.initForm();
+  }
+
+  initForm() {
+    this.formGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      full_name: ['', Validators.required],
+      mobile: ['', Validators.required],
+      password: ['', Validators.required],
+      partner_user_code: [''],
+      channel_id: [''],
+      agents_service: this.formBuilder.array([]),
+      new_agents_service: this.formBuilder.array([])
+    });
+
+    this.formGroupUserCode = this.formBuilder.group({
+      partner_user_code: [''],
+      channel_id: [''],
+    });
+
+    this.exitsUser = false;
+    this.isCreate = true;
+  }
+
+  async onSubmitCreate() {
+    console.log(this.formGroup.controls['new_agents_service'].value);
+    if (!this.exitsUser && this.isCreate) {
+      this.submitted = true;
+      if (this.formGroup.invalid) {
+        return;
+      }
+      const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => {
+        return { ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value }
+      })
+      const data: CreateAgentDto = {
+        name: this.formGroup.controls['name'].value,
+        username: this.formGroup.controls['mobile'].value,
+        mobile: this.formGroup.controls['mobile'].value,
+        agent_service: dataAgentServices,
+        password: this.formGroup.controls['password'].value,
+      }
+      if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
+        this.userService.createAgent(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            this.submitted = false;
+            return;
+          }
+
+          //add nguoi ban hang vao kho
+          this.telecomService.sellChannelAddChannelToUser({
+            channel_id: [this.searchForm.channel_id],
+            user_id: res.data.id
+          }).subscribe(res2 => {
+            if (!res2.status) {
+              this.alertService.showMess(res2.message);
+              return;
+            }
+            this.modalRef.close();
+            this.initForm();
+            this.alertService.showSuccess(res2.message);
+            this.getData()
+          }, error => {
+            this.alertService.showMess(error);
+            return;
+          }
+          )
+        }, error => {
+          this.alertService.showMess(error);
+        })
+      }
+    } else {
+      this.userService.addServicesToAgent(this.selectedUserId, this.formGroup.controls['new_agents_service'].value).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          this.submitted = false;
+          return;
+        }
+        this.modalRef.close();
+        this.initForm();
+        this.getData()
+        this.alertService.showSuccess(res.message);
+      })
+    }
+  }
+
   onChangeProvince(event) {
     let id = event.target.value
     this.commonDataService.getDistricts(id).subscribe((res: any) => {
@@ -193,6 +413,45 @@ export class ViewJuniorSellComponent implements OnInit {
         this.commues = res.data
       }
     })
+  }
+
+  onCheckExits() {
+    if (this.formGroup.controls['mobile'].value && this.formGroup.controls['mobile'].value != '') {
+      this.userService.getByMobile(this.formGroup.controls['mobile'].value).subscribe(async res => {
+        this.selectedUserId = res.data.id;
+        if(res.status && res.data){
+          this.exitsUser = true;
+          this.isCreate = false;
+        }
+        if (res.status && res.data && !res.data.is_agent) {
+          this.titleModal = "Đặt làm đại lý";
+          console.log("check isCreate = ",this.isCreate)
+          this.exitsUser = true;
+          return;
+        } else if (res.status && res.data && res.data.is_agent) {
+
+          this.userService.getAgentServices(res.data.id).subscribe(res => {
+            this.currentService = res.data.map(x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
+            let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
+            for (let i = 0; i < this.currentService.length; i++) {
+              const newGroup = this.formBuilder.group({
+                id: [{ value: this.currentService[i]['id'], disabled: true }],
+                status: [{ value: this.currentService[i]['status'], disabled: true }],
+                ref_code: [{ value: this.currentService[i]['ref_code'], disabled: true }],
+                service_code: [{ value: this.currentService[i]['service_code'], disabled: true }]
+              });
+              const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
+              this.listServiceFilter[index]['disabled'] = 'disabled';
+              arrayControl.push(newGroup);
+            }
+            this.titleModal = "Cập nhật đại lý";
+            this.isCreate = false;
+            this.exitsUser = false;
+          })
+        }
+        this.titleModal = this.isCreate ? "Thêm đại lý" : "Cập nhật đại lý";
+      })
+    }
   }
 
   getData() {

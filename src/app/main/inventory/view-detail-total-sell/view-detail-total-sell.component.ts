@@ -66,7 +66,25 @@ export class ViewDetailTotalSellComponent implements OnInit {
     page: 1,
   }
 
+  public searchFormJunior: any = {
+    keysearch: '',
+    action: '',
+    status: '',
+    mine: '',
+    page: 1,
+    array_status: [],
+    skip: 0,
+    take: 20,
+    date_range: '',
+    telco: '',
+    channel_id: '',
+    batch_id: '',
+    keyword: '',
+    level: ''
+  }
+
   public modalRef: any;
+  public type: any;
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
@@ -93,15 +111,27 @@ export class ViewDetailTotalSellComponent implements OnInit {
         return obj;
       }, {});
 
-      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
-      this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
-      this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
-      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
-      this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : 20;
+      this.type = params['type'] && params['type'] != undefined ? params['type'] : '';
 
-      // this.contentHeader.headerTitle = 'Danh sách sim số';
-      // this.contentHeader.breadcrumb.links[1] = 'Danh sách sim số';
 
+      if (this.type === 'KHOTONG') {
+        this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+        this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
+        this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
+        this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
+        this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : 20;
+      } else {
+        this.searchFormJunior.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
+        this.searchFormJunior.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+        this.searchFormJunior.action = params['action'] && params['action'] != undefined ? params['action'] : '';
+        this.searchFormJunior.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
+        this.searchFormJunior.batch_id = params['batch_id'] && params['batch_id'] != undefined ? params['batch_id'] : '';
+        this.searchFormJunior.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
+        this.searchFormJunior.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
+
+        this.searchFormJunior.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
+        this.searchFormJunior.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
+      }
       this.getData();
 
     })
@@ -110,13 +140,27 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
 
   loadPage(page) {
-    this.searchForm.page = page;
-    this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchForm });
+
+    if (this.type === 'KHOTONG') {
+      this.searchForm.page = page;
+      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchForm });
+    } else {
+      this.searchFormJunior.page = page;
+      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchFormJunior });
+    }
+
+
+
   }
 
 
   onSubmitSearch() {
-    this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: { name: this.searchForm.name, status: this.searchForm.status, level: this.searchForm.level } });
+    if (this.type === 'KHOTONG') {
+      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchForm });
+    } else {
+      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchFormJunior });
+    }
+
   }
 
   ngOnInit(): void {
@@ -128,13 +172,21 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.sectionBlockUI.start();
-    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
-    this.inventoryService.getAllSimSO(this.searchForm).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.list = res.data.items;
-      this.totalItems = res.data.count;
-    });
-
+    if (this.type === 'KHOTONG') {
+      this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
+      this.inventoryService.getAllSimSO(this.searchForm).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.list = res.data.items;
+        this.totalItems = res.data.count;
+      });
+    } else {
+      // this.searchFormJunior.skip = (this.searchFormJunior.page - 1) * this.searchFormJunior.page_size;
+      this.inventoryService.getAllSim(this.searchFormJunior).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.list = res.data.data.items;
+        this.totalItems = res.data.data.count;
+      });
+    }
   }
 
 }

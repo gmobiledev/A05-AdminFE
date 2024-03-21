@@ -10,6 +10,7 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { id } from '@swimlane/ngx-datatable';
 import { CommonService } from 'app/utils/common.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -162,52 +163,67 @@ export class SellChanelComponent implements OnInit {
     this.filesImages = event.target.files[0];
   }
 
-  async onSubmitLock(id, status, parent_id) {
+  async onApprove(item, status ){
+    let data = {id : item, status}
     let confirmMessage = status;
+    let title = "";
+
 
     if (status == 0) {
-      confirmMessage = "Bạn có khởi tạọ kho?"
+      confirmMessage = "Bạn có khởi tạo kho?"
+      title = "Bạn có đồng ý khởi tạo kho? Nhập lý do"
     } else if (status == 1) {
       confirmMessage = "Bạn có đồng ý kích hoạt kho?"
+      title = "Bạn có đồng ý kích hoạt kho? Nhập lý do"
     } else if (status == -2) {
       confirmMessage = "Bạn có đồng ý khóa kho?"
+      title = "Bạn có đồng ý khóa kho? Nhập lý do"
     } else if (status == -1) {
       confirmMessage = "Bạn có đồng ý hủy kho này không?"
+      title = "Bạn có đồng ý hủy kho? Nhập lý do"
     }
 
-    if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.inventoryService.lockSell(id, status).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showError(res.message);
+    Swal.fire({
+      title,
+      input: 'textarea',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Gửi',
+      showLoaderOnConfirm: true,
+      preConfirm: (note) => {
+        if (!note || note == '') {
+          Swal.showValidationMessage(
+            "Vui lòng nhập nội dung"
+          )
           return;
         }
-        this.alertService.showSuccess(res.message);
-        this.getData();
-      }, err => {
-        this.alertService.showError(err);
-      })
-    }
-  }
+        data['note'] = note;
+        this.inventoryService.lockSell(data).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showError(res.message);
+            return;
+          }
+          this.alertService.showSuccess(res.message);
+          this.getData();
+        }, err => {
+          this.alertService.showError(err);
+        })  
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
 
+      }
+    })  
+
+  }
 
   async onSelectFileAccount(event) {
     this.filesData = event.target.files[0];
   }
 
-
-  // async onFileChangeAttach(event) {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const ext = event.target.files[0].type;
-  //     if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-  //       this.dataSell.attached_file_name = 'png';
-  //       let img = await this.commonService.resizeImage(event.target.files[0]);
-  //       this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
-  //     } else if (ext.includes('pdf')) {
-  //       this.dataSell.attached_file_name = 'pdf';
-  //       this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
-  //     }
-  //   }
-  // }
 
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -227,24 +243,6 @@ export class SellChanelComponent implements OnInit {
       a.remove();
     })
   }
-
-  // async onViewSell(id) {
-
-  //   this.submittedUpload = true;
-  //   this.inventoryService.viewDetailSell(id).subscribe(res => {
-  //     this.submittedUpload = false;
-  //     if (!res.status) {
-  //       this.alertService.showError(res.message);
-  //       return;
-  //     }
-  //     this.alertService.showSuccess(res.message);
-  //     this.getData();
-  //   }, error => {
-  //     this.submittedUpload = false;
-  //     this.alertService.showError(error);
-  //   })
-
-  // }
 
   ngOnInit(): void {
     this.contentHeader = {
