@@ -65,29 +65,18 @@ export class ViewJuniorSellComponent implements OnInit {
   public modalRefAdd: any;
 
   public searchForm = {
-    id: '',
     name: '',
     code: '',
-    desc: '',
-    parent_id: '',
-    type: '',
-    status: '',
-    business_id: '',
-    channel_id: '',
-    admin_id: '',
     province_id: '',
     district_id: '',
-    skip: 0,
     commune_id: '',
-    address: '',
-    attach_file_name: '',
     customer_id: '',
-    user_sell_channels: '',
-    business: '',
+    channel_id: '',
+    status: '',
+    skip: 0,
     page_size: 10,
     page: 1,
     current_sell_channel_id: '',
-    user_id: '',
   }
 
   public submittedUpload: boolean = false;
@@ -126,7 +115,6 @@ export class ViewJuniorSellComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
       this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
       this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : '';
-      this.searchForm.user_id = params['user_id'] && params['user_id'] != undefined ? params['user_id'] : '';
 
       this.getData();
 
@@ -141,7 +129,7 @@ export class ViewJuniorSellComponent implements OnInit {
 
   onSubmitSearch(): void {
     this.searchForm.page = 1;
-    this.router.navigate(['/inventory/sview-junior-sell'], { queryParams: this.searchForm })
+    this.router.navigate(['/inventory/view-junior-sell'], { queryParams: this.searchForm })
   }
 
 
@@ -463,7 +451,7 @@ export class ViewJuniorSellComponent implements OnInit {
     })
 
 
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
     if (this.currentUser && this.currentUser.roles) {
       const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });

@@ -139,6 +139,8 @@ export class ViewSellChanelComponent implements OnInit {
         return obj;
       }, {});
 
+      
+
       this.searchForm.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.action = params['action'] && params['action'] != undefined ? params['action'] : '';
@@ -146,6 +148,8 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.batch_id = params['batch_id'] && params['batch_id'] != undefined ? params['batch_id'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
+      this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
+
 
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
@@ -317,13 +321,13 @@ export class ViewSellChanelComponent implements OnInit {
     if (this.formGroup.controls['mobile'].value && this.formGroup.controls['mobile'].value != '') {
       this.userService.getByMobile(this.formGroup.controls['mobile'].value).subscribe(async res => {
         this.selectedUserId = res.data.id;
-        if(res.status && res.data){
+        if (res.status && res.data) {
           this.exitsUser = true;
           this.isCreate = false;
         }
         if (res.status && res.data && !res.data.is_agent) {
           this.titleModal = "Đặt làm đại lý";
-          console.log("check isCreate = ",this.isCreate)
+          console.log("check isCreate = ", this.isCreate)
           this.exitsUser = true;
           return;
         } else if (res.status && res.data && res.data.is_agent) {
@@ -357,21 +361,21 @@ export class ViewSellChanelComponent implements OnInit {
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
   }
 
-  showDate(date, timeZone, diff) {
-    if (!date) {
-      return '';
-    }
-    let dateConverted = new Date(date);
-    dateConverted.setMinutes(new Date(date).getMinutes() + diff);
-    return formatDate(dateConverted, 'dd/MM/yyyy H:mm', 'en-US', timeZone);
-  }
+  // showDate(date, timeZone, diff) {
+  //   if (!date) {
+  //     return '';
+  //   }
+  //   let dateConverted = new Date(date);
+  //   dateConverted.setMinutes(new Date(date).getMinutes() + diff);
+  //   return formatDate(dateConverted, 'dd/MM/yyyy H:mm', 'en-US', timeZone);
+  // }
 
   onSubmitSearch() {
-    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
-      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
-    this.searchForm.date_range = daterangeString;
-    this.searchForm.mine = this.mineTask ? 1 : '';
+    // let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    // const daterangeString = this.dateRange.startDate && this.dateRange.endDate
+    //   ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
+    // this.searchForm.date_range = daterangeString;
+    // this.searchForm.mine = this.mineTask ? 1 : '';
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
   }
 
@@ -397,7 +401,8 @@ export class ViewSellChanelComponent implements OnInit {
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.sectionBlockUI.start();
-    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
+    // this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
+    
     this.inventoryService.getAllSim(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.data.items;

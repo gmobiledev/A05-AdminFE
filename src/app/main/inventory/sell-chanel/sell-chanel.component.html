@@ -178,6 +178,7 @@
                     <td class="overflow-auto">
                       <a
                         class="ml-1"
+                        *ngIf="item.parent_id != null"
                         title="Chỉnh sửa kho"
                         [routerLink]="[
                           '/inventory/edit-sell-chanel/' + item.id
