@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
-import { ProductStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { ProductConstant, ProductStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -57,6 +57,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   public listTaskAction = TaskTelecom.ACTION;
   public taskTelecomStatus;
+  public taskTelecomStatusSIM;
   public selectedItem: any;
   public selectedAgent: any;
   public mineTask = false;
@@ -139,7 +140,8 @@ export class ViewSellChanelComponent implements OnInit {
         return obj;
       }, {});
 
-      
+      this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO
+
 
       this.searchForm.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
@@ -361,21 +363,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
   }
 
-  // showDate(date, timeZone, diff) {
-  //   if (!date) {
-  //     return '';
-  //   }
-  //   let dateConverted = new Date(date);
-  //   dateConverted.setMinutes(new Date(date).getMinutes() + diff);
-  //   return formatDate(dateConverted, 'dd/MM/yyyy H:mm', 'en-US', timeZone);
-  // }
-
   onSubmitSearch() {
-    // let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    // const daterangeString = this.dateRange.startDate && this.dateRange.endDate
-    //   ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
-    // this.searchForm.date_range = daterangeString;
-    // this.searchForm.mine = this.mineTask ? 1 : '';
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
   }
 
@@ -384,7 +372,6 @@ export class ViewSellChanelComponent implements OnInit {
     this.titleModal = "Thêm tài khoản bán hàng";
   }
   ngOnInit(): void {
-    // this.getData()
     this.initForm();
   }
 

@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
-import { ProductStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { ProductConstant, ProductStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -50,6 +50,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
   public listTaskAction = TaskTelecom.ACTION;
   public taskTelecomStatus;
+  public taskTelecomStatusSIM;
   public selectedItem: any;
   public selectedAgent: any;
   public mineTask = false;
@@ -111,6 +112,9 @@ export class ViewDetailTotalSellComponent implements OnInit {
         return obj;
       }, {});
 
+      this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO
+
+
       this.type = params['type'] && params['type'] != undefined ? params['type'] : '';
 
 
@@ -148,9 +152,6 @@ export class ViewDetailTotalSellComponent implements OnInit {
       this.searchFormJunior.page = page;
       this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchFormJunior });
     }
-
-
-
   }
 
 
@@ -160,7 +161,6 @@ export class ViewDetailTotalSellComponent implements OnInit {
     } else {
       this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchFormJunior });
     }
-
   }
 
   ngOnInit(): void {
@@ -173,7 +173,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.sectionBlockUI.start();
     if (this.type === 'KHOTONG') {
-      this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
+      // this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
       this.inventoryService.getAllSimSO(this.searchForm).subscribe(res => {
         this.sectionBlockUI.stop();
         this.list = res.data.items;
