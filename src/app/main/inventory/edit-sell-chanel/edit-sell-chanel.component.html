@@ -104,27 +104,27 @@
                   <label for="" class="col-md-3 col-form-label"
                     >Kho cha</label
                   >
+
                   <div class="col-md-9">
-                    <select
-                      name="parent_id"
-                      class="form-control"
+                    <ng-select
+                      name=""
                       formControlName="parent_id"
                     >
-                      <option value="">-- Chọn kho nguồn --</option>
-                      <option *ngFor="let p of listMyChanel" [value]="p.id">
+                      <ng-option value="">-- Chọn kho nguồn --</ng-option>
+                      <ng-option *ngFor="let p of listMyChanel" [value]="p.id">
                         {{ p.name }}
-                      </option>
-                    </select>
-
+                      </ng-option>
+                    </ng-select>
                     <div
                       *ngIf="submitted && f.parent_id.errors"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="f.province_id.parent_id.required">
-                        Vui lòng nhập trường này
+                      <div *ngIf="f.parent_id.required">
+                        Vui lòng nhập tên đại lý
                       </div>
                     </div>
                   </div>
+
                 </div>
 
                 <div class="form-group">

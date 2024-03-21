@@ -220,52 +220,10 @@ export class SellChanelComponent implements OnInit {
 
   }
 
-  async onSubmitLock(id, status, parent_id) {
-    let confirmMessage = status;
-
-    if (status == 0) {
-      confirmMessage = "Bạn có khởi tạọ kho?"
-    } else if (status == 1) {
-      confirmMessage = "Bạn có đồng ý kích hoạt kho?"
-    } else if (status == -2) {
-      confirmMessage = "Bạn có đồng ý khóa kho?"
-    } else if (status == -1) {
-      confirmMessage = "Bạn có đồng ý hủy kho này không?"
-    }
-
-    if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      // this.inventoryService.lockSell(id, status).subscribe(res => {
-      //   if (!res.status) {
-      //     this.alertService.showError(res.message);
-      //     return;
-      //   }
-      //   this.alertService.showSuccess(res.message);
-      //   this.getData();
-      // }, err => {
-      //   this.alertService.showError(err);
-      // })
-    }
-  }
-
-
   async onSelectFileAccount(event) {
     this.filesData = event.target.files[0];
   }
 
-
-  // async onFileChangeAttach(event) {
-  //   if (event.target.files && event.target.files[0]) {
-  //     const ext = event.target.files[0].type;
-  //     if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-  //       this.dataSell.attached_file_name = 'png';
-  //       let img = await this.commonService.resizeImage(event.target.files[0]);
-  //       this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
-  //     } else if (ext.includes('pdf')) {
-  //       this.dataSell.attached_file_name = 'pdf';
-  //       this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
-  //     }
-  //   }
-  // }
 
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -285,24 +243,6 @@ export class SellChanelComponent implements OnInit {
       a.remove();
     })
   }
-
-  // async onViewSell(id) {
-
-  //   this.submittedUpload = true;
-  //   this.inventoryService.viewDetailSell(id).subscribe(res => {
-  //     this.submittedUpload = false;
-  //     if (!res.status) {
-  //       this.alertService.showError(res.message);
-  //       return;
-  //     }
-  //     this.alertService.showSuccess(res.message);
-  //     this.getData();
-  //   }, error => {
-  //     this.submittedUpload = false;
-  //     this.alertService.showError(error);
-  //   })
-
-  // }
 
   ngOnInit(): void {
     this.contentHeader = {

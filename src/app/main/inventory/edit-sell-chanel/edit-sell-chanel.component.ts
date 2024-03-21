@@ -328,7 +328,7 @@ export class EditSellChanelComponent implements OnInit {
           return;
         }
         this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
+        this.router.navigate(['/inventory/sell-chanel'])
       }, error => {
         this.submittedUpload = false;
         this.alertService.showError(error);

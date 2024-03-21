@@ -247,6 +247,8 @@
                       <a
                         class="ml-1"
                         [routerLink]="['/inventory/view-detail-totalSell']"
+                       
+                        [queryParams]="{ channel_id: item.id, type: item.parent_id != null ? 'KHOTHUONG' : 'KHOTONG' }"
                         title="Danh sách sim số"
                       >
                         <i

@@ -73,7 +73,7 @@ export class InventoryService {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/exportSell_channelExcel`, dto, { observe: 'response', responseType: 'blob' });
   }
 
-  getAllSim(params = null, inventoryType = "") {
+  getAllSim(params = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/product`, { params: params });
   }
 

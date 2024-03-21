@@ -97,7 +97,6 @@ export class ViewSellChanelComponent implements OnInit {
     channel_id: '',
     batch_id: '',
     keyword: '',
-    ekyc_status: '',
     level: ''
   }
 
@@ -149,7 +148,6 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
 
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
-      this.searchForm.ekyc_status = params['ekyc_status'] != undefined ? params['ekyc_status'] : '_all';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
       this.contentHeader.headerTitle = 'Xem chi tiết kho số';
