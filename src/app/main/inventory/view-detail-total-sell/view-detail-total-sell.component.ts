@@ -156,9 +156,9 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
   onSubmitSearch() {
     if (this.type === 'KHOTONG') {
-      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: { name: this.searchForm.name, status: this.searchForm.status, level: this.searchForm.level } });
+      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchForm });
     } else {
-      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: { name: this.searchFormJunior.name, status: this.searchFormJunior.status, level: this.searchFormJunior.level } });
+      this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchFormJunior });
     }
 
   }
