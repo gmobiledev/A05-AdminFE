@@ -38,3 +38,15 @@ export class RetrieveAllSellChannelDto {
     attached_file_content: string;
 
 }
+
+export class CreateBatchRetrieveDto {
+    title: string;
+    quantility: number;
+    channel_id: number;
+}
+
+export class UpdateBatchDto {
+    products: any;
+    batch_id: number;
+    channel_id: number;
+}

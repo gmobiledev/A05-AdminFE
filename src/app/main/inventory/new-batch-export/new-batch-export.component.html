@@ -20,7 +20,7 @@
                             </div>
                           </div>    
 
-                          <div class="col-md-4" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE">
+                          <!-- <div class="col-md-4" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE">
                             <div class="form-group">
                               <label></label>
                               <div>
@@ -30,7 +30,7 @@
                               </div>
                               
                             </div>
-                          </div> 
+                          </div>  -->
                           
                           <div class="col-md-4" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE
                           && !retrieveForm.retrieve_all
@@ -41,7 +41,7 @@
                             </div>
                           </div> 
 
-                          <ng-container *ngIf="typeCurrentBatch && typeCurrentBatch != listBatchType.RETRIEVE" >
+                          <ng-container *ngIf="typeCurrentBatch" >
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Loại sản phẩm</label>

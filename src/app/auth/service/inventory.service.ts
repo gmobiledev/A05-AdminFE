@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { User } from 'app/auth/models';
 import { Observable } from 'rxjs';
 import { CreateAgentDto, CreateUserDto, UpdateStatusAgentDto } from './dto/user.dto';
-import { CreateBatchExportDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchExportDto } from './dto/inventory.dto';
+import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto } from './dto/inventory.dto';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
@@ -184,5 +184,13 @@ export class InventoryService {
 
   viewFile(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/common/file/get-file`, data);
+  }
+
+  createBatchRetrieve(data: CreateBatchRetrieveDto) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/create`, data);
+  }
+
+  updateBatchRetrieve(data: UpdateBatchDto) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/edit`, data);
   }
 }

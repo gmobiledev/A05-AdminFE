@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
-import { CreateBatchExportDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
+import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
 import { BatchType } from 'app/utils/constants';
@@ -371,7 +371,53 @@ export class NewBatchExportComponent implements OnInit {
   /**
    * Thu hồi
    */
-  createBatchRetrieve() {
+  async createBatchRetrieve() {
+    if (this.selectedItems.length < 1) {
+      this.alertService.showMess("Vui lòng chọn sản phẩm");
+      return;
+    }
+    //call api moi
+    const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);
+    const dataCreateBatch = new CreateBatchRetrieveDto();
+    dataCreateBatch.title = this.createBatchExportForm.title;
+    dataCreateBatch.channel_id = parseInt(selectedChannel.parent_id);
+    dataCreateBatch.title = `Thu hồi về kho ${selectedChannel.name}`;
+    dataCreateBatch.quantility = this.selectedItems.length;
+
+    let resCreateBatch, resUpdateBatch;
+    this.submitted = true;
+    this.sectionBlockUI.start();
+    try {
+      resCreateBatch = await this.inventoryService.createBatchRetrieve(dataCreateBatch).toPromise();
+      if (!resCreateBatch.status) {
+        this.alertService.showMess(resCreateBatch.message);
+        this.sectionBlockUI.stop();
+        return;
+      }
+    } catch (error) {
+      this.alertService.showMess(error);
+      this.sectionBlockUI.stop();
+    }
+    let dataUpdateBatch = new UpdateBatchDto();
+    dataUpdateBatch.products = this.selectedItems.map(x => { return x.id });
+    dataUpdateBatch.batch_id = resCreateBatch.data.data.id;
+    try {
+      resUpdateBatch = await this.inventoryService.updateBatchRetrieve(dataUpdateBatch).toPromise();
+      if (!resUpdateBatch.status) {
+        this.alertService.showMess(resUpdateBatch.message);
+        this.sectionBlockUI.stop();
+        return;
+      }
+      this.alertService.showSuccess(resUpdateBatch.message);
+      this.sectionBlockUI.stop();
+      this.router.navigate(['/inventory/batch']);
+      return;
+    } catch (error) {
+      this.alertService.showMess(error);
+      this.sectionBlockUI.stop();
+    }
+    
+    return;
     if (this.retrieveForm.retrieve_all) {
       let dataRetrieve = new RetrieveAllSellChannelDto();
       dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
