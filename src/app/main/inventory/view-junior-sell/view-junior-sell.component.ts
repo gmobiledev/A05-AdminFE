@@ -505,6 +505,14 @@ export class ViewJuniorSellComponent implements OnInit {
       }
     }
 
+    this.inventoryService.getListCustomer(parseInt(this.searchForm.current_sell_channel_id)).subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.listSellUser = res.data.items;
+    }, error => {
+      this.sectionBlockUI.stop();
+      console.log("ERRRR");
+      console.log(error);
+    })
 
     this.inventoryService.viewDetailSell(parseInt(this.searchForm.current_sell_channel_id)).subscribe(res => {
       this.parentID = res.data.items[0].parent_id

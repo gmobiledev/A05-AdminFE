@@ -21,14 +21,6 @@ export class UserService {
     return this._http.get<any>(`${environment.apiUrl}/admin/users`, { params: params });
   }
 
-  // getAllChanel(channel_id) {
-  //   return this._http.post<any>(`${environment.apiUrl}/admin/users/channel/FindUserBySellChannelId`, { channel_id: channel_id });
-  // }
-
-  // removeUserChanel(channel_id, user_id) {
-  //   return this._http.post<any>(`${environment.apiUrl}/admin/users/channel/DeleteUserBySellChannelIDAndUserId`, {user_id: user_id , channel_id: channel_id});
-  // }
-
   getAllMerchant(params = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/merchants`, { params: params });
   }
