@@ -64,6 +64,8 @@ export class ViewJuniorSellComponent implements OnInit {
   public modalRef: any;
   public modalRefAdd: any;
 
+  public parentID: any
+
   public searchForm = {
     name: '',
     code: '',
@@ -105,6 +107,13 @@ export class ViewJuniorSellComponent implements OnInit {
 
 
   ) {
+
+    this.commonDataService.getProvinces().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.provinces = res.data
+      }
+    })
+
     this.route.queryParams.subscribe(params => {
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
       this.searchForm.code = params['code'] && params['code'] != undefined ? params['code'] : '';
@@ -134,8 +143,8 @@ export class ViewJuniorSellComponent implements OnInit {
   }
 
 
-  async onApprove(item, status ){
-    let data = {id : item, status}
+  async onApprove(item, status) {
+    let data = { id: item, status }
     let confirmMessage = status;
     let title = "";
 
@@ -180,14 +189,14 @@ export class ViewJuniorSellComponent implements OnInit {
           this.getData();
         }, err => {
           this.alertService.showError(err);
-        })  
+        })
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       if (result.isConfirmed) {
 
       }
-    })  
+    })
 
   }
 
@@ -408,13 +417,13 @@ export class ViewJuniorSellComponent implements OnInit {
     if (this.formGroup.controls['mobile'].value && this.formGroup.controls['mobile'].value != '') {
       this.userService.getByMobile(this.formGroup.controls['mobile'].value).subscribe(async res => {
         this.selectedUserId = res.data.id;
-        if(res.status && res.data){
+        if (res.status && res.data) {
           this.exitsUser = true;
           this.isCreate = false;
         }
         if (res.status && res.data && !res.data.is_agent) {
           this.titleModal = "Đặt làm đại lý";
-          console.log("check isCreate = ",this.isCreate)
+          console.log("check isCreate = ", this.isCreate)
           this.exitsUser = true;
           return;
         } else if (res.status && res.data && res.data.is_agent) {
@@ -487,13 +496,6 @@ export class ViewJuniorSellComponent implements OnInit {
 
   getData() {
 
-    this.commonDataService.getProvinces().subscribe((res: any) => {
-      if (res.status == 1) {
-        this.provinces = res.data
-      }
-    })
-
-
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
     if (this.currentUser && this.currentUser.roles) {
@@ -502,6 +504,16 @@ export class ViewJuniorSellComponent implements OnInit {
         this.isAdmin = true;
       }
     }
+
+
+    this.inventoryService.viewDetailSell(parseInt(this.searchForm.current_sell_channel_id)).subscribe(res => {
+      this.parentID = res.data.items[0].parent_id
+      console.log(this.parentID, "hdshgdsdggsd")
+    }, error => {
+      this.submittedUpload = false;
+      this.alertService.showError(error);
+    })
+
     this.sectionBlockUI.start();
     let paramSerch = { ...this.searchForm }
     for (const key in paramSerch) {
