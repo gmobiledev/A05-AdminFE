@@ -23,12 +23,8 @@ export class SellChanelComponent implements OnInit {
   public contentHeader: any;
   public list: any;
   public totalPage: number;
-  // public page: number = 1;
-  // public pageSize = 10;
 
   public searchForm = {
-
-    
     id: '',
     name: '',
     code: '',
@@ -38,6 +34,7 @@ export class SellChanelComponent implements OnInit {
     type: '',
     status: '',
     admin_id: '',
+    admin2_id:'',
     province_id: '',
     district_id: '',
     skip: 0,
@@ -97,14 +94,13 @@ export class SellChanelComponent implements OnInit {
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
       this.searchForm.code = params['code'] && params['code'] != undefined ? params['code'] : '';
       this.searchForm.admin_id = params['admin_id'] && params['admin_id'] != undefined ? params['admin_id'] : '';
+      this.searchForm.admin2_id = params['admin2_id'] && params['admin2_id'] != undefined ? params['admin2_id'] : '';
       this.searchForm.province_id = params['province_id'] && params['province_id'] != undefined ? params['province_id'] : '';
       this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
       this.searchForm.commune_id = params['commune_id'] && params['commune_id'] != undefined ? params['commune_id'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
       this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : '';
-
-
 
       this.getData();
 
