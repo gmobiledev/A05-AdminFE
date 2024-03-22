@@ -51,7 +51,9 @@ export class BatchComponent implements OnInit {
   public batchStatus = BatchStatus;
   public batchType = BatchType;
   public listCurrentAction: any;
-  public batchStatusShow
+  public batchStatusShow;
+  public basicSelectedOption = 20;
+  public listProductInputDup = [];
 
   public dataLo = {
     title: '',

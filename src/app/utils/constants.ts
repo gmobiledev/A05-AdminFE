@@ -52,6 +52,11 @@ export enum BatchStatus {
     APPROVED = 2, // lô đã duyệt
     COMPLETED = 1, // số đã được duyệt
     CANCEL = -1, //lô không được duyệt
+
+    //duyệt giảm dần xuống 11, từ 11 duyệt thành 2 (APPROVED)
+    APPROVED_19 = 19,
+    APPROVED_18 = 18,
+    APPROVED_17 = 17,
     APPROVED_BY_ACCOUNTANT = 11,
     CANCEL_BY_OFFICE = -2,
     CANCEL_BY_ACCOUNTANT = -11,
