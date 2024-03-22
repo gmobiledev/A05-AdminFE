@@ -20,11 +20,11 @@ import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 
 @Component({
-  selector: 'app-view-detail-total-sell',
-  templateUrl: './view-detail-total-sell.component.html',
-  styleUrls: ['./view-detail-total-sell.component.scss']
+  selector: 'app-view-detail-nomarl-sell',
+  templateUrl: './view-detail-nomarl-sell.component.html',
+  styleUrls: ['./view-detail-nomarl-sell.component.scss']
 })
-export class ViewDetailTotalSellComponent implements OnInit {
+export class ViewDetailNomarlSellComponent implements OnInit {
 
   public contentHeader: any = {
     headerTitle: 'Danh sách sim số',
@@ -44,22 +44,28 @@ export class ViewDetailTotalSellComponent implements OnInit {
       ]
     }
   };
-
   public list: any;
   public totalItems: number;
-  public summaryTask: any;
 
-  public listTaskAction = TaskTelecom.ACTION;
   public taskTelecomStatus;
   public taskTelecomStatusSIM;
   public currentUser: any;
 
-  public searchForm: any = {
-    name: '',
-    level: '',
+  public searchFormJunior: any = {
+    keysearch: '',
+    action: '',
     status: '',
-    page_size: 20,
+    mine: '',
     page: 1,
+    array_status: [],
+    skip: 0,
+    take: 20,
+    date_range: '',
+    telco: '',
+    channel_id: '',
+    batch_id: '',
+    keyword: '',
+    level: ''
   }
 
   public modalRef: any;
@@ -91,12 +97,16 @@ export class ViewDetailTotalSellComponent implements OnInit {
       }, {});
 
       this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO
+      this.searchFormJunior.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
+      this.searchFormJunior.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+      this.searchFormJunior.action = params['action'] && params['action'] != undefined ? params['action'] : '';
+      this.searchFormJunior.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
+      this.searchFormJunior.batch_id = params['batch_id'] && params['batch_id'] != undefined ? params['batch_id'] : '';
+      this.searchFormJunior.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
+      this.searchFormJunior.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
 
-      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
-      this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
-      this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
-      this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
-      this.searchForm.page_size = params['page_size'] && params['page_size'] != undefined ? params['page_size'] : 20;
+      this.searchFormJunior.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
+      this.searchFormJunior.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
       this.getData();
 
@@ -106,13 +116,13 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
 
   loadPage(page) {
-    this.searchForm.page = page;
-    this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchForm });
+    this.searchFormJunior.page = page;
+    this.router.navigate(['/inventory/view-detail-nomarlSell'], { queryParams: this.searchFormJunior });
   }
 
 
   onSubmitSearch() {
-    this.router.navigate(['/inventory/view-detail-totalSell'], { queryParams: this.searchForm });
+    this.router.navigate(['/inventory/view-detail-nomarlSell'], { queryParams: this.searchFormJunior });
   }
 
   ngOnInit(): void {
@@ -124,14 +134,12 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.sectionBlockUI.start();
-
-    this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
-    this.inventoryService.getAllSimSO(this.searchForm).subscribe(res => {
+    this.searchFormJunior.skip = (this.searchFormJunior.page - 1) * this.searchFormJunior.take;
+    this.inventoryService.getAllSim(this.searchFormJunior).subscribe(res => {
       this.sectionBlockUI.stop();
-      this.list = res.data.items;
-      this.totalItems = res.data.count;
+      this.list = res.data.data.items;
+      this.totalItems = res.data.data.count;
     });
-
   }
 
 }

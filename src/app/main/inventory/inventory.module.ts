@@ -31,6 +31,7 @@ import { KinhDoanhComponent } from './reports/kinh-doanh/kinh-doanh.component';
 import { DoanhThuComponent } from './reports/doanh-thu/doanh-thu.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { ViewJuniorSellComponent } from './view-junior-sell/view-junior-sell.component';
+import { ViewDetailNomarlSellComponent } from './view-detail-nomarl-sell/view-detail-nomarl-sell.component';
 
 const routes: Routes = [
   {
@@ -106,6 +107,11 @@ const routes: Routes = [
     path: 'view-junior-sell',
     component: ViewJuniorSellComponent
   },
+
+  {
+    path: 'view-detail-nomarlSell',
+    component: ViewDetailNomarlSellComponent
+  },
 ];
 
 @NgModule({
@@ -126,7 +132,8 @@ const routes: Routes = [
     ViewDetailTotalSellComponent,
     KinhDoanhComponent,
     DoanhThuComponent,
-    ViewJuniorSellComponent
+    ViewJuniorSellComponent,
+    ViewDetailNomarlSellComponent
   ],
   imports: [
     CommonModule,

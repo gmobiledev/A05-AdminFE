@@ -197,14 +197,14 @@ export const menu: CoreMenu[] = [
         url: 'inventory/sell-chanel'
       },
 
-      {
-        id: 'sell-chanel',
-        title: 'Chi tiết kho tổng',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'inventory/view-detail-totalSell'
-      },
+      // {
+      //   id: 'sell-chanel',
+      //   title: 'Chi tiết kho tổng',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'database',
+      //   url: 'inventory/view-detail-totalSell'
+      // },
 
       {
         id: 'report-business',

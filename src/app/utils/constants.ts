@@ -175,3 +175,14 @@ export enum HANG_SO_THUE_BAO {
 // + Hạng số Thường/Normal (N)
 
 }
+
+export class ProductConstant {
+    public static HANG_SO_THUE_BAO  = [
+        { id: 'NORMAL', name: 'NORMAL' },
+        { id: 'QUASI', name: 'QUASI' },
+        { id: 'BRONE', name: 'BRONE' },
+        { id: 'SILVER', name: 'SILVER' },
+        { id: 'GOLD', name: 'GOLD' },
+        { id: 'PLATILUM', name: 'PLATILUM' },
+      ]
+}
