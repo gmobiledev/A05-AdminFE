@@ -129,6 +129,7 @@ export class ViewJuniorSellComponent implements OnInit {
       this.searchForm.user_id = params['user_id'] && params['user_id'] != undefined ? params['user_id'] : '';
 
       this.getData();
+      this.getService();
 
     })
   }
@@ -240,6 +241,7 @@ export class ViewJuniorSellComponent implements OnInit {
         ]
       }
     };
+    this.initForm();
 
   }
 
@@ -315,7 +317,6 @@ export class ViewJuniorSellComponent implements OnInit {
   initForm() {
     this.formGroup = this.formBuilder.group({
       name: ['', Validators.required],
-      full_name: ['', Validators.required],
       mobile: ['', Validators.required],
       password: ['', Validators.required],
       partner_user_code: [''],
@@ -360,7 +361,7 @@ export class ViewJuniorSellComponent implements OnInit {
 
           //add nguoi ban hang vao kho
           this.telecomService.sellChannelAddChannelToUser({
-            channel_id: [this.searchForm.channel_id],
+            channel_id: [this.searchForm.current_sell_channel_id],
             user_id: res.data.id
           }).subscribe(res2 => {
             if (!res2.status) {
@@ -452,6 +453,48 @@ export class ViewJuniorSellComponent implements OnInit {
         this.titleModal = this.isCreate ? "Thêm đại lý" : "Cập nhật đại lý";
       })
     }
+  }
+
+  getService() {
+    this.userService.getAgentTypes().subscribe(res => {
+      this.listAllService = res.data;
+      this.listServiceFilter = res.data.map(x => { return { disabled: '', code: x.code, desc: x.desc } });
+      this.listServiceTmp = res.data;
+    })
+  }
+
+  get f() {
+    return this.formGroup.controls;
+  }
+
+  addInput() {
+    let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
+    let newGroup = this.formBuilder.group({
+      ref_code: [],
+      service_code: []
+    });
+    arrayControl.push(newGroup);
+    if (arrayControl.length == this.listAllService.length) {
+      this.isShowAddInput = false;
+    }
+  }
+
+  async removeInput(index) {
+    let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
+    const i = this.listSellUser.findIndex(item => item.code == this.formGroup.controls['user_id'].value[index]['channel_id']);
+    if (i != -1) {
+      this.listSellUser[i]['disabled'] = '';
+    }
+    arrayControl.removeAt(index);
+    if (arrayControl.length < this.listAllService.length) {
+      this.isShowAddInput = true;
+    }
+  }
+
+  onCompletedInputPassword(value) {
+    this.formGroup.patchValue({
+      password: value
+    })
   }
 
   getData() {

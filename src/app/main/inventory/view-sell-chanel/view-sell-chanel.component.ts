@@ -489,8 +489,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   initForm() {
     this.formGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      full_name: ['', Validators.required],
+      name: ['', Validators.required],      
       mobile: ['', Validators.required],
       password: ['', Validators.required],
       partner_user_code: [''],
