@@ -34,7 +34,6 @@ export class SellChanelComponent implements OnInit {
     parent_id: '',
     type: '',
     status: '',
-    business_id: '',
     admin_id: '',
     province_id: '',
     district_id: '',
@@ -44,7 +43,6 @@ export class SellChanelComponent implements OnInit {
     attach_file_name: '',
     customer_id: '',
     user_sell_channels: '',
-    business: '',
     page_size: 10,
     page: 1
   }
@@ -94,7 +92,6 @@ export class SellChanelComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
       this.searchForm.code = params['code'] && params['code'] != undefined ? params['code'] : '';
-      this.searchForm.business = params['business'] && params['business'] != undefined ? params['business'] : '';
       this.searchForm.admin_id = params['admin_id'] && params['admin_id'] != undefined ? params['admin_id'] : '';
       this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
       this.searchForm.commune_id = params['commune_id'] && params['commune_id'] != undefined ? params['commune_id'] : '';
@@ -317,7 +314,6 @@ export class SellChanelComponent implements OnInit {
       this.totalPage = res.data.count;
       this.searchForm.page_size = res.data.page_size;
       this.totalItems = res.data.count;
-      // this.onViewSell(res.data.id)
     }, error => {
       this.sectionBlockUI.stop();
       console.log(error);
