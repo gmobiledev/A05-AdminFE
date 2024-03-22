@@ -246,7 +246,7 @@
 
                       <a
                         class="ml-1"
-                        [routerLink]="['/inventory/view-detail-nomarlSell']"
+                        [routerLink]="['/inventory/view-sell-chanel']"
                         [queryParams]="{ channel_id: item.id }"
                         *ngIf="item.parent_id != null"
                         title="Danh sách sim số"
@@ -259,7 +259,7 @@
 
                       <a
                         class="ml-1"
-                        [routerLink]="['/inventory/view-sell-chanel']"
+                        [routerLink]="['/inventory/view-detail-totalSell']"
                         [queryParams]="{ channel_id: item.id }"
                         *ngIf="item.parent_id == null"
                         title="Danh sách sim số"
