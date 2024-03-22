@@ -90,14 +90,21 @@
                     <th>Số thuê bao</th>
                     <th>Nhà mạng</th>
                     <th>Hạng số</th>
+                    <th>Giá vốn</th>
+                    <th>Giá bán</th>
                     <th>Trạng thái</th>
+                    <th>Thao tác</th>
                     <th>Xuất cho kho</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list; let i = index">
                     <td>
-                      {{ (searchForm.page - 1) * searchForm.take + (i + 1) }}
+                      {{
+                        (searchForm.page - 1) * searchForm.take +
+                          (i + 1)
+                      }}
+                      <!-- {{ item.id }} -->
                     </td>
 
                     <td>
@@ -106,14 +113,32 @@
                     <td>
                       {{ item.brand }}
                     </td>
+
                     <td>
                       {{ item.level }}
                     </td>
 
                     <td>
-                      <div [innerHTML]="item.status | showStatusProduct"></div>
+                      {{ item.price || number }}
                     </td>
-                    <td></td>
+
+                    <td>
+                      {{ item.price || number }}
+                    </td>
+
+                    <td>
+                      <div [innerHTML]="item.status | showStatusSim"></div>
+                    </td>
+                    <td>
+                      <a class="ml-1" title="Chỉnh sửa giá">
+                        <i
+                          data-feather="edit-3"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+                    </td>
+                    <td>{{ item.sub_channel_id }}</td>
+
                   </tr>
                 </tbody>
               </table>

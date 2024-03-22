@@ -178,6 +178,6 @@ export class ProductConstant {
         { id: 'BRONE', name: 'BRONE' },
         { id: 'SILVER', name: 'SILVER' },
         { id: 'GOLD', name: 'GOLD' },
-        { id: 'PLATILUM', name: 'PLATILUM' },
+        { id: 'PLATINUM', name: 'PLATINUM' },
       ]
 }
