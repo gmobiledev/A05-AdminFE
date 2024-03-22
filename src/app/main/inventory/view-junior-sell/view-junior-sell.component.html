@@ -81,6 +81,7 @@
                   type="button"
                   class="btn btn-success mr-25"
                   (click)="modalOpen(modalAddUser, null, true)"
+                  *ngIf="parentID != null"
                 >
                   Tài khoản bán hàng
                 </button>

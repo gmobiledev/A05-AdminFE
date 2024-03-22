@@ -161,7 +161,6 @@ export class ViewSellChanelComponent implements OnInit {
 
       this.getData();
       this.getService();
-      // this.getSellChannel();
 
     })
 
