@@ -227,6 +227,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.selectedItem = null;
     this.getData();
     this.modalRef.close();
+    this.initForm();
   }
 
   modalCloseAdd() {
@@ -278,6 +279,7 @@ export class ViewSellChanelComponent implements OnInit {
   closeModalUserCode() {
     this.selectedUserId = null;
     this.modalUserCodeRef.close();
+    this.initForm();
   }
 
   async onSubmitUpdateUserCode() {
@@ -449,17 +451,34 @@ export class ViewSellChanelComponent implements OnInit {
         })
       }
     } else {
-      this.userService.addServicesToAgent(this.selectedUserId, this.formGroup.controls['new_agents_service'].value).subscribe(res => {
-        if (!res.status) {
-          this.alertService.showError(res.message);
-          this.submitted = false;
+      // this.userService.addServicesToAgent(this.selectedUserId, this.formGroup.controls['new_agents_service'].value).subscribe(res => {
+      //   if (!res.status) {
+      //     this.alertService.showError(res.message);
+      //     this.submitted = false;
+      //     return;
+      //   }                        
+      // })
+
+      if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
+        //add nguoi ban hang vao kho
+        this.telecomService.sellChannelAddChannelToUser({
+          channel_id: [this.searchForm.channel_id],
+          user_id: this.selectedUserId
+        }).subscribe(res2 => {
+          if (!res2.status) {
+            this.alertService.showMess(res2.message);
+            return;
+          }
+          this.modalRef.close();
+          this.initForm();
+          this.alertService.showSuccess(res2.message);
+          this.getData()
+        }, error => {
+          this.alertService.showMess(error);
           return;
-        }
-        this.modalRef.close();
-        this.initForm();
-        this.getData()
-        this.alertService.showSuccess(res.message);
-      })
+        })
+      }
+      
     }
   }
 
