@@ -70,6 +70,7 @@ export class ViewBatchExportComponent implements OnInit {
     fromChannel: '',
     toChannel: ''
   }
+  fileExt;
 
   constructor(
     private readonly inventoryService: InventoryService,
@@ -98,6 +99,16 @@ export class ViewBatchExportComponent implements OnInit {
         this.fromChannel = res.data.channels.find(x => x.id == res.data.batch.channel_id);
         this.toChannel = res.data.channels.find(x => x.id == res.data.batch.to_channel_id);
       }
+
+      this.fileExt = 'pdf';
+      let files = this.data.batch.attachments ? JSON.parse(this.data.batch.attachments) : null;
+      if (files && files.file) {
+        const arrayFileExt = files.file.split('.');
+        this.fileExt = arrayFileExt[arrayFileExt.length - 1];
+      } else {
+        this.fileExt = '';
+      }
+
       //lay thong tin admin
       this.adminService.getListAdmin({id: res.data.batch.created_by}).subscribe(res => {
         this.adminCreator = res.data.items[0];
