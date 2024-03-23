@@ -52,7 +52,6 @@ export class EditSellChanelComponent implements OnInit {
     nameSell: '',
     nameChanel: '',
     codeSell: '',
-
     page: 1
   }
 
@@ -146,14 +145,24 @@ export class EditSellChanelComponent implements OnInit {
 
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
+      // const ext = event.target.files[0].type;
+      // if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+      //   this.formGroup.attached_file_name = 'png';
+      //   let img = await this.commonService.resizeImage(event.target.files[0]);
+      //   this.formGroup.attached_file_name = (img + '').replace('data:image/png;base64,', '')
+      // } else if (ext.includes('pdf')) {
+      //   this.formGroup.attached_file_name = 'pdf';
+      //   this.formGroup.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
+      // }
+
       const ext = event.target.files[0].type;
-      if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-        this.formGroup.attached_file_name = 'png';
+      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.formGroup.attached_file_name = event.target.files[0].name;
         let img = await this.commonService.resizeImage(event.target.files[0]);
-        this.formGroup.attached_file_name = (img + '').replace('data:image/png;base64,', '')
+        this.formGroup.attached_file_content = (img + '').replace('data:image/png;base64,', '')
       } else if (ext.includes('pdf')) {
-        this.formGroup.attached_file_name = 'pdf';
-        this.formGroup.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
+        this.formGroup.attached_file_name = event.target.files[0].name;
+        this.formGroup.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
       }
     }
   }
@@ -337,26 +346,6 @@ export class EditSellChanelComponent implements OnInit {
 
 
   }
-
-  // async onSubmitUploadSell() {
-
-  //   if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
-  //     this.submittedUpload = true;
-  //     this.inventoryService.updateSellChanel(this.formGroup).subscribe(res => {
-  //       this.submittedUpload = false;
-  //       if (!res.status) {
-  //         this.alertService.showError(res.message);
-  //         return;
-  //       }
-  //       this.modalClose();
-  //       this.alertService.showSuccess(res.message);
-  //       this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
-  //     }, error => {
-  //       this.submittedUpload = false;
-  //       this.alertService.showError(error);
-  //     })
-  //   }
-  // }
 
 }
 
