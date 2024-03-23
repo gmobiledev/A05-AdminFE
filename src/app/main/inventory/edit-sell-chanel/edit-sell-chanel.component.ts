@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,6 +31,9 @@ export class EditSellChanelComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
+  @ViewChild('modalAttachments') modalAttachments;
+
+
   public modalRef: any;
   @Input() provinces;
   @Input() districts;
@@ -52,7 +55,6 @@ export class EditSellChanelComponent implements OnInit {
     nameSell: '',
     nameChanel: '',
     codeSell: '',
-
     page: 1
   }
 
@@ -72,6 +74,8 @@ export class EditSellChanelComponent implements OnInit {
   public page: number = 1;
   public pageSize: number;
   id;
+  listFiles = [];
+  fileExt;
 
   constructor(
     private route: ActivatedRoute,
@@ -147,16 +151,17 @@ export class EditSellChanelComponent implements OnInit {
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
       const ext = event.target.files[0].type;
-      if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-        this.formGroup.attached_file_name = 'png';
+      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.formGroup.attached_file_name = event.target.files[0].name;
         let img = await this.commonService.resizeImage(event.target.files[0]);
-        this.formGroup.attached_file_name = (img + '').replace('data:image/png;base64,', '')
+        this.formGroup.attached_file_content = (img + '').replace('data:image/png;base64,', '')
       } else if (ext.includes('pdf')) {
-        this.formGroup.attached_file_name = 'pdf';
-        this.formGroup.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
+        this.formGroup.attached_file_name = event.target.files[0].name;
+        this.formGroup.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
       }
     }
   }
+
 
   async onChangeHomeProvince(id, init = null) {
 
@@ -191,6 +196,36 @@ export class EditSellChanelComponent implements OnInit {
     }
   }
 
+  onViewAttachments() {
+    let files = this.formGroup.attached_file_name ? JSON.parse(this.formGroup.attached_file_name) : null;
+    if(files && files.file) {
+      this.inventoryService.viewFile({
+        file: files.file
+      }).subscribe(res => {
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.listFiles = [
+          {ext: res.data.ext, base64: res.data.base64}
+        ];
+        this.onViewModalApprove(this.modalAttachments);
+      },error => {
+        this.alertService.showMess(error);
+      })
+    } else {
+      this.onViewModalApprove(this.modalAttachments);
+    }    
+    
+  }
+
+  onViewModalApprove(modal) {
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'lg'
+    });
+  }
 
 
   initForm() {
@@ -228,6 +263,15 @@ export class EditSellChanelComponent implements OnInit {
         this.provinces = res.data
       }
     })
+
+    this.fileExt = 'pdf';
+    // let files = this.formGroup.attached_file_content ? JSON.parse(this.formGroup.attached_file_content) : null;
+    // if (files && files.file) {
+    //   const arrayFileExt = files.file.split('.');
+    //   this.fileExt = arrayFileExt[arrayFileExt.length - 1];
+    // } else {
+    //   this.fileExt = '';
+    // }
 
     this.inventoryService.getMyChannel(this.formGroup).subscribe(res => {
       this.listMyChanel = res.data.items;
@@ -337,26 +381,6 @@ export class EditSellChanelComponent implements OnInit {
 
 
   }
-
-  // async onSubmitUploadSell() {
-
-  //   if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
-  //     this.submittedUpload = true;
-  //     this.inventoryService.updateSellChanel(this.formGroup).subscribe(res => {
-  //       this.submittedUpload = false;
-  //       if (!res.status) {
-  //         this.alertService.showError(res.message);
-  //         return;
-  //       }
-  //       this.modalClose();
-  //       this.alertService.showSuccess(res.message);
-  //       this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
-  //     }, error => {
-  //       this.submittedUpload = false;
-  //       this.alertService.showError(error);
-  //     })
-  //   }
-  // }
 
 }
 

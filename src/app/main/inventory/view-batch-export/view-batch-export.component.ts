@@ -192,7 +192,7 @@ export class ViewBatchExportComponent implements OnInit {
             autocapitalize: 'off'
           },
           showCancelButton: true,
-          confirmButtonText: 'Gửi',
+          confirmButtonText: 'Xác nhận',
           showLoaderOnConfirm: true,
           preConfirm: (note) => {
             if (!note || note == '') {
