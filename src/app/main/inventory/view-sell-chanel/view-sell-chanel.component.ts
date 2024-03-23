@@ -412,7 +412,11 @@ export class ViewSellChanelComponent implements OnInit {
       }
       const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => {
         return { ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value }
-      })
+      });
+      if(dataAgentServices.length < 1) {
+        this.alertService.showMess("Vui lòng chọn Dịch vụ");
+        return;
+      }
       const data: CreateAgentDto = {
         name: this.formGroup.controls['name'].value,
         username: this.formGroup.controls['mobile'].value,
