@@ -81,6 +81,7 @@
                   type="button"
                   class="btn btn-success mr-25"
                   (click)="modalOpen(modalAddUser, null, true)"
+                  *ngIf="parentID != null"
                 >
                   Tài khoản bán hàng
                 </button>
@@ -176,7 +177,7 @@
                       </a>
                       <a
                         class="ml-1"
-                        [routerLink]="['/inventory/view-detail-nomarlSell']"
+                        [routerLink]="['/inventory/view-sell-chanel']"
                         [queryParams]="{ channel_id: item.id }"
                         title="Xem chi tiết"
                       >
@@ -354,7 +355,7 @@
               </div>
             </div>
             <div class="col-4">
-              <button
+              <!-- <button
                 *ngIf="
                   !isCreate &&
                   formGroup.controls['agents_service'].value[i]['status'] == 1
@@ -364,7 +365,7 @@
                 (click)="updateStatusAgentService(i, 0)"
               >
                 Khóa <span [data-feather]="'lock'"></span>
-              </button>
+              </button> -->
               <button
                 *ngIf="
                   !isCreate &&

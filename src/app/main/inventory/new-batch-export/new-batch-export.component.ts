@@ -221,6 +221,8 @@ export class NewBatchExportComponent implements OnInit {
     this.seachMyChannel.channel_id = this.searchForm.channel_id;
     this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(res => {
       this.listInputChannel = res.data.items;
+    }, error => {
+      this.alertService.showMess(error);
     });
     this.searchProductStore();
   }
@@ -511,6 +513,9 @@ export class NewBatchExportComponent implements OnInit {
         this.listChannel = [...childChannels];
         this.listChannel = this.listChannel.filter(x => x.parent_id != null)
       }
+      this.sectionBlockUI.stop();
+    }, error => {
+      this.alertService.showMess(error);
       this.sectionBlockUI.stop();
     })
   }
