@@ -285,6 +285,14 @@ export class EditSellChanelComponent implements OnInit {
     console.log(this.id);
     this.inventoryService.viewDetailSell(this.id).subscribe(res => {
       this.submittedUpload = false;
+      this.fileExt = 'pdf';
+      let files = res.data.items[0].attached_file_name ? JSON.parse(res.data.items[0].attached_file_name) : null;
+      if (files && files.file) {
+        const arrayFileExt = files.file.split('.');
+        this.fileExt = arrayFileExt[arrayFileExt.length - 1];
+      } else {
+        this.fileExt = '';
+      }
       if (!res.status) {
         this.alertService.showError(res.message);
         return;
@@ -294,15 +302,6 @@ export class EditSellChanelComponent implements OnInit {
       }
       if (res.data.items[0] && res.data.items[0].district_id) {
         this.onChangeHomeDistrict(parseInt(res.data.items[0].district_id), true);
-      }
-
-      this.fileExt = 'pdf';
-      let files = res.data.items[0].attached_file_content ? JSON.parse(res.data.items[0].attached_file_content) : null;
-      if (files && files.file) {
-        const arrayFileExt = files.file.split('.');
-        this.fileExt = arrayFileExt[arrayFileExt.length - 1];
-      } else {
-        this.fileExt = '';
       }
 
       this.formGroup.patchValue({
