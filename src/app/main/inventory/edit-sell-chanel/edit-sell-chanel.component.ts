@@ -152,12 +152,20 @@ export class EditSellChanelComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       const ext = event.target.files[0].type;
       if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-        this.formGroup.attached_file_name = event.target.files[0].name;
+          this.formGroup.patchValue({
+          attached_file_name: event.target.files[0].name,
+        });
         let img = await this.commonService.resizeImage(event.target.files[0]);
-        this.formGroup.attached_file_content = (img + '').replace('data:image/png;base64,', '')
+        this.formGroup.patchValue({
+          attached_file_content: (img + '').replace('data:image/png;base64,', '')
+        });
       } else if (ext.includes('pdf')) {
-        this.formGroup.attached_file_name = event.target.files[0].name;
-        this.formGroup.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+        this.formGroup.patchValue({
+          attached_file_name: event.target.files[0].name,
+        });
+        this.formGroup.patchValue({
+          attached_file_content: (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '')
+        });
       }
     }
   }
@@ -264,14 +272,7 @@ export class EditSellChanelComponent implements OnInit {
       }
     })
 
-    this.fileExt = 'pdf';
-    // let files = this.formGroup.attached_file_content ? JSON.parse(this.formGroup.attached_file_content) : null;
-    // if (files && files.file) {
-    //   const arrayFileExt = files.file.split('.');
-    //   this.fileExt = arrayFileExt[arrayFileExt.length - 1];
-    // } else {
-    //   this.fileExt = '';
-    // }
+ 
 
     this.inventoryService.getMyChannel(this.formGroup).subscribe(res => {
       this.listMyChanel = res.data.items;
@@ -293,6 +294,15 @@ export class EditSellChanelComponent implements OnInit {
       }
       if (res.data.items[0] && res.data.items[0].district_id) {
         this.onChangeHomeDistrict(parseInt(res.data.items[0].district_id), true);
+      }
+
+      this.fileExt = 'pdf';
+      let files = res.data.items[0].attached_file_content ? JSON.parse(res.data.items[0].attached_file_content) : null;
+      if (files && files.file) {
+        const arrayFileExt = files.file.split('.');
+        this.fileExt = arrayFileExt[arrayFileExt.length - 1];
+      } else {
+        this.fileExt = '';
       }
 
       this.formGroup.patchValue({
