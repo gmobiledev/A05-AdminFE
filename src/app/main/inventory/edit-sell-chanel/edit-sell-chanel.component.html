@@ -1,0 +1,286 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel160">Sửa Kho</h4>
+            </div>
+            <form
+              class="mt-2"
+              [formGroup]="formGroup"
+              (ngSubmit)="onSubmitCreate()"
+            >
+              <div class="modal-body" tabindex="0">
+                <div class="form-group">
+                  <label for="basicInput">Mã kho</label>
+                  <input
+                    type="text"
+                    disabled="true"
+                    class="form-control"
+                    name="code"
+                    placeholder=""
+                    formControlName="code"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.code.errors
+                    }"
+                  />
+                  <div
+                    *ngIf="submitted && f.code.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.code.errors.required">
+                      Vui lòng điền mã kho
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="basicInput">Tên kho</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="name"
+                    formControlName="name"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                  />
+                  <div
+                    *ngIf="submitted && f.name.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.name.errors.required">
+                      Vui lòng nhập tên kho
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="basicInput">Số lượng</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="quantity"
+                    formControlName="quantity"
+                    [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }"
+                  />
+                  <div
+                    *ngIf="submitted && f.quantity.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.quantity.errors.required">
+                      Vui lòng nhập tên kho
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="basicInput">Ghi chú</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="desc"
+                    formControlName="desc"
+                    [ngClass]="{ 'is-invalid': submitted && f.desc.errors }"
+                  />
+                </div>
+
+                <div class="mb-1 row">
+                  <i class="fa fa-upload" aria-hidden="true"></i>
+                  <input
+                    type="file"
+                    (change)="onFileChangeAttach($event)"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.attached_file_name.errors
+                    }"
+                    accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
+                  />
+                  <p *ngIf="fileExt"><img *ngIf="fileExt.length < 6" width="25px" src="/assets/images/icons/file/{{fileExt}}.png" /><a (click)="onViewAttachments()" ><u>Xem file đính kèm</u></a></p>
+
+                  <!-- <label class="ml-5 center">Tải lên file chứng từ</label> -->
+                </div>
+
+                <div class="form-group row mt-1">
+                  <label for="" class="col-md-3 col-form-label"
+                    >Kho cha</label
+                  >
+
+                  <div class="col-md-9">
+                    <ng-select
+                      name=""
+                      formControlName="parent_id"
+                    >
+                      <ng-option value="">-- Chọn kho nguồn --</ng-option>
+                      <ng-option *ngFor="let p of listMyChanel" [value]="p.id">
+                        {{ p.name }}
+                      </ng-option>
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && f.parent_id.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.parent_id.required">
+                        Vui lòng nhập tên đại lý
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+                  <label for="province_id">Tỉnh/Thành Phố</label>
+
+                  <ng-select
+                    formControlName="province_id"
+                    (clear)="onClearHomeProvince()"
+                    (change)="onChangeHomeProvince($event)"
+                  >
+                    <ng-option *ngFor="let p of provinces" [value]="p.id">{{
+                      p.title
+                    }}</ng-option>
+                  </ng-select>
+
+                  <div
+                    *ngIf="submitted && f.province_id.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.province_id.errors.required">
+                      Vui lòng nhập trường này
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="district_id">Quận/Huyện</label>
+
+                  <ng-select
+                    formControlName="district_id"
+                    (clear)="onClearHomeDistrict()"
+                    (change)="onChangeHomeDistrict($event)"
+                  >
+                    <ng-option *ngFor="let p of districts" [value]="p.id">{{
+                      p.title
+                    }}</ng-option>
+                  </ng-select>
+
+                  <div
+                    *ngIf="submitted && f.district_id.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.district_id.errors.required">
+                      Vui lòng nhập trường này
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="commune_id">Phường/Xã</label>
+
+                  <ng-select formControlName="commune_id">
+                    <ng-option *ngFor="let p of commues" [value]="p.id">{{
+                      p.title
+                    }}</ng-option>
+                  </ng-select>
+                  <div
+                    *ngIf="submitted && f.commune_id.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.commune_id.errors.required">
+                      Vui lòng nhập trường này
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="address">Địa chỉ cụ thể</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    name="address"
+                    formControlName="address"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.address.errors
+                    }"
+                  />
+                  <div
+                    *ngIf="submitted && f.address.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.address.errors.required">
+                      Vui lòng nhập số nhà tên đường
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-1">
+                  <label for="customer_id" class="col-md-3 col-form-label"
+                    >Đại lý</label
+                  >
+                  <div class="col-md-9">
+                    <ng-select
+                      name=""
+                      formControlName="customer_id"
+                    >
+                      <ng-option value="">-- Chọn đại lý --</ng-option>
+                      <ng-option *ngFor="let p of listCustomer" [value]="p.id">
+                        {{ p.name }}
+                      </ng-option>
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && f.customer_id.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.customer_id.required">
+                        Vui lòng nhập tên đại lý
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-1">
+                  <label for="admin_id" class="col-md-3 col-form-label"
+                    >Tài khoản quản lý kho</label
+                  >
+                  <div class="col-md-9">
+                    <ng-select
+                      name=""
+                      formControlName="admin_id"
+                    >
+                      <ng-option value="">-- Chọn tài khoản quản lý kho --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                        {{ p.username }}
+                      </ng-option>
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && f.admin_id.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.admin_id.required">
+                        Vui lòng nhập tên người quản lý kho
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  (click)="onSubmitCreate()"
+                  type="submit"
+                  class="btn btn-primary"
+                  rippleEffect
+                >
+                  Lưu
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

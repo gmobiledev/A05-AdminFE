@@ -44,6 +44,10 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/customer`, {params: params});
   }
 
+  getListAdmin(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/search`, {params: params});
+  }
+
   getById(id) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/loan-bank/${id}`);
   }

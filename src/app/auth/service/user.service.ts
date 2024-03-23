@@ -12,17 +12,17 @@ export class UserService {
    *
    * @param {HttpClient} _http
    */
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   /**
    * Get all users
    */
   getAll(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/users`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/users`, { params: params });
   }
 
   getAllMerchant(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/merchants`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/merchants`, { params: params });
   }
 
   exportExcelReport(dto: any, params = null): Observable<any> {
@@ -52,15 +52,15 @@ export class UserService {
   }
 
   lockUser(id, status, reason) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/users/lock`, {user_id: id, status: status, reason: reason});
+    return this._http.post<any>(`${environment.apiUrl}/admin/users/lock`, { user_id: id, status: status, reason: reason });
   }
 
   getListPeople(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/users/people`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/people`, { params: params });
   }
 
   getListFiles(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/users/list-files`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/list-files`, { params: params });
   }
 
   viewFile(id): Observable<any> {
@@ -72,23 +72,23 @@ export class UserService {
   }
 
   exportExcelPeople(): Observable<any> {
-    return this._http.post(`${environment.apiUrl}/admin/users/export-excel-people`,{}, {observe: 'response' , responseType: 'blob'});
-  }  
+    return this._http.post(`${environment.apiUrl}/admin/users/export-excel-people`, {}, { observe: 'response', responseType: 'blob' });
+  }
 
   exportExcelEkyc(body = {}): Observable<any> {
-    return this._http.post(`${environment.apiUrl}/admin/users/download-file-excel-ekyc`,body, {observe: 'response' , responseType: 'blob'});
-  }  
+    return this._http.post(`${environment.apiUrl}/admin/users/download-file-excel-ekyc`, body, { observe: 'response', responseType: 'blob' });
+  }
 
   listEkycBatch(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/users/list-ekyc-batch`, {params: params});
-  } 
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/list-ekyc-batch`, { params: params });
+  }
 
   checkEkyc(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/users/check-partner-ekyc`, data);
   }
 
   getAllAgents(params = null) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/users/agents`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/agents`, { params: params });
   }
 
   createAgent(data: CreateAgentDto) {
@@ -110,7 +110,7 @@ export class UserService {
   updateStatusAgent(id, data: UpdateStatusAgentDto) {
     return this._http.post<any>(`${environment.apiUrl}/admin/users/agents/${id}/update-status`, data);
   }
-    
+
   getAgentTypes() {
     return this._http.get<any>(`${environment.apiUrl}/admin/users/agents/list-type`);
   }
@@ -133,5 +133,9 @@ export class UserService {
 
   createCustomer(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/customer`, data);
+  }
+
+  searchCustomer(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/customer/search`, {params: params});
   }
 }

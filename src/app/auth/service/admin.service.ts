@@ -25,7 +25,7 @@ export class AdminService {
   } 
 
   lockUser(id, status, reason) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/admin/lock`, {user_id: id, status: status, reason: reason});
+    return this._http.post<any>(`${environment.apiUrl}/admin/lock`, {user_id: id, status: status, reason: reason});
   }
 
   create(data) {
@@ -75,5 +75,13 @@ export class AdminService {
   }
   getCommunes(districtId: number){
     return this._http.get<any>(`${environment.apiUrl}/area/get-communes/${districtId}`);
+  }
+
+  getListAdmin(params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/search`, {params: params});
+  }
+
+  createInventoryManger(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/inventory-manager`, data);
   }
 }

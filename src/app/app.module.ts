@@ -33,6 +33,7 @@ import { SubMenuCustomContextMenuComponent } from './main/extensions/context-men
 import { ViewFileContractComponent } from './main/shared/view-file-contract/view-file-contract.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'environments/environment';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 const appRoutes: Routes = [
   {
@@ -242,6 +243,7 @@ const appRoutes: Routes = [
     LayoutModule,
     ContentHeaderModule,
     ServiceWorkerModule.register('/firebase-messaging-sw.js', { enabled: true }),
+    // HighchartsChartModule 
   ],
 
   providers: [

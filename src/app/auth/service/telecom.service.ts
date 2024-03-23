@@ -267,4 +267,12 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/balance-changes/${mobile}`, { params: params });
   }
 
+  //doanh thu theo kho
+  getSimReport(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/telecom-logs/simReport`, data);
+  }
+
+  getBussinessReport(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/telecom-logs/incurredChargesReport`, data);
+  }
 }

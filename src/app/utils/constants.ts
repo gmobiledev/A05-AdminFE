@@ -41,11 +41,22 @@ export enum ProductStatus {
     STATUS_INIT = 0,
 }
 
+export enum BatchType {
+    INPUT = 1,
+    OUTPUT = -1,
+    RETRIEVE = 3    
+}
+
 export enum BatchStatus {
     INIT = 0, // lô mới khởi tạo
-    APPORVED = 2, // lô đã duyệt
+    APPROVED = 2, // lô đã duyệt
     COMPLETED = 1, // số đã được duyệt
-    CANCEL = -1 //lô không được duyệt
+    CANCEL = -1, //lô không được duyệt
+    APPROVED_BY_ACCOUNTANT = 11,
+    CANCEL_BY_OFFICE = -2,
+    CANCEL_BY_ACCOUNTANT = -11,
+    CANCEL_BY_USER = -12
+
 }
 
 export enum TelecomAction {
@@ -148,5 +159,25 @@ export enum HANG_SO_THUE_BAO {
     NORMAL = 'NORMAL',
     SILVER = 'SILVER',
     GOLD = 'GOLD',
-    PLATIUM = 'PLATIUM'
+    PLATIUM = 'PLATIUM',
+    BRONZE = 'BRONZE',
+    QUASI ='QUASI'
+//     + Hạng số Bạch Kim/Platinum (P)
+// + Hạng số Vàng/Gold (G)
+// + Hạng số Bạc/Silver (S)
+// + Hạng số Đồng/Bronze (B)
+// + Hạng số Chọn/Quasi (Q)
+// + Hạng số Thường/Normal (N)
+
+}
+
+export class ProductConstant {
+    public static HANG_SO_THUE_BAO  = [
+        { id: 'NORMAL', name: 'NORMAL' },
+        { id: 'QUASI', name: 'QUASI' },
+        { id: 'BRONE', name: 'BRONE' },
+        { id: 'SILVER', name: 'SILVER' },
+        { id: 'GOLD', name: 'GOLD' },
+        { id: 'PLATINUM', name: 'PLATINUM' },
+      ]
 }

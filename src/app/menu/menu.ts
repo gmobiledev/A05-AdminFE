@@ -158,38 +158,77 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '3',
+      title: '5',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
     children: [
+      {
+        id: 'dashboard',
+        title: 'Thống kê',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/dashboard'
+      },
 
       {
         id: 'batch-sim',
-        title: 'DS lô sim số',
+        title: 'Xuất/nhập kho',
         translate: '',
         type: 'item',
         icon: 'database',
         url: 'inventory/batch-sim'
       },
       {
-        id: 'sell-channel',
+        id: 'channel',
         title: 'DS kênh bán hàng',
         translate: '',
         type: 'item',
         icon: 'database',
         url: 'inventory/channel'
       },
-     
+      {
+        id: 'sell-chanel',
+        title: 'Danh sách kho',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/sell-chanel'
+      },
 
+      // {
+      //   id: 'sell-chanel',
+      //   title: 'Chi tiết kho tổng',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'database',
+      //   url: 'inventory/view-detail-totalSell'
+      // },
 
+      {
+        id: 'report-business',
+        title: 'Báo cáo tổng hợp',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/kinh-doanh'
+      },
+      {
+        id: 'report-doanh-thu',
+        title: 'Báo cáo doanh thu',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/doanh-thu'
+      }
     ]
   },
 
 
   {
     id: 'users',
-    title: 'Gtalk',
+    title: 'GSIM',
     translate: '',
     type: 'collapsible',
     icon: 'phone-call',
@@ -270,7 +309,7 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'gip/call-history'
       },
-     
+
       {
         id: 'g-task',
         title: 'Task',
@@ -383,7 +422,7 @@ export const menu: CoreMenu[] = [
       }
     ]
   },
- 
+
 
   {
     id: 'users',
@@ -400,6 +439,22 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/search-subscription'
       },
+      // {
+      //   id: 'search-topup',
+      //   title: 'Lịch sử TOPUP',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'search',
+      //   url: 'sim-so/msisdn/topup'
+      // },
+      // {
+      //   id: 'search-balance-changes',
+      //   title: 'Tra cứu cước',
+      //   translate: '',
+      //   type: 'item',
+      //   icon: 'search',
+      //   url: 'sim-so/msisdn/balance-changes'
+      // },
       {
         id: 'search',
         title: 'Tìm Sim Số',

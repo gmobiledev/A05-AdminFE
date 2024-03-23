@@ -1,0 +1,183 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      [(ngModel)]="searchForm.name"
+                      class="form-control"
+                      placeholder="Nhập số/serial"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="level"
+                      [(ngModel)]="searchForm.level"
+                    >
+                      <option value="">Chọn hạng số</option>
+                      <option
+                        *ngFor="let item of taskTelecomStatusSIM"
+                        [value]="item.name"
+                      >
+                        {{ item.id }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                    >
+                      <option value="">Chọn trạng thái</option>
+                      <option
+                        *ngFor="let item of taskTelecomStatus | keyvalue"
+                        [value]="item.value"
+                        [id]="item.key"
+                      >
+                        <span [innerHTML]="item.value | showStatusSim"></span>
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-1 overflow-hidden">
+                <div class="pull-left">
+                  <button type="submit" class="btn btn-block btn-info">
+                    Lọc kết quả <span [data-feather]="'search'"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div class="table-responsive" *blockUI="'section-block'">
+              <div class="mb-1">
+                <span>Tổng số: </span> <b>{{ totalItems }}</b>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Số thuê bao</th>
+                    <th>Nhà mạng</th>
+                    <th>Hạng số</th>
+                    <th>Giá vốn</th>
+                    <th>Giá bán</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                    <th>Xuất cho kho</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of list; let i = index">
+                    <td>
+                      {{
+                        (searchForm.page - 1) * searchForm.page_size + (i + 1)
+                      }}
+                      <!-- {{ item.id }} -->
+                    </td>
+
+                    <td>
+                      {{ item.name }}
+                    </td>
+                    <td>
+                      {{ item.brand }}
+                    </td>
+
+                    <td>
+                      {{ item.level }}
+                    </td>
+
+                    <td>
+                      {{ item.price || number }}
+                    </td>
+
+                    <td>
+                      {{ item.sale_price || number }}
+                    </td>
+                    <td>
+                      <div [innerHTML]="item.status | showStatusSim"></div>
+                    </td>
+
+                    <td>
+                      <a class="ml-1" title="Chỉnh sửa giá">
+                        <i
+                          data-feather="edit-3"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+                    </td>
+
+                    <td>{{ item.sub_channel_id }}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalItems"
+                [(page)]="searchForm.page"
+                [pageSize]="searchForm.page_size"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 2.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
