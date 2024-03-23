@@ -59,7 +59,7 @@ export class NewSellChanelComponent implements OnInit {
   public dataSell = {
     parent_id: '',
     name: '',
-    code: 0,
+    code: '',
     desc: '',
     type: 0,
     status: 0,

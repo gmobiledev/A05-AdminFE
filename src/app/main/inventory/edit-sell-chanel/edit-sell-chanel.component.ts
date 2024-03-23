@@ -52,7 +52,6 @@ export class EditSellChanelComponent implements OnInit {
     nameSell: '',
     nameChanel: '',
     codeSell: '',
-
     page: 1
   }
 
@@ -337,26 +336,6 @@ export class EditSellChanelComponent implements OnInit {
 
 
   }
-
-  // async onSubmitUploadSell() {
-
-  //   if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
-  //     this.submittedUpload = true;
-  //     this.inventoryService.updateSellChanel(this.formGroup).subscribe(res => {
-  //       this.submittedUpload = false;
-  //       if (!res.status) {
-  //         this.alertService.showError(res.message);
-  //         return;
-  //       }
-  //       this.modalClose();
-  //       this.alertService.showSuccess(res.message);
-  //       this.router.navigate(['/inventory/sell-chanel'], { queryParams: this.formGroup })
-  //     }, error => {
-  //       this.submittedUpload = false;
-  //       this.alertService.showError(error);
-  //     })
-  //   }
-  // }
 
 }
 
