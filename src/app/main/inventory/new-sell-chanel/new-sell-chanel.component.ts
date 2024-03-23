@@ -152,15 +152,6 @@ export class NewSellChanelComponent implements OnInit {
 
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
-      // const ext = event.target.files[0].type;
-      // if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-      //   this.dataSell.attached_file_name = 'png';
-      //   let img = await this.commonService.resizeImage(event.target.files[0]);
-      //   this.dataSell.attached_file_name = (img + '').replace('data:image/png;base64,', '')
-      // } else if (ext.includes('pdf')) {
-      //   this.dataSell.attached_file_name = 'pdf';
-      //   this.dataSell.attached_file_name = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
-      // }
       const ext = event.target.files[0].type;
       if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
         this.dataSell.attached_file_name = event.target.files[0].name;
