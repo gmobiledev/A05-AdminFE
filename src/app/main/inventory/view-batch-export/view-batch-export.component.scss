@@ -3,3 +3,7 @@
 .datatable-scroll {
   width: auto !important;
 }
+
+.ngx-datatable.bootstrap.core-bootstrap .datatable-body-row .datatable-body-cell {
+  display: inline;
+}
