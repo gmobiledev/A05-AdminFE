@@ -3,3 +3,10 @@
 .datatable-scroll {
   width: auto !important;
 }
+// datatable-scroller {
+//   width: 100% !important;
+// }
+
+.ngx-datatable.bootstrap.core-bootstrap .datatable-body-row .datatable-body-cell {
+  display: inline;
+}
