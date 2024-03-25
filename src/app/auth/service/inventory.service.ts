@@ -197,4 +197,8 @@ export class InventoryService {
   checkProductStore(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/check-upload-excel-file`, data);
   }
+
+  createBatchInputV2(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch`, data);
+  }
 }

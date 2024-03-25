@@ -285,7 +285,7 @@
 
 <ng-template #modalCreate let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Nhập kho</h5>
+    <h5 class="modal-title text-info" id="myModalLabel160">Nhập kho</h5>
     <button
       type="button"
       class="close"
@@ -295,7 +295,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0">
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <ng-container *ngIf="listProductInputDup.length < 1">
     <div class="form-group">
       <label for="">Tiêu đề</label>
@@ -334,8 +334,7 @@
       <input
         type="file"
         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-        (change)="onFileChangeExcel($event)"
-        accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
+        (change)="onFileChangeExcel($event)"        
       />
       <label>Tải lên file excel danh sách</label>
       <a href="/assets/upload-product.xlsx" class="ml-2">File mẫu tại đây</a>
@@ -344,54 +343,71 @@
 
     <!-- Truong hop co du lieu trung -->
     <ng-container *ngIf="listProductInputDup.length > 0">
-      <p>Sản phẩm trong danh sách bạn đang tải lên đã tồn tại, vui lòng kiểm tra lại</p>
-        <a csvLink [data]="listProductInputDup" class="btn btn-outline-secondary float-right mr-1" rippleEffect>Download</a>
-      <ngx-datatable [rows]="listProductInputDup" [rowHeight]="58" class="bootstrap core-bootstrap"
-        [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true" [limit]="basicSelectedOption">
-        <ngx-datatable-column name="Name" prop="name">
-          <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
-            <div class="d-flex align-items-center">
-              <div class="cell-line-height">
-                <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
-                  {{ name }}
-                </p>
-              </div>
-            </div>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Giá" prop="price">
-          <ng-template let-value="value" ngx-datatable-cell-template>
-            {{ value | number }}
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Hạng số" prop="level"></ngx-datatable-column>
-        <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>
-      </ngx-datatable>
+      <div class="row">
+        <div class="col-12">
+          <p class="text-warning"><i data-feather="alert-triangle" class="cursor-pointer"></i>Sản phẩm trong danh sách bạn đang tải lên đã tồn tại,
+            vui lòng kiểm tra lại
+            <a csvLink [data]="listDupToExport" class="btn btn-outline-warning float-right btn-sm"
+              rippleEffect><i data-feather="download" class="cursor-pointer"></i></a>
+          </p>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ngx-datatable [rows]="listProductInputDup" [rowHeight]="58" class="bootstrap core-bootstrap"
+            [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+            [limit]="basicSelectedOption">
+            <ngx-datatable-column name="Name" prop="name">
+              <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                <div class="d-flex align-items-center">
+                  <div class="cell-line-height">
+                    <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                      {{ name }}
+                    </p>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>                        
+            <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>
+            <ngx-datatable-column name="Hạng số" prop="level"></ngx-datatable-column>
+            <ngx-datatable-column name="Giá vốn" prop="original_price">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value | number }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Giá bán" prop="price">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value | number }}
+              </ng-template>
+            </ngx-datatable-column>
+
+          </ngx-datatable>
+        </div>
+      </div>
+    
+      <div class="text-center">
+        <button (click)="modalClose()" type="submit" class="btn btn-danger mr-1" rippleEffect>
+          Hủy
+        </button>
+      
+        <button (click)="onSubmitUploadLo()" type="submit" class="btn btn-primary" rippleEffect>
+          <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true" *ngIf="submittedUpload"></span>
+          Tiếp tục
+        </button>
+      </div>
     </ng-container>
-    <button
-      (click)="modalClose()"
-      type="submit"
-      class="btn btn-danger"
-      rippleEffect
-    >
-    Hủy
-    </button>
+    
+    
   </div>
   <div class="modal-footer">
-    <button
-      (click)="onSubmitUploadLo()"
-      type="submit"
-      class="btn btn-primary"
-      rippleEffect
-    >
-      <span
-        class="spinner-border spinner-border-sm"
-        role="ekyc_status"
-        aria-hidden="true"
-        *ngIf="submittedUpload"
-      ></span>
-      Submit
-    </button>
+    <ng-container *ngIf="listProductInputDup.length < 1">
+      <button (click)="onSubmitUploadLo()" type="submit" class="btn btn-primary" rippleEffect>
+        <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true" *ngIf="submittedUpload"></span>
+        Submit
+      </button>
+    </ng-container>
   </div>
 </ng-template>
 
@@ -407,7 +423,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+  <div class="modal-body" tabindex="0" *blockUI="'item-block-detail'">
     <div class="row mb-2">
       <div class="col-4"><span>Tiêu đề phiếu: </span> {{ batchdDetail?.title }}</div>
       <div class="col-4">

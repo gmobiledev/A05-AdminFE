@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,9 +14,13 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 @Component({
   selector: 'app-batch',
   templateUrl: './batch.component.html',
-  styleUrls: ['./batch.component.scss']
+  styleUrls: ['./batch.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class BatchComponent implements OnInit {
+
+  @BlockUI('item-block') itemBlockUI: NgBlockUI;
+  @BlockUI('item-block-detail') itemBlockDetailUI: NgBlockUI;
 
   @Input() inventoryType: string;
   public contentHeader: any;
@@ -54,6 +58,7 @@ export class BatchComponent implements OnInit {
   public batchStatusShow;
   public basicSelectedOption = 20;
   public listProductInputDup = [];
+  public listDupToExport = [];
 
   public dataLo = {
     title: '',
@@ -61,7 +66,8 @@ export class BatchComponent implements OnInit {
     // channel_id: 0,
     files: '',
     file_ext: '',
-    note: ''
+    note: '',
+    is_force_push: true,
   }
 
   public currentUser: any;
@@ -134,7 +140,9 @@ export class BatchComponent implements OnInit {
 
   onViewDetail(modal, item) {
     this.batchdDetail = item;
+    this.itemBlockDetailUI.start();
     this.inventoryService.detailBatchSim(item.id).subscribe(res => {
+      this.itemBlockDetailUI.stop();
       if (res.status && res.data) {
         this.itemBatch = res.data;
       }
@@ -144,6 +152,7 @@ export class BatchComponent implements OnInit {
         size: 'lg'
       });
     }, error => {
+      this.itemBlockDetailUI.stop();
       this.alertService.showError(error);
     })
   }
@@ -228,10 +237,23 @@ export class BatchComponent implements OnInit {
     this.filesData = event.target.files[0];
 
     //check trung
+    this.itemBlockUI.start();
     let formData = new FormData();
     formData.append("files", this.filesData);
     this.inventoryService.checkProductStore(formData).subscribe(res => {
+      this.itemBlockUI.stop();
       this.listProductInputDup = res.data.data;
+      this.listDupToExport = res.data.data.map(item => {
+        return {
+          'Name': item.name,
+          'Nhà mạng': item.brand,
+          'Hạng số': item.level,
+          'Giá vốn': item.original_price,
+          'Giá bán': item.price
+        }
+      })
+    }, error => {
+      this.itemBlockUI.stop();
     })
   }
 
@@ -283,14 +305,27 @@ export class BatchComponent implements OnInit {
     }
   }
 
+  //Tạo lo nhập kho tổng
   async onSubmitUploadLo() {
     if(!this.dataLo.files) {
       this.alertService.showMess("Vui lòng đính kèm chứng từ");
       return;
     }
+    if(!this.filesData) {
+      this.alertService.showMess("Vui lòng chọn file danh sách sản phẩm");
+      return;
+    }
+    let formData = new FormData();
+    for(let key in this.dataLo) {
+      formData.append(key, this.dataLo[key]);
+    }
+    formData.append("excel_upload_files", this.filesData);
+    
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu nhập kho")).value) {
       this.submittedUpload = true;
-      this.inventoryService.kdCreateBatchInput(this.dataLo).subscribe(res => {
+      this.itemBlockUI.start();
+      this.inventoryService.createBatchInputV2(formData).subscribe(res => {
+        this.itemBlockUI.stop();
         this.submittedUpload = false;
         if (!res.status) {
           this.alertService.showError(res.message);
@@ -300,6 +335,7 @@ export class BatchComponent implements OnInit {
         this.alertService.showSuccess(res.message);
         this.getData();
       }, error => {
+        this.itemBlockUI.stop();
         this.submittedUpload = false;
         this.alertService.showError(error);
       })
