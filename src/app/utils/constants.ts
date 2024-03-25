@@ -186,3 +186,9 @@ export class ProductConstant {
         { id: 'PLATINUM', name: 'PLATINUM' },
       ]
 }
+
+export enum PriceAction {
+    ADD = "ADD", //Công thêm 1 số tiền    
+    PERCENT = "PERCENT", // Tăng hoặc giảm % tiền
+    FIX = "FIX" //set giá
+  }
