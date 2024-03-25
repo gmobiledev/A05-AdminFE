@@ -296,6 +296,7 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0">
+    <ng-container *ngIf="listProductInputDup.length < 1">
     <div class="form-group">
       <label for="">Tiêu đề</label>
       <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
@@ -312,15 +313,6 @@
         [(ngModel)]="dataLo.quantility"
       />
     </div>
-
-    <!-- <div class="form-group">
-      <label for="">Kênh bán</label>
-      <select [(ngModel)]="dataLo.channel_id" id="" class="form-control">
-        <option [value]="item.id" *ngFor="let item of listChannel">
-          {{ item.name }}
-        </option>
-      </select>
-    </div> -->
 
     <div class="form-group">
       <label for="">Ghi chú</label>
@@ -341,16 +333,19 @@
       <i class="fa fa-upload" aria-hidden="true"></i>
       <input
         type="file"
-        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-        (change)="onFileChangeAttach($event)"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="onFileChangeExcel($event)"
         accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
       />
       <label>Tải lên file excel danh sách</label>
       <a href="/assets/upload-product.xlsx" class="ml-2">File mẫu tại đây</a>
     </div>
+  </ng-container>
 
     <!-- Truong hop co du lieu trung -->
     <ng-container *ngIf="listProductInputDup.length > 0">
+      <p>Sản phẩm trong danh sách bạn đang tải lên đã tồn tại, vui lòng kiểm tra lại</p>
+        <a csvLink [data]="listProductInputDup" class="btn btn-outline-secondary float-right mr-1" rippleEffect>Download</a>
       <ngx-datatable [rows]="listProductInputDup" [rowHeight]="58" class="bootstrap core-bootstrap"
         [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true" [limit]="basicSelectedOption">
         <ngx-datatable-column name="Name" prop="name">
@@ -373,6 +368,14 @@
         <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>
       </ngx-datatable>
     </ng-container>
+    <button
+      (click)="modalClose()"
+      type="submit"
+      class="btn btn-danger"
+      rippleEffect
+    >
+    Hủy
+    </button>
   </div>
   <div class="modal-footer">
     <button

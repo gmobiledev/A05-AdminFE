@@ -193,4 +193,8 @@ export class InventoryService {
   updateBatchRetrieve(data: UpdateBatchDto) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/edit`, data);
   }
+
+  checkProductStore(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/check-upload-excel-file`, data);
+  }
 }

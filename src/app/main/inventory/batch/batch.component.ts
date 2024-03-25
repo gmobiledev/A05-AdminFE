@@ -76,6 +76,7 @@ export class BatchComponent implements OnInit {
   public subFormGroup: FormGroup;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   count: any;
+  public checkDup: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -225,6 +226,13 @@ export class BatchComponent implements OnInit {
 
   async onFileChangeExcel(event) {
     this.filesData = event.target.files[0];
+
+    //check trung
+    let formData = new FormData();
+    formData.append("files", this.filesData);
+    this.inventoryService.checkProductStore(formData).subscribe(res => {
+      this.listProductInputDup = res.data.data;
+    })
   }
 
   async onFileChangeImages(event) {
