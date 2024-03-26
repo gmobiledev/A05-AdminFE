@@ -3,37 +3,36 @@
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
         <div class="row">
             
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="text-center">Tìm kiếm</h3>
                         <div class="row">
                           <div class="col-md-4">
                             <div class="form-group">
-                              <label for="">{{ titleFromChannel }}</label>
+                              <label for="">Chọn kho số</label>
                               <ng-select [disabled]="disableSelectParent" [(ngModel)]="searchForm.channel_id"
                                 (search)="onSearchParentChannel($event)" (change)="onChangeParentChannel()">
-                                <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
+                                <ng-option *ngFor="let p of listChannel" [value]="p.id.toString()">{{
                                   p.name
                                   }}</ng-option>
                               </ng-select>
                             </div>
                           </div>    
 
-                          <!-- <div class="col-md-4" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE">
+                          <div class="col-md-4">
                             <div class="form-group">
                               <label></label>
                               <div>
-                                Thu hồi tất cả
+                                Cập nhật tất cả
                               <input type="checkbox"                             
                               [(ngModel)]="retrieveForm.retrieve_all">
                               </div>
                               
                             </div>
-                          </div>  -->
+                          </div> 
                           
-                          <div class="col-md-4" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE
-                          && !retrieveForm.retrieve_all
+                          <div class="col-md-4" *ngIf="!retrieveForm.retrieve_all
                           ">
                             <div class="form-group">
                               <label for="">Số lượng tối đa lấy ra</label>
@@ -41,7 +40,7 @@
                             </div>
                           </div> 
 
-                          <ng-container *ngIf="typeCurrentBatch" >
+                          <ng-container  >
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Loại sản phẩm</label>
@@ -67,7 +66,7 @@
                                     </ng-select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Nhà mạng</label>
                                     <select name="" id="" class="form-control"
@@ -80,10 +79,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6" *ngIf=" typeCurrentBatch != listBatchType.RETRIEVE">
-                                
-                            </div>
-
+                            
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Dải từ</label>
@@ -105,15 +101,9 @@
                                     [dropSpecialCharacters]="false"
                                     class="form-control" [(ngModel)]="searchForm.key_to" placeholder="099698****">
                                 </div>
-                            </div>
-                            <div class="col-md-4" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE">
-                                <div class="form-group">
-                                    <label for="">Số lượng</label>
-                                    <input type="number" class="form-control" [(ngModel)]="searchForm.take" >
-                                </div>
-                            </div>
+                            </div>                            
                           </ng-container>
-                            <div class="col-md-4" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE || !retrieveForm.retrieve_all">
+                            <div class="col-md-4" *ngIf="!retrieveForm.retrieve_all">
                               <div class="form-group">
                                 <label></label>
                                 <button type="button" (click)="searchProductStore()" class="btn d-block btn-info mb-1" rippleEffect><span [data-feather]="'search'"
@@ -121,64 +111,21 @@
                               </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button type="button" [disabled]="selectedItems.length < 1"
+                                 (click)="modalOpen(modalUpdatePrice)" class="btn btn-warning mb-1" rippleEffect><span [data-feather]="'money'"
+                                    [class]="'mr-25'"></span>Cập nhật giá bán</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">  
-                      <ng-container *ngIf="typeCurrentBatch && typeCurrentBatch != listBatchType.RETRIEVE" >
-                        <p>Người tạo: <b>{{ currentUser.full_name }}</b></p>
-                        <p>Mã xuất đơn hàng: <b>Tự sinh</b></p>
-                      </ng-container>
-                        <p>Số lượng: <b>{{ selectedItems.length | number }}</b></p>
-                        <!-- <p class="ml-3">Số điện thoại: <b></b></p>
-                        <p class="ml-3">SIM trắng: <b></b></p> -->
-                        <div class="row  mb-1" *ngIf="typeCurrentBatch && typeCurrentBatch != listBatchType.RETRIEVE">
-                          <div class="col-4">Kho xuất đến: </div>
-                          <div class="col-8">
-                          <ng-select     
-                          [(ngModel)]="createBatchExportForm.to_channel_id"                        
-                            >
-                              <ng-option *ngFor="let p of listInputChannel" [value]="p.id">{{
-                                p.name
-                              }}</ng-option>
-                            </ng-select>
-                            <!-- <small *ngIf="submitted && !createBatchExport.to_channel_id" class="invalid-feedback">
-                              Vui lòng chọn trường này
-                            </small> -->
-                            <!-- <select class="form-control">
-                                <option></option>
-                            </select> -->
-                          </div>
-                          </div>
-                          <div class="row mb-1" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE">
-                            <div class="col-4">
-                              File chứng từ
-                            </div>
-                            <div class="col-8">
-                              <input type="file" class="form-control" (change)="onSelectFileFront($event)">
-                            </div>
-                          </div>
-                        <div class="row mb-1">
-                          <div class="col-4">
-                            Ghi chú
-                          </div>
-                          <div class="col-8">
-                            <textarea class="form-control"></textarea>
-                          </div>                                                        
-                        </div>  
-                        <div class="form-group text-center">
-                            <button (click)="onSubmitCreate()" type="button" class="btn btn-success mb-1" rippleEffect><span [data-feather]="'save'"
-                                [class]="'mr-25'"></span>Tạo yêu cầu</button>
-                        </div>          
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <div class="row" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE || !retrieveForm.retrieve_all">
+        <div class="row" *ngIf="!retrieveForm.retrieve_all">
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
@@ -281,7 +228,14 @@
                         </div>
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Giá" prop="price">
+
+                    <ngx-datatable-column name="Giá vốn" prop="price">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{ value | number }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Giá bán" prop="export_price">
                       <ng-template  let-value="value" ngx-datatable-cell-template>
                         {{ value | number  }}
                       </ng-template>
@@ -413,7 +367,14 @@
                         </div>
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Giá" prop="price">
+
+                    <ngx-datatable-column name="Giá bán" prop="price">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{ value | number }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Giá bán" prop="export_price">
                       <ng-template  let-value="value" ngx-datatable-cell-template>
                         {{ value | number  }}
                       </ng-template>
@@ -436,3 +397,92 @@
         </div>
     </div>
 </div>
+
+<ng-template #modalUpdatePrice let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title text-info" id="myModalLabel160">Cập nhật giá sản phẩm</h5>
+      <button
+        type="button"
+        class="close"
+        (click)="modalClose()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">       
+        <div class="row mb-1">
+            <div class="col-md-4">
+                <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
+                    [(ngModel)]="dataUpdatePrice.change_type"
+                    (change)="onChangeType()"
+                    value="{{ listPriceAction.FIX }}"  class="form-check-input"><label 
+                    
+                    class="form-check-label">Thay đổi giá bán</label></div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-check-inline">
+                    <input type="text" *ngIf="dataUpdatePrice.change_type == listPriceAction.FIX" 
+                    [(ngModel)]="dataUpdatePrice.change_value"
+                    
+                    mask="separator"
+                    thousandSeparator=","
+                    placeholder="Nhập số tiền/sản phẩm" class="form-control">
+                </div>
+            </div>
+            
+           
+        </div>
+
+        <div class="row mb-1">
+            <div class="col-md-4">
+                <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
+                    [(ngModel)]="dataUpdatePrice.change_type"
+                    (change)="onChangeType()"
+                    value="{{ listPriceAction.PERCENT }}"  class="form-check-input"><label 
+                    
+                    class="form-check-label">Cộng thêm % giá bán</label></div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-check-inline">
+                    <input *ngIf="dataUpdatePrice.change_type == listPriceAction.PERCENT" 
+                    [(ngModel)]="dataUpdatePrice.change_value"
+                    
+                    [allowNegativeNumbers]="true"
+                    type="text" placeholder="Nhập số %/sản phẩm"  class="form-control">
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row mb-1">
+            <div class="col-md-4">
+                <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
+                    [(ngModel)]="dataUpdatePrice.change_type"
+                    (change)="onChangeType()"
+                    value="{{ listPriceAction.ADD }}" class="form-check-input"><label 
+                    
+                    class="form-check-label">Cộng tiền giá bán</label></div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-check-inline">
+                    <input *ngIf="dataUpdatePrice.change_type == listPriceAction.ADD" 
+                    [(ngModel)]="dataUpdatePrice.change_value"
+                   
+                    mask="separator"
+                    thousandSeparator=","
+                    [allowNegativeNumbers]="true"
+                    type="text" placeholder="Nhập số tiền/sản phẩm" class="form-control">
+                </div>
+            </div>
+            
+        </div>
+        <div class="text-center">
+            <b>Lưu ý: Hành động sẽ được áp dụng cho toàn bộ danh sách đã chọn</b>
+        </div>
+    </div>
+    <div class="modal-footer text-center">
+        <button (click)="onSubmitData()" type="button" class="btn btn-warning mb-1" rippleEffect><span
+            [class]="'mr-25'"></span>Hoàn thành</button>
+    </div>
+</ng-template>

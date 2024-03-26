@@ -72,6 +72,13 @@
                 </div>
               </div>
             </form>
+            <div class="overflow-hidden">
+              <div class="pull-right">
+                <a routerLink="/inventory/edit-products"
+                [queryParams]="{channel_id: searchForm.current_sell_channel_id}"
+                class="btn d-block btn-primary">Sửa danh sách số</a>
+              </div>
+            </div>
             <div class="mt-3 mb-3 overflow-hidden">
               <div class="pull-left">
                 Tổng: <b>{{ totalPage }}</b>
@@ -195,7 +202,7 @@
                 class="d-flex justify-content-end pr-3 pt-2"
                 [collectionSize]="totalItems"
                 [(page)]="searchForm.page"
-                [pageSize]="searchForm.take"
+                [pageSize]="searchForm.page_size"
                 [boundaryLinks]="true"
                 (pageChange)="loadPage($event)"
               >

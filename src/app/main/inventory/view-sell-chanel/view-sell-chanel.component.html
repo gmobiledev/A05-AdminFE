@@ -78,7 +78,13 @@
                 </div>
               </div>
             </form>
-
+            <div class="overflow-hidden">
+              <div class="pull-right">
+                <a routerLink="/inventory/edit-products"
+                [queryParams]="{channel_id: searchForm.channel_id}"
+                class="btn d-block btn-primary">Sửa danh sách số</a>
+              </div>
+            </div>
             <div class="table-responsive" *blockUI="'section-block'">
               <div class="mb-1">
                 <span>Tổng số: </span> <b>{{ totalItems }}</b>
