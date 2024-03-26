@@ -135,6 +135,16 @@ export class BatchComponent implements OnInit {
 
   modalClose() {
     this.modalRef.close();
+    this.listDupToExport = [];
+    this.listProductInputDup = [];
+    this.dataLo = {
+      title: '',
+      quantility: 0,      
+      files: '',
+      file_ext: '',
+      note: '',
+      is_force_push: true,
+    }
     this.getData();
   }
 
@@ -242,16 +252,19 @@ export class BatchComponent implements OnInit {
     formData.append("files", this.filesData);
     this.inventoryService.checkProductStore(formData).subscribe(res => {
       this.itemBlockUI.stop();
-      this.listProductInputDup = res.data.data;
-      this.listDupToExport = res.data.data.map(item => {
-        return {
-          'Name': item.name,
-          'Nhà mạng': item.brand,
-          'Hạng số': item.level,
-          'Giá vốn': item.original_price,
-          'Giá bán': item.price
-        }
-      })
+      if (!res.data.success && res.data.data && res.data.data.length > 0) {
+        this.listProductInputDup = res.data.data;
+        this.listDupToExport = res.data.data.map(item => {
+          return {
+            'Name': item.name,
+            'Nhà mạng': item.brand,
+            'Hạng số': item.level,
+            'Giá vốn': item.original_price,
+            'Giá bán': item.price
+          }
+        })
+      }
+      
     }, error => {
       this.itemBlockUI.stop();
     })

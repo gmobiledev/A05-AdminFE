@@ -194,11 +194,35 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/edit`, data);
   }
 
+  ketoanApproveBatchRetrieve(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/ke-toan/approve`, data);
+  }
+
+  ketoanRejectBatchRetrieve(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/ke-toan/reject`, data);
+  }
+
+  vanphongApproveBatchRetrieve(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/van-phong/approve`, data);
+  }
+
+  vanphongRejectBatchRetrieve(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/van-phong/reject`, data);
+  }
+
   checkProductStore(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/check-upload-excel-file`, data);
   }
 
   createBatchInputV2(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch`, data);
+  }
+
+  getProductFromChild(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/product/find-from-child`, {params: params});
+  }
+
+  updatePriceProduct(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/price/update`, data);
   }
 }

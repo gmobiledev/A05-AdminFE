@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
+import { UpdatePriceDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
 import { BatchType, PriceAction } from 'app/utils/constants';
@@ -109,13 +110,27 @@ export class EditProductsComponent implements OnInit {
   modalRef: any;
   listPriceAction = PriceAction;
   price_action = '';
+  dataUpdatePrice: UpdatePriceDto = {
+    products : [],
+    channel_id: 0,
+    change_type: '',
+    change_value: 0,
+    confirm: false
+  }
 
-  constructor(
+  constructor(    
     private readonly inventoryService: InventoryService,
     private readonly alertService: SweetAlertService,
     private readonly route: ActivatedRoute,
     private modalService: NgbModal
-  ) { }
+  ) { 
+    this.route.queryParams.subscribe(params => {      
+      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ?  params['channel_id'] : '';
+      this.getData();
+      this.searchProductStore();
+    })
+
+  }
 
   onSelect(event) {
     const selected = event.selected
@@ -237,28 +252,28 @@ export class EditProductsComponent implements OnInit {
   // TÌm số trong kho
   searchProductStore(page = null) {
     if (!this.searchForm.channel_id) {
-      this.alertService.showMess("Vui lòng chọn kho xuất đi");
+      this.alertService.showMess("Vui lòng chọn kho");
       return;
     }
     this.sectionBlockUI.start();
 
-    if (this.searchFormProduct.take > 3000) {
-      this.searchFormProduct.take = 3000;
+    this.searchForm.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
+    console.log(this.selectedAttributes);
+    let paramSearch = { ...this.searchForm }
+    for (let key in paramSearch) {
+      if (paramSearch[key] === '') {
+        delete paramSearch[key];
+      }
     }
-    this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
-    this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
-    this.searchFormProduct.channel_id = this.searchForm.channel_id;
-    this.searchFormProduct.status_array = [0, 2];
-    this.inventoryService.getAllSim(this.searchFormProduct).subscribe(res => {
+    this.inventoryService.searchProductStore(paramSearch).subscribe(res => {
       this.sectionBlockUI.stop();
       if (!res.status) {
         this.alertService.showMess(res.message);
         return;
       }
-      const data = res.data.data;
-      this.serverPaging.total_items = data.count;
-      this.tempList = data.items.filter(x => x.status != 1);
-      this.list = data.items.filter(x => x.status != 1);
+      const data = res.data;
+      this.tempList = data.items;
+      this.list = data.items;
     }, error => {
       this.alertService.showMess(error);
       this.sectionBlockUI.stop();
@@ -271,23 +286,46 @@ export class EditProductsComponent implements OnInit {
     this.searchProductStore();
   }
 
+  onChangeType() {
+    this.dataUpdatePrice.change_value = 0;
+  }
+
   async onSubmitData() {
     this.submitted = true;
-    // if(!this.searchForm.channel_id && this.typeCurrentBatch == BatchType.OUTPUT) {
-    //   this.alertService.showMess("Vui lòng chọn kho xuất đi");
-    //   return;
-    // }
-    // if(!this.searchForm.channel_id && this.typeCurrentBatch == BatchType.RETRIEVE) {
-    //   this.alertService.showMess("Vui lòng chọn kho cần thu hồi");
-    //   return;
-    // }
-    // if(this.typeCurrentBatch == BatchType.OUTPUT) {
-    //   this.createBatchOutput();
-    // } else if (this.typeCurrentBatch == BatchType.RETRIEVE) {
-    //   if ((await this.alertService.showConfirm('Bạn có chắc chắn thu hồi các số của kho?')).value) {
-    //     this.createBatchRetrieve();
-    //   }      
-    // }
+    this.dataUpdatePrice.channel_id = parseInt(this.searchForm.channel_id);
+    this.dataUpdatePrice.products = this.selectedItems.map(x => {return x.id});
+    let res;
+    if ((await this.alertService.showConfirm('Bạn có chắc chắn cập nhật giá của các số?')).value) {
+      try {
+        res = await this.inventoryService.updatePriceProduct(this.dataUpdatePrice).toPromise();  
+        if(res.data.need_confirm) {
+          if ((await this.alertService.showConfirm(res.message)).value) {
+            this.dataUpdatePrice.confirm = true;
+            this.inventoryService.updatePriceProduct(this.dataUpdatePrice).subscribe(res => {
+              if(!res.status) {
+                this.alertService.showMess(res.message);
+              }
+              this.alertService.showSuccess(res.message);
+              this.getData();
+              this.selectedItems = [];
+              this.tempSelectedItems = [];      
+              this.disableSelectParent = false;
+            }, error => {
+              this.alertService.showMess(error);
+            })
+          }
+        } else {
+          this.alertService.showSuccess(res.message);
+          this.getData();
+          this.selectedItems = [];
+          this.tempSelectedItems = [];
+          this.disableSelectParent = false;
+        }
+      } catch (error) {
+        this.alertService.showMess(error);
+      }
+      
+    } 
   }
 
   /**
@@ -333,8 +371,7 @@ export class EditProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const data = this.route.snapshot.data;    
-    this.getData();
+    const data = this.route.snapshot.data;
   }  
 
 }

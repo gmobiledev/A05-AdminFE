@@ -66,6 +66,11 @@ export class NewBatchExportComponent implements OnInit {
     skip: 0,
     take: 1000,
     channel_id: '',
+    level: '',
+    key_from: '',
+    key_to: '',
+    brand: '',
+    category_id: '',
     status_array: []
   }
 
@@ -90,6 +95,7 @@ export class NewBatchExportComponent implements OnInit {
   isResetTempList: boolean = true;
   isResetTempSelected: boolean = true;
   public listChannel;
+  public listChannelTmp;
   public listInputChannel;
   public submitted: boolean = false;
   public listAttribute = [
@@ -245,14 +251,19 @@ export class NewBatchExportComponent implements OnInit {
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;
+      this.searchFormProduct.level = this.searchForm.level;
+      this.searchFormProduct.category_id = this.searchForm.category_id;
+      this.searchFormProduct.brand = this.searchForm.brand;
+      this.searchFormProduct.key_from = this.searchForm.key_from;
+      this.searchFormProduct.key_to = this.searchForm.key_to;
       this.searchFormProduct.status_array = [0,2];
-      this.inventoryService.getAllSim(this.searchFormProduct).subscribe(res => {
+      this.inventoryService.getProductFromChild(this.searchFormProduct).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
-        const data = res.data.data;
+        const data = res.data;
         this.serverPaging.total_items = data.count;
         this.tempList = data.items.filter(x => x.status != 1);
         this.list = data.items.filter(x => x.status != 1);
@@ -380,89 +391,31 @@ export class NewBatchExportComponent implements OnInit {
     }
     //call api moi
     const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);
+    const parentChannel = this.listChannelTmp.find(x => x.id == selectedChannel.parent_id);
     const dataCreateBatch = new CreateBatchRetrieveDto();
     dataCreateBatch.title = this.createBatchExportForm.title;
     dataCreateBatch.channel_id = parseInt(selectedChannel.parent_id);
-    dataCreateBatch.title = `Thu hồi về kho ${selectedChannel.name}`;
+    dataCreateBatch.title = `Thu hồi về kho ${parentChannel.name}`;
     dataCreateBatch.quantility = this.selectedItems.length;
+    dataCreateBatch.products = this.selectedItems.map(x => { return x.id });
 
-    let resCreateBatch, resUpdateBatch;
+    let resCreateBatch;
     this.submitted = true;
     this.sectionBlockUI.start();
     try {
       resCreateBatch = await this.inventoryService.createBatchRetrieve(dataCreateBatch).toPromise();
+      this.sectionBlockUI.stop();
       if (!resCreateBatch.status) {
-        this.alertService.showMess(resCreateBatch.message);
-        this.sectionBlockUI.stop();
+        this.alertService.showMess(resCreateBatch.message);        
         return;
       }
-    } catch (error) {
-      this.alertService.showMess(error);
-      this.sectionBlockUI.stop();
-    }
-    let dataUpdateBatch = new UpdateBatchDto();
-    dataUpdateBatch.products = this.selectedItems.map(x => { return x.id });
-    dataUpdateBatch.batch_id = resCreateBatch.data.data.id;
-    try {
-      resUpdateBatch = await this.inventoryService.updateBatchRetrieve(dataUpdateBatch).toPromise();
-      if (!resUpdateBatch.status) {
-        this.alertService.showMess(resUpdateBatch.message);
-        this.sectionBlockUI.stop();
-        return;
-      }
-      this.alertService.showSuccess(resUpdateBatch.message);
-      this.sectionBlockUI.stop();
+      this.alertService.showSuccess(resCreateBatch.message);
       this.router.navigate(['/inventory/batch']);
-      return;
+
     } catch (error) {
       this.alertService.showMess(error);
       this.sectionBlockUI.stop();
     }
-    
-    return;
-    if (this.retrieveForm.retrieve_all) {
-      let dataRetrieve = new RetrieveAllSellChannelDto();
-      dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
-      dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
-      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
-      dataRetrieve.user_id = this.currentUser.id;    
-      this.inventoryService.retrieveChannel(dataRetrieve).subscribe(res => {
-        this.sectionBlockUI.stop();
-        if (!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/batch']);
-      }, error => {
-        this.sectionBlockUI.stop();
-        this.alertService.showMess(error);
-        return;
-      })
-    } else {
-      let dataRetrieve = new RetrieveSellChannelDto();
-      dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
-      dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
-      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
-      dataRetrieve.product_ids = this.selectedItems.map(x => { return parseInt(x.id) });
-      dataRetrieve.user_id = this.currentUser.id;
-      this.inventoryService.retrieveProductOfChannel(dataRetrieve).subscribe(res => {
-        this.sectionBlockUI.stop();
-        if (!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/batch']);
-      }, error => {
-        this.sectionBlockUI.stop();
-        this.alertService.showMess(error);
-        return;
-      })
-    }
-
   }
 
   async onSelectFileFront(event) {
@@ -494,6 +447,7 @@ export class NewBatchExportComponent implements OnInit {
     this.sectionBlockUI.start();
     this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(async res => {
       this.listChannel = res.data.items;
+      this.listChannelTmp = res.data.items;
       if(this.typeCurrentBatch == BatchType.RETRIEVE) {
         let childChannels = [];
         let params = {

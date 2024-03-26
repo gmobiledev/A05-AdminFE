@@ -80,7 +80,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" *ngIf=" typeCurrentBatch != listBatchType.RETRIEVE">
                                 
                             </div>
 
@@ -106,7 +106,7 @@
                                     class="form-control" [(ngModel)]="searchForm.key_to" placeholder="099698****">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE">
                                 <div class="form-group">
                                     <label for="">Số lượng</label>
                                     <input type="number" class="form-control" [(ngModel)]="searchForm.take" >
@@ -116,7 +116,7 @@
                             <div class="col-md-4" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE || !retrieveForm.retrieve_all">
                               <div class="form-group">
                                 <label></label>
-                                <button type="button" (click)="searchProductStore()" class="btn btn-block btn-info mb-1" rippleEffect><span [data-feather]="'search'"
+                                <button type="button" (click)="searchProductStore()" class="btn d-block btn-info mb-1" rippleEffect><span [data-feather]="'search'"
                                   [class]="'mr-25'"></span>Lọc</button>
                               </div>
                             </div>

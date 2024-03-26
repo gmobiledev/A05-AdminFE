@@ -13,7 +13,7 @@
                               <label for="">Chọn kho số</label>
                               <ng-select [disabled]="disableSelectParent" [(ngModel)]="searchForm.channel_id"
                                 (search)="onSearchParentChannel($event)" (change)="onChangeParentChannel()">
-                                <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
+                                <ng-option *ngFor="let p of listChannel" [value]="p.id.toString()">{{
                                   p.name
                                   }}</ng-option>
                               </ng-select>
@@ -114,7 +114,8 @@
 
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <button type="button" (click)="modalOpen(modalUpdatePrice)" class="btn btn-warning mb-1" rippleEffect><span [data-feather]="'money'"
+                                <button type="button" [disabled]="selectedItems.length < 1"
+                                 (click)="modalOpen(modalUpdatePrice)" class="btn btn-warning mb-1" rippleEffect><span [data-feather]="'money'"
                                     [class]="'mr-25'"></span>Cập nhật giá bán</button>
                             </div>
                         </div>
@@ -227,7 +228,14 @@
                         </div>
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Giá" prop="price">
+
+                    <ngx-datatable-column name="Giá vốn" prop="original_price">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{ value | number }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Giá bán" prop="price">
                       <ng-template  let-value="value" ngx-datatable-cell-template>
                         {{ value | number  }}
                       </ng-template>
@@ -359,7 +367,14 @@
                         </div>
                       </ng-template>
                     </ngx-datatable-column>
-                    <ngx-datatable-column name="Giá" prop="price">
+
+                    <ngx-datatable-column name="Giá bán" prop="original_price">
+                        <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{ value | number }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Giá bán" prop="price">
                       <ng-template  let-value="value" ngx-datatable-cell-template>
                         {{ value | number  }}
                       </ng-template>
@@ -398,15 +413,20 @@
     <div class="modal-body" tabindex="0" *blockUI="'item-block'">       
         <div class="row mb-1">
             <div class="col-md-4">
-                <div class="form-check form-check-inline"><input type="radio" name="price_action" 
-                    [(ngModel)]="price_action"
+                <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
+                    [(ngModel)]="dataUpdatePrice.change_type"
                     value="{{ listPriceAction.FIX }}"  class="form-check-input"><label 
                     
                     class="form-check-label">Thay đổi giá bán</label></div>
             </div>
             <div class="col-md-8">
                 <div class="form-check-inline">
-                    <input type="text" *ngIf="price_action == listPriceAction.FIX" placeholder="Nhập số tiền/sản phẩm" class="form-control">
+                    <input type="text" *ngIf="dataUpdatePrice.change_type == listPriceAction.FIX" 
+                    [(ngModel)]="dataUpdatePrice.change_value"
+                    (change)="onChangeType()"
+                    mask="separator"
+                    thousandSeparator=","
+                    placeholder="Nhập số tiền/sản phẩm" class="form-control">
                 </div>
             </div>
             
@@ -415,15 +435,19 @@
 
         <div class="row mb-1">
             <div class="col-md-4">
-                <div class="form-check form-check-inline"><input type="radio" name="price_action" 
-                    [(ngModel)]="price_action"
+                <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
+                    [(ngModel)]="dataUpdatePrice.change_type"
                     value="{{ listPriceAction.PERCENT }}"  class="form-check-input"><label 
                     
                     class="form-check-label">Cộng thêm % giá bán</label></div>
             </div>
             <div class="col-md-8">
                 <div class="form-check-inline">
-                    <input *ngIf="price_action == listPriceAction.PERCENT" type="text" placeholder="Nhập số %/sản phẩm"  class="form-control">
+                    <input *ngIf="dataUpdatePrice.change_type == listPriceAction.PERCENT" 
+                    [(ngModel)]="dataUpdatePrice.change_value"
+                    (change)="onChangeType()"
+                    [allowNegativeNumbers]="true"
+                    type="text" placeholder="Nhập số %/sản phẩm"  class="form-control">
                 </div>
             </div>
             
@@ -431,15 +455,21 @@
 
         <div class="row mb-1">
             <div class="col-md-4">
-                <div class="form-check form-check-inline"><input type="radio" name="price_action" 
-                    [(ngModel)]="price_action"
+                <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
+                    [(ngModel)]="dataUpdatePrice.change_type"
                     value="{{ listPriceAction.ADD }}" class="form-check-input"><label 
                     
                     class="form-check-label">Cộng tiền giá bán</label></div>
             </div>
             <div class="col-md-8">
                 <div class="form-check-inline">
-                    <input *ngIf="price_action == listPriceAction.ADD" type="text" placeholder="Nhập số tiền/sản phẩm" class="form-control">
+                    <input *ngIf="dataUpdatePrice.change_type == listPriceAction.ADD" 
+                    [(ngModel)]="dataUpdatePrice.change_value"
+                    (change)="onChangeType()"
+                    mask="separator"
+                    thousandSeparator=","
+                    [allowNegativeNumbers]="true"
+                    type="text" placeholder="Nhập số tiền/sản phẩm" class="form-control">
                 </div>
             </div>
             
@@ -449,7 +479,7 @@
         </div>
     </div>
     <div class="modal-footer text-center">
-        <button type="button" class="btn btn-warning mb-1" rippleEffect><span
+        <button (click)="onSubmitData()" type="button" class="btn btn-warning mb-1" rippleEffect><span
             [class]="'mr-25'"></span>Hoàn thành</button>
     </div>
 </ng-template>

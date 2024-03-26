@@ -43,10 +43,19 @@ export class CreateBatchRetrieveDto {
     title: string;
     quantility: number;
     channel_id: number;
+    products: any;
 }
 
 export class UpdateBatchDto {
     products: any;
     batch_id: number;
     channel_id: number;
+}
+
+export class UpdatePriceDto {
+    products : any;
+    channel_id: number;
+    change_type: string;
+    change_value: number;
+    confirm: boolean;
 }
