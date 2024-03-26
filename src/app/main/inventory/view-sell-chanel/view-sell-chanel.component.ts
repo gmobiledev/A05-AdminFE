@@ -83,6 +83,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   public listSellChannel: any;
   public isShowAddInput: boolean = true;
+  public currentChannel;
 
   public searchForm: any = {
     keysearch: '',
@@ -388,6 +389,9 @@ export class ViewSellChanelComponent implements OnInit {
     })
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.inventoryService.viewDetailSell(this.searchForm.channel_id).subscribe(res => {
+      this.currentChannel = res.data.items[0];
+    })
     this.sectionBlockUI.start();
     // this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
     

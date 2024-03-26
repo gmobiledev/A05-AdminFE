@@ -81,6 +81,7 @@
             <div class="overflow-hidden">
               <div class="pull-right">
                 <a routerLink="/inventory/edit-products"
+                *ngIf="currentChannel && currentChannel.admin_id == currentUser.id"
                 [queryParams]="{channel_id: searchForm.channel_id}"
                 class="btn d-block btn-primary">Sửa danh sách số</a>
               </div>
@@ -129,7 +130,7 @@
                     </td>
 
                     <td>
-                      {{ item.price || number }}
+                      {{ item.export_price || number }}
                     </td>
 
                     <td>

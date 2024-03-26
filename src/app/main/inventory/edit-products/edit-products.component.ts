@@ -304,10 +304,11 @@ export class EditProductsComponent implements OnInit {
           }
         } else {
           this.alertService.showSuccess(res.message);
-          this.getData();
+          this.modalClose();          
           this.selectedItems = [];
           this.tempSelectedItems = [];
           this.disableSelectParent = false;
+          this.searchProductStore();
         }
       } catch (error) {
         this.alertService.showMess(error);
@@ -328,10 +329,11 @@ export class EditProductsComponent implements OnInit {
         this.alertService.showMess(res.message);
       }
       this.alertService.showSuccess(res.message);
-      this.getData();
+      this.modalClose();      
       this.selectedItems = [];
       this.tempSelectedItems = [];
       this.disableSelectParent = false;
+      this.searchProductStore();
     }, error => {
       this.alertService.showMess(error);
     })

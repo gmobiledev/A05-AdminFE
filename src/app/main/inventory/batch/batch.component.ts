@@ -46,6 +46,7 @@ export class BatchComponent implements OnInit {
   public submittedUpload: boolean = false;
   public filesData: any;
   public filesImages: any;
+  public fileAttachment: any;
 
   public adminId: any;
   public refCode: any;
@@ -277,14 +278,15 @@ export class BatchComponent implements OnInit {
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
       const ext = event.target.files[0].type;
-      if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-        this.dataLo.file_ext = 'png';
-        let img = await this.commonService.resizeImage(event.target.files[0]);
-        this.dataLo.files = (img + '').replace('data:image/png;base64,', '')
-      } else if (ext.includes('pdf')) {
-        this.dataLo.file_ext = 'pdf';
-        this.dataLo.files = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
-      }
+      this.fileAttachment = event.target.files[0];
+      // if (ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+      //   this.dataLo.file_ext = 'png';
+      //   let img = await this.commonService.resizeImage(event.target.files[0]);
+      //   this.dataLo.files = (img + '').replace('data:image/png;base64,', '')
+      // } else if (ext.includes('pdf')) {
+      //   this.dataLo.file_ext = 'pdf';
+      //   this.dataLo.files = (await this.commonService.fileUploadToBase64(event.target.files[0]) + '').replace('data:application/pdf;base64,', '');
+      // }
     }
   }
 
@@ -320,7 +322,7 @@ export class BatchComponent implements OnInit {
 
   //Tạo lo nhập kho tổng
   async onSubmitUploadLo() {
-    if(!this.dataLo.files) {
+    if(!this.fileAttachment) {
       this.alertService.showMess("Vui lòng đính kèm chứng từ");
       return;
     }
@@ -333,6 +335,7 @@ export class BatchComponent implements OnInit {
       formData.append(key, this.dataLo[key]);
     }
     formData.append("excel_upload_files", this.filesData);
+    formData.append("files_attachment", this.fileAttachment);
     
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu nhập kho")).value) {
       this.submittedUpload = true;
