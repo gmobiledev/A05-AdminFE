@@ -210,6 +210,14 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/van-phong/reject`, data);
   }
 
+  userApproveBatchRetrieve(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/approve`, data);
+  }
+
+  userRejectBatchRetrieve(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/reject`, data);
+  }
+
   checkProductStore(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/check-upload-excel-file`, data);
   }

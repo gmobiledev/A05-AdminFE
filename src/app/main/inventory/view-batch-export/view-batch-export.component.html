@@ -135,7 +135,7 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="data?.batch?.type == batchType.RETRIEVE">
-                <div class="col-12 text-center">
+                <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
                     <button *ngIf="data?.batch?.status == batchStatus.INIT
                                             && checkAction('batch/retrieve/ke-toan/approve')
                                             " (click)="onViewModalApprove(modalApprove)" class="btn btn-info  mb-2 mr-2">
@@ -159,6 +159,21 @@
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                     </button>        
+                </div>
+
+                <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
+                                    && (checkAction('batch/retrieve/approve') || checkAction('batch/retrieve/reject') )
+                                    ">
+                    <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/approve')
+                                                    " (click)="onApproveRetrieve(data?.batch, batchStatus.APPROVED, 'user')"
+                        class="btn btn-success mb-2 mr-2">
+                        <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+                    </button>
+                    <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/reject')
+                                            " (click)="onApproveRetrieve(data?.batch, batchStatus.CANCEL_BY_USER, 'user')"
+                        class="btn btn-danger  mb-2 mr-2">
+                        <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
+                    </button>
                 </div>
             </ng-container>
             
