@@ -371,13 +371,13 @@
             </ngx-datatable-column>                        
             <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>
             <ngx-datatable-column name="Hạng số" prop="level"></ngx-datatable-column>
-            <ngx-datatable-column name="Giá vốn" prop="original_price">
+            <ngx-datatable-column name="Giá vốn" prop="price">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 {{ value | number }}
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Giá bán" prop="price">
+            <ngx-datatable-column name="Giá bán" prop="export_price">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 {{ value | number }}
               </ng-template>

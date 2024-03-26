@@ -59,7 +59,12 @@
                                     </div>
                                 </ng-template>
                             </ngx-datatable-column>
-                            <ngx-datatable-column name="Giá" prop="price">
+                            <ngx-datatable-column name="Giá vốn" prop="price">
+                                <ng-template  let-value="value" ngx-datatable-cell-template>
+                                    {{ value | number  }}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Giá bán" prop="export_price">
                                 <ng-template  let-value="value" ngx-datatable-cell-template>
                                     {{ value | number  }}
                                 </ng-template>

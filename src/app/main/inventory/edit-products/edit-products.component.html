@@ -229,13 +229,13 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Giá vốn" prop="original_price">
+                    <ngx-datatable-column name="Giá vốn" prop="price">
                         <ng-template let-value="value" ngx-datatable-cell-template>
                             {{ value | number }}
                         </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Giá bán" prop="price">
+                    <ngx-datatable-column name="Giá bán" prop="export_price">
                       <ng-template  let-value="value" ngx-datatable-cell-template>
                         {{ value | number  }}
                       </ng-template>
@@ -368,13 +368,13 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Giá bán" prop="original_price">
+                    <ngx-datatable-column name="Giá bán" prop="price">
                         <ng-template let-value="value" ngx-datatable-cell-template>
                             {{ value | number }}
                         </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Giá bán" prop="price">
+                    <ngx-datatable-column name="Giá bán" prop="export_price">
                       <ng-template  let-value="value" ngx-datatable-cell-template>
                         {{ value | number  }}
                       </ng-template>
@@ -415,6 +415,7 @@
             <div class="col-md-4">
                 <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
                     [(ngModel)]="dataUpdatePrice.change_type"
+                    (change)="onChangeType()"
                     value="{{ listPriceAction.FIX }}"  class="form-check-input"><label 
                     
                     class="form-check-label">Thay đổi giá bán</label></div>
@@ -423,7 +424,7 @@
                 <div class="form-check-inline">
                     <input type="text" *ngIf="dataUpdatePrice.change_type == listPriceAction.FIX" 
                     [(ngModel)]="dataUpdatePrice.change_value"
-                    (change)="onChangeType()"
+                    
                     mask="separator"
                     thousandSeparator=","
                     placeholder="Nhập số tiền/sản phẩm" class="form-control">
@@ -437,6 +438,7 @@
             <div class="col-md-4">
                 <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
                     [(ngModel)]="dataUpdatePrice.change_type"
+                    (change)="onChangeType()"
                     value="{{ listPriceAction.PERCENT }}"  class="form-check-input"><label 
                     
                     class="form-check-label">Cộng thêm % giá bán</label></div>
@@ -445,7 +447,7 @@
                 <div class="form-check-inline">
                     <input *ngIf="dataUpdatePrice.change_type == listPriceAction.PERCENT" 
                     [(ngModel)]="dataUpdatePrice.change_value"
-                    (change)="onChangeType()"
+                    
                     [allowNegativeNumbers]="true"
                     type="text" placeholder="Nhập số %/sản phẩm"  class="form-control">
                 </div>
@@ -457,6 +459,7 @@
             <div class="col-md-4">
                 <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
                     [(ngModel)]="dataUpdatePrice.change_type"
+                    (change)="onChangeType()"
                     value="{{ listPriceAction.ADD }}" class="form-check-input"><label 
                     
                     class="form-check-label">Cộng tiền giá bán</label></div>
@@ -465,7 +468,7 @@
                 <div class="form-check-inline">
                     <input *ngIf="dataUpdatePrice.change_type == listPriceAction.ADD" 
                     [(ngModel)]="dataUpdatePrice.change_value"
-                    (change)="onChangeType()"
+                   
                     mask="separator"
                     thousandSeparator=","
                     [allowNegativeNumbers]="true"

@@ -300,19 +300,7 @@ export class EditProductsComponent implements OnInit {
         res = await this.inventoryService.updatePriceProduct(this.dataUpdatePrice).toPromise();  
         if(res.data.need_confirm) {
           if ((await this.alertService.showConfirm(res.message)).value) {
-            this.dataUpdatePrice.confirm = true;
-            this.inventoryService.updatePriceProduct(this.dataUpdatePrice).subscribe(res => {
-              if(!res.status) {
-                this.alertService.showMess(res.message);
-              }
-              this.alertService.showSuccess(res.message);
-              this.getData();
-              this.selectedItems = [];
-              this.tempSelectedItems = [];      
-              this.disableSelectParent = false;
-            }, error => {
-              this.alertService.showMess(error);
-            })
+            this.updatePrice();
           }
         } else {
           this.alertService.showSuccess(res.message);
@@ -334,11 +322,20 @@ export class EditProductsComponent implements OnInit {
    * @returns 
    */
   async updatePrice() {
-    if(!this.createBatchExportForm.to_channel_id ) {
-      this.alertService.showMess("Vui lòng chọn kho xuất đến");
-      return;
-    }
-    
+    this.dataUpdatePrice.confirm = true;
+    this.inventoryService.updatePriceProduct(this.dataUpdatePrice).subscribe(res => {
+      if (!res.status) {
+        this.alertService.showMess(res.message);
+      }
+      this.alertService.showSuccess(res.message);
+      this.getData();
+      this.selectedItems = [];
+      this.tempSelectedItems = [];
+      this.disableSelectParent = false;
+    }, error => {
+      this.alertService.showMess(error);
+    })
+
   }
   
 

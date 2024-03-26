@@ -259,8 +259,8 @@ export class BatchComponent implements OnInit {
             'Name': item.name,
             'Nhà mạng': item.brand,
             'Hạng số': item.level,
-            'Giá vốn': item.original_price,
-            'Giá bán': item.price
+            'Giá vốn': item.price,
+            'Giá bán': item.export_price
           }
         })
       }
