@@ -53,7 +53,7 @@
                         [value]="item.value"
                         [id]="item.key"
                       >
-                        <span [innerHTML]="item.value | showStatusSim"></span>
+                        <span [innerHTML]="item.value | showStatusProduct"></span>
                       </option>
                     </select>
                   </div>
@@ -115,7 +115,7 @@
                       {{ item.export_price || number }}
                     </td>
                     <td>
-                      <div [innerHTML]="item.status | showStatusSim"></div>
+                      <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
 
                     <td>

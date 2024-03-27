@@ -162,14 +162,14 @@
                 </div>
 
                 <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
-                                    && (checkAction('batch/retrieve/approve') || checkAction('batch/retrieve/reject') )
+                                    && (checkAction('batch/retrieve/user/approve') || checkAction('batch/retrieve/user/reject') )
                                     ">
-                    <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/approve')
+                    <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/user/approve')
                                                     " (click)="onApproveRetrieve(data?.batch, batchStatus.APPROVED, 'user')"
                         class="btn btn-success mb-2 mr-2">
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
-                    <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/reject')
+                    <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/user/reject')
                                             " (click)="onApproveRetrieve(data?.batch, batchStatus.CANCEL_BY_USER, 'user')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối

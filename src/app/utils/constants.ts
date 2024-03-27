@@ -38,6 +38,7 @@ export enum ProductStatus {
     STATUS_ACTIVE = 1,
     STATUS_AVAILABLE = 2,
     STATUS_LOCKED = 3,
+    LOCKED_BY_ADMIN = 4,
     STATUS_INIT = 0,
 }
 

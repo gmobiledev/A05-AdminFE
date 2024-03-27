@@ -211,11 +211,11 @@ export class InventoryService {
   }
 
   userApproveBatchRetrieve(data) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/approve`, data);
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/user/approve`, data);
   }
 
   userRejectBatchRetrieve(data) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/reject`, data);
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/user/reject`, data);
   }
 
   checkProductStore(data) {
