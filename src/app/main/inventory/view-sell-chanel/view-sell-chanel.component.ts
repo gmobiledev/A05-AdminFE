@@ -156,7 +156,7 @@ export class ViewSellChanelComponent implements OnInit {
 
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
-
+      this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
       this.contentHeader.headerTitle = 'Xem chi tiết kho số';
       this.contentHeader.breadcrumb.links[1] = 'Xem chi tiết kho số';
 
