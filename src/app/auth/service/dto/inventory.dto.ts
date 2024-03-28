@@ -44,6 +44,8 @@ export class CreateBatchRetrieveDto {
     quantility: number;
     channel_id: number;
     products: any;
+    files: any;
+    file_ext: any;
 }
 
 export class UpdateBatchDto {

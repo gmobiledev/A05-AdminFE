@@ -111,7 +111,8 @@ export class NewBatchExportComponent implements OnInit {
   }
   dataRetrieveFile = {
     attached_file_name: '',
-    attached_file_content: ''
+    attached_file_content: '',
+    file_ext: ''
   };
 
   constructor(
@@ -251,7 +252,7 @@ export class NewBatchExportComponent implements OnInit {
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;
-      this.searchFormProduct.level = this.searchForm.level;
+      this.searchFormProduct.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
       this.searchFormProduct.category_id = this.searchForm.category_id;
       this.searchFormProduct.brand = this.searchForm.brand;
       this.searchFormProduct.key_from = this.searchForm.key_from;
@@ -398,6 +399,8 @@ export class NewBatchExportComponent implements OnInit {
     dataCreateBatch.title = `Thu hồi về kho ${parentChannel.name}`;
     dataCreateBatch.quantility = this.selectedItems.length;
     dataCreateBatch.products = this.selectedItems.map(x => { return x.id });
+    dataCreateBatch.files = this.dataRetrieveFile.attached_file_content;
+    dataCreateBatch.file_ext = this.dataRetrieveFile.file_ext;
 
     let resCreateBatch;
     this.submitted = true;
@@ -423,10 +426,12 @@ export class NewBatchExportComponent implements OnInit {
       console.log(event.target.files[0]);
       const ext = event.target.files[0].type;
       if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.dataRetrieveFile.file_ext = 'png';
         this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
         let img = await this.commonService.resizeImage(event.target.files[0]);
         this.dataRetrieveFile.attached_file_content = (img + '').replace('data:image/png;base64,', '')
       } else if (ext.includes('pdf')) {
+        this.dataRetrieveFile.file_ext = 'pdf';
         this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
         this.dataRetrieveFile.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
       }
