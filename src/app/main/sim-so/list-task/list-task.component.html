@@ -186,6 +186,9 @@
                           Xem chi tiết
                         </a>
                       </div>
+
+
+
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
 
                         <div
@@ -247,8 +250,7 @@
                         {{ showApproveText(item.status) }}
                       </a>
 
-                      <div
-                        *ngIf="((item.status == taskTelecomStatus.STATUS_APPROVED 
+                      <div *ngIf="((item.status == taskTelecomStatus.STATUS_APPROVED 
                       &&
                       (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']
                       || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
@@ -265,13 +267,11 @@
                         Upload ảnh CMT cũ
                       </a>
 
-
-                      <a *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
-                        class="btn btn-info mt-1" (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')">
+                      <a class="btn btn-info mt-1" (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')">
                         <i data-feather="info" class="text-white cursor-pointer"></i>
                         Thông tin Ship
                       </a>
-
+                      
                       <a ngbTooltip="Lưu note"
                         *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
                         class="btn btn-sm btn-icon btn-info mt-1" (click)="modalApprovalOpen(modaNote, item, 'lg')">
