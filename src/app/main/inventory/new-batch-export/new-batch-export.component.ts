@@ -5,7 +5,7 @@ import { CommonDataService } from 'app/auth/service/common-data.service';
 import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchType } from 'app/utils/constants';
+import { BatchType, MAXIMUM_VALUE } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -52,20 +52,20 @@ export class NewBatchExportComponent implements OnInit {
     key_to: '',
     brand: '',
     category_id: '',
-    take: 1000,
+    take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
     level: ''
   }
   seachMyChannel = {
     user_id: '',
     channel_id: '',
-    page_size: 1000
+    page_size: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH
   }
 
   public searchFormProduct = {
     keyword: '',
     page: 1,
     skip: 0,
-    take: 1000,
+    take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
     channel_id: '',
     level: '',
     key_from: '',

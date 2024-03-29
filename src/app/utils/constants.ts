@@ -193,3 +193,7 @@ export enum PriceAction {
     PERCENT = "PERCENT", // Tăng hoặc giảm % tiền
     FIX = "FIX" //set giá
   }
+
+  export enum MAXIMUM_VALUE {
+    ROW_QUERY_PRODUCT_BATCH = 5000
+  }
