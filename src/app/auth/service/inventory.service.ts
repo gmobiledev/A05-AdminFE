@@ -233,4 +233,8 @@ export class InventoryService {
   updatePriceProduct(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/price/update`, data);
   }
+
+  searchExcelProductExport(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/search-product-from-excel`, data);
+  }
 }

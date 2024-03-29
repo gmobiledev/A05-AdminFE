@@ -9,5 +9,6 @@ export class User {
   avatar: string;
   role: Role;
   token?: string;
-  refreshToken?: string
+  refreshToken?: string;
+  menus?: any;
 }

@@ -120,6 +120,18 @@
                                   [class]="'mr-25'"></span>Lọc</button>
                               </div>
                             </div>
+                            <div class="col-md-6" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE">
+                              <div class="input-group">
+                                <!-- <label for="basicInputFile">Tìm trong file excel</label> -->
+                                <div class="custom-file">
+                                  <input #fileExcel type="file" class="custom-file-input" id="customFile" (change)="onSelectFileExcel($event)"
+                                  (click)="this.value=null" />
+                                  <label class="custom-file-label" for="customFile">Tìm bằng file excel</label>
+                                </div>
+
+                                <button (click)="onRemoveFileExcel()" type="button" rippleeffect="" class="ml-1 btn btn-outline-primary waves-effect">Bỏ chọn file</button>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
