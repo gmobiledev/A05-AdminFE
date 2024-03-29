@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
-import { CreateBatchExportDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
+import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
 import { BatchType } from 'app/utils/constants';
@@ -66,6 +66,11 @@ export class NewBatchExportComponent implements OnInit {
     skip: 0,
     take: 1000,
     channel_id: '',
+    level: '',
+    key_from: '',
+    key_to: '',
+    brand: '',
+    category_id: '',
     status_array: []
   }
 
@@ -90,6 +95,7 @@ export class NewBatchExportComponent implements OnInit {
   isResetTempList: boolean = true;
   isResetTempSelected: boolean = true;
   public listChannel;
+  public listChannelTmp;
   public listInputChannel;
   public submitted: boolean = false;
   public listAttribute = [
@@ -105,7 +111,8 @@ export class NewBatchExportComponent implements OnInit {
   }
   dataRetrieveFile = {
     attached_file_name: '',
-    attached_file_content: ''
+    attached_file_content: '',
+    file_ext: ''
   };
 
   constructor(
@@ -245,14 +252,19 @@ export class NewBatchExportComponent implements OnInit {
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;
+      this.searchFormProduct.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
+      this.searchFormProduct.category_id = this.searchForm.category_id;
+      this.searchFormProduct.brand = this.searchForm.brand;
+      this.searchFormProduct.key_from = this.searchForm.key_from;
+      this.searchFormProduct.key_to = this.searchForm.key_to;
       this.searchFormProduct.status_array = [0,2];
-      this.inventoryService.getAllSim(this.searchFormProduct).subscribe(res => {
+      this.inventoryService.getProductFromChild(this.searchFormProduct).subscribe(res => {
         this.sectionBlockUI.stop();
         if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
-        const data = res.data.data;
+        const data = res.data;
         this.serverPaging.total_items = data.count;
         this.tempList = data.items.filter(x => x.status != 1);
         this.list = data.items.filter(x => x.status != 1);
@@ -373,50 +385,40 @@ export class NewBatchExportComponent implements OnInit {
   /**
    * Thu hồi
    */
-  createBatchRetrieve() {
-    if (this.retrieveForm.retrieve_all) {
-      let dataRetrieve = new RetrieveAllSellChannelDto();
-      dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
-      dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
-      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
-      dataRetrieve.user_id = this.currentUser.id;    
-      this.inventoryService.retrieveChannel(dataRetrieve).subscribe(res => {
-        this.sectionBlockUI.stop();
-        if (!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/batch']);
-      }, error => {
-        this.sectionBlockUI.stop();
-        this.alertService.showMess(error);
-        return;
-      })
-    } else {
-      let dataRetrieve = new RetrieveSellChannelDto();
-      dataRetrieve.attached_file_content = this.dataRetrieveFile.attached_file_content;
-      dataRetrieve.attached_file_name = this.dataRetrieveFile.attached_file_name;
-      const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);      
-      dataRetrieve.channel_id = parseInt(selectedChannel.parent_id);
-      dataRetrieve.product_ids = this.selectedItems.map(x => { return parseInt(x.id) });
-      dataRetrieve.user_id = this.currentUser.id;
-      this.inventoryService.retrieveProductOfChannel(dataRetrieve).subscribe(res => {
-        this.sectionBlockUI.stop();
-        if (!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.alertService.showSuccess(res.message);
-        this.router.navigate(['/inventory/batch']);
-      }, error => {
-        this.sectionBlockUI.stop();
-        this.alertService.showMess(error);
-        return;
-      })
+  async createBatchRetrieve() {
+    if (this.selectedItems.length < 1) {
+      this.alertService.showMess("Vui lòng chọn sản phẩm");
+      return;
     }
+    //call api moi
+    const selectedChannel = this.listChannel.find(x => x.id == this.searchFormProduct.channel_id);
+    const parentChannel = this.listChannelTmp.find(x => x.id == selectedChannel.parent_id);
+    const dataCreateBatch = new CreateBatchRetrieveDto();
+    dataCreateBatch.title = this.createBatchExportForm.title;
+    dataCreateBatch.channel_id = parseInt(selectedChannel.parent_id);
+    dataCreateBatch.title = `Thu hồi về kho ${parentChannel.name}`;
+    dataCreateBatch.quantility = this.selectedItems.length;
+    dataCreateBatch.products = this.selectedItems.map(x => { return x.id });
+    dataCreateBatch.files = this.dataRetrieveFile.attached_file_content;
+    dataCreateBatch.file_ext = this.dataRetrieveFile.file_ext;
 
+    let resCreateBatch;
+    this.submitted = true;
+    this.sectionBlockUI.start();
+    try {
+      resCreateBatch = await this.inventoryService.createBatchRetrieve(dataCreateBatch).toPromise();
+      this.sectionBlockUI.stop();
+      if (!resCreateBatch.status) {
+        this.alertService.showMess(resCreateBatch.message);        
+        return;
+      }
+      this.alertService.showSuccess(resCreateBatch.message);
+      this.router.navigate(['/inventory/batch']);
+
+    } catch (error) {
+      this.alertService.showMess(error);
+      this.sectionBlockUI.stop();
+    }
   }
 
   async onSelectFileFront(event) {
@@ -424,10 +426,12 @@ export class NewBatchExportComponent implements OnInit {
       console.log(event.target.files[0]);
       const ext = event.target.files[0].type;
       if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+        this.dataRetrieveFile.file_ext = 'png';
         this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
         let img = await this.commonService.resizeImage(event.target.files[0]);
         this.dataRetrieveFile.attached_file_content = (img + '').replace('data:image/png;base64,', '')
       } else if (ext.includes('pdf')) {
+        this.dataRetrieveFile.file_ext = 'pdf';
         this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
         this.dataRetrieveFile.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
       }
@@ -448,6 +452,7 @@ export class NewBatchExportComponent implements OnInit {
     this.sectionBlockUI.start();
     this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(async res => {
       this.listChannel = res.data.items;
+      this.listChannelTmp = res.data.items;
       if(this.typeCurrentBatch == BatchType.RETRIEVE) {
         let childChannels = [];
         let params = {

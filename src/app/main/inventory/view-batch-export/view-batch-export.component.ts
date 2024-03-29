@@ -333,6 +333,169 @@ export class ViewBatchExportComponent implements OnInit {
     
   }
 
+  async onApproveRetrieve(item, status, type) {
+    let data = {
+      batch_id: item.id,
+      channel_id: item.channel_id
+    }
+    if(type == 'ketoan') {
+      if(status == this.batchStatus.APPROVED_BY_ACCOUNTANT) {
+        this.inventoryService.ketoanApproveBatchRetrieve(data).subscribe(res => {
+          if(!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.alertService.showSuccess(res.message);
+          this.getData();
+          this.modalClose();
+        },error => {
+          this.alertService.showMess(error)
+        })
+      } else if (status == this.batchStatus.CANCEL_BY_ACCOUNTANT) {
+        Swal.fire({
+          title: 'Bạn có đồng ý từ chối yêu cầu? Nhập lý do',
+          input: 'textarea',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Xác nhận',
+          showLoaderOnConfirm: true,
+          preConfirm: (note) => {
+            if (!note || note == '') {
+              Swal.showValidationMessage(
+                "Vui lòng nhập nội dung"
+              )
+              return;
+            }
+            data['note'] = note;
+            this.inventoryService.ketoanRejectBatchRetrieve(data).subscribe(res => {
+              if(!res.status) {
+                this.alertService.showMess(res.message);
+                return;
+              }
+              this.alertService.showSuccess(res.message);
+              this.getData();
+            },error => {
+              this.alertService.showMess(error)
+            })    
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+  
+          }
+        })  
+      }
+    } else if (type == 'vanphong') {
+      if(status == this.batchStatus.APPROVED) {
+        if(!this.dataApprove.attached_file_content) {
+          this.alertService.showMess("Vui lòng đính kèm chứng từ");
+          return;
+        }
+        this.inventoryService.vanphongApproveBatchRetrieve({...data, ...this.dataApprove}).subscribe(res => {
+          if(!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.alertService.showSuccess(res.message);
+          this.getData();
+          this.modalClose();
+        },error => {
+          this.alertService.showMess(error)
+        })
+      } else if (status == this.batchStatus.CANCEL_BY_OFFICE) {
+
+        Swal.fire({
+          title: 'Bạn có đồng ý từ chối yêu cầu? Nhập lý do',
+          input: 'textarea',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Gửi',
+          showLoaderOnConfirm: true,
+          preConfirm: (note) => {
+            if (!note || note == '') {
+              Swal.showValidationMessage(
+                "Vui lòng nhập nội dung"
+              )
+              return;
+            }
+            data['note'] = note;
+            this.inventoryService.vanphongRejectBatchRetrieve(data).subscribe(res => {
+              if(!res.status) {
+                this.alertService.showMess(res.message);
+                return;
+              }
+              this.alertService.showSuccess(res.message);
+              this.getData();
+            },error => {
+              this.alertService.showMess(error)
+            })  
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+  
+          }
+        })
+      }
+    } else if(type == 'user') {
+      let confirmMess = status == this.batchStatus.CANCEL_BY_USER ? 'Bạn có đồng ý từ chối yêu cầu này?' : 'Bạn có đồng ý duyệt yêu cầu này?';
+      if ((await this.alertService.showConfirm(confirmMess)).value) {
+        if (status == this.batchStatus.APPROVED) {
+          this.inventoryService.userApproveBatchRetrieve(data).subscribe(res => {
+            if (!res.status) {
+              this.alertService.showMess(res.message);
+              return;
+            }
+            this.alertService.showSuccess(res.message);
+            this.getData();
+            this.modalClose();
+          }, error => {
+            this.alertService.showMess(error)
+          })
+        } else if (status == this.batchStatus.CANCEL_BY_USER) {
+          Swal.fire({
+            title: 'Bạn có đồng ý từ chối yêu cầu? Nhập lý do',
+            input: 'textarea',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Gửi',
+            showLoaderOnConfirm: true,
+            preConfirm: (note) => {
+              if (!note || note == '') {
+                Swal.showValidationMessage(
+                  "Vui lòng nhập nội dung"
+                )
+                return;
+              }
+              data['note'] = note;
+              this.inventoryService.userRejectBatchRetrieve(data).subscribe(res => {
+                if (!res.status) {
+                  this.alertService.showMess(res.message);
+                  return;
+                }
+                this.alertService.showSuccess(res.message);
+                this.getData();
+              }, error => {
+                this.alertService.showMess(error)
+              })  
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+          }).then((result) => {
+            if (result.isConfirmed) {
+    
+            }
+          })          
+        }
+      }
+    }
+  }
+
   async onSelectFileFront(event) {
     if (event.target.files && event.target.files[0]) {
       console.log(event.target.files[0]);

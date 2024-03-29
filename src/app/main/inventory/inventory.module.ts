@@ -32,6 +32,8 @@ import { DoanhThuComponent } from './reports/doanh-thu/doanh-thu.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { ViewJuniorSellComponent } from './view-junior-sell/view-junior-sell.component';
 import { ViewDetailNomarlSellComponent } from './view-detail-nomarl-sell/view-detail-nomarl-sell.component';
+import { CsvModule } from '@ctrl/ngx-csv';
+import { EditProductsComponent } from './edit-products/edit-products.component';
 
 const routes: Routes = [
   {
@@ -112,6 +114,10 @@ const routes: Routes = [
     path: 'view-detail-nomarlSell',
     component: ViewDetailNomarlSellComponent
   },
+  {
+    path: 'edit-products',
+    component: EditProductsComponent
+  },
 ];
 
 @NgModule({
@@ -133,7 +139,8 @@ const routes: Routes = [
     KinhDoanhComponent,
     DoanhThuComponent,
     ViewJuniorSellComponent,
-    ViewDetailNomarlSellComponent
+    ViewDetailNomarlSellComponent,
+    EditProductsComponent
   ],
   imports: [
     CommonModule,
@@ -152,6 +159,7 @@ const routes: Routes = [
     NgSelectModule,
     CodeInputModule,
     NgxMaskModule.forRoot(),
+    CsvModule,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA

@@ -210,7 +210,7 @@
                             item.status == 1 ||
                             item.status == -2)
                         "
-                        title="Hủy kho"
+                        title="Từ chối kho"
                       >
                         <i
                           data-feather="x-square"
@@ -278,7 +278,7 @@
                 class="d-flex justify-content-end pr-3 pt-2"
                 [collectionSize]="totalItems"
                 [(page)]="searchForm.page"
-                [pageSize]="searchForm.take"
+                [pageSize]="searchForm.page_size"
                 [boundaryLinks]="true"
                 (pageChange)="loadPage($event)"
               >

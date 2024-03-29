@@ -53,7 +53,7 @@
                         [value]="item.value"
                         [id]="item.key"
                       >
-                        <span [innerHTML]="item.value | showStatusSim"></span>
+                        <span [innerHTML]="item.value | showStatusProduct"></span>
                       </option>
                     </select>
                   </div>
@@ -117,7 +117,7 @@
                     </td>
 
                     <td>
-                      <div [innerHTML]="item.status | showStatusSim"></div>
+                      <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
                     <td>
                       <a class="ml-1" title="Chỉnh sửa giá">
