@@ -78,7 +78,14 @@
                 </div>
               </div>
             </form>
-
+            <div class="overflow-hidden">
+              <div class="pull-right">
+                <a routerLink="/inventory/edit-products"
+                *ngIf="currentChannel && currentChannel.admin_id == currentUser.id"
+                [queryParams]="{channel_id: searchForm.channel_id}"
+                class="btn d-block btn-primary">Sửa danh sách số</a>
+              </div>
+            </div>
             <div class="table-responsive" *blockUI="'section-block'">
               <div class="mb-1">
                 <span>Tổng số: </span> <b>{{ totalItems }}</b>
@@ -123,11 +130,11 @@
                     </td>
 
                     <td>
-                      {{ item.price || number }}
+                      {{ item.export_price || number }}
                     </td>
 
                     <td>
-                      <div [innerHTML]="item.status | showStatusSim"></div>
+                      <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
                     <td>
                       <a class="ml-1" title="Chỉnh sửa giá">
