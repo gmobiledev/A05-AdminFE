@@ -336,7 +336,7 @@ export class ViewBatchExportComponent implements OnInit {
   async onApproveRetrieve(item, status, type) {
     let data = {
       batch_id: item.id,
-      user_id: this.currentUser.id
+      channel_id: item.channel_id
     }
     if(type == 'ketoan') {
       if(status == this.batchStatus.APPROVED_BY_ACCOUNTANT) {
