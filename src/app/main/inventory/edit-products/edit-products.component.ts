@@ -3,10 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
-import { UpdatePriceDto } from 'app/auth/service/dto/inventory.dto';
+import { UpdatePriceDto, UpdateStatusProductDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchType, PriceAction } from 'app/utils/constants';
+import { BatchType, PriceAction, ProductStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -117,6 +117,7 @@ export class EditProductsComponent implements OnInit {
     change_value: 0,
     confirm: false
   }
+  productStatus = ProductStatus;
 
   constructor(    
     private readonly inventoryService: InventoryService,
@@ -265,6 +266,7 @@ export class EditProductsComponent implements OnInit {
         delete paramSearch[key];
       }
     }
+    paramSearch['to_update_status'] = true;
     this.inventoryService.searchProductStore(paramSearch).subscribe(res => {
       this.sectionBlockUI.stop();
       if (!res.status) {
@@ -315,6 +317,28 @@ export class EditProductsComponent implements OnInit {
       }
       
     } 
+  }
+
+  async onUpdateStatusProduct(status) {
+    this.submitted = true;
+    
+    let dataUpdateStatus = new UpdateStatusProductDto();
+    dataUpdateStatus.channel_id = parseInt(this.searchForm.channel_id);
+    dataUpdateStatus.products = this.selectedItems.map(x => {return x.id}) as [number];
+    dataUpdateStatus.status = status;
+    dataUpdateStatus.select_all = this.retrieveForm.retrieve_all;
+    let confirmMessage = 'Bạn có chắc chắn cập nhật trạng thái các số?'
+    let res;
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.sectionBlockUI.start();
+      this.inventoryService.updateStatusProduct(dataUpdateStatus).subscribe(res => {        
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(res.message);
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(error);
+      })
+    }
   }
 
   /**

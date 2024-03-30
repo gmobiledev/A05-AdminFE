@@ -61,3 +61,10 @@ export class UpdatePriceDto {
     change_value: number;
     confirm: boolean;
 }
+
+export class UpdateStatusProductDto {
+    products: [number];
+    channel_id: number;
+    status: number;
+    select_all: boolean;
+}

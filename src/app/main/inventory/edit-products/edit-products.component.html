@@ -24,7 +24,7 @@
                             <div class="form-group">
                               <label></label>
                               <div>
-                                Cập nhật tất cả
+                                Tất cả
                               <input type="checkbox"                             
                               [(ngModel)]="retrieveForm.retrieve_all">
                               </div>
@@ -115,8 +115,16 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <button type="button" [disabled]="selectedItems.length < 1"
-                                 (click)="modalOpen(modalUpdatePrice)" class="btn btn-warning mb-1" rippleEffect><span [data-feather]="'money'"
-                                    [class]="'mr-25'"></span>Cập nhật giá bán</button>
+                                 (click)="modalOpen(modalUpdatePrice)" class="btn btn-warning mb-1 mr-3" rippleEffect><span [data-feather]="'dollar-sign'"
+                                   ></span>Cập nhật giá bán</button>
+                                  
+                                  <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
+                                 (click)="onUpdateStatusProduct(productStatus.STATUS_AVAILABLE)" class="btn btn-warning mb-1 mr-3" rippleEffect><span [data-feather]="'unlock'"
+                                    ></span>Mở bán số</button>
+                                  
+                                    <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
+                                 (click)="onUpdateStatusProduct(productStatus.LOCKED_BY_ADMIN)" class="btn btn-warning mb-1 mr-3" rippleEffect><span [data-feather]="'lock'"
+                                    ></span>Khóa số</button>
                             </div>
                         </div>
                     </div>
@@ -126,7 +134,7 @@
         </div>
 
         <div class="row" *ngIf="!retrieveForm.retrieve_all">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                 <div>
@@ -240,6 +248,13 @@
                         {{ value | number  }}
                       </ng-template>
                     </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Trạng thái" prop="status">
+                      <ng-template  let-value="value" ngx-datatable-cell-template>
+                        <p [innerHTML]="value | showStatusProduct"></p>                        
+                      </ng-template>
+                    </ngx-datatable-column>
+
                     <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>  
                     <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>                  
                     <!-- <ngx-datatable-column name="Actions"  [sortable]="false">
@@ -256,10 +271,10 @@
                 </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group text-center mt-5">
                     <label></label>
-                    <button (click)="onAddItems()" type="button" class="btn btn-info mb-1" rippleEffect><span [data-feather]="'chevrons-right'"
+                    <button (click)="onAddItems()" type="button" class="btn btn-sm btn-info mb-1" rippleEffect><span [data-feather]="'chevrons-right'"
                             [class]="'mr-25'"></span>Thêm</button>                    
                 </div>
             
@@ -368,7 +383,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Giá bán" prop="price">
+                    <ngx-datatable-column name="Giá vốn" prop="price">
                         <ng-template let-value="value" ngx-datatable-cell-template>
                             {{ value | number }}
                         </ng-template>
