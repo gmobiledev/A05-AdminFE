@@ -120,7 +120,7 @@
                                   [class]="'mr-25'"></span>Lọc</button>
                               </div>
                             </div>
-                            <div class="col-md-6" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE">
+                            <div class="col-md-8" *ngIf="typeCurrentBatch != listBatchType.RETRIEVE">
                               <div class="input-group">
                                 <!-- <label for="basicInputFile">Tìm trong file excel</label> -->
                                 <div class="custom-file">
@@ -129,7 +129,7 @@
                                   <label class="custom-file-label" for="customFile">Tìm bằng file excel</label>
                                   
                                 </div>
-
+                                <a *ngIf="!currentExcelFileSearch" href="/assets/search-product.xlsx" class="ml-2">File mẫu tại đây</a>
                                 <button *ngIf="currentExcelFileSearch" (click)="onRemoveFileExcel()" type="button" rippleeffect="" class="ml-1 btn btn-outline-primary waves-effect">Bỏ chọn file</button>
                               </div>
                               <small *ngIf="currentExcelFileSearch">{{ currentExcelFileSearch?.name }}</small>
