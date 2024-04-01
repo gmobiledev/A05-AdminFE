@@ -241,4 +241,8 @@ export class InventoryService {
   updateStatusProduct(data: UpdateStatusProductDto) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/update-status`, data);
   }
+
+  updateProductPriceBatch(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/price/update-batch`, data);
+  }
 }

@@ -127,10 +127,12 @@
                                   <input #fileExcel type="file" class="custom-file-input" id="customFile" (change)="onSelectFileExcel($event)"
                                   (click)="this.value=null" />
                                   <label class="custom-file-label" for="customFile">Tìm bằng file excel</label>
+                                  
                                 </div>
 
-                                <button (click)="onRemoveFileExcel()" type="button" rippleeffect="" class="ml-1 btn btn-outline-primary waves-effect">Bỏ chọn file</button>
+                                <button *ngIf="currentExcelFileSearch" (click)="onRemoveFileExcel()" type="button" rippleeffect="" class="ml-1 btn btn-outline-primary waves-effect">Bỏ chọn file</button>
                               </div>
+                              <small *ngIf="currentExcelFileSearch">{{ currentExcelFileSearch?.name }}</small>
                             </div>
                         </div>
                     </div>

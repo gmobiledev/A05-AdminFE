@@ -115,15 +115,19 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <button type="button" [disabled]="selectedItems.length < 1"
-                                 (click)="modalOpen(modalUpdatePrice)" class="btn btn-warning mb-1 mr-3" rippleEffect><span [data-feather]="'dollar-sign'"
+                                 (click)="modalOpen(modalUpdatePrice)" class="btn btn-success mb-1 mr-2" rippleEffect><span [data-feather]="'dollar-sign'"
                                    ></span>Cập nhật giá bán</button>
+
+                                   <button type="button" 
+                                 (click)="modalOpen(modalUpdatePriceBatch)" class="btn btn-success mb-1 mr-5" rippleEffect><span [data-feather]="'dollar-sign'"
+                                   ></span>Cập nhật giá bán bằng file</button>
                                   
                                   <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
-                                 (click)="onUpdateStatusProduct(productStatus.STATUS_AVAILABLE)" class="btn btn-warning mb-1 mr-3" rippleEffect><span [data-feather]="'unlock'"
+                                 (click)="onUpdateStatusProduct(productStatus.STATUS_AVAILABLE)" class="btn btn-warning mb-1 mr-2" rippleEffect><span [data-feather]="'unlock'"
                                     ></span>Mở bán số</button>
                                   
                                     <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
-                                 (click)="onUpdateStatusProduct(productStatus.LOCKED_BY_ADMIN)" class="btn btn-warning mb-1 mr-3" rippleEffect><span [data-feather]="'lock'"
+                                 (click)="onUpdateStatusProduct(productStatus.LOCKED_BY_ADMIN)" class="btn btn-warning mb-1 mr-2" rippleEffect><span [data-feather]="'lock'"
                                     ></span>Khóa số</button>
                             </div>
                         </div>
@@ -412,6 +416,47 @@
         </div>
     </div>
 </div>
+
+<ng-template #modalUpdatePriceBatch let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-info" id="myModalLabel160">Cập nhật giá sản phẩm</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">   
+    <div class="form-group">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      <input type="file" (change)="onFileChangeExcel($event)" />
+      <label>Tải lên file excel</label>
+
+      <a href="/assets/update-price.xlsx" class="ml-2">File mẫu tại đây</a>
+    </div> 
+  </div>
+
+  <div class="modal-footer">
+    <button
+      (click)="onSubmitUpdatePriceBatch()"
+      [disabled]="submitted"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      <span
+        class="spinner-border spinner-border-sm"
+        role="ekyc_status"
+        aria-hidden="true"
+        *ngIf="submitted"
+      ></span>
+      Submit
+    </button>
+  </div>
+</ng-template>
 
 <ng-template #modalUpdatePrice let-modal>
     <div class="modal-header">
