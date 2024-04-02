@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchType } from 'app/utils/constants';
+import { BatchType, MAXIMUM_VALUE } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -18,6 +18,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 export class NewBatchExportComponent implements OnInit {
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
+  @ViewChild('fileExcel') fileExcel: ElementRef;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   
   public contentHeader = {
@@ -51,20 +52,20 @@ export class NewBatchExportComponent implements OnInit {
     key_to: '',
     brand: '',
     category_id: '',
-    take: '',
+    take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
     level: ''
   }
   seachMyChannel = {
     user_id: '',
     channel_id: '',
-    page_size: 1000
+    page_size: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH
   }
 
   public searchFormProduct = {
     keyword: '',
     page: 1,
     skip: 0,
-    take: 1000,
+    take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
     channel_id: '',
     level: '',
     key_from: '',
@@ -114,6 +115,7 @@ export class NewBatchExportComponent implements OnInit {
     attached_file_content: '',
     file_ext: ''
   };
+  currentExcelFileSearch;
 
   constructor(
     private readonly inventoryService: InventoryService,
@@ -272,7 +274,18 @@ export class NewBatchExportComponent implements OnInit {
         this.alertService.showMess(error);
         this.sectionBlockUI.stop();
       })
-    } else {
+    } else {      
+      if(this.currentExcelFileSearch) {
+        this.onSelectFileExcel({
+          target: {
+            files: [
+              this.currentExcelFileSearch
+            ]
+          }
+        })
+        this.sectionBlockUI.stop();
+        return;
+      }
       this.searchForm.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
       console.log(this.selectedAttributes);
       let paramSearch = {...this.searchForm}
@@ -440,6 +453,42 @@ export class NewBatchExportComponent implements OnInit {
     //   let img = await this.commonService.resizeImage(event.target.files[0]);
     //   this.dataCreatePayment.file = (img+'').replace('data:image/png;base64,', '')
     // }
+  }
+
+  onSelectFileExcel(event) {
+    if(!this.searchForm.channel_id) {
+      this.alertService.showMess("Vui lòng chọn kho cần xuất đi");
+      return;
+    }
+    
+    if (event.target.files && event.target.files[0]) {
+      this.sectionBlockUI.start();
+      this.currentExcelFileSearch = event.target.files[0];
+      let formData = new FormData();
+      
+      for(let key in this.searchForm) {
+        if(this.searchForm[key] !== '') {          
+          formData.append(key, this.searchForm[key]);
+        }
+      } 
+      formData.append("files", this.currentExcelFileSearch);
+      this.inventoryService.searchExcelProductExport(formData).subscribe(res => {
+        this.sectionBlockUI.stop();
+        const data = res.data;
+        this.tempList = data.items;
+        this.list = data.items;
+        this.fileExcel.nativeElement.value = "";
+      },error => {
+        this.sectionBlockUI.stop();
+        this.fileExcel.nativeElement.value = "";
+        this.alertService.showMess(error);
+
+      })
+    }
+  }
+
+  onRemoveFileExcel() {
+    this.currentExcelFileSearch = null;
   }
 
   //init data

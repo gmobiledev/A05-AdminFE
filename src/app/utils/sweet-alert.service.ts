@@ -40,6 +40,22 @@ export class SweetAlertService {
     });
   }
 
+  /**
+   * 
+   * @param htmlMessage 
+   * @param type success | warning | info
+   */
+  showHtml(htmlMessage, type, title) {
+    Swal.fire({
+      icon: type,
+      title: title,
+      html: htmlMessage,      
+      customClass: {
+        confirmButton: 'btn btn-success'
+      }
+  });
+  }
+
   showError(message, timeout = 3500) {
     Swal.fire({
         icon: 'warning',

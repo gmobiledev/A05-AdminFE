@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { User } from 'app/auth/models';
 import { Observable } from 'rxjs';
 import { CreateAgentDto, CreateUserDto, UpdateStatusAgentDto } from './dto/user.dto';
-import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto } from './dto/inventory.dto';
+import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto, UpdateStatusProductDto } from './dto/inventory.dto';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
@@ -232,5 +232,17 @@ export class InventoryService {
 
   updatePriceProduct(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/price/update`, data);
+  }
+
+  searchExcelProductExport(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/search-product-from-excel`, data);
+  }
+
+  updateStatusProduct(data: UpdateStatusProductDto) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/update-status`, data);
+  }
+
+  updateProductPriceBatch(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/price/update-batch`, data);
   }
 }

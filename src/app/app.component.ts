@@ -61,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private _translateService: TranslateService
   ) {
     // Get the application main menu
-    this.menu = menu;
+    this.menu = menu.map(obj => ({...obj}));
 
     // Register the menu to the menu service
     this._coreMenuService.register('main', this.menu);

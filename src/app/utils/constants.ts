@@ -42,6 +42,12 @@ export enum ProductStatus {
     STATUS_INIT = 0,
 }
 
+export enum ProductStoreStatus {
+    STATUS_SOLD = 1,
+    STATUS_AVAILABLE = 0,
+    STATUS_INIT = 21,
+}
+
 export enum BatchType {
     INPUT = 1,
     OUTPUT = -1,
@@ -55,9 +61,9 @@ export enum BatchStatus {
     CANCEL = -1, //lô không được duyệt
 
     //duyệt giảm dần xuống 11, từ 11 duyệt thành 2 (APPROVED)
-    APPROVED_19 = 19,
-    APPROVED_18 = 18,
-    APPROVED_17 = 17,
+    // APPROVED_19 = 19,
+    // APPROVED_18 = 18,
+    // APPROVED_17 = 17,
     APPROVED_BY_ACCOUNTANT = 11,
     CANCEL_BY_OFFICE = -2,
     CANCEL_BY_ACCOUNTANT = -11,
@@ -192,4 +198,8 @@ export enum PriceAction {
     ADD = "ADD", //Công thêm 1 số tiền    
     PERCENT = "PERCENT", // Tăng hoặc giảm % tiền
     FIX = "FIX" //set giá
+  }
+
+  export enum MAXIMUM_VALUE {
+    ROW_QUERY_PRODUCT_BATCH = 5000
   }

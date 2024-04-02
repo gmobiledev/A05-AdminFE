@@ -3,10 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { CommonDataService } from 'app/auth/service/common-data.service';
-import { UpdatePriceDto } from 'app/auth/service/dto/inventory.dto';
+import { UpdatePriceDto, UpdateStatusProductDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchType, PriceAction } from 'app/utils/constants';
+import { BatchType, PriceAction, ProductStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -20,6 +20,7 @@ export class EditProductsComponent implements OnInit {
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  @BlockUI('item-block') itemBlockUI: NgBlockUI;
   
   public contentHeader = {
     headerTitle: 'Cập nhật sản phẩm',
@@ -117,6 +118,8 @@ export class EditProductsComponent implements OnInit {
     change_value: 0,
     confirm: false
   }
+  productStatus = ProductStatus;
+  fileExcelPrice;
 
   constructor(    
     private readonly inventoryService: InventoryService,
@@ -265,6 +268,7 @@ export class EditProductsComponent implements OnInit {
         delete paramSearch[key];
       }
     }
+    paramSearch['to_update_status'] = true;
     this.inventoryService.searchProductStore(paramSearch).subscribe(res => {
       this.sectionBlockUI.stop();
       if (!res.status) {
@@ -303,6 +307,7 @@ export class EditProductsComponent implements OnInit {
             this.updatePrice();
           }
         } else {
+          this.submitted = false;
           this.alertService.showSuccess(res.message);
           this.modalClose();          
           this.selectedItems = [];
@@ -311,10 +316,35 @@ export class EditProductsComponent implements OnInit {
           this.searchProductStore();
         }
       } catch (error) {
+        this.submitted = false;
         this.alertService.showMess(error);
       }
       
     } 
+  }
+
+  async onUpdateStatusProduct(status) {
+    this.submitted = true;
+    
+    let dataUpdateStatus = new UpdateStatusProductDto();
+    dataUpdateStatus.channel_id = parseInt(this.searchForm.channel_id);
+    dataUpdateStatus.products = this.selectedItems.map(x => {return x.id}) as [number];
+    dataUpdateStatus.status = status;
+    dataUpdateStatus.select_all = this.retrieveForm.retrieve_all;
+    let confirmMessage = 'Bạn có chắc chắn cập nhật trạng thái các số?'
+    let res;
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.sectionBlockUI.start();
+      this.inventoryService.updateStatusProduct(dataUpdateStatus).subscribe(res => {        
+        this.sectionBlockUI.stop();
+        this.submitted = false;
+        this.alertService.showMess(res.message);
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.submitted = false;
+        this.alertService.showMess(error);
+      })
+    }
   }
 
   /**
@@ -325,6 +355,7 @@ export class EditProductsComponent implements OnInit {
   async updatePrice() {
     this.dataUpdatePrice.confirm = true;
     this.inventoryService.updatePriceProduct(this.dataUpdatePrice).subscribe(res => {
+      this.submitted = false;
       if (!res.status) {
         this.alertService.showMess(res.message);
       }
@@ -335,8 +366,64 @@ export class EditProductsComponent implements OnInit {
       this.disableSelectParent = false;
       this.searchProductStore();
     }, error => {
+      this.submitted = false;
       this.alertService.showMess(error);
     })
+
+  }
+
+  //cập nhật giá theo file excel
+  async onFileChangeExcel(event) {
+    this.fileExcelPrice = event.target.files[0];
+  }
+
+  async onSubmitUpdatePriceBatch() {
+    if(!this.searchForm.channel_id) {
+      this.alertService.showMess("Vui lòng chọn kho cần cập nhật giá bán");
+      return;
+    }
+    if(!this.fileExcelPrice) {
+      this.alertService.showMess("Vui lòng chọn file");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có chắc chắn cập nhật giá theo file excel")).value) {
+      this.submitted = true;
+      this.itemBlockUI.start();
+      let formData = new FormData();
+      formData.append("files", this.fileExcelPrice);
+      formData.append("channel_id", this.searchForm.channel_id);
+      this.inventoryService.updateProductPriceBatch(formData).subscribe(res => {
+        this.itemBlockUI.stop();
+        this.submitted = false;
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }        
+        if(res.data.product_update_fail.length < 1) {
+          this.alertService.showSuccess(res.message, 4500);
+        } else {
+          const shortMess = `${res.data.product_update_fail.length} sản phẩm không cập nhật được`
+          let html = `<div class="html-messsage"><p>${shortMess}</p><table class="table"><thead><tr><th>#</th><th>Name</th></tr></thead><tbody>`;
+          let i = 1;
+          for(let item of res.data.product_update_fail) {
+            html += `<tr><td>${i}</td><td>${item}</td></tr>`;
+            i++;
+          }
+          html+= '</tbody></table></div>';
+          this.alertService.showHtml(html, 'success', res.message)
+        }
+        
+        this.modalClose();      
+        this.selectedItems = [];
+        this.tempSelectedItems = [];
+        this.disableSelectParent = false;
+        this.searchProductStore();
+      },error => {
+        this.itemBlockUI.stop();
+        this.submitted  = false;
+        this.alertService.showMess(error);
+      })
+    }    
 
   }
   
