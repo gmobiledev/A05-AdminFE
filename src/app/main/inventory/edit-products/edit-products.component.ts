@@ -399,7 +399,20 @@ export class EditProductsComponent implements OnInit {
           this.alertService.showMess(res.message);
           return;
         }        
-        this.alertService.showSuccess(res.message);
+        if(res.data.product_update_fail.length < 1) {
+          this.alertService.showSuccess(res.message, 4500);
+        } else {
+          const shortMess = `${res.data.product_update_fail.length} sản phẩm không cập nhật được`
+          let html = `<div class="html-messsage"><p>${shortMess}</p><table class="table"><thead><tr><th>#</th><th>Name</th></tr></thead><tbody>`;
+          let i = 1;
+          for(let item of res.data.product_update_fail) {
+            html += `<tr><td>${i}</td><td>${item}</td></tr>`;
+            i++;
+          }
+          html+= '</tbody></table></div>';
+          this.alertService.showHtml(html, 'success', res.message)
+        }
+        
         this.modalClose();      
         this.selectedItems = [];
         this.tempSelectedItems = [];

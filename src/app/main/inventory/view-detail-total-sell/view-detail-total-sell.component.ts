@@ -53,7 +53,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
   public taskTelecomStatus;
   public taskTelecomStatusSIM;
   public currentUser: any;
-
+  public channel_id;
   public searchForm: any = {
     name: '',
     level: '',
@@ -92,6 +92,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
       this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO
 
+      this.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.name = params['name'] && params['name'] != undefined ? params['name'] : '';
       this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';

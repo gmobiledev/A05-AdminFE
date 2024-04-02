@@ -25,6 +25,7 @@ import { TypeBalanceChangesPipe } from './type-balance-changes.pipe';
 import { TypeBatchFormPipe } from './type-batch-form.pipe';
 import { ShowStatusSellPipe } from './show-status-sell.pipe';
 import { ShowStatusProductPipe } from './show-status-product';
+import { ShowStatusProductStorePipe } from './show-status-product-store.pipe';
 
 @NgModule({
   declarations: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
@@ -32,7 +33,8 @@ import { ShowStatusProductPipe } from './show-status-product';
     ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe,ShowStatusBatchPipe,
     TypeBalanceChangesPipe, TypeBatchFormPipe,
     ShowStatusSellPipe,
-    ShowStatusProductPipe
+    ShowStatusProductPipe,
+    ShowStatusProductStorePipe
   ],
   imports: [],
   exports: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
@@ -40,7 +42,8 @@ import { ShowStatusProductPipe } from './show-status-product';
     ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe, ShowStatusBatchPipe,
     TypeBalanceChangesPipe, TypeBatchFormPipe,
     ShowStatusSellPipe,
-    ShowStatusProductPipe
+    ShowStatusProductPipe,
+    ShowStatusProductStorePipe
   ]
 })
 export class CorePipesModule {}

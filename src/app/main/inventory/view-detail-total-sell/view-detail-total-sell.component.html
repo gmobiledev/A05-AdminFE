@@ -66,6 +66,13 @@
                     Lọc kết quả <span [data-feather]="'search'"></span>
                   </button>
                 </div>
+
+                <div class="pull-right">
+                  <a routerLink="/inventory/edit-products"                  
+                  [queryParams]="{channel_id: channel_id}"
+                  class="btn d-block btn-primary">Sửa danh sách số</a>
+                </div>
+
               </div>
             </form>
 
@@ -115,7 +122,7 @@
                       {{ item.export_price || number }}
                     </td>
                     <td>
-                      <div [innerHTML]="item.status | showStatusProduct"></div>
+                      <div [innerHTML]="item.status | showStatusProductStore"></div>
                     </td>
 
                     <td>

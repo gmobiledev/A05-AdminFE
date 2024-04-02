@@ -42,6 +42,12 @@ export enum ProductStatus {
     STATUS_INIT = 0,
 }
 
+export enum ProductStoreStatus {
+    STATUS_SOLD = 1,
+    STATUS_AVAILABLE = 0,
+    STATUS_INIT = 21,
+}
+
 export enum BatchType {
     INPUT = 1,
     OUTPUT = -1,
