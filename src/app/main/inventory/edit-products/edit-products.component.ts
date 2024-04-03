@@ -120,6 +120,7 @@ export class EditProductsComponent implements OnInit {
   }
   productStatus = ProductStatus;
   fileExcelPrice;
+  currentChannel;
 
   constructor(    
     private readonly inventoryService: InventoryService,
@@ -436,6 +437,9 @@ export class EditProductsComponent implements OnInit {
       this.searchForm.admin_id = this.currentUser.id;
     }
     this.sectionBlockUI.start();
+    this.inventoryService.viewDetailSell(parseInt(this.searchForm.channel_id)).subscribe(res => {
+      this.currentChannel = res.data.items[0];
+    })
     this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(async res => {
       this.listChannel = res.data.items;
       if(this.typeCurrentBatch == BatchType.RETRIEVE) {

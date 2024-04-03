@@ -38,6 +38,11 @@ export class ViewDetailTotalSellComponent implements OnInit {
           link: '/'
         },
         {
+          name: 'Danh sách kho',
+          isLink: true,
+          link: '/inventory/sell-chanel'
+        },
+        {
           name: 'Danh sách sim số',
           isLink: false
         }
@@ -61,6 +66,7 @@ export class ViewDetailTotalSellComponent implements OnInit {
     page_size: 20,
     page: 1,
   }
+  public showChannel;
 
   public modalRef: any;
   public type: any;
@@ -71,16 +77,8 @@ export class ViewDetailTotalSellComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private router: Router,
-    private activeRouted: ActivatedRoute,
-    private adminService: AdminService,
-    private gtalkService: GtalkService,
-    private authenticaionService: AuthenticationService,
-    private alertService: SweetAlertService,
+    private activeRouted: ActivatedRoute,    
     private inventoryService: InventoryService,
-    private userService: UserService,
-    private formBuilder: FormBuilder,
-    private taskService: TaskService,
-    private telecomService: TelecomService,
 
 
   ) {
@@ -133,6 +131,29 @@ export class ViewDetailTotalSellComponent implements OnInit {
       this.totalItems = res.data.count;
     });
 
+  }
+
+  modalChannelOpen(modal, item) {
+    if (item) {
+      let params = {
+        channel_id: item.id,
+        current_sell_channel_id: this.searchForm.channel_id
+      }
+      this.inventoryService.viewDetailSell(item.sub_channel_id).subscribe(res => {
+        this.showChannel = res.data.items[0];
+
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'sm'
+        });
+
+      })
+    }
+  }
+
+  modalClose() {    
+    this.modalRef.close();
   }
 
 }

@@ -27,7 +27,7 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 export class ViewSellChanelComponent implements OnInit {
 
   public contentHeader: any = {
-    headerTitle: 'Yêu cầu của đại lý',
+    headerTitle: 'Danh sách sim số',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -38,7 +38,12 @@ export class ViewSellChanelComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Yêu cầu của đại lý',
+          name: 'Danh sách kho',
+          isLink: true,
+          link: '/inventory/sell-chanel'
+        },
+        {
+          name: 'Danh sách sim số',
           isLink: false
         }
       ]
@@ -84,6 +89,7 @@ export class ViewSellChanelComponent implements OnInit {
   public listSellChannel: any;
   public isShowAddInput: boolean = true;
   public currentChannel;
+  public showChannel;
 
   public searchForm: any = {
     keysearch: '',
@@ -157,14 +163,32 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
-      this.contentHeader.headerTitle = 'Xem chi tiết kho số';
-      this.contentHeader.breadcrumb.links[1] = 'Xem chi tiết kho số';
+      this.contentHeader.headerTitle = 'Xem chi tiết kho số';      
 
       this.getData();
       this.getService();
 
     })
 
+  }
+
+  modalChannelOpen(modal, item) {
+    if (item) {
+      let params = {
+        channel_id: item.id,
+        current_sell_channel_id: this.searchForm.channel_id
+      }
+      this.inventoryService.viewDetailSell(item.sub_channel_id).subscribe(res => {
+        this.showChannel = res.data.items[0];
+
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'sm'
+        });
+
+      })
+    }
   }
 
   modalOpen(modal, item = null, checkAdd = true) {

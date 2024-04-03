@@ -195,7 +195,7 @@ export class SellChanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách kho cha',
+      headerTitle: 'Danh sách kho',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -206,7 +206,7 @@ export class SellChanelComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách kho cha',
+            name: 'Danh sách kho',
             isLink: false
           }
         ]
