@@ -9,6 +9,15 @@
         <span>Trạng thái: </span><span [innerHTML]="data.task.status | showStatusTelecom"></span>
       </div>
       <div><span>Admin thao tác: </span>{{ data.user_sync }}</div>
+
+      <div *ngIf="data.number_success_msisdn && data.number_success_msisdn > 0">
+        <b class="text-info" *ngIf="data.task && data.task.otp">
+          Đã xác nhận OTP ĐKTTTB
+        </b>
+        <b class="text-secondary" *ngIf="data.task && !data.task.otp">
+          Chưa xác nhận OTP ĐKTTTB
+        </b>
+      </div>
     </div>
     <div class="mb-2 col-md-6" *ngIf="data.task.status == taskTelecomStatus.STATUS_PROCESSING">
       <div>Thời gian thao tác</div>

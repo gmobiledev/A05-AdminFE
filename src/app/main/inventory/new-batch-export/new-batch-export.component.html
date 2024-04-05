@@ -186,7 +186,7 @@
                           </div>                                                        
                         </div>  
                         <div class="form-group text-center">
-                            <button (click)="onSubmitCreate()" type="button" class="btn btn-success mb-1" rippleEffect><span [data-feather]="'save'"
+                            <button [disabled]="submitted" (click)="onSubmitCreate()" type="button" class="btn btn-success mb-1" rippleEffect><span [data-feather]="'save'"
                                 [class]="'mr-25'"></span>Tạo yêu cầu</button>
                         </div>          
                     </div>

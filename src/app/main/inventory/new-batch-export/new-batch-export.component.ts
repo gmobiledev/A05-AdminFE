@@ -366,11 +366,13 @@ export class NewBatchExportComponent implements OnInit {
       resCreateBatch = await this.inventoryService.createBatchExport(dataCreateBatchExport).toPromise();
       if(!resCreateBatch.status) {
         this.alertService.showMess(resCreateBatch.message);
+        this.submitted = false;
         this.sectionBlockUI.stop();
         return;
       }
     } catch (error) {
       this.alertService.showMess(error);
+      this.submitted = false;
       this.sectionBlockUI.stop();
     }
     let dataUpdateBatch = new UpdateBatchExportDto();
@@ -380,6 +382,7 @@ export class NewBatchExportComponent implements OnInit {
     dataUpdateBatch.action = 'ADD';
     try {
       resUpdateBatch = await this.inventoryService.updateBatchExport(dataUpdateBatch).toPromise();
+      this.submitted = false;
       if(!resUpdateBatch.status) {
         this.alertService.showMess(resUpdateBatch.message);
         this.sectionBlockUI.stop();
@@ -390,6 +393,7 @@ export class NewBatchExportComponent implements OnInit {
       this.router.navigate(['/inventory/batch']);
       return;
     } catch (error) {
+      this.submitted = false;
       this.alertService.showMess(error);
       this.sectionBlockUI.stop();
     }
@@ -420,6 +424,7 @@ export class NewBatchExportComponent implements OnInit {
     this.sectionBlockUI.start();
     try {
       resCreateBatch = await this.inventoryService.createBatchRetrieve(dataCreateBatch).toPromise();
+      this.submitted = false;
       this.sectionBlockUI.stop();
       if (!resCreateBatch.status) {
         this.alertService.showMess(resCreateBatch.message);        
@@ -430,6 +435,7 @@ export class NewBatchExportComponent implements OnInit {
 
     } catch (error) {
       this.alertService.showMess(error);
+      this.submitted = false;
       this.sectionBlockUI.stop();
     }
   }
