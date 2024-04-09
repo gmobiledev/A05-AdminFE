@@ -167,12 +167,13 @@
                             </select> -->
                           </div>
                           </div>
-                          <div class="row mb-1" *ngIf="typeCurrentBatch && typeCurrentBatch == listBatchType.RETRIEVE">
+                          <div class="row mb-1" *ngIf="typeCurrentBatch">
                             <div class="col-4">
                               File chứng từ
                             </div>
                             <div class="col-8">
                               <input type="file" class="form-control" (change)="onSelectFileFront($event)"
+                              multiple
                               accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
                               >
                             </div>

@@ -90,6 +90,8 @@ export class ViewSellChanelComponent implements OnInit {
   public isShowAddInput: boolean = true;
   public currentChannel;
   public showChannel;
+  filesData;
+  submittedUpload: boolean = false;
 
   public searchForm: any = {
     keysearch: '',
@@ -246,6 +248,14 @@ export class ViewSellChanelComponent implements OnInit {
         });
       }
     }
+  }
+
+  modalOpenNormal(modal) {
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'lg'
+    });
   }
 
   modalClose() {
@@ -526,6 +536,43 @@ export class ViewSellChanelComponent implements OnInit {
     this.telecomService.sellChannelList(null).subscribe(res => {
       this.listSellChannel = res.data.items;
     })
+  }
+
+  async onFileChangeExcel(event) {
+    this.filesData = event.target.files[0];
+  }
+
+  /**
+   * KITTING
+   * 
+   */
+  async onSubmitUpload() {
+    if(!this.filesData) {
+      this.alertService.showMess("Vui lòng chọn file");
+      return;
+    }
+    if (await (this.alertService.showConfirm("Bạn có đồng ý lưu lại?"))) {
+      this.submittedUpload = true;
+      this.itemBlockUI.start();
+      let formData = new FormData();
+      formData.append("files", this.filesData);
+      formData.append("channel_id", this.searchForm.channel_id);
+      this.inventoryService.kittingProduct(formData).subscribe(res => {
+        this.submittedUpload = false;
+        this.itemBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.data.message, 4500);
+        this.modalClose();
+      }, error => {
+        this.submittedUpload = false;
+        this.itemBlockUI.stop();
+        this.alertService.showMess(error);
+      })
+    }
+    
   }
 
 

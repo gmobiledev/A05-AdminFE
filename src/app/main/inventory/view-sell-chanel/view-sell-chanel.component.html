@@ -68,22 +68,33 @@
                   </button>
                 </div>
                 <div class="pull-right">
-                  <button
-                    type="button"
-                    class="btn btn-success mr-25"
-                    (click)="modalOpen(modalAddUser, null, true)"
-                  >
-                    Tài khoản bán hàng
-                  </button>
+                  
                 </div>
               </div>
             </form>
             <div class="overflow-hidden">
               <div class="pull-right">
+
+                <button
+                    type="button"
+                    class="btn btn-success mr-2"
+                    (click)="modalOpenNormal(modalUploadData)"
+                  >
+                    Kitting
+                  </button>
+
+                <button
+                    type="button"
+                    class="btn btn-success mr-2"
+                    (click)="modalOpen(modalAddUser, null, true)"
+                  >
+                    Tài khoản bán hàng
+                  </button>
+
                 <a routerLink="/inventory/edit-products"
                 *ngIf="currentChannel && currentChannel.admin_id == currentUser.id"
                 [queryParams]="{channel_id: searchForm.channel_id}"
-                class="btn d-block btn-primary">Sửa danh sách số</a>
+                class="btn btn-primary">Sửa danh sách số</a>
               </div>
             </div>
             <div class="table-responsive" *blockUI="'section-block'">
@@ -452,4 +463,46 @@
       <button type="submit" class="btn btn-primary" rippleEffect>Lưu</button>
     </div> -->
   </form>
+</ng-template>
+
+
+<ng-template #modalUploadData let-modal >
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">
+      Tải lên dữ liệu lên
+    </h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus *blockUI="'item-block'">
+    <div class="form-group">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      <input type="file" (change)="onFileChangeExcel($event)" />
+      <label>Tải lên file excel</label>
+
+      <a href="/assets/upload-product-kit.xlsx" class="ml-2">File mẫu tại đây</a>
+    </div>    
+  </div>
+  <div class="modal-footer">
+    <button
+      (click)="onSubmitUpload()"
+      type="submit"
+      [disabled]="submittedUpload"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      <span
+        class="spinner-border spinner-border-sm"       
+        aria-hidden="true"
+        *ngIf="submittedUpload"
+      ></span>
+      Submit
+    </button>
+  </div>
 </ng-template>
