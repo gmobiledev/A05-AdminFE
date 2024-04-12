@@ -53,7 +53,8 @@ export class NewBatchExportComponent implements OnInit {
     brand: '',
     category_id: '',
     take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
-    level: ''
+    level: '',
+    batch_type: BatchType.OUTPUT
   }
   seachMyChannel = {
     user_id: '',
@@ -327,6 +328,10 @@ export class NewBatchExportComponent implements OnInit {
       this.alertService.showMess("Vui lòng chọn kho cần thu hồi");
       return;
     }
+    if(!this.selectedFiles) {
+      this.alertService.showMess("Vui lòng đính kèm chứng từ");
+      return;
+    }
     if(this.typeCurrentBatch == BatchType.OUTPUT) {
       this.createBatchOutput();
     } else if (this.typeCurrentBatch == BatchType.RETRIEVE) {
@@ -556,6 +561,7 @@ export class NewBatchExportComponent implements OnInit {
     this.typeCurrentBatch = data && data.type ? data.type : BatchType.OUTPUT;
     console.log(data, this.typeCurrentBatch);
     if(this.typeCurrentBatch == BatchType.RETRIEVE) {
+      this.searchForm.batch_type = BatchType.RETRIEVE;
       this.contentHeader.headerTitle = 'Thu hồi';
       this.contentHeader.breadcrumb.links[2].name = 'Thu hồi';
       this.titleFromChannel = 'Kho cần thu hồi';

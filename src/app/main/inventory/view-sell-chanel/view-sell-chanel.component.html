@@ -105,7 +105,7 @@
                 <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Số thuê bao</th>
+                    <th>Số thuê bao/Serial SIM</th>
                     <th>Nhà mạng</th>
                     <th>Hạng số</th>
                     <th>Giá vốn</th>
@@ -126,6 +126,8 @@
 
                     <td>
                       {{ item.name }}
+                      <br/>
+                      <small class="text-info" *ngIf="item.is_kit"><i>KIT: {{ item.short_desc }}</i></small>
                     </td>
                     <td>
                       {{ item.brand }}
@@ -468,7 +470,7 @@
 
 <ng-template #modalUploadData let-modal >
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">
+    <h5 class="modal-title text-info" id="myModalLabel160">
       Tải lên dữ liệu lên
     </h5>
     <button
@@ -481,16 +483,45 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus *blockUI="'item-block'">
-    <div class="form-group">
-      <i class="fa fa-upload" aria-hidden="true"></i>
-      <input type="file" (change)="onFileChangeExcel($event)" />
-      <label>Tải lên file excel</label>
+    <ng-container *ngIf="listProductFail.length < 1">
+      <div class="form-group">
+        <i class="fa fa-upload" aria-hidden="true"></i>
+        <input type="file" (change)="onFileChangeExcel($event)" />
+        <label>Tải lên file excel</label>
+  
+        <a href="/assets/upload-product-kit.xlsx" class="ml-2">File mẫu tại đây</a>
+      </div>  
+    </ng-container>      
 
-      <a href="/assets/upload-product-kit.xlsx" class="ml-2">File mẫu tại đây</a>
-    </div>    
+    <ng-container *ngIf="listProductFail.length > 0">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-warning"><i data-feather="alert-triangle" class="cursor-pointer"></i>{{ listProductFail.length }} sản phẩm không KITTING được,
+           
+            <a csvLink [data]="listProductFailExport" class="btn btn-outline-warning float-right btn-sm"
+              rippleEffect><i data-feather="download" class="cursor-pointer"></i></a>
+          </p>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ngx-datatable [rows]="listProductFail" [rowHeight]="58" class="bootstrap core-bootstrap"
+            [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+            [limit]="basicSelectedOption">
+            <ngx-datatable-column name="Msisdn" prop="msisdn"></ngx-datatable-column>                       
+            <ngx-datatable-column name="Serial" prop="serial"></ngx-datatable-column>
+
+          </ngx-datatable>
+        </div>
+      </div>
+  
+    </ng-container>
+
   </div>
   <div class="modal-footer">
     <button
+    *ngIf="listProductFail.length < 1"
       (click)="onSubmitUpload()"
       type="submit"
       [disabled]="submittedUpload"

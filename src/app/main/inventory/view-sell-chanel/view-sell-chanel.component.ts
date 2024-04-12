@@ -22,7 +22,8 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 @Component({
   selector: 'app-view-sell-chanel',
   templateUrl: './view-sell-chanel.component.html',
-  styleUrls: ['./view-sell-chanel.component.scss']
+  styleUrls: ['./view-sell-chanel.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewSellChanelComponent implements OnInit {
 
@@ -92,6 +93,8 @@ export class ViewSellChanelComponent implements OnInit {
   public showChannel;
   filesData;
   submittedUpload: boolean = false;
+  listProductFail = [];
+  listProductFailExport = [];
 
   public searchForm: any = {
     keysearch: '',
@@ -260,6 +263,8 @@ export class ViewSellChanelComponent implements OnInit {
 
   modalClose() {
     this.selectedItem = null;
+    this.listProductFail = [];
+    this.listProductFailExport = [];
     this.getData();
     this.modalRef.close();
     this.initForm();
@@ -564,8 +569,17 @@ export class ViewSellChanelComponent implements OnInit {
           this.alertService.showMess(res.message);
           return;
         }
+
+        if(res.data.product_update_fail.length < 1) {
+          this.alertService.showSuccess(res.message, 4500);
+          this.modalClose();
+        } else {                    
+          this.listProductFail = res.data.product_update_fail;
+          this.listProductFailExport = res.data.product_update_fail.map(x => {return { msisdn: " '"+x.msisdn, serial: " '"+x.serial }});
+        }
+
         this.alertService.showSuccess(res.data.message, 4500);
-        this.modalClose();
+        
       }, error => {
         this.submittedUpload = false;
         this.itemBlockUI.stop();
