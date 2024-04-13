@@ -114,7 +114,7 @@
                     <th>Số tiền</th>
                     <!-- <th>Serial sim</th>
                 <th>Nhà mạng</th> -->
-                    <th>Đại lý</th>
+                    <th>Đại lý | Tham chiếu</th>
                     <!-- <th>Người mua</th> -->
                     <th>TG tạo/mua</th>
                     <th>Thời gian tiếp nhận</th>
@@ -162,6 +162,7 @@
                     <td>
                       <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, item.request_by)">{{
                         item.request_by }}</a>
+                        {{item.reference_id}}
                     </td>
                     <!-- <td>
                   
@@ -183,7 +184,7 @@
                       <div *ngIf="item.sync_by && currentUser.id != item.sync_by">
                         <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                          Xem chi tiết
+                          Xem chi tiết 
                         </a>
                       </div>
 
@@ -271,7 +272,7 @@
                         <i data-feather="info" class="text-white cursor-pointer"></i>
                         Thông tin Ship
                       </a>
-                      
+
                       <a ngbTooltip="Lưu note"
                         *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
                         class="btn btn-sm btn-icon btn-info mt-1" (click)="modalApprovalOpen(modaNote, item, 'lg')">

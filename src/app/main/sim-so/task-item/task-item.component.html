@@ -32,38 +32,12 @@
       {{ data.task.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
       <span>Thời gian hoàn thành: </span>
       {{ data.task.sync_time | date : "dd/MM/yyyy H:mm" : "UTC" }}
-      <!-- <span
-                *ngIf="data.task.status == taskTelecomStatus.STATUS_SUCCESS_PART || data.task.status == taskTelecomStatus.STATUS_SUCCESS || data.task.status == taskTelecomStatus.STATUS_CANCEL">
-                Thời gian hoàn thành: </span> {{ data.task.sync_time | date: 'dd/MM/yyyy H:mm':'UTC' }} -->
     </div>
     <div class="col-md-12 mb-2" *ngIf="data.task.note">
       <span>Note: </span> {{ data.task.note }}
     </div>
   </div>
 
-  <!-- <div class="row">
-        <ul class="progressbar w-100">
-            
-            <li [ngClass]="{'active': [
-            taskTelecomStatus.STATUS_NEW_ORDER,
-            taskTelecomStatus.STATUS_PROCESSING,
-            taskTelecomStatus.STATUS_PROCESS_TO_MNO, 
-            taskTelecomStatus.STATUS_SUCCESS].includes(data.task.status) }">
-                <span>Mới khởi tạo</span>
-            </li>
-            <li [ngClass]="{'active': [taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_PROCESS_TO_MNO, taskTelecomStatus.STATUS_SUCCESS].includes(data.task.status) }">
-                <span>Đã tiếp nhận/đang xử lý</span>
-            </li>
-            <li [ngClass]="{'active': [
-            taskTelecomStatus.STATUS_PROCESS_TO_MNO, 
-            taskTelecomStatus.STATUS_SUCCESS].includes(data.task.status) }">
-                <span>Đã đẩy sang nhà mạng</span>
-            </li>
-            <li [ngClass]="{'active': data.task.status == taskTelecomStatus.STATUS_SUCCESS}">
-                <span>Thành công</span>
-            </li>
-        </ul>
-    </div> -->
 
   <div class="row mb-4">
     <div class="col-md-6 border">
