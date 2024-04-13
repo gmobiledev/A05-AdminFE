@@ -114,7 +114,7 @@
                     <th>Số tiền</th>
                     <!-- <th>Serial sim</th>
                 <th>Nhà mạng</th> -->
-                    <th>Đại lý | Tham chiếu</th>
+                    <th>Đại lý <br> Tham chiếu</th>
                     <!-- <th>Người mua</th> -->
                     <th>TG tạo/mua</th>
                     <th>Thời gian tiếp nhận</th>
@@ -161,8 +161,8 @@
 
                     <td>
                       <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, item.request_by)">{{
-                        item.request_by }}</a>
-                        {{item.reference_id}}
+                        item.request_by }}</a><br>
+                      {{item.reference_id}}
                     </td>
                     <!-- <td>
                   
@@ -184,7 +184,7 @@
                       <div *ngIf="item.sync_by && currentUser.id != item.sync_by">
                         <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
-                          Xem chi tiết 
+                          Xem chi tiết
                         </a>
                       </div>
 
