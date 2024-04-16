@@ -239,8 +239,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log('success get');
       this.listData = res.data.items;
       console.log(this.listData);
-      this.listData = res.data.items.map(x => { return {name: x.name, value: x.value ? (x.value * 100).toFixed(2) : 0, key: x.key} });
-      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value:  x.value ? (x.value * 100).toFixed(2) : 0, key: x.key} });
+      this.listData = res.data.items.map(x => { return {name: x.name, value: x.value ? (x.value * 100).toFixed(2) : 0, key: x.key, active: x.active, total: x.total} });
+      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value:  x.value ? (x.value * 100).toFixed(2) : 0, key: x.key, active: x.active, total: x.total} });
       this.listData.sort((a,b) => b.value - a.value);
       this.listDataTmp.sort((a,b) => b.value - a.value);
       this.data = [];
