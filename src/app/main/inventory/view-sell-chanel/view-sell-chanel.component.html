@@ -11,7 +11,7 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()" class="mb-2">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <input
                       type="text"
@@ -23,14 +23,14 @@
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <select
                       class="form-control"
                       name="level"
                       [(ngModel)]="searchForm.level"
                     >
-                      <option value="">Chọn hạng số</option>
+                      <option value="">-- Chọn hạng số --</option>
                       <option
                         *ngFor="let item of taskTelecomStatusSIM"
                         [value]="item.name"
@@ -39,14 +39,14 @@
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <select
                       class="form-control"
                       name="status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="">Chọn trạng thái</option>
+                      <option value="">-- Chọn trạng thái --</option>
                       <option
                         *ngFor="let item of taskTelecomStatus | keyvalue"
                         [value]="item.value"
@@ -59,11 +59,26 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="is_kitting"
+                      [(ngModel)]="searchForm.is_kitting"
+                    >
+                      <option value=""> -- Tình trạng Kitting --</option>
+                      <option value="1">Đã Kitting</option>
+                      <option value="0">Chưa Kitting</option>
+                    </select>
+                  </div>
+                </div>
+
               </div>
 
               <div class="mt-1 overflow-hidden">
                 <div class="pull-left">
-                  <button type="submit" class="btn btn-block btn-info">
+                  <button type="submit" class="btn btn-block btn-info" [disabled]="submitted">
                     Lọc kết quả <span [data-feather]="'search'"></span>
                   </button>
                 </div>

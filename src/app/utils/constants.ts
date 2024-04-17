@@ -25,13 +25,26 @@ export enum TaskTelecomStatus {
 }
 
 export enum MsisdnStatus {
-    STATUS_NOT_PROCESS_MNO = 2,
-    STATUS_PROCESSED_MNO_FAIL = 3,
-    STATUS_PROCESSED_MNO_SUCCESS = 1,
-    STATUS_2G_VALID = 30,
-    STATUS_2G_WAITING = 31,
-    STATUS_2G_CASE_BY_CASE = 32,
-    STATUS_2G_PAID = 34,
+    STATUS_PROCESSED_MNO_SUCCESS = 1, //đã đấu nối
+    STATUS_2G_VALID = 30, //2g được chuyển đổi
+    STATUS_2G_WAITING = 31, //2g chờ đợt tiếp
+    STATUS_2G_PAID = 34,//2g trả sau đã thanh toán
+    STATUS_UNKNOWN = -1, // Trạng thái ko rõ của IT
+    // STATUS_PREACTIVE = 91, // Trạng thái Trước kích hoạt của IT
+    STATUS_SUCCESS = 1, //thành công
+    STATUS_NOT_PROCESS_MNO = 2, //TTTB G99 thành công, Mạng hợp tác chưa được xử lý
+    STATUS_PROCESSED_MNO_FAIL = 3, //TTTB G99 thành công, Mạng hợp tác thất bại
+    STATUS_PRE_REGISTER = 4, //Hợp lệ chờ đấu nối        
+    STATUS_2G_CASE_BY_CASE = 32, //2G phải được duyệt
+    STATUS_2G_TS = 33,   //2G trả sau
+    STATUS_4G = 40,    //Đã chuyển đổi sang sim 4G
+    // STATUS_LOCK_INACTIVE = 51, //Chưa rõ
+    // STATUS_GSIM = 60, //GSIM
+    STATUS_S1 = 90, //Chặn 1 chiều
+    STATUS_S2 = 93, //Chặn 2 chiều
+    STATUS_ACTIVE_LOCKED = 94, // Trạng thái khóa từ bên IT (~số bị khóa 2 chiều)
+    STATUS_S3 = 95, //Chuẩn bị thu hồi
+    STATUS_TERMINATE = 99 //Chấm dứt, thu hồi
 }
 
 export enum ProductStatus {

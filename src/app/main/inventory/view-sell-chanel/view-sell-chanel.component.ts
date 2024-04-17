@@ -94,7 +94,7 @@ export class ViewSellChanelComponent implements OnInit {
   filesData;
   submittedUpload: boolean = false;
   listProductFail = [];
-  listProductFailExport = [];
+  listProductFailExport = [];  
 
   public searchForm: any = {
     keysearch: '',
@@ -110,7 +110,8 @@ export class ViewSellChanelComponent implements OnInit {
     channel_id: '',
     batch_id: '',
     keyword: '',
-    level: ''
+    level: '',
+    is_kitting: ''
   }
 
   dateRange: any;
@@ -163,6 +164,7 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
+      this.searchForm.is_kitting = params['is_kitting'] && params['is_kitting'] != undefined ? params['is_kitting'] : '';
 
 
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
@@ -418,6 +420,7 @@ export class ViewSellChanelComponent implements OnInit {
 
 
   getData() {
+    this.list = [];
     this.inventoryService.getListCustomer(this.searchForm.channel_id).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
@@ -434,10 +437,17 @@ export class ViewSellChanelComponent implements OnInit {
     this.sectionBlockUI.start();
     // this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
     
+    this.submitted = true;
     this.inventoryService.getAllSim(this.searchForm).subscribe(res => {
-      this.sectionBlockUI.stop();
+      
       this.list = res.data.data.items;
       this.totalItems = res.data.data.count;
+      this.sectionBlockUI.stop();
+      this.submitted  = false;
+    }, error => {
+      this.alertService.showMess(error);
+      this.sectionBlockUI.stop();
+      this.submitted = false;
     });
 
   }
@@ -484,16 +494,19 @@ export class ViewSellChanelComponent implements OnInit {
               this.alertService.showMess(res2.message);
               return;
             }
+            this.submitted = false;
             this.modalRef.close();
             this.initForm();
             this.alertService.showSuccess(res2.message);
             this.getData()
           }, error => {
+            this.submitted = false;
             this.alertService.showMess(error);
             return;
           }
           )
         }, error => {
+          this.submitted = false;
           this.alertService.showMess(error);
         })
       }

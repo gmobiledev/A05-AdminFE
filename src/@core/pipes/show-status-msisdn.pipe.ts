@@ -21,6 +21,24 @@ export class ShowStatusMsisdnPipe implements PipeTransform {
       html = '<span class="badge badge-pill badge-light-warning mr-1">2G case by case</span>'
     }else if (value === MsisdnStatus.STATUS_2G_PAID) {
       html = '<span class="badge badge-pill badge-light-success mr-1">2G đã trả cước</span>'
+    } else if (value === MsisdnStatus.STATUS_4G) {
+      html = '<span class="badge badge-pill badge-light-info mr-1">Đã chuyển đổi 4G</span>'
+    } else if (value === MsisdnStatus.STATUS_PRE_REGISTER) {
+      html = '<span class="badge badge-pill badge-light-info mr-1">Chuẩn bị đấu nối</span>'
+    } else if (value === MsisdnStatus.STATUS_NOT_PROCESS_MNO) {
+      html = '<span class="badge badge-pill badge-light-info mr-1">Mạng hợp tác chưa xử lý</span>'
+    } else if (value === MsisdnStatus.STATUS_2G_TS) {
+      html = '<span class="badge badge-pill badge-light-info mr-1">2G trả sau</span>'
+    } else if (value === MsisdnStatus.STATUS_S1) {
+      html = '<span class="badge badge-pill badge-light-warning mr-1">Khóa 1 chiều S1</span>'
+    } else if (value === MsisdnStatus.STATUS_S2) {
+      html = '<span class="badge badge-pill badge-light-warning mr-1">Khóa 2 chiều S2</span>'
+    } else if (value === MsisdnStatus.STATUS_S3) {
+      html = '<span class="badge badge-pill badge-light-warning mr-1">Chuẩn bị thu hồi</span>'
+    } else if (value === MsisdnStatus.STATUS_TERMINATE) {
+      html = '<span class="badge badge-pill badge-light-danger mr-1">Đã thu hồi</span>'
+    } else if (value === MsisdnStatus.STATUS_ACTIVE_LOCKED) {
+      html = '<span class="badge badge-pill badge-light-danger mr-1">IT khóa</span>'
     }
     return html;
   }

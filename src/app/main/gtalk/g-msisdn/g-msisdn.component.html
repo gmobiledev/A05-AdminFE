@@ -23,7 +23,7 @@
                                             <option value="">Chọn trạng thái</option>
                                             <option *ngFor="let item of taskTelecomStatus | keyvalue"
                                                 [value]="item.value" [id]="item.key">
-                                                <span [innerHTML]="item.value | showStatusTelecom"></span>
+                                                <span [innerHTML]="item.value | showStatusMsisdn"></span>
                                             </option>
                                         </select>
                                     </div>
@@ -89,7 +89,7 @@
                                         <td>{{item.merchant_id}}</td>
                                         <td>{{item.task_id}}</td>
                                         <td>
-                                            <div [innerHTML]="item.state | showStatusSim"></div>        
+                                            <div [innerHTML]="item.state | showStatusMsisdn"></div>        
                                         </td>
                                         <td>
                                             <div>

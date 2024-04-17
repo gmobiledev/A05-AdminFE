@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TelecomService } from 'app/auth/service/telecom.service';
 
 @Component({
-  selector: 'app-msisdn',
+  selector: 'app-msisdn-single',
   templateUrl: './msisdn.component.html',
   styleUrls: ['./msisdn.component.scss']
 })
