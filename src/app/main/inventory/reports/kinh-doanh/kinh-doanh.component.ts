@@ -34,7 +34,7 @@ export class KinhDoanhComponent implements OnInit {
   public list = [];
   searchForm = {
     page: 1,
-    page_size: 15,
+    page_size: 200,
     reference_code: ''
   }
   totalItems;
@@ -56,7 +56,7 @@ export class KinhDoanhComponent implements OnInit {
 
   getData() {
     this.sectionBlockUI.start();
-    this.inventoryServie.summaryReport(null).subscribe(res => {
+    this.inventoryServie.summaryReport(this.searchForm).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;

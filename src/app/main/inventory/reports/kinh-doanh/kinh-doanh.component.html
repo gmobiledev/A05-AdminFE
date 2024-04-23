@@ -14,15 +14,14 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên đơn vị</th>
-                                        <th>Mã tỉnh</th>
-                                        <th>Tổng số quân đăng ký</th>
-                                        <th>Số SIM bàn giao</th>
-                                        <th>Số TB hoàn thiện TTTB thành công</th>
-                                        <th>Số TB đăng ký gói cước thành công</th>
-                                        <th>Số TB hoạt động</th>
-                                        <th>Số TB khóa 1 chiều</th>
-                                        <th>Số TB khóa 2 chiều</th>
-                                        <th>Số TB thu hồi</th>
+                                        <th>Số lượng đăng ký</th>
+                                        <th>Bàn giao</th>
+                                        <th>Hoàn thiện TTTB</th>
+                                        <!-- <th>Số TB đăng ký gói cước thành công</th> -->
+                                        <th>TB hoạt động</th>
+                                        <th>TB khóa 1 chiều</th>
+                                        <th>TB khóa 2 chiều</th>
+                                        <th>TB hủy</th>
                                         <!-- <th>Trạng thái</th> -->
                                     </tr>
                                 </thead>
@@ -32,15 +31,12 @@
                                             {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
                                         </td>
                                         <td>
-                                            {{item.sell_channel_code}}
-                                        </td>
-                                        <td>
-                                            {{item.province_id}}
+                                            {{item.name}}
                                         </td>
                                         <td>{{ item.total_user }}</td>
                                         <td>{{ item.imported_quantility }}</td>
                                         <td>{{ item.sum_completed_infor_sim }}</td>
-                                        <td>{{ item.sum_enable_package }}</td>
+                                        <!-- <td>{{ item.sum_enable_package }}</td> -->
                                         <td>{{ item.sum_active }}</td>
                                         <td>{{ item.sum_lock_1_way }}</td>
                                         <td>{{ item.sum_lock_2_way }}</td>
