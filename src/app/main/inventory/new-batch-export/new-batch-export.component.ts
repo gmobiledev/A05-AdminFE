@@ -328,7 +328,7 @@ export class NewBatchExportComponent implements OnInit {
       this.alertService.showMess("Vui lòng chọn kho cần thu hồi");
       return;
     }
-    if(!this.selectedFiles) {
+    if(!this.selectedFiles && this.typeCurrentBatch == BatchType.RETRIEVE) {
       this.alertService.showMess("Vui lòng đính kèm chứng từ");
       return;
     }
@@ -363,10 +363,14 @@ export class NewBatchExportComponent implements OnInit {
     for(let key in dataCreateBatchExport) {
       formDataCreate.append(key, dataCreateBatchExport[key]);
     }
-    for(let itemF of this.selectedFiles) {
-      formDataCreate.append("files", itemF);
+    if(this.selectedFiles && this.selectedFiles.length > 0) {
+      for(let itemF of this.selectedFiles) {
+        formDataCreate.append("files", itemF);
+      }
     }
+    
     if(this.selectedItems.length < 1) {
+      this.submitted = false;
       this.alertService.showMess("Vui lòng chọn sản phẩm");
       return;
     }
@@ -415,6 +419,7 @@ export class NewBatchExportComponent implements OnInit {
    */
   async createBatchRetrieve() {
     if (this.selectedItems.length < 1) {
+      this.submitted = false;
       this.alertService.showMess("Vui lòng chọn sản phẩm");
       return;
     }
@@ -434,9 +439,11 @@ export class NewBatchExportComponent implements OnInit {
     for(let key in dataCreateBatch) {
       formDataCreate.append(key, dataCreateBatch[key]);
     }
-    for(let itemF of this.selectedFiles) {
-      formDataCreate.append("files", itemF);
-    }
+    if(this.selectedFiles && this.selectedFiles.length > 0) {
+      for(let itemF of this.selectedFiles) {
+        formDataCreate.append("files", itemF);
+      }
+    }    
 
     let resCreateBatch;
     this.submitted = true;

@@ -242,10 +242,7 @@ export class ViewBatchExportComponent implements OnInit {
       }
     } else if (type == 'vanphong') {
       if(status == this.batchStatus.APPROVED) {
-        if(!this.dataApprove.attached_file_content) {
-          this.alertService.showMess("Vui lòng đính kèm chứng từ");
-          return;
-        }
+        
         let formDataA = new FormData();
         for (let key in data) {
           formDataA.append(key, data[key]);
@@ -253,9 +250,12 @@ export class ViewBatchExportComponent implements OnInit {
         for (let key in this.dataApprove) {
           formDataA.append(key, this.dataApprove[key]);
         }
-        for (let itemF of this.selectedFiles) {
-          formDataA.append("files", itemF);
+        if(this.selectedFiles && this.selectedFiles.length > 0) {
+          for (let itemF of this.selectedFiles) {
+            formDataA.append("files", itemF);
+          }
         }
+        
         this.inventoryService.vanphongDuyet(formDataA).subscribe(res => {
           if(!res.status) {
             this.alertService.showMess(res.message);
@@ -419,10 +419,10 @@ export class ViewBatchExportComponent implements OnInit {
       }
     } else if (type == 'vanphong') {
       if(status == this.batchStatus.APPROVED) {
-        if(!this.dataApprove.attached_file_content) {
-          this.alertService.showMess("Vui lòng đính kèm chứng từ");
-          return;
-        }
+        // if(!this.dataApprove.attached_file_content) {
+        //   this.alertService.showMess("Vui lòng đính kèm chứng từ");
+        //   return;
+        // }
         let formDataA = new FormData();
         for (let key in data) {
           formDataA.append(key, data[key]);
@@ -430,9 +430,12 @@ export class ViewBatchExportComponent implements OnInit {
         for (let key in this.dataApprove) {
           formDataA.append(key, this.dataApprove[key]);
         }
-        for (let itemF of this.selectedFiles) {
-          formDataA.append("files", itemF);
+        if(this.selectedFiles && this.selectedFiles.length > 0) {
+          for (let itemF of this.selectedFiles) {
+            formDataA.append("files", itemF);
+          }
         }
+        
         this.inventoryService.vanphongApproveBatchRetrieve(formDataA).subscribe(res => {
           if(!res.status) {
             this.alertService.showMess(res.message);
