@@ -38,6 +38,7 @@ export class KinhDoanhComponent implements OnInit {
     reference_code: ''
   }
   totalItems;
+  sumItems;
 
   constructor(
     private readonly telecomService: TelecomService,
@@ -60,10 +61,24 @@ export class KinhDoanhComponent implements OnInit {
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
+      this.sum(this.list);
     }, error => {
       this.sectionBlockUI.stop();
       this.alertService.showMess(error);
     })
+  }
+
+  sum(data) {
+    var total = {}
+    data.forEach(item => {
+      for (const key of Object.keys(item)) {
+        if (!total[key])
+          total[key] = 0
+        if (item[key])
+          total[key] += parseInt(item[key]);
+      }
+    });
+    this.sumItems = total;
   }
 
 }

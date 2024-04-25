@@ -1,4 +1,4 @@
-<div class="content-wrapper container-xxl p-0" >
+<div class="content-wrapper container-xxl p-0">
     <div class="content-body">
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
         <div class="row">
@@ -36,14 +36,22 @@
                                         <td>{{ item.total_user }}</td>
                                         <td>{{ item.imported_quantility }}</td>
                                         <td>{{ item.sum_completed_infor_sim }}</td>
-                                        <!-- <td>{{ item.sum_enable_package }}</td> -->
                                         <td>{{ item.sum_active }}</td>
                                         <td>{{ item.sum_lock_1_way }}</td>
                                         <td>{{ item.sum_lock_2_way }}</td>
                                         <td>{{ item.sum_revoke }}</td>
-                                        <!-- <td>
-                                <div [innerHTML]="item.status | showStatusSim"></div>
-                            </td> -->
+
+                                    </tr>
+                                    <tr>
+                                        <td> Tổng </td>
+                                        <td></td>
+                                        <td>{{ sumItems?.total_user }}</td>
+                                        <td>{{ sumItems?.imported_quantility }}</td>
+                                        <td>{{ sumItems?.sum_completed_infor_sim }}</td>
+                                        <td>{{ sumItems?.sum_active }}</td>
+                                        <td>{{ sumItems?.sum_lock_1_way }}</td>
+                                        <td>{{ sumItems?.sum_lock_2_way }}</td>
+                                        <td>{{ sumItems?.sum_revoke }}</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -64,7 +64,8 @@
                                             <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                                                 <div class="align-items-center">
                                                     <div class="cell-line-height">
-                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                        <p
+                                                            class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
                                                             {{ name }}
                                                         </p>
                                                     </div>
@@ -72,17 +73,16 @@
                                             </ng-template>
                                         </ngx-datatable-column>
                                         <ngx-datatable-column name="Độ phủ(%)" prop="value" [cellClass]="d-block">
-                                            <ng-template  ngx-datatable-cell-template let-row="row" let-value="value">
+                                            <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
                                                 <div class="align-items-center">
                                                     <div class="cell-line-height">
                                                         <ngb-progressbar showValue="true"
-                                                            
                                                             class="{{ getClassProgressBar(value) }}"
                                                             [animated]="getAnimateProgress(value)"
-                                                            [striped]="getAnimateProgress(value)"
-                                                            [value]="value"></ngb-progressbar>
-                                                        
-                                                        <small><i>{{ row.active }}/{{ row.total }} </i></small>
+                                                            [striped]="getAnimateProgress(value)" [value]="value">
+                                                        </ngb-progressbar>
+
+                                                        <!-- <small><i>{{ row.active }}/{{ row.total }} </i></small> -->
                                                     </div>
                                                 </div>
                                             </ng-template>
