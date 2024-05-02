@@ -1,7 +1,14 @@
 <div class="content-wrapper container-xxl p-0" *blockUI="'section-block'">
     <div class="content-body">
         <div class="row">
-            <div class="col-md-6">
+
+            <div class="col-md-8">
+                <highcharts-chart id="container" [Highcharts]="Highcharts" [constructorType]="chartConstructor"
+                    [(update)]="isUpdate" [options]="chartMap" style="width: 100%; height: 650px; display: block;">
+
+                </highcharts-chart>
+            </div>
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -88,7 +95,7 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column name="Thao tác" prop="key">
+                                        <!-- <ngx-datatable-column name="Thao tác" prop="key">
                                             <ng-template let-value="value" ngx-datatable-cell-template>
                                                 <div class="d-flex align-items-center">
                                                     <div class="cell-line-height">
@@ -101,7 +108,7 @@
                                                     </div>
                                                 </div>
                                             </ng-template>
-                                        </ngx-datatable-column>
+                                        </ngx-datatable-column> -->
                                     </ngx-datatable>
                                 </ng-container>
                                 <!-- Bar chart -->
@@ -153,12 +160,6 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="col-md-6">
-                <highcharts-chart id="container" [Highcharts]="Highcharts" [constructorType]="chartConstructor"
-                    [(update)]="isUpdate" [options]="chartMap" style="width: 100%; height: 650px; display: block;">
-
-                </highcharts-chart>
             </div>
 
         </div>

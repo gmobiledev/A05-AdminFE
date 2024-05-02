@@ -81,4 +81,19 @@ export class KinhDoanhComponent implements OnInit {
     this.sumItems = total;
   }
 
+  exportExcelReport() {
+    this.inventoryServie.xuatBaoCaoTongHop(this.searchForm).subscribe(res => {
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Báo cáo kho sim";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
+  }
+
 }

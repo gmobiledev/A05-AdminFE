@@ -6,6 +6,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="pull-right mb-1">
+                                <button (click)="exportExcelReport()" class="btn btn-info mr-2">Xuất File <span
+                                        [data-feather]="'download'"></span></button>
+                            </div>
                             <div class="mb-1">
                                 <span>Tổng số:</span> <b>{{ totalItems }}</b>
                             </div>
@@ -16,12 +20,10 @@
                                         <th>Tên đơn vị</th>
                                         <th>Số lượng đăng ký</th>
                                         <th>Bàn giao</th>
-                                        <th>Hoàn thiện TTTB</th>
                                         <!-- <th>Số TB đăng ký gói cước thành công</th> -->
                                         <th>TB hoạt động</th>
-                                        <th>TB khóa 1 chiều</th>
-                                        <th>TB khóa 2 chiều</th>
-                                        <th>TB hủy</th>
+                                        <th>Hoàn thiện TTTB</th>
+                                        <th>Doanh thu</th>
                                         <!-- <th>Trạng thái</th> -->
                                     </tr>
                                 </thead>
@@ -30,28 +32,24 @@
                                         <td>
                                             {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
                                         </td>
-                                        <td>
-                                            {{item.name}}
-                                        </td>
-                                        <td>{{ item.total_user }}</td>
-                                        <td>{{ item.imported_quantility }}</td>
-                                        <td>{{ item.sum_completed_infor_sim }}</td>
-                                        <td>{{ item.sum_active }}</td>
-                                        <td>{{ item.sum_lock_1_way }}</td>
-                                        <td>{{ item.sum_lock_2_way }}</td>
-                                        <td>{{ item.sum_revoke }}</td>
+                                        <td> {{item.name}} </td>
+                                        <td>{{ item.total_user | number }}</td>
+                                        <td>{{ item.imported_quantility | number }}</td>
+                                        <td>{{ (item.sum_active || 0) | number }}</td>
+                                        <td>{{ item.sum_completed_infor_sim | number}}</td>
+                                        <td>{{ (item.sum_revenue || 0) | number }}</td>
+
 
                                     </tr>
                                     <tr>
                                         <td> Tổng </td>
                                         <td></td>
-                                        <td>{{ sumItems?.total_user }}</td>
-                                        <td>{{ sumItems?.imported_quantility }}</td>
-                                        <td>{{ sumItems?.sum_completed_infor_sim }}</td>
-                                        <td>{{ sumItems?.sum_active }}</td>
-                                        <td>{{ sumItems?.sum_lock_1_way }}</td>
-                                        <td>{{ sumItems?.sum_lock_2_way }}</td>
-                                        <td>{{ sumItems?.sum_revoke }}</td>
+                                        <td>{{ sumItems?.total_user | number }}</td>
+                                        <td>{{ sumItems?.imported_quantility | number }}</td>
+                                        <td>{{ sumItems?.sum_active | number }}</td>
+                                        <td>{{ sumItems?.sum_completed_infor_sim | number }}</td>
+                                        <td>{{ sumItems?.sum_revenue | number }}</td>
+
                                     </tr>
                                 </tbody>
                             </table>

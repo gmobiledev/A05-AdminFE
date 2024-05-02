@@ -249,4 +249,12 @@ export class InventoryService {
   kittingProduct(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/kitting`, data);
   }
+
+  // xuatBaoCaoTongHop(dto: any): Observable<any> {
+  //   return this._http.get(`${environment.apiUrl}/admin/mcs/inventory/channel/exportSell_channelExcel`, dto, { observe: 'response', responseType: 'blob' });
+  // }
+  xuatBaoCaoTongHop(data) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports/excelFormat`);
+    // return this._http.get<any>(`http://localhost:3001/api/product-admin/sell-channel/s99SummarizeReports/excelFormat`);
+  }
 }

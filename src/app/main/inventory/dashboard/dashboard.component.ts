@@ -129,7 +129,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           from: 70,
           to: 80,
           color: '#e6dc2e',
-          name: 'Chưa đạt SL đăng ký TTTTB'
+          name: 'Chưa đạt SL DK TTTB'
       }, {
           from: 81,
           color: '#2ee640',

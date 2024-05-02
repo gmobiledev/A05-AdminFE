@@ -13,44 +13,25 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="mobile"
-                      [(ngModel)]="searchForm.mobile"
-                      class="form-control"
-                      placeholder="Nhập số điện thoại"
-                    />
+                    <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control"
+                      placeholder="Nhập số điện thoại" />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="id_no"
-                      [(ngModel)]="searchForm.id_no"
-                      class="form-control"
-                      placeholder="Số CCCD của KH"
-                    />
+                    <input type="text" name="id_no" [(ngModel)]="searchForm.id_no" class="form-control"
+                      placeholder="Số CCCD của KH" />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      [(ngModel)]="searchForm.name"
-                      class="form-control"
-                      placeholder="Tên khách hàng"
-                    />
+                    <input type="text" name="name" [(ngModel)]="searchForm.name" class="form-control"
+                      placeholder="Tên khách hàng" />
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button
-                      type="button"
-                      class="btn btn-block btn-info"
-                      (click)="onSubmitSearch()"
-                    >
+                    <button type="button" class="btn btn-block btn-info" (click)="onSubmitSearch()">
                       Lọc kết quả
                     </button>
                   </div>
@@ -58,11 +39,7 @@
 
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button
-                      type="button"
-                      class="btn btn-success mr-2"
-                      [routerLink]="['/customer/create/']"
-                    >
+                    <button type="button" class="btn btn-success mr-2" [routerLink]="['/customer/create/']">
                       Thêm khách hàng
                     </button>
                   </div>
@@ -73,17 +50,17 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>ID khách hàng</th>
-                    <th>Tên khách hàng</th>
+                    <th>ID</th>
+                    <th>Tên Khách hàng</th>
                     <th>SĐT</th>
-                    <th>Loại khách hàng</th>
+                    <th>Loại KH</th>
                     <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list">
                     <td>{{ item?.id }}</td>
-                    <td>{{ item?.name }}</td>
+                    <td><i *ngIf="item?.ekyc_status" data-feather="check-circle" class="text-success" title="Đã ĐK TTTB"></i>{{ item?.name }}</td>
                     <td>
                       {{ item?.mobile }}
                     </td>
@@ -92,67 +69,30 @@
                     </td>
 
                     <td>
-                      <a
-                        ngbTooltip="Xem chi tiết"
-                        (click)="onViewDetail(modalDetail, item)"
-                      >
-                        <i
-                          data-feather="eye"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <a ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)">
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
                       </a>
-                      <a
-                        class="ml-2"
-                        ngbTooltip="Cập nhật thông tin"
-                        [routerLink]="['/customer/update/' + item?.id]"
-                      >
-                        <i
-                          data-feather="edit"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <a class="ml-2" ngbTooltip="Cập nhật thông tin" [routerLink]="['/customer/update/' + item?.id]">
+                        <i data-feather="edit" class="text-primary cursor-pointer"></i>
                       </a>
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-              <ngb-pagination
-                class="d-flex justify-content-end pr-3 pt-2"
-                [collectionSize]="total"
-                [(page)]="searchForm.page"
-                [pageSize]="pageSize"
-                [boundaryLinks]="true"
-                (pageChange)="loadPage($event)"
-              >
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="total"
+                [(page)]="searchForm.page" [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="loadPage($event)">
                 <ng-template ngbPaginationPages let-page let-pages="pages">
                   <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
                     <div class="mb-3 d-flex flex-nowrap px-2">
-                      <label
-                        id="paginationInputLabel"
-                        for="paginationInput"
-                        class="col-form-label me-2 ms-1"
-                        >Trang</label
-                      >
-                      <input
-                        #i
-                        type="text"
-                        inputmode="numeric"
-                        pattern="[0-9]*"
-                        class="form-control custom-pages-input"
-                        id="paginationInput"
-                        [value]="searchForm.page"
-                        (keyup.enter)="loadPage(i.value)"
-                        (blur)="loadPage(i.value)"
-                        (input)="formatInput($any($event).target)"
-                        aria-labelledby="paginationInputLabel paginationDescription"
-                        style="width: 2.5rem"
-                      />
-                      <span
-                        id="paginationDescription"
-                        class="col-form-label text-nowrap px-2"
-                      >
-                        của {{ pages.length }}</span
-                      >
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Trang</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        của {{ pages.length }}</span>
                     </div>
                   </li>
                 </ng-template>
@@ -168,190 +108,107 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Thông tin khách hàng</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <div class="row mb-2">
-      <div class="col-md-12"  *ngIf="data?.customer_type == 'ORGANIZATION'">
+      <div class="col-md-12" *ngIf="data?.customer_type == 'ORGANIZATION'">
         <h5>Thông tin tổ chức</h5>
       </div>
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
+      <div class="col-md-6 col-sm-12 mb-1" *ngIf="data?.customer_type == 'ORGANIZATION'">
         <h6>Tên tổ chức:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          (click)="copyTextClipboard(data?.name)"
-        >
-          <span class="text-info">{{ data?.name }}</span></a
-        >
+        <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard(data?.name)">
+          <span class="text-info">{{ data?.name }}</span></a>
       </div>
 
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
-        <span
-          ><u>Mã số thuế</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            (click)="copyTextClipboard(organization?.id_no)"
-          >
+      <div class="col-md-6 col-sm-12 mb-1" *ngIf="data?.customer_type == 'ORGANIZATION'">
+        <span><u>Mã số thuế</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard(organization?.id_no)">
             <span class="text-info">{{ organization?.id_no }}</span>
-          </a></span
-        >
+          </a></span>
       </div>
 
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
+      <div class="col-md-6 col-sm-12 mb-1" *ngIf="data?.customer_type == 'ORGANIZATION'">
         <h6>Địa chỉ tổ chức:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          (click)="copyTextClipboard(data?.address)"
-        >
-          <span class="text-info">{{ data?.address }}</span></a
-        >
+        <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard(data?.address)">
+          <span class="text-info">{{ data?.address }}</span></a>
       </div>
 
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
+      <div class="col-md-6 col-sm-12 mb-1" *ngIf="data?.customer_type == 'ORGANIZATION'">
         <h6>SĐT liên hệ:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          (click)="copyTextClipboard(data?.organizationta?.mobile)"
-        >
-          <span class="text-info">{{ data?.organizationta?.mobile }}</span></a
-        >
+        <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard(data?.organizationta?.mobile)">
+          <span class="text-info">{{ data?.organizationta?.mobile }}</span></a>
       </div>
 
-      <div
-        class="col-md-6 col-sm-12 mb-1"
-        *ngIf="data?.customer_type == 'ORGANIZATION'"
-      >
+      <div class="col-md-6 col-sm-12 mb-1" *ngIf="data?.customer_type == 'ORGANIZATION'">
         <h6>Email liên hệ:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          (click)="copyTextClipboard(data?.organizationta?.email)"
-        >
-          <span class="text-info">{{ data?.organizationta?.email }}</span></a
-        >
+        <a placement="right" ngbTooltip="'Bấm để copy'" (click)="copyTextClipboard(data?.organizationta?.email)">
+          <span class="text-info">{{ data?.organizationta?.email }}</span></a>
       </div>
 
-      <div class="col-md-12"  *ngIf="data?.customer_type == 'ORGANIZATION'">
+      <div class="col-md-12" *ngIf="data?.customer_type == 'ORGANIZATION'">
         <h5>Thông người đại diện</h5>
       </div>
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Loại giấy tờ</u>:
+        <span><u>Loại giấy tờ</u>:
           <span class="text-info">{{
             data?.people?.identification_type
-          }}</span></span
-        >
+            }}</span></span>
       </div>
 
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Số giấy tờ</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.identification_no"
-            (click)="copyTextClipboard(data?.people?.identification_no)"
-          >
+        <span><u>Số giấy tờ</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.identification_no"
+            (click)="copyTextClipboard(data?.people?.identification_no)">
             <span class="text-info">{{ data?.people?.identification_no }}</span>
-          </a></span
-        >
+          </a></span>
       </div>
 
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Ngày cấp</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.identification_date"
-            (click)="copyTextClipboard(data?.people?.identification_date)"
-          >
+        <span><u>Ngày cấp</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.identification_date"
+            (click)="copyTextClipboard(data?.people?.identification_date)">
             <span class="text-info">{{
               data?.people?.identification_date * 1000 | date : "dd/MM/yyyy"
-            }}</span>
-          </a></span
-        >
+              }}</span>
+          </a></span>
       </div>
 
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Nơi cấp</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.identification_place"
-            (click)="copyTextClipboard(data?.people?.identification_place)"
-          >
+        <span><u>Nơi cấp</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.identification_place"
+            (click)="copyTextClipboard(data?.people?.identification_place)">
             <span class="text-info">{{
               data?.people?.identification_place
-            }}</span>
-          </a></span
-        >
+              }}</span>
+          </a></span>
       </div>
 
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Họ và tên</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.name"
-            (click)="copyTextClipboard(data?.people?.name)"
-          >
+        <span><u>Họ và tên</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.name"
+            (click)="copyTextClipboard(data?.people?.name)">
             <span class="text-info">{{ data?.people?.name }}</span>
-          </a></span
-        >
+          </a></span>
       </div>
 
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Ngày sinh</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.birth"
-            (click)="copyTextClipboard(data?.people?.birth)"
-          >
+        <span><u>Ngày sinh</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.birth"
+            (click)="copyTextClipboard(data?.people?.birth)">
             <span class="text-info">{{
               data?.people?.birth * 1000 | date : "dd/MM/yyyy"
-            }}</span>
-          </a></span
-        >
+              }}</span>
+          </a></span>
       </div>
 
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Số điện thoại liên hệ</u>:
+        <span><u>Số điện thoại liên hệ</u>:
 
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.mobile"
-            (click)="copyTextClipboard(data?.mobile)"
-          >
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.mobile"
+            (click)="copyTextClipboard(data?.mobile)">
             <span class="text-info">{{ data?.mobile }}</span>
           </a>
         </span>
@@ -359,110 +216,60 @@
 
       <div class="col-md-12 col-sm-12 mt-1">
         <h6>Địa chỉ thường trú:</h6>
-        <a
-          placement="right"
-          ngbTooltip="'Bấm để copy'"
-          *ngIf="data?.people?.full_address"
-          (click)="copyTextClipboard(data?.people?.full_address)"
-        >
-          <span class="text-info">{{ data?.people?.full_address }}</span></a
-        >
+        <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.full_address"
+          (click)="copyTextClipboard(data?.people?.full_address)">
+          <span class="text-info">{{ data?.people?.full_address }}</span></a>
       </div>
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Thôn, số nhà</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.address"
-            (click)="copyTextClipboard(data?.people?.address)"
-          >
-            <span class="text-info">{{ data?.people?.address }}</span></a
-          ></span
-        >
+        <span><u>Thôn, số nhà</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.address"
+            (click)="copyTextClipboard(data?.people?.address)">
+            <span class="text-info">{{ data?.people?.address }}</span></a></span>
       </div>
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Xã/phường</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.communue"
-            (click)="copyTextClipboard(data?.people?.communue)"
-          >
+        <span><u>Xã/phường</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.communue"
+            (click)="copyTextClipboard(data?.people?.communue)">
             <span class="text-info">{{ data?.people?.communue }}</span>
-          </a></span
-        >
+          </a></span>
       </div>
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Quận/huyện</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.district"
-            (click)="copyTextClipboard(data?.people?.district)"
-          >
+        <span><u>Quận/huyện</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.district"
+            (click)="copyTextClipboard(data?.people?.district)">
             <span class="text-info">{{ data?.people?.district }}</span>
-          </a></span
-        >
+          </a></span>
       </div>
       <div class="col-md-6 col-sm-12 mb-1">
-        <span
-          ><u>Tỉnh/thành</u>:
-          <a
-            placement="right"
-            ngbTooltip="'Bấm để copy'"
-            *ngIf="data?.people?.province"
-            (click)="copyTextClipboard(data?.people?.province)"
-          >
+        <span><u>Tỉnh/thành</u>:
+          <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="data?.people?.province"
+            (click)="copyTextClipboard(data?.people?.province)">
             <span class="text-info">{{ data?.people?.province }}</span>
-          </a></span
-        >
+          </a></span>
       </div>
       <div class="col-md-6 mt-1">
         <label for="">Ảnh giấy tờ mặt trước</label>
-        <img
-          (click)="onViewImage(modalImage, 'cccd_front')"
-          class="img-fluid rounded mb-75"
-          src="data:image/png;base64,{{
+        <img (click)="onViewImage(modalImage, 'cccd_front')" class="img-fluid rounded mb-75" src="data:image/png;base64,{{
             data?.people?.identification_front_file
-          }}"
-          alt="avatar img"
-        />
+          }}" alt="avatar img" />
       </div>
       <div class="col-md-6 mt-1">
         <label for="">Ảnh chân dung</label>
-        <img
-          (click)="onViewImage(modalImage, 'selfie')"
-          class="img-fluid rounded mb-75"
-          src="data:image/png;base64,{{
+        <img (click)="onViewImage(modalImage, 'selfie')" class="img-fluid rounded mb-75" src="data:image/png;base64,{{
             data?.people?.identification_selfie_file
-          }}"
-          alt="avatar img"
-        />
+          }}" alt="avatar img" />
       </div>
       <div class="col-md-6">
         <label for="">Ảnh giấy tờ mặt sau</label>
-        <img
-          (click)="onViewImage(modalImage, 'cccd_back')"
-          class="img-fluid rounded mb-75"
-          src="data:image/png;base64,{{
+        <img (click)="onViewImage(modalImage, 'cccd_back')" class="img-fluid rounded mb-75" src="data:image/png;base64,{{
             data?.people?.identification_back_file
-          }}"
-          alt="avatar img"
-        />
+          }}" alt="avatar img" />
       </div>
       <div class="col-md-6">
         <label for="">Ảnh chữ ký</label>
-        <img
-          (click)="onViewImage(modalImage, 'signature')"
-          class="img-fluid rounded mb-75"
-          src="data:image/png;base64,{{
+        <img (click)="onViewImage(modalImage, 'signature')" class="img-fluid rounded mb-75" src="data:image/png;base64,{{
             data?.people?.identification_signature_file
-          }}"
-          alt="avatar img"
-        />
+          }}" alt="avatar img" />
       </div>
     </div>
   </div>
