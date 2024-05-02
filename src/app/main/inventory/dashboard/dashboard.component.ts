@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   
       legend: {
         layout: 'vertical',
-        align: 'left',
+        align: 'center',
         verticalAlign: 'bottom'
       },
   
