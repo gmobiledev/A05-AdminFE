@@ -52,6 +52,7 @@
                   <tr>
                     <th>ID</th>
                     <th>Tên Khách hàng</th>
+                    <th>Xác Thực</th>
                     <th>SĐT</th>
                     <th>Loại KH</th>
                     <th>Thao tác</th>
@@ -60,7 +61,8 @@
                 <tbody>
                   <tr *ngFor="let item of list">
                     <td>{{ item?.id }}</td>
-                    <td><i *ngIf="item?.ekyc_status" data-feather="check-circle" class="text-success" title="Đã ĐK TTTB"></i>{{ item?.name }}</td>
+                    <td><ng-container *ngIf="item?.ekyc_status"><i data-feather="check-circle" class="text-success"
+                          title="Đã ĐK TTTB"></i></ng-container>{{ item?.name }}</td>
                     <td>
                       {{ item?.mobile }}
                     </td>
