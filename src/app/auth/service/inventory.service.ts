@@ -257,4 +257,8 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports/excelFormat`);
     // return this._http.get<any>(`http://localhost:3001/api/product-admin/sell-channel/s99SummarizeReports/excelFormat`);
   }
+
+  getAdminsSell(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/admins`, {params: params});
+  }
 }
