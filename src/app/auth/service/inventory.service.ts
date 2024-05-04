@@ -257,4 +257,8 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports/excelFormat`);
     // return this._http.get<any>(`http://localhost:3001/api/product-admin/sell-channel/s99SummarizeReports/excelFormat`);
   }
+
+  exportExcelChannelProducts(dto: any): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/product/channel/export-excel`, dto, { observe: 'response', responseType: 'blob' });
+  }
 }
