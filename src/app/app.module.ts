@@ -38,156 +38,156 @@ import { HighchartsChartModule } from 'highcharts-angular';
 const appRoutes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./main/auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./main/auth/auth.module').then((m) => { return m.AuthModule })
   },
   {
     path: 'profile',
-    loadChildren: () => import('./main/profile/profile.module').then(m => m.ProfileModule),
+    loadChildren: () => import('./main/profile/profile.module').then((m) => {return m.ProfileModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'role',
-    loadChildren: () => import('./main/role/role.module').then(m => m.RoleModule),
+    loadChildren: () => import('./main/role/role.module').then((m) => {return m.RoleModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    loadChildren: () => import('./main/admin/admin.module').then(m => m.AdminModule),
+    loadChildren: () => import('./main/admin/admin.module').then((m) => {return m.AdminModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'customer',
-    loadChildren: () => import('./main/customer/customer.module').then(m => m.CustomerModule),
+    loadChildren: () => import('./main/customer/customer.module').then((m) => {return m.CustomerModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'user',
-    loadChildren: () => import('./main/user/user.module').then(m => m.UserModule),
+    loadChildren: () => import('./main/user/user.module').then((m) => {return m.UserModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'agent',
-    loadChildren: () => import('./main/agent/agent.module').then(m => m.AgentModule),
+    loadChildren: () => import('./main/agent/agent.module').then((m) => { return m.AgentModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'sim-so',
-    loadChildren: () => import('./main/sim-so/sim-so.module').then(m => m.SimSoModule),
+    loadChildren: () => import('./main/sim-so/sim-so.module').then((m) => { return m.SimSoModule }),
     canActivate: [AuthGuard]
   },
 
   {
     path: 'gip',
-    loadChildren: () => import('./main/gip/gip.module').then(m => m.GIPModule),
+    loadChildren: () => import('./main/gip/gip.module').then((m) => { return m.GIPModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'gtalk',
-    loadChildren: () => import('./main/gtalk/gtalk.module').then(m => m.GtalkModule),
+    loadChildren: () => import('./main/gtalk/gtalk.module').then((m) => { return m.GtalkModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'files',
-    loadChildren: () => import('./main/files/files.module').then(m => m.FilesModule),
+    loadChildren: () => import('./main/files/files.module').then((m) => { return m.FilesModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'contract',
-    loadChildren: () => import('./main/contract/contract.module').then(m => m.ContractModule),
+    loadChildren: () => import('./main/contract/contract.module').then((m) => { return m.ContractModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'loan-bank',
-    loadChildren: () => import('./main/loan-bank/loan-bank.module').then(m => m.LoanBankModule),
+    loadChildren: () => import('./main/loan-bank/loan-bank.module').then((m) => { return m.LoanBankModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'task',
-    loadChildren: () => import('./main/task/task.module').then(m => m.TaskModule),
+    loadChildren: () => import('./main/task/task.module').then((m) => { return m.TaskModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'file',
-    loadChildren: () => import('./main/files/files.module').then(m => m.FilesModule),
+    loadChildren: () => import('./main/files/files.module').then((m) => { return m.FilesModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'people',
-    loadChildren: () => import('./main/people/people.module').then(m => m.PeopleModule),
+    loadChildren: () => import('./main/people/people.module').then((m) => { return m.PeopleModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'transaction',
-    loadChildren: () => import('./main/transaction/transaction.module').then(m => m.TransactionModule),
+    loadChildren: () => import('./main/transaction/transaction.module').then((m) => { return m.TransactionModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'sms-log',
-    loadChildren: () => import('./main/sms-log/sms-log.module').then(m => m.SmsLogModule),
+    loadChildren: () => import('./main/sms-log/sms-log.module').then((m) => { return m.SmsLogModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'order-ltg',
-    loadChildren: () => import('./main/order-ltg/order-ltg.module').then(m => m.OrderLtgModule),
+    loadChildren: () => import('./main/order-ltg/order-ltg.module').then((m) => { return m.OrderLtgModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'merchant',
-    loadChildren: () => import('./main/merchant/merchant.module').then(m => m.MerchantModule),
+    loadChildren: () => import('./main/merchant/merchant.module').then((m) => { return m.MerchantModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'services',
-    loadChildren: () => import('./main/gservice/gservice.module').then(m => m.GserviceModule),
+    loadChildren: () => import('./main/gservice/gservice.module').then((m) => { return m.GserviceModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'inventory',
-    loadChildren: () => import('./main/inventory/inventory.module').then(m => m.InventoryModule),
+    loadChildren: () => import('./main/inventory/inventory.module').then((m) => { return m.InventoryModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'collaborator',
-    loadChildren: () => import('./main/collaborator/collaborator.module').then(m => m.CollaboratorModule),
+    loadChildren: () => import('./main/collaborator/collaborator.module').then((m) => { return m.CollaboratorModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./main/dashboard/dashboard.module').then(m => m.DashboardModule),
+    loadChildren: () => import('./main/dashboard/dashboard.module').then((m) => { return m.DashboardModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'apps',
-    loadChildren: () => import('./main/apps/apps.module').then(m => m.AppsModule),
+    loadChildren: () => import('./main/apps/apps.module').then((m) => { return m.AppsModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'pages',
-    loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
+    loadChildren: () => import('./main/pages/pages.module').then((m) => { return m.PagesModule })
   },
-  {
-    path: 'ui',
-    loadChildren: () => import('./main/ui/ui.module').then(m => m.UIModule),
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'ui',
+  //   loadChildren: () => import('./main/ui/ui.module').then((m) => {m.UIModule}),
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: 'components',
-    loadChildren: () => import('./main/components/components.module').then(m => m.ComponentsModule),
+    loadChildren: () => import('./main/components/components.module').then((m) => { return m.ComponentsModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'extensions',
-    loadChildren: () => import('./main/extensions/extensions.module').then(m => m.ExtensionsModule),
+    loadChildren: () => import('./main/extensions/extensions.module').then((m) => { return m.ExtensionsModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'forms',
-    loadChildren: () => import('./main/forms/forms.module').then(m => m.FormsModule),
+    loadChildren: () => import('./main/forms/forms.module').then((m) => { return m.FormsModule }),
     canActivate: [AuthGuard]
   },
   {
     path: 'tables',
-    loadChildren: () => import('./main/tables/tables.module').then(m => m.TablesModule),
+    loadChildren: () => import('./main/tables/tables.module').then((m) => { return m.TablesModule }),
     canActivate: [AuthGuard]
   },
   // {
@@ -197,7 +197,7 @@ const appRoutes: Routes = [
   // },
   {
     path: 'share',
-    loadChildren: () => import('./main/shared/share.module').then(m => m.SharedModule),
+    loadChildren: () => import('./main/shared/share.module').then((m) => { return m.SharedModule }),
     canActivate: [AuthGuard]
   },
   {
@@ -256,4 +256,4 @@ const appRoutes: Routes = [
   entryComponents: [BasicCustomContextMenuComponent, AnimatedCustomContextMenuComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

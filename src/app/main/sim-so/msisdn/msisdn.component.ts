@@ -22,7 +22,7 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 export class MsisdnComponent implements OnInit {
 
   @Input() service: string;
-  private myUrl = "sim-so/msisdn"
+  private myUrl = "/sim-so/msisdn"
 
   public contentHeader: any = {
     headerTitle: 'Số điện thoại đã đăng ký',

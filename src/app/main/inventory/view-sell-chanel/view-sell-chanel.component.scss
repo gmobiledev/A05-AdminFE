@@ -1,0 +1,14 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+.datatable-scroll {
+    width: auto !important;
+  }
+  .ngx-datatable.bootstrap.core-bootstrap {
+    .datatable-body-row {
+      .datatable-body-cell {
+        display: inline;
+        p {
+          word-wrap: break-word;
+        }
+      }
+    }   
+  } 

@@ -126,7 +126,7 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/my-list`, { params: params });
   }
 
-  createBatchExport(data: CreateBatchExportDto) {
+  createBatchExport(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/create`, data);
   }
 
@@ -186,7 +186,7 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/common/file/get-file`, data);
   }
 
-  createBatchRetrieve(data: CreateBatchRetrieveDto) {
+  createBatchRetrieve(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/retrieve/create`, data);
   }
 
@@ -244,5 +244,17 @@ export class InventoryService {
 
   updateProductPriceBatch(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/price/update-batch`, data);
+  }
+
+  kittingProduct(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/kitting`, data);
+  }
+
+  // xuatBaoCaoTongHop(dto: any): Observable<any> {
+  //   return this._http.get(`${environment.apiUrl}/admin/mcs/inventory/channel/exportSell_channelExcel`, dto, { observe: 'response', responseType: 'blob' });
+  // }
+  xuatBaoCaoTongHop(data) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports/excelFormat`);
+    // return this._http.get<any>(`http://localhost:3001/api/product-admin/sell-channel/s99SummarizeReports/excelFormat`);
   }
 }

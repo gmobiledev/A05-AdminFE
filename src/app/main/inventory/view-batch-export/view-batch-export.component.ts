@@ -70,6 +70,9 @@ export class ViewBatchExportComponent implements OnInit {
     fromChannel: '',
     toChannel: ''
   }
+  listFileAttachments = {    
+  }
+  selectedFiles;
   fileExt;
 
   constructor(
@@ -85,7 +88,17 @@ export class ViewBatchExportComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.listFileAttachments["files_approve_"+BatchStatus.APPROVED_BY_ACCOUNTANT] = [];
+    this.listFileAttachments["files_approve_"+BatchStatus.APPROVED] = [];
+    this.listFileAttachments["files_request"] = [];
     this.getData();
+  }
+
+  getFileExt(link) {
+    let ext = 'pdf';
+    const arrayFileExt = link.split('.');
+    ext = arrayFileExt[arrayFileExt.length - 1];
+    return ext;
   }
 
   getData() {
@@ -107,6 +120,13 @@ export class ViewBatchExportComponent implements OnInit {
         this.fileExt = arrayFileExt[arrayFileExt.length - 1];
       } else {
         this.fileExt = '';
+      }
+
+      if (files) {
+        this.listFileAttachments["files_approve_" + BatchStatus.APPROVED_BY_ACCOUNTANT] = files["files_approve_" + BatchStatus.APPROVED_BY_ACCOUNTANT] ?
+        files["files_approve_" + BatchStatus.APPROVED_BY_ACCOUNTANT] : [];
+        this.listFileAttachments["files_approve_" + BatchStatus.APPROVED] = files["files_approve_" + BatchStatus.APPROVED] ? files["files_approve_" + BatchStatus.APPROVED] : [];
+        this.listFileAttachments["files_request"] = files['files_request'] ? files['files_request'] : []
       }
 
       //lay thong tin admin
@@ -222,11 +242,21 @@ export class ViewBatchExportComponent implements OnInit {
       }
     } else if (type == 'vanphong') {
       if(status == this.batchStatus.APPROVED) {
-        if(!this.dataApprove.attached_file_content) {
-          this.alertService.showMess("Vui lòng đính kèm chứng từ");
-          return;
+        
+        let formDataA = new FormData();
+        for (let key in data) {
+          formDataA.append(key, data[key]);
         }
-        this.inventoryService.vanphongDuyet({...data, ...this.dataApprove}).subscribe(res => {
+        for (let key in this.dataApprove) {
+          formDataA.append(key, this.dataApprove[key]);
+        }
+        if(this.selectedFiles && this.selectedFiles.length > 0) {
+          for (let itemF of this.selectedFiles) {
+            formDataA.append("files", itemF);
+          }
+        }
+        
+        this.inventoryService.vanphongDuyet(formDataA).subscribe(res => {
           if(!res.status) {
             this.alertService.showMess(res.message);
             return;
@@ -389,11 +419,24 @@ export class ViewBatchExportComponent implements OnInit {
       }
     } else if (type == 'vanphong') {
       if(status == this.batchStatus.APPROVED) {
-        if(!this.dataApprove.attached_file_content) {
-          this.alertService.showMess("Vui lòng đính kèm chứng từ");
-          return;
+        // if(!this.dataApprove.attached_file_content) {
+        //   this.alertService.showMess("Vui lòng đính kèm chứng từ");
+        //   return;
+        // }
+        let formDataA = new FormData();
+        for (let key in data) {
+          formDataA.append(key, data[key]);
         }
-        this.inventoryService.vanphongApproveBatchRetrieve({...data, ...this.dataApprove}).subscribe(res => {
+        for (let key in this.dataApprove) {
+          formDataA.append(key, this.dataApprove[key]);
+        }
+        if(this.selectedFiles && this.selectedFiles.length > 0) {
+          for (let itemF of this.selectedFiles) {
+            formDataA.append("files", itemF);
+          }
+        }
+        
+        this.inventoryService.vanphongApproveBatchRetrieve(formDataA).subscribe(res => {
           if(!res.status) {
             this.alertService.showMess(res.message);
             return;
@@ -509,6 +552,7 @@ export class ViewBatchExportComponent implements OnInit {
         this.dataApprove.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
       }
     }
+    this.selectedFiles = event.target.files;
     // if (event.target.files && event.target.files[0]) {
     //   let img = await this.commonService.resizeImage(event.target.files[0]);
     //   this.dataCreatePayment.file = (img+'').replace('data:image/png;base64,', '')
@@ -604,26 +648,43 @@ export class ViewBatchExportComponent implements OnInit {
     })
   }
 
-  onViewAttachments() {
-    let files = this.data.batch.attachments ? JSON.parse(this.data.batch.attachments) : null;
-    if(files && files.file) {
+  onViewAttachments(link = null) {
+    if (link) {
       this.inventoryService.viewFile({
-        file: files.file
+        file: link
       }).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
         this.listFiles = [
-          {ext: res.data.ext, base64: res.data.base64}
+          { ext: res.data.ext, base64: res.data.base64 }
         ];
         this.onViewModalApprove(this.modalAttachments);
-      },error => {
+      }, error => {
         this.alertService.showMess(error);
       })
     } else {
-      this.onViewModalApprove(this.modalAttachments);
-    }    
-    
+      let files = this.data.batch.attachments ? JSON.parse(this.data.batch.attachments) : null;
+      if (files && files.file) {
+        this.inventoryService.viewFile({
+          file: files.file
+        }).subscribe(res => {
+          if (!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.listFiles = [
+            { ext: res.data.ext, base64: res.data.base64 }
+          ];
+          this.onViewModalApprove(this.modalAttachments);
+        }, error => {
+          this.alertService.showMess(error);
+        })
+      } else {
+        this.onViewModalApprove(this.modalAttachments);
+      }
+    }
+
   }
 }

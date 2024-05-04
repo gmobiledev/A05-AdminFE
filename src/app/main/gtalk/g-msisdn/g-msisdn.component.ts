@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
-import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { MsisdnStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -94,8 +94,8 @@ export class GMsisdnComponent implements OnInit {
   ) {
     this.dateRange = null;
     this.activeRouted.queryParams.subscribe(params => {
-      this.taskTelecomStatus = Object.keys(TaskTelecomStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-        obj[key] = TaskTelecomStatus[key];
+      this.taskTelecomStatus = Object.keys(MsisdnStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
+        obj[key] = MsisdnStatus[key];
         return obj;
       }, {});
 
@@ -109,8 +109,8 @@ export class GMsisdnComponent implements OnInit {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
       }
 
-      this.contentHeader.headerTitle = 'Đơn & Topup';
-      this.contentHeader.breadcrumb.links[1] = 'Đơn & Topup';
+      this.contentHeader.headerTitle = 'Số thuê bao GSIM';
+      this.contentHeader.breadcrumb.links[1] = 'Số thuê bao GSIM';
 
       this.getData();
     })

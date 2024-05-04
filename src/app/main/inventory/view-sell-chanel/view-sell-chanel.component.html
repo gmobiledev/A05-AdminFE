@@ -11,7 +11,7 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()" class="mb-2">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <input
                       type="text"
@@ -23,14 +23,14 @@
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <select
                       class="form-control"
                       name="level"
                       [(ngModel)]="searchForm.level"
                     >
-                      <option value="">Chọn hạng số</option>
+                      <option value="">-- Chọn hạng số --</option>
                       <option
                         *ngFor="let item of taskTelecomStatusSIM"
                         [value]="item.name"
@@ -39,14 +39,14 @@
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <select
                       class="form-control"
                       name="status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="">Chọn trạng thái</option>
+                      <option value="">-- Chọn trạng thái --</option>
                       <option
                         *ngFor="let item of taskTelecomStatus | keyvalue"
                         [value]="item.value"
@@ -59,31 +59,57 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="is_kitting"
+                      [(ngModel)]="searchForm.is_kitting"
+                    >
+                      <option value=""> -- Tình trạng Kitting --</option>
+                      <option value="1">Đã Kitting</option>
+                      <option value="0">Chưa Kitting</option>
+                    </select>
+                  </div>
+                </div>
+
               </div>
 
               <div class="mt-1 overflow-hidden">
                 <div class="pull-left">
-                  <button type="submit" class="btn btn-block btn-info">
+                  <button type="submit" class="btn btn-block btn-info" [disabled]="submitted">
                     Lọc kết quả <span [data-feather]="'search'"></span>
                   </button>
                 </div>
                 <div class="pull-right">
-                  <button
-                    type="button"
-                    class="btn btn-success mr-25"
-                    (click)="modalOpen(modalAddUser, null, true)"
-                  >
-                    Tài khoản bán hàng
-                  </button>
+                  
                 </div>
               </div>
             </form>
             <div class="overflow-hidden">
               <div class="pull-right">
+
+                <button
+                    type="button"
+                    class="btn btn-success mr-2"
+                    (click)="modalOpenNormal(modalUploadData)"
+                  >
+                    Kitting
+                  </button>
+
+                <button
+                    type="button"
+                    class="btn btn-success mr-2"
+                    (click)="modalOpen(modalAddUser, null, true)"
+                  >
+                    Tài khoản bán hàng
+                  </button>
+
                 <a routerLink="/inventory/edit-products"
                 *ngIf="currentChannel && currentChannel.admin_id == currentUser.id"
                 [queryParams]="{channel_id: searchForm.channel_id}"
-                class="btn d-block btn-primary">Sửa danh sách số</a>
+                class="btn btn-primary">Sửa danh sách số</a>
               </div>
             </div>
             <div class="table-responsive" *blockUI="'section-block'">
@@ -94,13 +120,12 @@
                 <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Số thuê bao</th>
+                    <th>Số thuê bao/Serial SIM</th>
                     <th>Nhà mạng</th>
                     <th>Hạng số</th>
                     <th>Giá vốn</th>
                     <th>Giá bán</th>
                     <th>Trạng thái</th>
-                    <th>Thao tác</th>
                     <th>Xuất cho kho</th>
                   </tr>
                 </thead>
@@ -116,6 +141,8 @@
 
                     <td>
                       {{ item.name }}
+                      <br/>
+                      <small class="text-info" *ngIf="item.is_kit"><i>KIT: {{ item.short_desc }}</i></small>
                     </td>
                     <td>
                       {{ item.brand }}
@@ -136,15 +163,10 @@
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
+
                     <td>
-                      <a class="ml-1" title="Chỉnh sửa giá">
-                        <i
-                          data-feather="edit-3"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a>
-                    </td>
-                    <td>{{ item.sub_channel_id }}</td>
+                      <a (click)="modalChannelOpen(modalChannelInfo, item)" ><u>{{ item.sub_channel_id }}</u></a>
+                      </td>
 
                   </tr>
                 </tbody>
@@ -198,6 +220,24 @@
     </div>
   </div>
 </div>
+
+<ng-template #modalChannelInfo let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-info" id="myModalLabel160">Thông tin kho</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <p>Tên kho: {{ showChannel?.name }}</p>
+    <p>Mã kho: {{ showChannel?.code }}</p>
+  </div>
+</ng-template>
 
 <ng-template #modalCreate let-modal>
   <div class="modal-header">
@@ -440,4 +480,75 @@
       <button type="submit" class="btn btn-primary" rippleEffect>Lưu</button>
     </div> -->
   </form>
+</ng-template>
+
+
+<ng-template #modalUploadData let-modal >
+  <div class="modal-header">
+    <h5 class="modal-title text-info" id="myModalLabel160">
+      Tải lên dữ liệu lên
+    </h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus *blockUI="'item-block'">
+    <ng-container *ngIf="listProductFail.length < 1">
+      <div class="form-group">
+        <i class="fa fa-upload" aria-hidden="true"></i>
+        <input type="file" (change)="onFileChangeExcel($event)" />
+        <label>Tải lên file excel</label>
+  
+        <a href="/assets/upload-product-kit.xlsx" class="ml-2">File mẫu tại đây</a>
+      </div>  
+    </ng-container>      
+
+    <ng-container *ngIf="listProductFail.length > 0">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-warning"><i data-feather="alert-triangle" class="cursor-pointer"></i>{{ listProductFail.length }} sản phẩm không KITTING được,
+           
+            <a csvLink [data]="listProductFailExport" class="btn btn-outline-warning float-right btn-sm"
+              rippleEffect><i data-feather="download" class="cursor-pointer"></i></a>
+          </p>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ngx-datatable [rows]="listProductFail" [rowHeight]="58" class="bootstrap core-bootstrap"
+            [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+            [limit]="basicSelectedOption">
+            <ngx-datatable-column name="Msisdn" prop="msisdn"></ngx-datatable-column>                       
+            <ngx-datatable-column name="Serial" prop="serial"></ngx-datatable-column>
+
+          </ngx-datatable>
+        </div>
+      </div>
+  
+    </ng-container>
+
+  </div>
+  <div class="modal-footer">
+    <button
+    *ngIf="listProductFail.length < 1"
+      (click)="onSubmitUpload()"
+      type="submit"
+      [disabled]="submittedUpload"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      <span
+        class="spinner-border spinner-border-sm"       
+        aria-hidden="true"
+        *ngIf="submittedUpload"
+      ></span>
+      Submit
+    </button>
+  </div>
 </ng-template>

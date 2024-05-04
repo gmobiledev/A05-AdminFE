@@ -122,13 +122,15 @@
                                  (click)="modalOpen(modalUpdatePriceBatch)" class="btn btn-success mb-1 mr-5" rippleEffect><span [data-feather]="'dollar-sign'"
                                    ></span>Cập nhật giá bán bằng file</button>
                                   
+                                   <ng-container *ngIf="currentChannel && currentChannel.parent_id">
                                   <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
-                                 (click)="onUpdateStatusProduct(productStatus.STATUS_AVAILABLE)" class="btn btn-warning mb-1 mr-2" rippleEffect><span [data-feather]="'unlock'"
-                                    ></span>Mở bán số</button>
+                                    (click)="onUpdateStatusProduct(productStatus.STATUS_AVAILABLE)" class="btn btn-warning mb-1 mr-2" rippleEffect><span
+                                      [data-feather]="'unlock'"></span>Mở bán số</button>
                                   
-                                    <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
-                                 (click)="onUpdateStatusProduct(productStatus.LOCKED_BY_ADMIN)" class="btn btn-warning mb-1 mr-2" rippleEffect><span [data-feather]="'lock'"
-                                    ></span>Khóa số</button>
+                                  <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
+                                    (click)="onUpdateStatusProduct(productStatus.LOCKED_BY_ADMIN)" class="btn btn-warning mb-1 mr-2" rippleEffect><span
+                                      [data-feather]="'lock'"></span>Khóa số</button>
+                                  </ng-container>
                             </div>
                         </div>
                     </div>

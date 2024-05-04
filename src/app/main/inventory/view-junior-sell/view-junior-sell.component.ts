@@ -232,6 +232,11 @@ export class ViewJuniorSellComponent implements OnInit {
             link: '/'
           },
           {
+            name: 'Danh sách kho',
+            isLink: true,
+            link: '/inventory/sell-chanel'
+          },
+          {
             name: 'Danh sách kho con',
             isLink: false
           }

@@ -53,7 +53,8 @@ export class NewBatchExportComponent implements OnInit {
     brand: '',
     category_id: '',
     take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
-    level: ''
+    level: '',
+    batch_type: BatchType.OUTPUT
   }
   seachMyChannel = {
     user_id: '',
@@ -115,6 +116,7 @@ export class NewBatchExportComponent implements OnInit {
     attached_file_content: '',
     file_ext: ''
   };
+  selectedFiles;
   currentExcelFileSearch;
 
   constructor(
@@ -326,6 +328,10 @@ export class NewBatchExportComponent implements OnInit {
       this.alertService.showMess("Vui lòng chọn kho cần thu hồi");
       return;
     }
+    if(!this.selectedFiles && this.typeCurrentBatch == BatchType.RETRIEVE) {
+      this.alertService.showMess("Vui lòng đính kèm chứng từ");
+      return;
+    }
     if(this.typeCurrentBatch == BatchType.OUTPUT) {
       this.createBatchOutput();
     } else if (this.typeCurrentBatch == BatchType.RETRIEVE) {
@@ -352,10 +358,19 @@ export class NewBatchExportComponent implements OnInit {
     dataCreateBatchExport.user_id = parseInt(this.searchForm.admin_id);
     dataCreateBatchExport.title = this.createBatchExportForm.title;
     dataCreateBatchExport.quantity = this.selectedItems.length;
-    // if(!dataCreateBatchExport.channel_id || !dataCreateBatchExport.to_channel_id) {
-    //   return;
-    // }
+    
+    let formDataCreate = new FormData();
+    for(let key in dataCreateBatchExport) {
+      formDataCreate.append(key, dataCreateBatchExport[key]);
+    }
+    if(this.selectedFiles && this.selectedFiles.length > 0) {
+      for(let itemF of this.selectedFiles) {
+        formDataCreate.append("files", itemF);
+      }
+    }
+    
     if(this.selectedItems.length < 1) {
+      this.submitted = false;
       this.alertService.showMess("Vui lòng chọn sản phẩm");
       return;
     }
@@ -363,14 +378,16 @@ export class NewBatchExportComponent implements OnInit {
     this.submitted = true;
     this.sectionBlockUI.start();
     try {
-      resCreateBatch = await this.inventoryService.createBatchExport(dataCreateBatchExport).toPromise();
+      resCreateBatch = await this.inventoryService.createBatchExport(formDataCreate).toPromise();
       if(!resCreateBatch.status) {
         this.alertService.showMess(resCreateBatch.message);
+        this.submitted = false;
         this.sectionBlockUI.stop();
         return;
       }
     } catch (error) {
       this.alertService.showMess(error);
+      this.submitted = false;
       this.sectionBlockUI.stop();
     }
     let dataUpdateBatch = new UpdateBatchExportDto();
@@ -380,6 +397,7 @@ export class NewBatchExportComponent implements OnInit {
     dataUpdateBatch.action = 'ADD';
     try {
       resUpdateBatch = await this.inventoryService.updateBatchExport(dataUpdateBatch).toPromise();
+      this.submitted = false;
       if(!resUpdateBatch.status) {
         this.alertService.showMess(resUpdateBatch.message);
         this.sectionBlockUI.stop();
@@ -390,6 +408,7 @@ export class NewBatchExportComponent implements OnInit {
       this.router.navigate(['/inventory/batch']);
       return;
     } catch (error) {
+      this.submitted = false;
       this.alertService.showMess(error);
       this.sectionBlockUI.stop();
     }
@@ -400,6 +419,7 @@ export class NewBatchExportComponent implements OnInit {
    */
   async createBatchRetrieve() {
     if (this.selectedItems.length < 1) {
+      this.submitted = false;
       this.alertService.showMess("Vui lòng chọn sản phẩm");
       return;
     }
@@ -415,11 +435,22 @@ export class NewBatchExportComponent implements OnInit {
     dataCreateBatch.files = this.dataRetrieveFile.attached_file_content;
     dataCreateBatch.file_ext = this.dataRetrieveFile.file_ext;
 
+    let formDataCreate = new FormData();
+    for(let key in dataCreateBatch) {
+      formDataCreate.append(key, dataCreateBatch[key]);
+    }
+    if(this.selectedFiles && this.selectedFiles.length > 0) {
+      for(let itemF of this.selectedFiles) {
+        formDataCreate.append("files", itemF);
+      }
+    }    
+
     let resCreateBatch;
     this.submitted = true;
     this.sectionBlockUI.start();
     try {
-      resCreateBatch = await this.inventoryService.createBatchRetrieve(dataCreateBatch).toPromise();
+      resCreateBatch = await this.inventoryService.createBatchRetrieve(formDataCreate).toPromise();
+      this.submitted = false;
       this.sectionBlockUI.stop();
       if (!resCreateBatch.status) {
         this.alertService.showMess(resCreateBatch.message);        
@@ -430,25 +461,29 @@ export class NewBatchExportComponent implements OnInit {
 
     } catch (error) {
       this.alertService.showMess(error);
+      this.submitted = false;
       this.sectionBlockUI.stop();
     }
   }
 
   async onSelectFileFront(event) {
-    if (event.target.files && event.target.files[0]) {
-      console.log(event.target.files[0]);
-      const ext = event.target.files[0].type;
-      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-        this.dataRetrieveFile.file_ext = 'png';
-        this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
-        let img = await this.commonService.resizeImage(event.target.files[0]);
-        this.dataRetrieveFile.attached_file_content = (img + '').replace('data:image/png;base64,', '')
-      } else if (ext.includes('pdf')) {
-        this.dataRetrieveFile.file_ext = 'pdf';
-        this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
-        this.dataRetrieveFile.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+    if(this.typeCurrentBatch == this.listBatchType.RETRIEVE) {
+      if (event.target.files && event.target.files[0]) {
+        console.log(event.target.files[0]);
+        const ext = event.target.files[0].type;
+        if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+          this.dataRetrieveFile.file_ext = 'png';
+          this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
+          let img = await this.commonService.resizeImage(event.target.files[0]);
+          this.dataRetrieveFile.attached_file_content = (img + '').replace('data:image/png;base64,', '')
+        } else if (ext.includes('pdf')) {
+          this.dataRetrieveFile.file_ext = 'pdf';
+          this.dataRetrieveFile.attached_file_name = event.target.files[0].name;
+          this.dataRetrieveFile.attached_file_content = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+        }
       }
     }
+    this.selectedFiles = event.target.files;
     // if (event.target.files && event.target.files[0]) {
     //   let img = await this.commonService.resizeImage(event.target.files[0]);
     //   this.dataCreatePayment.file = (img+'').replace('data:image/png;base64,', '')
@@ -533,6 +568,7 @@ export class NewBatchExportComponent implements OnInit {
     this.typeCurrentBatch = data && data.type ? data.type : BatchType.OUTPUT;
     console.log(data, this.typeCurrentBatch);
     if(this.typeCurrentBatch == BatchType.RETRIEVE) {
+      this.searchForm.batch_type = BatchType.RETRIEVE;
       this.contentHeader.headerTitle = 'Thu hồi';
       this.contentHeader.breadcrumb.links[2].name = 'Thu hồi';
       this.titleFromChannel = 'Kho cần thu hồi';

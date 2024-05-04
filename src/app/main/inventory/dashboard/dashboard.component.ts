@@ -119,21 +119,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           from: 0,
           to: 30,
           color: '#f51800',
-          name: '< 30%'
+          name: 'Chưa đạt SL bàn giao'
       }, {
           from: 30,
           to: 70,
           color: '#d17e31',
-          name: '30% - 70%'
+          name: 'Chưa đạt SL TB hoạt động'
       }, {
           from: 70,
           to: 80,
           color: '#e6dc2e',
-          name: '70% - 80%'
+          name: 'Chưa đạt SL DK TTTB'
       }, {
           from: 81,
           color: '#2ee640',
-          name: '> 80%'
+          name: 'Đạt'
       }]
         // min: 0,
         // max: 100,
@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   
       legend: {
         layout: 'vertical',
-        align: 'left',
+        align: 'center',
         verticalAlign: 'bottom'
       },
   
@@ -239,8 +239,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       console.log('success get');
       this.listData = res.data.items;
       console.log(this.listData);
-      this.listData = res.data.items.map(x => { return {name: x.name, value: x.value ? (x.value * 100).toFixed(2) : 0, key: x.key} });
-      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value:  x.value ? (x.value * 100).toFixed(2) : 0, key: x.key} });
+      this.listData = res.data.items.map(x => { return {name: x.name, value: x.value ? (x.value * 100).toFixed(2) : 0, key: x.key, active: x.active, total: x.total} });
+      this.listDataTmp = res.data.items.map(x => { return {name: x.name, value:  x.value ? (x.value * 100).toFixed(2) : 0, key: x.key, active: x.active, total: x.total} });
       this.listData.sort((a,b) => b.value - a.value);
       this.listDataTmp.sort((a,b) => b.value - a.value);
       this.data = [];

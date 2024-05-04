@@ -23,7 +23,7 @@ export class ListBatchProductsComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   
   public contentHeader: any = {
-    headerTitle: 'Yêu cầu của đại lý',
+    headerTitle: 'Chi tiết',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -34,7 +34,12 @@ export class ListBatchProductsComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Yêu cầu của đại lý',
+          name: 'Danh sách phiếu',
+          isLink: true,
+          link: '/inventory/batch'
+        },
+        {
+          name: 'Chi tiết',
           isLink: false
         }
       ]
@@ -118,8 +123,7 @@ export class ListBatchProductsComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       
-      this.contentHeader.headerTitle = 'Danh sách';
-      this.contentHeader.breadcrumb.links[1] = 'Danh sách';
+      this.contentHeader.headerTitle = 'Danh sách chi tiết';      
 
       this.getData();
     })
