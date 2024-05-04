@@ -117,17 +117,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       colorAxis: {
         dataClasses: [{
           from: 0,
-          to: 24,
+          to: 25,
           color: '#f51800',
           name: 'Chưa đạt SL bàn giao'
       }, {
-          from: 30,
-          to: 49,
+          from: 25,
+          to: 50,
           color: '#d17e31',
           name: 'Chưa đạt SL TB hoạt động'
       }, {
           from: 50,
-          to: 74,
+          to: 75,
           color: '#e6dc2e',
           name: 'Chưa đạt SL DK TTTB'
       }, {
