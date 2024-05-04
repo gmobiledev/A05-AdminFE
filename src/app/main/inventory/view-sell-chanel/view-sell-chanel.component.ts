@@ -18,6 +18,7 @@ import { CreateAgentDto, CreateAgentServiceDto, CreateUserDto, UpdateStatusAgent
 import { UserService } from 'app/auth/service';
 import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-view-sell-chanel',
@@ -600,6 +601,36 @@ export class ViewSellChanelComponent implements OnInit {
       })
     }
     
+  }
+
+  async onExportExcel() {
+
+    this.sectionBlockUI.start();
+    this.inventoryService.exportExcelChannelProducts(this.searchForm).subscribe((res: HttpResponse<Blob>) => {
+      console.log(res);
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      // const contentDisposition = res.headers.get('content-disposition');
+
+      // // Extract the file name
+      // console.log(contentDisposition);
+      // const filename = contentDisposition
+      //   .split(';')[1]
+      //   .split('filename')[1]
+      //   .split('=')[1]
+      //   .trim()
+      //   .match(/"([^"]+)"/)[1];
+      a.download = `Danhsachsokho_${this.currentChannel.code}`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+      this.sectionBlockUI.stop();
+    })
+
   }
 
 
