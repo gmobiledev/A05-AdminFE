@@ -182,6 +182,10 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports`, data);
   }
 
+  summaryReportByAdmin(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/summarize-reports-byadmin`, data);
+  }
+
   viewFile(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/common/file/get-file`, data);
   }

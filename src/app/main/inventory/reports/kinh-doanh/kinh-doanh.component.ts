@@ -46,7 +46,9 @@ export class KinhDoanhComponent implements OnInit {
   enableSummary = true;
   summaryPosition = 'bottom';
   ColumnMode = ColumnMode
-  dataToExport = []
+  dataToExport = [];
+  listCurrentAction;
+  currentUser;
 
   constructor(
     private readonly inventoryServie: InventoryService,
@@ -63,37 +65,73 @@ export class KinhDoanhComponent implements OnInit {
   }
 
   getData() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.listCurrentAction = this.currentUser.actions;
     this.sectionBlockUI.start();
-    this.inventoryServie.summaryReport(this.searchForm).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.list = res.data.items;
-      this.totalItems = res.data.count;
-      this.sum(this.list);
+    if (this.listCurrentAction.find(itemX => itemX.includes('sell-channel/s99SummarizeReports'))) {
+      this.inventoryServie.summaryReport(this.searchForm).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.list = res.data.items;
+        this.totalItems = res.data.count;
+        this.sum(this.list);
 
-      this.dataToExport = this.list.map((item, index) => {
-        return {
-          'STT': index + 1,
-          'TÊN ĐƠN VỊ': item.name,
-          'SL ĐĂNG KÝ': item.imported_quantility,
-          'SL BÀN GIAO': item.level,
-          'TB HOẠT ĐỘNG': item.sum_active,
-          'HOÀN THIỆN TTTB': item.sum_completed_infor_sim,
-          'DOANH THU': item.sum_revenue
-        }
+        this.dataToExport = this.list.map((item, index) => {
+          return {
+            'STT': index + 1,
+            'TÊN ĐƠN VỊ': item.name,
+            'SL ĐĂNG KÝ': item.imported_quantility,
+            'SL BÀN GIAO': item.level,
+            'TB HOẠT ĐỘNG': item.sum_active,
+            'HOÀN THIỆN TTTB': item.sum_completed_infor_sim,
+            'DOANH THU': item.sum_revenue
+          }
+        })
+        this.dataToExport.push({
+          'STT': "",
+          'TÊN ĐƠN VỊ': "Tổng",
+          'SL ĐĂNG KÝ': this.sumItems.imported_quantility,
+          'SL BÀN GIAO': this.sumItems.level,
+          'TB HOẠT ĐỘNG': this.sumItems.sum_active,
+          'HOÀN THIỆN TTTB': this.sumItems.sum_completed_infor_sim,
+          'DOANH THU': this.sumItems.sum_revenue
+        })
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(error);
       })
-      this.dataToExport.push({
-        'STT': "",
-        'TÊN ĐƠN VỊ': "Tổng",
-        'SL ĐĂNG KÝ': this.sumItems.imported_quantility,
-        'SL BÀN GIAO': this.sumItems.level,
-        'TB HOẠT ĐỘNG': this.sumItems.sum_active,
-        'HOÀN THIỆN TTTB': this.sumItems.sum_completed_infor_sim,
-        'DOANH THU': this.sumItems.sum_revenue
+    } else {
+      this.inventoryServie.summaryReportByAdmin(this.searchForm).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.list = res.data.items;
+        this.totalItems = res.data.count;
+        this.sum(this.list);
+
+        this.dataToExport = this.list.map((item, index) => {
+          return {
+            'STT': index + 1,
+            'TÊN ĐƠN VỊ': item.name,
+            'SL ĐĂNG KÝ': item.imported_quantility,
+            'SL BÀN GIAO': item.level,
+            'TB HOẠT ĐỘNG': item.sum_active,
+            'HOÀN THIỆN TTTB': item.sum_completed_infor_sim,
+            'DOANH THU': item.sum_revenue
+          }
+        })
+        this.dataToExport.push({
+          'STT': "",
+          'TÊN ĐƠN VỊ': "Tổng",
+          'SL ĐĂNG KÝ': this.sumItems.imported_quantility,
+          'SL BÀN GIAO': this.sumItems.level,
+          'TB HOẠT ĐỘNG': this.sumItems.sum_active,
+          'HOÀN THIỆN TTTB': this.sumItems.sum_completed_infor_sim,
+          'DOANH THU': this.sumItems.sum_revenue
+        })
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(error);
       })
-    }, error => {
-      this.sectionBlockUI.stop();
-      this.alertService.showMess(error);
-    })
+    }
+    
   }
 
   sum(data) {
