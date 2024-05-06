@@ -244,18 +244,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.listData.sort((a,b) => b.value - a.value);
       this.listDataTmp.sort((a,b) => b.value - a.value);
       this.data = [];
-      for(let item of this.mapData.features) {
-        const index = this.data.findIndex(x => x.key == item.properties.id);
-        const seData = this.listData.find(x => x.key == item.properties.id);
-        if(index != -1) {
-          this.data[index].value += (seData ? seData.value : 0)
-        } else {
-          this.data.push({
-            id: item.properties.id,
-            value: seData ? seData.value : 0
-          })
-        }        
+      for(let item of this.mapData.features) {       
+        const list = this.listData.filter(x => x.key == item.properties.id);        
+        const value = list.length > 0 ? (list.reduce((n, {value}) => parseFloat(n) + parseFloat(value), 0) / list.length).toFixed(3) : 0;
+        // console.log(list, value);
+        this.data.push({
+          id: item.properties.id,
+          value: value,
+        })      
       }
+      
       if(this.searchForm.province_id && this.searchForm.province_id != undefined) {
         var id = this.searchForm.province_id;
         const temp = this.listData.filter(function (d) {
