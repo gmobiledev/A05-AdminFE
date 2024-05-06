@@ -147,11 +147,13 @@
                 <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
                     <button *ngIf="data?.batch?.status == batchStatus.INIT
                                             && checkAction('batch/retrieve/ke-toan/approve')
+                                            && checkSellAdminAction(listAction.CONFIRM_RETRIEVE)
                                             " (click)="onViewModalApprove(modalApprove)" class="btn btn-info  mb-2 mr-2">
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
             
                     <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/ke-toan/reject')
+                    && checkSellAdminAction(listAction.CONFIRM_RETRIEVE)
                                             " (click)="onApproveRetrieve(data?.batch, batchStatus.CANCEL_BY_ACCOUNTANT, 'ketoan')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
@@ -159,11 +161,13 @@
             
                     <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
                                             && checkAction('batch/retrieve/van-phong/approve')
+                                            && checkSellAdminAction(listAction.APPROVE_RETRIEVE)
                                             " (click)="onViewModalApprove(modalApprove)" class="btn btn-info  mb-2 mr-2">
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
             
                     <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT && checkAction('batch/retrieve/van-phong/reject')
+                    && checkSellAdminAction(listAction.APPROVE_RETRIEVE)
                                     " (click)="onApproveRetrieve(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
