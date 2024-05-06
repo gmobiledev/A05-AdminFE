@@ -39,7 +39,8 @@ export class KinhDoanhComponent implements OnInit {
   searchForm = {
     page: 1,
     page_size: 200,
-    reference_code: ''
+    reference_code: '',
+    keyword: ''
   }
   totalItems;
   sumItems;
