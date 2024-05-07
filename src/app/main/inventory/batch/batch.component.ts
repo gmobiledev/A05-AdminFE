@@ -84,6 +84,7 @@ export class BatchComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   count: any;
   public checkDup: boolean = false;
+  listAdminSellAction;
 
   constructor(
     private route: ActivatedRoute,
@@ -114,6 +115,9 @@ export class BatchComponent implements OnInit {
 
   modalOpen(modal, item = null) {
     if (item) {
+      this.inventoryService.getAdminsSell({channel_id: item.channel_id}).subscribe(res => {
+        this.listAdminSellAction = res.data;
+      })
       this.titleModal = "Tải dữ liệu";
       this.isCreate = false;
       this.selectedItem = item;
@@ -423,7 +427,7 @@ export class BatchComponent implements OnInit {
         this.sectionBlockUI.stop();
         console.log("ERRRR");
         console.log(error);
-      })
+      });
     } else {
       this.inventoryService.findBatchUser(paramSearch).subscribe(res => {
         this.sectionBlockUI.stop();
@@ -445,5 +449,8 @@ export class BatchComponent implements OnInit {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
+  checkSellAdminAction(action) {
+    return this.listAdminSellAction.find(x => x.admin_id == this.currentUser.id && x.action == action) ? true : false
+  }
 
 }

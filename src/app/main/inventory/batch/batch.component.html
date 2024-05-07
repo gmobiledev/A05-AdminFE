@@ -457,11 +457,12 @@
   </div>
 
   <div class="modal-footer">
-    <div class="text-center">
+    <div class="text-center" *ngIf="listAdminSellAction">
       
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
         && checkAction('batch/ke-toan/update-status')
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED_BY_ACCOUNTANT)"
         class="btn btn-info btn-sm mb-2"
@@ -472,6 +473,7 @@
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
         && checkAction('batch/ke-toan/update-status')
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_ACCOUNTANT)"
         class="btn btn-danger btn-sm mb-2"
@@ -491,6 +493,7 @@
       <button
         *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
         && checkAction('batch/van-phong/update-status')
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LAST)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED)"
         class="ml-2 btn btn-info btn-sm mb-2"
@@ -501,6 +504,7 @@
       <button
         *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
         && checkAction('batch/van-phong/update-status')
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LAST)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_OFFICE)"
         class="ml-2 btn btn-danger btn-sm mb-2"
