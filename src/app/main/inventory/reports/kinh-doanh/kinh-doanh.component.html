@@ -5,6 +5,28 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <form (ngSubmit)="loadPage(1)">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input
+                                    type="text"
+                                    name="keyword"
+                                    placeholder="Nhập từ khóa tìm kiếm"
+                                    [(ngModel)]="searchForm.keyword"
+                                    class="form-control"                 
+                                  />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-info">
+                                      Lọc kết quả <span [data-feather]="'search'"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                         <div class="row">
                             <div class="col-12">
                                 <a csvLink [data]="dataToExport" class="btn btn-outline-warning float-right btn-sm"
