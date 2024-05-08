@@ -50,6 +50,7 @@ export class KinhDoanhComponent implements OnInit {
   dataToExport = [];
   listCurrentAction;
   currentUser;
+  isExportFile = false;
 
   constructor(
     private readonly inventoryServie: InventoryService,
@@ -71,6 +72,7 @@ export class KinhDoanhComponent implements OnInit {
     this.sectionBlockUI.start();
     if (this.listCurrentAction.find(itemX => itemX.includes('sell-channel/s99SummarizeReports'))) {
       this.inventoryServie.summaryReport(this.searchForm).subscribe(res => {
+        this.isExportFile = true;
         this.sectionBlockUI.stop();
         this.list = res.data.items;
         this.totalItems = res.data.count;
@@ -132,7 +134,7 @@ export class KinhDoanhComponent implements OnInit {
         this.alertService.showMess(error);
       })
     }
-    
+
   }
 
   sum(data) {
@@ -162,6 +164,25 @@ export class KinhDoanhComponent implements OnInit {
     let data = this.list;
   }
 
+  // onSubmitExportExcelReport() {
+  //   let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+  //   const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
+  //   ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+  //   this.searchForm.date_range = daterangeString;
+  //   this.telecomService.exportExcelReport(this.searchForm).subscribe(res => {
+  //     var newBlob = new Blob([res.body], { type: res.body.type });
+  //     let url = window.URL.createObjectURL(newBlob);
+  //     let a = document.createElement('a');
+  //     document.body.appendChild(a);
+  //     a.setAttribute('style', 'display: none');
+  //     a.href = url;
+  //     a.download = "Báo cáo đấu nối";
+  //     a.click();
+  //     window.URL.revokeObjectURL(url);
+  //     a.remove();
+  //   })
+  // }
+
   exportExcelReport() {
     this.inventoryServie.xuatBaoCaoTongHop(this.searchForm).subscribe(res => {
       var newBlob = new Blob([res.body], { type: res.body.type });
@@ -170,7 +191,7 @@ export class KinhDoanhComponent implements OnInit {
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');
       a.href = url;
-      a.download = "Báo cáo kho sim";
+      a.download = "Báo cáo tổng hợp S99";
       a.click();
       window.URL.revokeObjectURL(url);
       a.remove();
