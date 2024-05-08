@@ -67,7 +67,7 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       if (this.dataInput.people.identification_expire_date !== null && this.dataInput.people.identification_expire_date !== '') {
         this.formPeople.controls.identification_expire_date_text.setValue(this.commonService.formatDateFromTimestamp(this.dataInput.people.identification_expire_date))
       }
-      
+
       this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
       this.formPeople.controls.residence_address.setValue(this.dataInput.address)
       this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
@@ -162,7 +162,9 @@ export class FormPersonalComponent implements OnInit, OnChanges {
   async onSelectFileSignature(event) {
     if (event.target.files && event.target.files[0]) {
       const image = await this.commonService.resizeImage(event.target.files[0]) + '';
+      this.formPeople.controls['identification_signature_file'].setValue(image.replace('data:image/png;base64,', ''));
       this.formPeople.controls['signature'].setValue(image.replace('data:image/png;base64,', ''));
+      this.imageSignature = image.replace('data:image/png;base64,', '')
     }
   }
 
