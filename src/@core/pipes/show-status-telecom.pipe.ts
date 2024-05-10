@@ -61,7 +61,7 @@ export class ShowStatusTelecomPipe implements PipeTransform {
                 html = '<span class="badge badge-pill badge-light-danger mr-1">Đã Thanh toán & Thu hồi</span>'
                 break;
             case TaskTelecomStatus.STATUS_WAITING_CONTRACT:
-                html = '<span class="badge badge-pill badge-light-danger mr-1">Chờ ký Phiếu/HĐ</span>'
+                html = '<span class="badge badge-pill badge-light-info mr-1">Chờ ký Phiếu/HĐ</span>'
                 break;
 
             default:
