@@ -96,7 +96,8 @@ export class KinhDoanhComponent implements OnInit {
           'SL BÀN GIAO': this.sumItems.level,
           'TB HOẠT ĐỘNG': this.sumItems.sum_active,
           'HOÀN THIỆN TTTB': this.sumItems.sum_completed_infor_sim,
-          'DOANH THU': this.sumItems.sum_revenue
+          'DT TIÊU DÙNG': this.sumItems.sum_revenue,
+          'DT TOPUP': this.sumItems.topup
         })
       }, error => {
         this.sectionBlockUI.stop();
@@ -127,7 +128,8 @@ export class KinhDoanhComponent implements OnInit {
           'SL BÀN GIAO': this.sumItems.level,
           'TB HOẠT ĐỘNG': this.sumItems.sum_active,
           'HOÀN THIỆN TTTB': this.sumItems.sum_completed_infor_sim,
-          'DOANH THU': this.sumItems.sum_revenue
+          'DT TIÊU DÙNG': this.sumItems.sum_revenue,
+          'DT TOPUP': this.sumItems.topup
         })
       }, error => {
         this.sectionBlockUI.stop();
