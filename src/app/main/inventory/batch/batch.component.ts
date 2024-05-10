@@ -418,7 +418,7 @@ export class BatchComponent implements OnInit {
       }
     }
     this.sectionBlockUI.start();
-    if(this.checkAction('batch/ke-toan/update-status') || this.checkAction('batch/van-phong/update-status')) {
+    if(this.checkAction('staff/list')) {
       this.inventoryService.findBatchStaff(paramSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.list = res.data.items;
