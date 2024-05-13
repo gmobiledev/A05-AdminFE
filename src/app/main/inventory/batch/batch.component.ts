@@ -68,6 +68,11 @@ export class BatchComponent implements OnInit {
     files: '',
     file_ext: '',
     note: '',
+    code: '',
+    name: '',
+    unit: '',
+    key_from: '',
+    key_to: '',
     is_force_push: true,
   }
 
@@ -148,6 +153,11 @@ export class BatchComponent implements OnInit {
       files: '',
       file_ext: '',
       note: '',
+      code: '',
+      name: '',
+      unit: '',
+      key_from: '',
+      key_to: '',
       is_force_push: true,
     }
     this.getData();
