@@ -257,10 +257,7 @@ export class NewBatchExportComponent implements OnInit {
       return;
     }
     this.sectionBlockUI.start();
-    if (this.typeCurrentBatch == BatchType.RETRIEVE) {
-      if(this.searchFormProduct.take > 3000) {
-        this.searchFormProduct.take = 3000;
-      }
+    if (this.typeCurrentBatch == BatchType.RETRIEVE) {      
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;

@@ -73,6 +73,8 @@ export class NewSellChanelComponent implements OnInit {
     attached_file_name: '',
     attached_file_content: '',
     customer_id: 0,
+    approval_1: 0,
+    approval_2: 0,
   }
 
   constructor(
