@@ -264,6 +264,10 @@ export class InventoryService {
   getAdminsSell(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/admins`, {params: params});
   }
+
+  getAdminsSellKhoTong(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/kho-tong/admins`, {params: params});
+  }
   
   exportExcelChannelProducts(dto: any): Observable<any> {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/product/channel/export-excel`, dto, { observe: 'response', responseType: 'blob' });

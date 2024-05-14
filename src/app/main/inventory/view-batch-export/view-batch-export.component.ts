@@ -180,7 +180,14 @@ export class ViewBatchExportComponent implements OnInit {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
-  checkSellAdminAction(action) {
+  checkSellAdminAction(action, has = false) {
+    if(has) {
+      return !this.listAdminSellAction.find(x => x.action == action ) || this.listAdminSellAction.find(x => (x.admin_id == this.currentUser.id || x.admin_id == this.data.batch.created_by ) && x.action == action) ? true : false
+    }
+    return this.listAdminSellAction.find(x => x.admin_id != this.data.batch.created_by && x.action == action) ? true : false
+  }
+
+  checkHasPermissionAction(action) {
     return this.listAdminSellAction.find(x => x.admin_id == this.currentUser.id && x.action == action) ? true : false
   }
 

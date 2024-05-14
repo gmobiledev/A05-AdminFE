@@ -89,11 +89,15 @@
                 </button>
 
                 <a routerLink="/inventory/new-batch-export"
-                *ngIf="checkAction('batch/export/create')"
+                *ngIf="checkAction('batch/export/create')
+                && checkHasPermissionAction(listAdminSellActionCurrent, listAction.CREATE_EXPORT)
+                "
                 class="btn btn-info mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
 
                 <a routerLink="/inventory/batch/retrieve"
-                *ngIf="checkAction('batch/retrieve-channel')"
+                *ngIf="checkAction('batch/retrieve-channel') 
+                && checkHasPermissionAction(listAdminSellActionCurrent, listAction.CREATE_RETRIEVE)
+                "
                 class="btn btn-info mr-2">Thu hồi về kho cha<span [data-feather]="'rotate-ccw'"></span></a>
               </div>
             </div>
@@ -511,7 +515,8 @@
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
         && checkAction('batch/ke-toan/update-status')
-        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)        
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LEVEL11)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED_BY_ACCOUNTANT)"
         class="btn btn-info btn-sm mb-2"
@@ -522,7 +527,8 @@
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
         && checkAction('batch/ke-toan/update-status')
-        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)        
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LEVEL11)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_ACCOUNTANT)"
         class="btn btn-danger btn-sm mb-2"
@@ -540,9 +546,11 @@
       </button> -->
 
       <button
-        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        *ngIf="
+        (itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        || (itemBatch.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11, true)))                                            
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LAST)
         && checkAction('batch/van-phong/update-status')
-        && checkSellAdminAction(listAction.APPROVE_IMPORT_LAST)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED)"
         class="ml-2 btn btn-info btn-sm mb-2"
@@ -551,9 +559,10 @@
       </button>
 
       <button
-        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        *ngIf="(itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        || (itemBatch.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11, true)))                                            
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LAST)
         && checkAction('batch/van-phong/update-status')
-        && checkSellAdminAction(listAction.APPROVE_IMPORT_LAST)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_OFFICE)"
         class="ml-2 btn btn-danger btn-sm mb-2"
@@ -561,7 +570,7 @@
       <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
       </button>
 
-      <button
+      <!-- <button
         *ngIf="itemBatch.status == batchStatus.APPROVED
         && checkAction('batch/update-status-complete')
         "
@@ -569,7 +578,7 @@
         class="ml-2 btn btn-info btn-sm mb-2"
       >
       <i data-feather="check" class="text-white cursor-pointer"></i> Hoàn thành
-      </button>
+      </button> -->
     </div>
   </div>
 </ng-template>

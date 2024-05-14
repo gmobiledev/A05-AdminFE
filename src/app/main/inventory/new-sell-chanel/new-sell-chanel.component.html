@@ -177,11 +177,11 @@
 
                 <div class="form-group row mt-1">
                   <label for="commune" class="col-md-3 col-form-label"
-                    >Người duyệt 1</label
+                    >Người tạo</label
                   >
                   <div class="col-md-9">
-                    <ng-select name="" [(ngModel)]="dataSell.approval_1">
-                      <ng-option value="">-- Chọn người duyệt --</ng-option>
+                    <ng-select name="" [(ngModel)]="dataSell.create_export">
+                      <ng-option value="">-- Chọn tài khoản --</ng-option>
                       <ng-option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}
                       </ng-option>
@@ -191,11 +191,25 @@
 
                 <div class="form-group row mt-1">
                   <label for="commune" class="col-md-3 col-form-label"
-                    >Người duyệt 2</label
+                    >Kế toán</label
+                  >
+                  <div class="col-md-9">
+                    <ng-select name="" [(ngModel)]="dataSell.approval_1">
+                      <ng-option value="">-- Chọn tài khoản --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                        {{ p.username }}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-1">
+                  <label for="commune" class="col-md-3 col-form-label"
+                    >Người duyệt xuất kho/thu hồi</label
                   >
                   <div class="col-md-9">
                     <ng-select name="" [(ngModel)]="dataSell.approval_2">
-                      <ng-option value="">-- Chọn người duyệt --</ng-option>
+                      <ng-option value="">-- Chọn tài khoản --</ng-option>
                       <ng-option *ngFor="let p of listAdmin" [value]="p.id">
                         {{ p.username }}
                       </ng-option>
