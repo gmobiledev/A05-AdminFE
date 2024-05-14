@@ -269,6 +269,17 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
+                      <a
+                        class="ml-1"
+                        [routerLink]="['/inventory/report/ton-kho']"
+                        [queryParams]="{ channel_id: item.id }"
+                        title="Báo cáo tồn kho"
+                      >
+                        <i
+                          data-feather="file-text"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>

@@ -1,0 +1,90 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <form (ngSubmit)="loadPage(1)">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm"
+                                            [(ngModel)]="searchForm.keyword" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-info">
+                                            Lọc kết quả <span [data-feather]="'search'"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button type="button" (click)="exportExcelReport()"
+                                            class="btn btn-block btn-success">Xuất
+                                            báo cáo excel <span [data-feather]="'file'"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Đầu Số</th>
+                                        <th>Hạng số</th>
+                                        <th>Xuất kho</th>
+                                        <!-- <th>ĐK TTTB</th> -->
+                                        <th>Tồn hiện tại</th>
+                                        <th>Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                                        </td>
+                                        <td>
+                                            {{item.dau_so}}
+                                        </td>
+                                        <td>
+                                            {{item.level}}
+                                        </td>
+                                        <td>
+                                            {{item.exported || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.total - item.exported || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.total || 0 | number}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tổng</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{sumItems?.exported || 0}}</td>
+                                        <!-- <td>{{sumItems?.exported || 0}}</td> -->
+                                        <td>{{sumItems?.total - sumItems?.exported || 0}}</td>
+                                        <td>{{sumItems?.total || 0}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

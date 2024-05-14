@@ -258,7 +258,7 @@ export class InventoryService {
   //   return this._http.get(`${environment.apiUrl}/admin/mcs/inventory/channel/exportSell_channelExcel`, dto, { observe: 'response', responseType: 'blob' });
   // }
   xuatBaoCaoTongHop(data): Observable<any> {
-    return this._http.get(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports/excelFormat`, { observe: 'response',responseType: 'blob' });
+    return this._http.get(`${environment.apiUrl}/admin/mcs/inventory/sell-channel/s99SummarizeReports/excelFormat`, { observe: 'response', responseType: 'blob' });
   }
 
   getAdminsSell(params) {
@@ -271,5 +271,11 @@ export class InventoryService {
   
   exportExcelChannelProducts(dto: any): Observable<any> {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/product/channel/export-excel`, dto, { observe: 'response', responseType: 'blob' });
+  }
+  reportInventory(dto: any) {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/report-inventory`, dto);
+  }
+  reportInventoryExcel(dto: any): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/report-inventory/excelFormat`, dto, { observe: 'response', responseType: 'blob' });
   }
 }

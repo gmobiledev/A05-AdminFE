@@ -165,11 +165,11 @@ const appRoutes: Routes = [
     path: 'pages',
     loadChildren: () => import('./main/pages/pages.module').then((m) => { return m.PagesModule })
   },
-  // {
-  //   path: 'ui',
-  //   loadChildren: () => import('./main/ui/ui.module').then((m) => {m.UIModule}),
-  //   canActivate: [AuthGuard]
-  // },
+  {
+    path: 'ui',
+    loadChildren: () => import('./main/ui/ui.module').then((m) => {m.UIModule}),
+    canActivate: [AuthGuard]
+  },
   {
     path: 'components',
     loadChildren: () => import('./main/components/components.module').then((m) => { return m.ComponentsModule }),
