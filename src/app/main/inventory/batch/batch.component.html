@@ -478,11 +478,15 @@
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block-detail'">
     <div class="row mb-2">
-      <div class="col-4"><span>Tiêu đề phiếu: </span> {{ batchdDetail?.title }}</div>
-      <div class="col-4">
-        <span>Số lượng: </span> {{ batchdDetail?.quantility }}
-      </div>
-      <div class="col-4"><span>Note: </span> {{ batchdDetail?.note }}</div>
+      <div class="col-6"><span>Tiêu đề phiếu: </span> <b>{{ batchdDetail?.title }}</b></div>      
+      <div class="col-6"><span>Note: </span> <b>{{ batchdDetail?.note }}</b></div>
+      <div class="col-6"><span>Mã hàng: </span> <b>{{ batchdDetail?.code }}</b></div>
+      <div class="col-6"><span>Tên hàng: </span> <b>{{ batchdDetail?.name }}</b></div>
+      <div class="col-6"><span>Đơn vị tính: </span> <b>{{ batchdDetail?.unit }}</b></div>
+      <div class="col-6"><span>Số lượng: </span> <b>{{ batchdDetail?.quantility }}</b></div>
+      <div class="col-6"><span>Dải từ: </span> <b>{{ batchdDetail?.key_from }}</b></div>
+      <div class="col-6"><span>Dải đến: </span> <b>{{ batchdDetail?.key_to }}</b></div>
+
     </div>
 
     <div class="row">
