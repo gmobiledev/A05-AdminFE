@@ -268,12 +268,38 @@
 
                 <div class="form-group row mt-1">
                   <label for="approval_1" class="col-md-3 col-form-label"
+                    >Người tạo xuất/thu hồi</label
+                  >
+                  <div class="col-md-9">
+                    <ng-select
+                      name=""
+                      formControlName="create_export"
+                    >
+                      <ng-option value="">-- Chọn tài khoản --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                        {{ p.username }}
+                      </ng-option>
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && f.create_export.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.create_export.required">
+                        Vui lòng nhập
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-1">
+                  <label for="approval_1" class="col-md-3 col-form-label"
                     >Kế toán</label
                   >
                   <div class="col-md-9">
                     <ng-select
                       name=""
                       formControlName="approval_1"
+                      (clear)="onClearApproval1()"
                     >
                       <ng-option value="">-- Chọn tài khoản --</ng-option>
                       <ng-option *ngFor="let p of listAdmin" [value]="p.id">

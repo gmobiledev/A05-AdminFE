@@ -187,6 +187,10 @@ export class NewSellChanelComponent implements OnInit {
     })
   }
 
+  onClearApproval1() {
+    this.dataSell.approval_1 = -1;
+  }
+
   async onSubmitUploadSell() {
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo kho không?")).value) {

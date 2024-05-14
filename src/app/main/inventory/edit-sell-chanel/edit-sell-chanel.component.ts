@@ -126,6 +126,7 @@ export class EditSellChanelComponent implements OnInit {
       this.listAdminSellAction = res.data;
       const approval1 = this.listAdminSellAction.find(x => x.action == AdminChannelAction.APPROVE_EXPORT_LEVEL11);
       const approval2 = this.listAdminSellAction.find(x => x.action == AdminChannelAction.APPROVE_EXPORT_LAST);
+      const createExport = this.listAdminSellAction.find(x => x.action == AdminChannelAction.CREATE_EXPORT);
       if(approval1) {
         this.formGroup.patchValue({
           approval_1: approval1.admin_id
@@ -134,6 +135,11 @@ export class EditSellChanelComponent implements OnInit {
       if(approval2) {
         this.formGroup.patchValue({
           approval_2: approval2.admin_id
+        })
+      }
+      if(createExport) {
+        this.formGroup.patchValue({
+          create_export: createExport.admin_id
         })
       }
     })
@@ -278,10 +284,15 @@ export class EditSellChanelComponent implements OnInit {
       customer_id: ['', Validators.required],
       approval_1: [''],
       approval_2: [''],
+      create_export: [''],
     })
   }
 
-
+  onClearApproval1() {
+    this.formGroup.patchValue({
+      approval_1: -1
+    })
+  }
 
   getData() {
 
@@ -391,6 +402,7 @@ export class EditSellChanelComponent implements OnInit {
       customer_id: this.formGroup.controls['customer_id'].value,
       approval_1: this.formGroup.controls['approval_1'].value,
       approval_2: this.formGroup.controls['approval_2'].value,
+      create_export: this.formGroup.controls['create_export'].value,
 
     }
     if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
