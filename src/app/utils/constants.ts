@@ -236,3 +236,11 @@ export enum ExportType {
     H2L = 'H2L',
     A2A = 'A2A'
 }
+
+export enum FIX_ROLE {
+    DUYET_XUAT_KHO = 'DUYET_XUAT_KHO',
+    QLY_KHO = 'QLY_KHO',
+    DUYET_THU_HOI_KHO = 'DUYET_THU_HOI_KHO',
+    TAO_XUAT_KHO = 'TAO_XUAT_KHO',
+    TAO_THU_HOI_KHO = 'TAO_THU_HOI_KHO'
+}

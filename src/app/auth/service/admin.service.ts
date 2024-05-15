@@ -36,6 +36,10 @@ export class AdminService {
     return this._http.post<any>(`${environment.apiUrl}/admin/role/permission/view/${admin}`, data)
   }
 
+  addRoleInventory(admin, data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/role/inventory/permission/${admin}`, data)
+  }
+
   removeRole(admin, data) {
     return this._http.put<any>(`${environment.apiUrl}/admin/role/permission/view/${admin}`, data)
   }

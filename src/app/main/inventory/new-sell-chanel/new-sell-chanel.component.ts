@@ -12,6 +12,8 @@ import { id } from '@swimlane/ngx-datatable';
 import { CommonService } from 'app/utils/common.service';
 import { TaskService } from 'app/auth/service/task.service';
 import { GtalkService } from 'app/auth/service/gtalk.service';
+import { AdminService } from 'app/auth/service/admin.service';
+import { FIX_ROLE } from 'app/utils/constants';
 
 @Component({
   selector: 'app-new-sell-chanel',
@@ -93,6 +95,7 @@ export class NewSellChanelComponent implements OnInit {
     private commonService: CommonService,
     private taskService: TaskService,
     private gtalkService: GtalkService,
+    private adminService: AdminService
 
   ) {
     this.getData();
@@ -205,9 +208,34 @@ export class NewSellChanelComponent implements OnInit {
           return;
         }
 
+        if (this.parentLevel < 2) {
+          const createExportAdId = this.dataSell.create_export ? this.dataSell.create_export : this.dataSell.admin_id;
+          this.adminService.addRoleInventory(createExportAdId, [
+            { item_name: FIX_ROLE.TAO_THU_HOI_KHO, user_id: createExportAdId },
+            { item_name: FIX_ROLE.TAO_XUAT_KHO, user_id: createExportAdId },
+          ]).subscribe(res => {
+
+          })
+          if (this.dataSell.approval_1 && this.dataSell.approval_1 != -1) {
+            this.adminService.addRoleInventory(this.dataSell.approval_1, [
+              { item_name: FIX_ROLE.DUYET_THU_HOI_KHO, user_id: this.dataSell.approval_2 },
+              { item_name: FIX_ROLE.DUYET_XUAT_KHO, user_id: this.dataSell.approval_2 }
+            ]).subscribe(res => {
+
+            })
+          }
+          if (this.dataSell.approval_2) {
+            this.adminService.addRoleInventory(this.dataSell.approval_2, [
+              { item_name: FIX_ROLE.DUYET_THU_HOI_KHO, user_id: this.dataSell.approval_2 },
+              { item_name: FIX_ROLE.DUYET_XUAT_KHO, user_id: this.dataSell.approval_2 }
+            ]).subscribe(res => {
+
+            })
+          }
+        }
+
         this.alertService.showSuccess(res.message);
         this.router.navigate(['/inventory/sell-chanel'])
-
         
         this.getData();
       }, error => {

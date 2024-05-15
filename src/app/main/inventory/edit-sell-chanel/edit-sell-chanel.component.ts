@@ -13,7 +13,8 @@ import { CommonService } from 'app/utils/common.service';
 import { TaskService } from 'app/auth/service/task.service';
 import { GtalkService } from 'app/auth/service/gtalk.service';
 import { CollaboratorService } from 'app/auth/service/collaborator.service';
-import { AdminChannelAction } from 'app/utils/constants';
+import { AdminChannelAction, FIX_ROLE } from 'app/utils/constants';
+import { AdminService } from 'app/auth/service/admin.service';
 
 @Component({
   selector: 'app-edit-sell-chanel',
@@ -94,7 +95,7 @@ export class EditSellChanelComponent implements OnInit {
     private gtalkService: GtalkService,
     private fb: FormBuilder,
     private collaboratorSerivce: CollaboratorService,
-
+    private adminService: AdminService
 
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -146,21 +147,21 @@ export class EditSellChanelComponent implements OnInit {
   }
 
   async listUser() {
-    this.taskService.getListCustomer(this.formGroup).subscribe(res => {
+    this.taskService.getListCustomer({}).subscribe(res => {
       this.listCustomer = res.data.items;
     }, error => {
       console.log("ERRRR");
       console.log(error);
     })
 
-    this.taskService.getListAdmin(this.searchForm).subscribe(res => {
+    this.taskService.getListAdmin({}).subscribe(res => {
       this.listAdmin = res.data.items;
     }, error => {
       console.log("ERRRR");
       console.log(error);
     })
 
-    this.userService.getAll(this.formGroup).subscribe(res => {
+    this.userService.getAll({}).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
     }, error => {
@@ -304,7 +305,7 @@ export class EditSellChanelComponent implements OnInit {
 
     console.log(this.id);
     this.inventoryService.viewDetailSell(this.id).subscribe(res => {
-      this.inventoryService.getMyChannel(this.formGroup).subscribe(res1 => {
+      this.inventoryService.getMyChannel({}).subscribe(res1 => {
         this.listMyChanel = res1.data.items;
         const parent = this.listMyChanel.find(x => x.id == res.data.items[0].parent_id)
         this.parentLevel = parent.level;
@@ -413,6 +414,34 @@ export class EditSellChanelComponent implements OnInit {
           this.alertService.showError(res.message);
           return;
         }
+
+        if (this.parentLevel < 2) {
+          const createExportAdId = dataPost.create_export ? dataPost.create_export : dataPost.admin_id;
+          this.adminService.addRoleInventory(createExportAdId, [
+            { item_name: FIX_ROLE.TAO_THU_HOI_KHO, user_id: createExportAdId },
+            { item_name: FIX_ROLE.TAO_XUAT_KHO, user_id: createExportAdId },
+          ]).subscribe(res => {
+
+          })
+
+          if (dataPost.approval_1 && dataPost.approval_1.value != -1) {
+            this.adminService.addRoleInventory(dataPost.approval_1, [
+              { item_name: FIX_ROLE.DUYET_THU_HOI_KHO, user_id: dataPost.approval_1 },
+              { item_name: FIX_ROLE.DUYET_XUAT_KHO, user_id: dataPost.approval_1 }
+            ]).subscribe(res => {
+
+            })
+          }
+          if (dataPost.approval_2) {
+            this.adminService.addRoleInventory(dataPost.approval_2, [
+              { item_name: FIX_ROLE.DUYET_THU_HOI_KHO, user_id: dataPost.approval_2 },
+              { item_name: FIX_ROLE.DUYET_XUAT_KHO, user_id: dataPost.approval_2 }
+            ]).subscribe(res => {
+
+            })
+          }
+        }        
+
         this.alertService.showSuccess(res.message);
         this.router.navigate(['/inventory/sell-chanel'])
       }, error => {

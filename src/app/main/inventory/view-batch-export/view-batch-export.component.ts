@@ -711,11 +711,13 @@ export class ViewBatchExportComponent implements OnInit {
     for(let item of event.target.files) {
       formData.append("files", item);
     }
+    formData.append("id", this.data.batch.id)
     if ((await this.alertService.showConfirm('Bạn có đồng ý tải lên các file?')).value) {
-      this.inventoryService.uploadAttachmentBatch(this.data.id, formData).subscribe(res => {
+      this.inventoryService.uploadAttachmentBatch(formData).subscribe(res => {
         this.getData();
+        this.alertService.showSuccess(res.message);
       }, error => {
-
+        this.alertService.showMess(error)
       })
     }
   }
