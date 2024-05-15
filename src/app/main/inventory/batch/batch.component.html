@@ -311,7 +311,7 @@
       <input
         class="form-control"
         type="text"
-        [(ngModel)]="dataLo.code"
+        [(ngModel)]="dataLo.product_code"
       />
     </div>
 
@@ -321,7 +321,7 @@
         class="form-control"
         type="text"
         
-        [(ngModel)]="dataLo.name"
+        [(ngModel)]="dataLo.product_name"
       />
     </div>
 
@@ -480,8 +480,8 @@
     <div class="row mb-2">
       <div class="col-6"><span>Tiêu đề phiếu: </span> <b>{{ batchdDetail?.title }}</b></div>      
       <div class="col-6"><span>Note: </span> <b>{{ batchdDetail?.note }}</b></div>
-      <div class="col-6"><span>Mã hàng: </span> <b>{{ batchdDetail?.code }}</b></div>
-      <div class="col-6"><span>Tên hàng: </span> <b>{{ batchdDetail?.name }}</b></div>
+      <div class="col-6"><span>Mã hàng: </span> <b>{{ batchdDetail?.product_code }}</b></div>
+      <div class="col-6"><span>Tên hàng: </span> <b>{{ batchdDetail?.product_name }}</b></div>
       <div class="col-6"><span>Đơn vị tính: </span> <b>{{ batchdDetail?.unit }}</b></div>
       <div class="col-6"><span>Số lượng: </span> <b>{{ batchdDetail?.quantility }}</b></div>
       <div class="col-6"><span>Dải từ: </span> <b>{{ batchdDetail?.key_from }}</b></div>

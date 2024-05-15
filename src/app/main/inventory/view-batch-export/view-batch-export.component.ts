@@ -704,4 +704,19 @@ export class ViewBatchExportComponent implements OnInit {
     }
 
   }
+
+  async onUploadAttachments(event) {
+    const file = event.target.file;
+    let formData = new FormData();
+    for(let item of event.target.files) {
+      formData.append("files", item);
+    }
+    if ((await this.alertService.showConfirm('Bạn có đồng ý tải lên các file?')).value) {
+      this.inventoryService.uploadAttachmentBatch(this.data.id, formData).subscribe(res => {
+        this.getData();
+      }, error => {
+
+      })
+    }
+  }
 }

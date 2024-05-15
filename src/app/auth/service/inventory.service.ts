@@ -278,4 +278,8 @@ export class InventoryService {
   reportInventoryExcel(dto: any): Observable<any> {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/report-inventory/excelFormat`, dto, { observe: 'response', responseType: 'blob' });
   }
+
+  uploadAttachmentBatch(id, data) {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/batch/${id}/uploads`, data)
+  }
 }

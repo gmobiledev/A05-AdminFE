@@ -20,6 +20,9 @@
                             <p><img *ngIf="getFileExt(itemC).length < 6" width="30px" src="/assets/images/icons/file/{{getFileExt(itemC)}}.png" /><a (click)="onViewAttachments(itemC)" ><u>Xem file đính kèm</u></a></p>
                         </ng-container>
                     </ng-container>
+                    <!-- <div class="form-group">
+                        <input type="file" (change)="onUploadAttachments($event)">
+                    </div> -->
                 </div>
                 </div>
             </div>
