@@ -48,7 +48,7 @@ export class EditSellChanelComponent implements OnInit {
   public formGroup;
   public isCreate: boolean = false;
   public submitted: boolean = false;
-
+  parentLevel;
 
   public searchForm = {
     keyword: '',
@@ -302,18 +302,18 @@ export class EditSellChanelComponent implements OnInit {
       }
     })
 
- 
-
-    this.inventoryService.getMyChannel(this.formGroup).subscribe(res => {
-      this.listMyChanel = res.data.items;
-      this.formGroup.parent_id = res.data.parent_id
-    }, error => {
-      console.log("ERRRR");
-      console.log(error);
-    })
-
     console.log(this.id);
     this.inventoryService.viewDetailSell(this.id).subscribe(res => {
+      this.inventoryService.getMyChannel(this.formGroup).subscribe(res1 => {
+        this.listMyChanel = res1.data.items;
+        const parent = this.listMyChanel.find(x => x.id == res.data.items[0].parent_id)
+        this.parentLevel = parent.level;
+        // this.formGroup.parent_id = res.data.parent_id;
+      }, error => {
+        console.log("ERRRR");
+        console.log(error);
+      })
+
       this.submittedUpload = false;
       this.fileExt = 'pdf';
       let files = res.data.items[0].attached_file_name ? JSON.parse(res.data.items[0].attached_file_name) : null;

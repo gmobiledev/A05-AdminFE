@@ -266,6 +266,7 @@
                   </div>
                 </div>
 
+                <ng-container *ngIf="parentLevel < 2">
                 <div class="form-group row mt-1">
                   <label for="approval_1" class="col-md-3 col-form-label"
                     >Người tạo xuất/thu hồi</label
@@ -341,6 +342,7 @@
                     </div>
                   </div>
                 </div>
+              </ng-container>
               </div>
 
               <div class="modal-footer">
