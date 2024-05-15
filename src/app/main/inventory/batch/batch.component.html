@@ -89,11 +89,15 @@
                 </button>
 
                 <a routerLink="/inventory/new-batch-export"
-                *ngIf="checkAction('batch/export/create')"
+                *ngIf="checkAction('batch/export/create')
+                && checkHasPermissionAction(listAdminSellActionCurrent, listAction.CREATE_EXPORT)
+                "
                 class="btn btn-info mr-2">Xuất kho <span [data-feather]="'download'"></span></a>
 
                 <a routerLink="/inventory/batch/retrieve"
-                *ngIf="checkAction('batch/retrieve-channel')"
+                *ngIf="checkAction('batch/retrieve-channel') 
+                && checkHasPermissionAction(listAdminSellActionCurrent, listAction.CREATE_RETRIEVE)
+                "
                 class="btn btn-info mr-2">Thu hồi về kho cha<span [data-feather]="'rotate-ccw'"></span></a>
               </div>
             </div>
@@ -303,13 +307,62 @@
     </div>
 
     <div class="form-group">
-      <label>Nhập số lượng</label>
+      <label>Mã hàng</label>
       <input
         class="form-control"
         type="text"
-        placeholder="100"
-        mask="separator"
-        thousandSeparator=","
+        [(ngModel)]="dataLo.product_code"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Tên hàng</label>
+      <input
+        class="form-control"
+        type="text"
+        
+        [(ngModel)]="dataLo.product_name"
+      />
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Dải từ</label>
+          <input
+            class="form-control"
+            type="text"        
+            [(ngModel)]="dataLo.key_from"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Dải đến</label>
+          <input
+            class="form-control"
+            type="text"        
+            [(ngModel)]="dataLo.key_to"
+          />
+        </div>
+      </div>
+    </div>
+   
+    <div class="form-group">
+      <label>Đơn vị tính</label>
+      <input
+        class="form-control"
+        type="text"        
+        [(ngModel)]="dataLo.unit"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Nhập số lượng</label>
+      <input
+        class="form-control"
+        type="text"        
         [(ngModel)]="dataLo.quantility"
       />
     </div>
@@ -425,11 +478,15 @@
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block-detail'">
     <div class="row mb-2">
-      <div class="col-4"><span>Tiêu đề phiếu: </span> {{ batchdDetail?.title }}</div>
-      <div class="col-4">
-        <span>Số lượng: </span> {{ batchdDetail?.quantility }}
-      </div>
-      <div class="col-4"><span>Note: </span> {{ batchdDetail?.note }}</div>
+      <div class="col-6"><span>Tiêu đề phiếu: </span> <b>{{ batchdDetail?.title }}</b></div>      
+      <div class="col-6"><span>Note: </span> <b>{{ batchdDetail?.note }}</b></div>
+      <div class="col-6"><span>Mã hàng: </span> <b>{{ batchdDetail?.product_code }}</b></div>
+      <div class="col-6"><span>Tên hàng: </span> <b>{{ batchdDetail?.product_name }}</b></div>
+      <div class="col-6"><span>Đơn vị tính: </span> <b>{{ batchdDetail?.unit }}</b></div>
+      <div class="col-6"><span>Số lượng: </span> <b>{{ batchdDetail?.quantility }}</b></div>
+      <div class="col-6"><span>Dải từ: </span> <b>{{ batchdDetail?.key_from }}</b></div>
+      <div class="col-6"><span>Dải đến: </span> <b>{{ batchdDetail?.key_to }}</b></div>
+
     </div>
 
     <div class="row">
@@ -457,11 +514,13 @@
   </div>
 
   <div class="modal-footer">
-    <div class="text-center">
+    <div class="text-center" *ngIf="listAdminSellAction">
       
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
         && checkAction('batch/ke-toan/update-status')
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)        
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LEVEL11)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED_BY_ACCOUNTANT)"
         class="btn btn-info btn-sm mb-2"
@@ -472,6 +531,8 @@
       <button
         *ngIf="batchdDetail?.status == batchStatus.INIT
         && checkAction('batch/ke-toan/update-status')
+        && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)        
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LEVEL11)
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_ACCOUNTANT)"
         class="btn btn-danger btn-sm mb-2"
@@ -489,7 +550,10 @@
       </button> -->
 
       <button
-        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        *ngIf="
+        (itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        || (itemBatch.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11, true)))                                            
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LAST)
         && checkAction('batch/van-phong/update-status')
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED)"
@@ -499,7 +563,9 @@
       </button>
 
       <button
-        *ngIf="itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        *ngIf="(itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
+        || (itemBatch.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11, true)))                                            
+        && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LAST)
         && checkAction('batch/van-phong/update-status')
         "
         (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_OFFICE)"
@@ -508,7 +574,7 @@
       <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
       </button>
 
-      <button
+      <!-- <button
         *ngIf="itemBatch.status == batchStatus.APPROVED
         && checkAction('batch/update-status-complete')
         "
@@ -516,7 +582,7 @@
         class="ml-2 btn btn-info btn-sm mb-2"
       >
       <i data-feather="check" class="text-white cursor-pointer"></i> Hoàn thành
-      </button>
+      </button> -->
     </div>
   </div>
 </ng-template>

@@ -7,7 +7,7 @@ import { AdminService } from 'app/auth/service/admin.service';
 import { CommonDataService } from 'app/auth/service/common-data.service';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchStatus, BatchType } from 'app/utils/constants';
+import { AdminChannelAction, BatchStatus, BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 const ExcelJS = require('exceljs');
 import Swal from 'sweetalert2';
@@ -74,6 +74,8 @@ export class ViewBatchExportComponent implements OnInit {
   }
   selectedFiles;
   fileExt;
+  listAdminSellAction;
+  listAction = AdminChannelAction;
 
   constructor(
     private readonly inventoryService: InventoryService,
@@ -151,6 +153,10 @@ export class ViewBatchExportComponent implements OnInit {
           toChannel: 'Xuất tới kho'
         }
       }
+
+      this.inventoryService.getAdminsSell({channel_id: this.fromChannel.id}).subscribe(res => {
+        this.listAdminSellAction = res.data;
+      })
       
     })
 
@@ -172,6 +178,17 @@ export class ViewBatchExportComponent implements OnInit {
 
   checkAction(item) {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
+  }
+
+  checkSellAdminAction(action, has = false) {
+    if(has) {
+      return !this.listAdminSellAction.find(x => x.action == action ) || this.listAdminSellAction.find(x => (x.admin_id == this.currentUser.id || x.admin_id == this.data.batch.created_by ) && x.action == action) ? true : false
+    }
+    return this.listAdminSellAction.find(x => x.admin_id != this.data.batch.created_by && x.action == action) ? true : false
+  }
+
+  checkHasPermissionAction(action) {
+    return this.listAdminSellAction.find(x => x.admin_id == this.currentUser.id && x.action == action) ? true : false
   }
 
   onViewModalApprove(modal) {
@@ -686,5 +703,20 @@ export class ViewBatchExportComponent implements OnInit {
       }
     }
 
+  }
+
+  async onUploadAttachments(event) {
+    const file = event.target.file;
+    let formData = new FormData();
+    for(let item of event.target.files) {
+      formData.append("files", item);
+    }
+    if ((await this.alertService.showConfirm('Bạn có đồng ý tải lên các file?')).value) {
+      this.inventoryService.uploadAttachmentBatch(this.data.id, formData).subscribe(res => {
+        this.getData();
+      }, error => {
+
+      })
+    }
   }
 }

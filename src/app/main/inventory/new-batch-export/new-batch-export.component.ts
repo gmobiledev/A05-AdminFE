@@ -5,7 +5,7 @@ import { CommonDataService } from 'app/auth/service/common-data.service';
 import { CreateBatchExportDto, CreateBatchRetrieveDto, RetrieveAllSellChannelDto, RetrieveSellChannelDto, UpdateBatchDto, UpdateBatchExportDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchType, MAXIMUM_VALUE } from 'app/utils/constants';
+import { BatchType, ExportType, MAXIMUM_VALUE } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -230,8 +230,16 @@ export class NewBatchExportComponent implements OnInit {
 
   onChangeParentChannel() {
     this.seachMyChannel.channel_id = this.searchForm.channel_id;
+    const currentChannel = this.listChannel.find(x => x.id == this.seachMyChannel.channel_id);
+    
     this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(res => {
       this.listInputChannel = res.data.items;
+      console.log("currentChannel", currentChannel);
+      if(currentChannel.export_type == ExportType.P2P) {
+        const listAppend = this.listChannel.filter(x => x.id != currentChannel.id);
+        this.listInputChannel = [...res.data.items, ...listAppend];
+        console.log(listAppend);
+      }
     }, error => {
       this.alertService.showMess(error);
     });
@@ -249,10 +257,7 @@ export class NewBatchExportComponent implements OnInit {
       return;
     }
     this.sectionBlockUI.start();
-    if (this.typeCurrentBatch == BatchType.RETRIEVE) {
-      if(this.searchFormProduct.take > 3000) {
-        this.searchFormProduct.take = 3000;
-      }
+    if (this.typeCurrentBatch == BatchType.RETRIEVE) {      
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;

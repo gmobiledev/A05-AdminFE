@@ -20,6 +20,9 @@
                             <p><img *ngIf="getFileExt(itemC).length < 6" width="30px" src="/assets/images/icons/file/{{getFileExt(itemC)}}.png" /><a (click)="onViewAttachments(itemC)" ><u>Xem file đính kèm</u></a></p>
                         </ng-container>
                     </ng-container>
+                    <!-- <div class="form-group">
+                        <input type="file" (change)="onUploadAttachments($event)">
+                    </div> -->
                 </div>
                 </div>
             </div>
@@ -84,29 +87,40 @@
             
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="listAdminSellAction">
             <ng-container *ngIf="data?.batch?.type == batchType.OUTPUT">
                 <!-- VP/KT duyệt -->
                 <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
                     <button *ngIf="data?.batch?.status == batchStatus.INIT
                                             && checkAction('batch/export/ke-toan/approve')
+                                            && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11)
+                                            && checkHasPermissionAction(listAction.APPROVE_EXPORT_LEVEL11)
                                             " (click)="onViewModalApprove(modalApprove)" class="btn btn-info  mb-2 mr-2">
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
             
                     <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/ke-toan/reject')
+                    && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11)
+                    && checkHasPermissionAction(listAction.APPROVE_EXPORT_LEVEL11)
                                             " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_ACCOUNTANT, 'ketoan')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                     </button>
             
-                    <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    <button *ngIf="(data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    
+                    || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11, true))
+                )
                                             && checkAction('batch/export/van-phong/approve')
+                                            && checkHasPermissionAction(listAction.APPROVE_EXPORT_LAST)
                                             " (click)="onViewModalApprove(modalApprove)" class="btn btn-info  mb-2 mr-2">
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
             
-                    <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT && checkAction('batch/export/van-phong/reject')
+                    <button *ngIf="checkAction('batch/export/van-phong/reject') && (data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    
+                    || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11, true)))
+                    && checkHasPermissionAction(listAction.APPROVE_EXPORT_LAST)
                                     " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
@@ -143,23 +157,33 @@
                 <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
                     <button *ngIf="data?.batch?.status == batchStatus.INIT
                                             && checkAction('batch/retrieve/ke-toan/approve')
+                                            && checkSellAdminAction(listAction.APPROVE_RETRIEVE_LEVEL11)                                           
+                                            && checkHasPermissionAction(listAction.APPROVE_RETRIEVE_LEVEL11)
                                             " (click)="onViewModalApprove(modalApprove)" class="btn btn-info  mb-2 mr-2">
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
             
                     <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/ke-toan/reject')
+                    && checkSellAdminAction(listAction.APPROVE_RETRIEVE_LEVEL11)
+                    && checkHasPermissionAction(listAction.APPROVE_RETRIEVE_LEVEL11)
                                             " (click)="onApproveRetrieve(data?.batch, batchStatus.CANCEL_BY_ACCOUNTANT, 'ketoan')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                     </button>
             
-                    <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
-                                            && checkAction('batch/retrieve/van-phong/approve')
+                    <button *ngIf="(data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    
+                    || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_RETRIEVE_LEVEL11, true)))
+                    && checkHasPermissionAction(listAction.APPROVE_RETRIEVE_LAST) && checkAction('batch/retrieve/van-phong/approve')
+                    
                                             " (click)="onViewModalApprove(modalApprove)" class="btn btn-info  mb-2 mr-2">
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
             
-                    <button *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT && checkAction('batch/retrieve/van-phong/reject')
+                    <button *ngIf="(data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    
+                    || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_RETRIEVE_LEVEL11, true)))
+                    && checkHasPermissionAction(listAction.APPROVE_RETRIEVE_LAST) && checkAction('batch/retrieve/van-phong/reject')                   
                                     " (click)="onApproveRetrieve(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
@@ -207,7 +231,9 @@
     </div>
 
     <div class="modal-footer">
-        <ng-container *ngIf="data?.batch?.status == batchStatus.INIT">
+        <ng-container *ngIf="data?.batch?.status == batchStatus.INIT
+        && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11)
+        ">
             <button *ngIf="checkAction('batch/export/ke-toan/approve')
             && data?.batch?.type == batchType.OUTPUT
                                             " (click)="onApprove(data?.batch, batchStatus.APPROVED_BY_ACCOUNTANT, 'ketoan')"
@@ -223,7 +249,12 @@
 
         </ng-container>
 
-        <ng-container *ngIf="data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT">
+        <ng-container *ngIf="(data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    
+        || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11, true))
+    )
+                                && checkAction('batch/export/van-phong/approve')
+                                && checkHasPermissionAction(listAction.APPROVE_EXPORT_LAST)">
             <button *ngIf="checkAction('batch/export/van-phong/approve') && data?.batch?.type == batchType.OUTPUT"
                 (click)="onApprove(data?.batch, batchStatus.APPROVED, 'vanphong')" class="btn btn-info  mb-2">
                 <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt

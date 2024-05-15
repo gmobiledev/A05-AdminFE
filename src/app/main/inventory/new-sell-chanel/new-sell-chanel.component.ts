@@ -55,6 +55,7 @@ export class NewSellChanelComponent implements OnInit {
   public totalPage: number;
   public page: number = 1;
   public pageSize: number;
+  parentLevel;
 
   public dataSell = {
     parent_id: '',
@@ -73,6 +74,10 @@ export class NewSellChanelComponent implements OnInit {
     attached_file_name: '',
     attached_file_content: '',
     customer_id: 0,
+    create_export: 0,
+    create_retrieve: 0,
+    approval_1: 0,
+    approval_2: 0,
   }
 
   constructor(
@@ -134,6 +139,7 @@ export class NewSellChanelComponent implements OnInit {
     this.inventoryService.getMyChannel(this.searchForm).subscribe(res => {
       this.listMyChanel = res.data.items;
       console.log("3",this.listMyChanel);
+      this.parentLevel = this.listMyChanel[0].level;
     }, error => {
       console.log(error);
     })
@@ -183,6 +189,10 @@ export class NewSellChanelComponent implements OnInit {
     })
   }
 
+  onClearApproval1() {
+    this.dataSell.approval_1 = -1;
+  }
+
   async onSubmitUploadSell() {
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo kho không?")).value) {
@@ -211,7 +221,10 @@ export class NewSellChanelComponent implements OnInit {
     this.modalRef.close();
   }
 
-
+  onChangeParent() {
+    const parent = this.listMyChanel.find(x => x.id == parseInt(this.dataSell.parent_id));
+    this.parentLevel = parent.level;
+  }
 
   getData() {
     

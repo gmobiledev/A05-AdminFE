@@ -7,7 +7,7 @@ import { CreateAgentDto } from 'app/auth/service/dto/user.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchStatus, BatchType } from 'app/utils/constants';
+import { AdminChannelAction, BatchStatus, BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -68,6 +68,11 @@ export class BatchComponent implements OnInit {
     files: '',
     file_ext: '',
     note: '',
+    product_code: '',
+    product_name: '',
+    unit: '',
+    key_from: '',
+    key_to: '',
     is_force_push: true,
   }
 
@@ -84,6 +89,9 @@ export class BatchComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   count: any;
   public checkDup: boolean = false;
+  listAdminSellAction;
+  listAdminSellActionCurrent;
+  listAction = AdminChannelAction;
 
   constructor(
     private route: ActivatedRoute,
@@ -114,6 +122,9 @@ export class BatchComponent implements OnInit {
 
   modalOpen(modal, item = null) {
     if (item) {
+      this.inventoryService.getAdminsSell({channel_id: item.channel_id}).subscribe(res => {
+        this.listAdminSellAction = res.data;
+      })
       this.titleModal = "Tải dữ liệu";
       this.isCreate = false;
       this.selectedItem = item;
@@ -144,6 +155,11 @@ export class BatchComponent implements OnInit {
       files: '',
       file_ext: '',
       note: '',
+      product_code: '',
+      product_name: '',
+      unit: '',
+      key_from: '',
+      key_to: '',
       is_force_push: true,
     }
     this.getData();
@@ -157,6 +173,9 @@ export class BatchComponent implements OnInit {
       if (res.status && res.data) {
         this.itemBatch = res.data;
       }
+      this.inventoryService.getAdminsSellKhoTong({}).subscribe(res => {
+        this.listAdminSellAction = res.data;
+      })
       this.modalRef = this.modalService.open(modal, {
         centered: true,
         windowClass: 'modal modal-primary',
@@ -413,8 +432,11 @@ export class BatchComponent implements OnInit {
         delete paramSearch[key];
       }
     }
+    this.inventoryService.getAdminsSell({user_id: this.currentUser.id}).subscribe(res => {
+      this.listAdminSellActionCurrent = res.data;
+    })
     this.sectionBlockUI.start();
-    if(this.checkAction('batch/ke-toan/update-status') || this.checkAction('batch/van-phong/update-status')) {
+    if(this.checkAction('staff/list')) {
       this.inventoryService.findBatchStaff(paramSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.list = res.data.items;
@@ -423,7 +445,7 @@ export class BatchComponent implements OnInit {
         this.sectionBlockUI.stop();
         console.log("ERRRR");
         console.log(error);
-      })
+      });
     } else {
       this.inventoryService.findBatchUser(paramSearch).subscribe(res => {
         this.sectionBlockUI.stop();
@@ -445,5 +467,19 @@ export class BatchComponent implements OnInit {
     return this.listCurrentAction ? this.listCurrentAction.find(itemX => itemX.includes(item)) : false;
   }
 
+  // checkSellAdminAction(action) {
+  //   return this.listAdminSellAction.find(x => x.admin_id == this.currentUser.id && x.action == action) ? true : false
+  // }
+
+  checkSellAdminAction(action, has = false) {
+    if(has) {
+      return !this.listAdminSellAction.find(x => x.action == action ) || this.listAdminSellAction.find(x => (x.admin_id == this.currentUser.id || x.admin_id == this.batchdDetail.created_by ) && x.action == action) ? true : false
+    }
+    return this.listAdminSellAction.find(x => x.admin_id != this.batchdDetail.created_by && x.action == action) ? true : false
+  }
+
+  checkHasPermissionAction(list, action) {
+    return list.find(x => x.admin_id == this.currentUser.id && x.action == action) ? true : false
+  }
 
 }

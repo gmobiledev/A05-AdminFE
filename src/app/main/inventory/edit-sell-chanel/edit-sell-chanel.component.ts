@@ -13,6 +13,7 @@ import { CommonService } from 'app/utils/common.service';
 import { TaskService } from 'app/auth/service/task.service';
 import { GtalkService } from 'app/auth/service/gtalk.service';
 import { CollaboratorService } from 'app/auth/service/collaborator.service';
+import { AdminChannelAction } from 'app/utils/constants';
 
 @Component({
   selector: 'app-edit-sell-chanel',
@@ -47,7 +48,7 @@ export class EditSellChanelComponent implements OnInit {
   public formGroup;
   public isCreate: boolean = false;
   public submitted: boolean = false;
-
+  parentLevel;
 
   public searchForm = {
     keyword: '',
@@ -76,6 +77,7 @@ export class EditSellChanelComponent implements OnInit {
   id;
   listFiles = [];
   fileExt;
+  listAdminSellAction;
 
   constructor(
     private route: ActivatedRoute,
@@ -118,8 +120,29 @@ export class EditSellChanelComponent implements OnInit {
         ]
       }
     };
-
+    
     this.initForm();
+    this.inventoryService.getAdminsSell({channel_id: this.id}).subscribe(res => {
+      this.listAdminSellAction = res.data;
+      const approval1 = this.listAdminSellAction.find(x => x.action == AdminChannelAction.APPROVE_EXPORT_LEVEL11);
+      const approval2 = this.listAdminSellAction.find(x => x.action == AdminChannelAction.APPROVE_EXPORT_LAST);
+      const createExport = this.listAdminSellAction.find(x => x.action == AdminChannelAction.CREATE_EXPORT);
+      if(approval1) {
+        this.formGroup.patchValue({
+          approval_1: approval1.admin_id
+        })
+      }
+      if(approval2) {
+        this.formGroup.patchValue({
+          approval_2: approval2.admin_id
+        })
+      }
+      if(createExport) {
+        this.formGroup.patchValue({
+          create_export: createExport.admin_id
+        })
+      }
+    })
   }
 
   async listUser() {
@@ -259,10 +282,17 @@ export class EditSellChanelComponent implements OnInit {
       attached_file_name: ['', Validators.required],
       attached_file_content: ['', Validators.required],
       customer_id: ['', Validators.required],
+      approval_1: [''],
+      approval_2: [''],
+      create_export: [''],
     })
   }
 
-
+  onClearApproval1() {
+    this.formGroup.patchValue({
+      approval_1: -1
+    })
+  }
 
   getData() {
 
@@ -272,18 +302,18 @@ export class EditSellChanelComponent implements OnInit {
       }
     })
 
- 
-
-    this.inventoryService.getMyChannel(this.formGroup).subscribe(res => {
-      this.listMyChanel = res.data.items;
-      this.formGroup.parent_id = res.data.parent_id
-    }, error => {
-      console.log("ERRRR");
-      console.log(error);
-    })
-
     console.log(this.id);
     this.inventoryService.viewDetailSell(this.id).subscribe(res => {
+      this.inventoryService.getMyChannel(this.formGroup).subscribe(res1 => {
+        this.listMyChanel = res1.data.items;
+        const parent = this.listMyChanel.find(x => x.id == res.data.items[0].parent_id)
+        this.parentLevel = parent.level;
+        // this.formGroup.parent_id = res.data.parent_id;
+      }, error => {
+        console.log("ERRRR");
+        console.log(error);
+      })
+
       this.submittedUpload = false;
       this.fileExt = 'pdf';
       let files = res.data.items[0].attached_file_name ? JSON.parse(res.data.items[0].attached_file_name) : null;
@@ -370,6 +400,9 @@ export class EditSellChanelComponent implements OnInit {
       attached_file_name: this.formGroup.controls['attached_file_name'].value,
       attached_file_content: this.formGroup.controls['attached_file_content'].value,
       customer_id: this.formGroup.controls['customer_id'].value,
+      approval_1: this.formGroup.controls['approval_1'].value,
+      approval_2: this.formGroup.controls['approval_2'].value,
+      create_export: this.formGroup.controls['create_export'].value,
 
     }
     if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {

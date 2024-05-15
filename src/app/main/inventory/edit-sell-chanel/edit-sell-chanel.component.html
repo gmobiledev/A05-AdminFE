@@ -260,11 +260,89 @@
                       class="invalid-feedback"
                     >
                       <div *ngIf="f.admin_id.required">
-                        Vui lòng nhập tên người quản lý kho
+                        Vui lòng nhập người quản lý kho
                       </div>
                     </div>
                   </div>
                 </div>
+
+                <ng-container *ngIf="parentLevel < 2">
+                <div class="form-group row mt-1">
+                  <label for="approval_1" class="col-md-3 col-form-label"
+                    >Người tạo xuất/thu hồi</label
+                  >
+                  <div class="col-md-9">
+                    <ng-select
+                      name=""
+                      formControlName="create_export"
+                    >
+                      <ng-option value="">-- Chọn tài khoản --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                        {{ p.username }}
+                      </ng-option>
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && f.create_export.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.create_export.required">
+                        Vui lòng nhập
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-1">
+                  <label for="approval_1" class="col-md-3 col-form-label"
+                    >Kế toán</label
+                  >
+                  <div class="col-md-9">
+                    <ng-select
+                      name=""
+                      formControlName="approval_1"
+                      (clear)="onClearApproval1()"
+                    >
+                      <ng-option value="">-- Chọn tài khoản --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                        {{ p.username }}
+                      </ng-option>
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && f.approval_1.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.approval_1.required">
+                        Vui lòng nhập
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row mt-1">
+                  <label for="approval_2" class="col-md-3 col-form-label"
+                    >Người duyệt</label
+                  >
+                  <div class="col-md-9">
+                    <ng-select
+                      name=""
+                      formControlName="approval_2"
+                    >
+                      <ng-option value="">-- Chọn tài khoản --</ng-option>
+                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                        {{ p.username }}
+                      </ng-option>
+                    </ng-select>
+                    <div
+                      *ngIf="submitted && f.approval_2.errors"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="f.approval_2.required">
+                        Vui lòng nhập
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
               </div>
 
               <div class="modal-footer">

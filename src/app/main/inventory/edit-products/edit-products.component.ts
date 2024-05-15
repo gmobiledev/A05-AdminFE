@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
@@ -21,6 +21,7 @@ export class EditProductsComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
+  @ViewChild('fileExcel') fileExcel: ElementRef;
   
   public contentHeader = {
     headerTitle: 'Cập nhật sản phẩm',
@@ -121,6 +122,8 @@ export class EditProductsComponent implements OnInit {
   productStatus = ProductStatus;
   fileExcelPrice;
   currentChannel;
+  currentExcelFileSearch;
+  listStatus;
 
   constructor(    
     private readonly inventoryService: InventoryService,
@@ -128,7 +131,16 @@ export class EditProductsComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private modalService: NgbModal
   ) { 
-    this.route.queryParams.subscribe(params => {      
+    this.route.queryParams.subscribe(params => {   
+      this.listStatus = Object.keys({
+        'STATUS_AVAILABLE': 2,    
+    'LOCKED_BY_ADMIN': 4,
+    'STATUS_INIT' :0
+      }).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
+        obj[key] = ProductStatus[key];
+        return obj;
+      }, {});
+
       this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ?  params['channel_id'] : '';
       this.getData();
       this.searchProductStore();
@@ -270,6 +282,17 @@ export class EditProductsComponent implements OnInit {
       }
     }
     paramSearch['to_update_status'] = true;
+    if(this.currentExcelFileSearch) {
+      this.onSelectFileExcel({
+        target: {
+          files: [
+            this.currentExcelFileSearch
+          ]
+        }
+      })
+      this.sectionBlockUI.stop();
+      return;
+    }
     this.inventoryService.searchProductStore(paramSearch).subscribe(res => {
       this.sectionBlockUI.stop();
       if (!res.status) {
@@ -293,6 +316,42 @@ export class EditProductsComponent implements OnInit {
 
   onChangeType() {
     this.dataUpdatePrice.change_value = 0;
+  }
+
+  onSelectFileExcel(event) {
+    if(!this.searchForm.channel_id) {
+      this.alertService.showMess("Vui lòng chọn kho cần xuất đi");
+      return;
+    }
+    
+    if (event.target.files && event.target.files[0]) {
+      this.sectionBlockUI.start();
+      this.currentExcelFileSearch = event.target.files[0];
+      let formData = new FormData();
+      
+      for(let key in this.searchForm) {
+        if(this.searchForm[key] !== '') {          
+          formData.append(key, this.searchForm[key]);
+        }
+      } 
+      formData.append("files", this.currentExcelFileSearch);
+      this.inventoryService.searchExcelProductExport(formData).subscribe(res => {
+        this.sectionBlockUI.stop();
+        const data = res.data;
+        this.tempList = data.items;
+        this.list = data.items;
+        this.fileExcel.nativeElement.value = "";
+      },error => {
+        this.sectionBlockUI.stop();
+        this.fileExcel.nativeElement.value = "";
+        this.alertService.showMess(error);
+
+      })
+    }
+  }
+
+  onRemoveFileExcel() {
+    this.currentExcelFileSearch = null;
   }
 
   async onSubmitData() {
