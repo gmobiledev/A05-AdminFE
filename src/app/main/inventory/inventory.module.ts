@@ -35,6 +35,7 @@ import { ViewDetailNomarlSellComponent } from './view-detail-nomarl-sell/view-de
 import { CsvModule } from '@ctrl/ngx-csv';
 import { EditProductsComponent } from './edit-products/edit-products.component';
 import { TonKhoComponent } from './reports/ton-kho/ton-kho.component';
+import { TonKhoSimComponent } from './reports/ton-kho-sim/ton-kho-sim.component';
 
 const routes: Routes = [
   {
@@ -111,6 +112,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'report/ton-kho-sim',
+    component: TonKhoSimComponent
+  },
+
+  {
     path: 'view-junior-sell',
     component: ViewJuniorSellComponent
   },
@@ -146,7 +152,8 @@ const routes: Routes = [
     ViewJuniorSellComponent,
     ViewDetailNomarlSellComponent,
     EditProductsComponent,
-    TonKhoComponent
+    TonKhoComponent,
+    TonKhoSimComponent
   ],
   imports: [
     CommonModule,

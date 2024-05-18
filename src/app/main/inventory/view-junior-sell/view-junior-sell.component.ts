@@ -436,6 +436,11 @@ export class ViewJuniorSellComponent implements OnInit {
     })
   }
 
+  onSelectService(service_code) {
+    const index = this.listServiceFilter.findIndex(item => item.code == service_code);
+    this.listServiceFilter[index]['disabled'] = 'disabled';
+  }
+
   onChangeDistrict(event) {
     let id = event.target.value
     this.commonDataService.getCommunes(id).subscribe((res: any) => {

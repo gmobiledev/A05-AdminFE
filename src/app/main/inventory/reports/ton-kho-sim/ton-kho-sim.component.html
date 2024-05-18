@@ -1,0 +1,69 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã hàng</th>
+                                        <th>Tên hàng</th>
+                                        <th>SL đầu kỳ</th>
+                                        
+                                        <th>Nhập kho</th>
+                                        <th>Xuất kho</th>
+                                        <th>SL cuối kỳ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ i+1 }}
+                                        </td>
+                                        <td>
+                                            {{item.product_code}}
+                                        </td>
+                                        <td>
+                                            {{item.product_name}}
+                                        </td>
+                                        <td>
+                                            {{item.begin_total || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.imported || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.exported || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.total || 0 | number}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tổng</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{sumItems?.begin_total || 0 | number}}</td>
+                                        <td>{{sumItems?.imported || 0 | number}}</td>
+                                        <td>{{sumItems?.exported || 0 | number}}</td>
+                                        <td>{{sumItems?.total || 0 | number}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

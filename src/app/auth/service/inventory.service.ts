@@ -282,4 +282,8 @@ export class InventoryService {
   uploadAttachmentBatch(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/attachments/uploads`, data)
   }
+
+  reportInventorySim(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/report/report-inventory-sim`, {params: params});
+  }
 }
