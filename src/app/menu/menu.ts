@@ -221,6 +221,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/report/doanh-thu'
+      },
+      {
+        id: 'report-ton-kho-sim',
+        title: 'Báo cáo tồn SIM',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/ton-kho-sim'
       }
     ]
   },
