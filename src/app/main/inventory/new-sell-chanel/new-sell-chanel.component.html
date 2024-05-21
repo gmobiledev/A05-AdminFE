@@ -67,7 +67,7 @@
                       [(ngModel)]="dataSell.parent_id"
                       (change)="onChangeParent()"
                     >
-                      <option value="">-- Chọn kho nguồn --</option>
+                      <option value="">-- Chọn kho cha --</option>
                       <option *ngFor="let p of listMyChanel" [value]="p.id">
                         {{ p.name }}
                       </option>
@@ -176,7 +176,7 @@
                   </div>
                 </div>
 
-                <ng-container *ngIf="parentLevel < 2">
+                <ng-container >
                 <div class="form-group row mt-1">
                   <label for="commune" class="col-md-3 col-form-label"
                     >Người tạo xuất/thu hồi</label

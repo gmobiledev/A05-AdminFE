@@ -91,7 +91,7 @@
         <div class="row" *ngIf="listAdminSellAction">
             <ng-container *ngIf="data?.batch?.type == batchType.OUTPUT">
                 <!-- VP/KT duyệt -->
-                <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
+                <div class="col-12 text-center" >
                     <button *ngIf="data?.batch?.status == batchStatus.INIT
                                             && checkAction('batch/export/ke-toan/approve')
                                             && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11)
@@ -139,7 +139,7 @@
                 </div>
             
                 <!-- User tự duyệt -->
-                <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
+                <!-- <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
                             && (checkAction('batch/export/user/approve') || checkAction('batch/export/user/reject') )
                             ">
                     <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/export/user/approve')
@@ -152,10 +152,10 @@
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                     </button>
-                </div>
+                </div> -->
             </ng-container>
             <ng-container *ngIf="data?.batch?.type == batchType.RETRIEVE">
-                <div class="col-12 text-center" *ngIf="data?.batch?.channel_level < 2">
+                <div class="col-12 text-center" >
                     <button *ngIf="data?.batch?.status == batchStatus.INIT
                                             && checkAction('batch/retrieve/ke-toan/approve')
                                             && checkSellAdminAction(listAction.APPROVE_RETRIEVE_LEVEL11)                                           
@@ -191,7 +191,7 @@
                     </button>        
                 </div>
 
-                <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
+                <!-- <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2
                                     && (checkAction('batch/retrieve/user/approve') || checkAction('batch/retrieve/user/reject') )
                                     ">
                     <button *ngIf="data?.batch?.status == batchStatus.INIT && checkAction('batch/retrieve/user/approve')
@@ -204,7 +204,7 @@
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                     </button>
-                </div>
+                </div> -->
             </ng-container>
             
             
@@ -233,16 +233,18 @@
 
     <div class="modal-footer">
         <ng-container *ngIf="data?.batch?.status == batchStatus.INIT
-        && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11)
+    
         ">
             <button *ngIf="checkAction('batch/export/ke-toan/approve')
             && data?.batch?.type == batchType.OUTPUT
+            && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11)
                                             " (click)="onApprove(data?.batch, batchStatus.APPROVED_BY_ACCOUNTANT, 'ketoan')"
                 class="btn btn-info  mb-2">
                 <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
             </button>
             
             <button *ngIf="checkAction('batch/retrieve/ke-toan/approve') && data?.batch?.type == batchType.RETRIEVE
+             && checkSellAdminAction(listAction.APPROVE_RETRIEVE_LEVEL11)
                                             " (click)="onApproveRetrieve(data?.batch, batchStatus.APPROVED_BY_ACCOUNTANT, 'ketoan')"
                 class="btn btn-info  mb-2">
                 <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
@@ -252,16 +254,17 @@
 
         <ng-container *ngIf="(data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
                     
-        || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11, true))
+        || (data?.batch?.status == batchStatus.INIT && (checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11, true) || checkSellAdminAction(listAction.APPROVE_RETRIEVE_LEVEL11, true) ))
     )
-                                && checkAction('batch/export/van-phong/approve')
-                                && checkHasPermissionAction(listAction.APPROVE_EXPORT_LAST)">
-            <button *ngIf="checkAction('batch/export/van-phong/approve') && data?.batch?.type == batchType.OUTPUT"
+                                ">
+            <button *ngIf="checkAction('batch/export/van-phong/approve') && data?.batch?.type == batchType.OUTPUT            
+                                && checkHasPermissionAction(listAction.APPROVE_EXPORT_LAST)"
                 (click)="onApprove(data?.batch, batchStatus.APPROVED, 'vanphong')" class="btn btn-info  mb-2">
                 <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
             </button>
 
-            <button *ngIf="checkAction('batch/retrieve/van-phong/approve') && data?.batch?.type == batchType.RETRIEVE"
+            <button *ngIf="checkAction('batch/retrieve/van-phong/approve') && data?.batch?.type == batchType.RETRIEVE           
+                                && checkHasPermissionAction(listAction.APPROVE_RETRIEVE_LAST)"
                 (click)="onApproveRetrieve(data?.batch, batchStatus.APPROVED, 'vanphong')" class="btn btn-info  mb-2">
                 <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
             </button>

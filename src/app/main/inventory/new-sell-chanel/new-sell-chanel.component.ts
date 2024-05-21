@@ -208,7 +208,7 @@ export class NewSellChanelComponent implements OnInit {
           return;
         }
 
-        if (this.parentLevel < 2) {
+        // if (this.parentLevel < 2) {
           const createExportAdId = this.dataSell.create_export ? this.dataSell.create_export : this.dataSell.admin_id;
           this.adminService.addRoleInventory(createExportAdId, [
             { item_name: FIX_ROLE.TAO_THU_HOI_KHO, user_id: createExportAdId },
@@ -232,7 +232,7 @@ export class NewSellChanelComponent implements OnInit {
 
             })
           }
-        }
+        // }
 
         this.alertService.showSuccess(res.message);
         this.router.navigate(['/inventory/sell-chanel'])

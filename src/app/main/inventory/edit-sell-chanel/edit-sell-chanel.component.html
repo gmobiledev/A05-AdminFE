@@ -113,7 +113,7 @@
                       name=""
                       formControlName="parent_id"
                     >
-                      <ng-option value="">-- Chọn kho nguồn --</ng-option>
+                      <ng-option value="">-- Chọn kho cha --</ng-option>
                       <ng-option *ngFor="let p of listMyChanel" [value]="p.id">
                         {{ p.name }}
                       </ng-option>
@@ -266,7 +266,7 @@
                   </div>
                 </div>
 
-                <ng-container *ngIf="parentLevel < 2">
+                <ng-container >
                 <div class="form-group row mt-1">
                   <label for="approval_1" class="col-md-3 col-form-label"
                     >Người tạo xuất/thu hồi</label

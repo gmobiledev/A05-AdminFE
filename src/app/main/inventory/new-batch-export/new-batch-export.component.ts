@@ -327,14 +327,17 @@ export class NewBatchExportComponent implements OnInit {
     this.submitted = true;
     if(!this.searchForm.channel_id && this.typeCurrentBatch == BatchType.OUTPUT) {
       this.alertService.showMess("Vui lòng chọn kho xuất đi");
+      this.submitted = false;
       return;
     }
     if(!this.searchForm.channel_id && this.typeCurrentBatch == BatchType.RETRIEVE) {
       this.alertService.showMess("Vui lòng chọn kho cần thu hồi");
+      this.submitted = false;
       return;
     }
     if(!this.selectedFiles && this.typeCurrentBatch == BatchType.RETRIEVE) {
       this.alertService.showMess("Vui lòng đính kèm chứng từ");
+      this.submitted = false;
       return;
     }
     if(this.typeCurrentBatch == BatchType.OUTPUT) {

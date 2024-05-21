@@ -154,7 +154,7 @@ export class ViewBatchExportComponent implements OnInit {
         }
       }
 
-      this.inventoryService.getAdminsSell({channel_id: this.fromChannel.id}).subscribe(res => {
+      this.inventoryService.getAdminsSell({channel_id: this.fromChannel.id, batch_id: this.data.batch.id}).subscribe(res => {
         this.listAdminSellAction = res.data;
       })
       
