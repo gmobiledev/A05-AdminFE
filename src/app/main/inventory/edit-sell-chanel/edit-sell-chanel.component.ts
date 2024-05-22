@@ -282,7 +282,7 @@ export class EditSellChanelComponent implements OnInit {
       isFileChanged: ['', Validators.required],
       attached_file_name: ['', Validators.required],
       attached_file_content: ['', Validators.required],
-      customer_id: ['', Validators.required],
+      customer_id: [''],
       approval_1: [''],
       approval_2: [''],
       create_export: [''],
