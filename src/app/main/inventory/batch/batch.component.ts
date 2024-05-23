@@ -173,7 +173,7 @@ export class BatchComponent implements OnInit {
       if (res.status && res.data) {
         this.itemBatch = res.data;
       }
-      this.inventoryService.getAdminsSellKhoTong({}).subscribe(res => {
+      this.inventoryService.getAdminsSellKhoTong({batch_id: item.id}).subscribe(res => {
         this.listAdminSellAction = res.data;
       })
       this.modalRef = this.modalService.open(modal, {
