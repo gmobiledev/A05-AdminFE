@@ -286,4 +286,12 @@ export class InventoryService {
   reportInventorySim(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/report/report-inventory-sim`, {params: params});
   }
+
+  getReportSummaryS99(params = null) {
+    return this._http.get<any>(`${environment.apiProductPrivate}/product-admin/report/dashboard`, {params: params});
+  }
+
+  getHeatmapPrivate(data) {
+    return this._http.post<any>(`${environment.apiProductPrivate}/product-admin/channel/GetHeatMapList`, data);
+  }
 }
