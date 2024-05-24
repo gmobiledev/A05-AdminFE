@@ -76,7 +76,7 @@ export class TongHopComponent implements OnInit {
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
-    this.inventoryService.reportInventorySim(paramsSearch).subscribe(res => {
+    this.inventoryService.reportTongHopSim(paramsSearch).subscribe(res => {
       this.sectionBlockUI.stop();
       this.list = res.data;
       for(let item of this.list) {
