@@ -76,7 +76,7 @@
                                             {{item.received}}
                                         </td>
                                         <td>
-                                            {{item.percent}}
+                                            {{item.percent * 100}} %
                                         </td>
                                         <td>
                                             {{item.actived}}
@@ -88,10 +88,10 @@
                                             {{item.hoan_thien_tttb}}
                                         </td>
                                         <td>
-                                            {{item.sum_topup}}
+                                            {{item.sum_topup | formatPrice}}
                                         </td>
                                         <td>
-                                            {{item.sum_cost}}
+                                            {{item.sum_cost | formatPrice}}
                                         </td>
                                     </tr>
                                 </tbody>
