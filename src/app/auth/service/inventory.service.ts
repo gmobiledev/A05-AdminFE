@@ -292,7 +292,7 @@ export class InventoryService {
   }
 
   reportChiTietSim(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn-state`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn`, {params: params});
   }
 
   reportKetQuaSim(params) {

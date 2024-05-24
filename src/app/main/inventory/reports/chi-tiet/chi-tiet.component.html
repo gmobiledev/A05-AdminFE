@@ -78,45 +78,32 @@
                                             {{ i+1 }}
                                         </td>
                                         <td>
-                                            {{item.product_code}}
+                                            {{item.name}}
                                         </td>
                                         <td>
-                                            {{item.product_name}}
+                                            {{item.msisdn}}
                                         </td>
                                         <td>
-                                            {{item.begin_total || 0 | number}}
+                                            {{item.customer_name}}
                                         </td>
                                         <td>
-                                            {{item.imported || 0 | number}}
+                                            {{item.sync_time | formatDate}}
                                         </td>
                                         <td>
-                                            {{item.exported || 0 | number}}
+                                            {{item.first_psc_date | formatDate}}
                                         </td>
                                         <td>
-                                            {{item.total || 0 | number}}
+                                            {{item.package}}
                                         </td>
                                         <td>
-                                            {{item.begin_total || 0 | number}}
+                                            {{item.status}}
                                         </td>
                                         <td>
-                                            {{item.begin_total || 0 | number}}
+                                            {{item.sum_topup | formatPrice}}
                                         </td>
                                         <td>
-                                            {{item.begin_total || 0 | number}}
+                                            {{item.sum_cost | formatPrice}}
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tổng</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{sumItems?.begin_total || 0 | number}}</td>
-                                        <td>{{sumItems?.imported || 0 | number}}</td>
-                                        <td>{{sumItems?.exported || 0 | number}}</td>
-                                        <td>{{sumItems?.total || 0 | number}}</td>
-                                        <td>{{sumItems?.imported || 1 | number}}</td>
-                                        <td>{{sumItems?.exported || 2 | number}}</td>
-                                        <td>{{sumItems?.total || 3 | number}}</td>
-
                                     </tr>
                                 </tbody>
                             </table>
