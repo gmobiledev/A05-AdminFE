@@ -91,6 +91,7 @@
                     <th>Giá bán</th>
                     <th>Trạng thái</th>
                     <th>Xuất cho kho</th>
+                    <th>Lô Xuất</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,6 +126,8 @@
                     </td>
 
                     <td><a (click)="modalChannelOpen(modalChannelInfo, item)" ><u>{{ item.sub_channel_id }}</u></a></td>
+
+                    <td>{{ item.export_batch_id }}</td>
 
                   </tr>
                 </tbody>
