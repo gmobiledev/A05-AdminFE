@@ -14,7 +14,7 @@ export class ChiTietComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   
   public contentHeader = {
-    headerTitle: 'Báo cáo chi tiết SIM',
+    headerTitle: 'Báo cáo chi tiết tình trạng thuê bao',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -25,7 +25,7 @@ export class ChiTietComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Báo cáo chi tiết SIM',
+          name: 'Báo cáo chi tiết tình trạng thuê bao',
           isLink: false
         }
       ]

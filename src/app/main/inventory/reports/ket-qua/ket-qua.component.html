@@ -1,1 +1,131 @@
-<p>ket-qua works!</p>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form (ngSubmit)="getData()">
+                            <div class="row">
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label>Từ ngày</label>
+                                  <input
+                                    type="date"
+                                    name="start_date"
+                                    [(ngModel)]="searchForm.start_date"
+                                    class="form-control"                 
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label>Tới ngày</label>
+                                  <input
+                                    type="date"
+                                    name="end_date"
+                                    [(ngModel)]="searchForm.end_date"
+                                    class="form-control"                      
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Kho số</label>
+                                    <ng-select       
+                                    name="sell_channel_id"                               
+                                    [(ngModel)]="searchForm.channel_id" 
+                                        >
+                                        <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
+                                            p.name
+                                            }}</ng-option>
+                                    </ng-select>
+                                </div>
+                              </div>                             
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label for=""></label>
+                                  <button type="submit" class="btn btn-block btn-info">
+                                    Lọc kết quả <span [data-feather]="'search'"></span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Đơn vị</th>
+                                        <th>Đăng ký đơn vị</th>
+                                        <th>Đã giao</th>     
+                                        <th>Tỉ lệ (đã giao)</th>
+                                        <th>Số lượng TB hoạt động</th>
+                                        <th>Số thuê bao hoạt động luỹ kế</th>
+                                        <th>Số TB hoàn thiện TTTB</th>
+                                        <th>Doanh thu topup</th>
+                                        <th>Doanh thu tiêu dùng</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ i+1 }}
+                                        </td>
+                                        <td>
+                                            {{item.product_code}}
+                                        </td>
+                                        <td>
+                                            {{item.product_name}}
+                                        </td>
+                                        <td>
+                                            {{item.begin_total || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.imported || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.exported || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.total || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.begin_total || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.begin_total || 0 | number}}
+                                        </td>
+                                        <td>
+                                            {{item.begin_total || 0 | number}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tổng</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{sumItems?.begin_total || 0 | number}}</td>
+                                        <td>{{sumItems?.imported || 0 | number}}</td>
+                                        <td>{{sumItems?.exported || 0 | number}}</td>
+                                        <td>{{sumItems?.total || 0 | number}}</td>
+                                        <td>{{sumItems?.imported || 1 | number}}</td>
+                                        <td>{{sumItems?.exported || 2 | number}}</td>
+                                        <td>{{sumItems?.total || 3 | number}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
