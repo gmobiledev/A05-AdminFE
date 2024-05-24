@@ -80,22 +80,21 @@
                       {{item.count_msisdn}}
                     </td>
                     <td>
-                      {{item.all_status[Active]}}
+                      {{item['all_status'][0]['Active']}}
+                    <td>
+                      {{item['all_status'][0]['S1']}}
                     </td>
                     <td>
-                      {{item.all_status[S1]}}
+                      {{item['all_status'][0]['S2']}}
                     </td>
                     <td>
-                      {{item.all_status[S2]}}
+                      {{item['all_status'][0]['TH']}}
                     </td>
                     <td>
-                      {{item.all_status[TH]}}
+                      {{item.sum_topup | formatPrice}}
                     </td>
                     <td>
-                      {{item.sum_topup}}
-                    </td>
-                    <td>
-                      {{item.sum_cost}}
+                      {{item.sum_cost | formatPrice}}
                     </td>
 
                   </tr>
