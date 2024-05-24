@@ -118,7 +118,13 @@ export class SummaryS99Component implements OnInit {
         }
       }
     },
-
+    yaxis: {
+      labels: {
+        formatter: function(value) {
+          return value.toLocaleString()
+        }
+      }
+    },
     
     colors: [colors.solid.info],
     dataLabels: {
@@ -127,6 +133,9 @@ export class SummaryS99Component implements OnInit {
       style: {
         fontSize: '8px',
         colors: ["#304758"]
+      },
+      formatter: function(value) {
+        return value.toLocaleString()
       }
     },
   }
@@ -156,7 +165,25 @@ export class SummaryS99Component implements OnInit {
         
       }
     },
-    yaxis: [],
+    yaxis: {
+      labels: {
+        formatter: function(value) {
+          let r;
+          var val = Math.abs(value)
+          if(val >= 1000000000) {
+            r = parseFloat((val / 1000000000).toFixed(2)) + ' B'
+          } else if (val >= 1000000) {
+            r = parseFloat((val / 1000000).toFixed(2)) + ' M'
+          }
+          else if (val >= 1000) {
+            r = parseFloat((val / 1000).toFixed(2)) + ' K'
+          } else {
+            r = val + '';
+          }
+          return r
+        }
+    }
+  },
     
     colors: [colors.solid.info],
     dataLabels: {
@@ -164,7 +191,11 @@ export class SummaryS99Component implements OnInit {
       offsetY: -20,
       style: {
         fontSize: '8px',
-        colors: ["#304758"]
+        colors: ["#304758"],
+        
+      },
+      formatter: function(value) {
+        return value.toLocaleString()
       }
     },
   }
@@ -279,24 +310,24 @@ export class SummaryS99Component implements OnInit {
     //     return value + ''
     //   }
     // }
-    this.apexBarChartDoanhThu.yaxis.labels = {
-      formatter: function(value) {
-        console.log("----- format")
-        // let r;
-        // var val = Math.abs(value)
-        // if(val >= 1000000000) {
-        //   r = (val / 1000000000).toFixed(2) + ' B'
-        // } else if (val >= 1000000) {
-        //   r = (val / 1000000).toFixed(2) + ' M'
-        // }
-        // else if (val >= 1000) {
-        //   r = (val / 1000).toFixed(2) + ' K'
-        // } else {
-        //   r = val + ' X';
-        // }
-        return value + ' X'
-      }
-    }
+    // this.apexBarChartDoanhThu.yaxis.labels = {
+    //   formatter: function(value) {
+    //     console.log("----- format")
+    //     // let r;
+    //     // var val = Math.abs(value)
+    //     // if(val >= 1000000000) {
+    //     //   r = (val / 1000000000).toFixed(2) + ' B'
+    //     // } else if (val >= 1000000) {
+    //     //   r = (val / 1000000).toFixed(2) + ' M'
+    //     // }
+    //     // else if (val >= 1000) {
+    //     //   r = (val / 1000).toFixed(2) + ' K'
+    //     // } else {
+    //     //   r = val + ' X';
+    //     // }
+    //     return value + ' X'
+    //   }
+    // }
 
     this.apexBarChartTTTB = Object.assign({
       series: res.chart_dktttb.series,
