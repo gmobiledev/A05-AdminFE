@@ -56,54 +56,35 @@
                             <div class="mb-1">
                                 <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
                             </div>
+
+
+
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
-                                        <th>Đơn vị</th>
-                                        <th>Số lượng thuê bao</th>
-                                        <th>TTTB : Active</th>
-                                        <th>TTTB : Khóa 1C</th>
-                                        <th>TTTB : Khóa 2C</th>
-                                        <th>TTTB : Thu hồi</th>
-                                        <th>Doanh thu topup</th>
-                                        <th>Doanh thu tiêu dùng</th>
-
+                                        <th rowspan="">STT</th>
+                                        <th rowspan="">Đơn vị</th>
+                                        <th rowspan="">Số lượng thuê bao</th>
+                                        <th colspan="4" class="text-center">Trạng thái thuê bao trong tháng</th>
+                                        <th rowspan="">Doanh thu topup</th>
+                                        <th rowspan="">Doanh thu tiêu dùng</th>
                                     </tr>
+
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Active</th>
+                                        <th>Khóa 1C</th>
+                                        <th>Khóa 2C</th>
+                                        <th>Thu hồi</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of list;let i = index">
-                                        <td>
-                                            {{ i+1 }}
-                                        </td>
-                                        <td>
-                                            {{item.product_code}}
-                                        </td>
-                                        <td>
-                                            {{item.product_name}}
-                                        </td>
-                                        <td>
-                                            {{item.begin_total || 0 | number}}
-                                        </td>
-                                        <td>
-                                            {{item.imported || 0 | number}}
-                                        </td>
-                                        <td>
-                                            {{item.exported || 0 | number}}
-                                        </td>
-                                        <td>
-                                            {{item.total || 0 | number}}
-                                        </td>
-                                        <td>
-                                            {{item.begin_total || 0 | number}}
-                                        </td>
-                                        <td>
-                                            {{item.begin_total || 0 | number}}
-                                        </td>
-                                        <td>
-                                            {{item.begin_total || 0 | number}}
-                                        </td>
-                                    </tr>
+    
                                     <tr>
                                         <td>Tổng</td>
                                         <td></td>
@@ -118,7 +99,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-
 
                         </div>
                     </div>
