@@ -36,6 +36,9 @@ export class ChiTietComponent implements OnInit {
     channel_id: '',
     end_date: '',
     start_date: '',
+    msisdn: '',
+    page_size: 50,
+    page: 1
   }
   sumItems = {
     begin_total: 0,
@@ -45,12 +48,16 @@ export class ChiTietComponent implements OnInit {
   }
   listChannel;
   list;
+  totalItems;
+  submitted = false;
+
   constructor(
     private route: ActivatedRoute,
     private readonly inventoryService: InventoryService
   ) {
     this.route.queryParams.subscribe(async params => {
       this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
+      this.searchForm.msisdn = params['msisdn'] && params['msisdn'] != undefined ? params['msisdn'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
       this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
@@ -63,7 +70,12 @@ export class ChiTietComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  loadPage(page) {
+    this.searchForm.page = page;
+    this.getData();
+  }
   getData() {
+    this.submitted = true;
     this.sectionBlockUI.start();
     this.sumItems = {
       begin_total: 0,
@@ -73,19 +85,25 @@ export class ChiTietComponent implements OnInit {
     }
     const paramsSearch = {
       channel_id: this.searchForm.channel_id,
+      msisdn: this.searchForm.msisdn,
+      page: this.searchForm.page,
+      page_size: this.searchForm.page_size,
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
     this.inventoryService.reportChiTietSim(paramsSearch).subscribe(res => {
+      this.submitted = false;
       this.sectionBlockUI.stop();
-      this.list = res.data;
-      for(let item of this.list) {
-        this.sumItems.begin_total += item.begin_total;
-        this.sumItems.exported += item.exported;
-        this.sumItems.imported += item.imported;
-        this.sumItems.total += item.total;
-      }
+      this.list = res.data.items;
+      this.totalItems = res.data.count;
+      // for(let item of this.list) {
+      //   this.sumItems.begin_total += item.begin_total;
+      //   this.sumItems.exported += item.exported;
+      //   this.sumItems.imported += item.imported;
+      //   this.sumItems.total += item.total;
+      // }
     }, error => {
+      this.submitted = false;
       this.sectionBlockUI.stop();
     })
   }

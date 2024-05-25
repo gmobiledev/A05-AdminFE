@@ -229,11 +229,26 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/report/ton-kho-sim'
-      },
+      }      
+    ]
+  },
+
+  {
+    id: 'users',
+    title: 'Báo cáo S99',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '5',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
 
       {
         id: 'report-business',
-        title: 'Báo cáo tình trạng TB',
+        title: 'Tình trạng TB',
         translate: '',
         type: 'item',
         icon: 'circle',
@@ -241,7 +256,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'report-business',
-        title: 'Báo cáo chi tiết',
+        title: 'Chi tiết TB',
         translate: '',
         type: 'item',
         icon: 'circle',
@@ -249,7 +264,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'report-business',
-        title: 'Báo cáo tổng hợp kết quả',
+        title: 'Tổng hợp kết quả',
         translate: '',
         type: 'item',
         icon: 'circle',
