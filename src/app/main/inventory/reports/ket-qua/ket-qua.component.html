@@ -103,6 +103,19 @@
                                             {{item.sum_cost | formatPrice}}
                                         </td>
                                     </tr>
+                                    <tr class="font-weight-bold">
+                                        <td>Tổng</td>
+                                        <td></td>
+                                        <td>{{ sumItems.total_register | number }}</td>
+                                        <td>{{ sumItems.received | number }}</td>
+                                        <td>{{ sumItems.percent }} %</td>
+                                        <td>{{ sumItems.actived | number }}</td>
+                                        <td>{{ sumItems.luy_ke_actived | number }}</td>
+                                        <td>{{ sumItems.hoan_thien_tttb | number }}</td>
+                                        <td>{{ sumItems.sum_topup | formatPrice }}</td>
+                                        <td>{{ sumItems.sum_coast | formatPrice }}</td>
+
+                                    </tr>
                                 </tbody>
                             </table>
 

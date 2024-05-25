@@ -40,10 +40,14 @@ export class KetQuaComponent implements OnInit {
     start_date: '',
   }
   sumItems = {
-    begin_total: 0,
-    exported: 0,
-    imported: 0,
-    total: 0
+    total_register: 0,
+    received: 0,
+    actived: 0,
+    percent: 0,
+    luy_ke_actived: 0,
+    hoan_thien_tttb: 0,
+    sum_coast: 0,
+    sum_topup: 0,
   }
   listChannel;
   list;
@@ -59,7 +63,7 @@ export class KetQuaComponent implements OnInit {
       let currentDate = new Date(new Date().getTime() - tzoffset);
       this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
       this.searchForm.end_date = new Date(new Date().getTime() - tzoffset).toISOString().slice(0,10)
-      await this.getChannel();
+      // await this.getChannel();
       this.getData();
     })
   }
@@ -71,10 +75,14 @@ export class KetQuaComponent implements OnInit {
     this.submitted = true;
     this.sectionBlockUI.start();
     this.sumItems = {
-      begin_total: 0,
-      exported: 0,
-      imported: 0,
-      total: 0
+      total_register: 0,
+      received: 0,
+      actived: 0,
+      percent: 0,
+      luy_ke_actived: 0,
+      hoan_thien_tttb: 0,
+      sum_coast: 0,
+      sum_topup: 0,
     }
     const paramsSearch = {
       channel_id: this.searchForm.channel_id,
@@ -85,6 +93,17 @@ export class KetQuaComponent implements OnInit {
       this.sectionBlockUI.stop();
       this.submitted = false;
       this.list = res.data;      
+      for(let item of this.list) {
+        this.sumItems.total_register += item.total_register;
+        this.sumItems.received += item.received;
+        this.sumItems.actived += item.actived;
+        this.sumItems.luy_ke_actived += item.luy_ke_actived;
+        this.sumItems.hoan_thien_tttb += item.hoan_thien_tttb;
+        this.sumItems.sum_coast += item.sum_cost;
+        this.sumItems.sum_topup += item.sum_topup;
+        
+      }
+      this.sumItems.percent =  parseFloat(((this.sumItems.received / this.sumItems.total_register) * 100).toFixed(4))
 
     }, error => {
       this.submitted = false;
