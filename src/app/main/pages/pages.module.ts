@@ -17,6 +17,7 @@ import { FaqModule } from 'app/main/pages/faq/faq.module';
 import { AccountSettingsModule } from './account-settings/account-settings.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+import { ReportModule } from './report/report.module';
 
 @NgModule({
   declarations: [],
@@ -35,7 +36,8 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
     ProfileModule,
     KbModule,
     FaqModule,
-    AccountSettingsModule
+    AccountSettingsModule,
+    ReportModule
   ],
 
   providers: []

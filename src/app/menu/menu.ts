@@ -229,6 +229,31 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/report/ton-kho-sim'
+      },
+
+      {
+        id: 'report-business',
+        title: 'Báo cáo tình trạng TB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/tong-hop'
+      },
+      {
+        id: 'report-business',
+        title: 'Báo cáo chi tiết',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/chi-tiet'
+      },
+      {
+        id: 'report-business',
+        title: 'Báo cáo tổng hợp kết quả',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/ket-qua'
       }
     ]
   },

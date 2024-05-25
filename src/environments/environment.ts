@@ -18,6 +18,7 @@ export const environment = {
   apiGipUrl: 'http://localhost:4000/gip/api',
   apiTelecomUrl: 'https://sandbox-admin.g99.vn/telecom/api',
   apiGtalkUrl: 'https://sandbox-admin.g99.vn/virtual-number/api',
+  apiProductPrivate: 'http://172.16.252.11:3001/api',
 
   FCM_VAPID_PUBLIC_KEY: 'BD1zjiNqZGojPvrF2BBbUNe_zv_tq9q4ftHSlCJlxTugdNZpMbV7r_e6YjKIpToTWt_PVoJQwFisoEk-HI2ASEo',
   firebaseConfig: {

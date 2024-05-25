@@ -34,9 +34,18 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for=""></label>
-                                        <button type="submit" class="btn btn-block btn-info">
+                                        <button [disabled]="submitted" type="submit" class="btn btn-block btn-info">
                                             Lọc kết quả <span [data-feather]="'search'"></span>
                                         </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for=""></label>
+                                        <a [ngClass]="submitted ? 'btn btn-block btn-success disabled' : 'btn btn-block btn-success'"  (click)="exportExcel()">
+                                            Xuất Excel <span [data-feather]="'file'"></span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -50,10 +59,10 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Đơn vị</th>
-                                        <th>Đăng ký đơn vị</th>
+                                        <th>SL đăng ký</th>
                                         <th>Đã giao</th>
                                         <th>Tỉ lệ (đã giao)</th>
-                                        <th>Số lượng TB hoạt động</th>
+                                        <th>Số TB hoạt động</th>
                                         <th>Số thuê bao hoạt động luỹ kế</th>
                                         <th>Số TB hoàn thiện TTTB</th>
                                         <th>Doanh thu topup</th>
@@ -70,22 +79,22 @@
                                             {{item.name}}
                                         </td>
                                         <td>
-                                            {{item.total_register}}
+                                            {{item.total_register | number}}
                                         </td>
                                         <td>
-                                            {{item.received}}
+                                            {{item.received | number}}
                                         </td>
                                         <td>
-                                            {{item.percent * 100}} %
+                                            {{ (item.percent * 100).toFixed(4) }} %
                                         </td>
                                         <td>
-                                            {{item.actived}}
+                                            {{item.actived | number}}
                                         </td>
                                         <td>
-                                            {{item.luy_ke_actived}}
+                                            {{item.luy_ke_actived | number}}
                                         </td>
                                         <td>
-                                            {{item.hoan_thien_tttb}}
+                                            {{item.hoan_thien_tttb | number }}
                                         </td>
                                         <td>
                                             {{item.sum_topup | formatPrice}}

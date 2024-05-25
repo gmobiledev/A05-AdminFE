@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ChartsModule } from 'ng2-charts';
+import { Chart } from 'ng2-charts';
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { ChartjsComponent } from './chartjs.component';
 
@@ -28,7 +28,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ContentHeaderModule,
     CardSnippetModule,
-    ChartsModule,
+    // ChartsModule,
     Ng2FlatpickrModule,
     CoreCommonModule,
     NgbModule

@@ -1,0 +1,242 @@
+<div class="row" #summaryNumberRef>
+  <div class="col-3">
+    <div class="card card-statistics">
+      <div class="card-body statistics-body">
+        <div class="row">
+          <div class="col-12 mb-2 mb-xl-0">
+              <div class="d-flex flex-row">
+                  <div class="avatar bg-light-primary me-2">
+                      <div class="avatar-content">
+                          <i data-feather="trending-up" class="avatar-icon"></i>
+                      </div>
+                  </div>
+                  <div class="my-auto ml-2">
+                    <p class="card-text font-small-3 mb-0">SL BÀN GIAO</p>
+                      <h4 class="fw-bolder mb-0">{{ summaryTotal.exported | number }}</h4>
+                      
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-3">
+    <div class="card card-statistics">
+      <div class="card-body statistics-body">
+        <div class="row">
+          <div class="col-12 mb-2 mb-xl-0">
+              <div class="d-flex flex-row">
+                  <div class="avatar bg-light-primary me-2">
+                      <div class="avatar-content">
+                          <i data-feather="trending-up" class="avatar-icon"></i>
+                      </div>
+                  </div>
+                  <div class="my-auto ml-2">
+                    <p class="card-text font-small-3 mb-0">TB HOẠT ĐỘNG</p>
+                      <h4 class="fw-bolder mb-0">{{ summaryTotal.da_kich_hoat | number }}</h4>
+                      
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-3">
+    <div class="card card-statistics">
+      <div class="card-body statistics-body">
+        <div class="row">
+          <div class="col-12 mb-2 mb-xl-0">
+              <div class="d-flex flex-row">
+                  <div class="avatar bg-light-primary me-2">
+                      <div class="avatar-content">
+                          <i data-feather="trending-up" class="avatar-icon"></i>
+                      </div>
+                  </div>
+                  <div class="my-auto ml-2">
+                    <p class="card-text font-small-3 mb-0">HOÀN THIỆN TTTB </p>
+                      <h4 class="fw-bolder mb-0">{{ summaryTotal.active | number }}</h4>
+                     
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-3">
+    <div class="card card-statistics">
+      <div class="card-body statistics-body">
+        <div class="row">
+          <div class="col-12 mb-2 mb-xl-0">
+              <div class="d-flex flex-row">
+                  <div class="avatar bg-light-primary me-2">
+                      <div class="avatar-content">
+                          <i data-feather="trending-up" class="avatar-icon"></i>
+                      </div>
+                  </div>
+                  <div class="my-auto ml-2">
+                    <p class="card-text font-small-3 mb-0">DOANH THU</p>
+                      <h4 class="fw-bolder mb-0">{{ summaryTotal.revenue | number }}</h4>
+                      
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<section id="apex-bar-and-candlestick-charts">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <div class="card">
+          <div
+            class="card-header d-flex flex-sm-row flex-column justify-content-md-between align-items-start justify-content-start"
+          >
+            <div>
+              <p class="card-subtitle text-muted mb-25">Số TB hoạt động</p>              
+            </div>
+            <!-- <div class="d-flex align-items-center mt-md-0 mt-1">
+              <i class="font-medium-2" data-feather="calendar"></i>
+              <ng2-flatpickr [config]="DateRangeOptions" name="DateRange"></ng2-flatpickr>
+            </div> -->
+          </div>
+          <div class="card-body">
+            <div id="bar-chart" #apexBarChartRef>
+              <apx-chart
+                [series]="apexBarChartActive.series"
+                [chart]="{
+                  height: commonHeight,
+                  width:  apexBarChartRef.offsetWidth,
+                  type: 'bar',
+                  toolbar: {
+                    show: false
+                  }
+                }"
+                [dataLabels]="apexBarChartActive.dataLabels"
+                [plotOptions]="apexBarChartActive.plotOptions"
+                [xaxis]="apexBarChartActive.xaxis"
+                [yaxis]="apexBarChartActive.yaxis"
+                [colors]="apexBarChartActive.colors"
+                [grid]="apexBarChartActive.grid"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-12">
+        <div class="card">
+          <div
+            class="card-header d-flex flex-sm-row flex-column justify-content-md-between align-items-start justify-content-start"
+          >
+            <div>
+              <p class="card-subtitle text-muted mb-25">Doanh thu</p>              
+            </div>
+            <!-- <div class="d-flex align-items-center mt-md-0 mt-1">
+              <i class="font-medium-2" data-feather="calendar"></i>
+              <ng2-flatpickr [config]="DateRangeOptions" name="DateRange"></ng2-flatpickr>
+            </div> -->
+          </div>
+          <div class="card-body">
+            <div id="bar-chart" #apexBarChartRef>
+              <apx-chart
+                [series]="apexBarChartDoanhThu.series"
+                [chart]="{
+                  height: commonHeight,
+                  width:  apexBarChartRef.offsetWidth,
+                  type: 'bar',
+                  toolbar: {
+                    show: false
+                  }
+                }"
+                [dataLabels]="apexBarChartDoanhThu.dataLabels"
+                [plotOptions]="apexBarChartDoanhThu.plotOptions"
+                [xaxis]="apexBarChartDoanhThu.xaxis"
+                [yaxis]="apexBarChartDoanhThu.yaxis"
+                [colors]="apexBarChartDoanhThu.colors"
+                [grid]="apexBarChartDoanhThu.grid"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row">
+    <div class="col-md-6 col-12">
+      <div class="card">
+        <div
+          class="card-header d-flex flex-sm-row flex-column justify-content-md-between align-items-start justify-content-start"
+        >
+          <div>
+            <p class="card-subtitle text-muted mb-25">TOP 5</p>            
+          </div>
+          
+        </div>
+        <div class="card-body">
+          <div id="bar-chart" #apexBarChartRef>
+            <apx-chart
+              [series]="apexBarChartTop.series"
+              [chart]="{
+                height: commonHeight,
+                width:  apexBarChartRef.offsetWidth,
+                type: 'bar',
+                toolbar: {
+                  show: false
+                }
+              }"
+              [dataLabels]="apexBarChartTop.dataLabels"
+              [plotOptions]="apexBarChartTop.plotOptions"
+              [xaxis]="apexBarChartTop.xaxis"
+              [colors]="apexBarChartTop.colors"
+              [grid]="apexBarChartTop.grid"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-12">
+      <div class="card">
+        <div
+          class="card-header d-flex flex-sm-row flex-column justify-content-md-between align-items-start justify-content-start"
+        >
+          <div>
+            <p class="card-subtitle text-muted mb-25">Số lượng hoàn thiện TTTB</p>            
+          </div>
+          <!-- <div class="d-flex align-items-center mt-md-0 mt-1">
+            <i class="font-medium-2" data-feather="calendar"></i>
+            <ng2-flatpickr [config]="DateRangeOptions" name="DateRange"></ng2-flatpickr>
+          </div> -->
+        </div>
+        <div class="card-body">
+          <div id="bar-chart" #apexBarChartRef>
+            <apx-chart
+              [series]="apexBarChartTTTB.series"
+              [chart]="{
+                height: commonHeight,
+                width:  apexBarChartRef.offsetWidth,
+                type: 'bar',
+                toolbar: {
+                  show: false
+                }
+              }"
+              [dataLabels]="apexBarChartTTTB.dataLabels"
+              [plotOptions]="apexBarChartTTTB.plotOptions"
+              [xaxis]="apexBarChartTTTB.xaxis"
+              [yaxis]="apexBarChartTTTB.yaxis"
+              [colors]="apexBarChartTTTB.colors"
+              [grid]="apexBarChartTTTB.grid"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

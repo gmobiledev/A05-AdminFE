@@ -52,7 +52,8 @@ export class ChiTietComponent implements OnInit {
     this.route.queryParams.subscribe(async params => {
       this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-      this.searchForm.start_date = new Date(new Date().getTime() - tzoffset).toISOString().slice(0,10)
+      let currentDate = new Date(new Date().getTime() - tzoffset);
+      this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
       this.searchForm.end_date = new Date(new Date().getTime() - tzoffset).toISOString().slice(0,10)
       await this.getChannel();
       this.getData();
@@ -92,9 +93,6 @@ export class ChiTietComponent implements OnInit {
   async getChannel() {
     const res = await this.inventoryService.getMyChannel(null).toPromise();
     this.listChannel = res.data.items;
-    if (!this.searchForm.channel_id && res.data.items.length > 0) {
-      this.searchForm.channel_id = res.data.items[0].id
-    }
   }
 
 }
