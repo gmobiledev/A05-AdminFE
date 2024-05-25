@@ -229,6 +229,46 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/report/ton-kho-sim'
+      }      
+    ]
+  },
+
+  {
+    id: 'users',
+    title: 'Báo cáo S99',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '5',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+
+      {
+        id: 'report-business',
+        title: 'Tình trạng TB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/tong-hop'
+      },
+      {
+        id: 'report-business',
+        title: 'Chi tiết TB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/chi-tiet'
+      },
+      {
+        id: 'report-business',
+        title: 'Tổng hợp kết quả',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/ket-qua'
       }
     ]
   },
