@@ -38,6 +38,7 @@ export class ChiTietComponent implements OnInit {
     start_date: '',
     msisdn: '',
     page_size: 50,
+    status: '',
     page: 1
   }
   sumItems = {
@@ -62,7 +63,7 @@ export class ChiTietComponent implements OnInit {
       let currentDate = new Date(new Date().getTime() - tzoffset);
       this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
       this.searchForm.end_date = new Date(new Date().getTime() - tzoffset).toISOString().slice(0,10)
-      // await this.getChannel();
+      await this.getChannel();
       this.getData();
     })
   }
@@ -87,6 +88,7 @@ export class ChiTietComponent implements OnInit {
       channel_id: this.searchForm.channel_id,
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
+      status: this.searchForm.status,
       page_size: this.searchForm.page_size,
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
@@ -109,8 +111,38 @@ export class ChiTietComponent implements OnInit {
   }
 
   async getChannel() {
-    const res = await this.inventoryService.getMyChannel(null).toPromise();
+    const res = await this.inventoryService.getChannelS99(null).toPromise();
     this.listChannel = res.data.items;
+  }
+
+  exportExcel() {
+    this.sectionBlockUI.start();
+    this.submitted = true;
+    const paramsSearch = {
+      channel_id: this.searchForm.channel_id,
+      msisdn: this.searchForm.msisdn,
+      page: this.searchForm.page,
+      status: this.searchForm.status,
+      page_size: this.searchForm.page_size,
+      start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
+      end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
+    }
+    this.inventoryService.exportReportChiTietSim(null, paramsSearch).subscribe(res => {
+      this.sectionBlockUI.stop();
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Báo cáo chi tiet TB";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+      this.submitted = false;
+    },error => {
+      console.log(error);
+    })
   }
 
 }

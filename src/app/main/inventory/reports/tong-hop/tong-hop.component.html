@@ -52,7 +52,7 @@
               <div class="mb-1">
                 <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
               </div>
-              <table class="table table-striped table-bordered">
+              <!-- <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th rowspan="2" class="align-middle">STT</th>
@@ -111,10 +111,101 @@
                     <td>{{ sumItems.s2 | number }}</td>
                     <td>{{ sumItems.th | number }}</td>
                     <td>{{ sumItems.sum_topup | number }}</td>
-                    <td>{{ sumItems.sum_coast | number }}</td>
+                    <td>{{ sumItems.sum_cost | number }}</td>
                   </tr>
                 </tbody>
-              </table>
+              </table> -->
+
+              <ngx-datatable #table class="bootstrap core-bootstrap" [summaryRow]="enableSummary" [summaryPosition]="summaryPosition"
+                [summaryHeight]="100" [columnMode]="ColumnMode.force" [headerHeight]="50" rowHeight="auto" [rows]="list">
+              
+                <ngx-datatable-column name="STT" [width]="50" [cellClass]="table-stt">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+                    {{rowIndex+1}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Tên Đơn Vị" prop="name" [summaryTemplate]="nameSummaryCell"
+                  [cellClass]="d-block"></ngx-datatable-column>
+                <ngx-datatable-column name="SL Thuê bao" prop="count_msisdn" [summaryFunc]="sumValue">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="align-items-center">
+                      <div class="cell-line-height">
+                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                          {{ row.count_msisdn | number }}
+                        </p>
+                      </div>
+                    </div>
+                  </ng-template></ngx-datatable-column>
+                <ngx-datatable-column name="Active" [summaryFunc]="sumValue" [cellClass]="d-block">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="align-items-center">
+                      <div class="cell-line-height">
+                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                          {{ (row['all_status'][0]['Active'] || 0) | number }}
+                        </p>
+                      </div>
+                    </div>
+                  </ng-template></ngx-datatable-column>
+                
+                
+                <ngx-datatable-column name="Khóa 1C" [summaryFunc]="sumValue" [cellClass]="d-block">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="align-items-center">
+                      <div class="cell-line-height">
+                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                          {{ (row['all_status'][0]['s1'] || 0) | number }}
+                        </p>
+                      </div>
+                    </div>
+                  </ng-template></ngx-datatable-column>
+                <ngx-datatable-column name="Khóa 2" [summaryFunc]="sumValue" [cellClass]="d-block">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div class="align-items-center">
+                      <div class="cell-line-height">
+                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                          {{ (row['all_status'][0]['s2'] || 0) | number }}
+                        </p>
+                      </div>
+                    </div>
+                  </ng-template></ngx-datatable-column>
+                  <ngx-datatable-column name="Thu hồi" [summaryFunc]="sumValue" [cellClass]="d-block">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <div class="align-items-center">
+                        <div class="cell-line-height">
+                          <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                            {{ (row['all_status'][0]['TH'] || 0) | number }}
+                          </p>
+                        </div>
+                      </div>
+                    </ng-template></ngx-datatable-column>
+
+                <ngx-datatable-column name="DT Tiêu dùng" prop="sum_cost" [summaryFunc]="sumValue" [cellClass]="d-block"><ng-template
+                    let-row="row" ngx-datatable-cell-template>
+                    <div class="align-items-center">
+                      <div class="cell-line-height">
+                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                          {{ row.sum_cost | number }}
+                        </p>
+                      </div>
+                    </div>
+                  </ng-template></ngx-datatable-column>
+                <ngx-datatable-column name="DT Topup" prop="sum_topup" [summaryFunc]="sumValue" [cellClass]="d-block"><ng-template
+                    let-row="row" ngx-datatable-cell-template>
+                    <div class="align-items-center">
+                      <div class="cell-line-height">
+                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                          {{ row.sum_topup | number }}
+                        </p>
+                      </div>
+                    </div>
+                  </ng-template></ngx-datatable-column>
+              </ngx-datatable>
+              
+              <ng-template #nameSummaryCell>
+                <div class="name-container">
+                  Tổng
+                </div>
+              </ng-template>
 
             </div>
           </div>

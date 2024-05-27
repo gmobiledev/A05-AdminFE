@@ -31,17 +31,7 @@
                               </div>
                               <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="">Số thuê bao</label>
-                                    <input
-                                    type="text"
-                                    name="msisdn"
-                                    [(ngModel)]="searchForm.msisdn"
-                                    class="form-control" >
-                                </div>
-                              </div>  
-                              <!-- <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="">Kho số</label>
+                                    <label for="">Đơn vị</label>
                                     <ng-select       
                                     name="sell_channel_id"                               
                                     [(ngModel)]="searchForm.channel_id" 
@@ -51,7 +41,30 @@
                                             }}</ng-option>
                                     </ng-select>
                                 </div>
-                              </div>                            -->
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Số thuê bao</label>
+                                    <input
+                                    type="text"
+                                    name="msisdn"
+                                    [(ngModel)]="searchForm.msisdn"
+                                    class="form-control" >
+                                </div>
+                              </div> 
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Trạng thái</label>
+                                    <select [(ngModel)]="searchForm.status" name="status" class="form-control">
+                                        <option>-- Chọn trạng thái --</option>
+                                        <option value="Active">Active</option>
+                                        <option value="S1">Khóa 1C</option>
+                                        <option value="S2">Khóa 2C</option>
+                                        <option value="TH">Thu hồi</option>
+                                    </select>
+                                </div>
+                              </div>  
+                                                         
                               <div class="col-md-2">
                                 <div class="form-group">
                                   <label for=""></label>
@@ -60,6 +73,15 @@
                                   </button>
                                 </div>
                               </div>
+
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for=""></label>
+                                    <a [ngClass]="submitted ? 'btn btn-block btn-success disabled' : 'btn btn-block btn-success'"  (click)="exportExcel()">
+                                        Xuất Excel <span [data-feather]="'file'"></span>
+                                    </a>
+                                </div>
+                            </div>
                             </div>
                           </form>
                         <div class="table-responsive" *blockUI="'section-block'">
@@ -112,7 +134,7 @@
                                             {{item.sum_topup | formatPrice}}
                                         </td>
                                         <td>
-                                            {{item.sum_coast | formatPrice}}
+                                            {{item.sum_cost | formatPrice}}
                                         </td>
                                     </tr>
                                 </tbody>

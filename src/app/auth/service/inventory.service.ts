@@ -126,6 +126,10 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/my-list`, { params: params });
   }
 
+  getChannelS99(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/channel/s99`, { params: params });
+  }
+
   createBatchExport(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/create`, data);
   }
@@ -296,6 +300,10 @@ export class InventoryService {
 
   reportKetQuaSim(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary`, {params: params});
+  }
+
+  exportReportChiTietSim(params = null, data = null) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn/excel`, data, {params: params});
   }
 
   getReportSummaryS99(params = null) {

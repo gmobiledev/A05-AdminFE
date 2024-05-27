@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 const ExcelJS = require('exceljs');
@@ -14,6 +15,8 @@ const ExcelJS = require('exceljs');
 
 export class TongHopComponent implements OnInit {
 
+  @ViewChild(DatatableComponent)
+  private readonly table: DatatableComponent;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   
   public contentHeader = {
@@ -47,12 +50,16 @@ export class TongHopComponent implements OnInit {
     s2: 0,
     th: 0,
     sum_topup: 0,
-    sum_coast: 0,
+    sum_cost: 0,
   }
   listChannel;
   list;
   listExecel;
   submitted = false;
+
+  enableSummary = true;
+  summaryPosition = 'bottom';
+  ColumnMode = ColumnMode;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,7 +88,7 @@ export class TongHopComponent implements OnInit {
       s1: 0,
       s2: 0,
       th: 0,
-      sum_coast: 0,
+      sum_cost: 0,
       sum_topup: 0,
     }
     const paramsSearch = {
@@ -99,7 +106,7 @@ export class TongHopComponent implements OnInit {
         this.sumItems.s1 += item.all_status[0]['S1'] ? item.all_status[0]['S1'] : 0;
         this.sumItems.s2 += item.all_status[0]['S2'] ? item.all_status[0]['S2'] : 0;
         this.sumItems.th += item.all_status[0]['TH'] ? item.all_status[0]['TH'] : 0;
-        this.sumItems.sum_coast += item.sum_cost;
+        this.sumItems.sum_cost += item.sum_cost;
         this.sumItems.sum_topup += item.sum_topup;
       }
       this.listExecel = res.data.map(x => {
@@ -153,6 +160,15 @@ export class TongHopComponent implements OnInit {
     window.URL.revokeObjectURL(url);
     a.remove();
     return;
+  }
+
+  public getRowIndex(row: any): number {
+    return this.table.bodyComponent.getRowIndex(row); // row being data object passed into the template
+  }
+  public sumValue(cells: number[]): string {
+    const filteredCells = cells.filter(cell => !!cell);
+    let x = filteredCells.reduce((sum, cell) => (sum += cell), 0);
+    return Number(x).toLocaleString('en-GB');
   }
 
 }
