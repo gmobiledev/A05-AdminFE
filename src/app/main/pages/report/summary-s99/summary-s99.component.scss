@@ -1,2 +1,27 @@
 @import '@core/scss/base/plugins/charts/chart-apex';
 @import '@core/scss/angular/libs/flatpickr.component.scss';
+.clock-container{
+
+    font-size:25px;
+    /*line-height:25px;*/
+    height:100%;
+    font-weight: 500;
+  
+  
+  }
+  .clock, .clock2 {
+    top:30%;
+    width:30%;
+    height:100%;
+  }
+  .clock div, .clock2 div {
+    display:inline-block;
+    width:25%;
+    height: 100%;
+    text-align: center;
+  }
+  .clock2 {
+  }
+  .time{
+    width:100% !important;
+  }

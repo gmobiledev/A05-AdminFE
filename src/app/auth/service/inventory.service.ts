@@ -306,8 +306,12 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn/excel`, data, {params: params});
   }
 
+  // getReportSummaryS99(params = null) {
+  //   return this._http.get<any>(`${environment.apiProductPrivate}/product-admin/report/dashboard`, {params: params});
+  // }
+
   getReportSummaryS99(params = null) {
-    return this._http.get<any>(`${environment.apiProductPrivate}/product-admin/report/dashboard`, {params: params});
+    return this._http.get<any>(`${environment.apiTelecomOraclePrivate}/telecom-oracle-admin/report/s99-dashboard-tv`, {params: params});
   }
 
   getHeatmapPrivate(data) {

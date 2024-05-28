@@ -71,7 +71,7 @@ export class TongHopComponent implements OnInit {
       let currentDate = new Date(new Date().getTime() - tzoffset);
       this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
       this.searchForm.end_date = new Date(new Date().getTime() - tzoffset).toISOString().slice(0,10)
-      // await this.getChannel();
+      await this.getChannel();
       this.getData();
     })
   }
@@ -127,7 +127,7 @@ export class TongHopComponent implements OnInit {
   }
 
   async getChannel() {
-    const res = await this.inventoryService.getMyChannel(null).toPromise();
+    const res = await this.inventoryService.getChannelS99(null).toPromise();
     this.listChannel = res.data.items;
     // if (!this.searchForm.channel_id && res.data.items.length > 0) {
     //   this.searchForm.channel_id = res.data.items[0].id
