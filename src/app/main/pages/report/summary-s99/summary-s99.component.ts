@@ -54,6 +54,7 @@ export class SummaryS99Component implements OnInit {
   @ViewChild('apexBarChartRef') apexBarChartRef: any;
   @ViewChild('summaryNumberRef') summaryNumberRef: any;
 
+  date;
   public apexBarChartActive: Partial<ChartOptions>;
   public apexBarChartDoanhThu: Partial<ChartOptions>;
   public apexBarChartTop: Partial<ChartOptions>;
@@ -244,7 +245,10 @@ export class SummaryS99Component implements OnInit {
     let previous30 = new Date();
     previous30.setDate(previous30.getDate() - 30);
     this.DateRangeOptions.defaultDate = [previous30.toISOString().slice(0,10), currentDate.toISOString().slice(0,10)]
-
+    setInterval(() =>{
+      const currentDate = new Date();
+      this.date = currentDate.toLocaleTimeString();
+       }, 1000);     
   
     
   }
@@ -285,7 +289,7 @@ export class SummaryS99Component implements OnInit {
     var ctx = this;
     setInterval(function () {
       ctx.getData()
-    }, 1000 * 60 * 3);
+    }, 1000 * 60 * 30);
   }
 
   async getData() {
