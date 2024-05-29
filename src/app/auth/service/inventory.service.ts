@@ -262,15 +262,18 @@ export class InventoryService {
   }
 
   getAdminsSell(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/admins`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/admins`, { params: params });
   }
 
   getAdminsSellKhoTong(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/kho-tong/admins`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/kho-tong/admins`, { params: params });
   }
-  
+
   exportExcelChannelProducts(dto: any): Observable<any> {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/product/channel/export-excel`, dto, { observe: 'response', responseType: 'blob' });
+  }
+  getAllChannelProducts(dto: any) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/channel/all-products-by-channel`, dto);
   }
   reportInventory(dto: any) {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/report-inventory`, dto);
@@ -284,11 +287,11 @@ export class InventoryService {
   }
 
   reportInventorySim(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/report/report-inventory-sim`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/report/report-inventory-sim`, { params: params });
   }
 
   getReportSummaryS99(params = null) {
-    return this._http.get<any>(`${environment.apiProductPrivate}/product-admin/report/dashboard`, {params: params});
+    return this._http.get<any>(`${environment.apiProductPrivate}/product-admin/report/dashboard`, { params: params });
   }
 
   getHeatmapPrivate(data) {

@@ -24,6 +24,13 @@ import { FIX_ROLE } from 'app/utils/constants';
 })
 export class NewSellChanelComponent implements OnInit {
 
+  onClearProvince() {
+    throw new Error('Method not implemented.');
+  }
+  onClearDistrict() {
+    throw new Error('Method not implemented.');
+  }
+
   public modalRef: any;
   @Input() provinces;
   @Input() districts;

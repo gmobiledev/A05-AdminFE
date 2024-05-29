@@ -19,6 +19,8 @@ import { UserService } from 'app/auth/service';
 import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { HttpResponse } from '@angular/common/http';
+const ExcelJS = require('exceljs');
+
 
 @Component({
   selector: 'app-view-sell-chanel',
@@ -95,7 +97,7 @@ export class ViewSellChanelComponent implements OnInit {
   filesData;
   submittedUpload: boolean = false;
   listProductFail = [];
-  listProductFailExport = [];  
+  listProductFailExport = [];
 
   public searchForm: any = {
     keysearch: '',
@@ -171,7 +173,7 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
-      this.contentHeader.headerTitle = 'Xem chi tiết kho số';      
+      this.contentHeader.headerTitle = 'Xem chi tiết kho số';
 
       this.getData();
       this.getService();
@@ -437,14 +439,14 @@ export class ViewSellChanelComponent implements OnInit {
     })
     this.sectionBlockUI.start();
     // this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
-    
+
     this.submitted = true;
     this.inventoryService.getAllSim(this.searchForm).subscribe(res => {
-      
+
       this.list = res.data.data.items;
       this.totalItems = res.data.data.count;
       this.sectionBlockUI.stop();
-      this.submitted  = false;
+      this.submitted = false;
     }, error => {
       this.alertService.showMess(error);
       this.sectionBlockUI.stop();
@@ -467,7 +469,7 @@ export class ViewSellChanelComponent implements OnInit {
       const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => {
         return { ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value }
       });
-      if(dataAgentServices.length < 1) {
+      if (dataAgentServices.length < 1) {
         this.alertService.showMess("Vui lòng chọn Dịch vụ");
         return;
       }
@@ -539,7 +541,7 @@ export class ViewSellChanelComponent implements OnInit {
           return;
         })
       }
-      
+
     }
   }
 
@@ -566,7 +568,7 @@ export class ViewSellChanelComponent implements OnInit {
    * 
    */
   async onSubmitUpload() {
-    if(!this.filesData) {
+    if (!this.filesData) {
       this.alertService.showMess("Vui lòng chọn file");
       return;
     }
@@ -584,23 +586,23 @@ export class ViewSellChanelComponent implements OnInit {
           return;
         }
 
-        if(res.data.product_update_fail.length < 1) {
+        if (res.data.product_update_fail.length < 1) {
           this.alertService.showSuccess(res.message, 4500);
           this.modalClose();
-        } else {                    
+        } else {
           this.listProductFail = res.data.product_update_fail;
-          this.listProductFailExport = res.data.product_update_fail.map(x => {return { msisdn: " '"+x.msisdn, serial: " '"+x.serial }});
+          this.listProductFailExport = res.data.product_update_fail.map(x => { return { msisdn: " '" + x.msisdn, serial: " '" + x.serial } });
         }
 
         this.alertService.showSuccess(res.data.message, 4500);
-        
+
       }, error => {
         this.submittedUpload = false;
         this.itemBlockUI.stop();
         this.alertService.showMess(error);
       })
     }
-    
+
   }
 
   async onExportExcel() {
@@ -614,16 +616,6 @@ export class ViewSellChanelComponent implements OnInit {
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');
       a.href = url;
-      // const contentDisposition = res.headers.get('content-disposition');
-
-      // // Extract the file name
-      // console.log(contentDisposition);
-      // const filename = contentDisposition
-      //   .split(';')[1]
-      //   .split('filename')[1]
-      //   .split('=')[1]
-      //   .trim()
-      //   .match(/"([^"]+)"/)[1];
       a.download = `Danhsachsokho_${this.currentChannel.code}`;
       a.click();
       window.URL.revokeObjectURL(url);
@@ -633,10 +625,23 @@ export class ViewSellChanelComponent implements OnInit {
 
   }
 
+  async exportExcelByLocal() {
+    this.sectionBlockUI.start();
+    this.inventoryService.getAllChannelProducts(this.searchForm).subscribe(async res => {
+      let data: any = res.data.items;
+      await this.downloadFile(data, 'jsontocsv')
+      this.sectionBlockUI.stop();
+    }, error => {
+      this.sectionBlockUI.stop();
+      console.log("ERRRR");
+      console.log(error);
+    })
+  }
+
 
   initForm() {
     this.formGroup = this.formBuilder.group({
-      name: ['', Validators.required],      
+      name: ['', Validators.required],
       mobile: ['', Validators.required],
       password: ['', Validators.required],
       partner_user_code: [''],
@@ -686,6 +691,48 @@ export class ViewSellChanelComponent implements OnInit {
     if (arrayControl.length < this.listAllService.length) {
       this.isShowAddInput = true;
     }
+  }
+
+
+  downloadFile(data, filename = 'data') {
+    console.log("downloadFile")
+    let csvData = this.ConvertToCSV(data, ['name', 'brand', 'level', 'price', 'status']);
+    console.log(csvData)
+    let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+    let dwldLink = document.createElement("a");
+    let url = URL.createObjectURL(blob);
+    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+    if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+    }
+    dwldLink.setAttribute("href", url);
+    dwldLink.setAttribute("download", filename + ".csv");
+    dwldLink.style.visibility = "hidden";
+    document.body.appendChild(dwldLink);
+    dwldLink.click();
+    document.body.removeChild(dwldLink);
+  }
+
+  ConvertToCSV(objArray, headerList) {
+    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    let str = '';
+    let row = 'S.No,';
+
+    for (let index in headerList) {
+      row += headerList[index] + ',';
+    }
+    row = row.slice(0, -1);
+    str += row + '\r\n';
+    for (let i = 0; i < array.length; i++) {
+      let line = (i + 1) + '';
+      for (let index in headerList) {
+        let head = headerList[index];
+
+        line += ',' + array[i][head];
+      }
+      str += line + '\r\n';
+    }
+    return str;
   }
 
 }
