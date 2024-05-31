@@ -46,6 +46,7 @@ export class CreateBatchRetrieveDto {
     products: any;
     files: any;
     file_ext: any;
+    from_channel_id: any;
 }
 
 export class UpdateBatchDto {
