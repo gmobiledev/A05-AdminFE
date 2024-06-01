@@ -101,8 +101,12 @@
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
                         </a>
                       </ng-template>
-                      <button title="View Webook" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item.id)">
+                      <button title="View Webook" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item)">
                         <i data-feather="monitor" class="text-primary cursor-pointer"></i>
+                      </button>
+
+                      <button *ngIf="item.status == taskStatus.STATUS_WAITING" title="Duyệt" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalDuyetSimprofile, item)">
+                        <i data-feather="check" class="text-primary cursor-pointer"></i>
                       </button>
 
                         <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm" (click)="checkGatewayTransaction(item)">
@@ -209,4 +213,31 @@
     </button>
   </div>
 
+</ng-template>
+
+<ng-template #modalDuyetSimprofile let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Duyệt SIM profile</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="form-group">
+      <label for="">Nhà mạng</label>
+      <select name="" id="" class="form-control" [(ngModel)]="dataApprove.brand">
+        <option value="VMS">Mobifone</option>
+        <option value="VNP">Vinaphone</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="onApproveTask()" type="submit" class="btn btn-primary" rippleEffect>
+      Duyệt
+    </button>
+    <button (click)="modalClose()" type="submit" class="btn btn-danger" rippleEffect>
+      Từ chối
+    </button>
+  </div>
 </ng-template>

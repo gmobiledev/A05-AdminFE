@@ -11,6 +11,7 @@ import { ReportComponent } from './report/report.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { BlockUIModule } from 'ng-block-ui';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { ServiceCode } from 'app/utils/constants';
 
 
 const routes: Routes = [
@@ -25,6 +26,13 @@ const routes: Routes = [
   },
   {
     path: 'list',
+    component: ListTaskComponent,
+  },
+  {
+    path: 'sim-profile',
+    data: {
+      service: ServiceCode.SIM_PROFILE
+    },
     component: ListTaskComponent,
   },
 ];

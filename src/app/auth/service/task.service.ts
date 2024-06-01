@@ -96,4 +96,8 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/check-transaction`, {params: params});
   }
 
+  approveTask(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/task/sim-profile/approve`, data);
+  }
+
 }

@@ -244,3 +244,27 @@ export enum FIX_ROLE {
     TAO_XUAT_KHO = 'TAO_XUAT_KHO',
     TAO_THU_HOI_KHO = 'TAO_THU_HOI_KHO'
 }
+
+export enum ServiceCode {
+    AIRTIME_TOPUP = 'AIRTIME_TOPUP',
+    SIM_PROFILE = 'SIM_PROFILE',
+    BUY_DATA = 'BUY_DATA',
+    MerchantKitting = 'MerchantKitting',
+    ĐKTTTB = 'ĐKTTTB',
+    KITTING = 'KITTING'
+}
+
+export enum TaskStatus {
+    STATUS_INIT = 0,
+    STATUS_REJECT = 99,
+    STATUS_SUCCESS = 1,
+    STATUS_CANCEL = -1,
+    STATUS_WAITING = 2,
+    STATUS_APPROVED = 3,
+    STATUS_DISBURSING = 4, //chờ giải ngân
+    STATUS_DISBURSED = 5, //Đã giải ngân
+    STATUS_WAITING_BUSINESS_DEPARTMENT = 10,
+    STATUS_WAITING_PAYMENT=20,
+    STATUS_WAITING_ACCOUNTING = 30,
+    STATUS_WATING_ITADMIN = 60
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from 'app/auth/service/task.service';
+import { ServiceCode, TaskStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 
 @Component({
@@ -39,6 +40,13 @@ export class ListTaskComponent implements OnInit {
   public wh;
 
   public modalRef: any;
+  public currentService;
+  public currentTask;
+  public taskStatus = TaskStatus;
+  public dataApprove = {
+    brand: '',
+    id: ''
+  }
 
   constructor(
     private modalService: NgbModal,
@@ -47,11 +55,14 @@ export class ListTaskComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
+    const data = this.route.snapshot.data;  
+    this.currentService = data && data.service ? data.service : '';
+
     this.route.queryParams.subscribe(params => {
       this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
       this.searchForm.title = params['title'] && params['title'] != undefined ? params['title'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
-      this.searchForm.service_code = params['service_code'] && params['service_code'] != undefined ? params['service_code'] : '';
+      this.searchForm.service_code = params['service_code'] && params['service_code'] != undefined ? params['service_code'] : this.currentService;
       this.searchForm.trans_id = params['trans_id'] && params['trans_id'] != undefined ? params['trans_id'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.is_customer_sign = params['is_customer_sign'] && params['is_customer_sign'] != undefined ? params['is_customer_sign'] : '';
@@ -96,18 +107,28 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
-  modalOpen(modal, id) {
-    this.taskService.getTransWebhook(id).subscribe(res => {
-      this.task = res.data.task;
-      this.wh = res.data.wh;
-      this.trans = res.data.trans;
-
+  modalOpen(modal, item = null) {
+    this.currentTask = item;
+    if(item && item.webhook_id) {      
+      this.taskService.getTransWebhook(item.id).subscribe(res => {
+        this.task = res.data.task;
+        this.wh = res.data.wh;
+        this.trans = res.data.trans;
+  
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'lg'
+        });
+      })
+    } else {
       this.modalRef = this.modalService.open(modal, {
         centered: true,
         windowClass: 'modal modal-primary',
         size: 'lg'
       });
-    })
+    }
+    
   }
 
   modalClose() {
@@ -138,6 +159,34 @@ export class ListTaskComponent implements OnInit {
     } else {
       self.alertService.showMess(message, 20000)
     }
+  }
+
+  async onApproveTask() {
+    if(this.currentTask.service_code == ServiceCode.SIM_PROFILE && !this.dataApprove.brand) {
+      this.alertService.showMess("Vui lòng chọn nhà mạng");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng duyệt đơn?")).value) {
+      if(this.currentTask.service_code == ServiceCode.SIM_PROFILE) {
+        this.approveSimProfileTask();
+      }
+    }
+    
+  }
+
+  approveSimProfileTask() {
+    
+    let dataPost = {
+      id: this.currentTask.id,
+      brand: this.dataApprove.brand
+    }
+    this.taskService.approveTask(dataPost).subscribe(res => {
+      this.alertService.showSuccess(res.message);
+      this.getData();
+      this.modalClose();
+    }, error => {
+      this.alertService.showMess(error);
+    })
   }
 
   getData(): void {
