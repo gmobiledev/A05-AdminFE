@@ -23,7 +23,7 @@
                       placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" *ngIf="!isSingleService">
                   <div class="form-group">
                     <select class="form-control" name="service_code" [(ngModel)]="searchForm.service_code">
                       <option value="">Chọn dịch vụ</option>
@@ -60,7 +60,7 @@
                     <th>Người dùng</th>
                     <th>Dịch vụ</th>
                     <th>Merchant</th>
-                    <th>Số tiền</th>
+                    <th>{{ tableColumnName.amount }}</th>
                     <th>Tiêu đề</th>
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
@@ -83,7 +83,7 @@
                       {{item.merchant_id}}
                     </td>
                     <td>
-                      {{ item?.amount | currency:'VND':true}}
+                      {{ item?.amount | number }} {{ currency }}
                     </td>
                     <td>
                       {{ item?.title }}
@@ -101,9 +101,10 @@
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
                         </a>
                       </ng-template>
-                      <button title="View Webook" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item)">
+                      <button title="View Webook" *ngIf="item.webhook_id" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item)">
                         <i data-feather="monitor" class="text-primary cursor-pointer"></i>
                       </button>
+                      
 
                       <button *ngIf="item.status == taskStatus.STATUS_WAITING" title="Duyệt" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalDuyetSimprofile, item)">
                         <i data-feather="check" class="text-primary cursor-pointer"></i>
@@ -111,6 +112,17 @@
 
                         <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm" (click)="checkGatewayTransaction(item)">
                         <i data-feather="info" class="text-primary cursor-pointer"></i>
+                      </button>
+                      
+                      <button
+                        ngbTooltip="Xem chi tiết"
+                        (click)="onViewDetail(modalDetail, item)"
+                        class="btn btn-icon btn-flat-success btn-sm"
+                      >
+                        <i
+                          data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </button>
                     </td>
                   </tr>
@@ -239,5 +251,91 @@
     <button (click)="modalClose()" type="submit" class="btn btn-danger" rippleEffect>
       Từ chối
     </button>
+  </div>
+</ng-template>
+
+
+<ng-template #modalDetail let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="row mb-2">
+      <div class="col-4">
+        <span>Ngân hàng nhận: </span> {{ selectedItem?.receiver_bank_code }}
+      </div>
+      <div class="col-4">
+        <span>Tên tài khoản: </span> {{ selectedItem?.receiver_name }}
+      </div>
+      <div class="col-4">
+        <span>Số tài khoản: </span> {{ selectedItem?.receiver_banker_number }}
+      </div>
+    </div>
+    <div
+      class="row"
+      *ngIf="listFiles.files_request && listFiles.files_request.length > 0"
+    >
+      <div class="col-12">Ảnh yêu cầu</div>
+      <div class="col-6" *ngFor="let item of listFiles.files_request">
+        <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+      </div>
+    </div>
+    <div
+      class="row"
+      *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0"
+    >
+      <div class="col-12">Ảnh chuyển khoản</div>
+      <div class="col-6" *ngFor="let item of listFiles.files_banking">
+        <img *ngIf="item.ext == 'png'"  src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+      </div>
+    </div>
+    <div
+      class="row"
+      *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0"
+    >
+      <div class="col-12">Ảnh quyết định hoàn tiền</div>
+      <div class="col-6" *ngFor="let item of listFiles.files_rollback">
+        <img *ngIf="item.ext == 'png'"  src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-12">
+        <span>Note: </span> {{ selectedItem?.response_note }}
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div
+      *ngIf="
+        selectedItem.status >= 30 &&
+        selectedItem.status <= 39 &&
+        checkRole('ACCOUNTING')
+      "
+    >
+      <button
+        (click)="onUpdateStatus(selectedItem, 1)"
+        class="btn btn-info btn-sm mb-2"
+      >
+        <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt đã
+        nhận tiền
+      </button>
+
+      <button
+        (click)="onUpdateStatus(selectedItem, 99)"
+        class="ml-2 btn btn-warning btn-sm mb-2"
+      >
+        <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
+        Từ chối
+      </button>
+    </div>
   </div>
 </ng-template>

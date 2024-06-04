@@ -31,7 +31,32 @@ const routes: Routes = [
   {
     path: 'sim-profile',
     data: {
-      service: ServiceCode.SIM_PROFILE
+      service: ServiceCode.SIM_PROFILE,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
+    path: 'sim-kitting',
+    data: {
+      service: ServiceCode.SIM_KITTING,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
+    path: 'balance',
+    data: {
+      service: ServiceCode.ADD_MONEY_BALANCE,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
+    path: 'data',
+    data: {
+      service: ServiceCode.ADD_DATA_BALANCE,
+      single_service: 1
     },
     component: ListTaskComponent,
   },

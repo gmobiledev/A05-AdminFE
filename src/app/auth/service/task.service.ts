@@ -96,6 +96,10 @@ export class TaskService {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/check-transaction`, {params: params});
   }
 
+  getTaskByServiceCode(service_code, params = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/${service_code}`, { params: params });
+  }
+  
   approveTask(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/task/sim-profile/approve`, data);
   }
