@@ -20,7 +20,7 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control"
-                      placeholder="Nhập tìm theo tên hoặc sđt hoặc số cccd/cmnd của khách hàng...">
+                      placeholder="Nhập tìm theo SĐT của khách hàng">
                   </div>
                 </div>
                 <div class="col-md-3" *ngIf="!isSingleService">
@@ -36,11 +36,14 @@
                     <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                       <option value="">Chọn trạng thái task</option>
 
-                      <option value="2">Chờ duyệt</option>
-                      <option value="0">Không duyệt</option>
+                      <option value="2">Chờ duyệt</option>                      
                       <option value="3">Đã duyệt</option>
-                      <option value="4">Chờ giải ngân</option>
-                      <option value="5">Đã giải ngân</option>
+                      <option value="1">Thành công</option>
+                      <option value="-1">Hủy</option>
+                      <option value="20">Chờ thanh toán</option>
+                      <option value="30">Chờ KT duyệt</option>
+                      <option value="99">Từ chối</option>
+                      <option value="8">Đang xử lý</option>
                     </select>
                   </div>
                 </div>
@@ -55,38 +58,41 @@
               <table class="table table-striped text-nowrap">
                 <thead>
                   <tr>
+                    <th>STT</th>
                     <th>ID</th>
-                    <th *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">Mã hợp đồng</th>
                     <th>Người dùng</th>
-                    <th>Dịch vụ</th>
-                    <th>Merchant</th>
-                    <th>{{ tableColumnName.amount }}</th>
+                    <th *ngIf="!isSingleService">Dịch vụ</th>
+                    <th *ngIf="!isSingleService">Merchant</th>
                     <th>Tiêu đề</th>
+                    <th>{{ tableColumnName.amount }}</th>  
+                    <th *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)" >Nhà mạng</th>                  
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of list">
-
+                  <tr *ngFor="let item of list; index as i">
+                    <td>{{ (searchForm.page - 1) * searchForm.page_size + (i+1) }}</td>
                     <td>{{ item?.id }}</td>
-                    <td *ngIf="searchForm.service_code == 'BANK_LOAN_PVCOMBANK' ">{{ item.contract[0]?.contract_code }}
-                    </td>
+                    
                     <td>{{ item?.user?.people?.name }}
                       <br>{{ item?.user?.people?.mobile }}
                     </td>
-                    <td>
+                    <td *ngIf="!isSingleService">
                       {{ item.service_code }}
                     </td>
-                    <td>
+                    <td *ngIf="!isSingleService">
                       {{item.merchant_id}}
+                    </td>
+                    <td>
+                      {{ item?.title }}
                     </td>
                     <td>
                       {{ item?.amount | number }} {{ currency }}
                     </td>
-                    <td>
-                      {{ item?.title }}
+                    <td *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)" >
+                      {{ getJSONDetail(item, 'mno') }}
                     </td>
                     <td>
                       {{ item?.created_at | date: 'dd/MM/yyyy H:mm' }}
@@ -115,12 +121,25 @@
                       </button>
                       
                       <button
+                      *ngIf="[ServiceCode.ADD_DATA_BALANCE, ServiceCode.ADD_MONEY_BALANCE].includes(currentService)"
                         ngbTooltip="Xem chi tiết"
                         (click)="onViewDetail(modalDetail, item)"
                         class="btn btn-icon btn-flat-success btn-sm"
                       >
                         <i
                           data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </button>
+
+                      <button
+                      *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)"
+                        ngbTooltip="Xem danh sách"
+                        (click)="modalOpen(modalListSerial, item)"
+                        class="btn btn-icon btn-flat-success btn-sm"
+                      >
+                        <i
+                          data-feather="list"
                           class="text-primary cursor-pointer"
                         ></i>
                       </button>
@@ -268,17 +287,6 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <div class="row mb-2">
-      <div class="col-4">
-        <span>Ngân hàng nhận: </span> {{ selectedItem?.receiver_bank_code }}
-      </div>
-      <div class="col-4">
-        <span>Tên tài khoản: </span> {{ selectedItem?.receiver_name }}
-      </div>
-      <div class="col-4">
-        <span>Số tài khoản: </span> {{ selectedItem?.receiver_banker_number }}
-      </div>
-    </div>
     <div
       class="row"
       *ngIf="listFiles.files_request && listFiles.files_request.length > 0"
@@ -338,4 +346,58 @@
       </button>
     </div>
   </div>
+</ng-template>
+
+<ng-template #modalListSerial let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Danh sách Serial</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <div class="d-flex justify-content-between align-items-center m-1">
+          <label class="d-flex align-items-center">Show
+            <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            entries</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-12 d-flex justify-content-md-end">
+        <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+          <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+              class="form-control ml-25" (keyup)="filterList($event)" /></label>
+        </div>
+      </div>
+    </div>
+    <div style="height: 500px;
+        overflow-y: auto;">
+      <ngx-datatable [rows]="listSerial" rowHeight="auto" class="bootstrap core-bootstrap" [limit]="25"
+        [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true">
+        <ngx-datatable-column name="Name">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="align-items-center">
+              <div class="cell-line-height">
+                <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                  {{ row.value }}
+                </p>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+
 </ng-template>

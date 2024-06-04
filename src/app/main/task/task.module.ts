@@ -12,6 +12,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { BlockUIModule } from 'ng-block-ui';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { ServiceCode } from 'app/utils/constants';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 const routes: Routes = [
@@ -77,6 +78,7 @@ const routes: Routes = [
     ContentHeaderModule,
     SharedModule,
     NgApexchartsModule,
+    NgxDatatableModule,
     BlockUIModule.forRoot(),
     NgxDaterangepickerMd.forRoot()
   ],

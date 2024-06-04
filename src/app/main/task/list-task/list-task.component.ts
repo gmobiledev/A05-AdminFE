@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from 'app/auth/service/task.service';
@@ -9,7 +9,8 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-list-task',
   templateUrl: './list-task.component.html',
-  styleUrls: ['./list-task.component.scss']
+  styleUrls: ['./list-task.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ListTaskComponent implements OnInit {
 
@@ -56,6 +57,9 @@ export class ListTaskComponent implements OnInit {
     amount: 'Số tiền'
   }
   currency = 'VND'
+  ServiceCode = ServiceCode;
+  listSerial;
+  basicSelectedOption =  25;
 
   constructor(
     private modalService: NgbModal,
@@ -130,11 +134,14 @@ export class ListTaskComponent implements OnInit {
 
   modalOpen(modal, item = null) {
     this.selectedItem = item;
-    if(item && item.webhook_id) {      
+    if(item) {      
       this.taskService.getTransWebhook(item.id).subscribe(res => {
         this.task = res.data.task;
         this.wh = res.data.wh;
         this.trans = res.data.trans;
+        if([ServiceCode.SIM_PROFILE].includes(this.currentService)) {
+          this.listSerial = res.data.task.details.filter(x => x.attribute == 'serial');
+        }
   
         this.modalRef = this.modalService.open(modal, {
           centered: true,
@@ -154,6 +161,18 @@ export class ListTaskComponent implements OnInit {
 
   modalClose() {
     this.modalRef.close();
+  }
+
+  getJSONDetail(item, key) {
+    const r =  item.detail ? JSON.parse(item.detail) : null;
+    if(!r) {
+      return null;
+    }
+    return r[key]
+  }
+
+  filterList(event) {
+
   }
 
   checkGatewayTransaction(item) {
