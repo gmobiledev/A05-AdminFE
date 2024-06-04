@@ -57,10 +57,10 @@
                                     <label for="">Trạng thái</label>
                                     <select [(ngModel)]="searchForm.status" name="status" class="form-control">
                                         <option>-- Chọn trạng thái --</option>
-                                        <option value="Active">Active</option>
-                                        <option value="S1">Khóa 1C</option>
-                                        <option value="S2">Khóa 2C</option>
-                                        <option value="TH">Thu hồi</option>
+                                        <option value="A">Active</option>
+                                        <option value="IC">Khóa 1C</option>
+                                        <option value="OC">Khóa 2C</option>
+                                        <option value="HUY">Thu hồi</option>
                                     </select>
                                 </div>
                               </div>  
@@ -128,7 +128,7 @@
                                             {{item.package}}
                                         </td>
                                         <td>
-                                            {{item.status}}
+                                            {{ showStatus(item.status) }}
                                         </td>
                                         <td>
                                             {{item.sum_topup | formatPrice}}

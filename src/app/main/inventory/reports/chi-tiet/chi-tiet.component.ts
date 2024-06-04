@@ -115,6 +115,20 @@ export class ChiTietComponent implements OnInit {
     this.listChannel = res.data.items;
   }
 
+  showStatus(value) {
+    let r = value;
+    if(value == 'A') {
+      r = 'Active'
+    } else if (value == 'OC') {
+      r = 'S1'
+    } else if (value == 'IC') {
+      r = 'S2'
+    } else if (value == 'HUY') {
+      r = 'TH'
+    }
+    return r;
+  }
+
   exportExcel() {
     this.sectionBlockUI.start();
     this.submitted = true;
