@@ -184,10 +184,6 @@ export class ViewSellChanelComponent implements OnInit {
 
   modalChannelOpen(modal, item) {
     if (item) {
-      let params = {
-        channel_id: item.id,
-        current_sell_channel_id: this.searchForm.channel_id
-      }
       this.inventoryService.viewDetailSell(item.sub_channel_id).subscribe(res => {
         this.showChannel = res.data.items[0];
 
@@ -427,6 +423,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.inventoryService.getListCustomer(this.searchForm.channel_id).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
+      
     }, error => {
       this.sectionBlockUI.stop();
       console.log("ERRRR");
@@ -436,6 +433,8 @@ export class ViewSellChanelComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.inventoryService.viewDetailSell(this.searchForm.channel_id).subscribe(res => {
       this.currentChannel = res.data.items[0];
+      this.contentHeader.headerTitle = 'Xem chi tiết kho số: ' + this.currentChannel.name;
+
     })
     this.sectionBlockUI.start();
     // this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;

@@ -109,18 +109,6 @@ export class TongHopComponent implements OnInit {
         this.sumItems.sum_cost += item.sum_cost;
         this.sumItems.sum_topup += item.sum_topup;
       }
-      this.listExecel = res.data.map(x => {
-        return {
-          name: x.name,
-          actived: x.all_status[0]['Active'] ? x.all_status[0]['Active'] : 0,
-          s1: x.all_status[0]['S1'] ? x.all_status[0]['S1'] : 0,
-          s2: x.all_status[0]['S2'] ? x.all_status[0]['S2'] : 0,
-          th: x.all_status[0]['TH'] ? x.all_status[0]['TH'] : 0,
-          sum_topup: x.sum_topup,
-          sum_cost: x.sum_cost
-        }
-        
-      })
     }, error => {
       this.sectionBlockUI.stop();
     })
@@ -140,10 +128,10 @@ export class TongHopComponent implements OnInit {
     worksheet.columns = [
       { letter: 'A', header: 'Đơn vị', key: 'name' },
       { letter: 'B', header: 'SL thuê bao', key: 'count_msisdn' },
-      { letter: 'C', header: 'Số TB Active', key: 'actived' },
-      { letter: 'D', header: 'Số TB Khóa 1C', key: 's1' },
-      { letter: 'E', header: 'Số TB Khóa 2C', key: 's2' },
-      { letter: 'F', header: 'Số TB Thu hồi', key: 'th' },
+      { letter: 'C', header: 'Số TB Active', key: 'sum_active' },
+      { letter: 'D', header: 'Số TB Khóa 1C', key: 'sum_s1' },
+      { letter: 'E', header: 'Số TB Khóa 2C', key: 'sum_s2' },
+      { letter: 'F', header: 'Số TB Thu hồi', key: 'sum_th' },
       { letter: 'G', header: 'Doanh thu topup', key: 'sum_topup' },
       { letter: 'H', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
     ];

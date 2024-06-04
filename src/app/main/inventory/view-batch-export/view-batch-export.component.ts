@@ -142,11 +142,16 @@ export class ViewBatchExportComponent implements OnInit {
           this.reciever = res.data.items[0];
         })
       }
+      let _channel_id = this.fromChannel.id;
       if(this.data.batch.type == this.batchType.RETRIEVE) {
-        this.htmlHeadingText = {
+        this.htmlHeadingText = this.data.batch.to_channel_id ? {
+          fromChannel: 'Thu hồi từ kho',
+          toChannel: 'Thu hồi về kho'
+        } : {
           fromChannel: 'Thu hồi về kho',
           toChannel: 'Thu hồi từ kho'
-        }
+        };
+        _channel_id = this.data.batch.to_channel_id ? this.data.batch.to_channel_id  : this.data.batch.channel_id;
       } else if(this.data.batch.type == this.batchType.OUTPUT) {
         this.htmlHeadingText = {
           fromChannel: 'Xuất từ kho',
@@ -154,7 +159,7 @@ export class ViewBatchExportComponent implements OnInit {
         }
       }
 
-      this.inventoryService.getAdminsSell({channel_id: this.fromChannel.id, batch_id: this.data.batch.id}).subscribe(res => {
+      this.inventoryService.getAdminsSell({channel_id: _channel_id, batch_id: this.data.batch.id}).subscribe(res => {
         this.listAdminSellAction = res.data;
       })
       
