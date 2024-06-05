@@ -48,7 +48,8 @@ export class NewSellChanelComponent implements OnInit {
     nameSell: '',
     nameChanel: '',
     codeSell: '',
-    page: 1
+    page: 1,
+    page_size: 500
   }
 
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
