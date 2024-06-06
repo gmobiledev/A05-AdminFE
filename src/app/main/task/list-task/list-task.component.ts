@@ -209,6 +209,8 @@ export class ListTaskComponent implements OnInit {
     if ((await this.alertService.showConfirm("Bạn có đồng duyệt đơn?")).value) {
       if(this.selectedItem.service_code == ServiceCode.SIM_PROFILE) {
         this.approveSimProfileTask();
+      } else if(this.selectedItem.service_code == ServiceCode.SIM_KITTING) {
+        this.approveSimKitting();
       }
     }
     
@@ -221,6 +223,20 @@ export class ListTaskComponent implements OnInit {
       brand: this.dataApprove.brand
     }
     this.taskService.approveTask(dataPost).subscribe(res => {
+      this.alertService.showSuccess(res.message);
+      this.getData();
+      this.modalClose();
+    }, error => {
+      this.alertService.showMess(error);
+    })
+  }
+
+  approveSimKitting() {
+    
+    let dataPost = {
+      id: this.selectedItem.id,
+    }
+    this.taskService.approveTaskSimKitting(dataPost).subscribe(res => {
       this.alertService.showSuccess(res.message);
       this.getData();
       this.modalClose();

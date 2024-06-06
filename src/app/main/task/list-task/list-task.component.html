@@ -254,7 +254,7 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
-    <div class="form-group">
+    <div class="form-group" *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">
       <label for="">Nhà mạng</label>
       <select name="" id="" class="form-control" [(ngModel)]="dataApprove.brand">
         <option value="VMS">Mobifone</option>
