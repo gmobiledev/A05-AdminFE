@@ -39,13 +39,20 @@ export class FormPersonalComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-
-
     this.initForm();
+    if (!this.provinces) {
+      this.commonDataService.getProvinces().subscribe((res: any) => {
+        if (res.status == 1) {
+          this.provinces = res.data
+        }
+      })
+    }
+
   }
 
   ngOnChanges() {
-    if (this.dataInput) {
+    if (this.dataInput && !this.formPeople.controls.identification_no.value) {
+      console.log("init set form data")
       this.formPeople.controls.name.setValue(this.dataInput.name)
       this.formPeople.controls.mobile.setValue(this.dataInput.mobile)
       this.formPeople.controls.identification_type.setValue(this.dataInput.id_type)
@@ -67,38 +74,64 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       if (this.dataInput.people.identification_expire_date !== null && this.dataInput.people.identification_expire_date !== '') {
         this.formPeople.controls.identification_expire_date_text.setValue(this.commonService.formatDateFromTimestamp(this.dataInput.people.identification_expire_date))
       }
-
-      this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
       this.formPeople.controls.residence_address.setValue(this.dataInput.address)
-      this.formPeople.controls.residence_province.setValue(this.dataInput.people.home_province)
-      this.formPeople.controls.country.setValue(this.dataInput.people.country)
+      if (this.dataInput.people.residence_province && !this.residence_districts) {
+        this.onChangeResidenceProvince({ target: { value: this.dataInput.people.residence_province } })
+        this.formPeople.controls.residence_district.setValue(this.dataInput.people.residence_district)
+      }
+      this.formPeople.controls.residence_province.setValue(this.dataInput.people.residence_province)
 
+      this.formPeople.controls.residence_commune.setValue(this.dataInput.people.residence_commune)
+      if (this.dataInput.people.residence_district && !this.residence_commues)
+        this.onChangeResidenceDistrict({ target: { value: this.dataInput.people.residence_district } })
+
+      //home
+      this.formPeople.controls.home_province.setValue(this.dataInput.people.home_province)
+      if (this.dataInput.people.home_province && !this.home_districts) {
+        this.onChangeHomeProvince({ target: { value: this.dataInput.people.home_province } })
+        this.formPeople.controls.home_district.setValue(this.dataInput.people.home_district)
+      }
+
+      this.formPeople.controls.home_commune.setValue(this.dataInput.people.home_commune)
+      if (this.dataInput.people.home_district && !this.home_commues)
+        this.onChangeHomeDistrict({ target: { value: this.dataInput.people.home_district } })
+
+
+      this.formPeople.controls.country.setValue(this.dataInput.people.country)
       this.imageFront = this.dataInput.people.identification_front_file
       this.imageBack = this.dataInput.people.identification_back_file
       this.imageSelfie = this.dataInput.people.identification_selfie_file
       this.imageSignature = this.dataInput.people.identification_signature_file
-      console.log(this.dataInput)
     }
+    if (this.formPeople && this.formPeople.controls) {
+      console.log(this.formPeople,this.formPeople.controls);
+
+      this.formPeople.controls.home_country.setValue("VN")
+      this.formPeople.controls.country.setValue("VN")
+    }
+
 
   }
 
   onChangeResidenceProvince(event) {
-    // let id = event.target.value
-    // this.commonDataService.getDistricts(id).subscribe((res: any) => {
-    //   if (res.status == 1) {
-    //     this.residence_districts = res.data
-    //     this.residence_commues = []
-    //   }
-    // })
+    console.log("onChangeResidenceProvince", event)
+    let id = event.target.value
+    this.commonDataService.getDistricts(id).subscribe((res: any) => {
+      if (res.status == 1) {
+        this.residence_districts = res.data
+        this.residence_commues = []
+      }
+    })
   }
 
   onChangeResidenceDistrict(event) {
-    // let id = event.target.value
-    // this.commonDataService.getCommunes(id).subscribe((res: any) => {
-    //   if (res.status == 1) {
-    //     this.residence_commues = res.data
-    //   }
-    // })
+    console.log("onChangeResidenceDistrict", event);
+    let id = event.target.value
+    this.commonDataService.getCommunes(id).subscribe((res: any) => {
+      if (res.status == 1) {
+        this.residence_commues = res.data
+      }
+    })
   }
   onChangeResidenceCommune(event) {
     if (event.target['options'])
@@ -106,22 +139,22 @@ export class FormPersonalComponent implements OnInit, OnChanges {
   }
 
   onChangeHomeProvince(event) {
-    // let id = event.target.value
-    // this.commonDataService.getDistricts(id).subscribe((res: any) => {
-    //   if (res.status == 1) {
-    //     this.home_districts = res.data
-    //     this.home_commues = []
-    //   }
-    // })
+    let id = event.target.value
+    this.commonDataService.getDistricts(id).subscribe((res: any) => {
+      if (res.status == 1) {
+        this.home_districts = res.data
+        this.home_commues = []
+      }
+    })
   }
 
   onChangeHomeDistrict(event) {
-    // let id = event.target.value
-    // this.commonDataService.getCommunes(id).subscribe((res: any) => {
-    //   if (res.status == 1) {
-    //     this.home_commues = res.data
-    //   }
-    // })
+    let id = event.target.value
+    this.commonDataService.getCommunes(id).subscribe((res: any) => {
+      if (res.status == 1) {
+        this.home_commues = res.data
+      }
+    })
   }
 
   onChangeIdentificationType(event) {
@@ -193,7 +226,7 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       birth: ['', [Validators.required]],
       birth_text: ['', [Validators.required]],
       gender: ['', Validators.required],
-      country: ['VN', Validators.required],
+      country: ['', Validators.required],
       identification_no: ['', Validators.required],
       identification_place: ['', Validators.required],
       identification_back_file: [''],
@@ -204,14 +237,14 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       identification_type: ['', Validators.required],
       identification_expire_date: [""],
       identification_expire_date_text: [""],
-      home_country: ['VN', Validators.required], //Có trường người nước noài
-      home_province: ['-1'],
-      home_district: ['-1'],
-      home_commune: ['-1'],
+      home_country: ['', Validators.required], //Có trường người nước noài
+      home_province: [''],
+      home_district: [''],
+      home_commune: [''],
       home_address: [''],
-      residence_province: ['-1'],
-      residence_district: ['-1'],
-      residence_commune: ['-1'],
+      residence_province: ['', Validators.required],
+      residence_district: ['', Validators.required],
+      residence_commune: [''], //Có huyện không có xã vd huyện đảo
       residence_address: [''], //Có trường hợp CCCD không có địa chỉ thường chú
       residence_full_address: [''],
       province: ['-1'],
@@ -224,6 +257,8 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       signature: [''],
       identification_signature_file: ['']
     })
+
+
 
   }
 

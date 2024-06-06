@@ -154,11 +154,9 @@ export class CreateCustomerComponent implements OnInit {
 
     this.submitted = true;
 
+    console.log(this.formPeopleComponent.formPeople.invalid)
 
-    console.log(dataUpdate)
-
-
-    if ((await this.alertService.showConfirm("Bạn có chắc chắn muốn cập nhật thông tin?")).value) {
+    if (!this.formPeopleComponent.formPeople.invalid && (await this.alertService.showConfirm("Bạn có chắc chắn muốn cập nhật thông tin?")).value) {
       this.sectionBlockUI.start();
       this.taskService.patchUpdateCustomer(this.id, dataUpdate).subscribe(res => {
         this.sectionBlockUI.stop();
