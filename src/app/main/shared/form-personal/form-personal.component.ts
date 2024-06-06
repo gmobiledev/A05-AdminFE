@@ -47,6 +47,7 @@ export class FormPersonalComponent implements OnInit, OnChanges {
         }
       })
     }
+
   }
 
   ngOnChanges() {
@@ -102,6 +103,13 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       this.imageSelfie = this.dataInput.people.identification_selfie_file
       this.imageSignature = this.dataInput.people.identification_signature_file
     }
+    if (this.formPeople && this.formPeople.controls) {
+      console.log(this.formPeople,this.formPeople.controls);
+
+      this.formPeople.controls.home_country.setValue("VN")
+      this.formPeople.controls.country.setValue("VN")
+    }
+
 
   }
 
@@ -218,7 +226,7 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       birth: ['', [Validators.required]],
       birth_text: ['', [Validators.required]],
       gender: ['', Validators.required],
-      country: ['VN', Validators.required],
+      country: ['', Validators.required],
       identification_no: ['', Validators.required],
       identification_place: ['', Validators.required],
       identification_back_file: [''],
@@ -229,14 +237,14 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       identification_type: ['', Validators.required],
       identification_expire_date: [""],
       identification_expire_date_text: [""],
-      home_country: ['VN', Validators.required], //Có trường người nước noài
-      home_province: ['', Validators.required],
-      home_district: ['', Validators.required],
-      home_commune: ['', Validators.required],
+      home_country: ['', Validators.required], //Có trường người nước noài
+      home_province: [''],
+      home_district: [''],
+      home_commune: [''],
       home_address: [''],
       residence_province: ['', Validators.required],
       residence_district: ['', Validators.required],
-      residence_commune: ['', Validators.required],
+      residence_commune: [''], //Có huyện không có xã vd huyện đảo
       residence_address: [''], //Có trường hợp CCCD không có địa chỉ thường chú
       residence_full_address: [''],
       province: ['-1'],
@@ -249,6 +257,8 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       signature: [''],
       identification_signature_file: ['']
     })
+
+
 
   }
 
