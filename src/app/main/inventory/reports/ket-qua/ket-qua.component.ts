@@ -112,7 +112,7 @@ export class KetQuaComponent implements OnInit {
         this.sumItems.sum_topup += item.sum_topup;
         
       }
-      this.sumItems.percent =  parseFloat(((this.sumItems.received / this.sumItems.total_register) * 100).toFixed(4))
+      this.sumItems.percent =  Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
 
     }, error => {
       this.submitted = false;
@@ -164,7 +164,7 @@ export class KetQuaComponent implements OnInit {
   }
 
   roundPercent(value) {
-    return parseFloat((value* 100).toFixed(4))
+    return Math.round((value* 100))
   }
 
 }
