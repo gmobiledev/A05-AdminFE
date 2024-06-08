@@ -95,12 +95,12 @@ export class ListTaskComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
-    this.router.navigate(['/task'], { queryParams: this.searchForm })
+    this.router.navigate([window.location.pathname], { queryParams: this.searchForm })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/task'], { queryParams: this.searchForm })
+    this.router.navigate([window.location.pathname], { queryParams: this.searchForm })
   }
 
   ngOnInit(): void {
