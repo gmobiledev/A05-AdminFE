@@ -133,7 +133,7 @@
                       </button>
 
                       <button
-                      *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)"
+                      *ngIf="[ServiceCode.SIM_PROFILE, ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)"
                         ngbTooltip="Xem danh sách"
                         (click)="modalOpen(modalListSerial, item)"
                         class="btn btn-icon btn-flat-success btn-sm"
@@ -385,17 +385,51 @@
         overflow-y: auto;">
       <ngx-datatable [rows]="listSerial" rowHeight="auto" class="bootstrap core-bootstrap" [limit]="25"
         [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true">
-        <ngx-datatable-column name="Name">
+        <ngx-datatable-column name="Serial" *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div class="align-items-center">
               <div class="cell-line-height">
                 <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
-                  {{ row.value }}
+                  {{ row.name }}
                 </p>
               </div>
             </div>
           </ng-template>
         </ngx-datatable-column>
+
+        <ngx-datatable-column name="Số thuê bao" *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER]includes(currentService)">
+          <ng-template let-row="row"  ngx-datatable-cell-template>
+              <div class="align-items-center">
+                  <div class="cell-line-height">
+                      <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                          {{ row.msisdn }}
+                      </p>
+                  </div>
+              </div>
+          </ng-template>
+      </ngx-datatable-column> 
+      <ngx-datatable-column name="Serial" *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
+          <ng-template let-row="row"  ngx-datatable-cell-template>
+              <div class="align-items-center">
+                  <div class="cell-line-height">
+                      <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                          {{ row.serial }}
+                      </p>
+                  </div>
+              </div>
+          </ng-template>
+      </ngx-datatable-column> 
+      <ngx-datatable-column name="Trạng thái" *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
+          <ng-template let-row="row"  ngx-datatable-cell-template>
+              <div class="align-items-center">
+                  <div class="cell-line-height">
+                      <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                          <span [innerHTML]="row.state | showStatusMsisdn"></span>                                                        
+                      </p>
+                  </div>
+              </div>
+          </ng-template>
+      </ngx-datatable-column> 
       </ngx-datatable>
     </div>
   </div>

@@ -73,7 +73,7 @@ export class ListTaskComponent implements OnInit {
     if(this.currentService == ServiceCode.ADD_DATA_BALANCE) {
       this.tableColumnName.amount = 'Số GB';
       this.currency = '';
-    } else if([ServiceCode.SIM_KITTING, ServiceCode.SIM_PROFILE, ServiceCode.SIM_PROFILE].includes(this.currentService)) {
+    } else if([ServiceCode.SIM_KITTING, ServiceCode.SIM_PROFILE, ServiceCode.SIM_REGISTER].includes(this.currentService)) {
       this.tableColumnName.amount = 'Số lượng';
       this.currency = '';
     }
@@ -141,6 +141,8 @@ export class ListTaskComponent implements OnInit {
         this.trans = res.data.trans;
         if([ServiceCode.SIM_PROFILE].includes(this.currentService)) {
           this.listSerial = res.data.task.details.filter(x => x.attribute == 'serial');
+        } else if(this.currentService == ServiceCode.SIM_KITTING || this.currentService == ServiceCode.SIM_REGISTER) {
+          this.listSerial = res.data.task.msisdns;
         }
   
         this.modalRef = this.modalService.open(modal, {

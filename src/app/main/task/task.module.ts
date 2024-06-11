@@ -46,6 +46,14 @@ const routes: Routes = [
     component: ListTaskComponent,
   },
   {
+    path: 'sim-register',
+    data: {
+      service: ServiceCode.SIM_REGISTER,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
     path: 'balance',
     data: {
       service: ServiceCode.ADD_MONEY_BALANCE,
