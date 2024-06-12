@@ -111,10 +111,14 @@
                         <i data-feather="monitor" class="text-primary cursor-pointer"></i>
                       </button>
                       
-
-                      <button *ngIf="item.status == taskStatus.STATUS_WAITING" title="Duyệt" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalDuyetSimprofile, item)">
-                        <i data-feather="check" class="text-primary cursor-pointer"></i>
-                      </button>
+                      <ng-container *ngIf="item.status == taskStatus.STATUS_WAITING">
+                        <button  title="Duyệt" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalDuyetSimprofile, item)">
+                          <i data-feather="check" class="text-primary cursor-pointer"></i>
+                        </button>
+                        <button  title="Từ chối" class="btn btn-icon btn-flat-danger btn-sm" (click)="onUpdateStatus(item, 99)">
+                          <i data-feather="x-circle" class="text-primary cursor-pointer"></i>
+                        </button>
+                      </ng-container>                      
 
                         <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm" (click)="checkGatewayTransaction(item)">
                         <i data-feather="info" class="text-primary cursor-pointer"></i>

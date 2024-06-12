@@ -108,4 +108,8 @@ export class TaskService {
     return this._http.post<any>(`${environment.apiUrl}/admin/task/sim-kitting/approve`, data);
   }
 
+  approveTaskSimRegister(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/task/sim-register/approve`, data);
+  }
+
 }

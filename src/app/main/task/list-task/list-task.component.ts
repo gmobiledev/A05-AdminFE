@@ -213,9 +213,10 @@ export class ListTaskComponent implements OnInit {
         this.approveSimProfileTask();
       } else if(this.selectedItem.service_code == ServiceCode.SIM_KITTING) {
         this.approveSimKitting();
+      }  else if(this.selectedItem.service_code == ServiceCode.SIM_REGISTER) {
+        this.approveSimRegister();
       }
-    }
-    
+    }    
   }
 
   approveSimProfileTask() {
@@ -239,6 +240,20 @@ export class ListTaskComponent implements OnInit {
       id: this.selectedItem.id,
     }
     this.taskService.approveTaskSimKitting(dataPost).subscribe(res => {
+      this.alertService.showSuccess(res.message);
+      this.getData();
+      this.modalClose();
+    }, error => {
+      this.alertService.showMess(error);
+    })
+  }
+
+  approveSimRegister() {
+    
+    let dataPost = {
+      id: this.selectedItem.id,
+    }
+    this.taskService.approveTaskSimRegister(dataPost).subscribe(res => {
       this.alertService.showSuccess(res.message);
       this.getData();
       this.modalClose();
@@ -305,7 +320,6 @@ export class ListTaskComponent implements OnInit {
               // this.alertService.showSuccess('Thành công');
               return;
             }
-            this.modalClose();
             this.getData();
             this.alertService.showSuccess(res.message);
           }, error => {
