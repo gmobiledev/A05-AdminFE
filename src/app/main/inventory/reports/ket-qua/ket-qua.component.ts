@@ -112,7 +112,7 @@ export class KetQuaComponent implements OnInit {
         this.sumItems.sum_topup += item.sum_topup;
         
       }
-      this.sumItems.percent =  parseFloat(((this.sumItems.received / this.sumItems.total_register) * 100).toFixed(4))
+      this.sumItems.percent =  Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
 
     }, error => {
       this.submitted = false;
@@ -132,14 +132,18 @@ export class KetQuaComponent implements OnInit {
       { letter: 'A', header: 'Đơn vị', key: 'name' },
       { letter: 'B', header: 'SL đăng ký', key: 'total_register' },
       { letter: 'C', header: 'Bàn giao', key: 'received' },
-      { letter: 'D', header: 'Tỉ lệ', key: 'percent' },
+      { letter: 'D', header: 'Tỉ lệ(%)', key: 'percent' },
       { letter: 'E', header: 'Số lượng TB hoạt động', key: 'actived' },
       { letter: 'F', header: 'Số thuê bao hoạt động luỹ kế', key: 'luy_ke_actived' },
       { letter: 'G', header: 'Số TB hoàn thiện TTTB', key: 'hoan_thien_tttb' },
       { letter: 'H', header: 'Doanh thu topup', key: 'sum_topup' },
       { letter: 'I', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
     ];
-    worksheet.addRows(this.list);
+    let exportData = this.list.map(obj => ({...obj}));
+    for(let i = 0;i<exportData.length;i++) {
+      exportData[i]['percent'] = Math.round((exportData[i]['percent'] * 100))
+    }
+    worksheet.addRows(exportData);
     const buffer = await wb.xlsx.writeBuffer();
     var newBlob = new Blob([buffer], { type: 'application/octet-stream' });
     const url = window.URL.createObjectURL(newBlob);
@@ -164,7 +168,7 @@ export class KetQuaComponent implements OnInit {
   }
 
   roundPercent(value) {
-    return parseFloat((value* 100).toFixed(4))
+    return Math.round((value* 100))
   }
 
 }

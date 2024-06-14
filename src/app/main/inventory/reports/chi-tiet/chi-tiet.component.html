@@ -56,10 +56,10 @@
                                 <div class="form-group">
                                     <label for="">Trạng thái</label>
                                     <select [(ngModel)]="searchForm.status" name="status" class="form-control">
-                                        <option>-- Chọn trạng thái --</option>
+                                        <option value="">-- Chọn trạng thái --</option>
                                         <option value="A">Active</option>
-                                        <option value="IC">Khóa 1C</option>
-                                        <option value="OC">Khóa 2C</option>
+                                        <option value="OC">Khóa 1C</option>
+                                        <option value="IC">Khóa 2C</option>
                                         <option value="HUY">Thu hồi</option>
                                     </select>
                                 </div>
@@ -86,7 +86,7 @@
                           </form>
                         <div class="table-responsive" *blockUI="'section-block'">
                             <div class="mb-1">
-                                <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
+                                <span>Tổng số:</span> <b>{{ totalItems | number }}</b>
                             </div>
                             <table class="table table-striped">
                                 <thead>
@@ -94,7 +94,7 @@
                                         <th>STT</th>
                                         <th>Đơn vị</th>
                                         <th>Số thuê bao</th>
-                                        <th>Tên KH</th>     
+                                        <!-- <th>Tên KH</th>      -->
                                         <th>Ngày kích hoạt</th>
                                         <th>Ngày phát sinh cước đầu tiên</th>
                                         <th>Gói cước đang sử dụng</th>
@@ -115,9 +115,9 @@
                                         <td>
                                             {{item.msisdn}}
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             {{item.customer_name}}
-                                        </td>
+                                        </td> -->
                                         <td>
                                             {{item.sync_time | formatDate}}
                                         </td>

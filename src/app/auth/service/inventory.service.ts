@@ -305,8 +305,8 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary`, {params: params});
   }
 
-  exportReportChiTietSim(params = null, data = null) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn/excel`, data, {params: params});
+  exportReportChiTietSim(params = null, data = null): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
   }
 
   // getReportSummaryS99(params = null) {
