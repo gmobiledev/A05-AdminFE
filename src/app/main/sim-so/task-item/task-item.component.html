@@ -600,8 +600,13 @@
         <a class="ml-2 btn btn-success" (click)="onUpdateStatusV2(data.task, taskTelecomStatus.STATUS_SUCCESS)">
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
           <span>
-            Cập nhật thành công
+            Duyệt thành công (Đổi sim web)
           </span>
+        </a>
+
+        <a class="ml-2 btn btn-success" (click)="asyncToMnoViaApi(data.task)">
+          <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+          <span> Đổi sim API </span>
         </a>
 
         <a class="ml-2 btn btn-danger" (click)="onUpdateStatusV2(data.task, taskTelecomStatus.STATUS_REJECT)">
