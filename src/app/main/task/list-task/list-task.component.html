@@ -55,7 +55,7 @@
               </div>
             </form>
             <div class="table-responsive">
-              <table class="table table-striped text-nowrap">
+              <table class="table table-striped text-nowrap" *blockUI="'section-block'">
                 <thead>
                   <tr>
                     <th>STT</th>
@@ -112,7 +112,7 @@
                       </button>
                       
                       <ng-container *ngIf="item.status == taskStatus.STATUS_WAITING">
-                        <button  title="Duyệt" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalDuyetSimprofile, item)">
+                        <button  title="Duyệt" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalDuyetSimprofile, item, false)">
                           <i data-feather="check" class="text-primary cursor-pointer"></i>
                         </button>
                         <button  title="Từ chối" class="btn btn-icon btn-flat-danger btn-sm" (click)="onUpdateStatus(item, 99)">
@@ -252,7 +252,7 @@
 
 <ng-template #modalDuyetSimprofile let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Duyệt SIM profile</h5>
+    <h5 class="modal-title" id="myModalLabel160">Duyệt đơn</h5>
     <button type="button" class="close" (click)="modalClose()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

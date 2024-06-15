@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskService } from 'app/auth/service/task.service';
 import { ObjectLocalStorage, ServiceCode, TaskStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,6 +15,8 @@ import Swal from 'sweetalert2';
 })
 export class ListTaskComponent implements OnInit {
 
+  @BlockUI('section-block') itemBlockUI: NgBlockUI;
+  
   public contentHeader: any;
   public list: any;
   public totalItems: number;
@@ -132,9 +135,10 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
-  modalOpen(modal, item = null) {
+  modalOpen(modal, item = null, is_load = true) {
     this.selectedItem = item;
-    if(item) {      
+    if(item && is_load) {      
+      this.itemBlockUI.start();
       this.taskService.getTransWebhook(item.id).subscribe(res => {
         this.task = res.data.task;
         this.wh = res.data.wh;
@@ -144,12 +148,16 @@ export class ListTaskComponent implements OnInit {
         } else if(this.currentService == ServiceCode.SIM_KITTING || this.currentService == ServiceCode.SIM_REGISTER) {
           this.listSerial = res.data.task.msisdns;
         }
+        this.itemBlockUI.stop();
   
         this.modalRef = this.modalService.open(modal, {
           centered: true,
           windowClass: 'modal modal-primary',
           size: 'lg'
         });
+      }, error => {
+        console.log(error);
+        this.itemBlockUI.stop();
       })
     } else {
       this.modalRef = this.modalService.open(modal, {
