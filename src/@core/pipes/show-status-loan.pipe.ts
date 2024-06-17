@@ -37,6 +37,12 @@ export class ShowStatusLoanPipe implements PipeTransform {
             case TaskStatus.STATUS_IN_PROGRESS:
                 html = '<span class="badge badge-pill badge-light-info mr-1">Đang xử lý</span>'
                 break;
+            case TaskStatus.STATUS_SUCCESS_PART:
+                html = '<span class="badge badge-pill badge-light-success mr-1">Thành công 1 phần</span>'
+                break;
+            case TaskStatus.STATUS_FAIL:
+                html = '<span class="badge badge-pill badge-light-danger mr-1">Thất bại</span>'
+                break;
             default:
                 html = value + '';
         }
