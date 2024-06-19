@@ -64,6 +64,10 @@ const routes: Routes = [
     component: ActionLogsComponent
   },
   {
+    path: 'commitment',
+    component: CommitmentComponent
+  },
+  {
     path: 'sell-channel',
     component: SellChannelComponent
   },
