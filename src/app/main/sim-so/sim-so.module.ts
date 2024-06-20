@@ -34,6 +34,7 @@ import { TopupComponent } from './history/topup/topup.component';
 import { BalanceChangesComponent } from './history/balance-changes/balance-changes.component';
 import { MsisdnComponent as TTTBMsisdnComponent } from './history/msisdn/msisdn.component';
 import { CommitmentComponent } from './commitment/commitment.component';
+import { ResolutionDetailComponent } from './resolution-detail/resolution-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -116,7 +117,8 @@ const routes: Routes = [
     TopupComponent,
     BalanceChangesComponent,
     TTTBMsisdnComponent,
-    CommitmentComponent
+    CommitmentComponent,
+    ResolutionDetailComponent
   ],
   imports: [
     CommonModule, 
