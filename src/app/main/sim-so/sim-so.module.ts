@@ -69,6 +69,10 @@ const routes: Routes = [
     component: CommitmentComponent
   },
   {
+    path: 'resolution-detail',
+    component: ResolutionDetailComponent
+  },
+  {
     path: 'sell-channel',
     component: SellChannelComponent
   },

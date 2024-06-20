@@ -145,9 +145,17 @@
                                         </td>
 
                                         <td>
-                                            <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
-                                                <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                                            </a>
+                                            <a
+                                            class="ml-1"
+                                            [routerLink]="['/sim-so/resolution-detail']" 
+                                            [queryParams]="{msisdns_id: item.id}"
+                                            title="Xem chi tiết"
+                                          >
+                                            <i
+                                              data-feather="eye"
+                                              class="text-primary cursor-pointer"
+                                            ></i>
+                                          </a>
                                         </td>
 
                                     </tr>
