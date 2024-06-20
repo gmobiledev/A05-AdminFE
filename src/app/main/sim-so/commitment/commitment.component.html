@@ -1,7 +1,6 @@
 <div class="content-wrapper container-xxl p-0">
     <div class="content-body">
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
-
         <div class="row" id="table-striped">
             <div class="col-12">
                 <div class="card">
@@ -9,87 +8,74 @@
                         <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
                     </div>
                     <div class="card-body">
-                        <form (ngSubmit)="onSubmitSearch()">
+                        <form (ngSubmit)="onSubmitSearch()" class="mb-2">
                             <div class="row">
-
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label>Cam kết từ ngày</label>
-                                        <input type="date" name="from_date" [(ngModel)]="searchForm.from_date"
-                                            class="form-control" />
+                                        <input type="text" name="mobile" [(ngModel)]="searchForm.mobile"
+                                            class="form-control" placeholder="Nhập số thuê bao">
                                     </div>
                                 </div>
-
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Tới ngày</label>
-                                        <input type="datetime-local" name="to_date" [(ngModel)]="searchForm.to_date"
+                                        <input type="text" placeholder="Khoảng thời gian"
+                                            [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
+                                            [(ngModel)]="dateRange" [ranges]="ranges"
+                                            [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
+                                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
                                             class="form-control" />
                                     </div>
-                                </div>
 
+                                </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label></label>
-                                        <select class="form-control" name="type" [(ngModel)]="searchForm.type">
-                                            <option value="">-- Chọn thời gian kích hoạt --</option>
-                                            <option value="{{batchType.INPUT}}">Nhập kho</option>
-                                            <option value="{{batchType.OUTPUT}}">Xuất kho</option>
-                                            <option value="{{batchType.RETRIEVE}}">Thu hồi</option>
+                                        <select class="form-control" name="action" [(ngModel)]="searchForm.action">
+                                            <option value="">Chọn thời gian kích hoạt</option>
+                                            <option value="new_sim">Đấu nối mới</option>
+                                            <option value="change_sim">Đổi sim</option>
+                                            <option value="change_info">Cập nhật TTTB</option>
+                                            <option value="cancel_subcriber">Hủy SIM</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label></label>
                                         <select class="form-control" name="status" [(ngModel)]="searchForm.status">
-                                            <option value="">-- Chọn trạng thái --</option>
-                                            <option *ngFor="let item of batchStatusShow | keyvalue" [value]="item.value"
-                                                [id]="item.key">
-                                                <span [innerHTML]="item.value | showStatusBatch"></span>
+                                            <option value="">Chọn trạng thái</option>
+                                            <option *ngFor="let item of taskTelecomStatus | keyvalue"
+                                                [value]="item.value" [id]="item.key">
+                                                <span [innerHTML]="item.value | showStatusTelecom"></span>
                                             </option>
                                         </select>
                                     </div>
                                 </div>
 
+                            </div>
+                            <div class="row mt-2">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label></label>
-                                        <input type="text" name="code" [(ngModel)]="searchForm.keyword"
-                                            class="form-control" placeholder="Nhập số thuê bao" />
+                                        <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                                                [data-feather]="'search'"></span></button>
                                     </div>
                                 </div>
-
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for=""></label>
-                                        <button type="submit" class="btn btn-block btn-info">
-                                            Lọc kết quả <span [data-feather]="'search'"></span>
-                                        </button>
+                                        <button type="button" (click)="onSubmitExportExcelReport()"
+                                            class="btn btn-block btn-success">Xuất
+                                            báo cáo excel <span [data-feather]="'file'"></span></button>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
-
-                        <div class="mt-3 mb-3 overflow-hidden">
-                            <div class="pull-left">
-                                Tổng: <b>{{ totalItems }}</b>
-                            </div>
-                            <div class="pull-right">
-                                <button *ngIf="checkAction('batch/kinh-doanh')" type="button"
-                                    (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">
-                                    Xuất báo cáo excel <span [data-feather]="'upload'"></span>
-                                </button>
-                            </div>
-                        </div>
-
                         <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <span>Tổng số:</span> <b>{{ totalItems }}</b>
+                            </div>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Mã</th>
+                                        <th>STT</th>
                                         <th>Số thuê bao</th>
                                         <th>Nhà mạng</th>
                                         <th>Giá gói cam kết</th>
@@ -102,53 +88,68 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of list">
+                                    <tr *ngFor="let item of list;let i = index">
                                         <td>
-                                            {{ item.type | typeBatchForm }}
+                                            {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
                                         </td>
                                         <td>
-                                            {{ item?.id }}
+                                            <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
+                                                {{ item.msisdns[0].msisdn }}
+                                            </div>
+                                            <div *ngIf="item.msisdns.length >= 2">
+                                                <div *ngFor="let number of item.msisdns">
+                                                    {{ number.msisdn }}
+                                                </div>
+                                                <br>
+                                            </div>
+                                            <div *ngIf="item.msisdns.length < 1">
+                                                {{ item.msisdn }}
+                                            </div>
                                         </td>
                                         <td>
-                                            {{ item?.id }}
+                                            <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
+                                                <span [innerHTML]="item.msisdns[0].mno | showIconMno"></span>
+                                            </div>
+                                            <div *ngIf="item.msisdns.length >= 2">
+                                                <div *ngFor="let number of item.msisdns">
+                                                    <span [innerHTML]="number.mno | showIconMno"></span>
+                                                </div>
+                                                <br>
+                                            </div>
+                                            <div *ngIf="item.msisdns.length < 1">
+                                                {{ item.msisdn }}
+                                            </div>
                                         </td>
                                         <td>
-                                            {{ item?.id }}
+                                            <span class="text-info">{{ item.amount | number }}</span><br>
+                                            <span class="text-success">{{ item.charge_amount | number }}</span><br>
                                         </td>
                                         <td>
-                                            {{ item?.title }}
+                                            <span class="text-primary" title="Mã Kho">{{ item.reference_id }}</span><br>
                                         </td>
-                                        <td>
-                                            {{ item?.quantility }}
-                                        </td>
-                                        <td>{{ item?.imported_quantility }}</td>
-                                        <td>
-                                            <div [innerHTML]="item?.status | showStatusBatch"></div>
-                                        </td>
-                                        <td>
-                                            {{ item?.created_at | date : "dd/MM/yyyy H:mm":'GMT' }}
-                                        </td>
-                                        <td class="d-inline-flex">
 
-                                            <ng-container *ngIf="item.type == batchType.INPUT">
-                                                <a class="ml-0" (click)="onViewDetail(modalDetail, item)"
-                                                    title="Xem chi tiết">
-                                                    <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                                                </a>
+                                        <td>
+                                            {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                                            {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
 
-
-                                                <a class="ml-1" [routerLink]="['/inventory/list-batch-products']"
-                                                    [queryParams]="{ batch_id: item.id }" title="Xem danh sách">
-                                                    <i data-feather="list" class="text-primary cursor-pointer"></i>
-                                                </a>
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="item.type == batchType.OUTPUT || item.type == batchType.RETRIEVE">
-                                                <a class="ml-0" routerLink="/inventory/batch-export/{{item.id}}">
-                                                    <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                                                </a>
-                                            </ng-container>
                                         </td>
+                                        <td>
+                                            {{ item?.msisdns[0]?.commit_turn}}
+                                        </td>
+                                        <td>
+                                            {{ showDate(item?.msisdns[0]?.sync_time, 'UTC', -10 * item.msisdns.length) }}
+                                        </td>
+                                        <td>
+                                            <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
+                                            {{ item.note }}
+                                        </td>
+
+                                        <td>
+                                            <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
+                                                <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                                            </a>
+                                        </td>
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -168,278 +169,118 @@
                                                 aria-labelledby="paginationInputLabel paginationDescription"
                                                 style="width: 2.5rem" />
                                             <span id="paginationDescription" class="col-form-label text-nowrap px-2">
-                                                của {{ pages.length }}</span>
+                                                của
+                                                {{pages.length}}</span>
                                         </div>
                                     </li>
                                 </ng-template>
                             </ngb-pagination>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<ng-template #modalUploadData let-modal>
+<ng-template #modalItem let-modal *blockUI="'item-block-detail'">
     <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160">
-            Tải lên dữ liệu lên - Mã phiếu: {{ selectedItem.id }}
-        </h5>
+        <h5 class="modal-title" id="myModalLabel160"></h5>
         <button type="button" class="close" (click)="modalClose()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body" tabindex="0" ngbAutofocus>
-        <div class="form-group">
-            <i class="fa fa-upload" aria-hidden="true"></i>
-            <input type="file" (change)="onFileChangeExcel($event)" />
-            <label>Tải lên file excel</label>
-
-            <a href="/assets/upload-product.xlsx" class="ml-2">File mẫu tại đây</a>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button (click)="onSubmitUpload()" type="submit" class="btn btn-primary" rippleEffect>
-            <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true"
-                *ngIf="submittedUpload"></span>
-            Submit
-        </button>
+    <div class="modal-body" tabindex="0">
+        <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)"
+            (createNewTask)="onCreateTaskNewSim($event)" [currentUser]="currentUser"
+            [currentUserId]="currentUser.id"></app-task-item>
     </div>
 </ng-template>
 
-<ng-template #modalCreate let-modal>
+<ng-template #modalViewAgent let-modal>
     <div class="modal-header">
-        <h5 class="modal-title text-info" id="myModalLabel160">Nhập kho</h5>
+        <h5 class="modal-title" id="myModalLabel160">Thông tin đại lý</h5>
+        <button type="button" class="close" (click)="modalViewAgentClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="row">
+            <div class="col-md-6">
+                SĐT đại lý: {{ selectedAgent?.user?.mobile }}
+            </div>
+            <div class="col-md-6">
+                Tên đại lý: {{ selectedAgent?.peopleInfo.name }}
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #modalApproveInfo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
         <button type="button" class="close" (click)="modalClose()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-        <ng-container *ngIf="listProductInputDup.length < 1">
-            <div class="form-group">
-                <label for="">Tiêu đề</label>
-                <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
-            </div>
-
-            <div class="form-group">
-                <label>Mã hàng</label>
-                <input class="form-control" type="text" [(ngModel)]="dataLo.product_code" />
-            </div>
-
-            <div class="form-group">
-                <label>Tên hàng</label>
-                <input class="form-control" type="text" [(ngModel)]="dataLo.product_name" />
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Dải từ</label>
-                        <input class="form-control" type="text" [(ngModel)]="dataLo.key_from" />
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Dải đến</label>
-                        <input class="form-control" type="text" [(ngModel)]="dataLo.key_to" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Đơn vị tính</label>
-                <input class="form-control" type="text" [(ngModel)]="dataLo.unit" />
-            </div>
-
-            <div class="form-group">
-                <label>Nhập số lượng</label>
-                <input class="form-control" type="text" [(ngModel)]="dataLo.quantility" />
-            </div>
-
-            <div class="form-group">
-                <label for="">Ghi chú</label>
-                <input type="text" class="form-control" [(ngModel)]="dataLo.note" />
-            </div>
-            <div class="form-group">
-                <i class="fa fa-upload" aria-hidden="true"></i>
-                <input type="file" (change)="onFileChangeAttach($event)"
-                    accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf" />
-                <label>Tải lên file chứng từ</label>
-
-            </div>
-
-            <div class="form-group">
-                <i class="fa fa-upload" aria-hidden="true"></i>
-                <input type="file"
-                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                    (change)="onFileChangeExcel($event)" />
-                <label>Tải lên file excel danh sách</label>
-                <a href="/assets/upload-product.xlsx" class="ml-2">File mẫu tại đây</a>
-            </div>
-        </ng-container>
-
-        <!-- Truong hop co du lieu trung -->
-        <ng-container *ngIf="listProductInputDup.length > 0">
-            <div class="row">
-                <div class="col-12">
-                    <p class="text-warning"><i data-feather="alert-triangle" class="cursor-pointer"></i>Sản phẩm trong
-                        danh sách bạn đang tải lên đã tồn tại,
-                        vui lòng kiểm tra lại
-                        <a csvLink [data]="listDupToExport" class="btn btn-outline-warning float-right btn-sm"
-                            rippleEffect><i data-feather="download" class="cursor-pointer"></i></a>
-                    </p>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <ngx-datatable [rows]="listProductInputDup" rowHeight="auto" class="bootstrap core-bootstrap"
-                        [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
-                        [limit]="basicSelectedOption">
-                        <ngx-datatable-column name="Name" prop="name">
-                            <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
-                                <div class="align-items-center">
-                                    <div class="cell-line-height">
-                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
-                                            {{ name }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </ngx-datatable-column>
-                        <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>
-                        <ngx-datatable-column name="Hạng số" prop="level"></ngx-datatable-column>
-                        <ngx-datatable-column name="Giá vốn" prop="price">
-                            <ng-template let-value="value" ngx-datatable-cell-template>
-                                {{ value | number }}
-                            </ng-template>
-                        </ngx-datatable-column>
-
-                        <ngx-datatable-column name="Giá bán" prop="export_price">
-                            <ng-template let-value="value" ngx-datatable-cell-template>
-                                {{ value | number }}
-                            </ng-template>
-                        </ngx-datatable-column>
-
-                    </ngx-datatable>
-                </div>
-            </div>
-
-            <div class="text-center">
-                <button (click)="modalClose()" type="submit" class="btn btn-danger mr-1" rippleEffect>
-                    Hủy
-                </button>
-
-                <button (click)="onSubmitUploadLo()" type="submit" class="btn btn-primary" rippleEffect>
-                    <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true"
-                        *ngIf="submittedUpload"></span>
-                    Tiếp tục
-                </button>
-            </div>
-        </ng-container>
-
-
-    </div>
-    <div class="modal-footer">
-        <ng-container *ngIf="listProductInputDup.length < 1">
-            <button (click)="onSubmitUploadLo()" type="submit" class="btn btn-primary" rippleEffect>
-                <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true"
-                    *ngIf="submittedUpload"></span>
-                Submit
-            </button>
-        </ng-container>
+        <app-approve-convert2g-item [item]="selectedItem" [currentUserId]="currentUser.id"></app-approve-convert2g-item>
     </div>
 </ng-template>
 
-<ng-template #modalDetail let-modal>
+<ng-template #modalUpload let-modal>
     <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160">Chi tiết</h5>
+        <h5 class="modal-title" id="myModalLabel160"></h5>
         <button type="button" class="close" (click)="modalClose()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block-detail'">
-        <div class="row mb-2">
-            <div class="col-6"><span>Tiêu đề phiếu: </span> <b>{{ batchdDetail?.title }}</b></div>
-            <div class="col-6"><span>Note: </span> <b>{{ batchdDetail?.note }}</b></div>
-            <div class="col-6"><span>Mã hàng: </span> <b>{{ batchdDetail?.product_code }}</b></div>
-            <div class="col-6"><span>Tên hàng: </span> <b>{{ batchdDetail?.product_name }}</b></div>
-            <div class="col-6"><span>Đơn vị tính: </span> <b>{{ batchdDetail?.unit }}</b></div>
-            <div class="col-6"><span>Số lượng: </span> <b>{{ batchdDetail?.quantility }}</b></div>
-            <div class="col-6"><span>Dải từ: </span> <b>{{ batchdDetail?.key_from }}</b></div>
-            <div class="col-6"><span>Dải đến: </span> <b>{{ batchdDetail?.key_to }}</b></div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="">Bổ sung thêm chứng từ</label>
-                    <input type="file" multiple (change)="onUploadAttachments($event)">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row" style="height: 550px;
-      overflow-y: auto;">
-            <div class="col-12">File đính kèm</div>
-
-            <div class="col-12" *ngFor="let item of itemBatch.file">
-                <img *ngIf="item.ext.includes('png') || item.ext.includes('jpg') || item.ext.includes('jpeg')"
-                    src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
-
-                <div *ngIf="item.ext.includes('pdf') && item.base64">
-                    <pdf-viewer [src]="'data:application/pdf;base64,'+item.base64" [render-text]="true"
-                        [original-size]="false" [external-link-target]="'blank'" style="height: 500px"></pdf-viewer>
-                </div>
-
-            </div>
-        </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <app-approve-convert2g-identification [item]="selectedItem"
+            [currentUserId]="currentUser.id"></app-approve-convert2g-identification>
     </div>
+</ng-template>
 
-    <div class="modal-footer">
-        <div class="text-center" *ngIf="listAdminSellAction">
+<ng-template #modalUpdateShipTracking let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Thông tin Ship</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <app-ship-info [item]="selectedItem"></app-ship-info>
+    </div>
+</ng-template>
 
-            <button *ngIf="batchdDetail?.status == batchStatus.INIT
-          && checkAction('batch/ke-toan/update-status')
-          && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)        
-          && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LEVEL11)
-          " (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED_BY_ACCOUNTANT)"
-                class="btn btn-info btn-sm mb-2">
-                <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
-            </button>
-
-            <button *ngIf="batchdDetail?.status == batchStatus.INIT
-          && checkAction('batch/ke-toan/update-status')
-          && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11)        
-          && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LEVEL11)
-          " (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_ACCOUNTANT)"
-                class="btn btn-danger btn-sm mb-2">
-                <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
-            </button>
-
-            <button *ngIf="
-          (itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
-          || (itemBatch.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11, true)))                                            
-          && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LAST)
-          && checkAction('batch/van-phong/update-status')
-          " (click)="onUpdateStatus(batchdDetail, batchStatus.APPROVED)" class="ml-2 btn btn-info btn-sm mb-2">
-                <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
-            </button>
-
-            <button *ngIf="(itemBatch.status == batchStatus.APPROVED_BY_ACCOUNTANT
-          || (itemBatch.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_IMPORT_LEVEL11, true)))                                            
-          && checkHasPermissionAction(listAdminSellAction, listAction.APPROVE_IMPORT_LAST)
-          && checkAction('batch/van-phong/update-status')
-          " (click)="onUpdateStatus(batchdDetail, batchStatus.CANCEL_BY_OFFICE)"
-                class="ml-2 btn btn-danger btn-sm mb-2">
-                <i data-feather="x-circle" class="text-white cursor-pointer"></i> Từ chối
-            </button>
-
+<ng-template #modaNote let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Lưu note</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <div class="form-group">
+            <label for="">Note</label>
+            <select name="" id="" class="form-control mb-2" [(ngModel)]="selectedNote">
+                <option value="">- Chọn nội dung -</option>
+                <option value="Ảnh giấy tờ bị mờ, mất góc">Ảnh giấy tờ bị mờ, mất góc</option>
+                <option value="Hệ thống đấu nối bận">Hệ thống đấu nối bận</option>
+                <option value="Hệ thống đấu nối bận">Mất SIM</option>
+            </select>
+            <input type="text" class="form-control" #note placeholder="Tự nhập nội dung ở đây"
+                value="{{ selectedNote }}">
+        </div>
+        <div class="form-group">
+            <a class="btn btn-success" (click)="onSaveNote(note?.value)">
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                <span>
+                    Lưu
+                </span>
+            </a>
         </div>
     </div>
 </ng-template>
