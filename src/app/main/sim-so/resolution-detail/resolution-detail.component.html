@@ -4,37 +4,71 @@
         <div class="row" id="table-striped">
             <div class="col-12">
                 <div class="card">
-                    
+
                     <div class="card-body">
-                        
-                        <div class="row" >
-                            <div  class="col-6">
-                              <h4>{{ contentHeader.headerTitle }}</h4>
-                              <div class="col border-primary rounded bg-light">
-                                <p class="mt-1"><b>Số thuê bao : </b> 09933 </p>
-                                <div>
-                                    <b>Số thuê bao : </b> 
-                                    
-                                                               
-                                   
+
+                        <div class="row">
+                            <div *ngIf="data" class="col-6">
+                                <h4>{{ contentHeader.headerTitle }}</h4>
+                                <div class="col border-primary rounded bg-light">
+                                    <div class="mt-1">
+                                        <p>
+                                            <b>Số thuê bao : </b>
+                                            {{ data.msisdn.msisdns[0].msisdn }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Nhà mạng : </b>
+                                            {{ data?.msisdn?.mno}}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p>
+                                            <b>Giá gói cam kết: </b>
+                                            {{ data.task.id }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Mã gói viễn thông : </b>
+                                            {{ data.task.id }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Thời gian cam kết : </b>
+                                            {{ data.task.id }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Số kỳ chưa thanh toán : </b>
+                                            {{ data.task.id }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Thời gian kích hoạt : </b>
+                                            {{ data.task.id }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Trạng thái : </b>
+                                            {{ data.task.id }}
+                                        </p>
+                                    </div>
                                 </div>
-                                
-                                <p><b>Số thuê bao : </b> 09933 </p>
-                                <p><b>Số thuê bao : </b> 09933 </p>
-                                <p><b>Số thuê bao : </b> 09933 </p>
-                                <p><b>Số thuê bao : </b> 09933 </p>
-                                <p><b>Số thuê bao : </b> 09933 </p>
-                                <p><b>Số thuê bao : </b> 09933 </p>
-
-                              </div>
                             </div>
 
-                            <div class="col-6" >
-                              <h4>Lịch sử thanh toán</h4>
-                              <p>Some text..</p>
+                            <div class="col-6">
+                                <h4>Lịch sử thanh toán</h4>
+                                <p>Some text..</p>
                             </div>
-                          </div>
-                
+                        </div>
+
                     </div>
 
                 </div>

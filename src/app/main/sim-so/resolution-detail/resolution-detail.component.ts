@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-resolution-detail',
@@ -16,6 +17,7 @@ export class ResolutionDetailComponent implements OnInit {
   public totalItems: number;
   public summaryTask: any;
   public data: any;
+  msisdns_id: any;
 
   public searchForm: any = {
     mobile: '',
@@ -52,8 +54,15 @@ export class ResolutionDetailComponent implements OnInit {
 
   constructor(    
     private telecomService: TelecomService,
+    private route: ActivatedRoute,
+    private router: Router,
+
   ) { 
-    this.getData()
+   
+    this.route.queryParams.subscribe(params => {
+      this.msisdns_id = params['msisdns_id'] && params['msisdns_id'] != undefined ? params['msisdns_id'] : '';
+      this.getData();
+    })
   }
 
   ngOnInit(): void {
@@ -65,7 +74,7 @@ export class ResolutionDetailComponent implements OnInit {
     this.listCurrentAction = this.currentUser.actions;
     if(this.currentUser && this.currentUser.roles) {
     }
-    this.telecomService.getDetailTaskMsisdn(5542).subscribe(res => {
+    this.telecomService.getDetailTask(this.msisdns_id).subscribe(res => {
       this.data = res.data;
     
     })
