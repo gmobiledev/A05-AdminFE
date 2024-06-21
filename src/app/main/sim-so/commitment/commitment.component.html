@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <select class="form-control" name="action" [(ngModel)]="searchForm.action">
+                                        <select class="form-control" name="action" [(ngModel)]="searchForm.commit_extant">
                                             <option value="">Chọn thời hạn cam kết</option>
                                             <option value="t2">2 tháng</option>
                                             <option value="t3">3 tháng</option>
@@ -121,19 +121,17 @@
                                                 </div>
                                                 <br>
                                             </div>
-                                            <div *ngIf="item.msisdns.length < 1">
-                                                {{ item.msisdn }}
-                                            </div>
+                                            
                                         </td>
                                         <td>
                                             <span class="text-info">{{ item.amount | number }}</span><br>
                                         </td>
                                         <td>
-                                            <span class="text-primary" title="Mã Kho">{{ item.invite_code }}</span><br>
+                                            {{item?.msisdns[0]?.commit_package}}
                                         </td>
 
                                         <td>
-                                            {{ showDate(item?.msisdns[0]?.sync_time, 'UTC', -10 * item.msisdns.length) }}
+                                            {{ item?.msisdns[0]?.commit_extant}}
 
                                         </td>
                                         <td>

@@ -17,6 +17,8 @@ export class ResolutionDetailComponent implements OnInit {
   public totalItems: number;
   public summaryTask: any;
   public data: any;
+  public dataPayment: any;
+
   msisdns_id: any;
 
   public searchForm: any = {
@@ -76,7 +78,9 @@ export class ResolutionDetailComponent implements OnInit {
     }
     this.telecomService.getDetailTask(this.msisdns_id).subscribe(res => {
       this.data = res.data;
-    
+    })
+    this.telecomService.getPaymentTask(this.msisdns_id).subscribe(res => {
+      this.dataPayment = res.data;
     })
     this.telecomService.getSummary().subscribe(res => {
       this.summaryTask = res.data;

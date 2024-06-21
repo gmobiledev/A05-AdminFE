@@ -33,6 +33,13 @@ export class TelecomService {
     return this._http.get<any>(url);
   }
 
+    /**
+   * Xem lich su thanh toan
+   */
+    getPaymentTask(id) {
+      return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/payment-log/${id}`);
+    }
+
   /**
  * Tìm Sim/Số
  */

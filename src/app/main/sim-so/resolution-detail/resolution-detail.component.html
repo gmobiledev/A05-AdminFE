@@ -33,7 +33,7 @@
                                     <div>
                                         <p>
                                             <b>Mã gói viễn thông : </b>
-                                            {{ data.task.invite_code }}
+                                            {{ data.msisdn.msisdns[0].commit_package }}
                                         </p>
                                     </div>
                                     <div>
@@ -64,7 +64,7 @@
 
                             <div class="col-8">
                                 <h4>Lịch sử thanh toán</h4>
-                                <div class="col border-primary rounded bg-resolution">
+                                <div class="">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -77,26 +77,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let item of list;let i = index">
+                                            <tr *ngIf="dataPayment">
 
                                                 <td>
-                                                    <span class="text-primary" title="Mã Kho">{{ item.invite_code
-                                                        }}</span><br>
+                                                    {{ dataPayment.items[0].id }}
+                                                <td>
+                                                    {{ dataPayment.items[0].msisdn }}
                                                 </td>
                                                 <td>
-                                                    {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
-                                                    {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
-
+                                                    {{ dataPayment.items[0].completed_at | date: 'dd/MM/yyyy H:mm':'GMT' }}
                                                 </td>
                                                 <td>
-                                                    {{ item?.msisdns[0]?.commit_turn}}
+                                                    {{ dataPayment.items[0].amount | number }}
                                                 </td>
                                                 <td>
-                                                    {{ showDate(item?.msisdns[0]?.sync_time, 'UTC', -10 *
-                                                    item.msisdns.length) }}
-                                                </td>
-                                                <td>
-                                                    <div [innerHTML]="item.status | showStatusTelecom" class="mb-1">
+                                                    <div [innerHTML]="dataPayment.items[0].status | showStatusTelecom" class="mb-1">
                                                     </div>
                                                     {{ item.note }}
                                                 </td>
