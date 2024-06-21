@@ -133,15 +133,16 @@
                                         </td>
 
                                         <td>
-                                            {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
-                                            {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                                            {{ showDate(item?.msisdns[0]?.sync_time, 'UTC', -10 * item.msisdns.length) }}
 
                                         </td>
                                         <td>
                                             {{ item?.msisdns[0]?.commit_turn}}
                                         </td>
                                         <td>
-                                            {{ showDate(item?.msisdns[0]?.sync_time, 'UTC', -10 * item.msisdns.length) }}
+                                            {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                                            {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+
                                         </td>
                                         <td>
                                             <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>

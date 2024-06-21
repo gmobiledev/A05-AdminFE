@@ -353,7 +353,7 @@ export class CommitmentComponent implements OnInit {
       document.body.appendChild(a);
       a.setAttribute('style', 'display: none');
       a.href = url;
-      a.download = "Báo cáo đấu nối";
+      a.download = "Danh sách thuê bao cam kết";
       a.click();
       window.URL.revokeObjectURL(url);
       a.remove();
