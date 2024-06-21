@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Khoảng thời gian"
+                                        <input type="text" placeholder="Chọn thời gian kích hoạt"
                                             [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
                                             [(ngModel)]="dateRange" [ranges]="ranges"
                                             [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
@@ -30,11 +30,16 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <select class="form-control" name="action" [(ngModel)]="searchForm.action">
-                                            <option value="">Chọn thời gian kích hoạt</option>
-                                            <option value="new_sim">Đấu nối mới</option>
-                                            <option value="change_sim">Đổi sim</option>
-                                            <option value="change_info">Cập nhật TTTB</option>
-                                            <option value="cancel_subcriber">Hủy SIM</option>
+                                            <option value="">Chọn thời hạn cam kết (tháng)</option>
+                                            <option value="t2">2</option>
+                                            <option value="t3">3</option>
+                                            <option value="t6">6</option>
+                                            <option value="t12">12</option>
+                                            <option value="t18">18</option>
+                                            <option value="t30">30</option>
+                                            <option value="t36">36</option>
+                                            <option value="t48">48</option>
+                                            <option value="t54">54</option>
                                         </select>
                                     </div>
                                 </div>
