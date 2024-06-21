@@ -30,16 +30,16 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <select class="form-control" name="action" [(ngModel)]="searchForm.action">
-                                            <option value="">Chọn thời hạn cam kết (tháng)</option>
-                                            <option value="t2">2</option>
-                                            <option value="t3">3</option>
-                                            <option value="t6">6</option>
-                                            <option value="t12">12</option>
-                                            <option value="t18">18</option>
-                                            <option value="t30">30</option>
-                                            <option value="t36">36</option>
-                                            <option value="t48">48</option>
-                                            <option value="t54">54</option>
+                                            <option value="">Chọn thời hạn cam kết</option>
+                                            <option value="t2">2 tháng</option>
+                                            <option value="t3">3 tháng</option>
+                                            <option value="t6">6 tháng</option>
+                                            <option value="t12">12 tháng</option>
+                                            <option value="t18">18 tháng</option>
+                                            <option value="t30">30 tháng</option>
+                                            <option value="t36">36 tháng</option>
+                                            <option value="t48">48 tháng</option>
+                                            <option value="t54">54 tháng</option>
                                         </select>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                         <th>Nhà mạng</th>
                                         <th>Giá gói cam kết</th>
                                         <th>Mã gói viễn thông</th>
-                                        <th>Thời gian cam kết</th>
+                                        <th>Thời hạn cam kết</th>
                                         <th>Số kỳ chưa thanh toán</th>
                                         <th>Thời gian kích hoạt</th>
                                         <th>Trạng thái</th>
@@ -146,7 +146,7 @@
                                         </td>
                                         <td>
                                             <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
-                                            {{ item.note }}
+                                            <!-- {{ item.note }} -->
                                         </td>
 
                                         <td>

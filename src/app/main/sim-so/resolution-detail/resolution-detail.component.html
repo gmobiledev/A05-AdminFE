@@ -18,10 +18,10 @@
                                         </p>
                                     </div>
                                     <div>
-                                        <p>
-                                            <b>Nhà mạng : </b>
-                                            {{ data.msisdn.msisdns[0].mno}}
-                                        </p>
+                                        <b>Nhà mạng : </b>
+                                        <div *ngIf="data.msisdn.length < 2 && data.msisdn.length > 0">
+                                            <span [innerHTML]="data.msisdn.msisdns[0].mno | showIconMno"></span>
+                                        </div>
                                     </div>
 
                                     <div>
