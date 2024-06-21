@@ -35,6 +35,7 @@ import { BalanceChangesComponent } from './history/balance-changes/balance-chang
 import { MsisdnComponent as TTTBMsisdnComponent } from './history/msisdn/msisdn.component';
 import { CommitmentComponent } from './commitment/commitment.component';
 import { ResolutionDetailComponent } from './resolution-detail/resolution-detail.component';
+import { CommitmentDetailComponent } from './commitment-detail/commitment-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -122,7 +123,8 @@ const routes: Routes = [
     BalanceChangesComponent,
     TTTBMsisdnComponent,
     CommitmentComponent,
-    ResolutionDetailComponent
+    ResolutionDetailComponent,
+    CommitmentDetailComponent
   ],
   imports: [
     CommonModule, 
