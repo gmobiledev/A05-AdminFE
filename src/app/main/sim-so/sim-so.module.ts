@@ -34,7 +34,6 @@ import { TopupComponent } from './history/topup/topup.component';
 import { BalanceChangesComponent } from './history/balance-changes/balance-changes.component';
 import { MsisdnComponent as TTTBMsisdnComponent } from './history/msisdn/msisdn.component';
 import { CommitmentComponent } from './commitment/commitment.component';
-import { ResolutionDetailComponent } from './resolution-detail/resolution-detail.component';
 import { CommitmentDetailComponent } from './commitment-detail/commitment-detail.component';
 const routes: Routes = [
   {
@@ -70,8 +69,8 @@ const routes: Routes = [
     component: CommitmentComponent
   },
   {
-    path: 'resolution-detail',
-    component: ResolutionDetailComponent
+    path: 'commitment-detail',
+    component: CommitmentDetailComponent
   },
   {
     path: 'sell-channel',
@@ -123,7 +122,6 @@ const routes: Routes = [
     BalanceChangesComponent,
     TTTBMsisdnComponent,
     CommitmentComponent,
-    ResolutionDetailComponent,
     CommitmentDetailComponent
   ],
   imports: [

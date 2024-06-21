@@ -1,1 +1,113 @@
-<p>commitment-detail works!</p>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div *ngIf="data" class="col-4">
+                                <h4>{{ contentHeader.headerTitle }}</h4>
+                                <div class="col border-primary rounded bg-resolution">
+                                    <div class="mt-1">
+                                        <p>
+                                            <b>Số thuê bao : </b>
+                                            {{ data.task.msisdn }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <b>Nhà mạng : </b>
+                                        <div *ngIf="data.msisdn.length < 2 && data.msisdn.length > 0">
+                                            <span [innerHTML]="data.msisdn.msisdns[0].mno | showIconMno"></span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p>
+                                            <b>Giá gói cam kết: </b>
+                                            {{ data.task.amount | number }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Mã gói viễn thông : </b>
+                                            {{ data.msisdn.msisdns[0].commit_package }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Thời gian cam kết : </b>
+                                            {{ data.task.completed_at | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Số kỳ chưa thanh toán : </b>
+                                            {{ data.task.commit_turn }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <b>Thời gian kích hoạt : </b>
+                                            {{ data.task.sync_time }}
+                                        </p>
+                                    </div>
+                                    <div class="mb-1">
+                                        <b>Trạng thái :
+                                            <span [innerHTML]="data.task.status | showStatusTelecom"></span>
+                                        </b>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <h4>Lịch sử thanh toán</h4>
+                                <div class="">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Mã</th>
+                                                <th>Số thuê bao</th>
+                                                <th>Ngày thanh toán</th>
+                                                <th>Số tiền </th>
+                                                <th>Kỳ hạn</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngIf="dataPayment">
+
+                                                <td>
+                                                    {{ dataPayment.items[0].id }}
+                                                <td>
+                                                    {{ dataPayment.items[0].msisdn }}
+                                                </td>
+                                                <td>
+                                                    {{ dataPayment.items[0].completed_at | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                                                </td>
+                                                <td>
+                                                    {{ dataPayment.items[0].amount | number }}
+                                                </td>
+                                                <td>
+                                                    <div [innerHTML]="dataPayment.items[0].status | showStatusTelecom" class="mb-1">
+                                                    </div>
+                                                    {{ item.note }}
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
