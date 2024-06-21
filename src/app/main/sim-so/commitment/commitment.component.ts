@@ -73,7 +73,7 @@ export class CommitmentComponent implements OnInit {
     telco: '',
     customer_name: '',
     customer_type: '',
-    commit_extant: '',
+    commit_turn: '',
     sub_action: 'SIM_CAM_KET'
   }
   dateRange: any;
