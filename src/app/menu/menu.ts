@@ -325,6 +325,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/report/ton-kho-sim'
+      }  ,
+      {
+        id: 'i-action-logs',
+        title: 'Nhật ký hoạt động',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/action-logs'
       }      
     ]
   },

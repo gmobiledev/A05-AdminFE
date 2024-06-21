@@ -54,6 +54,7 @@ export class NewBatchExportComponent implements OnInit {
     category_id: '',
     take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
     level: '',
+    batch_id: '',
     batch_type: BatchType.OUTPUT
   }
   seachMyChannel = {
@@ -72,7 +73,7 @@ export class NewBatchExportComponent implements OnInit {
     key_from: '',
     key_to: '',
     brand: '',
-    category_id: '',
+    category_id: '',    
     status_array: []
   }
 
@@ -104,6 +105,14 @@ export class NewBatchExportComponent implements OnInit {
 
   ]
   selectedAttributes: any;
+  selectedBatch;
+  searchBatch = {
+    keyword: '',
+    channel_id: '',
+    type: ''
+  };
+  isNgSelectBatchOpen = false;
+  isLoadingBatch = false;
   disableSelectParent: boolean = false;
   listBatchType = BatchType;
   typeCurrentBatch;
@@ -118,6 +127,7 @@ export class NewBatchExportComponent implements OnInit {
   };
   selectedFiles;
   currentExcelFileSearch;
+  listBatchImport;
 
   constructor(
     private readonly inventoryService: InventoryService,
@@ -231,7 +241,7 @@ export class NewBatchExportComponent implements OnInit {
   onChangeParentChannel() {
     this.seachMyChannel.channel_id = this.searchForm.channel_id;
     const currentChannel = this.listChannel.find(x => x.id == this.seachMyChannel.channel_id);
-
+    this.searchBatch.channel_id = this.searchForm.channel_id;    
     this.inventoryService.getMyChannel(this.seachMyChannel).subscribe(res => {
       this.listInputChannel = res.data.items;
       console.log("currentChannel", currentChannel);
@@ -243,6 +253,7 @@ export class NewBatchExportComponent implements OnInit {
     }, error => {
       this.alertService.showMess(error);
     });
+    this.getListBatchToExport();
     this.searchProductStore();
   }
 
@@ -261,7 +272,7 @@ export class NewBatchExportComponent implements OnInit {
       this.searchFormProduct.page = page && page.offset ? page.offset + 1 : 1;
       this.searchFormProduct.skip = (this.searchFormProduct.page - 1) * this.searchFormProduct.take;
       this.searchFormProduct.channel_id = this.searchForm.channel_id;
-      this.searchFormProduct.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
+      this.searchFormProduct.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';      
       this.searchFormProduct.category_id = this.searchForm.category_id;
       this.searchFormProduct.brand = this.searchForm.brand;
       this.searchFormProduct.key_from = this.searchForm.key_from;
@@ -294,6 +305,7 @@ export class NewBatchExportComponent implements OnInit {
         return;
       }
       this.searchForm.level = this.selectedAttributes !== null && this.selectedAttributes != undefined ? this.selectedAttributes : '';
+      this.searchForm.batch_id = this.selectedBatch !== null && this.selectedBatch != undefined ? this.selectedBatch : '';
       console.log(this.selectedAttributes);
       let paramSearch = { ...this.searchForm }
       for (let key in paramSearch) {
@@ -572,9 +584,33 @@ export class NewBatchExportComponent implements OnInit {
     })
   }
 
+  getListBatchToExport(isShow = false) {
+    this.isLoadingBatch = true;
+    this.inventoryService.getListBatchToExport(this.searchBatch).subscribe(res => {
+      this.listBatchImport = res.data.items;
+      this.isLoadingBatch = false;
+      this.isNgSelectBatchOpen = isShow;
+    })
+  }
+
+  onBlurSelectBatch() {
+    this.searchBatch.keyword = '';
+    if(this.searchForm.channel_id) {
+      this.getListBatchToExport();
+    }    
+  }
+
+  onSearchSelectBatch(event) {
+    this.searchBatch.keyword = event.term;
+    if(this.searchForm.channel_id) {
+      this.getListBatchToExport(true)
+    }
+  }
+
   ngOnInit(): void {
     const data = this.route.snapshot.data;
     this.typeCurrentBatch = data && data.type ? data.type : BatchType.OUTPUT;
+    this.searchBatch.type = this.typeCurrentBatch
     console.log(data, this.typeCurrentBatch);
     if (this.typeCurrentBatch == BatchType.RETRIEVE) {
       this.searchForm.batch_type = BatchType.RETRIEVE;
@@ -582,7 +618,7 @@ export class NewBatchExportComponent implements OnInit {
       this.contentHeader.breadcrumb.links[2].name = 'Thu hồi';
       this.titleFromChannel = 'Kho cần thu hồi';
     }
-    this.getData();
+    this.getData();    
   }
 
 }
