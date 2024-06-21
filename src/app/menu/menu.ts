@@ -148,7 +148,47 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+  {
+    id: 'users',
+    title: 'Sim cam kết',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '3',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'Danh sách thuê bao',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/commitment'
+      },
 
+      {
+        id: 'agents',
+        title: 'Thiết lập thuê bao',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: ''
+      },
+
+      {
+        id: 'agents',
+        title: 'Báo cáo thống kê',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: ''
+      },
+      
+    ]
+  },
   {
     id: 'users',
     title: 'SIM Du lịch',
