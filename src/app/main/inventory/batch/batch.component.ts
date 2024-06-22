@@ -167,9 +167,9 @@ export class BatchComponent implements OnInit {
 
   onViewDetail(modal, item) {
     this.batchdDetail = item;
-    this.itemBlockDetailUI.start();
+    this.sectionBlockUI.start();
     this.inventoryService.detailBatchSim(item.id).subscribe(res => {
-      this.itemBlockDetailUI.stop();
+      this.sectionBlockUI.stop();
       if (res.status && res.data) {
         this.itemBatch = res.data;
       }
@@ -182,7 +182,7 @@ export class BatchComponent implements OnInit {
         size: 'lg'
       });
     }, error => {
-      this.itemBlockDetailUI.stop();
+      this.sectionBlockUI.stop();
       this.alertService.showError(error);
     })
   }
