@@ -1,1 +1,71 @@
-<p>warning works!</p>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <form class="rounded bg-resolution p-2">
+                            <div>
+
+                                <div class="custom-control custom-switch custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                                    <label class="custom-control-label" for="customSwitch1"><h4>Cảnh báo trước khi thu hồi sim cam kết</h4></label>
+                                  </div>
+
+                                <div class="form-group">
+                                    <label for="khoa1ChieuNgay">Khóa 1 chiều</label>
+                                    <input type="number" id="khoa1ChieuNgay" placeholder="Trước ... ngày">
+                                    <input type="time" placeholder="Thời gian gửi thông báo">
+                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="khoa2ChieuNgay">Khóa 2 chiều</label>
+                                    <input type="number" id="khoa2ChieuNgay" placeholder="Trước ... ngày">
+                                    <input type="time" placeholder="Thời gian gửi thông báo">
+                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="thuHoiSimNgay">Thu hồi sim</label>
+                                    <input type="number" id="thuHoiSimNgay" placeholder="Trước ... ngày">
+                                    <input type="time" placeholder="Thời gian gửi thông báo">
+                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="notification-section">
+                                <h4>Cảnh báo kích hoạt thuê bao trước 72h</h4>
+                                <div class="form-group">
+                                    <input type="number" placeholder="Trước ... ngày">
+                                    <input type="time" placeholder="Thời gian gửi thông báo">
+                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="notification-section">
+                                <h4>Cảnh báo bị khóa 1/2 chiều</h4>
+                                <div class="form-group">
+                                    <input type="time" placeholder="Thời gian gửi thông báo">
+                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="row">
+
+                        </div>
+                        <div class="mt-1 text-center">
+                            <div class="d-flex justify-content-center">
+                                <button type="button" (click)="onSubmitExportExcelReport()"
+                                    class="btn btn-success">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

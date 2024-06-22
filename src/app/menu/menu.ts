@@ -175,7 +175,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'user',
-        url: ''
+        url: 'sim-so/warning'
       },
 
       {
