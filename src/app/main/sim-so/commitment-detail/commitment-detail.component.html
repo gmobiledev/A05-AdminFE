@@ -59,6 +59,7 @@
                                             <span [innerHTML]="data.task.status | showStatusTelecom"></span>
                                         </b>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -93,7 +94,6 @@
                                                 <td>
                                                     <div [innerHTML]="dataPayment.items[0].status | showStatusTelecom" class="mb-1">
                                                     </div>
-                                                    {{ item.note }}
                                                 </td>
 
                                             </tr>
@@ -103,7 +103,13 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-4 mt-1">
+                            <div class="d-flex justify-content-center">
+                                <button type="button" (click)="onSubmitExportExcelReport()"
+                                    class="btn btn-success">Xuất
+                                    báo cáo excel <span [data-feather]="'file'"></span></button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

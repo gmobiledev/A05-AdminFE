@@ -18,6 +18,7 @@ export class CommitmentDetailComponent implements OnInit {
   public summaryTask: any;
   public data: any;
   public dataPayment: any;
+  dateRange: any;
 
   msisdns_id: any;
 
@@ -60,15 +61,36 @@ export class CommitmentDetailComponent implements OnInit {
     private router: Router,
 
   ) { 
-   
+
     this.route.queryParams.subscribe(params => {
       this.msisdns_id = params['msisdns_id'] && params['msisdns_id'] != undefined ? params['msisdns_id'] : '';
+      this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
+
       this.getData();
     })
   }
 
   ngOnInit(): void {
 
+  }
+
+  onSubmitExportExcelReport() {
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    // const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
+    // ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    // this.searchForm.date_range = daterangeString;
+    this.telecomService.exportExcelReport(this.searchForm).subscribe(res => {
+      var newBlob = new Blob([res.body], { type: res.body.type });
+      let url = window.URL.createObjectURL(newBlob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Danh sách thuê bao cam kết";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
   }
 
   getData() {

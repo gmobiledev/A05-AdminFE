@@ -23,24 +23,24 @@ export class CommitmentComponent implements OnInit {
 
   @ViewChild('modalItem') modalItem: ElementRef;
   
-  public contentHeader: any =  {
-    headerTitle: 'Danh sách thuê bao cam kết',
-    actionButton: true,
-    breadcrumb: {
-      type: '',
-      links: [
-        {
-          name: 'Home',
-          isLink: true,
-          link: '/'
-        },
-        {
-          name: 'Danh sách thuê bao cam kết',
-          isLink: false
-        }
-      ]
-    }
-  };
+  // public contentHeader: any =  {
+  //   headerTitle: 'Danh sách thuê bao cam kết',
+  //   actionButton: true,
+  //   breadcrumb: {
+  //     type: '',
+  //     links: [
+  //       {
+  //         name: 'Home',
+  //         isLink: true,
+  //         link: '/'
+  //       },
+  //       {
+  //         name: 'Danh sách thuê bao cam kết',
+  //         isLink: false
+  //       }
+  //     ]
+  //   }
+  // };
   public list: any;
   public totalItems: number;
   public summaryTask: any;
@@ -128,20 +128,39 @@ export class CommitmentComponent implements OnInit {
       if(this.searchForm.action && this.searchForm.array_status.length > 0) {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
       }
-      if(!this.searchForm.action) {
-        this.contentHeader.headerTitle = 'Danh sách thuê bao cam kết';
-        this.contentHeader.breadcrumb.links[1] = 'Danh sách thuê bao cam kết';
-      }else if(this.searchForm.action && this.searchForm.action == this.listTaskAction.change_info.value) {
-        this.contentHeader.headerTitle = 'Yêu cầu cập nhật TTTB của đại lý';
-        this.contentHeader.breadcrumb.links[1] = 'Yêu cầu cập nhật TTTB của đại lý';
-      } else if (this.searchForm.action && this.searchForm.action == this.listTaskAction.new_sim.value) {
-        this.contentHeader.headerTitle = 'Yêu cầu đấu sim mới của đại lý';
-        this.contentHeader.breadcrumb.links[1] = 'Yêu cầu đấu sim mới của đại lý';
-      }
+      // if(!this.searchForm.action) {
+      //   this.contentHeader.headerTitle = 'Danh sách thuê bao cam kết';
+      //   this.contentHeader.breadcrumb.links[1] = 'Danh sách thuê bao cam kết';
+      // }else if(this.searchForm.action && this.searchForm.action == this.listTaskAction.change_info.value) {
+      //   this.contentHeader.headerTitle = 'Yêu cầu cập nhật TTTB của đại lý';
+      //   this.contentHeader.breadcrumb.links[1] = 'Yêu cầu cập nhật TTTB của đại lý';
+      // } else if (this.searchForm.action && this.searchForm.action == this.listTaskAction.new_sim.value) {
+      //   this.contentHeader.headerTitle = 'Yêu cầu đấu sim mới của đại lý';
+      //   this.contentHeader.breadcrumb.links[1] = 'Yêu cầu đấu sim mới của đại lý';
+      // }
       this.getData();
     })
     
   }
+
+  public contentHeader: any =  {
+    headerTitle: 'Danh sách thuê bao cam kết',
+    actionButton: true,
+    breadcrumb: {
+      type: '',
+      links: [
+        {
+          name: 'Home',
+          isLink: true,
+          link: '/'
+        },
+        {
+          name: 'Danh sách thuê bao cam kết',
+          isLink: false
+        }
+      ]
+    }
+  };
 
   async modalOpen(modal, item = null) { 
     if(item) {

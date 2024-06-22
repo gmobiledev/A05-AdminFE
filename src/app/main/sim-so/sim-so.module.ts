@@ -70,6 +70,10 @@ const routes: Routes = [
     component: CommitmentComponent
   },
   {
+    path: 'warning',
+    component: WarningComponent
+  },
+  {
     path: 'commitment-detail',
     component: CommitmentDetailComponent
   },
