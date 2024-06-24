@@ -7,55 +7,109 @@
 
                     <div class="card-body">
                         <form class="rounded bg-resolution p-2">
-                            <div>
-
+                            <div class="col">
                                 <div class="custom-control custom-switch custom-control-inline">
                                     <input type="checkbox" class="custom-control-input" id="customSwitch1" />
-                                    <label class="custom-control-label" for="customSwitch1"><h4>Cảnh báo trước khi thu hồi sim cam kết</h4></label>
-                                  </div>
+                                    <i data-feather="settings" class="text-primary cursor-pointer"></i>
+                                    <h4 class="mr-1 ml-1">Cảnh báo trước khi thu hồi sim cam kết</h4>
+                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                </div>
+                                <div class="line">
+                                    <h5>Khoá 1 chiều</h5>
+                                    <div class="row ml-0"> 
+                                        <h5>Trước</h5> 
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate1"></ng2-flatpickr>
+                                        <h5>ngày</h5>
+                                        <h5 class="ml-2">Thời gian gửi thông báo</h5>
+                                        <ng2-flatpickr [config]="timeOptions" name="time"></ng2-flatpickr>
+                                    </div>
+                                    <h5>Nội dung gửi thông báo</h5>
+                                    <textarea
+                                    class="form-control"
+                                    id="customer-address"
+                                    cols="2"
+                                    rows="2"
+                                    placeholder="1307 Lady Bug Drive New York"
+                                  ></textarea>
+                                </div>
 
-                                <div class="form-group">
-                                    <label for="khoa1ChieuNgay">Khóa 1 chiều</label>
-                                    <input type="number" id="khoa1ChieuNgay" placeholder="Trước ... ngày">
-                                    <input type="time" placeholder="Thời gian gửi thông báo">
-                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                                <div>
+                                    <h5>Khoá 2 chiều</h5>
+                                    <div class="row ml-0"> 
+                                        <h5>Trước</h5> 
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+                                        <h5>ngày</h5>
+                                        <h5 class="ml-2">Thời gian gửi thông báo</h5>
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+
+                                    </div>
+                                    <h5>Nội dung gửi thông báo</h5>
+                                    <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+                                    <h6 class="text-primary cursor-pointer">----------------------------------------------</h6>
+
                                 </div>
-                                <div class="form-group">
-                                    <label for="khoa2ChieuNgay">Khóa 2 chiều</label>
-                                    <input type="number" id="khoa2ChieuNgay" placeholder="Trước ... ngày">
-                                    <input type="time" placeholder="Thời gian gửi thông báo">
-                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="thuHoiSimNgay">Thu hồi sim</label>
-                                    <input type="number" id="thuHoiSimNgay" placeholder="Trước ... ngày">
-                                    <input type="time" placeholder="Thời gian gửi thông báo">
-                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+
+                                <div>
+                                    <h5>Thu hồi SIM</h5>
+                                    <div class="row ml-0"> 
+                                        <h5>Trước</h5> 
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+                                        <h5>ngày</h5>
+                                        <h5 class="ml-2">Thời gian gửi thông báo</h5>
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+
+                                    </div>
+                                    <h5>Nội dung gửi thông báo</h5>
+                                    <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+                                    <h6 class="text-primary cursor-pointer">----------------------------------------------</h6>
+
                                 </div>
                             </div>
-
-                            <div class="notification-section">
-                                <h4>Cảnh báo kích hoạt thuê bao trước 72h</h4>
-                                <div class="form-group">
-                                    <input type="number" placeholder="Trước ... ngày">
-                                    <input type="time" placeholder="Thời gian gửi thông báo">
-                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                            <div class="col">
+                                <div class="custom-control custom-switch custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                                    <i data-feather="settings" class="text-primary cursor-pointer"></i>
+                                    <h4 class="mr-1 ml-1">Cảnh báo kích hoạt thuê bao trước 72h</h4>
+                                    <label class="custom-control-label" for="customSwitch1"></label>
                                 </div>
-                            </div>
+                                <div>
+                                    <h5>Khoá 1 chiều</h5>
+                                    <div class="row ml-0"> 
+                                        <h5>Trước</h5> 
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+                                        <h5>ngày</h5>
+                                        <h5 class="ml-2">Thời gian gửi thông báo</h5>
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
 
-                            <div class="notification-section">
-                                <h4>Cảnh báo bị khóa 1/2 chiều</h4>
-                                <div class="form-group">
-                                    <input type="time" placeholder="Thời gian gửi thông báo">
-                                    <textarea placeholder="Nội dung gửi thông báo"></textarea>
+                                    </div>
+                                    <h5>Nội dung gửi thông báo</h5>
+                                    <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+                                    <h6 class="text-primary cursor-pointer">----------------------------------------------</h6>
                                 </div>
-                            </div>
 
+                            </div>
+                            <div class="col">
+                                <div class="custom-control custom-switch custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                                    <i data-feather="settings" class="text-primary cursor-pointer"></i>
+                                    <h4 class="mr-1 ml-1">Cảnh báo thuê bao bị khóa 1/2 chiều</h4>
+                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                </div>
+                                <div>
+                                    <h5>Khoá 1 chiều</h5>
+                                    <div class="row ml-0"> 
+                                        <h5 class="ml-2">Thời gian gửi thông báo</h5>
+                                        <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+
+                                    </div>
+                                    <h5>Nội dung gửi thông báo</h5>
+                                    <ng2-flatpickr [ngClass]="'firstsecond'" [config]="basicDateOptions" name="basicDate"></ng2-flatpickr>
+                                    <h6 class="text-primary cursor-pointer">----------------------------------------------</h6>
+                                </div>
+
+                            </div>
                         </form>
 
-                        <div class="row">
-
-                        </div>
                         <div class="mt-1 text-center">
                             <div class="d-flex justify-content-center">
                                 <button type="button" (click)="onSubmitExportExcelReport()"

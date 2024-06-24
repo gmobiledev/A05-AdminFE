@@ -36,6 +36,8 @@ import { MsisdnComponent as TTTBMsisdnComponent } from './history/msisdn/msisdn.
 import { CommitmentComponent } from './commitment/commitment.component';
 import { CommitmentDetailComponent } from './commitment-detail/commitment-detail.component';
 import { WarningComponent } from './warning/warning.component';
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+
 const routes: Routes = [
   {
     path: '',
@@ -144,7 +146,8 @@ const routes: Routes = [
     SharedModule,
     QuillModule.forRoot(),
     PdfViewerModule,
-    QRCodeModule
+    QRCodeModule,
+    Ng2FlatpickrModule
   ]
 })
 export class SimSoModule { }

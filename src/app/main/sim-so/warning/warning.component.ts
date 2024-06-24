@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FlatpickrOptions } from 'ng2-flatpickr';
+
 @Component({
   selector: 'app-warning',
   templateUrl: './warning.component.html',
@@ -52,6 +54,16 @@ export class WarningComponent implements OnInit {
         }
       ]
     }
+  };
+
+  public basicDateOptions: FlatpickrOptions = {
+    altInput: true
+  };
+
+  public timeOptions: FlatpickrOptions = {
+    enableTime: true,
+    noCalendar: true,
+    altInput: true
   };
 
   constructor(    
