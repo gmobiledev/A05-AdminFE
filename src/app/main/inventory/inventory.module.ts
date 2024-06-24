@@ -40,6 +40,7 @@ import { TongHopComponent } from './reports/tong-hop/tong-hop.component';
 import { ChiTietComponent } from './reports/chi-tiet/chi-tiet.component';
 import { KetQuaComponent } from './reports/ket-qua/ket-qua.component';
 import { ActionLogsComponent } from './action-logs/action-logs.component';
+import { SearchProductsTransferComponent } from './search-products-transfer/search-products-transfer.component';
 
 const routes: Routes = [
   {
@@ -151,6 +152,10 @@ const routes: Routes = [
     path: 'action-logs',
     component: ActionLogsComponent
   },
+  {
+    path: 'search-product-transfer',
+    component: SearchProductsTransferComponent
+  },
 ];
 
 @NgModule({
@@ -178,7 +183,7 @@ const routes: Routes = [
     TonKhoSimComponent, 
     TongHopComponent,
     ChiTietComponent, 
-    KetQuaComponent, ActionLogsComponent
+    KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent,
   ],
   imports: [
     CommonModule,
