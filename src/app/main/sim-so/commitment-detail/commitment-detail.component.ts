@@ -21,6 +21,8 @@ export class CommitmentDetailComponent implements OnInit {
   dateRange: any;
 
   msisdns_id: any;
+  task_id: any;
+
 
   public searchForm: any = {
     mobile: '',
@@ -64,6 +66,8 @@ export class CommitmentDetailComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.msisdns_id = params['msisdns_id'] && params['msisdns_id'] != undefined ? params['msisdns_id'] : '';
+      this.task_id = params['task_id'] && params['task_id'] != undefined ? params['task_id'] : '';
+
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
 
       this.getData();
@@ -98,7 +102,7 @@ export class CommitmentDetailComponent implements OnInit {
     this.listCurrentAction = this.currentUser.actions;
     if(this.currentUser && this.currentUser.roles) {
     }
-    this.telecomService.getDetailTask(this.msisdns_id).subscribe(res => {
+    this.telecomService.getDetailTask(this.task_id).subscribe(res => {
       this.data = res.data;
     })
     this.telecomService.getPaymentTask(this.msisdns_id).subscribe(res => {

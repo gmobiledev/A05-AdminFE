@@ -151,7 +151,8 @@
                                             <a
                                             class="ml-1"
                                             [routerLink]="['/sim-so/commitment-detail']" 
-                                            [queryParams]="{msisdns_id: item?.msisdns[0]?.id}"
+                                            [queryParams]="{task_id: item?.id, msisdns_id: item?.msisdns[0]?.id}"
+
                                             title="Xem chi tiết"
                                           >
                                             <i
