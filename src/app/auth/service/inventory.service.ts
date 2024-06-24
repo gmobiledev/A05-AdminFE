@@ -329,4 +329,7 @@ export class InventoryService {
   getActionlogs(dto) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/action-logs`, {params: dto});
   }
+  searchProductsTransfer(dto) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/product/list-transfer-channel`, {params: dto});
+  }
 }
