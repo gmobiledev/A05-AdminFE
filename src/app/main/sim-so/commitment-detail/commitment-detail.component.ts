@@ -50,6 +50,11 @@ export class CommitmentDetailComponent implements OnInit {
           link: '/'
         },
         {
+          name: 'Danh sách thuê báo cam kết',
+          isLink: true,
+          link: '/sim-so/commitment'
+        },
+        {
           name: 'Chi tiết thuê bao cam kết',
           isLink: false
         }

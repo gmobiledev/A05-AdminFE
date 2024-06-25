@@ -131,11 +131,11 @@
                                         </td>
 
                                         <td>
-                                            {{ item?.msisdns[0]?.commit_extant}}
+                                            {{ item?.msisdns[0]?.commit_turn}}
 
                                         </td>
                                         <td>
-                                            {{ item?.msisdns[0]?.commit_turn}}
+                                            {{ item?.msisdns[0]?.commit_extant}}
                                         </td>
                                         <td>
                                             {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
@@ -144,7 +144,6 @@
                                         </td>
                                         <td>
                                             <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
-                                            <!-- {{ item.note }} -->
                                         </td>
 
                                         <td>
