@@ -142,7 +142,7 @@ export class CommitmentDetailComponent implements OnInit {
   initForm() {
     this.formGroup = this.formBuilder.group({
       trans_id: ['', Validators.required],
-      amount: [0, Validators.required],
+      amount: ['', Validators.required],
       note: ['', Validators.required], 
     });
     this.isCreate = true;

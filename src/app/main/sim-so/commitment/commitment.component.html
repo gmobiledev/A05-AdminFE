@@ -125,11 +125,10 @@
                                             
                                         </td>
                                         <td>
-                                            <span class="text-info">{{ item.amount | number }}</span><br>
+                                            {{ item?.commit_price | number}}
                                         </td>
                                         <td>
-                                            {{ item?.msisdns[0]?.amount | number}}
-
+                                            <span class="text-info">{{ item.amount | number }}</span><br>
                                         </td>
                                         <td>
                                             {{item?.msisdns[0]?.commit_package}}
