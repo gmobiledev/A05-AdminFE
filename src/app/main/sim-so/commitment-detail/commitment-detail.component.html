@@ -128,7 +128,8 @@
                     excel</button>
                 </div> -->
                 <div class="d-flex justify-content-center">
-                  <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-primary">Xác nhận nạp tiền</button>
+                  <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-primary">Xác nhận nạp
+                    tiền</button>
                 </div>
               </div>
 
@@ -151,25 +152,25 @@
   <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
     <div class="modal-body" tabindex="0">
 
-      <div class="form-group" *ngIf="isCreate">
+      <div class="form-group">
         <label for="basicInput">Mã giao dịch</label>
-        <input type="text" class="form-control" placeholder=""
-          name="trans_id" formControlName="trans_id" [ngClass]="{ 'is-invalid': submitted && f.trans_id.errors }" />
+        <input type="text" class="form-control" placeholder="" name="trans_id" formControlName="trans_id"
+          [ngClass]="{ 'is-invalid': submitted && f.trans_id.errors }" />
         <div *ngIf="submitted && f.trans_id.errors" class="invalid-feedback">
           <div *ngIf="f.trans_id.errors.required">Vui lòng mã giao dịch</div>
         </div>
       </div>
 
-      <div class="form-group" *ngIf="isCreate">
+      <div class="form-group">
         <label for="basicInput">Số tiền</label>
-        <input type="text" class="form-control" placeholder="" name="amount" formControlName="name"
-          [ngClass]="{ 'is-invalid': submitted && f.amount.errors }" />
+        <input name="amount" formControlName="amount" [ngClass]="{ 'is-invalid': submitted && f.amount.errors }"
+          class="form-control" type="number" placeholder="100,000,000,000" mask="separator" thousandSeparator="," />
         <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
           <div *ngIf="f.amount.errors.required">Vui lòng nhập số tiền</div>
         </div>
       </div>
 
-      <div class="form-group" *ngIf="isCreate">
+      <div class="form-group">
         <label for="basicInput">Ghi chú</label>
         <input type="text" class="form-control" placeholder="" name="note" formControlName="note"
           [ngClass]="{ 'is-invalid': submitted && f.note.errors }" />

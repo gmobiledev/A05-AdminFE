@@ -65,8 +65,8 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/summary`);
   }
 
-  postTopup(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/manual-topup`, data);
+  postTopup(data, id) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/manual-topup/${id}`, data);
   }
 
   exportExcelReport(dto: any): Observable<any> {
