@@ -65,6 +65,10 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/summary`);
   }
 
+  postTopup(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/manual-topup`, data);
+  }
+
   exportExcelReport(dto: any): Observable<any> {
     return this._http.post(`${environment.apiTelecomUrl}/telecom-admin/task/export-excel-report`, dto, { observe: 'response', responseType: 'blob' });
   }

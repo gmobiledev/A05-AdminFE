@@ -1,6 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'app/auth/service';
 
 @Component({
   selector: 'app-commitment-detail',
@@ -19,6 +22,12 @@ export class CommitmentDetailComponent implements OnInit {
   public data: any;
   public dataPayment: any;
   dateRange: any;
+  public titleModal: string;
+  public isCreate: boolean = false;
+  public selectedUserId: number;
+  public modalRef: any;
+  public formGroup: FormGroup;
+
 
   msisdns_id: any;
   task_id: any;
@@ -66,6 +75,8 @@ export class CommitmentDetailComponent implements OnInit {
     private telecomService: TelecomService,
     private route: ActivatedRoute,
     private router: Router,
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder
 
   ) { 
 
@@ -100,6 +111,64 @@ export class CommitmentDetailComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     })
+  }
+
+  modalOpen(modal, item = null) { 
+    if(item) {
+      this.titleModal = "Nạp tiền cho số thuê bao";
+      this.isCreate = false;
+      this.selectedUserId = item.id;
+      // this.userService.getAgentServices(item.id).subscribe(res => {
+
+      //   this.currentService = res.data.map( x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
+      //   let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
+      //   for (let i = 0; i < this.currentService.length; i++ ) {
+      //     const newGroup = this.formBuilder.group({
+      //       id: [{value:this.currentService[i]['id'], disabled: true}],
+      //       status: [{value:this.currentService[i]['status'], disabled: true}],
+      //       ref_code: [{value: this.currentService[i]['ref_code'], disabled: true}],
+      //       service_code: [{value: this.currentService[i]['service_code'], disabled: true}]
+      //     });
+      //     const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
+      //     this.listServiceFilter[index]['disabled'] = 'disabled';
+      //     arrayControl.push(newGroup);
+      //   }
+        
+      //   this.modalRef = this.modalService.open(modal, {
+      //     centered: true,
+      //     windowClass: 'modal modal-primary',
+      //     size: 'lg'
+      //   });
+      // })
+    } else {
+      this.titleModal = "Nạp tiền cho số thuê bao";
+      this.isCreate = true;
+      this.modalRef = this.modalService.open(modal, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'lg'
+      });
+    }
+  }
+
+  modalClose() {    
+    this.modalRef.close();
+    this.initForm();
+  }
+
+  initForm() {
+    this.formGroup = this.formBuilder.group({
+      trans_id: ['', Validators.required],
+      amount: ['', Validators.required],
+      note: ['', Validators.required], 
+      // partner_user_code: [''],
+      // channel_id: [''],
+    });
+    this.isCreate = true;
+  }
+
+  async onSubmitCreate() {
+
   }
 
   getData() {

@@ -84,6 +84,7 @@
                                         <th>Số thuê bao</th>
                                         <th>Nhà mạng</th>
                                         <th>Giá gói cam kết</th>
+                                        <th>Tiền đã thanh toán</th>
                                         <th>Mã gói viễn thông</th>
                                         <th>Thời hạn cam kết</th>
                                         <th>Số kỳ chưa thanh toán</th>
@@ -125,6 +126,10 @@
                                         </td>
                                         <td>
                                             <span class="text-info">{{ item.amount | number }}</span><br>
+                                        </td>
+                                        <td>
+                                            {{ item?.msisdns[0]?.amount | number}}
+
                                         </td>
                                         <td>
                                             {{item?.msisdns[0]?.commit_package}}
