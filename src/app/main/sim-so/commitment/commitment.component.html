@@ -81,6 +81,7 @@
                                 <thead>
                                     <tr>
                                         <th>Mã</th>
+                                        <th>Yêu cầu</th>
                                         <th>Số thuê bao</th>
                                         <th>Nhà mạng</th>
                                         <th>Giá gói cam kết</th>
@@ -97,6 +98,12 @@
                                     <tr *ngFor="let item of list;let i = index">
                                         <td>
                                             {{ item.id }}
+                                        </td>
+                                        <td>
+                                            {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] :
+                                            item.action }}
+                                            <br>
+                                            {{ item.sub_action ? item.sub_action : '' }}
                                         </td>
                                         <td>
                                             <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
@@ -122,7 +129,7 @@
                                                 </div>
                                                 <br>
                                             </div>
-                                            
+
                                         </td>
                                         <td>
                                             {{ item?.commit_price | number}}
@@ -151,18 +158,11 @@
                                         </td>
 
                                         <td>
-                                            <a
-                                            class="ml-1"
-                                            [routerLink]="['/sim-so/commitment-detail']" 
-                                            [queryParams]="{task_id: item?.id, msisdns_id: item?.msisdns[0]?.id}"
-
-                                            title="Xem chi tiết"
-                                          >
-                                            <i
-                                              data-feather="eye"
-                                              class="text-primary cursor-pointer"
-                                            ></i>
-                                          </a>
+                                            <a class="ml-1" [routerLink]="['/sim-so/commitment-detail']"
+                                                [queryParams]="{task_id: item?.id, msisdns_id: item?.msisdns[0]?.id}"
+                                                title="Xem chi tiết">
+                                                <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                                            </a>
                                         </td>
 
                                     </tr>

@@ -18,7 +18,7 @@ export class TelecomService {
    * Get all task
    */
   getAllTask(params = null) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task`, { params: params });
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/sim-cam-ket`, { params: params });
   }
 
   getAllTaskWorking(params = null) {
