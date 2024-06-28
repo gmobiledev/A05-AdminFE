@@ -92,12 +92,12 @@
                           <th>Ngày thanh toán</th>
                           <th>Số tiền </th>
                           <th>Kỳ hạn</th>
-  
+
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let item of dataPayment?.items;let i = index">
-  
+
                           <td>
                             {{ item?.id }}
                           <td>
@@ -110,57 +110,24 @@
                             {{ item?.amount | number }}
                           </td>
                           <td>
-                            <!-- <div [innerHTML]="dataPayment.items[0].status | showStatusTelecom"
-                                                          class="mb-1">
-                                                      </div> -->
+                            <span *ngIf="data.task?.commit_billing_cycle == 'MONTHLY'">
+                              {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                            </span>
+                            <span *ngIf="data.task?.commit_billing_cycle == 'ONCE'">Tất cả</span>
                           </td>
-  
+
                         </tr>
                       </tbody>
                     </table>
-  
+
                   </div>
                 </div>
-                <div class="mt-3">
-                  <h4>Lịch sử nạp tiền</h4>
-                  <div class="">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Mã</th>
-                          <th>Số thuê bao</th>
-                          <th>Ngày thanh toán</th>
-                          <th>Số tiền </th>
-                          <th>Kỳ hạn</th>
-  
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let item of dataPayment?.items;let i = index">
-  
-                          <td>
-                            {{ item?.id }}
-                          <td>
-                            {{ item?.msisdn }}
-                          </td>
-                          <td>
-                            {{ item?.completed_at | date: 'dd/MM/yyyy H:mm':'GMT'}}
-                          </td>
-                          <td>
-                            {{ item?.amount | number }}
-                          </td>
-                          <td>
-                            <!-- <div [innerHTML]="dataPayment.items[0].status | showStatusTelecom"
-                                                          class="mb-1">
-                                                      </div> -->
-                          </td>
-  
-                        </tr>
-                      </tbody>
-                    </table>
-  
-                  </div>
+
+                <div class="mt-2 ml-0">
+                  <button type="button" class="btn btn-flat-info" (click)="modalOpen(modalTopUp)" rippleEffect><u>Xem
+                      lịch sử nạp tiền cho thuê bao</u></button>
                 </div>
+
               </div>
             </div>
             <div class="row mt-1">
@@ -226,6 +193,53 @@
       <button type="submit" class="btn btn-primary" rippleEffect>
         Xác nhận
       </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #modalTopUp let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Lịch sử nạp tiền cho số thuê bao</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
+    <div class="modal-body" tabindex="0">
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Mã</th>
+            <th>Số thuê bao</th>
+            <th>Ngày nạp tiền</th>
+            <th>Số tiền nạp</th>
+            <th>Ghi chú</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataHistory?.items;let i = index">
+
+            <td>
+              {{ item?.id }}
+            <td>
+              {{ item?.msisdn }}
+            </td>
+            <td>
+              {{ item?.action_at | date: 'dd/MM/yyyy H:mm':'GMT'}}
+            </td>
+            <td>
+              {{ item?.amount | number }}
+            </td>
+            <td>      
+              {{ item?.detail }}
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
     </div>
   </form>
 </ng-template>

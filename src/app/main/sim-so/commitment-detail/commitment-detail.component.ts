@@ -22,6 +22,7 @@ export class CommitmentDetailComponent implements OnInit {
   public summaryTask: any;
   public data: any;
   public dataPayment: any;
+  public dataHistory: any;
   dateRange: any;
   public titleModal: string;
   public isCreate: boolean = false;
@@ -186,6 +187,9 @@ export class CommitmentDetailComponent implements OnInit {
     })
     this.telecomService.getPaymentTask(this.msisdns_id).subscribe(res => {
       this.dataPayment = res.data;
+    })
+    this.telecomService.getHistoryTopup(this.msisdns_id).subscribe(res => {
+      this.dataHistory = res.data;
     })
     this.telecomService.getSummary().subscribe(res => {
       this.summaryTask = res.data;
