@@ -215,7 +215,7 @@
             <th>Ngày nạp tiền</th>
             <th>Số tiền nạp</th>
             <th>Ghi chú</th>
-
+            <th>Trạng thái</th>
           </tr>
         </thead>
         <tbody>
@@ -232,10 +232,12 @@
             <td>
               {{ item?.amount | number }}
             </td>
-            <td>      
+            <td>
               {{ item?.detail }}
             </td>
-
+            <td>
+              <span [innerHTML]="item?.object_status | showStatusTelecom"></span>
+            </td>
           </tr>
         </tbody>
       </table>
