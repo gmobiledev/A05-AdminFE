@@ -48,6 +48,7 @@ export enum MsisdnStatus {
     STATUS_TERMINATE = 99 //Chấm dứt, thu hồi
 }
 
+
 export enum ProductStatus {
     STATUS_ACTIVE = 1,
     STATUS_AVAILABLE = 2,

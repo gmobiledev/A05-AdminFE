@@ -102,16 +102,26 @@ export class CommitmentComponent implements OnInit {
     private alertService: SweetAlertService
   ) {
     this.dateRange = null;
+
     this.activeRouted.queryParams.subscribe(params => {
       this.taskTelecomStatus = Object.keys(TaskTelecomStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
         obj[key] = TaskTelecomStatus[key];
         return obj;
       }, {});
+      delete this.taskTelecomStatus['STATUS_CANCEL'];
+      delete this.taskTelecomStatus['STATUS_APPROVED_3'];
       delete this.taskTelecomStatus['STATUS_APPROVED_1'];
       delete this.taskTelecomStatus['STATUS_APPROVED_2'];
-      delete this.taskTelecomStatus['STATUS_APPROVED_3'];
+      delete this.taskTelecomStatus['STATUS_WAITING_CONTRACT'];
+      delete this.taskTelecomStatus['STATUS_WAITING_SIM'];
       delete this.taskTelecomStatus['STATUS_DVKHKD_REJECT'];
+      delete this.taskTelecomStatus['STATUS_NEW_ORDER_ORGANIZATION'];
+      delete this.taskTelecomStatus['STATUS_PROCESSING'];
       delete this.taskTelecomStatus['STATUS_PROCESS_TO_MNO'];
+      delete this.taskTelecomStatus['STATUS_SUCCESS_PART'];
+      delete this.taskTelecomStatus['STATUS_PAID_SUSPENDING'];
+      delete this.taskTelecomStatus['STATUS_PAID_TERMINATED'];
+
       console.log(this.taskTelecomStatus);
       
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
@@ -128,23 +138,14 @@ export class CommitmentComponent implements OnInit {
       if(this.searchForm.action && this.searchForm.array_status.length > 0) {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
       }
-      // if(!this.searchForm.action) {
-      //   this.contentHeader.headerTitle = 'Danh sách thuê bao cam kết';
-      //   this.contentHeader.breadcrumb.links[1] = 'Danh sách thuê bao cam kết';
-      // }else if(this.searchForm.action && this.searchForm.action == this.listTaskAction.change_info.value) {
-      //   this.contentHeader.headerTitle = 'Yêu cầu cập nhật TTTB của đại lý';
-      //   this.contentHeader.breadcrumb.links[1] = 'Yêu cầu cập nhật TTTB của đại lý';
-      // } else if (this.searchForm.action && this.searchForm.action == this.listTaskAction.new_sim.value) {
-      //   this.contentHeader.headerTitle = 'Yêu cầu đấu sim mới của đại lý';
-      //   this.contentHeader.breadcrumb.links[1] = 'Yêu cầu đấu sim mới của đại lý';
-      // }
+
       this.getData();
     })
     
   }
 
   public contentHeader: any =  {
-    headerTitle: 'Danh sách thuê bao cam kết',
+    headerTitle: 'Danh sách đơn hàng',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -155,7 +156,7 @@ export class CommitmentComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Danh sách thuê bao cam kết',
+          name: 'Danh sách đơn hàng',
           isLink: false
         }
       ]
