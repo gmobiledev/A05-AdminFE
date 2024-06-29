@@ -34,6 +34,7 @@ export class CommitmentDetailComponent implements OnInit {
   msisdns_id: any;
   task_id: any;
 
+  totalAmount: number = 0;
 
   public searchForm: any = {
     mobile: '',
@@ -96,7 +97,7 @@ export class CommitmentDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.calculateTotalAmount();
   }
 
   onSubmitExportExcelReport() {
@@ -177,6 +178,10 @@ export class CommitmentDetailComponent implements OnInit {
    
   }
 
+  calculateTotalAmount() {
+    this.totalAmount = this.dataPayment.items.reduce((sum, item) => sum + item.amount, 0);
+  }
+
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listCurrentAction = this.currentUser.actions;
@@ -187,6 +192,7 @@ export class CommitmentDetailComponent implements OnInit {
     })
     this.telecomService.getPaymentTask(this.msisdns_id).subscribe(res => {
       this.dataPayment = res.data;
+      this.calculateTotalAmount();
     })
     this.telecomService.getHistoryTopup(this.msisdns_id).subscribe(res => {
       this.dataHistory = res.data;

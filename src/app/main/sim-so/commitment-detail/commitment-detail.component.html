@@ -54,17 +54,22 @@
                   </div>
                   <div>
                     <p>
-                      <b>Tiền đã thanh toán : </b>
-                      {{ data.task.amount | number }}
+                      <b>Tiền SIM : </b>
+                      {{ data.msisdn?.msisdns[0]?.card_sim_price | number }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Phí hào mạng : </b>
+                      {{ data.msisdn?.msisdns[0]?.registration_fee | number }}
                     </p>
                   </div>
                   <div>
                     <p>
                       <b>Tổng giá tiền gói: </b>
-                      {{ data.task?.sale_price | number }}
+                      {{ data.task.commit_price * data.msisdn?.msisdns[0]?.commit_turn | number }}
                     </p>
                   </div>
-
                   <div>
                     <p>
                       <b>Thời gian kích hoạt : </b>
@@ -119,6 +124,10 @@
                         </tr>
                       </tbody>
                     </table>
+
+                    <div class="text-right text-primary mr-5 mt-1">
+                      Tổng số tiền = {{ totalAmount | number }}
+                    </div>
 
                   </div>
                 </div>
