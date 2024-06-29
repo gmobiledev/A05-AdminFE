@@ -23,24 +23,6 @@ export class CommitmentComponent implements OnInit {
 
   @ViewChild('modalItem') modalItem: ElementRef;
   
-  // public contentHeader: any =  {
-  //   headerTitle: 'Danh sách thuê bao cam kết',
-  //   actionButton: true,
-  //   breadcrumb: {
-  //     type: '',
-  //     links: [
-  //       {
-  //         name: 'Home',
-  //         isLink: true,
-  //         link: '/'
-  //       },
-  //       {
-  //         name: 'Danh sách thuê bao cam kết',
-  //         isLink: false
-  //       }
-  //     ]
-  //   }
-  // };
   public list: any;
   public totalItems: number;
   public summaryTask: any;

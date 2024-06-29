@@ -151,7 +151,6 @@ export class CommitmentDetailComponent implements OnInit {
   }
 
   async onSubmitCreate() {
-    console.log(this.formGroup.value)
     if (this.formGroup.invalid) {
       return;
     }

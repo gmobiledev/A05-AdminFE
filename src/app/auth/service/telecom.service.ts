@@ -40,6 +40,11 @@ export class TelecomService {
       return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/payment-log/${id}`);
     }
 
+
+    postSetting(data) {
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`, data);
+    }
+
   /**
  * Tìm Sim/Số
  */

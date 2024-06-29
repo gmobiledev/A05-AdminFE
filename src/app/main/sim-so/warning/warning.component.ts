@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@an
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlatpickrOptions } from 'ng2-flatpickr';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SweetAlertService } from 'app/utils/sweet-alert.service';
 
 @Component({
   selector: 'app-warning',
@@ -20,6 +22,7 @@ export class WarningComponent implements OnInit {
   public data: any;
   public dataPayment: any;
   dateRange: any;
+  public formGroup: FormGroup;
 
   msisdns_id: any;
 
@@ -66,10 +69,21 @@ export class WarningComponent implements OnInit {
     altInput: true
   };
 
+  formPost = {
+    remind_terminate: '',
+    s1: {
+      before_days: '',
+      action_time: '',
+      message: ''
+    }
+  }
+
   constructor(    
     private telecomService: TelecomService,
     private route: ActivatedRoute,
     private router: Router,
+    private formBuilder: FormBuilder,
+    private alertService: SweetAlertService,
 
   ) { 
 
@@ -79,6 +93,103 @@ export class WarningComponent implements OnInit {
 
       this.getData();
     })
+  }
+
+  initForm() {
+    [
+      {
+          "meta_key": "remind_terminate", //Cảnh báo trước khi thu hồi sim cam kết
+          "meta_value": "on", //on hoặc off
+          "child": [
+              {
+                  "meta_key": "s1", //khóa 1 chiều
+                  "meta_value": "on",
+                  "child": [
+                      {
+                          "meta_key": "before_days", //trước ngày
+                          "meta_value": 1 //số ngày
+                      },
+                      {
+                          "meta_key": "action_time", //thời gian gửi thông báo
+                          "meta_value": "16:00" //thời gian hạng HH:mm (24h)
+                      },
+                      {
+                          "meta_key": "message", //Nội dung gửi thông báo
+                          "meta_value": "abc xyz"
+                      }
+                  ]
+              },
+              {
+                  "meta_key": "s2",
+                  "meta_value": "on",
+                  "child": [
+                      {
+                          "meta_key": "before_days",
+                          "meta_value": 1
+                      },
+                      {
+                          "meta_key": "action_time",
+                          "meta_value": "16:00"
+                      },
+                      {
+                          "meta_key": "message",
+                          "meta_value": "abc xyz"
+                      }
+                  ]
+              },
+              {
+                  "meta_key": "terminate",
+                  "meta_value": "on",
+                  "child": [
+                      {
+                          "meta_key": "before_days",
+                          "meta_value": 1
+                      },
+                      {
+                          "meta_key": "action_time",
+                          "meta_value": "16:00"
+                      },
+                      {
+                          "meta_key": "message",
+                          "meta_value": "abc xyz"
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+          "meta_key": "remind_active", //Cảnh báo kích hoạt thuê bao trước 72h
+          "meta_valye": "on",
+          "child": [
+              {
+                  "meta_key": "before_days",
+                  "meta_value": 1
+              },
+              {
+                  "meta_key": "action_time",
+                  "meta_value": "16:00"
+              },
+              {
+                  "meta_key": "message",
+                  "meta_value": "abc xyz"
+              }
+          ]
+      },
+      {
+          "meta_key": "remind_s1_s2", //Cảnh báo khóa 1 chiều/2chieeuf
+          "meta_valye": "on",
+          "child": [
+              {
+                  "meta_key": "action_time",
+                  "meta_value": "16:00"
+              },
+              {
+                  "meta_key": "message",
+                  "meta_value": "abc xyz"
+              }
+          ]
+      }
+  ]
   }
 
   ngOnInit(): void {
@@ -104,20 +215,34 @@ export class WarningComponent implements OnInit {
     })
   }
 
+  async onSubmitCreate() {
+
+    if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {   
+      this.telecomService.postSetting(this.formPost).subscribe(res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+   
+  }
+
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listCurrentAction = this.currentUser.actions;
     if(this.currentUser && this.currentUser.roles) {
     }
-    this.telecomService.getDetailTask(this.msisdns_id).subscribe(res => {
-      this.data = res.data;
-    })
-    this.telecomService.getPaymentTask(this.msisdns_id).subscribe(res => {
-      this.dataPayment = res.data;
-    })
+ 
     this.telecomService.getSummary().subscribe(res => {
       this.summaryTask = res.data;
     })
+
   }
 
 }
