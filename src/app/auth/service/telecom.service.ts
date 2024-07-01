@@ -18,7 +18,7 @@ export class TelecomService {
    * Get all task
    */
   getAllTask(params = null) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task`, { params: params });
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/sim-cam-ket`, { params: params });
   }
 
   getAllTaskWorking(params = null) {
@@ -32,6 +32,18 @@ export class TelecomService {
     let url = action_view ? `${environment.apiTelecomUrl}/telecom-admin/task/${id}?action_view=${action_view}` : `${environment.apiTelecomUrl}/telecom-admin/task/${id}`
     return this._http.get<any>(url);
   }
+
+    /**
+   * Xem lich su thanh toan
+   */
+    getPaymentTask(id) {
+      return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/payment-log/${id}`);
+    }
+
+
+    postSetting(data) {
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`, data);
+    }
 
   /**
  * Tìm Sim/Số
@@ -56,6 +68,14 @@ export class TelecomService {
 
   getSummary() {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/summary`);
+  }
+
+  postTopup(data, id) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/manual-topup/${id}`, data);
+  }
+
+  getHistoryTopup( id) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/${id}/topup`);
   }
 
   exportExcelReport(dto: any): Observable<any> {

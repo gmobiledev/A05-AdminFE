@@ -148,7 +148,103 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+  {
+    id: 'users',
+    title: 'Sim cam kết',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '3',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'Đơn hàng',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/commitment'
+      },
 
+      {
+        id: 'agents',
+        title: 'Thiết lập thuê bao',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/warning'
+      },
+
+      {
+        id: 'agents',
+        title: 'Báo cáo thống kê',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: ''
+      },
+      
+    ]
+  },
+  {
+    id: 'users',
+    title: 'SIM Du lịch',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '4',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'Đơn SIM Profile',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'task/sim-profile'
+      },
+
+      {
+        id: 'agents',
+        title: 'Đơn Kitting',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'task/sim-kitting'
+      },
+
+      {
+        id: 'agents',
+        title: 'Đăng ký TTTB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'task/sim-register'
+      },
+      {
+        id: 'agents',
+        title: 'Nạp tiền',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'task/balance'
+      },
+      {
+        id: 'agents',
+        title: 'Nạp Data',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'task/data'
+      },
+    ]
+  },
 
 
   {
@@ -229,6 +325,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/report/ton-kho-sim'
+      }  ,
+      {
+        id: 'i-action-logs',
+        title: 'Nhật ký hoạt động',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/action-logs'
       }      
     ]
   },

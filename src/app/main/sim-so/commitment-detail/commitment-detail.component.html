@@ -1,0 +1,256 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+
+          <div class="card-body">
+
+            <div class="row">
+              <div *ngIf="data" class="col-4">
+                <h4>{{ contentHeader.headerTitle }}</h4>
+                <div class="col border-primary rounded bg-resolution">
+                  <div class="mt-1">
+                    <p>
+                      <b>Số thuê bao : </b>
+                      {{ data.task.msisdn }}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    <b>Nhà mạng : </b>
+                    <span [innerHTML]="data.msisdn?.msisdns[0]?.mno | showIconMno"></span>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Giá gói cam kết: </b>
+                      {{ data.task.commit_price | number }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Mã gói viễn thông : </b>
+                      {{ data.msisdn?.msisdns[0]?.commit_package }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Thời hạn cam kết : </b>
+                      {{ data.msisdn?.msisdns[0]?.commit_turn }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Số kỳ chưa thanh toán : </b>
+                      {{ data.msisdn?.msisdns[0]?.commit_extant }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Loại thanh toán : </b>
+                      {{ data.task?.commit_billing_cycle }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Tiền SIM : </b>
+                      {{ data.msisdn?.msisdns[0]?.card_sim_price | number }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Phí hào mạng : </b>
+                      {{ data.msisdn?.msisdns[0]?.registration_fee | number }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Tổng giá tiền gói: </b>
+                      {{ data.task.commit_price * data.msisdn?.msisdns[0]?.commit_turn | number }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Thời gian kích hoạt : </b>
+                      {{ data.task?.sync_time | date: 'dd/MM/yyyy H:mm':'GMT'}}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    <b>Trạng thái :
+                      <span [innerHTML]="data.task?.status | showStatusTelecom"></span>
+                    </b>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-8">
+                <div>
+                  <h4>Lịch sử thanh toán</h4>
+                  <div class="">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Mã</th>
+                          <th>Số thuê bao</th>
+                          <th>Ngày thanh toán</th>
+                          <th>Số tiền </th>
+                          <th>Kỳ hạn</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of dataPayment?.items;let i = index">
+
+                          <td>
+                            {{ item?.id }}
+                          <td>
+                            {{ item?.msisdn }}
+                          </td>
+                          <td>
+                            {{ item?.completed_at | date: 'dd/MM/yyyy H:mm':'GMT'}}
+                          </td>
+                          <td>
+                            {{ item?.amount | number }}
+                          </td>
+                          <td>
+                            <span *ngIf="data.task?.commit_billing_cycle == 'MONTHLY'">
+                              {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                            </span>
+                            <span *ngIf="data.task?.commit_billing_cycle == 'ONCE'">Tất cả</span>
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="text-right text-primary mr-5 mt-1">
+                      Tổng số tiền = {{ totalAmount | number }}
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="mt-2 ml-0">
+                  <button type="button" class="btn btn-flat-info" (click)="modalOpen(modalTopUp)" rippleEffect><u>Xem
+                      lịch sử nạp tiền cho thuê bao</u></button>
+                </div>
+
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-4">
+                <!-- <div class="d-flex justify-content-center float-left">
+                  <button type="button" (click)="onSubmitExportExcelReport()" class="btn btn-success">Xuất
+                    excel</button>
+                </div> -->
+                <div class="d-flex justify-content-center">
+                  <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-primary">Xác nhận nạp
+                    tiền</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCreate let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
+    <div class="modal-body" tabindex="0">
+
+      <div class="form-group">
+        <label for="basicInput">Mã giao dịch</label>
+        <input type="text" class="form-control" placeholder="" name="trans_id" formControlName="trans_id"
+          [ngClass]="{ 'is-invalid': submitted && f.trans_id.errors }" />
+        <div *ngIf="submitted && f.trans_id.errors" class="invalid-feedback">
+          <div *ngIf="f.trans_id.errors.required">Vui lòng mã giao dịch</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="basicInput">Số tiền</label>
+        <input name="amount" formControlName="amount" [ngClass]="{ 'is-invalid': submitted && f.amount.errors }"
+          class="form-control" type="number" placeholder="100,000,000,000" mask="separator" thousandSeparator="," />
+        <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+          <div *ngIf="f.amount.errors.required">Vui lòng nhập số tiền</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="basicInput">Ghi chú</label>
+        <input type="text" class="form-control" placeholder="" name="note" formControlName="note"
+          [ngClass]="{ 'is-invalid': submitted && f.note.errors }" />
+        <div *ngIf="submitted && f.note.errors" class="invalid-feedback">
+          <div *ngIf="f.note.errors.required">Vui lòng nhập ghi chú</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Xác nhận
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #modalTopUp let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Lịch sử nạp tiền cho số thuê bao</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
+    <div class="modal-body" tabindex="0">
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Mã</th>
+            <th>Số thuê bao</th>
+            <th>Ngày nạp tiền</th>
+            <th>Số tiền nạp</th>
+            <th>Ghi chú</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataHistory?.items;let i = index">
+
+            <td>
+              {{ item?.id }}
+            <td>
+              {{ item?.msisdn }}
+            </td>
+            <td>
+              {{ item?.action_at | date: 'dd/MM/yyyy H:mm':'GMT'}}
+            </td>
+            <td>
+              {{ item?.amount | number }}
+            </td>
+            <td>
+              {{ item?.detail }}
+            </td>
+            <td>
+              <span [innerHTML]="item?.object_status | showStatusTelecom"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </form>
+</ng-template>

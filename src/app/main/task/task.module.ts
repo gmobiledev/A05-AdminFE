@@ -11,6 +11,8 @@ import { ReportComponent } from './report/report.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { BlockUIModule } from 'ng-block-ui';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { ServiceCode } from 'app/utils/constants';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 const routes: Routes = [
@@ -25,6 +27,46 @@ const routes: Routes = [
   },
   {
     path: 'list',
+    component: ListTaskComponent,
+  },
+  {
+    path: 'sim-profile',
+    data: {
+      service: ServiceCode.SIM_PROFILE,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
+    path: 'sim-kitting',
+    data: {
+      service: ServiceCode.SIM_KITTING,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
+    path: 'sim-register',
+    data: {
+      service: ServiceCode.SIM_REGISTER,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
+    path: 'balance',
+    data: {
+      service: ServiceCode.ADD_MONEY_BALANCE,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
+  {
+    path: 'data',
+    data: {
+      service: ServiceCode.ADD_DATA_BALANCE,
+      single_service: 1
+    },
     component: ListTaskComponent,
   },
 ];
@@ -44,6 +86,7 @@ const routes: Routes = [
     ContentHeaderModule,
     SharedModule,
     NgApexchartsModule,
+    NgxDatatableModule,
     BlockUIModule.forRoot(),
     NgxDaterangepickerMd.forRoot()
   ],

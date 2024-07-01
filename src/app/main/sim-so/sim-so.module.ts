@@ -33,6 +33,11 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
 import { TopupComponent } from './history/topup/topup.component';
 import { BalanceChangesComponent } from './history/balance-changes/balance-changes.component';
 import { MsisdnComponent as TTTBMsisdnComponent } from './history/msisdn/msisdn.component';
+import { CommitmentComponent } from './commitment/commitment.component';
+import { CommitmentDetailComponent } from './commitment-detail/commitment-detail.component';
+import { WarningComponent } from './warning/warning.component';
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+
 const routes: Routes = [
   {
     path: '',
@@ -61,6 +66,18 @@ const routes: Routes = [
   {
     path: 'action-logs',
     component: ActionLogsComponent
+  },
+  {
+    path: 'commitment',
+    component: CommitmentComponent
+  },
+  {
+    path: 'warning',
+    component: WarningComponent
+  },
+  {
+    path: 'commitment-detail',
+    component: CommitmentDetailComponent
   },
   {
     path: 'sell-channel',
@@ -110,7 +127,10 @@ const routes: Routes = [
     UploadFileComponent,
     TopupComponent,
     BalanceChangesComponent,
-    TTTBMsisdnComponent
+    TTTBMsisdnComponent,
+    CommitmentComponent,
+    CommitmentDetailComponent,
+    WarningComponent
   ],
   imports: [
     CommonModule, 
@@ -126,7 +146,8 @@ const routes: Routes = [
     SharedModule,
     QuillModule.forRoot(),
     PdfViewerModule,
-    QRCodeModule
+    QRCodeModule,
+    Ng2FlatpickrModule
   ]
 })
 export class SimSoModule { }

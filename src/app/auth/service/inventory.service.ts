@@ -321,4 +321,15 @@ export class InventoryService {
   getHeatmapPrivate(data) {
     return this._http.post<any>(`${environment.apiProductPrivate}/product-admin/channel/GetHeatMapList`, data);
   }
+
+  getListBatchToExport(dto) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/to-export`, {params: dto});
+  }
+
+  getActionlogs(dto) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/action-logs`, {params: dto});
+  }
+  searchProductsTransfer(dto) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/product/list-transfer-channel`, {params: dto});
+  }
 }

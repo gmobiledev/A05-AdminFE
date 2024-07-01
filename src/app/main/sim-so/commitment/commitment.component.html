@@ -1,0 +1,301 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <form (ngSubmit)="onSubmitSearch()" class="mb-2">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input type="text" name="mobile" [(ngModel)]="searchForm.mobile"
+                                            class="form-control" placeholder="Nhập số thuê bao">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Chọn thời gian kích hoạt"
+                                            [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
+                                            [(ngModel)]="dateRange" [ranges]="ranges"
+                                            [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
+                                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
+                                            class="form-control" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <select class="form-control" name="action" [(ngModel)]="searchForm.commit_turn">
+                                            <option value="">Chọn thời hạn cam kết</option>
+                                            <option value="2">2 tháng</option>
+                                            <option value="3">3 tháng</option>
+                                            <option value="6">6 tháng</option>
+                                            <option value="12">12 tháng</option>
+                                            <option value="18">18 tháng</option>
+                                            <option value="30">30 tháng</option>
+                                            <option value="36">36 tháng</option>
+                                            <option value="48">48 tháng</option>
+                                            <option value="54">54 tháng</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                                            <option value="">Chọn trạng thái</option>
+                                            <option *ngFor="let item of taskTelecomStatus | keyvalue"
+                                                [value]="item.value" [id]="item.key">
+                                                <span [innerHTML]="item.value | showStatusTelecom"></span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                                                [data-feather]="'search'"></span></button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button type="button" (click)="onSubmitExportExcelReport()"
+                                            class="btn btn-block btn-success">Xuất
+                                            báo cáo excel <span [data-feather]="'file'"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <span>Tổng số:</span> <b>{{ totalItems }}</b>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Mã</th>
+                                        <th>Yêu cầu</th>
+                                        <th>Số thuê bao</th>
+                                        <th>Nhà mạng</th>
+                                        <th>Giá gói cam kết</th>
+                                        <th>Tiền đã thanh toán</th>
+                                        <th>Mã gói viễn thông</th>
+                                        <th>Thời hạn cam kết</th>
+                                        <th>Số kỳ chưa thanh toán</th>
+                                        <th>Thời gian kích hoạt</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of list;let i = index">
+                                        <td>
+                                            {{ item.id }}
+                                        </td>
+                                        <td>
+                                            {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] :
+                                            item.action }}
+                                            <br>
+                                            {{ item.sub_action ? item.sub_action : '' }}
+                                        </td>
+                                        <td>
+                                            <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
+                                                {{ item.msisdns[0].msisdn }}
+                                            </div>
+                                            <div *ngIf="item.msisdns.length >= 2">
+                                                <div *ngFor="let number of item.msisdns">
+                                                    {{ number.msisdn }}
+                                                </div>
+                                                <br>
+                                            </div>
+                                            <div *ngIf="item.msisdns.length < 1">
+                                                {{ item.msisdn }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
+                                                <span [innerHTML]="item.msisdns[0].mno | showIconMno"></span>
+                                            </div>
+                                            <div *ngIf="item.msisdns.length >= 2">
+                                                <div *ngFor="let number of item.msisdns">
+                                                    <span [innerHTML]="number.mno | showIconMno"></span>
+                                                </div>
+                                                <br>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            {{ item?.commit_price | number}}
+                                        </td>
+                                        <td>
+                                            <span class="text-info">{{ item.amount | number }}</span><br>
+                                        </td>
+                                        <td>
+                                            {{item?.msisdns[0]?.commit_package}}
+                                        </td>
+
+                                        <td>
+                                            {{ item?.msisdns[0]?.commit_turn}}
+
+                                        </td>
+                                        <td>
+                                            {{ item?.msisdns[0]?.commit_extant}}
+                                        </td>
+                                        <td>
+                                            {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                                            {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+
+                                        </td>
+                                        <td>
+                                            <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
+                                        </td>
+
+                                        <td>
+                                            <a class="ml-1" [routerLink]="['/sim-so/commitment-detail']"
+                                                [queryParams]="{task_id: item?.id, msisdns_id: item?.msisdns[0]?.id}"
+                                                title="Xem chi tiết">
+                                                <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
+                                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
+                                (pageChange)="loadPage($event)">
+                                <ng-template ngbPaginationPages let-page let-pages="pages">
+                                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                        <div class="mb-3 d-flex flex-nowrap px-2">
+                                            <label id="paginationInputLabel" for="paginationInput"
+                                                class="col-form-label me-2 ms-1">Trang</label>
+                                            <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                                class="form-control custom-pages-input" id="paginationInput"
+                                                [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                                                (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                                                aria-labelledby="paginationInputLabel paginationDescription"
+                                                style="width: 2.5rem" />
+                                            <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                                của
+                                                {{pages.length}}</span>
+                                        </div>
+                                    </li>
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalItem let-modal *blockUI="'item-block-detail'">
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0">
+        <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)"
+            (createNewTask)="onCreateTaskNewSim($event)" [currentUser]="currentUser"
+            [currentUserId]="currentUser.id"></app-task-item>
+    </div>
+</ng-template>
+
+<ng-template #modalViewAgent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Thông tin đại lý</h5>
+        <button type="button" class="close" (click)="modalViewAgentClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div class="row">
+            <div class="col-md-6">
+                SĐT đại lý: {{ selectedAgent?.user?.mobile }}
+            </div>
+            <div class="col-md-6">
+                Tên đại lý: {{ selectedAgent?.peopleInfo.name }}
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #modalApproveInfo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <app-approve-convert2g-item [item]="selectedItem" [currentUserId]="currentUser.id"></app-approve-convert2g-item>
+    </div>
+</ng-template>
+
+<ng-template #modalUpload let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <app-approve-convert2g-identification [item]="selectedItem"
+            [currentUserId]="currentUser.id"></app-approve-convert2g-identification>
+    </div>
+</ng-template>
+
+<ng-template #modalUpdateShipTracking let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Thông tin Ship</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <app-ship-info [item]="selectedItem"></app-ship-info>
+    </div>
+</ng-template>
+
+<ng-template #modaNote let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Lưu note</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+        <div class="form-group">
+            <label for="">Note</label>
+            <select name="" id="" class="form-control mb-2" [(ngModel)]="selectedNote">
+                <option value="">- Chọn nội dung -</option>
+                <option value="Ảnh giấy tờ bị mờ, mất góc">Ảnh giấy tờ bị mờ, mất góc</option>
+                <option value="Hệ thống đấu nối bận">Hệ thống đấu nối bận</option>
+                <option value="Hệ thống đấu nối bận">Mất SIM</option>
+            </select>
+            <input type="text" class="form-control" #note placeholder="Tự nhập nội dung ở đây"
+                value="{{ selectedNote }}">
+        </div>
+        <div class="form-group">
+            <a class="btn btn-success" (click)="onSaveNote(note?.value)">
+                <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+                <span>
+                    Lưu
+                </span>
+            </a>
+        </div>
+    </div>
+</ng-template>

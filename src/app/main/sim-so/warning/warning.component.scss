@@ -1,0 +1,11 @@
+.bg-resolution {
+    background-color: rgba(252, 183, 30, 0.1); /* 0.1 tương đương với 10% độ trong suốt */
+}
+@import '@core/scss/angular/libs/flatpickr.component.scss';
+
+.line {
+    border-bottom: 1px solid #FCB71E;
+    margin: 10px;
+    align-items: center;
+    padding: 10px;
+}

@@ -80,8 +80,34 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6" *ngIf=" typeCurrentBatch != listBatchType.RETRIEVE">
-                                
+                            <div class="col-md-6" *ngIf=" typeCurrentBatch == listBatchType.OUTPUT">
+                              <div class="form-group">
+                                <label for="">Lô xuất/nhập kho</label>
+                              <ng-select    
+                              typeToSearchText="{{ searchBatch.keyword }}"    
+                                                          
+                              [(ngModel)]="selectedBatch"
+                              [editableSearchTerm]="true"
+                              (search)="onSearchSelectBatch($event)"
+                              (blur)="onBlurSelectBatch()"
+                              (change)="searchProductStore()"
+                             
+                              [inputAttrs]="{ 'value': 'a'}"
+                              [loading]="isLoadingBatch"
+                              >
+                              <ng-template ng-loadingspinner-tmp>
+                                <div class="lds-ellipsis">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </ng-template>
+                                <ng-option *ngFor="let p of listBatchImport" [value]="p.id"  >{{
+                                  p.title
+                                  }}</ng-option>
+                              </ng-select>
+                            </div>
                             </div>
 
                             <div class="col-md-4">
