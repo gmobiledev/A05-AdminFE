@@ -162,7 +162,7 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: 'users',
-        title: 'Danh sách thuê bao',
+        title: 'Đơn hàng',
         translate: '',
         type: 'item',
         icon: 'user',
