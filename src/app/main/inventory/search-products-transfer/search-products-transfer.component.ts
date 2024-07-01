@@ -39,9 +39,9 @@ export class SearchProductsTransferComponent implements OnInit {
     page: 1,
     page_size: 20,
     status: '',
-    type: BatchType.INPUT,
+    type: BatchType.OUTPUT,
     date_range: '',
-    category_id: 2,
+    category_id: 3,
     keysearch: '',
   }
   productStatus;
@@ -70,8 +70,8 @@ export class SearchProductsTransferComponent implements OnInit {
       return obj;
     }, {});
     this.activeRouted.queryParams.subscribe(params => {
-      this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : this.batchType.INPUT;
-      this.searchForm.category_id = params['category_id'] && params['category_id'] != undefined ? params['category_id'] : 2;
+      this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : this.batchType.OUTPUT;
+      this.searchForm.category_id = params['category_id'] && params['category_id'] != undefined ? params['category_id'] : 3;
       this.searchForm.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
       if(!params['date_range']) {
         this.initDefaultDateRange();
@@ -111,9 +111,9 @@ export class SearchProductsTransferComponent implements OnInit {
 
   modalChannelOpen(modal, item) {
     if (item) {
-      const sub_channel_id = item.sub_channel_id ? item.sub_channel_id : ( item.sell_channels && item.sell_channels[0] ? item.sell_channels[0].sub_channel_id : '' )
+      const sub_channel_id = item.sub_channel_id ? item.sub_channel_id : ( item.sell_channels && item.sell_channels[0] ? item.sell_channels[0].channel_id : '' )
       if(sub_channel_id) {
-        this.inventoryService.viewDetailSell(item.sub_channel_id).subscribe(res => {
+        this.inventoryService.viewDetailSell(sub_channel_id).subscribe(res => {
           this.showChannel = res.data.items[0];
   
           this.modalRef = this.modalService.open(modal, {
@@ -126,6 +126,15 @@ export class SearchProductsTransferComponent implements OnInit {
       }
       
     }
+  }
+
+  modalClose() {
+    this.modalRef.close();
+  }
+
+  loadPage(page) {
+    this.searchForm.page = page;
+    this.router.navigate(['/inventory/search-product-transfer'], { queryParams: this.searchForm})
   }
 
   getData() {
