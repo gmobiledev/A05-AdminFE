@@ -440,7 +440,7 @@ export class CommitmentComponent implements OnInit {
     this.listCurrentAction = this.currentUser.actions;
     if(this.currentUser && this.currentUser.roles) {
     }
-    this.telecomService.getAllTask(this.searchForm).subscribe(res => {
+    this.telecomService.getAllTaskSimCamket(this.searchForm).subscribe(res => {
       this.list = res.data.items;
       this.totalItems = res.data.count;
     });
