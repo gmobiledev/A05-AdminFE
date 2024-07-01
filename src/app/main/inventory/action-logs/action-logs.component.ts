@@ -3,12 +3,16 @@ import dayjs from 'dayjs';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryService } from 'app/auth/service/inventory.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 @Component({
   selector: 'app-action-logs',
   templateUrl: './action-logs.component.html',
   styleUrls: ['./action-logs.component.scss']
 })
 export class ActionLogsComponent implements OnInit {
+
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
+  
   public list: any;
   public totalItems: number;
 
@@ -55,7 +59,9 @@ export class ActionLogsComponent implements OnInit {
     }
   };
   onSubmitSearch() {
+    this.sectionBlockUI.start();
     this.inventoryService.getActionlogs(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
     })
