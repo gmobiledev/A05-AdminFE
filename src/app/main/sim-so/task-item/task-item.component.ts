@@ -353,6 +353,8 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
+  
+
   async sendCallback(item) {
     this.telecomService.sendCallback(item).subscribe(res => {
       if (!res.status) {
