@@ -37,6 +37,7 @@ import { CommitmentComponent } from './commitment/commitment.component';
 import { CommitmentDetailComponent } from './commitment-detail/commitment-detail.component';
 import { WarningComponent } from './warning/warning.component';
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+import { SearchCommitmentComponent } from './search-commitment/search-commitment.component';
 
 const routes: Routes = [
   {
@@ -130,7 +131,8 @@ const routes: Routes = [
     TTTBMsisdnComponent,
     CommitmentComponent,
     CommitmentDetailComponent,
-    WarningComponent
+    WarningComponent,
+    SearchCommitmentComponent
   ],
   imports: [
     CommonModule, 
