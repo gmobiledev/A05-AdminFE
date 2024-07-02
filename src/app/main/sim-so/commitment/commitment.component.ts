@@ -56,7 +56,7 @@ export class CommitmentComponent implements OnInit {
     customer_name: '',
     customer_type: '',
     commit_turn: '',
-    sub_action: 'SIM_CAM_KET'
+    sub_action: ''
   }
   dateRange: any;
   selectedNote: string;
@@ -115,7 +115,7 @@ export class CommitmentComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       this.searchForm.array_status = params['array_status'] && params['array_status'] != undefined ? params['array_status'] : [];
-      this.searchForm.sub_action = params['sub_action'] && params['sub_action'] != undefined ? params['sub_action'] : 'SIM_CAM_KET';
+      this.searchForm.sub_action = params['sub_action'] && params['sub_action'] != undefined ? params['sub_action'] : '';
       this.initActiveBoxSummary();
       if(this.searchForm.action && this.searchForm.array_status.length > 0) {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);

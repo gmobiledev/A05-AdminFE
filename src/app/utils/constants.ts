@@ -100,6 +100,10 @@ export class TaskTelecom {
             value: 'new_sim',
             label: 'Đăng ký mới'
         },
+        PAY_COMMITMENT: {
+            value: 'PAY_COMMITMENT',
+            label: 'Gia hạn'
+        },
         change_info: {
             value: 'change_info',
             label: 'Cập nhật TTTB'

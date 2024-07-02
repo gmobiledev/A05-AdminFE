@@ -22,14 +22,15 @@
                                             [ngModelOptions]="{standalone: true}" ngxDaterangepickerMd
                                             [(ngModel)]="dateRange" [ranges]="ranges"
                                             [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
-                                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
+                                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="date_range"
                                             class="form-control" />
                                     </div>
 
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <select class="form-control" name="action" [(ngModel)]="searchForm.commit_turn">
+                                        <select class="form-control" name="commit_turn"
+                                            [(ngModel)]="searchForm.commit_turn">
                                             <option value="">Chọn thời hạn cam kết</option>
                                             <option value="2">2 tháng</option>
                                             <option value="3">3 tháng</option>
@@ -56,14 +57,24 @@
                                     </div>
                                 </div>
 
-                            </div>
-                            <div class="row mt-2">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <select class="form-control" name="sub_action"
+                                            [(ngModel)]="searchForm.sub_action">
+                                            <option value="">Chọn yêu cầu</option>
+                                            <option value="SIM_CAM_KET">Sim cam kết</option>
+                                            <option value="PAY_COMMITMENT">Gia hạn</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
                                                 [data-feather]="'search'"></span></button>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <button type="button" (click)="onSubmitExportExcelReport()"
@@ -71,7 +82,9 @@
                                             báo cáo excel <span [data-feather]="'file'"></span></button>
                                     </div>
                                 </div>
+
                             </div>
+
                         </form>
                         <div class="table-responsive" *blockUI="'section-block'">
                             <div class="mb-1">
