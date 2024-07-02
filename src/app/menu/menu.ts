@@ -600,12 +600,12 @@ export const menu: CoreMenu[] = [
         url: 'sim-so/search-subscription'
       },
       {
-        id: 'search-commitment',
+        id: 'dvkh-search',
         title: 'Tra cứu Sim Số',
         translate: '',
         type: 'item',
         icon: 'search',
-        url: 'sim-so/search-commitment'
+        url: 'sim-so/dvkh-search'
       },
       // {
       //   id: 'search-topup',
