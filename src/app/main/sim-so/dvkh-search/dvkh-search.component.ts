@@ -47,7 +47,7 @@ export class DvkhSearchComponent implements OnInit {
   onSubmitSearch() {
     console.log(this.searchSim);
     this.itemBlockUI.start();
-    this.telecomService.getDetailSim(this.searchSim).subscribe(res => {
+    this.telecomService.getDetailSimDVKH(this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;

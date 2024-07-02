@@ -16,7 +16,7 @@ export const environment = {
 
   apiUrl: 'https://sandbox-api.g99.vn/api',
   apiGipUrl: 'http://localhost:4000/gip/api',
-  apiTelecomUrl: 'https://sandbox-admin.g99.vn/telecom/api',
+  apiTelecomUrl: 'https://sandbox-api.g99.vn/telecom/api',
   apiGtalkUrl: 'https://sandbox-admin.g99.vn/virtual-number/api',
   apiProductPrivate: 'http://172.16.252.11:3001/api',
   apiTelecomOraclePrivate: 'http://172.16.252.16:3990/api',
