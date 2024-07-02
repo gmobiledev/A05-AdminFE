@@ -40,7 +40,7 @@ export class WarningComponent implements OnInit {
     customer_type: '',
     sub_action: 'SIM_CAM_KET'
   }
-  public contentHeader: any =  {
+  public contentHeader: any = {
     headerTitle: 'Thiết lập cảnh báo',
     actionButton: true,
     breadcrumb: {
@@ -78,14 +78,14 @@ export class WarningComponent implements OnInit {
     }
   }
 
-  constructor(    
+  constructor(
     private telecomService: TelecomService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private alertService: SweetAlertService,
 
-  ) { 
+  ) {
 
     this.route.queryParams.subscribe(params => {
       this.msisdns_id = params['msisdns_id'] && params['msisdns_id'] != undefined ? params['msisdns_id'] : '';
@@ -95,105 +95,114 @@ export class WarningComponent implements OnInit {
     })
   }
 
-  initForm() {
+  dataSetting = {
+    remind_terminate: "",
+    s1: {
+      before_days: ["2024-07-09T17:00:00.000Z"],
+      action_time: ["2024-07-02T05:00:00.000Z"],
+      message: ""
+    }
+  };
+
+
+  dataArr() {
     [
       {
-          "meta_key": "remind_terminate", //Cảnh báo trước khi thu hồi sim cam kết
-          "meta_value": "on", //on hoặc off
-          "child": [
+        "meta_key": "remind_terminate", //Cảnh báo trước khi thu hồi sim cam kết
+        "meta_value": "on", //on hoặc off
+        "child": [
+          {
+            "meta_key": "s1", //khóa 1 chiều
+            "meta_value": "on",
+            "child": [
               {
-                  "meta_key": "s1", //khóa 1 chiều
-                  "meta_value": "on",
-                  "child": [
-                      {
-                          "meta_key": "before_days", //trước ngày
-                          "meta_value": 1 //số ngày
-                      },
-                      {
-                          "meta_key": "action_time", //thời gian gửi thông báo
-                          "meta_value": "16:00" //thời gian hạng HH:mm (24h)
-                      },
-                      {
-                          "meta_key": "message", //Nội dung gửi thông báo
-                          "meta_value": "abc xyz"
-                      }
-                  ]
+                "meta_key": "before_days", //trước ngày
+                "meta_value": 1 //số ngày
               },
               {
-                  "meta_key": "s2",
-                  "meta_value": "on",
-                  "child": [
-                      {
-                          "meta_key": "before_days",
-                          "meta_value": 1
-                      },
-                      {
-                          "meta_key": "action_time",
-                          "meta_value": "16:00"
-                      },
-                      {
-                          "meta_key": "message",
-                          "meta_value": "abc xyz"
-                      }
-                  ]
+                "meta_key": "action_time", //thời gian gửi thông báo
+                "meta_value": "16:00" //thời gian hạng HH:mm (24h)
               },
               {
-                  "meta_key": "terminate",
-                  "meta_value": "on",
-                  "child": [
-                      {
-                          "meta_key": "before_days",
-                          "meta_value": 1
-                      },
-                      {
-                          "meta_key": "action_time",
-                          "meta_value": "16:00"
-                      },
-                      {
-                          "meta_key": "message",
-                          "meta_value": "abc xyz"
-                      }
-                  ]
+                "meta_key": "message", //Nội dung gửi thông báo
+                "meta_value": "abc xyz"
               }
-          ]
+            ]
+          },
+          {
+            "meta_key": "s2",
+            "meta_value": "on",
+            "child": [
+              {
+                "meta_key": "before_days",
+                "meta_value": 1
+              },
+              {
+                "meta_key": "action_time",
+                "meta_value": "16:00"
+              },
+              {
+                "meta_key": "message",
+                "meta_value": "abc xyz"
+              }
+            ]
+          },
+          {
+            "meta_key": "terminate",
+            "meta_value": "on",
+            "child": [
+              {
+                "meta_key": "before_days",
+                "meta_value": 1
+              },
+              {
+                "meta_key": "action_time",
+                "meta_value": "16:00"
+              },
+              {
+                "meta_key": "message",
+                "meta_value": "abc xyz"
+              }
+            ]
+          }
+        ]
       },
       {
-          "meta_key": "remind_active", //Cảnh báo kích hoạt thuê bao trước 72h
-          "meta_valye": "on",
-          "child": [
-              {
-                  "meta_key": "before_days",
-                  "meta_value": 1
-              },
-              {
-                  "meta_key": "action_time",
-                  "meta_value": "16:00"
-              },
-              {
-                  "meta_key": "message",
-                  "meta_value": "abc xyz"
-              }
-          ]
+        "meta_key": "remind_active", //Cảnh báo kích hoạt thuê bao trước 72h
+        "meta_valye": "on",
+        "child": [
+          {
+            "meta_key": "before_days",
+            "meta_value": 1
+          },
+          {
+            "meta_key": "action_time",
+            "meta_value": "16:00"
+          },
+          {
+            "meta_key": "message",
+            "meta_value": "abc xyz"
+          }
+        ]
       },
       {
-          "meta_key": "remind_s1_s2", //Cảnh báo khóa 1 chiều/2chieeuf
-          "meta_valye": "on",
-          "child": [
-              {
-                  "meta_key": "action_time",
-                  "meta_value": "16:00"
-              },
-              {
-                  "meta_key": "message",
-                  "meta_value": "abc xyz"
-              }
-          ]
+        "meta_key": "remind_s1_s2", //Cảnh báo khóa 1 chiều/2chieeuf
+        "meta_valye": "on",
+        "child": [
+          {
+            "meta_key": "action_time",
+            "meta_value": "16:00"
+          },
+          {
+            "meta_key": "message",
+            "meta_value": "abc xyz"
+          }
+        ]
       }
-  ]
+    ]
   }
 
   ngOnInit(): void {
-
   }
 
   onSubmitExportExcelReport() {
@@ -215,9 +224,39 @@ export class WarningComponent implements OnInit {
     })
   }
 
+  convertSetting = (data) => {
+    return {
+      meta_key: "remind_terminate",
+      meta_value: data.remind_terminate || "on", // Đặt giá trị theo yêu cầu của bạn
+      child: Object.keys(data).filter(key => key !== 'remind_terminate').map(key => {
+        const childData = data[key];
+        return {
+          meta_key: key,
+          meta_value: "on", // Đặt giá trị theo yêu cầu của bạn
+          child: Object.keys(childData).map(childKey => {
+            const value = childData[childKey];
+            return {
+              meta_key: childKey,
+              meta_value: Array.isArray(value) && value.length > 0 ? value[0] : value
+            };
+          })
+        };
+      })
+    };
+  };
+
+
+  getDataSetting() {
+    const convertedData = this.convertSetting(this.dataSetting);
+
+    console.log("12345 ====== ",JSON.stringify(convertedData, null, 2));
+
+  }
+
+
   async onSubmitCreate() {
 
-    if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {   
+    if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {
       this.telecomService.postSetting(this.formPost).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);
@@ -230,15 +269,17 @@ export class WarningComponent implements OnInit {
         return;
       })
     }
-   
+
   }
 
   getData() {
+    this.getDataSetting()
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listCurrentAction = this.currentUser.actions;
-    if(this.currentUser && this.currentUser.roles) {
+    if (this.currentUser && this.currentUser.roles) {
     }
- 
+
     this.telecomService.getSummary().subscribe(res => {
       this.summaryTask = res.data;
     })
