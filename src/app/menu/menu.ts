@@ -600,7 +600,7 @@ export const menu: CoreMenu[] = [
         url: 'sim-so/search-subscription'
       },
       {
-        id: 'search-subscription',
+        id: 'search-commitment',
         title: 'Tra cứu Sim Số',
         translate: '',
         type: 'item',
