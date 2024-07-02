@@ -61,6 +61,10 @@ const routes: Routes = [
     component: SearchSimSoComponent
   },
   {
+    path: 'search-commitment',
+    component: SearchCommitmentComponent
+  },
+  {
     path: 'search-subscription',
     component: SearchSubscriptionComponent
   },

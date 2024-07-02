@@ -599,6 +599,14 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/search-subscription'
       },
+      {
+        id: 'search-subscription',
+        title: 'Tra cứu Sim Số',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search-commitment'
+      },
       // {
       //   id: 'search-topup',
       //   title: 'Lịch sử TOPUP',
