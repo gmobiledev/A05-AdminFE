@@ -69,15 +69,6 @@ export class WarningComponent implements OnInit {
     altInput: true
   };
 
-  formPost = {
-    remind_terminate: '',
-    s1: {
-      before_days: '',
-      action_time: '',
-      message: ''
-    }
-  }
-
   constructor(
     private telecomService: TelecomService,
     private route: ActivatedRoute,
@@ -95,112 +86,41 @@ export class WarningComponent implements OnInit {
     })
   }
 
-  dataSetting = {
-    remind_terminate: "",
-    s1: {
-      before_days: ["2024-07-09T17:00:00.000Z"],
-      action_time: ["2024-07-02T05:00:00.000Z"],
-      message: ""
-    }
-  };
 
-
-  dataArr() {
-    [
-      {
-        "meta_key": "remind_terminate", //Cảnh báo trước khi thu hồi sim cam kết
-        "meta_value": "on", //on hoặc off
-        "child": [
-          {
-            "meta_key": "s1", //khóa 1 chiều
-            "meta_value": "on",
-            "child": [
-              {
-                "meta_key": "before_days", //trước ngày
-                "meta_value": 1 //số ngày
-              },
-              {
-                "meta_key": "action_time", //thời gian gửi thông báo
-                "meta_value": "16:00" //thời gian hạng HH:mm (24h)
-              },
-              {
-                "meta_key": "message", //Nội dung gửi thông báo
-                "meta_value": "abc xyz"
-              }
-            ]
-          },
-          {
-            "meta_key": "s2",
-            "meta_value": "on",
-            "child": [
-              {
-                "meta_key": "before_days",
-                "meta_value": 1
-              },
-              {
-                "meta_key": "action_time",
-                "meta_value": "16:00"
-              },
-              {
-                "meta_key": "message",
-                "meta_value": "abc xyz"
-              }
-            ]
-          },
-          {
-            "meta_key": "terminate",
-            "meta_value": "on",
-            "child": [
-              {
-                "meta_key": "before_days",
-                "meta_value": 1
-              },
-              {
-                "meta_key": "action_time",
-                "meta_value": "16:00"
-              },
-              {
-                "meta_key": "message",
-                "meta_value": "abc xyz"
-              }
-            ]
-          }
-        ]
+  dataFrom = {
+    "remind_terminate": {
+      "remind_terminate": "",
+      "s1": {
+        "before_days": "",
+        "action_time": "",
+        "message": ""
       },
-      {
-        "meta_key": "remind_active", //Cảnh báo kích hoạt thuê bao trước 72h
-        "meta_valye": "on",
-        "child": [
-          {
-            "meta_key": "before_days",
-            "meta_value": 1
-          },
-          {
-            "meta_key": "action_time",
-            "meta_value": "16:00"
-          },
-          {
-            "meta_key": "message",
-            "meta_value": "abc xyz"
-          }
-        ]
+      "s2": {
+        "before_days": "",
+        "action_time": "",
+        "message": ""
       },
-      {
-        "meta_key": "remind_s1_s2", //Cảnh báo khóa 1 chiều/2chieeuf
-        "meta_valye": "on",
-        "child": [
-          {
-            "meta_key": "action_time",
-            "meta_value": "16:00"
-          },
-          {
-            "meta_key": "message",
-            "meta_value": "abc xyz"
-          }
-        ]
+      "terminate": {
+        "before_days": "",
+        "action_time": "",
+        "message": ""
       }
-    ]
+    },
+    "remind_active": {
+      "remind_active": "",
+      "before_days": "",
+      "action_time": "",
+      "message": ""
+    },
+    "remind_s1_s2": {
+      "remind_s1_s2": "",
+      "before_days": "",
+      "action_time": "",
+      "message": ""
+    }
   }
+
+  result = [];
 
   ngOnInit(): void {
   }
@@ -224,44 +144,49 @@ export class WarningComponent implements OnInit {
     })
   }
 
-  convertSetting = (data) => {
-    return {
-      meta_key: "remind_terminate",
-      meta_value: data.remind_terminate || "on", // Đặt giá trị theo yêu cầu của bạn
-      child: Object.keys(data).filter(key => key !== 'remind_terminate').map(key => {
-        const childData = data[key];
-        return {
-          meta_key: key,
-          meta_value: "on", // Đặt giá trị theo yêu cầu của bạn
-          child: Object.keys(childData).map(childKey => {
-            const value = childData[childKey];
-            return {
-              meta_key: childKey,
-              meta_value: Array.isArray(value) && value.length > 0 ? value[0] : value
-            };
+  convert(x, results) {
+    for (let key in x) {
+      let index = results.findIndex(item => item.meta_key === key);
+      if (typeof x[key] !== 'object' && !["remind_terminate", "remind_active", "remind_s1_s2"].includes(key)) {
+        if (index !== -1) {
+          results[index] = {
+            meta_key: key,
+            meta_value: x[key]
+          }
+        } else {
+          results.push({
+            meta_key: key,
+            meta_value: x[key]
           })
-        };
-      })
-    };
-  };
+        }
 
+      } else if (typeof x[key] === 'object') {
+        if (index !== -1) {
+          results[index]['child'] = [];
+        } else {
+          index = results.push({
+            meta_key: key,
+            meta_value: x[key][key] || "on",
+            child: []
+          }) - 1
 
-  getDataSetting() {
-    const convertedData = this.convertSetting(this.dataSetting);
-
-    console.log("12345 ====== ",JSON.stringify(convertedData, null, 2));
-
+        }
+        this.convert(x[key], results[index]['child']);
+      }
+    }
+    return results;
   }
 
-
   async onSubmitCreate() {
+    // this.convert(this.dataFrom, this.result)
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {
-      this.telecomService.postSetting(this.formPost).subscribe(res => {
+      this.telecomService.postSetting(this.convert(this.dataFrom, this.result)).subscribe(res => {
         if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
+
         this.alertService.showSuccess(res.message);
         this.getData();
       }, error => {
@@ -273,7 +198,6 @@ export class WarningComponent implements OnInit {
   }
 
   getData() {
-    this.getDataSetting()
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listCurrentAction = this.currentUser.actions;
