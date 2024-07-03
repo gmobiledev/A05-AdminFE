@@ -179,6 +179,8 @@ export class WarningComponent implements OnInit {
 
   async onSubmitCreate() {
     // this.convert(this.dataFrom, this.result)
+    // console.log("12345 ===== ",this.dataFrom)
+    // return;
 
     if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {
       this.telecomService.postSetting(this.convert(this.dataFrom, this.result)).subscribe(res => {
@@ -202,7 +204,9 @@ export class WarningComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listCurrentAction = this.currentUser.actions;
     if (this.currentUser && this.currentUser.roles) {
+
     }
+
 
     this.telecomService.getSummary().subscribe(res => {
       this.summaryTask = res.data;
