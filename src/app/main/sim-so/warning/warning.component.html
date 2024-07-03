@@ -19,12 +19,12 @@
                                     <h6>Khoá 1 chiều</h6>
                                     <div class="row ml-0 align-items-center mb-1">
                                         <h6 class="mr-1">Trước</h6>
-                                        <ng2-flatpickr [(ngModel)]="dataFrom.remind_terminate.s1.before_days" [ngClass]="'firstsecond'"
-                                            [config]="basicDateOptions" name="basicDate1"></ng2-flatpickr>
+
+                                        <input type="number" [(ngModel)]="dataFrom.remind_terminate.s1.before_days">
                                         <h6 class="ml-1">ngày.</h6>
                                         <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                        <ng2-flatpickr [(ngModel)]="dataFrom.remind_terminate.s1.action_time" [config]="timeOptions"
-                                            name="time"></ng2-flatpickr>
+                                        <input type="time" name="time" [(ngModel)]="dataFrom.remind_terminate.s1.action_time">
+
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
                                     <textarea [(ngModel)]="dataFrom.remind_terminate.s1.message" class="form-control"
@@ -35,12 +35,10 @@
                                     <h6>Khoá 2 chiều</h6>
                                     <div class="row ml-0 align-items-center mb-1">
                                         <h6 class="mr-1">Trước</h6>
-                                        <ng2-flatpickr [(ngModel)]="dataFrom.remind_terminate.s2.before_days" [ngClass]="'firstsecond'"
-                                            [config]="basicDateOptions" name="basicDate1"></ng2-flatpickr>
+                                        <input type="number" [(ngModel)]="dataFrom.remind_terminate.s2.before_days">
                                         <h6 class="ml-1">ngày.</h6>
                                         <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                        <ng2-flatpickr [(ngModel)]="dataFrom.remind_terminate.s2.action_time" [config]="timeOptions"
-                                            name="time"></ng2-flatpickr>
+                                        <input type="time" name="time" [(ngModel)]="dataFrom.remind_terminate.s2.action_time">
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
                                     <textarea class="form-control" [(ngModel)]="dataFrom.remind_terminate.s2.message"
@@ -52,12 +50,11 @@
                                     <h6>Thu hồi SIM</h6>
                                     <div class="row ml-0 align-items-center mb-1">
                                         <h6 class="mr-1">Trước</h6>
-                                        <ng2-flatpickr [(ngModel)]="dataFrom.remind_terminate.terminate.before_days" [ngClass]="'firstsecond'"
-                                            [config]="basicDateOptions" name="basicDate1"></ng2-flatpickr>
+                                        <input type="number" [(ngModel)]="dataFrom.remind_terminate.terminate.before_days">
                                         <h6 class="ml-1">ngày.</h6>
                                         <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                        <ng2-flatpickr [(ngModel)]="dataFrom.remind_terminate.terminate.action_time" [config]="timeOptions"
-                                            name="time"></ng2-flatpickr>
+                                        <input type="time" name="time" [(ngModel)]="dataFrom.remind_terminate.terminate.action_time">
+
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
                                     <textarea [(ngModel)]="dataFrom.remind_terminate.terminate.message" class="form-control"
@@ -77,11 +74,10 @@
                                     <div class="row ml-0">
                                         <div class="row ml-0 align-items-center mb-1">
                                             <h6 class="mr-1">Trước</h6>
-                                            <ng2-flatpickr [(ngModel)]="dataFrom.remind_active.before_days" [ngClass]="'firstsecond'" [config]="basicDateOptions"
-                                                name="basicDate1"></ng2-flatpickr>
+                                            <input type="number" [(ngModel)]="dataFrom.remind_active.before_days">
                                             <h6 class="ml-1">ngày.</h6>
                                             <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                            <ng2-flatpickr [(ngModel)]="dataFrom.remind_active.action_time" [config]="timeOptions" name="time"></ng2-flatpickr>
+                                            <input type="time" name="time" [(ngModel)]="dataFrom.remind_active.action_time">
                                         </div>
                                     </div>
                                     <h6>Nội dung gửi thông báo</h6>
@@ -101,11 +97,10 @@
                                     <div class="row ml-0">
                                         <div class="row ml-0 align-items-center mb-1">
                                             <h6 class="mr-1">Trước</h6>
-                                            <ng2-flatpickr [(ngModel)]="dataFrom.remind_s1_s2.before_days" [ngClass]="'firstsecond'" [config]="basicDateOptions"
-                                                name="basicDate1"></ng2-flatpickr>
+                                            <input type="number" [(ngModel)]="dataFrom.remind_s1_s2.before_days">
                                             <h6 class="ml-1">ngày.</h6>
                                             <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                            <ng2-flatpickr [(ngModel)]="dataFrom.remind_s1_s2.action_time" [config]="timeOptions" name="time"></ng2-flatpickr>
+                                            <input type="time" name="time" [(ngModel)]="dataFrom.remind_s1_s2.action_time">
                                         </div>
                                     </div>
                                     <h6>Nội dung gửi thông báo</h6>
