@@ -80,7 +80,7 @@
                     >Tỉnh/TP Tổ chức</label
                   >
                   <div class="col-md-9">
-                    <select
+                    <!-- <select
                       name=""
                       id="province"
                       class="form-control"
@@ -91,10 +91,9 @@
                       <option *ngFor="let p of provinces" [value]="p.id">
                         {{ p.title }}
                       </option>
-                    </select>
+                    </select> -->
 
-                    <!-- <ng-select
-                    formControlName="province_id"
+                    <ng-select
                     (clear)="onClearProvince()"
                     (change)="onChangeProvince($event)"
                     [(ngModel)]="dataSell.province_id"
@@ -102,7 +101,7 @@
                     <ng-option *ngFor="let p of provinces" [value]="p.id">{{
                       p.title
                     }}</ng-option>
-                  </ng-select> -->
+                  </ng-select>
 
                   </div>
                 </div>
@@ -112,7 +111,7 @@
                     >Quận/Huyện Tổ chức
                   </label>
                   <div class="col-md-9">
-                    <select
+                    <!-- <select
                       id="home_district"
                       class="form-control"
                       (change)="onChangeDistrict($event)"
@@ -122,7 +121,14 @@
                       <option *ngFor="let p of districts" [value]="p.id">
                         {{ p.title }}
                       </option>
-                    </select>
+                    </select> -->
+
+                    <ng-select (change)="onChangeDistrict($event)" [(ngModel)]="dataSell.district_id">
+                      <ng-option *ngFor="let p of districts" [value]="p.id">{{
+                        p.title
+                        }}</ng-option>
+                    </ng-select>
+
                   </div>
                 </div>
 
@@ -131,7 +137,7 @@
                     >Phường/Xã Tổ chức</label
                   >
                   <div class="col-md-9">
-                    <select
+                    <!-- <select
                       name=""
                       class="form-control"
                       [(ngModel)]="dataSell.commune_id"
@@ -140,7 +146,13 @@
                       <option *ngFor="let p of commues" [value]="p.id">
                         {{ p.title }}
                       </option>
-                    </select>
+                    </select> -->
+
+                    <ng-select  [(ngModel)]="dataSell.commune_id">
+                      <ng-option *ngFor="let p of commues" [value]="p.id">{{
+                        p.title
+                        }}</ng-option>
+                    </ng-select>
                   </div>
                 </div>
 

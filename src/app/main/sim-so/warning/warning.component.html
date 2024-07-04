@@ -10,7 +10,7 @@
                             <div class="col">
                                 <div class="custom-control custom-switch custom-control-inline">
                                     <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                        [(ngModel)]="formPost.remind_terminate" />
+                                        [(ngModel)]="dataFrom.remind_terminate.remind_terminate" />
                                     <i data-feather="settings" class="text-primary cursor-pointer"></i>
                                     <h5 class="mr-1 ml-1">Cảnh báo trước khi thu hồi sim cam kết</h5>
                                     <label class="custom-control-label" for="customSwitch1"></label>
@@ -19,15 +19,15 @@
                                     <h6>Khoá 1 chiều</h6>
                                     <div class="row ml-0 align-items-center mb-1">
                                         <h6 class="mr-1">Trước</h6>
-                                        <ng2-flatpickr [(ngModel)]="formPost.s1.before_days" [ngClass]="'firstsecond'"
-                                            [config]="basicDateOptions" name="basicDate1"></ng2-flatpickr>
+
+                                        <input type="number" [(ngModel)]="dataFrom.remind_terminate.s1.before_days">
                                         <h6 class="ml-1">ngày.</h6>
                                         <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                        <ng2-flatpickr [(ngModel)]="formPost.s1.action_time" [config]="timeOptions"
-                                            name="time"></ng2-flatpickr>
+                                        <input type="time" name="time" [(ngModel)]="dataFrom.remind_terminate.s1.action_time">
+
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
-                                    <textarea [(ngModel)]="formPost.s1.message" class="form-control"
+                                    <textarea [(ngModel)]="dataFrom.remind_terminate.s1.message" class="form-control"
                                         id="customer-address" cols="2" rows="2"
                                         placeholder="Nhập nội dung thông báo"></textarea>
                                 </div>
@@ -35,15 +35,13 @@
                                     <h6>Khoá 2 chiều</h6>
                                     <div class="row ml-0 align-items-center mb-1">
                                         <h6 class="mr-1">Trước</h6>
-                                        <ng2-flatpickr [(ngModel)]="formPost.s1.before_days" [ngClass]="'firstsecond'"
-                                            [config]="basicDateOptions" name="basicDate1"></ng2-flatpickr>
+                                        <input type="number" [(ngModel)]="dataFrom.remind_terminate.s2.before_days">
                                         <h6 class="ml-1">ngày.</h6>
                                         <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                        <ng2-flatpickr [(ngModel)]="formPost.s1.action_time" [config]="timeOptions"
-                                            name="time"></ng2-flatpickr>
+                                        <input type="time" name="time" [(ngModel)]="dataFrom.remind_terminate.s2.action_time">
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
-                                    <textarea class="form-control" [(ngModel)]="formPost.s1.message"
+                                    <textarea class="form-control" [(ngModel)]="dataFrom.remind_terminate.s2.message"
                                         id="customer-address" cols="2" rows="2"
                                         placeholder="Nhập nội dung thông báo"></textarea>
                                 </div>
@@ -52,15 +50,14 @@
                                     <h6>Thu hồi SIM</h6>
                                     <div class="row ml-0 align-items-center mb-1">
                                         <h6 class="mr-1">Trước</h6>
-                                        <ng2-flatpickr [(ngModel)]="formPost.s1.before_days" [ngClass]="'firstsecond'"
-                                            [config]="basicDateOptions" name="basicDate1"></ng2-flatpickr>
+                                        <input type="number" [(ngModel)]="dataFrom.remind_terminate.terminate.before_days">
                                         <h6 class="ml-1">ngày.</h6>
                                         <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                        <ng2-flatpickr [(ngModel)]="formPost.s1.action_time" [config]="timeOptions"
-                                            name="time"></ng2-flatpickr>
+                                        <input type="time" name="time" [(ngModel)]="dataFrom.remind_terminate.terminate.action_time">
+
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
-                                    <textarea [(ngModel)]="formPost.s1.message" class="form-control"
+                                    <textarea [(ngModel)]="dataFrom.remind_terminate.terminate.message" class="form-control"
                                         id="customer-address" cols="2" rows="2"
                                         placeholder="Nhập nội dung thông báo"></textarea>
                                 </div>
@@ -68,48 +65,46 @@
                             <div class="col align-items-center">
                                 <div class="custom-control custom-switch custom-control-inline">
                                     <input type="checkbox" class="custom-control-input" id="customSwitch2"
-                                        [(ngModel)]="formPost.remind_terminate" />
+                                        [(ngModel)]="dataFrom.remind_active.remind_active" />
                                     <i data-feather="settings" class="text-primary cursor-pointer"></i>
                                     <h5 class="mr-1 ml-1">Cảnh báo kích hoạt thuê bao trước 72h</h5>
-                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                    <label class="custom-control-label" for="customSwitch2"></label>
                                 </div>
                                 <div class="line">
                                     <div class="row ml-0">
                                         <div class="row ml-0 align-items-center mb-1">
                                             <h6 class="mr-1">Trước</h6>
-                                            <ng2-flatpickr [(ngModel)]="formPost.s1.before_days" [ngClass]="'firstsecond'" [config]="basicDateOptions"
-                                                name="basicDate1"></ng2-flatpickr>
+                                            <input type="number" [(ngModel)]="dataFrom.remind_active.before_days">
                                             <h6 class="ml-1">ngày.</h6>
                                             <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                            <ng2-flatpickr [(ngModel)]="formPost.s1.action_time" [config]="timeOptions" name="time"></ng2-flatpickr>
+                                            <input type="time" name="time" [(ngModel)]="dataFrom.remind_active.action_time">
                                         </div>
                                     </div>
                                     <h6>Nội dung gửi thông báo</h6>
-                                    <textarea class="form-control" [(ngModel)]="formPost.s1.message" id="customer-address" cols="2" rows="2"
+                                    <textarea class="form-control" [(ngModel)]="dataFrom.remind_active.message" id="customer-address" cols="2" rows="2"
                                         placeholder="Nhập nội dung thông báo"></textarea>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="custom-control custom-switch custom-control-inline">
                                     <input type="checkbox" class="custom-control-input" id="customSwitch3"
-                                        [(ngModel)]="formPost.remind_terminate" />
+                                        [(ngModel)]="dataFrom.remind_s1_s2.remind_s1_s2" />
                                     <i data-feather="settings" class="text-primary cursor-pointer"></i>
                                     <h5 class="mr-1 ml-1">Cảnh báo thuê bao bị khóa 1/2 chiều</h5>
-                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                    <label class="custom-control-label" for="customSwitch3"></label>
                                 </div>
                                 <div class="line">
                                     <div class="row ml-0">
                                         <div class="row ml-0 align-items-center mb-1">
                                             <h6 class="mr-1">Trước</h6>
-                                            <ng2-flatpickr [(ngModel)]="formPost.s1.before_days" [ngClass]="'firstsecond'" [config]="basicDateOptions"
-                                                name="basicDate1"></ng2-flatpickr>
+                                            <input type="number" [(ngModel)]="dataFrom.remind_s1_s2.before_days">
                                             <h6 class="ml-1">ngày.</h6>
                                             <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                            <ng2-flatpickr [(ngModel)]="formPost.s1.action_time" [config]="timeOptions" name="time"></ng2-flatpickr>
+                                            <input type="time" name="time" [(ngModel)]="dataFrom.remind_s1_s2.action_time">
                                         </div>
                                     </div>
                                     <h6>Nội dung gửi thông báo</h6>
-                                    <textarea class="form-control" [(ngModel)]="formPost.s1.message" id="customer-address" cols="2" rows="2"
+                                    <textarea class="form-control" [(ngModel)]="dataFrom.remind_s1_s2.message" id="customer-address" cols="2" rows="2"
                                         placeholder="Nhập nội dung thông báo"></textarea>
                                 </div>
                             </div>

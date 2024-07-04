@@ -33,7 +33,7 @@
                     />
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>Loại phiếu</label>
                     <select
@@ -48,7 +48,22 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-3">
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Mã</label>
+                    <input type="text" class="form-control" name="id" [(ngModel)]="searchForm.id"  >
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Tên kho</label>
+                    <input type="text" class="form-control" name="channel_name" [(ngModel)]="searchForm.channel_name"  >
+                  </div>
+                </div>
+
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>Trạng thái</label>
                     <select
