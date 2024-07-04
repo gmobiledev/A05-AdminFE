@@ -6,7 +6,7 @@ import { CommonDataService } from 'app/auth/service/common-data.service';
 import { UpdatePriceDto, UpdateStatusProductDto } from 'app/auth/service/dto/inventory.dto';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchType, PriceAction, ProductStatus } from 'app/utils/constants';
+import { BatchType, MAXIMUM_VALUE, PriceAction, ProductStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -54,7 +54,7 @@ export class EditProductsComponent implements OnInit {
     key_to: '',
     brand: '',
     category_id: '',
-    take: '',
+    take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
     level: ''
   }
   seachMyChannel = {
@@ -67,7 +67,7 @@ export class EditProductsComponent implements OnInit {
     keyword: '',
     page: 1,
     skip: 0,
-    take: 1000,
+    take: MAXIMUM_VALUE.ROW_QUERY_PRODUCT_BATCH,
     channel_id: '',
     status_array: []
   }

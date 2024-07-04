@@ -36,6 +36,8 @@ export class BatchComponent implements OnInit {
     page: 1,
     page_size: 20,
     from_date: '',
+    channel_name: '',
+    id: '',
     to_date: ''
   }
   public selectedItem: any
@@ -110,6 +112,8 @@ export class BatchComponent implements OnInit {
       this.searchForm.from_date = params['from_date'] && params['from_date'] != undefined ? params['from_date'] : '';
       this.searchForm.to_date = params['to_date'] && params['to_date'] != undefined ? params['to_date'] : '';
       this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';
+      this.searchForm.channel_name = params['channel_name'] && params['channel_name'] != undefined ? params['channel_name'] : '';
+      this.searchForm.id = params['id'] && params['id'] != undefined ? params['id'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
       this.getData();
@@ -443,6 +447,9 @@ export class BatchComponent implements OnInit {
         this.totalItems = res.data.count;
       }, error => {
         this.sectionBlockUI.stop();
+        this.list = [];
+        this.totalItems = 0;
+        this.alertService.showMess(error);
         console.log("ERRRR");
         console.log(error);
       });
@@ -453,8 +460,9 @@ export class BatchComponent implements OnInit {
         this.totalItems = res.data.count;
       }, error => {
         this.sectionBlockUI.stop();
-        console.log("ERRRR");
-        console.log(error);
+        this.list = [];
+        this.totalItems = 0;
+        this.alertService.showMess(error);
       })
     }
     

@@ -182,7 +182,8 @@ export class NewSellChanelComponent implements OnInit {
   }
 
   onChangeProvince(event) {
-    let id = event.target.value
+    console.log(event);
+    let id = event
     this.commonDataService.getDistricts(id).subscribe((res: any) => {
       if (res.status == 1) {
         this.districts = res.data
@@ -192,7 +193,7 @@ export class NewSellChanelComponent implements OnInit {
   }
 
   onChangeDistrict(event) {
-    let id = event.target.value
+    let id = event
     this.commonDataService.getCommunes(id).subscribe((res: any) => {
       if (res.status == 1) {
         this.commues = res.data
