@@ -280,6 +280,19 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
+
+                      <a
+                        class="ml-1"
+                        [routerLink]="['/inventory/search-product-transfer']"
+                        [queryParams]="{ channel_id: item.id }"
+                        title="Tra cứu số xuất/nhập kho"
+                      >
+                        <i
+                          data-feather="repeat"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </a>
+
                     </td>
                   </tr>
                 </tbody>
