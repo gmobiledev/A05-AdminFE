@@ -45,13 +45,14 @@
                                             [ngModelOptions]="{standalone: true}" name="2c">
                                         <h6 class="ml-1">ngày.</h6>
                                         <h6 class="ml-2 mr-1">Thời gian gửi thông báo</h6>
-                                        <input type="time" name="time2c"
+                                        <input type="time" name="time2c" [ngModelOptions]="{standalone: true}"
                                             [(ngModel)]="dataFrom.remind_terminate.s2.action_time">
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
                                     <!-- <input type="text" name="mess2c" [(ngModel)]="dataFrom.remind_terminate.s2.message"> -->
-                                    <textarea class="form-control" [(ngModel)]="dataFrom.remind_terminate.s2.message" name="time2c"
-                                        cols="2" rows="2" placeholder="Nhập nội dung thông báo"></textarea>
+                                    <textarea class="form-control" [(ngModel)]="dataFrom.remind_terminate.s2.message"
+                                        name="time2c" cols="2" rows="2"
+                                        placeholder="Nhập nội dung thông báo"></textarea>
 
                                 </div>
 
@@ -70,8 +71,8 @@
 
                                     </div>
                                     <h6>Nội dung gửi thông báo: </h6>
-                                    <textarea [(ngModel)]="dataFrom.remind_terminate.terminate.message" class="form-control"
-                                        cols="2" rows="2" placeholder="Nhập nội dung thông báo"
+                                    <textarea [(ngModel)]="dataFrom.remind_terminate.terminate.message"
+                                        class="form-control" cols="2" rows="2" placeholder="Nhập nội dung thông báo"
                                         name="messthuSim"></textarea>
 
                                     <!-- <input type="text" name="messthuSim"
@@ -100,9 +101,8 @@
                                         </div>
                                     </div>
                                     <h6>Nội dung gửi thông báo</h6>
-                                    <textarea [(ngModel)]="dataFrom.remind_active.message" class="form-control"
-                                    cols="2" rows="2" placeholder="Nhập nội dung thông báo"
-                                    name="messkh"></textarea>
+                                    <textarea [(ngModel)]="dataFrom.remind_active.message" class="form-control" cols="2"
+                                        rows="2" placeholder="Nhập nội dung thông báo" name="messkh"></textarea>
 
                                     <!-- <input type="text" name="messkh" [(ngModel)]="dataFrom.remind_active.message"> -->
                                 </div>
@@ -130,9 +130,8 @@
                                         </div>
                                     </div>
                                     <h6>Nội dung gửi thông báo</h6>
-                                    <textarea [(ngModel)]="dataFrom.remind_s1_s2.message" class="form-control"
-                                    cols="2" rows="2" placeholder="Nhập nội dung thông báo"
-                                    name="messkhoa12"></textarea>
+                                    <textarea [(ngModel)]="dataFrom.remind_s1_s2.message" class="form-control" cols="2"
+                                        rows="2" placeholder="Nhập nội dung thông báo" name="messkhoa12"></textarea>
                                     <!-- <input type="text" name="messkhoa12" [(ngModel)]="dataFrom.remind_s1_s2.message"> -->
                                 </div>
                             </div>
