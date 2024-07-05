@@ -584,7 +584,16 @@ export class ViewBatchExportComponent implements OnInit {
   async exportExcel() {
     
     if(this.data.batch.type == BatchType.RETRIEVE) {
-      this.commonService.exportExcel(this.listProducts, 'Danh sach so thu hoi.xlsx')
+      const data = this.listProducts.map(x => {
+        return {
+          "Số/Serial": x.name,
+          "Nhà mạng": x.brand,
+          "Hạng số": x.level,
+          "Giá vốn": x.price, 
+          "Giá bán": ""
+        }
+      })
+      this.commonService.exportExcel(data, 'Danh sach so thu hoi.xlsx')
     } else {
       const wb = new ExcelJS.Workbook();
       let link = 'assets/template/phieu_xuat_kho.xlsx';
