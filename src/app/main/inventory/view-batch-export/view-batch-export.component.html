@@ -127,8 +127,7 @@
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
                     </button>
             
-                    <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2" *ngIf="data?.batch?.type != batchType.RETRIEVE
-                            && ![batchStatus.CANCEL_BY_OFFICE, batchStatus.CANCEL_BY_ACCOUNTANT, batchStatus.CANCEL_BY_USER].includes(data?.batch?.status)
+                    <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2" *ngIf="![batchStatus.CANCEL_BY_OFFICE, batchStatus.CANCEL_BY_ACCOUNTANT, batchStatus.CANCEL_BY_USER].includes(data?.batch?.status)
                             ">
                         <i data-feather="file" class="text-white cursor-pointer"></i>
                         Xuất excel</button>
@@ -188,7 +187,12 @@
                                     " (click)="onApproveRetrieve(data?.batch, batchStatus.CANCEL_BY_OFFICE, 'vanphong')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
-                    </button>        
+                    </button>    
+                    
+                    <button (click)="exportExcel()" class="btn btn-success mb-2 mr-2" *ngIf="![batchStatus.CANCEL_BY_OFFICE, batchStatus.CANCEL_BY_ACCOUNTANT, batchStatus.CANCEL_BY_USER].includes(data?.batch?.status)
+                            ">
+                        <i data-feather="file" class="text-white cursor-pointer"></i>
+                        Xuất excel</button>
                 </div>
 
                 <!-- <div class="col-12 text-center" *ngIf="data?.batch?.channel_level >= 2

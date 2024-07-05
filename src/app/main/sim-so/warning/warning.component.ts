@@ -121,6 +121,8 @@ export class WarningComponent implements OnInit {
   }
 
   result = [];
+  resultData = {};
+
 
   ngOnInit(): void {
   }
@@ -177,11 +179,26 @@ export class WarningComponent implements OnInit {
     return results;
   }
 
-  async onSubmitCreate() {
-    // this.convert(this.dataFrom, this.result)
-    // console.log("12345 ===== ",this.dataFrom)
-    // return;
+  convertData(array, resultObj) {
+    for (let item of array) {
+      if (item.child && item.child.length > 0) {
+        if (!resultObj[item.meta_key]) {
+          resultObj[item.meta_key] = {}
+          if (["remind_terminate", "remind_active", "remind_s1_s2"].includes(item.meta_key)) {
+            resultObj[item.meta_key][item.meta_key] = item.meta_value || 'on'
+          }
+        }
+        this.convertData(item.child, resultObj[item.meta_key])
+      } else {
+        resultObj[item.meta_key] = item.meta_value
+      }
+    }
+    return resultObj
+  }
 
+  async onSubmitCreate() {
+    // const data = this.convert(this.dataFrom, this.result);
+    // console.log("data submit", this.dataFrom, data);
     if ((await this.alertService.showConfirm("Bạn có đồng ý thực hiện thao tác?")).value) {
       this.telecomService.postSetting(this.convert(this.dataFrom, this.result)).subscribe(res => {
         if (!res.status) {
@@ -207,6 +224,17 @@ export class WarningComponent implements OnInit {
 
     }
 
+    this.telecomService.getSetting().subscribe(res => {
+      this.convertData(res.data, this.resultData)
+
+      this.dataFrom = this.convertData(res.data, this.resultData)
+      console.log("abcde = ",this.dataFrom)
+
+
+    }, error => {
+      this.alertService.showMess(error);
+      return;
+    })
 
     this.telecomService.getSummary().subscribe(res => {
       this.summaryTask = res.data;
