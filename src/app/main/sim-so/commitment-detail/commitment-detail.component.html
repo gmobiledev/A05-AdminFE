@@ -13,6 +13,14 @@
                 <div class="col border-primary rounded bg-resolution">
                   <div class="mt-1">
                     <p>
+                      <b>Yêu cầu : </b>
+                      {{ listTaskAction[data.task.action] ? listTaskAction[data.task.action]['label'] :
+                      data.task.action }}
+                      <br>
+                      {{ data.task.sub_action ? data.task.sub_action : '' }}
+
+                    </p>
+                    <p>
                       <b>Số thuê bao : </b>
                       {{ data.task.msisdn }}
                     </p>
