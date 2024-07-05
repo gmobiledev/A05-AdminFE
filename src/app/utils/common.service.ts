@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+let xlsx = require('xlsx');
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
@@ -79,6 +80,26 @@ export class CommonService {
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
+    }
+
+    async exportExcel(data, fileName) {
+        const worksheet = xlsx.utils.json_to_sheet(data);
+        const workbook = xlsx.utils.book_new();
+        xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+        const buffer = xlsx.write(workbook, { bookType: "xlsx", type: "buffer" });
+
+        // const buffer = await wb.xlsx.writeBuffer();
+        var newBlob = new Blob([buffer], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(newBlob);
+        let a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        return;
     }
 
 }
