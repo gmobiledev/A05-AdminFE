@@ -582,92 +582,106 @@ export class ViewBatchExportComponent implements OnInit {
   }
 
   async exportExcel() {
-    const wb = new ExcelJS.Workbook();
-    let link = 'assets/template/phieu_xuat_kho.xlsx';
-    this.commonDataService.readFile(link).subscribe(async res => {
-      
-      let workbook = await wb.xlsx.load(res);
-      console.log(workbook, 'workbook instance')
-      let workSheet = workbook.getWorksheet('TM04');
-      console.log("workSheet", workSheet);
-      let dataBrand = this.listProducts.map(x => x.brand);
-      let dataInput = [];
-
-      for (let j = 0; j < this.listProducts.length; j++) {
-        let typeProduct = 'SIM';
-        if (this.listProducts[j].category_id == 3) {
-          typeProduct = 'SỐ'
-        } else if (this.listProducts[j].category_id == 2) {
-          typeProduct = 'SIM'
+    
+    if(this.data.batch.type == BatchType.RETRIEVE) {
+      const data = this.listProducts.map(x => {
+        return {
+          "Số/Serial": x.name,
+          "Nhà mạng": x.brand,
+          "Hạng số": x.level,
+          "Giá vốn": x.price, 
+          "Giá bán": ""
         }
-        let name = typeProduct + ' ' + this.listProducts[j].brand;
-        const index = dataInput.findIndex(x => x.name == name);
-        if (index != -1) {
-          dataInput[index].quantity++;
-        } else {
-          dataInput.push({
-            sku: '',
-            name: name,
-            quantity: 1,
-            note: 'Danh sách tại Phụ Lục'
-          })
+      })
+      this.commonService.exportExcel(data, 'Danh sach so thu hoi.xlsx')
+    } else {
+      const wb = new ExcelJS.Workbook();
+      let link = 'assets/template/phieu_xuat_kho.xlsx';
+      this.commonDataService.readFile(link).subscribe(async res => {
+        
+        let workbook = await wb.xlsx.load(res);
+        console.log(workbook, 'workbook instance')
+        let workSheet = workbook.getWorksheet('TM04');
+        console.log("workSheet", workSheet);
+        let dataBrand = this.listProducts.map(x => x.brand);
+        let dataInput = [];
+
+        for (let j = 0; j < this.listProducts.length; j++) {
+          let typeProduct = 'SIM';
+          if (this.listProducts[j].category_id == 3) {
+            typeProduct = 'SỐ'
+          } else if (this.listProducts[j].category_id == 2) {
+            typeProduct = 'SIM'
+          }
+          let name = typeProduct + ' ' + this.listProducts[j].brand;
+          const index = dataInput.findIndex(x => x.name == name);
+          if (index != -1) {
+            dataInput[index].quantity++;
+          } else {
+            dataInput.push({
+              sku: '',
+              name: name,
+              quantity: 1,
+              note: 'Danh sách tại Phụ Lục'
+            })
+          }
+
+        }
+        
+
+        const startRow = 20;
+        let index = 0;
+        for (let item of dataInput) {
+          var getRowInsert = workSheet.getRow(startRow + index);
+          getRowInsert.getCell('A').value = index + 1;
+          getRowInsert.getCell('B').value = item.sku;
+          getRowInsert.getCell('C').value = item.name;
+          getRowInsert.getCell('D').value = item.unit;
+          getRowInsert.getCell('E').value = item.quantity;
+          getRowInsert.getCell('H').value = item.note;
+          getRowInsert.commit();
+          index++;
         }
 
-      }
-      
+        let cDate = new Date()
+        const offset = cDate.getTimezoneOffset()
+        cDate = new Date(cDate.getTime() - (offset * 60 * 1000))
+        
+        //xuat di
+        workSheet.getCell('C8').value = this.adminCreator.full_name;
+        workSheet.getCell('C12').value = this.adminCreator.mobile;
+        workSheet.getCell('C13').value = cDate.toISOString().split('T')[0];
 
-      const startRow = 20;
-      let index = 0;
-      for (let item of dataInput) {
-        var getRowInsert = workSheet.getRow(startRow + index);
-        getRowInsert.getCell('A').value = index + 1;
-        getRowInsert.getCell('B').value = item.sku;
-        getRowInsert.getCell('C').value = item.name;
-        getRowInsert.getCell('D').value = item.unit;
-        getRowInsert.getCell('E').value = item.quantity;
-        getRowInsert.getCell('H').value = item.note;
-        getRowInsert.commit();
-        index++;
-      }
+        //nhan hang
+        workSheet.getCell('G8').value = this.reciever ? this.reciever.name : this.toChannel.name;
+        workSheet.getCell('G12').value = this.adminCreator.mobile;
+        // workSheet.getCell('G13').value = cDate.toISOString().split('T')[0];
 
-      let cDate = new Date()
-      const offset = cDate.getTimezoneOffset()
-      cDate = new Date(cDate.getTime() - (offset * 60 * 1000))
-      
-      //xuat di
-      workSheet.getCell('C8').value = this.adminCreator.full_name;
-      workSheet.getCell('C12').value = this.adminCreator.mobile;
-      workSheet.getCell('C13').value = cDate.toISOString().split('T')[0];
+        const worksheet = workbook.addWorksheet('Phụ Lục');
+        worksheet.columns = [
+          { letter: 'A', header: 'NAME', key: 'name' },
+          { letter: 'B', header: 'LOẠI SP', key: 'category_id' },
+          { letter: 'C', header: 'GIÁ', key: 'price' },
+          { letter: 'D', header: 'HẠNG', key: 'level' },
+          { letter: 'E', header: 'NHÀ MẠNG', key: 'brand' },
+        ];
 
-      //nhan hang
-      workSheet.getCell('G8').value = this.reciever ? this.reciever.name : this.toChannel.name;
-      workSheet.getCell('G12').value = this.adminCreator.mobile;
-      // workSheet.getCell('G13').value = cDate.toISOString().split('T')[0];
-
-      const worksheet = workbook.addWorksheet('Phụ Lục');
-      worksheet.columns = [
-        { letter: 'A', header: 'NAME', key: 'name' },
-        { letter: 'B', header: 'LOẠI SP', key: 'category_id' },
-        { letter: 'C', header: 'GIÁ', key: 'price' },
-        { letter: 'D', header: 'HẠNG', key: 'level' },
-        { letter: 'E', header: 'NHÀ MẠNG', key: 'brand' },
-      ];
-
-      worksheet.addRows(this.listProducts.map(x => { return { name: x.name, category_id: x.category_id, price: x.price, level: x.level, brand: x.brand } }));
-      
-      const buffer = await wb.xlsx.writeBuffer();
-      var newBlob = new Blob([buffer], { type: 'application/octet-stream' });
-      const url = window.URL.createObjectURL(newBlob);
-      let a = document.createElement('a');
-      document.body.appendChild(a);
-      a.setAttribute('style', 'display: none');
-      a.href = url;
-      a.download = "phieu xuat kho.xlsx";
-      a.click();
-      window.URL.revokeObjectURL(url);
-      a.remove();
-      return;
-    })
+        worksheet.addRows(this.listProducts.map(x => { return { name: x.name, category_id: x.category_id, price: x.price, level: x.level, brand: x.brand } }));
+        
+        const buffer = await wb.xlsx.writeBuffer();
+        var newBlob = new Blob([buffer], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(newBlob);
+        let a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = url;
+        a.download = "phieu xuat kho.xlsx";
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        return;
+      })
+    }
   }
 
   onViewAttachments(link = null) {

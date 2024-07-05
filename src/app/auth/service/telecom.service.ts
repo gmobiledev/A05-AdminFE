@@ -47,7 +47,9 @@ export class TelecomService {
       return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/payment-log/${id}`);
     }
 
-
+    getSetting() {
+      return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`);
+    }
     postSetting(data) {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`, data);
     }

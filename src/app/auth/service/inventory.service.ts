@@ -126,6 +126,10 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/my-list`, { params: params });
   }
 
+  searchChannel(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/search`, { params: params });
+  }
+
   getChannelS99(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/channel/s99`, { params: params });
   }
@@ -303,6 +307,10 @@ export class InventoryService {
 
   reportKetQuaSim(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary`, {params: params});
+  }
+
+  reportTonghopS99Admin(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary-by-admin`, {params: params});
   }
 
   exportReportChiTietSim(params = null, data = null): Observable<any> {

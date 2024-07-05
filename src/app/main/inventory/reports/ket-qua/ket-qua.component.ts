@@ -98,26 +98,54 @@ export class KetQuaComponent implements OnInit {
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
-    this.inventoryService.reportKetQuaSim(paramsSearch).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.submitted = false;
-      this.list = res.data;      
-      for(let item of this.list) {
-        this.sumItems.total_register += item.total_register;
-        this.sumItems.received += item.received;
-        this.sumItems.actived += item.actived;
-        this.sumItems.luy_ke_actived += item.luy_ke_actived;
-        this.sumItems.hoan_thien_tttb += item.hoan_thien_tttb;
-        this.sumItems.sum_cost += item.sum_cost;
-        this.sumItems.sum_topup += item.sum_topup;
-        
-      }
-      this.sumItems.percent =  Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    const listCurrentAction = currentUser.actions;
+    
+    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-summary')) {
+      this.inventoryService.reportKetQuaSim(paramsSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.submitted = false;
+        this.list = res.data;      
+        for(let item of this.list) {
+          this.sumItems.total_register += item.total_register;
+          this.sumItems.received += item.received;
+          this.sumItems.actived += item.actived;
+          this.sumItems.luy_ke_actived += item.luy_ke_actived;
+          this.sumItems.hoan_thien_tttb += item.hoan_thien_tttb;
+          this.sumItems.sum_cost += item.sum_cost;
+          this.sumItems.sum_topup += item.sum_topup;
+          
+        }
+        this.sumItems.percent =  Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
+  
+      }, error => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+      })  
+    } else {
+      this.inventoryService.reportTonghopS99Admin(paramsSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.submitted = false;
+        this.list = res.data;      
+        for(let item of this.list) {
+          this.sumItems.total_register += item.total_register;
+          this.sumItems.received += item.received;
+          this.sumItems.actived += item.actived;
+          this.sumItems.luy_ke_actived += item.luy_ke_actived;
+          this.sumItems.hoan_thien_tttb += item.hoan_thien_tttb;
+          this.sumItems.sum_cost += item.sum_cost;
+          this.sumItems.sum_topup += item.sum_topup;
+          
+        }
+        this.sumItems.percent =  Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
+  
+      }, error => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+      })
+    }
 
-    }, error => {
-      this.submitted = false;
-      this.sectionBlockUI.stop();
-    })
+    
   }
 
   async getChannel() {
