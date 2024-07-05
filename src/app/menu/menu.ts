@@ -333,15 +333,7 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/action-logs'
-      },
-      {
-        id: 'i-search-product-transfer',
-        title: 'Số xuất/nhập kho',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/search-product-transfer'
-      }   
+      }       
     ]
   },
 

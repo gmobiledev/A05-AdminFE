@@ -8,7 +8,7 @@
     "start-hmr-sourcemaps": "ng serve --configuration hmr --source-map=true --hmr-warning=false",
     "build": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build",
     "build-stats": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --stats-json",
-    "build:prod": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration production",
+    "build:prod": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration production --outputHashing=all",
     "build:uat": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration uat",
     "build:test": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration test",
     "build:prod-stats": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration production --stats-json",
@@ -86,8 +86,8 @@
     "sweetalert2": "9.17.2",
     "swiper": "6.7.0",
     "tslib": "2.2.0",
-    "xlsx": "^0.18.5",
-    "zone.js": "0.11.4"
+    "zone.js": "0.11.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.7",
