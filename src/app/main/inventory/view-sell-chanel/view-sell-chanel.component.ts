@@ -69,7 +69,8 @@ export class ViewSellChanelComponent implements OnInit {
   public taskTelecomStatusSIM;
   public selectedItem: any;
   public selectedAgent: any;
-  public mineTask = false;
+
+
   public currentUser: any;
   public isAdmin: boolean = false;
   public mnos: any = []
@@ -104,6 +105,8 @@ export class ViewSellChanelComponent implements OnInit {
     action: '',
     status: '',
     mine: '',
+    mineTaskCamket: false,
+    mineTaskG59: false,
     page: 1,
     array_status: [],
     skip: 0,
@@ -167,13 +170,30 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
+
+      this.searchForm.mineTaskCamket = params['mineTaskCamket'] && params['mineTaskCamket'] != undefined ? params['mineTaskCamket'] : false;
+      this.searchForm.mineTaskG59 = params['mineTaskG59'] && params['mineTaskG59'] != undefined ? params['mineTaskG59'] : false;
+
+      if (params['mineTaskG59'] && params['mineTaskG59'] !== undefined && params['mineTaskG59'] === 'false') {
+        this.searchForm.mineTaskG59 = false
+      } else if (params['mineTaskG59'] && params['mineTaskG59'] !== undefined && params['mineTaskG59'] === 'true') {
+        this.searchForm.mineTaskG59 = true
+      }
+
+      if (params['mineTaskCamket'] && params['mineTaskCamket'] !== undefined && params['mineTaskCamket'] === 'false') {
+        this.searchForm.mineTaskCamket = false
+      } else if (params['mineTaskCamket'] && params['mineTaskCamket'] !== undefined && params['mineTaskCamket'] === 'true'){
+        this.searchForm.mineTaskCamket = true
+      }
+
+
       this.searchForm.is_kitting = params['is_kitting'] && params['is_kitting'] != undefined ? params['is_kitting'] : '';
-
-
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
       this.contentHeader.headerTitle = 'Xem chi tiết kho số:' + this.searchForm.channel_id;
+
+      console.log(" searchForm ==== ", this.searchForm)
 
       this.getData();
       this.getService();
@@ -406,6 +426,7 @@ export class ViewSellChanelComponent implements OnInit {
   }
 
   onSubmitSearch() {
+
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
   }
 
@@ -423,7 +444,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.inventoryService.getListCustomer(this.searchForm.channel_id).subscribe(res => {
       this.sectionBlockUI.stop();
       this.listSellUser = res.data.items;
-      
+
     }, error => {
       this.sectionBlockUI.stop();
       console.log("ERRRR");
@@ -695,7 +716,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   downloadFile(data, filename = 'data') {
     console.log("downloadFile")
-    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit',  'price', 'status']);
+    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status']);
     console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
     let dwldLink = document.createElement("a");
