@@ -12,8 +12,8 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <input type="text" name="mobile" [(ngModel)]="searchForm.mobile"
-                                            class="form-control" placeholder="Nhập số thuê bao">
+                                        <input type="tel" name="mobile" [(ngModel)]="searchForm.mobile"
+                                            class="form-control" mask="0000000000" placeholder="Nhập số thuê bao">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -31,7 +31,7 @@
                                     <div class="form-group">
                                         <select class="form-control" name="commit_turn"
                                             [(ngModel)]="searchForm.commit_turn">
-                                            <option value="">Chọn thời hạn cam kết</option>
+                                            <option value="">Chọn thời hạn SCK</option>
                                             <option value="2">2 tháng</option>
                                             <option value="3">3 tháng</option>
                                             <option value="6">6 tháng</option>
@@ -97,12 +97,12 @@
                                         <th>Yêu cầu</th>
                                         <th>Số thuê bao</th>
                                         <th>Nhà mạng</th>
-                                        <th>Giá gói cam kết</th>
+                                        <th>Giá gói SCK</th>
                                         <th>Tiền đã thanh toán</th>
                                         <th>Mã gói viễn thông</th>
-                                        <th>Thời hạn cam kết</th>
+                                        <th>Thời hạn SCK</th>
                                         <th>Số kỳ chưa thanh toán</th>
-                                        <th>Thời gian kích hoạt</th>
+                                        <th>TG kích hoạt/CK tiếp theo</th>
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
@@ -162,8 +162,8 @@
                                             {{ item?.msisdns[0]?.commit_extant}}
                                         </td>
                                         <td>
-                                            {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
-                                            <!-- {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }} -->
+                                            {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }} -
+                                            {{ item?.msisdns[0]?.commit_cycle_date | date: 'dd/MM/yyyy H:mm':'GMT' }}
 
                                         </td>
                                         <td>

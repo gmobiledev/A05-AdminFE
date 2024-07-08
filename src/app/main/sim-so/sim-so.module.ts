@@ -38,6 +38,7 @@ import { CommitmentDetailComponent } from './commitment-detail/commitment-detail
 import { WarningComponent } from './warning/warning.component';
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { DvkhSearchComponent } from './dvkh-search/dvkh-search.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 const routes: Routes = [
   {
@@ -153,7 +154,8 @@ const routes: Routes = [
     QuillModule.forRoot(),
     PdfViewerModule,
     QRCodeModule,
-    Ng2FlatpickrModule
+    Ng2FlatpickrModule,
+    NgxMaskModule
   ]
 })
 export class SimSoModule { }
