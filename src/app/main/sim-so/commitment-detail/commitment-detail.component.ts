@@ -178,7 +178,9 @@ export class CommitmentDetailComponent implements OnInit {
   }
 
   calculateTotalAmount() {
-    this.totalAmount = this.dataPayment.items.reduce((sum, item) => sum + item.amount, 0);
+    if (this.dataPayment){
+      this.totalAmount = this.dataPayment.items.reduce((sum, item) => sum + item.amount, 0);
+    }
   }
 
   getData() {

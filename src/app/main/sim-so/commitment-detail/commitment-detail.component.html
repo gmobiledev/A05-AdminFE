@@ -14,10 +14,11 @@
                   <div class="mt-1">
                     <p>
                       <b>Yêu cầu : </b>
-                      {{ listTaskAction[data.task.action] ? listTaskAction[data.task.action]['label'] :
-                      data.task.action }}
-                      <br>
-                      {{ data.task.sub_action ? data.task.sub_action : '' }}
+                    
+                      <!-- {{ listTaskAction[data.task?.sub_action] ? listTaskAction[data.task?.sub_action]['label'] :
+                      data.task?.sub_action }}
+                      <br> -->
+                      {{ data.task?.sub_action ? data.task?.sub_action : '' }}
 
                     </p>
                     <p>
@@ -123,19 +124,36 @@
                             {{ item?.amount | number }}
                           </td>
                           <td>
-                            <span *ngIf="data.task?.commit_billing_cycle == 'MONTHLY'">
+                            <span *ngIf="data?.task?.commit_billing_cycle == 'MONTHLY'">
                               {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
                             </span>
-                            <span *ngIf="data.task?.commit_billing_cycle == 'ONCE'">Tất cả</span>
+                            <span *ngIf="data?.task?.commit_billing_cycle == 'ONCE'">Tất cả</span>
                           </td>
 
                         </tr>
+
+                        <tr >
+                            
+                          <td>
+                            
+                          </td>
+                          <td>
+                            
+                          </td>
+                          <td>
+                            
+                          </td>
+                          <td>
+                            <div class="text-primary">
+                              Tổng tiền = {{ totalAmount | number }}
+                            </div>
+                          </td>
+
+                        </tr>
+
                       </tbody>
                     </table>
 
-                    <div class="text-right text-primary mr-5 mt-1">
-                      Tổng số tiền = {{ totalAmount | number }}
-                    </div>
 
                   </div>
                 </div>
