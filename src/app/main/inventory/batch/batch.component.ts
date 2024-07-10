@@ -37,6 +37,7 @@ export class BatchComponent implements OnInit {
     page_size: 20,
     from_date: '',
     channel_name: '',
+    channel_id: 0,
     id: '',
     to_date: ''
   }
@@ -113,6 +114,7 @@ export class BatchComponent implements OnInit {
       this.searchForm.to_date = params['to_date'] && params['to_date'] != undefined ? params['to_date'] : '';
       this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';
       this.searchForm.channel_name = params['channel_name'] && params['channel_name'] != undefined ? params['channel_name'] : '';
+      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? parseInt(params['channel_id']) : 0;
       this.searchForm.id = params['id'] && params['id'] != undefined ? params['id'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
 
@@ -438,6 +440,9 @@ export class BatchComponent implements OnInit {
     }
     this.inventoryService.getAdminsSell({user_id: this.currentUser.id}).subscribe(res => {
       this.listAdminSellActionCurrent = res.data;
+    });
+    this.inventoryService.getMyChannel({}).subscribe(async res => {
+      this.listChannel = res.data.items;
     })
     this.sectionBlockUI.start();
     if(this.checkAction('staff/list')) {

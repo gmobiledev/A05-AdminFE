@@ -59,7 +59,15 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label>Tên kho</label>
-                    <input type="text" class="form-control" name="channel_name" [(ngModel)]="searchForm.channel_name"  >
+                    <ng-select  [(ngModel)]="searchForm.channel_id"
+                    name="channel_id"
+                     >
+                     <ng-option [value]="0"></ng-option>
+                      <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
+                        p.name
+                        }}</ng-option>
+                    </ng-select>
+                    <!-- <input type="text" class="form-control" name="channel_name" [(ngModel)]="searchForm.channel_name"  > -->
                   </div>
                 </div>
 

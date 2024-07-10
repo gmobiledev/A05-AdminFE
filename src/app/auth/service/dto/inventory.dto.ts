@@ -4,6 +4,7 @@ export class CreateBatchExportDto {
     channel_id: number;
     to_channel_id: number;
     user_id: number;
+    note: string
 }
 
 export class UpdateBatchExportDto {
@@ -47,6 +48,7 @@ export class CreateBatchRetrieveDto {
     files: any;
     file_ext: any;
     from_channel_id: any;
+    note: string;
 }
 
 export class UpdateBatchDto {
