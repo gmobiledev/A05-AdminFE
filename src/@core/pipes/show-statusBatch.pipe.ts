@@ -16,7 +16,7 @@ export class ShowStatusBatchPipe implements PipeTransform {
     } else if (value === BatchStatus.CANCEL_BY_ACCOUNTANT) {
       html = '<span class="badge badge-pill badge-light-danger mr-1">Kế toán từ chối</span>' // 1 nút
     } else if (value === BatchStatus.CANCEL_BY_OFFICE) {
-      html = '<span class="badge badge-pill badge-light-danger mr-1">VP từ chối</span>' // 1 nút
+      html = '<span class="badge badge-pill badge-light-danger mr-1">Từ chối</span>' // 1 nút
     } else if (value === BatchStatus.CANCEL_BY_USER) {
       html = '<span class="badge badge-pill badge-light-danger mr-1">User từ chối</span>' // 1 nút
     }

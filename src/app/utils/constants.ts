@@ -61,6 +61,7 @@ export enum ProductStoreStatus {
     STATUS_SOLD = 1,
     STATUS_AVAILABLE = 0,
     STATUS_INIT = 21,
+    STATUS_EXPORTED = 5
 }
 
 export enum BatchType {

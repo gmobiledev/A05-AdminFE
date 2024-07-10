@@ -37,7 +37,7 @@ export class ActionLogsComponent implements OnInit {
       this.searchForm.user_id = params['user_id'] && params['user_id'] != undefined ? params['user_id'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
-      this.onSubmitSearch();
+      this.getData();
     })
   }
   public contentHeader: any = {
@@ -59,12 +59,11 @@ export class ActionLogsComponent implements OnInit {
     }
   };
   onSubmitSearch() {
-    this.sectionBlockUI.start();
-    this.inventoryService.getActionlogs(this.searchForm).subscribe(res => {
-      this.sectionBlockUI.stop();
-      this.list = res.data.items;
-      this.totalItems = res.data.count;
-    })
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
+    ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    this.searchForm.date_range = daterangeString;
+    this.getData();
   }
   dateRange: any;
   ranges: any = {
@@ -81,8 +80,16 @@ export class ActionLogsComponent implements OnInit {
     this.router.navigate(['/inventory/action-logs'], { queryParams: this.searchForm });
   }
 
+  getData() {
+    this.sectionBlockUI.start();
+    this.inventoryService.getActionlogs(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
+      this.list = res.data.items;
+      this.totalItems = res.data.count;
+    })
+  }
+
   ngOnInit(): void {
-    this.onSubmitSearch();
   }
 
 
