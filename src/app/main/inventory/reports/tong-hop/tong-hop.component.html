@@ -16,7 +16,10 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label>Tới ngày</label>
-                    <input type="date" name="end_date" [(ngModel)]="searchForm.end_date" class="form-control" />
+                    <input type="date" name="end_date" [(ngModel)]="searchForm.end_date" class="form-control" 
+                    min="{{ searchForm.start_date }}"
+                                        max="{{ maxDate }}"
+                    />
                   </div>
                 </div>
                 <div class="col-md-2">

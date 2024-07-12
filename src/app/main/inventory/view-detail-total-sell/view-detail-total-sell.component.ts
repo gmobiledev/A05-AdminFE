@@ -83,9 +83,12 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
   ) {
     this.activeRouted.queryParams.subscribe(params => {
-      this.taskTelecomStatus = Object.keys(ProductStoreStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-        obj[key] = ProductStoreStatus[key];
-        return obj;
+      this.taskTelecomStatus = Object.keys(ProductStoreStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {                
+        if([ProductStoreStatus.STATUS_AVAILABLE, ProductStoreStatus.STATUS_EXPORTED, ProductStoreStatus.STATUS_SOLD].includes(obj[key])) {
+          obj[key] = ProductStoreStatus[key];
+          return obj;  
+        }
+        
       }, {});
 
       this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO

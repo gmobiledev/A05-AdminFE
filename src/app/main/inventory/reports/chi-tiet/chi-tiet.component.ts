@@ -93,21 +93,31 @@ export class ChiTietComponent implements OnInit {
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
-    this.inventoryService.reportChiTietSim(paramsSearch).subscribe(res => {
-      this.submitted = false;
-      this.sectionBlockUI.stop();
-      this.list = res.data.items;
-      this.totalItems = res.data.count;
-      // for(let item of this.list) {
-      //   this.sumItems.begin_total += item.begin_total;
-      //   this.sumItems.exported += item.exported;
-      //   this.sumItems.imported += item.imported;
-      //   this.sumItems.total += item.total;
-      // }
-    }, error => {
-      this.submitted = false;
-      this.sectionBlockUI.stop();
-    })
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    const listCurrentAction = currentUser.actions;
+    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-msisdn')) {
+      this.inventoryService.reportChiTietSim(paramsSearch).subscribe(res => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+        this.list = res.data.items;
+        this.totalItems = res.data.count;
+      }, error => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+      })
+    } else {
+      this.inventoryService.reportChiTietSimByAdmin(paramsSearch).subscribe(res => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+        this.list = res.data.items;
+        this.totalItems = res.data.count;
+      }, error => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+      })
+    }
+    
   }
 
   async getChannel() {

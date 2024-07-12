@@ -105,8 +105,8 @@ export class ViewSellChanelComponent implements OnInit {
     action: '',
     status: '',
     mine: '',
-    mineTaskCamket: false,
-    mineTaskG59: false,
+    is_sck: false,
+    is_g59: false,
     page: 1,
     array_status: [],
     skip: 0,
@@ -117,8 +117,10 @@ export class ViewSellChanelComponent implements OnInit {
     batch_id: '',
     keyword: '',
     level: '',
-    is_kitting: ''
+    is_kitting: '',
+    category_id: ''
   }
+  isLoaded: boolean = false;
 
   dateRange: any;
 
@@ -170,20 +172,21 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       this.searchForm.level = params['level'] && params['level'] != undefined ? params['level'] : '';
+      this.searchForm.category_id = params['category_id'] && params['category_id'] != undefined ? params['category_id'] : '';
 
-      this.searchForm.mineTaskCamket = params['mineTaskCamket'] && params['mineTaskCamket'] != undefined ? params['mineTaskCamket'] : false;
-      this.searchForm.mineTaskG59 = params['mineTaskG59'] && params['mineTaskG59'] != undefined ? params['mineTaskG59'] : false;
+      this.searchForm.is_sck = params['is_sck'] && params['is_sck'] != undefined ? params['is_sck'] : false;
+      this.searchForm.is_g59 = params['is_g59'] && params['is_g59'] != undefined ? params['is_g59'] : false;
 
-      if (params['mineTaskG59'] && params['mineTaskG59'] !== undefined && params['mineTaskG59'] === 'false') {
-        this.searchForm.mineTaskG59 = false
-      } else if (params['mineTaskG59'] && params['mineTaskG59'] !== undefined && params['mineTaskG59'] === 'true') {
-        this.searchForm.mineTaskG59 = true
+      if (params['is_g59'] && params['is_g59'] !== undefined && params['is_g59'] === 'false') {
+        this.searchForm.is_g59 = false
+      } else if (params['is_g59'] && params['is_g59'] !== undefined && params['is_g59'] === 'true') {
+        this.searchForm.is_g59 = true
       }
 
-      if (params['mineTaskCamket'] && params['mineTaskCamket'] !== undefined && params['mineTaskCamket'] === 'false') {
-        this.searchForm.mineTaskCamket = false
-      } else if (params['mineTaskCamket'] && params['mineTaskCamket'] !== undefined && params['mineTaskCamket'] === 'true'){
-        this.searchForm.mineTaskCamket = true
+      if (params['is_sck'] && params['is_sck'] !== undefined && params['is_sck'] === 'false') {
+        this.searchForm.is_sck = false
+      } else if (params['is_sck'] && params['is_sck'] !== undefined && params['is_sck'] === 'true'){
+        this.searchForm.is_sck = true
       }
 
 
@@ -440,6 +443,7 @@ export class ViewSellChanelComponent implements OnInit {
 
 
   getData() {
+    this.isLoaded = false;
     this.list = [];
     this.inventoryService.getListCustomer(this.searchForm.channel_id).subscribe(res => {
       this.sectionBlockUI.stop();
@@ -462,7 +466,7 @@ export class ViewSellChanelComponent implements OnInit {
 
     this.submitted = true;
     this.inventoryService.getAllSim(this.searchForm).subscribe(res => {
-
+      this.isLoaded = true;
       this.list = res.data.data.items;
       this.totalItems = res.data.data.count;
       this.sectionBlockUI.stop();

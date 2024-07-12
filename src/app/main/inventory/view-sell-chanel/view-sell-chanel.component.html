@@ -20,6 +20,16 @@
 
                 <div class="col-md-3">
                   <div class="form-group">
+                    <select class="form-control" name="category_id" [(ngModel)]="searchForm.category_id">
+                      <option value="">-- Chọn loại SP --</option>
+                      <option value="2">SIM</option>
+                      <option value="3">Số</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
                     <select class="form-control" name="level" [(ngModel)]="searchForm.level">
                       <option value="">-- Chọn hạng số --</option>
                       <option *ngFor="let item of taskTelecomStatusSIM" [value]="item.name"> {{item.id}}</option>
@@ -58,12 +68,12 @@
                 </div>
                 <div class="col-md-3">
                   <label class="mr-1" style="font-size: 1rem">Sim cam kết</label>
-                  <input type="checkbox" [(ngModel)]="searchForm.mineTaskCamket" name="mineTaskCamket"
+                  <input type="checkbox" [(ngModel)]="searchForm.is_sck" name="is_sck" (change)="onSubmitSearch()"
                     [ngModelOptions]="{standalone: true}">
                 </div>
                 <div class="col-md-3">
                   <label class="mr-1" for="" style="font-size: 1rem">Sim G59</label>
-                  <input type="checkbox" [(ngModel)]="searchForm.mineTaskG59" name="mineTaskG59"
+                  <input type="checkbox" [(ngModel)]="searchForm.is_g59" name="is_g59" (change)="onSubmitSearch()"
                     [ngModelOptions]="{standalone: true}">
                 </div>
 
@@ -104,12 +114,12 @@
                     <th>Trạng thái</th>
                     <th>Xuất cho kho</th>
 
-                    <th *ngIf="searchForm.mineTaskG59 == true">Địa điểm</th>
+                    <th *ngIf="searchForm.is_g59 == true ">Địa điểm</th>
 
-                    <ng-container *ngIf="searchForm.mineTaskCamket == true">
+                    <ng-container *ngIf="searchForm.is_sck == true ">
                       <th>Giá gói cam kết</th>
-                      <th>Số kỳ chưa thanh toán</th>
-                      <th>Thời gian kích hoạt</th>
+                      <th>Số kỳ</th>
+                      <th>Giá gói</th>
                     </ng-container>
 
 
@@ -154,19 +164,19 @@
                       <a (click)="modalChannelOpen(modalChannelInfo, item)"><u>{{ item.sub_channel_id }}</u></a>
                     </td>
 
-                    <td *ngIf="searchForm.mineTaskG59 == true">
-                      ABC
+                    <td *ngIf="searchForm.is_g59 == true ">
+                      
                     </td>
                     
-                    <ng-container *ngIf="searchForm.mineTaskCamket == true">
+                    <ng-container *ngIf="searchForm.is_sck == true ">
                       <td>
-                        ABC 1
+                        {{ item?.sell_channels[0]?.commit_package }}
                       </td>
                       <td>
-                        ABC 2
+                        {{ item?.sell_channels[0]?.commit_turn }}
                       </td>
                       <td>
-                        ABC 3
+                        {{ item?.sell_channels[0]?.commit_price | number }}
                       </td>
                     </ng-container>
 
