@@ -60,6 +60,7 @@ export class TongHopComponent implements OnInit {
   enableSummary = true;
   summaryPosition = 'bottom';
   ColumnMode = ColumnMode;
+  maxDate;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,8 +70,12 @@ export class TongHopComponent implements OnInit {
       this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
+      let endDate = new Date(new Date().getTime() - tzoffset);
+      endDate.setDate(endDate.getDate() - 2);
+
       this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
-      this.searchForm.end_date = new Date(new Date().getTime() - tzoffset).toISOString().slice(0,10)
+      this.searchForm.end_date = endDate.toISOString().slice(0,10);
+      this.maxDate = endDate.toISOString().slice(0,10);
       await this.getChannel();
       this.getData();
     })
@@ -96,22 +101,45 @@ export class TongHopComponent implements OnInit {
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
-    this.inventoryService.reportTongHopSim(paramsSearch).subscribe(res => {
-      this.submitted = false;
-      this.sectionBlockUI.stop();
-      this.list = res.data;
-      for(let item of this.list) {
-        this.sumItems.count_msisdn += item.count_msisdn;
-        this.sumItems.actived += item.all_status[0]['Active'] ? item.all_status[0]['Active'] : 0;
-        this.sumItems.s1 += item.all_status[0]['S1'] ? item.all_status[0]['S1'] : 0;
-        this.sumItems.s2 += item.all_status[0]['S2'] ? item.all_status[0]['S2'] : 0;
-        this.sumItems.th += item.all_status[0]['TH'] ? item.all_status[0]['TH'] : 0;
-        this.sumItems.sum_cost += item.sum_cost;
-        this.sumItems.sum_topup += item.sum_topup;
-      }
-    }, error => {
-      this.sectionBlockUI.stop();
-    })
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    const listCurrentAction = currentUser.actions;
+    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-msisdn-state')){
+      this.inventoryService.reportTongHopSim(paramsSearch).subscribe(res => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+        this.list = res.data;
+        for(let item of this.list) {
+          this.sumItems.count_msisdn += item.count_msisdn;
+          this.sumItems.actived += item.all_status[0]['Active'] ? item.all_status[0]['Active'] : 0;
+          this.sumItems.s1 += item.all_status[0]['S1'] ? item.all_status[0]['S1'] : 0;
+          this.sumItems.s2 += item.all_status[0]['S2'] ? item.all_status[0]['S2'] : 0;
+          this.sumItems.th += item.all_status[0]['TH'] ? item.all_status[0]['TH'] : 0;
+          this.sumItems.sum_cost += item.sum_cost;
+          this.sumItems.sum_topup += item.sum_topup;
+        }
+      }, error => {
+        this.sectionBlockUI.stop();
+      })
+    } else {
+      this.inventoryService.reportTongHopSimByAdmin(paramsSearch).subscribe(res => {
+        this.submitted = false;
+        this.sectionBlockUI.stop();
+        this.list = res.data;
+        for(let item of this.list) {
+          this.sumItems.count_msisdn += item.count_msisdn;
+          this.sumItems.actived += item.all_status[0]['Active'] ? item.all_status[0]['Active'] : 0;
+          this.sumItems.s1 += item.all_status[0]['S1'] ? item.all_status[0]['S1'] : 0;
+          this.sumItems.s2 += item.all_status[0]['S2'] ? item.all_status[0]['S2'] : 0;
+          this.sumItems.th += item.all_status[0]['TH'] ? item.all_status[0]['TH'] : 0;
+          this.sumItems.sum_cost += item.sum_cost;
+          this.sumItems.sum_topup += item.sum_topup;
+        }
+      }, error => {
+        this.sectionBlockUI.stop();
+      })
+    }
+    
   }
 
   async getChannel() {
@@ -160,5 +188,4 @@ export class TongHopComponent implements OnInit {
   }
 
 }
-
 

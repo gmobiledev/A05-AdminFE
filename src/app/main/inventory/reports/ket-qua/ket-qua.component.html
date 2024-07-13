@@ -18,6 +18,8 @@
                                     <div class="form-group">
                                         <label>Tới ngày</label>
                                         <input type="date" name="end_date" [(ngModel)]="searchForm.end_date"
+                                        min="{{ searchForm.start_date }}"
+                                        max="{{ maxDate }}"
                                             class="form-control" />
                                     </div>
                                 </div>
