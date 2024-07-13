@@ -51,6 +51,7 @@ export class ChiTietComponent implements OnInit {
   list;
   totalItems;
   submitted = false;
+  maxDate;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,8 +62,12 @@ export class ChiTietComponent implements OnInit {
       this.searchForm.msisdn = params['msisdn'] && params['msisdn'] != undefined ? params['msisdn'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
+      let endDate = new Date(new Date().getTime() - tzoffset);
+      endDate.setDate(endDate.getDate() - 2);
+
       this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
-      this.searchForm.end_date = new Date(new Date().getTime() - tzoffset).toISOString().slice(0,10)
+      this.searchForm.end_date = endDate.toISOString().slice(0,10);
+      this.maxDate = endDate.toISOString().slice(0,10);
       await this.getChannel();
       this.getData();
     })
@@ -170,4 +175,3 @@ export class ChiTietComponent implements OnInit {
   }
 
 }
-

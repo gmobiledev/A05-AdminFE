@@ -104,7 +104,7 @@ export class TongHopComponent implements OnInit {
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     const listCurrentAction = currentUser.actions;
-    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-msisdn-state-v2')) {
+    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-msisdn-state')){
       this.inventoryService.reportTongHopSim(paramsSearch).subscribe(res => {
         this.submitted = false;
         this.sectionBlockUI.stop();
@@ -188,5 +188,4 @@ export class TongHopComponent implements OnInit {
   }
 
 }
-
 

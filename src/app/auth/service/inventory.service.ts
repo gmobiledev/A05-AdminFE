@@ -298,11 +298,11 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/report/report-inventory-sim`, { params: params });
   }
   reportTongHopSim(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn-state-v2`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn-state`, {params: params} );
   }
 
   reportTongHopSimByAdmin(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn-state-v2-by-admin`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn-state-by-admin`, {params: params});
   }
 
   reportChiTietSim(params) {
@@ -314,7 +314,7 @@ export class InventoryService {
   }
 
   reportKetQuaSim(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary-v2`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary`, {params: params} );
   }
 
   reportTonghopS99Admin(params) {
