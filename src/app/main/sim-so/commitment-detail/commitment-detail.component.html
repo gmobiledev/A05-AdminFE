@@ -208,7 +208,7 @@
       <div class="form-group">
         <label for="basicInput">Số tiền</label>
         <input name="amount" formControlName="amount" [ngClass]="{ 'is-invalid': submitted && f.amount.errors }"
-          class="form-control" type="number" placeholder="100,000,000,000" mask="separator" thousandSeparator="," />
+          class="form-control" type="text" placeholder="100,000,000,000" mask="separator" thousandSeparator="," />
         <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
           <div *ngIf="f.amount.errors.required">Vui lòng nhập số tiền</div>
         </div>

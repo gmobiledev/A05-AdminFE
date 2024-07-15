@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { CommonService } from 'app/utils/common.service';
-import { BatchType, ProductStatus } from 'app/utils/constants';
+import { BatchType, ProductStatus, ProductStoreStatus } from 'app/utils/constants';
 import dayjs from 'dayjs';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -52,6 +52,7 @@ export class SearchProductsTransferComponent implements OnInit {
   batchType = BatchType;
   modalRef;
   showChannel;
+  isShowStatusKhoTong: boolean = false;
 
   ranges: any = {
     'Hôm nay': [dayjs(), dayjs()],
@@ -68,10 +69,10 @@ export class SearchProductsTransferComponent implements OnInit {
     private readonly activeRouted: ActivatedRoute,
     private modalService: NgbModal,
   ) {
-    this.productStatus = Object.keys(ProductStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-      obj[key] = ProductStatus[key];
-      return obj;
-    }, {});
+    // this.productStatus = Object.keys(ProductStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
+    //   obj[key] = ProductStatus[key];
+    //   return obj;
+    // }, {});
     this.activeRouted.queryParams.subscribe(params => {
       this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : this.batchType.OUTPUT;
       this.searchForm.category_id = params['category_id'] && params['category_id'] != undefined ? params['category_id'] : 3;
@@ -164,6 +165,21 @@ export class SearchProductsTransferComponent implements OnInit {
   getData() {
     this.sectionBlockUI.start();
     this.inventoryService.searchProductsTransfer(this.searchForm).subscribe(res => {
+      if(this.searchForm.type == BatchType.INPUT && res.data.is_kho_tong) {
+        this.productStatus = Object.keys(ProductStoreStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
+          if([ProductStoreStatus.STATUS_AVAILABLE, ProductStoreStatus.STATUS_EXPORTED, ProductStoreStatus.STATUS_SOLD].includes(ProductStoreStatus[key])) {                    
+            obj[key] = ProductStoreStatus[key];
+          }
+          return obj; 
+        }, {});
+        this.isShowStatusKhoTong = true;
+      } else {
+        this.productStatus = Object.keys(ProductStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
+          obj[key] = ProductStatus[key];
+          return obj;
+        }, {});
+        this.isShowStatusKhoTong = false;
+      }
       this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;

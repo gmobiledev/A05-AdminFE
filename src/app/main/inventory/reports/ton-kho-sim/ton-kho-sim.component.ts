@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InventoryService } from 'app/auth/service/inventory.service';
+import { CommonService } from 'app/utils/common.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -47,7 +48,8 @@ export class TonKhoSimComponent implements OnInit {
   list;
   constructor(
     private route: ActivatedRoute,
-    private readonly inventoryService: InventoryService
+    private readonly inventoryService: InventoryService,
+    private readonly commonService: CommonService
   ) {
     this.route.queryParams.subscribe(async params => {
       this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
@@ -87,6 +89,20 @@ export class TonKhoSimComponent implements OnInit {
     }, error => {
       this.sectionBlockUI.stop();
     })
+  }
+
+  exportExcel() {
+    const data = this.list.map(x => {
+      return {
+        "Mã hàng": x.product_code,
+        "Tên hàng": x.product_name,
+        "Số lượng đầu kỳ": x.begin_total,
+        "Nhập kho": x.imported,
+        "Xuất kho": x.exported,
+        "Số lượng cuối kỳ": x.total
+      }
+    })
+    this.commonService.exportExcel(data, `Tồn kho sim_${this.searchForm.start_date}_${this.searchForm.end_date}_.xlsx`)
   }
 
   async getChannel() {

@@ -318,7 +318,7 @@ export class InventoryService {
   }
 
   reportTonghopS99Admin(params) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary-by-admin`, {params: params});
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-summary-v2-by-admin`, {params: params});
   }
 
   exportReportChiTietSim(params = null, data = null): Observable<any> {

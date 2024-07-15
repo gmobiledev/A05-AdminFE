@@ -82,7 +82,8 @@ export class NewBatchExportComponent implements OnInit {
     channel_id: '',
     quantity: '',
     title: '',
-    user_id: ''
+    user_id: '',
+    note: ''
   };
 
   public retrieveForm = {
@@ -378,6 +379,7 @@ export class NewBatchExportComponent implements OnInit {
     dataCreateBatchExport.user_id = parseInt(this.searchForm.admin_id);
     dataCreateBatchExport.title = this.createBatchExportForm.title;
     dataCreateBatchExport.quantity = this.selectedItems.length;
+    dataCreateBatchExport.note = this.createBatchExportForm.note
 
     let formDataCreate = new FormData();
     for (let key in dataCreateBatchExport) {
@@ -455,6 +457,7 @@ export class NewBatchExportComponent implements OnInit {
     dataCreateBatch.products = this.selectedItems.map(x => { return x.id });
     dataCreateBatch.files = this.dataRetrieveFile.attached_file_content;
     dataCreateBatch.file_ext = this.dataRetrieveFile.file_ext;
+    dataCreateBatch.note = this.createBatchExportForm.note;
 
     let formDataCreate = new FormData();
     for (let key in dataCreateBatch) {

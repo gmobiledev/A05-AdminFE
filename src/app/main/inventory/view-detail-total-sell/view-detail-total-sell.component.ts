@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
-import { ProductConstant, ProductStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { ProductConstant, ProductStatus, ProductStoreStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -83,9 +83,12 @@ export class ViewDetailTotalSellComponent implements OnInit {
 
   ) {
     this.activeRouted.queryParams.subscribe(params => {
-      this.taskTelecomStatus = Object.keys(ProductStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-        obj[key] = ProductStatus[key];
-        return obj;
+      this.taskTelecomStatus = Object.keys(ProductStoreStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {                        
+        if([ProductStoreStatus.STATUS_AVAILABLE, ProductStoreStatus.STATUS_EXPORTED, ProductStoreStatus.STATUS_SOLD].includes(ProductStoreStatus[key])) {                    
+          obj[key] = ProductStoreStatus[key];
+        }
+        return obj;  
+        
       }, {});
 
       this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO

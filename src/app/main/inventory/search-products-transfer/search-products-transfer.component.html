@@ -63,7 +63,12 @@
                                   [id]="item.key"
                                 >
                                   <span
+                                  *ngIf="!isShowStatusKhoTong"
                                     [innerHTML]="item.value | showStatusProduct"
+                                  ></span>
+                                  <span
+                                  *ngIf="isShowStatusKhoTong"
+                                    [innerHTML]="item.value | showStatusProductStore"
                                   ></span>
                                 </option>
                               </select>
@@ -154,7 +159,8 @@
                                   </td>
               
                                   <td>
-                                    <div [innerHTML]="item.status | showStatusProduct"></div>
+                                    <div *ngIf="!isShowStatusKhoTong" [innerHTML]="item.status | showStatusProduct"></div>
+                                    <div *ngIf="isShowStatusKhoTong" [innerHTML]="item.status | showStatusProductStore"></div>
                                   </td>
               
                                   <td>
