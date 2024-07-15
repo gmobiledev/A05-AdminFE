@@ -167,8 +167,10 @@ export class SearchProductsTransferComponent implements OnInit {
     this.inventoryService.searchProductsTransfer(this.searchForm).subscribe(res => {
       if(this.searchForm.type == BatchType.INPUT && res.data.is_kho_tong) {
         this.productStatus = Object.keys(ProductStoreStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-          obj[key] = ProductStoreStatus[key];
-          return obj;
+          if([ProductStoreStatus.STATUS_AVAILABLE, ProductStoreStatus.STATUS_EXPORTED, ProductStoreStatus.STATUS_SOLD].includes(ProductStoreStatus[key])) {                    
+            obj[key] = ProductStoreStatus[key];
+          }
+          return obj; 
         }, {});
         this.isShowStatusKhoTong = true;
       } else {
