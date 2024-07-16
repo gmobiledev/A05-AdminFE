@@ -348,4 +348,8 @@ export class InventoryService {
   searchProductsTransfer(dto) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/product/list-transfer-channel`, {params: dto});
   }
+
+  updateProductAttributeBatch(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/attribute/update-batch`, data);
+  }
 }
