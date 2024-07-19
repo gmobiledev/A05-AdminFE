@@ -124,6 +124,8 @@ export class EditProductsComponent implements OnInit {
   currentChannel;
   currentExcelFileSearch;
   listStatus;
+  listProductFail = [];
+  reasonFail;
 
   constructor(    
     private readonly inventoryService: InventoryService,
@@ -180,6 +182,7 @@ export class EditProductsComponent implements OnInit {
   }
 
   modalClose() {
+    this.listProductFail = [];
     this.modalRef.close();
     this.getData();
   }
@@ -471,6 +474,50 @@ export class EditProductsComponent implements OnInit {
           }
           html+= '</tbody></table></div>';
           this.alertService.showHtml(html, 'success', res.message)
+        }
+        
+        this.modalClose();      
+        this.selectedItems = [];
+        this.tempSelectedItems = [];
+        this.disableSelectParent = false;
+        this.searchProductStore();
+      },error => {
+        this.itemBlockUI.stop();
+        this.submitted  = false;
+        this.alertService.showMess(error);
+      })
+    }    
+
+  }
+
+  async onSubmitUpdateAttributeBatch() {
+    if(!this.searchForm.channel_id) {
+      this.alertService.showMess("Vui lòng chọn kho cần cập nhật sản phẩm");
+      return;
+    }
+    if(!this.fileExcelPrice) {
+      this.alertService.showMess("Vui lòng chọn file");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có chắc chắn cập nhật theo file excel")).value) {
+      this.submitted = true;
+      this.itemBlockUI.start();
+      let formData = new FormData();
+      formData.append("files", this.fileExcelPrice);
+      formData.append("channel_id", this.searchForm.channel_id);
+      this.inventoryService.updateProductAttributeBatch(formData).subscribe(res => {
+        this.itemBlockUI.stop();
+        this.submitted = false;
+        if(!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }        
+        if(res.data.product_update_fail.list.length < 1) {
+          this.alertService.showSuccess(res.message, 4500);
+        } else {
+          this.listProductFail = res.data.product_update_fail.list.map(x => { return {name: x} });
+          this.reasonFail = res.data.product_update_fail.reason;
+          return;
         }
         
         this.modalClose();      

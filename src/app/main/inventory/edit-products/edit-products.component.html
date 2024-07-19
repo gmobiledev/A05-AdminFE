@@ -157,6 +157,10 @@
                                    <button type="button" 
                                  (click)="modalOpen(modalUpdatePriceBatch)" class="btn btn-success mb-1 mr-5" rippleEffect><span [data-feather]="'dollar-sign'"
                                    ></span>Cập nhật giá bán bằng file</button>
+
+                                   <button type="button" 
+                                 (click)="modalOpen(modalUpdateAttributeBatch)" class="btn btn-success mb-1 mr-5" rippleEffect><span
+                                   ></span>Cập nhật sản phẩm bằng file</button>
                                   
                                    <ng-container *ngIf="currentChannel && currentChannel.parent_id">
                                   <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
@@ -583,4 +587,72 @@
         <button (click)="onSubmitData()" type="button" class="btn btn-warning mb-1" rippleEffect><span
             [class]="'mr-25'"></span>Hoàn thành</button>
     </div>
+</ng-template>
+
+
+<ng-template #modalUpdateAttributeBatch let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title text-info" id="myModalLabel160">Cập nhật sản phẩm</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">   
+    <div class="form-group" *ngIf="listProductFail.length < 1">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      <input type="file" (change)="onFileChangeExcel($event)" />
+      <label>Tải lên file excel</label>
+
+      <a href="/assets/update_attributes.xlsx" class="ml-2">File mẫu tại đây</a>
+    </div> 
+
+    <ng-container *ngIf="listProductFail.length > 0">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-warning"><i data-feather="alert-triangle" class="cursor-pointer"></i>{{ listProductFail.length
+            }} sản phẩm không cập nhật được. Lý do: <b>{{ reasonFail }}</b>
+
+            <a csvLink [data]="listProductFail" class="btn btn-outline-warning float-right btn-sm" rippleEffect><i
+                data-feather="download" class="cursor-pointer"></i></a>
+          </p>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ngx-datatable [rows]="listProductFail" [rowHeight]="58" class="bootstrap core-bootstrap"
+            [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+            [limit]="basicSelectedOption">
+            <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>            
+          </ngx-datatable>
+        </div>
+      </div>
+
+    </ng-container>
+
+  </div>
+
+  <div class="modal-footer">
+    <button
+    *ngIf="listProductFail.length < 1"
+      (click)="onSubmitUpdateAttributeBatch()"
+      [disabled]="submitted"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      <span
+        class="spinner-border spinner-border-sm"
+        role="ekyc_status"
+        aria-hidden="true"
+        *ngIf="submitted"
+      ></span>
+      Submit
+    </button>
+  </div>
 </ng-template>
