@@ -346,6 +346,24 @@ export class ListTaskComponent implements OnInit {
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
+
+    if (!daterangeString) {
+      this.alertService.showError("Bạn cần chọn khoảng thời gian xuất excel")
+      return;
+    } else {
+      var startDate = new Date(this.dateRange.startDate.toISOString())
+      var endDate = new Date(this.dateRange.endDate.toISOString())
+      var priorDate = new Date(new Date().setDate(startDate.getDate() + 32));
+
+      console.log(startDate,endDate,priorDate)
+
+      if (endDate.getTime() > priorDate.getTime()) {
+        this.alertService.showError("Chỉ xuất được tối đa trong 31 ngày")
+        return;
+
+      }
+    }
+
     this.telecomService.exportExcelReport(this.searchForm).subscribe(res => {
       var newBlob = new Blob([res.body], { type: res.body.type });
       let url = window.URL.createObjectURL(newBlob);
@@ -358,7 +376,7 @@ export class ListTaskComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     }, err => {
-      this.alertService.showError(err.message)
+      this.alertService.showError(err);
     })
   }
 
