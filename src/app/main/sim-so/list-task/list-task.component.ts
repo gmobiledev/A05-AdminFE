@@ -353,12 +353,10 @@ export class ListTaskComponent implements OnInit {
     } else {
       var startDate = new Date(this.dateRange.startDate.toISOString())
       var endDate = new Date(this.dateRange.endDate.toISOString())
-      var priorDate = new Date(new Date().setDate(startDate.getDate() + 32));
-
-      console.log(startDate,endDate,priorDate)
+      var priorDate = new Date(startDate.setDate(startDate.getDate() + 60));
 
       if (endDate.getTime() > priorDate.getTime()) {
-        this.alertService.showError("Chỉ xuất được tối đa trong 31 ngày")
+        this.alertService.showError("Chỉ xuất được tối đa trong 60 ngày")
         return;
 
       }
