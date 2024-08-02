@@ -141,6 +141,37 @@ const routes: Routes = [
     path: 'report/ket-qua',
     component: KetQuaComponent
   },
+  {
+    path: 'report/doanh-thu-g59',
+    component: DoanhThuG59Component
+  },
+  {
+    path: 'report/kinh-doanh-g59',
+    component: KinhDoanhG59Component
+  },
+  {
+    path: 'report/ton-kho-g59',
+    component: TonKhoG59Component
+  },
+
+  {
+    path: 'report/ton-kho-sim-g59',
+    component: TonKhoSimG59Component
+  },
+  {
+    path: 'report/tong-hop-g59',
+    component: TongHopG59Component
+  },
+
+  {
+    path: 'report/chi-tiet-g59',
+    component: ChiTietG59Component
+  },
+
+  {
+    path: 'report/ket-qua-g59',
+    component: KetQuaG59Component
+  },
 
   {
     path: 'view-junior-sell',

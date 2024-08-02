@@ -377,6 +377,46 @@ export const menu: CoreMenu[] = [
     ]
   },
 
+  {
+    id: 'users',
+    title: 'Báo cáo G59',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '5',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+
+      {
+        id: 'report-business',
+        title: 'Tình trạng TB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/tong-hop-g59'
+      },
+      {
+        id: 'report-business',
+        title: 'Chi tiết TB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/chi-tiet-g59'
+      },
+      {
+        id: 'report-business',
+        title: 'Tổng hợp kết quả',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/ket-qua-g59'
+      }
+    ]
+  },
+
 
   {
     id: 'users',
