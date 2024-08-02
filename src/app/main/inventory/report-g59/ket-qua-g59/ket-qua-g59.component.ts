@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { AdminService } from 'app/auth/service/admin.service';
 const ExcelJS = require('exceljs');
 
 @Component({
@@ -38,7 +39,8 @@ export class KetQuaG59Component implements OnInit {
   };
 
   searchForm = {
-    channel_id: '',
+    district_id: '',
+    communes_id: '',
     end_date: '',
     start_date: '',
   }
@@ -52,7 +54,8 @@ export class KetQuaG59Component implements OnInit {
     sum_cost: 0,
     sum_topup: 0,
   }
-  listChannel;
+  listDistrict;
+  listCommunes;
   list;
   dataExcel;
   submitted = false;
@@ -65,10 +68,12 @@ export class KetQuaG59Component implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private readonly inventoryService: InventoryService
+    private readonly inventoryService: InventoryService,
+    private adminSerivce: AdminService,
+
   ) {
     this.route.queryParams.subscribe(async params => {
-      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
+      this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['channel_id'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
       let endDate = new Date(new Date().getTime() - tzoffset);
@@ -98,7 +103,7 @@ export class KetQuaG59Component implements OnInit {
       sum_topup: 0,
     }
     const paramsSearch = {
-      channel_id: this.searchForm.channel_id,
+      channel_id: this.searchForm.district_id,
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
@@ -153,8 +158,27 @@ export class KetQuaG59Component implements OnInit {
   }
 
   async getChannel() {
-    const res = await this.inventoryService.getChannelS99(null).toPromise();
-    this.listChannel = res.data.items;
+    const res = await this.adminSerivce.getDistrictsAll().toPromise();
+    this.listDistrict = res.data;
+
+  }
+
+  async onChangeHomeDistrict(id, init = null) {
+
+    console.log(id)
+    this.searchForm.communes_id = null
+    try {
+      const res = await this.adminSerivce.getCommunes(id).toPromise();
+      if (res.status == 1) {
+        if (!init) {
+          // this.formGroup.controls['commune_id'].setValue('');
+        }
+        this.listCommunes = res.data
+
+      }
+    } catch (error) {
+
+    }
   }
 
   async exportExcel() {

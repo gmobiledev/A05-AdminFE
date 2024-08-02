@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InventoryService } from 'app/auth/service/inventory.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { AdminService } from 'app/auth/service/admin.service';
 
 @Component({
   selector: 'app-chi-tiet-g59',
@@ -34,7 +35,8 @@ export class ChiTietG59Component implements OnInit {
   };
 
   searchForm = {
-    channel_id: '',
+    district_id: '',
+    communes_id: '',
     end_date: '',
     start_date: '',
     msisdn: '',
@@ -48,7 +50,8 @@ export class ChiTietG59Component implements OnInit {
     imported: 0,
     total: 0
   }
-  listChannel;
+  listDistrict;
+  listCommunes;
   list;
   totalItems;
   submitted = false;
@@ -56,10 +59,11 @@ export class ChiTietG59Component implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private readonly inventoryService: InventoryService
+    private readonly inventoryService: InventoryService,
+    private adminSerivce: AdminService,
   ) {
     this.route.queryParams.subscribe(async params => {
-      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
+      this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
       this.searchForm.msisdn = params['msisdn'] && params['msisdn'] != undefined ? params['msisdn'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
@@ -91,7 +95,7 @@ export class ChiTietG59Component implements OnInit {
       total: 0
     }
     const paramsSearch = {
-      channel_id: this.searchForm.channel_id,
+      channel_id: this.searchForm.district_id,
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
       status: this.searchForm.status,
@@ -127,8 +131,27 @@ export class ChiTietG59Component implements OnInit {
   }
 
   async getChannel() {
-    const res = await this.inventoryService.getChannelS99(null).toPromise();
-    this.listChannel = res.data.items;
+    const res = await this.adminSerivce.getDistrictsAll().toPromise();
+    this.listDistrict = res.data;
+
+  }
+
+  async onChangeHomeDistrict(id, init = null) {
+
+    console.log(id)
+    this.searchForm.communes_id = null
+    try {
+      const res = await this.adminSerivce.getCommunes(id).toPromise();
+      if (res.status == 1) {
+        if (!init) {
+          // this.formGroup.controls['commune_id'].setValue('');
+        }
+        this.listCommunes = res.data
+
+      }
+    } catch (error) {
+
+    }
   }
 
   showStatus(value) {
@@ -149,7 +172,7 @@ export class ChiTietG59Component implements OnInit {
     this.sectionBlockUI.start();
     this.submitted = true;
     const paramsSearch = {
-      channel_id: this.searchForm.channel_id,
+      channel_id: this.searchForm.district_id,
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
       status: this.searchForm.status,
