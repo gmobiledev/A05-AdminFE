@@ -73,7 +73,9 @@ export class KetQuaG59Component implements OnInit {
 
   ) {
     this.route.queryParams.subscribe(async params => {
-      this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['channel_id'] : '';
+      this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
+      this.searchForm.communes_id = params['communes_id'] && params['communes_id'] != undefined ? params['communes_id'] : '';
+
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
       let endDate = new Date(new Date().getTime() - tzoffset);
@@ -103,7 +105,8 @@ export class KetQuaG59Component implements OnInit {
       sum_topup: 0,
     }
     const paramsSearch = {
-      channel_id: this.searchForm.district_id,
+      district_id: this.searchForm.district_id,
+      communes_id: this.searchForm.communes_id, 
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }

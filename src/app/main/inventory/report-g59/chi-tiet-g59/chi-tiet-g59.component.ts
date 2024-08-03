@@ -64,6 +64,7 @@ export class ChiTietG59Component implements OnInit {
   ) {
     this.route.queryParams.subscribe(async params => {
       this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
+      this.searchForm.communes_id = params['communes_id'] && params['communes_id'] != undefined ? params['communes_id'] : '';
       this.searchForm.msisdn = params['msisdn'] && params['msisdn'] != undefined ? params['msisdn'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
@@ -95,7 +96,8 @@ export class ChiTietG59Component implements OnInit {
       total: 0
     }
     const paramsSearch = {
-      channel_id: this.searchForm.district_id,
+      district_id: this.searchForm.district_id,
+      communes_id: this.searchForm.communes_id, 
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
       status: this.searchForm.status,
