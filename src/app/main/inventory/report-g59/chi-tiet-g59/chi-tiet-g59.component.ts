@@ -108,7 +108,7 @@ export class ChiTietG59Component implements OnInit {
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     const listCurrentAction = currentUser.actions;
-    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-msisdn')) {
+    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-msisdn')) {
       this.inventoryService.reportChiTietSim(paramsSearch).subscribe(res => {
         this.submitted = false;
         this.sectionBlockUI.stop();

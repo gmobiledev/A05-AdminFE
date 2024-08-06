@@ -113,7 +113,7 @@ export class KetQuaG59Component implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     const listCurrentAction = currentUser.actions;
     
-    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-summary')){
+    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-summary')){
       this.inventoryService.reportKetQuaSim(paramsSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.submitted = false;
