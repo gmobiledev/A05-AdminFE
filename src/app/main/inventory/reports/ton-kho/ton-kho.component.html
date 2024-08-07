@@ -45,6 +45,7 @@
                                         <!-- <th>ĐK TTTB</th> -->
                                         <th>Tồn hiện tại</th>
                                         <th>Tổng</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +68,12 @@
                                         <td>
                                             {{item.total || 0 | number}}
                                         </td>
+                                        <td>
+                                            <a class="ml-1" (click)="exportExcelReportDetail()"
+                                                [queryParams]="{ channel_id: item.id }" title="Xuất báo cáo chi tiết đầu số">
+                                                <i data-feather="file-text" class="text-primary cursor-pointer"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Tổng</td>
@@ -76,6 +83,7 @@
                                         <!-- <td>{{sumItems?.exported || 0}}</td> -->
                                         <td>{{sumItems?.total - sumItems?.exported || 0}}</td>
                                         <td>{{sumItems?.total || 0}}</td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
