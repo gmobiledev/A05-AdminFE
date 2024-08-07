@@ -39,6 +39,7 @@ import { WarningComponent } from './warning/warning.component';
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { DvkhSearchComponent } from './dvkh-search/dvkh-search.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { SearchEsimComponent } from './search-esim/search-esim.component';
 
 const routes: Routes = [
   {
@@ -137,7 +138,8 @@ const routes: Routes = [
     CommitmentComponent,
     CommitmentDetailComponent,
     WarningComponent,
-    DvkhSearchComponent
+    DvkhSearchComponent,
+    SearchEsimComponent
     ],
   imports: [
     CommonModule, 
