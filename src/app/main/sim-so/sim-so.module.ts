@@ -67,6 +67,10 @@ const routes: Routes = [
     component: DvkhSearchComponent
   },
   {
+    path: 'esim-search',
+    component: SearchEsimComponent
+  },
+  {
     path: 'search-subscription',
     component: SearchSubscriptionComponent
   },
@@ -139,7 +143,7 @@ const routes: Routes = [
     CommitmentDetailComponent,
     WarningComponent,
     DvkhSearchComponent,
-    SearchEsimComponent
+    SearchEsimComponent,
     ],
   imports: [
     CommonModule, 

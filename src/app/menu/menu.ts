@@ -344,7 +344,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '5',
+      title: '3',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
@@ -384,7 +384,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '5',
+      title: '3',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
@@ -622,7 +622,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '1',
+      title: '5',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
@@ -649,7 +649,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'search',
-        url: 'sim-so/msisdn/topup'
+        url: 'sim-so/esim-search'
       },
       // {
       //   id: 'search-balance-changes',
