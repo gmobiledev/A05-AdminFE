@@ -352,4 +352,16 @@ export class InventoryService {
   updateProductAttributeBatch(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/attribute/update-batch`, data);
   }
+
+  reportKetQuaSimG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-summary`, {params: params} );
+  }
+
+  reportTongHopSimG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-state`, {params: params} );
+  }
+
+  reportChiTietSimG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn`, {params: params});
+  }
 }

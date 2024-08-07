@@ -113,7 +113,7 @@ export class TongHopG59Component implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     const listCurrentAction = currentUser.actions;
     if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-msisdn-state')) {
-      this.inventoryService.reportTongHopSim(paramsSearch).subscribe(res => {
+      this.inventoryService.reportTongHopSimG59(paramsSearch).subscribe(res => {
         this.submitted = false;
         this.sectionBlockUI.stop();
         this.list = res.data;

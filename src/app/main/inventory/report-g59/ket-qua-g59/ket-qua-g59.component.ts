@@ -114,7 +114,7 @@ export class KetQuaG59Component implements OnInit {
     const listCurrentAction = currentUser.actions;
     
     if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-summary')){
-      this.inventoryService.reportKetQuaSim(paramsSearch).subscribe(res => {
+      this.inventoryService.reportKetQuaSimG59(paramsSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.submitted = false;
         this.list = res.data;      
