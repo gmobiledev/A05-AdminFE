@@ -124,7 +124,12 @@ export class TelecomService {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-sim-vnm`, {});
     else if (task.action == this.listTaskAction.new_sim.value)
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
+    else if(task.action == this.listTaskAction.change_info)
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/update-info-subsriber`, {});
+
   }
+
+  
 
   sendCallback(task) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/send-callback`, {});
