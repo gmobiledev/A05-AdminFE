@@ -312,4 +312,8 @@ export class TelecomService {
   getBussinessReport(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/telecom-logs/incurredChargesReport`, data);
   }
+
+  resendMail(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/resend-email`, data);
+  }
 }
