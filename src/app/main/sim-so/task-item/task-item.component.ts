@@ -758,6 +758,28 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
+  async onRetryTask() {
+    if ((await this.alertService.showConfirm(`Bạn có đồng ý thực hiện lại?`)).value) {
+      const data = {
+        task_id: this.data.task.id
+      }
+      this.telecomService.retryTask(data).subscribe(res => {        
+        if(res && !res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        if(res){
+          this.alertService.showSuccess(res.message);
+        }
+        
+        this.modalClose();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+  }
+
   onDownloadImages() {
     var zip = new JSZip();
     if (this.data.task.action == this.listTaskAction.new_sim.value) {

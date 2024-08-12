@@ -316,4 +316,8 @@ export class TelecomService {
   resendMail(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/resend-email`, data);
   }
+
+  retryTask(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/change-esim`, data);
+  }
 }
