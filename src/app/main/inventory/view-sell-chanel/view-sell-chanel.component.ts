@@ -118,6 +118,7 @@ export class ViewSellChanelComponent implements OnInit {
     keyword: '',
     level: '',
     is_kitting: '',
+    is_exported: '',
     category_id: ''
   }
   isLoaded: boolean = false;
@@ -191,6 +192,7 @@ export class ViewSellChanelComponent implements OnInit {
 
 
       this.searchForm.is_kitting = params['is_kitting'] && params['is_kitting'] != undefined ? params['is_kitting'] : '';
+      this.searchForm.is_exported = params['is_exported'] && params['is_exported'] != undefined ? params['is_exported'] : '';
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;

@@ -359,7 +359,26 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
-  
+  async updateInfoSubscriber(item) {
+    let confirmMessage = "Xác nhận cập nhật TTTB"
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.sectionBlockUI.start();
+      item.action = this.listTaskAction.change_info
+      this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
+        this.sectionBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showError(res.message, 30000);
+          return;
+        }
+        this.alertService.showSuccess(res.data.message, 15000);
+      }, error => {
+        this.sectionBlockUI.stop();
+        this.alertService.showError(error, 15000);
+      })
+    }
+  }
+
+
 
   async sendCallback(item) {
     this.telecomService.sendCallback(item).subscribe(res => {
