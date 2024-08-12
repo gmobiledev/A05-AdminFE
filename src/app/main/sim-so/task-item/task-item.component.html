@@ -647,7 +647,7 @@
         </a>
 
         <button *ngIf="checkAction('POST@/api/telecom-admin/task/resend-email')
-        && this.data.task.sub_action == 'sim_to_esim'
+        && ['sim_to_esim', 'buy_esim'].includes(this.data.task.sub_action)
         && [taskTelecomStatus.STATUS_NEW_ORDER, taskTelecomStatus.STATUS_PROCESSING, taskTelecomStatus.STATUS_SUCCESS].includes(this.data.task.status) "class="ml-2 btn btn-info" rippleEffect
           (click)="modalOpen(modalResendMail)"><i data-feather="send" class="text-white cursor-pointer"></i> Gửi lại Email</button>
 
