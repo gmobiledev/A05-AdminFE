@@ -25,7 +25,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Quận, Huyện</label>
-                                        <ng-select name="district_id" [(ngModel)]="searchForm.district_id"
+                                        <ng-select name="g59_district_name" [(ngModel)]="searchForm.g59_district_name"
                                             (change)="onChangeHomeDistrict($event)">
                                             <ng-option *ngFor="let p of listDistrict" [value]="p.id">{{
                                                 p.title
@@ -36,7 +36,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Phường, Xã</label>
-                                        <ng-select name="communes_id" [(ngModel)]="searchForm.communes_id">
+                                        <ng-select name="g59_commune_name" [(ngModel)]="searchForm.g59_commune_name">
                                             <ng-option *ngFor="let p of listCommunes" [value]="p.id">{{
                                                 p.title
                                                 }}</ng-option>

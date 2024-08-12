@@ -35,8 +35,8 @@ export class ChiTietG59Component implements OnInit {
   };
 
   searchForm = {
-    district_id: '',
-    communes_id: '',
+    g59_district_name: '',
+    g59_commune_name: '',
     end_date: '',
     start_date: '',
     msisdn: '',
@@ -63,8 +63,8 @@ export class ChiTietG59Component implements OnInit {
     private adminSerivce: AdminService,
   ) {
     this.route.queryParams.subscribe(async params => {
-      this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
-      this.searchForm.communes_id = params['communes_id'] && params['communes_id'] != undefined ? params['communes_id'] : '';
+      this.searchForm.g59_district_name = params['g59_district_name'] && params['g59_district_name'] != undefined ? params['g59_district_name'] : '';
+      this.searchForm.g59_commune_name = params['g59_commune_name'] && params['g59_commune_name'] != undefined ? params['g59_commune_name'] : '';
       this.searchForm.msisdn = params['msisdn'] && params['msisdn'] != undefined ? params['msisdn'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
@@ -96,8 +96,8 @@ export class ChiTietG59Component implements OnInit {
       total: 0
     }
     const paramsSearch = {
-      district_id: this.searchForm.district_id,
-      communes_id: this.searchForm.communes_id, 
+      district_id: this.searchForm.g59_district_name,
+      communes_id: this.searchForm.g59_commune_name, 
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
       status: this.searchForm.status,
@@ -141,7 +141,7 @@ export class ChiTietG59Component implements OnInit {
   async onChangeHomeDistrict(id, init = null) {
 
     console.log(id)
-    this.searchForm.communes_id = null
+    this.searchForm.g59_commune_name = null
     try {
       const res = await this.adminSerivce.getCommunes(id).toPromise();
       if (res.status == 1) {
@@ -174,7 +174,7 @@ export class ChiTietG59Component implements OnInit {
     this.sectionBlockUI.start();
     this.submitted = true;
     const paramsSearch = {
-      channel_id: this.searchForm.district_id,
+      channel_id: this.searchForm.g59_district_name,
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
       status: this.searchForm.status,

@@ -41,8 +41,8 @@ export class TongHopG59Component implements OnInit {
   };
 
   searchForm = {
-    district_id: '',
-    communes_id: '',
+    g59_district_name: '',
+    g59_commune_name: '',
     end_date: '',
     start_date: '',
   }
@@ -73,8 +73,8 @@ export class TongHopG59Component implements OnInit {
 
   ) {
     this.route.queryParams.subscribe(async params => {
-      this.searchForm.district_id = params['district_id'] && params['district_id'] != undefined ? params['district_id'] : '';
-      this.searchForm.communes_id = params['communes_id'] && params['communes_id'] != undefined ? params['communes_id'] : '';
+      this.searchForm.g59_district_name = params['g59_district_name'] && params['g59_district_name'] != undefined ? params['g59_district_name'] : '';
+      this.searchForm.g59_commune_name = params['g59_commune_name'] && params['g59_commune_name'] != undefined ? params['g59_commune_name'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
       let endDate = new Date(new Date().getTime() - tzoffset);
@@ -104,8 +104,8 @@ export class TongHopG59Component implements OnInit {
       sum_topup: 0,
     }
     const paramsSearch = {
-      district_id: this.searchForm.district_id,
-      communes_id: this.searchForm.communes_id, 
+      district_id: this.searchForm.g59_district_name,
+      communes_id: this.searchForm.g59_commune_name, 
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
@@ -159,7 +159,7 @@ export class TongHopG59Component implements OnInit {
   async onChangeHomeDistrict(id, init = null) {
 
     console.log(id)
-    this.searchForm.communes_id = null
+    this.searchForm.g59_commune_name = null
     try {
       const res = await this.adminSerivce.getCommunes(id).toPromise();
       if (res.status == 1) {
