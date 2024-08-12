@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
 import { TelecomService } from 'app/auth/service/telecom.service';
-import { STORAGE_KEY, TaskAction, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { STORAGE_KEY, TaskAction, TaskTelecom, TaskTelecomStatus, TelecomTaskSubAction } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
 import { AdminService } from 'app/auth/service/admin.service';
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken  } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 import dayjs from 'dayjs';
 
 @Component({
@@ -22,8 +22,8 @@ import dayjs from 'dayjs';
 export class ListTaskComponent implements OnInit {
 
   @ViewChild('modalItem') modalItem: ElementRef;
-  
-  public contentHeader: any =  {
+
+  public contentHeader: any = {
     headerTitle: 'Yêu cầu của đại lý',
     actionButton: true,
     breadcrumb: {
@@ -77,11 +77,12 @@ export class ListTaskComponent implements OnInit {
   }
   dateRange: any;
   selectedNote: string;
+  telecomTaskSubAction = TelecomTaskSubAction;
 
   ranges: any = {
     'Hôm nay': [dayjs(), dayjs()],
     'Hôm qua': [dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')],
-    'Tuần vừa qua': [dayjs().subtract(6, 'days'), dayjs()],    
+    'Tuần vừa qua': [dayjs().subtract(6, 'days'), dayjs()],
     'Tháng này': [dayjs().startOf('month'), dayjs().endOf('month')],
     'Tháng trước': [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')]
   }
@@ -112,7 +113,7 @@ export class ListTaskComponent implements OnInit {
       delete this.taskTelecomStatus['STATUS_DVKHKD_REJECT'];
       delete this.taskTelecomStatus['STATUS_PROCESS_TO_MNO'];
       console.log(this.taskTelecomStatus);
-      
+
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.cccd = params['cccd'] && params['cccd'] != undefined ? params['cccd'] : '';
       this.searchForm.customer_name = params['customer_name'] && params['customer_name'] != undefined ? params['customer_name'] : '';
@@ -124,13 +125,13 @@ export class ListTaskComponent implements OnInit {
       this.searchForm.array_status = params['array_status'] && params['array_status'] != undefined ? params['array_status'] : [];
       this.searchForm.sub_action = params['sub_action'] && params['sub_action'] != undefined ? params['sub_action'] : '';
       this.initActiveBoxSummary();
-      if(this.searchForm.action && this.searchForm.array_status.length > 0) {
+      if (this.searchForm.action && this.searchForm.array_status.length > 0) {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);
       }
-      if(!this.searchForm.action) {
+      if (!this.searchForm.action) {
         this.contentHeader.headerTitle = 'Yêu cầu của đại lý';
         this.contentHeader.breadcrumb.links[1] = 'Yêu cầu của đại lý';
-      }else if(this.searchForm.action && this.searchForm.action == this.listTaskAction.change_info.value) {
+      } else if (this.searchForm.action && this.searchForm.action == this.listTaskAction.change_info.value) {
         this.contentHeader.headerTitle = 'Yêu cầu cập nhật TTTB của đại lý';
         this.contentHeader.breadcrumb.links[1] = 'Yêu cầu cập nhật TTTB của đại lý';
       } else if (this.searchForm.action && this.searchForm.action == this.listTaskAction.new_sim.value) {
@@ -139,48 +140,48 @@ export class ListTaskComponent implements OnInit {
       }
       this.getData();
     })
-    
+
   }
 
-  async modalOpen(modal, item = null) { 
-    if(item) {
+  async modalOpen(modal, item = null) {
+    if (item) {
       let check;
       this.itemBlockDetailUI.start();
       //neu la task dau noi cho KH doanh nghiep, chuyen sang trang moi
-      if(item.customer_id && item.customer_type == 'ORGANIZATION') {
-        if((item.status == TaskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION || item.status == TaskTelecomStatus.STATUS_NEW_ORDER)
-          && (this.checkAction('telecom-admin/task/:slug(\\d+)/update-status') || this.checkAction('telecom-admin/task/:slug(\\d+)/'+ item.action+ '/update-status'))
-          ) {
+      if (item.customer_id && item.customer_type == 'ORGANIZATION') {
+        if ((item.status == TaskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION || item.status == TaskTelecomStatus.STATUS_NEW_ORDER)
+          && (this.checkAction('telecom-admin/task/:slug(\\d+)/update-status') || this.checkAction('telecom-admin/task/:slug(\\d+)/' + item.action + '/update-status'))
+        ) {
           try {
             check = await this.telecomService.checkAvailabledTask(item.id);
-            if(!check.status) { 
+            if (!check.status) {
               this.getData();
-              this.alertService.showMess(check.message); 
-              return;              
+              this.alertService.showMess(check.message);
+              return;
             }
             this.itemBlockDetailUI.stop();
-            this.router.navigateByUrl('/sim-so/task/'+item.id);
+            this.router.navigateByUrl('/sim-so/task/' + item.id);
           } catch (error) {
             this.itemBlockDetailUI.stop();
             return;
           }
         } else {
-          this.router.navigateByUrl('/sim-so/task/'+item.id);
+          this.router.navigateByUrl('/sim-so/task/' + item.id);
         }
         return;
-      }      
+      }
       this.selectedItem = item;
-      
-      if(item.status != this.taskTelecomStatus.STATUS_CANCEL && item.status != this.taskTelecomStatus.STATUS_SUCCESS) {
+
+      if (item.status != this.taskTelecomStatus.STATUS_CANCEL && item.status != this.taskTelecomStatus.STATUS_SUCCESS) {
         try {
           // if (item.action != 'CHECK_CONVERSION_2G') {
           if ((item.status != this.taskTelecomStatus.STATUS_NEW_ORDER
             && this.checkAction('telecom-admin/task/approve-2g-conversion'))
             || (
               (item.status == this.taskTelecomStatus.STATUS_NEW_ORDER || item.status == this.taskTelecomStatus.STATUS_PROCESSING) &&
-              (this.checkAction('telecom-admin/task/:slug(\\d+)/update-status') || this.checkAction('telecom-admin/task/:slug(\\d+)/'+ item.action+ '/update-status'))
+              (this.checkAction('telecom-admin/task/:slug(\\d+)/update-status') || this.checkAction('telecom-admin/task/:slug(\\d+)/' + item.action + '/update-status'))
             )
-          
+
           ) {
             check = await this.telecomService.checkAvailabledTask(item.id);
             if (!check.status) {
@@ -188,16 +189,16 @@ export class ListTaskComponent implements OnInit {
               this.alertService.showMess(check.message);
             }
           }
-            
+
           // }
-          
+
           this.itemBlockDetailUI.stop();
           this.modalRef = this.modalService.open(modal, {
             centered: true,
             windowClass: 'modal modal-primary',
             size: 'xl',
-            backdrop : 'static',
-            keyboard : false
+            backdrop: 'static',
+            keyboard: false
           });
         } catch (error) {
           this.itemBlockDetailUI.stop();
@@ -209,68 +210,68 @@ export class ListTaskComponent implements OnInit {
           centered: true,
           windowClass: 'modal modal-primary',
           size: 'xl',
-          backdrop : 'static',
-          keyboard : false
+          backdrop: 'static',
+          keyboard: false
         });
-      }            
+      }
     }
   }
 
-  async modalApprovalOpen(modal, item = null, size = 'xl') { 
-    if(item) {     
+  async modalApprovalOpen(modal, item = null, size = 'xl') {
+    if (item) {
       this.selectedItem = item;
       this.modalRef = this.modalService.open(modal, {
         centered: true,
         windowClass: 'modal modal-primary',
         size: size,
-        backdrop : 'static',
-        keyboard : false
-      });            
+        backdrop: 'static',
+        keyboard: false
+      });
     }
   }
 
-  modalClose() {    
+  modalClose() {
     this.selectedItem = null;
     this.selectedNote = '';
     this.getData();
-    this.modalRef.close();    
+    this.modalRef.close();
   }
-  async modalViewAgentOpen(modal, item = null) { 
-    if(item) {
+  async modalViewAgentOpen(modal, item = null) {
+    if (item) {
       this.itemBlockUI.start();
-      
-        try {
-          let res = await this.telecomService.taskViewAgent(item);
-          if(!res.status) { 
-            this.getData();
-            this.alertService.showMess(res.message);
-          }
-          this.selectedAgent = res.data;
-          this.itemBlockUI.stop();
-          this.modalRef = this.modalService.open(modal, {
-            centered: true,
-            windowClass: 'modal modal-primary',
-            size: 'sm',
-            backdrop : 'static',
-            keyboard : false
-          });
-        } catch (error) {
-          this.itemBlockUI.stop();
-          return;
+
+      try {
+        let res = await this.telecomService.taskViewAgent(item);
+        if (!res.status) {
+          this.getData();
+          this.alertService.showMess(res.message);
         }
-      
+        this.selectedAgent = res.data;
+        this.itemBlockUI.stop();
+        this.modalRef = this.modalService.open(modal, {
+          centered: true,
+          windowClass: 'modal modal-primary',
+          size: 'sm',
+          backdrop: 'static',
+          keyboard: false
+        });
+      } catch (error) {
+        this.itemBlockUI.stop();
+        return;
+      }
+
     }
   }
 
-  modalViewAgentClose() {    
+  modalViewAgentClose() {
     this.selectedAgent = null;
     this.getData();
-    this.modalRef.close();    
+    this.modalRef.close();
   }
 
   onGetAvaiable(modalToOpen) {
     this.telecomService.getAvaiable().subscribe(res => {
-      if(!res.status) {
+      if (!res.status) {
         this.alertService.showMess(res.message);
         return;
       }
@@ -279,21 +280,21 @@ export class ListTaskComponent implements OnInit {
         centered: true,
         windowClass: 'modal modal-primary',
         size: 'xl',
-        backdrop : 'static',
-        keyboard : false
+        backdrop: 'static',
+        keyboard: false
       });
     })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm});
+    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
   }
 
   viewDetailSummary(array_status, action) {
     this.searchForm.action = action;
     this.searchForm.array_status = array_status;
-    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm});
+    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
   }
 
   initActiveBoxSummary() {
@@ -305,26 +306,26 @@ export class ListTaskComponent implements OnInit {
     this.isActivedBoxUpdateProcessing = false;
   }
 
-  setActiveBoxSummary(array_status, action) {   
-    if(action == this.listTaskAction.new_sim.value ) {
-      if(JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_NEW_ORDER+""]) ) {
+  setActiveBoxSummary(array_status, action) {
+    if (action == this.listTaskAction.new_sim.value) {
+      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_NEW_ORDER + ""])) {
         this.isActivedBoxNewInit = true;
       }
-      if(JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_PROCESSING+"", ""+this.taskTelecomStatus.STATUS_PROCESS_TO_MNO]) ) {
+      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_PROCESSING + "", "" + this.taskTelecomStatus.STATUS_PROCESS_TO_MNO])) {
         this.isActivedBoxNewProcessing = true;
       }
-    } else if (action == this.listTaskAction.change_info.value ) {
-      if(JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_NEW_ORDER+""]) ) {
+    } else if (action == this.listTaskAction.change_info.value) {
+      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_NEW_ORDER + ""])) {
         this.isActivedBoxChangeSimInit = true;
       }
-      if(JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_PROCESSING+"", ""+this.taskTelecomStatus.STATUS_PROCESS_TO_MNO]) ) {
+      if (JSON.stringify(array_status) == JSON.stringify([this.taskTelecomStatus.STATUS_PROCESSING + "", "" + this.taskTelecomStatus.STATUS_PROCESS_TO_MNO])) {
         this.isActivedBoxChangeSimProcessing = true;
       }
     }
   }
 
   showDate(date, timeZone, diff) {
-    if(!date) {
+    if (!date) {
       return '';
     }
     let dateConverted = new Date(date);
@@ -334,18 +335,34 @@ export class ListTaskComponent implements OnInit {
 
   onSubmitSearch() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
-    ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
-    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm});
+    this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
   }
 
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
-    ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
+    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
+
+    if (!daterangeString) {
+      this.alertService.showError("Bạn cần chọn khoảng thời gian xuất excel")
+      return;
+    } else {
+      var startDate = new Date(this.dateRange.startDate.toISOString())
+      var endDate = new Date(this.dateRange.endDate.toISOString())
+      var priorDate = new Date(startDate.setDate(startDate.getDate() + 60));
+
+      if (endDate.getTime() > priorDate.getTime()) {
+        this.alertService.showError("Chỉ xuất được tối đa trong 60 ngày")
+        return;
+
+      }
+    }
+
     this.telecomService.exportExcelReport(this.searchForm).subscribe(res => {
       var newBlob = new Blob([res.body], { type: res.body.type });
       let url = window.URL.createObjectURL(newBlob);
@@ -357,11 +374,13 @@ export class ListTaskComponent implements OnInit {
       a.click();
       window.URL.revokeObjectURL(url);
       a.remove();
+    }, err => {
+      this.alertService.showError(err);
     })
   }
 
-  onUpdateStatusSuccess(eventData: {updated: boolean}) {
-    if(eventData.updated) {
+  onUpdateStatusSuccess(eventData: { updated: boolean }) {
+    if (eventData.updated) {
       this.getData();
       // this.modalRef.close();
     }
@@ -392,15 +411,15 @@ export class ListTaskComponent implements OnInit {
   getSubscribe() {
     console.log(Notification.permission);
     let isSub = localStorage.getItem(STORAGE_KEY.FCM_SUBSCRIBE) ? true : false;
-    if(!isSub) {
-      if(Notification.permission === 'default') {
+    if (!isSub) {
+      if (Notification.permission === 'default') {
         Notification.requestPermission().then(() => {
           this.setSubcribe();
         }).catch((error) => {
-          console.log(error);        
+          console.log(error);
         });
       }
-      else if(Notification.permission === 'denied') {
+      else if (Notification.permission === 'denied') {
         console.log('denined');
       } else {
         this.setSubcribe();
@@ -408,7 +427,7 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
-  async setSubcribe() {  
+  async setSubcribe() {
     const firebaseConfig = environment.firebaseConfig;
     const app = initializeApp(firebaseConfig);
     const messaging = getMessaging(app);
@@ -435,7 +454,7 @@ export class ListTaskComponent implements OnInit {
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listCurrentAction = this.currentUser.actions;
-    if(this.currentUser && this.currentUser.roles) {
+    if (this.currentUser && this.currentUser.roles) {
       // const arrayRoles = this.currentUser.roles.map( item => {return item.item_name.toLowerCase()});
       // if(arrayRoles.includes("admin") || arrayRoles.includes("root")) {
       //   this.isAdmin = true;
@@ -463,7 +482,7 @@ export class ListTaskComponent implements OnInit {
   }
 
   getDetail(item) {
-    if(item.detail) {
+    if (item.detail) {
       try {
         return JSON.parse(item.detail);
       } catch (error) {
@@ -480,7 +499,7 @@ export class ListTaskComponent implements OnInit {
    * @returns 
    */
   async onSaveNote(content) {
-    if(!content || content == undefined) {
+    if (!content || content == undefined) {
       this.alertService.showMess("Vui lòng nhập nội dung");
       return;
     }
@@ -489,7 +508,7 @@ export class ListTaskComponent implements OnInit {
         note: content,
         task_id: this.selectedItem.id
       }).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
@@ -499,7 +518,7 @@ export class ListTaskComponent implements OnInit {
       }, err => {
         this.alertService.showMess(err);
       })
-    }  
+    }
   }
 
   copyTextClipboard(text: string) {
