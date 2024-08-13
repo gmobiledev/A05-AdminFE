@@ -325,6 +325,10 @@ export class InventoryService {
     return this._http.post(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
   }
 
+  exportReportChiTietSimByAdmin(params = null, data = null): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/s99-msisdn-by-admins/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
+  }
+
   // getReportSummaryS99(params = null) {
   //   return this._http.get<any>(`${environment.apiProductPrivate}/product-admin/report/dashboard`, {params: params});
   // }
