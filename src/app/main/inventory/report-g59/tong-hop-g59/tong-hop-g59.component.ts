@@ -57,8 +57,10 @@ export class TongHopG59Component implements OnInit {
     district: '',
     commune: ''  
   }
+  public districtID;
+  public communeID;
+  listCommunes; 
   listDistrict;
-  listCommunes;
   list;
   listExecel;
   submitted = false;
@@ -108,11 +110,20 @@ export class TongHopG59Component implements OnInit {
       commune: ''         
 
     }
+    
+    if (this.searchForm.g59_district_name != null){
+      this.districtID = this.listDistrict.find(element => element.id === this.searchForm.g59_district_name);
+    }
+
+    if (this.searchForm.g59_commune_name != null && this.listCommunes != null){
+      this.communeID = this.listCommunes.find(element => element.id === this.searchForm.g59_commune_name);
+    }
+
     const paramsSearch = {
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
-      district_name: this.searchForm.g59_district_name,
-      commune_name: this.searchForm.g59_commune_name, 
+      district_name: this.districtID ? this.districtID.title : "",
+      commune_name: this.communeID ? this.communeID.title : "", 
     }
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
@@ -158,7 +169,6 @@ export class TongHopG59Component implements OnInit {
   async getChannel() {
     const res = await this.adminSerivce.getDistrictsAll().toPromise();
     this.listDistrict = res.data;
-
   }
 
   async onChangeHomeDistrict(id, init = null) {
@@ -167,12 +177,8 @@ export class TongHopG59Component implements OnInit {
     this.searchForm.g59_commune_name = null
     try {
       const res = await this.adminSerivce.getCommunes(id).toPromise();
-      if (res.status == 1) {
-        if (!init) {
-          // this.formGroup.controls['commune_id'].setValue('');
-        }
-        this.listCommunes = res.data
-
+      if (res.status == 1) {      
+        this.listCommunes = res.data        
       }
     } catch (error) {
 
