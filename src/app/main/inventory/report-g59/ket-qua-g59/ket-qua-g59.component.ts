@@ -108,6 +108,10 @@ export class KetQuaG59Component implements OnInit {
       sum_topup: 0,
     }
 
+    this.districtID = null;
+    this.communeID = null;
+
+
     if (this.searchForm.g59_district_name != null){
       this.districtID = this.listDistrict.find(element => element.id === this.searchForm.g59_district_name);
     }

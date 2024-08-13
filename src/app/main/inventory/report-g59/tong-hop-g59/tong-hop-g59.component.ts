@@ -77,6 +77,7 @@ export class TongHopG59Component implements OnInit {
 
   ) {
     this.route.queryParams.subscribe(async params => {
+
       this.searchForm.g59_district_name = params['g59_district_name'] && params['g59_district_name'] != undefined ? params['g59_district_name'] : '';
       this.searchForm.g59_commune_name = params['g59_commune_name'] && params['g59_commune_name'] != undefined ? params['g59_commune_name'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -110,6 +111,9 @@ export class TongHopG59Component implements OnInit {
       commune: ''         
 
     }
+
+    this.districtID = null;
+    this.communeID = null;
     
     if (this.searchForm.g59_district_name != null){
       this.districtID = this.listDistrict.find(element => element.id === this.searchForm.g59_district_name);
