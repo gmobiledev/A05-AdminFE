@@ -71,18 +71,19 @@
 
                             <ngx-datatable #table class="bootstrap core-bootstrap" [summaryRow]="enableSummary"
                                 [summaryPosition]="summaryPosition" [summaryHeight]="100"
-                                [columnMode]="ColumnMode.force" [headerHeight]="50" rowHeight="auto" [rows]="list">
+                                [columnMode]="ColumnMode.force" [headerHeight]="100" rowHeight="auto" [rows]="list">
 
-                                <ngx-datatable-column name="STT" [width]="50" [cellClass]="table-stt">
+                                <ngx-datatable-column name="STT" [width]="100" [cellClass]="table-stt">
                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
                                         {{rowIndex+1}}
                                     </ng-template>
                                 </ngx-datatable-column>
-                                <ngx-datatable-column name="Quận, Huyện" prop="name" [summaryTemplate]="nameSummaryCell"
+                                <ngx-datatable-column name="Quận, Huyện" prop="district" [summaryTemplate]="nameSummaryCell"
                                     [cellClass]="d-block"></ngx-datatable-column>
 
-                                <ngx-datatable-column name="Phường, Xã" prop="name" [summaryTemplate]="nameSummaryCell"
+                                <ngx-datatable-column name="Phường, Xã" prop="commune" [summaryTemplate]="nameSummaryCell"
                                     [cellClass]="d-block"></ngx-datatable-column>
+
                                 <ngx-datatable-column name="SL Đăng Ký" prop="total_register" [summaryFunc]="sumValue">
                                     <ng-template let-row="row" ngx-datatable-cell-template>
                                         <div class="align-items-center">

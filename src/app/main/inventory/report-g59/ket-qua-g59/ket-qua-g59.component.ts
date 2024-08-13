@@ -105,10 +105,11 @@ export class KetQuaG59Component implements OnInit {
       sum_topup: 0,
     }
     const paramsSearch = {
-      district_id: this.searchForm.g59_district_name,
-      communes_id: this.searchForm.g59_commune_name, 
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
+      district_name: this.searchForm.g59_district_name,
+      commune_name: this.searchForm.g59_commune_name, 
+
     }
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     const listCurrentAction = currentUser.actions;
