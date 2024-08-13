@@ -18,6 +18,7 @@ import { CreateAgentDto, CreateAgentServiceDto, CreateUserDto, UpdateStatusAgent
 import { UserService } from 'app/auth/service';
 import { TaskService } from 'app/auth/service/task.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { CommonService } from 'app/utils/common.service';
 
 @Component({
   selector: 'app-view-detail-total-sell',
@@ -79,7 +80,8 @@ export class ViewDetailTotalSellComponent implements OnInit {
     private router: Router,
     private activeRouted: ActivatedRoute,    
     private inventoryService: InventoryService,
-
+    private commonService: CommonService,
+    private alertService: SweetAlertService
 
   ) {
     this.activeRouted.queryParams.subscribe(params => {
@@ -134,6 +136,20 @@ export class ViewDetailTotalSellComponent implements OnInit {
       this.totalItems = res.data.count;
     });
 
+  }
+
+  async exportExcelByLocal() {
+    this.sectionBlockUI.start();
+    this.inventoryService.getAllProductStore(this.searchForm).subscribe(async res => {
+      let data: any = res.data.items;
+      await this.commonService.downloadFile(data, 'danh sach', ['name',  'brand', 'level',  'price', 'status'])
+      this.sectionBlockUI.stop();
+    }, error => {
+      this.sectionBlockUI.stop();
+      this.alertService.showMess(error);
+      console.log("ERRRR");
+      console.log(error);
+    })
   }
 
   modalChannelOpen(modal, item) {

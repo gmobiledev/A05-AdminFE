@@ -68,11 +68,16 @@
                 </div>
 
                 <div class="pull-right">
+                <div class="d-flex">
+                  <button type="button" class="btn btn-success mr-2" (click)="exportExcelByLocal()">
+                    Xuất file excel
+                  </button>
+
                   <a routerLink="/inventory/edit-products"                  
                   [queryParams]="{channel_id: channel_id}"
                   class="btn d-block btn-primary">Sửa danh sách số</a>
                 </div>
-
+              </div>
               </div>
             </form>
 

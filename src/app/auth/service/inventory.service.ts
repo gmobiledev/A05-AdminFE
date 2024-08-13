@@ -352,4 +352,8 @@ export class InventoryService {
   updateProductAttributeBatch(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/attribute/update-batch`, data);
   }
+
+  getAllProductStore(dto: any) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/product-store/get-all`, {params: dto});
+  }
 }
