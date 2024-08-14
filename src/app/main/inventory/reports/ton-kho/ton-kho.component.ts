@@ -108,8 +108,11 @@ export class TonKhoComponent implements OnInit {
     }
 
 
-    exportExcelReportDetail() {
-        this.inventoryServie.reportInventoryExcelDetail(this.searchForm).subscribe(res => {
+    exportExcelReportDetail(number) {
+        let data = {
+            "dau_so": number
+        }
+        this.inventoryServie.reportInventoryExcelDetail(data).subscribe(res => {
             var newBlob = new Blob([res.body], { type: res.body.type });
             let url = window.URL.createObjectURL(newBlob);
             let a = document.createElement('a');

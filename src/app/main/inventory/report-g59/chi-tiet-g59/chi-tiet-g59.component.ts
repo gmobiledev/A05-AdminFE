@@ -50,6 +50,8 @@ export class ChiTietG59Component implements OnInit {
     imported: 0,
     total: 0
   }
+  public districtID;
+  public communeID;
   listDistrict;
   listCommunes;
   list;
@@ -74,7 +76,7 @@ export class ChiTietG59Component implements OnInit {
       this.searchForm.start_date = new Date(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0, 10)
       this.searchForm.end_date = endDate.toISOString().slice(0, 10);
       this.maxDate = endDate.toISOString().slice(0, 10);
-      await this.getChannel();
+      await this.getDistricts();
       this.getData();
     })
   }
@@ -95,21 +97,34 @@ export class ChiTietG59Component implements OnInit {
       imported: 0,
       total: 0
     }
+
+    this.districtID = null;
+    this.communeID = null;
+
+
+    if (this.searchForm.g59_district_name != null){
+      this.districtID = this.listDistrict.find(element => element.id === this.searchForm.g59_district_name);
+    }
+
+    if (this.searchForm.g59_commune_name != null && this.listCommunes != null){
+      this.communeID = this.listCommunes.find(element => element.id === this.searchForm.g59_commune_name);
+    }
+
     const paramsSearch = {
-      district_id: this.searchForm.g59_district_name,
-      communes_id: this.searchForm.g59_commune_name, 
+      start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
+      end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
+      district_name: this.districtID ? this.districtID.title : "",
+      commune_name: this.communeID ? this.communeID.title : "", 
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
       status: this.searchForm.status,
       page_size: this.searchForm.page_size,
-      start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
-      end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     const listCurrentAction = currentUser.actions;
     if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-msisdn')) {
-      this.inventoryService.reportChiTietSim(paramsSearch).subscribe(res => {
+      this.inventoryService.reportChiTietSimG59(paramsSearch).subscribe(res => {
         this.submitted = false;
         this.sectionBlockUI.stop();
         this.list = res.data.items;
@@ -132,7 +147,7 @@ export class ChiTietG59Component implements OnInit {
 
   }
 
-  async getChannel() {
+  async getDistricts() {
     const res = await this.adminSerivce.getDistrictsAll().toPromise();
     this.listDistrict = res.data;
 
@@ -174,7 +189,8 @@ export class ChiTietG59Component implements OnInit {
     this.sectionBlockUI.start();
     this.submitted = true;
     const paramsSearch = {
-      channel_id: this.searchForm.g59_district_name,
+      district_name: this.searchForm.g59_district_name,
+      commune_name: this.searchForm.g59_commune_name,
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
       status: this.searchForm.status,

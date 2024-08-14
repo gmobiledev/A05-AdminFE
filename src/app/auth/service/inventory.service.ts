@@ -375,4 +375,8 @@ export class InventoryService {
   getAllProductStore(dto: any) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/product-store/get-all`, {params: dto});
   }
+  
+  reportChiTietSimByAdminG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-by-admins`, {params: params});
+  }
 }
