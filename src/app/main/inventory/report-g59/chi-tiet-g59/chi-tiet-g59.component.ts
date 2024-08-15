@@ -122,7 +122,7 @@ export class ChiTietG59Component implements OnInit {
       commune_name: this.communeID ? this.communeID.title : "", 
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
-      channel_id: this.searchForm.channel_id,
+      channel_id: this.searchForm.channel_id ? this.searchForm.channel_id : '',
       status: this.searchForm.status,
       page_size: this.searchForm.page_size,
     }

@@ -131,7 +131,7 @@ export class TongHopG59Component implements OnInit {
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
       district_name: this.districtID ? this.districtID.title : "",
       commune_name: this.communeID ? this.communeID.title : "", 
-      channel_id: this.searchForm.channel_id
+      channel_id: this.searchForm.channel_id ? this.searchForm.channel_id : '',
     }
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
