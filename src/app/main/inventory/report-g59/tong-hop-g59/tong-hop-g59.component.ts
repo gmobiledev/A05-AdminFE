@@ -204,13 +204,15 @@ export class TongHopG59Component implements OnInit {
     const worksheet = wb.addWorksheet('My Sheet');
     worksheet.columns = [
       { letter: 'A', header: 'Đơn vị', key: 'name' },
-      { letter: 'B', header: 'SL thuê bao', key: 'count_msisdn' },
-      { letter: 'C', header: 'Số TB Active', key: 'sum_active' },
-      { letter: 'D', header: 'Số TB Khóa 1C', key: 'sum_s1' },
-      { letter: 'E', header: 'Số TB Khóa 2C', key: 'sum_s2' },
-      { letter: 'F', header: 'Số TB Thu hồi', key: 'sum_th' },
-      { letter: 'G', header: 'Doanh thu topup', key: 'sum_topup' },
-      { letter: 'H', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
+      { letter: 'B', header: 'Quận, Huyện', key: 'district' },
+      { letter: 'C', header: 'Phường, Xã', key: 'commune' },
+      { letter: 'D', header: 'SL thuê bao', key: 'count_msisdn' },
+      { letter: 'E', header: 'Số TB Active', key: 'sum_active' },
+      { letter: 'F', header: 'Số TB Khóa 1C', key: 'sum_s1' },
+      { letter: 'G', header: 'Số TB Khóa 2C', key: 'sum_s2' },
+      { letter: 'H', header: 'Số TB Thu hồi', key: 'sum_th' },
+      { letter: 'I', header: 'Doanh thu topup', key: 'sum_topup' },
+      { letter: 'J', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
     ];
     worksheet.addRows(this.list);
     const buffer = await wb.xlsx.writeBuffer();

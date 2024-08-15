@@ -214,14 +214,16 @@ export class KetQuaG59Component implements OnInit {
     const worksheet = wb.addWorksheet('My Sheet');
     worksheet.columns = [
       { letter: 'A', header: 'Đơn vị', key: 'name' },
-      { letter: 'B', header: 'SL đăng ký', key: 'total_register' },
-      { letter: 'C', header: 'Bàn giao', key: 'received' },
-      { letter: 'D', header: 'Tỉ lệ(%)', key: 'percent' },
-      { letter: 'E', header: 'Số lượng TB hoạt động', key: 'actived' },
-      { letter: 'F', header: 'Số thuê bao hoạt động luỹ kế', key: 'luy_ke_actived' },
-      { letter: 'G', header: 'Số TB hoàn thiện TTTB', key: 'hoan_thien_tttb' },
-      { letter: 'H', header: 'Doanh thu topup', key: 'sum_topup' },
-      { letter: 'I', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
+      { letter: 'B', header: 'Quận, Huyện', key: 'district' },
+      { letter: 'C', header: 'Phường, Xã', key: 'commune' },
+      { letter: 'D', header: 'SL đăng ký', key: 'total_register' },
+      { letter: 'E', header: 'Bàn giao', key: 'received' },
+      { letter: 'F', header: 'Tỉ lệ(%)', key: 'percent' },
+      { letter: 'G', header: 'Số lượng TB hoạt động', key: 'actived' },
+      { letter: 'H', header: 'Số thuê bao hoạt động luỹ kế', key: 'luy_ke_actived' },
+      { letter: 'I', header: 'Số TB hoàn thiện TTTB', key: 'hoan_thien_tttb' },
+      { letter: 'J', header: 'Doanh thu topup', key: 'sum_topup' },
+      { letter: 'K', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
     ];
     let exportData = this.list.map(obj => ({...obj}));
     for(let i = 0;i<exportData.length;i++) {
