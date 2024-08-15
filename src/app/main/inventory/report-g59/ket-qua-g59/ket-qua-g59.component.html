@@ -88,6 +88,10 @@
                                         {{rowIndex+1}}
                                     </ng-template>
                                 </ngx-datatable-column>
+                                
+                                <ngx-datatable-column name="Tên Đơn Vị" prop="name" [summaryTemplate]="nameSummaryCell"
+                                [cellClass]="d-block"></ngx-datatable-column>
+
                                 <ngx-datatable-column name="Quận, Huyện" prop="district" [summaryTemplate]="nameSummaryCell"
                                     [cellClass]="d-block"></ngx-datatable-column>
 
