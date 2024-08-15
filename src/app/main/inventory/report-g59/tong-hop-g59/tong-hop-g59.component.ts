@@ -45,6 +45,7 @@ export class TongHopG59Component implements OnInit {
     g59_commune_name: '',
     end_date: '',
     start_date: '',
+    channel_id: '',
   }
   sumItems = {
     count_msisdn: 0,
@@ -60,6 +61,7 @@ export class TongHopG59Component implements OnInit {
   public districtID;
   public communeID;
   listCommunes; 
+  listChannel;
   listDistrict;
   list;
   listExecel;
@@ -77,7 +79,7 @@ export class TongHopG59Component implements OnInit {
 
   ) {
     this.route.queryParams.subscribe(async params => {
-
+      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
       this.searchForm.g59_district_name = params['g59_district_name'] && params['g59_district_name'] != undefined ? params['g59_district_name'] : '';
       this.searchForm.g59_commune_name = params['g59_commune_name'] && params['g59_commune_name'] != undefined ? params['g59_commune_name'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -88,6 +90,7 @@ export class TongHopG59Component implements OnInit {
       this.searchForm.start_date = new Date(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0, 10)
       this.searchForm.end_date = endDate.toISOString().slice(0, 10);
       this.maxDate = endDate.toISOString().slice(0, 10);
+      await this.getDistrict();
       await this.getChannel();
       this.getData();
     })
@@ -128,6 +131,7 @@ export class TongHopG59Component implements OnInit {
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
       district_name: this.districtID ? this.districtID.title : "",
       commune_name: this.communeID ? this.communeID.title : "", 
+      channel_id: this.searchForm.channel_id
     }
 
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
@@ -170,9 +174,15 @@ export class TongHopG59Component implements OnInit {
 
   }
 
-  async getChannel() {
+  async getDistrict() {
     const res = await this.adminSerivce.getDistrictsAll().toPromise();
     this.listDistrict = res.data;
+  }
+
+  async getChannel() {
+    const res = await this.inventoryService.getChannelG59(null).toPromise();
+    this.listChannel = res.data.items;
+
   }
 
   async onChangeHomeDistrict(id, init = null) {

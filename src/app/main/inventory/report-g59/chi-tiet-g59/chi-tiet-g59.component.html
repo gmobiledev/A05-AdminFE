@@ -24,6 +24,16 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                      <label for="">Đơn vị</label>
+                                      <ng-select name="sell_channel_id" [(ngModel)]="searchForm.channel_id">
+                                        <ng-option *ngFor="let p of listChannel" [value]="p.id">{{
+                                          p.name
+                                          }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label for="">Quận, Huyện</label>
                                         <ng-select name="g59_district_name" [(ngModel)]="searchForm.g59_district_name"
                                             (change)="onChangeHomeDistrict($event)">

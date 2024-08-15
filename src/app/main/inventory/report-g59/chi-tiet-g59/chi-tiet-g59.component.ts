@@ -37,6 +37,7 @@ export class ChiTietG59Component implements OnInit {
   searchForm = {
     g59_district_name: '',
     g59_commune_name: '',
+    channel_id: '',
     end_date: '',
     start_date: '',
     msisdn: '',
@@ -54,6 +55,7 @@ export class ChiTietG59Component implements OnInit {
   public communeID;
   listDistrict;
   listCommunes;
+  listChannel;
   list;
   totalItems;
   submitted = false;
@@ -66,6 +68,7 @@ export class ChiTietG59Component implements OnInit {
   ) {
     this.route.queryParams.subscribe(async params => {
       this.searchForm.g59_district_name = params['g59_district_name'] && params['g59_district_name'] != undefined ? params['g59_district_name'] : '';
+      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
       this.searchForm.g59_commune_name = params['g59_commune_name'] && params['g59_commune_name'] != undefined ? params['g59_commune_name'] : '';
       this.searchForm.msisdn = params['msisdn'] && params['msisdn'] != undefined ? params['msisdn'] : '';
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -77,6 +80,8 @@ export class ChiTietG59Component implements OnInit {
       this.searchForm.end_date = endDate.toISOString().slice(0, 10);
       this.maxDate = endDate.toISOString().slice(0, 10);
       await this.getDistricts();
+      await this.getChannel();
+
       this.getData();
     })
   }
@@ -117,6 +122,7 @@ export class ChiTietG59Component implements OnInit {
       commune_name: this.communeID ? this.communeID.title : "", 
       msisdn: this.searchForm.msisdn,
       page: this.searchForm.page,
+      channel_id: this.searchForm.channel_id,
       status: this.searchForm.status,
       page_size: this.searchForm.page_size,
     }
@@ -150,8 +156,13 @@ export class ChiTietG59Component implements OnInit {
   async getDistricts() {
     const res = await this.adminSerivce.getDistrictsAll().toPromise();
     this.listDistrict = res.data;
-
   }
+
+  async getChannel() {
+    const res = await this.inventoryService.getChannelG59(null).toPromise();
+    this.listChannel = res.data.items;
+  }
+
 
   async onChangeHomeDistrict(id, init = null) {
 

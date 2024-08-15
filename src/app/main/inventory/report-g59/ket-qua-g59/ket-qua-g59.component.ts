@@ -43,6 +43,7 @@ export class KetQuaG59Component implements OnInit {
     g59_commune_name: '',
     end_date: '',
     start_date: '',
+    channel_id: '',
   }
   sumItems = {
     total_register: 0,
@@ -58,6 +59,7 @@ export class KetQuaG59Component implements OnInit {
   public districtID;
   public communeID;
   listDistrict;
+  listChannel;
   listCommunes;
   list;
   dataExcel;
@@ -78,6 +80,7 @@ export class KetQuaG59Component implements OnInit {
     this.route.queryParams.subscribe(async params => {
       this.searchForm.g59_district_name = params['g59_district_name'] && params['g59_district_name'] != undefined ? params['g59_district_name'] : '';
       this.searchForm.g59_commune_name = params['g59_commune_name'] && params['g59_commune_name'] != undefined ? params['g59_commune_name'] : '';
+      this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
 
       let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       let currentDate = new Date(new Date().getTime() - tzoffset);
@@ -87,6 +90,7 @@ export class KetQuaG59Component implements OnInit {
       this.searchForm.end_date = endDate.toISOString().slice(0,10);
       this.maxDate = endDate.toISOString().slice(0,10);
       await this.getChannel();
+      await this.getDistrict();
       this.getData();
     })
   }
@@ -125,6 +129,7 @@ export class KetQuaG59Component implements OnInit {
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
       district_name: this.districtID ? this.districtID.title : "",
       commune_name: this.communeID ? this.communeID.title : "", 
+      channel_id: this.searchForm.channel_id
 
     }
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
@@ -177,9 +182,14 @@ export class KetQuaG59Component implements OnInit {
     
   }
 
-  async getChannel() {
+  async getDistrict() {
     const res = await this.adminSerivce.getDistrictsAll().toPromise();
     this.listDistrict = res.data;
+  }
+
+  async getChannel() {
+    const res = await this.inventoryService.getChannelG59(null).toPromise();
+    this.listChannel = res.data.items;
 
   }
 
