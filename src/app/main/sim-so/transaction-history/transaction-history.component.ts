@@ -16,7 +16,7 @@ import { NgIf } from '@angular/common';
 export class TransactionHistoryComponent implements OnInit {
 
   public total: any;
-  public item: any;
+  public list: any;
   public showMessage: boolean
   public selectedItem: any;
   public taskTelecomStatus;
@@ -24,9 +24,10 @@ export class TransactionHistoryComponent implements OnInit {
   productListAll: any;
 
   public searchSim: any = {
-    keysearch: '',
-    category_id: 2,
-    take: 10,
+    msisdn: '',
+    from: '',
+    to: '',
+    type: '',
   }
 
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
@@ -47,14 +48,14 @@ export class TransactionHistoryComponent implements OnInit {
   onSubmitSearch() {
     console.log(this.searchSim);
     this.itemBlockUI.start();
-    this.telecomService.getDetailSimDVKH(this.searchSim).subscribe(res => {
+    this.telecomService.getBalanceChangeSimDVKH(this.searchSim.msisdn, this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;
-        this.item = res.data
-        this.total = res.data.count;
+        this.list = res.data;
+        // this.total = res.data.count;
       } else if (!res.data || Object.keys(res.data).length === 0) {
-        this.item = null
+        this.list = null
         this.showMessage = true;
       }
 
@@ -69,53 +70,9 @@ export class TransactionHistoryComponent implements OnInit {
   getData(): void {
   }
 
-  async onSubmitLock(id, status, name) {
-
-    let confirmMessage: string;
-
-    if (status == 2) {
-      confirmMessage = "Bạn có đồng ý mở khóa " + name + "?";
-    } else {
-      confirmMessage = "Bạn có đồng ý khóa " + name + "?";
-    }
-
-    // if ((await this.alertService.showConfirm(confirmMessage)).value) {
-    //   this.userService.lockUser(id, status, "").subscribe(res => {
-    //     if (!res.status) {
-    //       this.alertService.showError(res.message);
-    //       return;
-    //     }
-    //     this.alertService.showSuccess(res.message);
-    //     this.getData();
-    //   }, err => {
-    //     this.alertService.showError(err);
-    //   })
-    // }
-  }
 
   getInvenstory(){
-    return this.item?.sell_channels ? this.item.sell_channels.map(x=>x.channel.name).join("-") : ""
-  }
-
-
-  async modalOpen(modal, item) {
-    if (item) {
-      this.selectedItem = item;
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'lg',
-        backdrop: 'static',
-        keyboard: false
-      });
-
-    }
-  }
-
-  modalClose() {
-    this.selectedItem = null;
-    this.getData();
-    this.modalRef.close();
+    return this.list?.sell_channels ? this.list.sell_channels.map(x=>x.channel.name).join("-") : ""
   }
 
 }

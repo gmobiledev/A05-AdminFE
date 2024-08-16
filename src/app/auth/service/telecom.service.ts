@@ -65,6 +65,10 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/tra-cuu-kho`, { params: params });
   }
 
+  getBalanceChangeSimDVKH(mobile, params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/balance-changes/${mobile}`, { params: params });
+  }
+
   getDetaileSim(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/confirm-reuse-sim-from-esim`, data);
   }
