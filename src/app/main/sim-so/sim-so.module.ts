@@ -40,6 +40,7 @@ import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { DvkhSearchComponent } from './dvkh-search/dvkh-search.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { SearchEsimComponent } from './search-esim/search-esim.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
   {
     path: 'dvkh-search',
     component: DvkhSearchComponent
+  },
+  {
+    path: 'transaction-history',
+    component: TransactionHistoryComponent
   },
   {
     path: 'esim-search',
@@ -144,6 +149,7 @@ const routes: Routes = [
     WarningComponent,
     DvkhSearchComponent,
     SearchEsimComponent,
+    TransactionHistoryComponent,
     ],
   imports: [
     CommonModule, 

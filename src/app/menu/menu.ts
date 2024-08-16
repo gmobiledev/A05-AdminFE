@@ -622,7 +622,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '5',
+      title: '8',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
@@ -650,6 +650,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'search',
         url: 'sim-so/esim-search'
+      },
+      {
+        id: 'transaction-history',
+        title: 'Lịch sử giao dịch',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/transaction-history'
       },
       // {
       //   id: 'search-balance-changes',
