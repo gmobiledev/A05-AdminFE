@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'app/auth/service/admin.service';
 import { TelecomService } from 'app/auth/service/telecom.service';
-import { MsisdnStatus, TaskAction, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { MsisdnStatus, TaskAction, TaskTelecom, TaskTelecomStatus, TelecomTaskSubAction } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import JSZip from 'jszip';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -44,6 +44,12 @@ export class TaskItemComponent implements OnInit {
     people: {
       identification_signature_file: ''
     }
+  }
+
+  dataResendMail = {
+    task_id: 0,
+    email: '',
+    reason: ''
   }
 
 
@@ -748,6 +754,51 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
+  async onResendMail() {
+    if(!this.dataResendMail.reason) {
+      this.alertService.showMess("Vui lòng nhập lý do");
+      return;
+    }
+    if ((await this.alertService.showConfirm(`Bạn có đồng ý gửi lại vào email ${this.dataResendMail.email}`)).value) {
+      this.telecomService.resendMail(this.dataResendMail).subscribe(res => {        
+        if(res && !res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        if(res){
+          this.alertService.showSuccess(res.message);
+        }
+        
+        this.modalClose();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+  }
+
+  async onRetryTask() {
+    if ((await this.alertService.showConfirm(`Bạn có đồng ý thực hiện lại?`)).value) {
+      const data = {
+        task_id: this.data.task.id
+      }
+      this.telecomService.retryTask(data).subscribe(res => {        
+        if(res && !res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        if(res){
+          this.alertService.showSuccess(res.message);
+        }
+        
+        this.modalClose();
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+  }
+
   onDownloadImages() {
     var zip = new JSZip();
     if (this.data.task.action == this.listTaskAction.new_sim.value) {
@@ -961,9 +1012,13 @@ export class TaskItemComponent implements OnInit {
           this.mnos.push(msi.mno);
         }
         if (this.data.task.action == this.listTaskAction.change_sim) {
-          this.actionText = 'Cập nhật'
+          this.actionText = 'Cập nhật';          
         }
         const detailObj = JSON.parse(this.data.task.detail);
+        if(this.data.task.sub_action == TelecomTaskSubAction.SIM_TO_ESIM) {
+          this.dataResendMail.email = detailObj['email'];
+          this.dataResendMail.task_id = this.data.task.id;
+        }
       })
     }
 

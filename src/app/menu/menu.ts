@@ -344,7 +344,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '5',
+      title: '3',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
@@ -373,6 +373,46 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'circle',
         url: 'inventory/report/ket-qua'
+      }
+    ]
+  },
+
+  {
+    id: 'users',
+    title: 'Báo cáo G59',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
+      title: '3',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+
+      {
+        id: 'report-business',
+        title: 'Tình trạng TB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/tong-hop-g59'
+      },
+      {
+        id: 'report-business',
+        title: 'Chi tiết TB',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/chi-tiet-g59'
+      },
+      {
+        id: 'report-business',
+        title: 'Tổng hợp kết quả',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'inventory/report/ket-qua-g59'
       }
     ]
   },
@@ -575,13 +615,17 @@ export const menu: CoreMenu[] = [
     ]
   },
 
-
   {
     id: 'users',
-    type: 'section',
     title: 'CSKH',
     translate: '',
+    type: 'collapsible',
     icon: 'package',
+    badge: {
+      title: '5',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
     children: [
       {
         id: 'search-subscription',
@@ -599,14 +643,14 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/dvkh-search'
       },
-      // {
-      //   id: 'search-topup',
-      //   title: 'Lịch sử TOPUP',
-      //   translate: '',
-      //   type: 'item',
-      //   icon: 'search',
-      //   url: 'sim-so/msisdn/topup'
-      // },
+      {
+        id: 'search-topup',
+        title: 'Tái sử dụng eSim',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/esim-search'
+      },
       // {
       //   id: 'search-balance-changes',
       //   title: 'Tra cứu cước',
@@ -633,7 +677,6 @@ export const menu: CoreMenu[] = [
       }
     ]
   },
-
 
   {
     id: 'users',

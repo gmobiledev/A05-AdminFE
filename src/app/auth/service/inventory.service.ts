@@ -134,6 +134,10 @@ export class InventoryService {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/channel/s99`, { params: params });
   }
 
+  getChannelG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/channel/G59`, { params: params });
+  }
+
   createBatchExport(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/create`, data);
   }
@@ -289,6 +293,9 @@ export class InventoryService {
   reportInventoryExcel(dto: any): Observable<any> {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/report-inventory/excelFormat`, dto, { observe: 'response', responseType: 'blob' });
   }
+  reportInventoryExcelDetail(dto: any): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/channel/report-inventory/excelFormatDetail`, dto, { observe: 'response', responseType: 'blob' });
+  }
 
   uploadAttachmentBatch(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/attachments/uploads`, data)
@@ -357,7 +364,23 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/product/attribute/update-batch`, data);
   }
 
+  reportKetQuaSimG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-summary`, {params: params} );
+  }
+
+  reportTongHopSimG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-state`, {params: params} );
+  }
+
+  reportChiTietSimG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn`, {params: params});
+  }
+  
   getAllProductStore(dto: any) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/product-store/get-all`, {params: dto});
+  }
+  
+  reportChiTietSimByAdminG59(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-by-admins`, {params: params});
   }
 }

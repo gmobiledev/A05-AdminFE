@@ -41,6 +41,13 @@ import { ChiTietComponent } from './reports/chi-tiet/chi-tiet.component';
 import { KetQuaComponent } from './reports/ket-qua/ket-qua.component';
 import { ActionLogsComponent } from './action-logs/action-logs.component';
 import { SearchProductsTransferComponent } from './search-products-transfer/search-products-transfer.component';
+import { ChiTietG59Component } from './report-g59/chi-tiet-g59/chi-tiet-g59.component';
+import { TongHopG59Component } from './report-g59/tong-hop-g59/tong-hop-g59.component';
+import { DoanhThuG59Component } from './report-g59/doanh-thu-g59/doanh-thu-g59.component';
+import { KetQuaG59Component } from './report-g59/ket-qua-g59/ket-qua-g59.component';
+import { KinhDoanhG59Component } from './report-g59/kinh-doanh-g59/kinh-doanh-g59.component';
+import { TonKhoG59Component } from './report-g59/ton-kho-g59/ton-kho-g59.component';
+import { TonKhoSimG59Component } from './report-g59/ton-kho-sim-g59/ton-kho-sim-g59.component';
 
 const routes: Routes = [
   {
@@ -134,6 +141,37 @@ const routes: Routes = [
     path: 'report/ket-qua',
     component: KetQuaComponent
   },
+  {
+    path: 'report/doanh-thu-g59',
+    component: DoanhThuG59Component
+  },
+  {
+    path: 'report/kinh-doanh-g59',
+    component: KinhDoanhG59Component
+  },
+  {
+    path: 'report/ton-kho-g59',
+    component: TonKhoG59Component
+  },
+
+  {
+    path: 'report/ton-kho-sim-g59',
+    component: TonKhoSimG59Component
+  },
+  {
+    path: 'report/tong-hop-g59',
+    component: TongHopG59Component
+  },
+
+  {
+    path: 'report/chi-tiet-g59',
+    component: ChiTietG59Component
+  },
+
+  {
+    path: 'report/ket-qua-g59',
+    component: KetQuaG59Component
+  },
 
   {
     path: 'view-junior-sell',
@@ -183,7 +221,7 @@ const routes: Routes = [
     TonKhoSimComponent, 
     TongHopComponent,
     ChiTietComponent, 
-    KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent,
+    KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent, ChiTietG59Component, TongHopG59Component, DoanhThuG59Component, KetQuaG59Component, KinhDoanhG59Component, TonKhoG59Component, TonKhoSimG59Component,
   ],
   imports: [
     CommonModule,

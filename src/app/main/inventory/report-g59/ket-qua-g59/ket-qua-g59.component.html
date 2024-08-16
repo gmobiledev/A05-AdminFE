@@ -1,0 +1,204 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form (ngSubmit)="getData()">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Từ ngày</label>
+                                        <input type="date" name="start_date" [(ngModel)]="searchForm.start_date"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Tới ngày</label>
+                                        <input type="date" name="end_date" [(ngModel)]="searchForm.end_date"
+                                            min="{{ searchForm.start_date }}" max="{{ maxDate }}"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                      <label for="">Đơn vị</label>
+                                      <ng-select name="sell_channel_id" [(ngModel)]="searchForm.channel_id">
+                                        <ng-option *ngFor="let p of listChannel" [value]="p.code">{{
+                                          p.name
+                                          }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                </div>   
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Quận, Huyện</label>
+                                        <ng-select name="g59_district_name" [(ngModel)]="searchForm.g59_district_name"
+                                            (change)="onChangeHomeDistrict($event)">
+                                            <ng-option *ngFor="let p of listDistrict" [value]="p.id">{{
+                                                p.title
+                                                }}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Phường, Xã</label>
+                                        <ng-select name="g59_commune_name" [(ngModel)]="searchForm.g59_commune_name">
+                                            <ng-option *ngFor="let p of listCommunes" [value]="p.id">{{
+                                                p.title
+                                                }}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for=""></label>
+                                        <button [disabled]="submitted" type="submit" class="btn btn-block btn-info">
+                                            Lọc kết quả <span [data-feather]="'search'"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for=""></label>
+                                        <a [ngClass]="submitted ? 'btn btn-block btn-success disabled' : 'btn btn-block btn-success'"
+                                            (click)="exportExcel()">
+                                            Xuất Excel <span [data-feather]="'file'"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive" *blockUI="'section-block'">
+                            <div class="mb-1">
+                                <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
+                            </div>
+                           
+
+                            <ngx-datatable #table class="bootstrap core-bootstrap" [summaryRow]="enableSummary"
+                                [summaryPosition]="summaryPosition" [summaryHeight]="100"
+                                [columnMode]="ColumnMode.force" [headerHeight]="100" rowHeight="auto" [rows]="list">
+
+                                <ngx-datatable-column name="STT" [width]="100" [cellClass]="table-stt">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+                                        {{rowIndex+1}}
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                
+                                <ngx-datatable-column name="Tên Đơn Vị" prop="name" [summaryTemplate]="nameSummaryCell"
+                                [cellClass]="d-block"></ngx-datatable-column>
+
+                                <ngx-datatable-column name="Quận, Huyện" prop="district" [summaryTemplate]="nameSummaryCell"
+                                    [cellClass]="d-block"></ngx-datatable-column>
+
+                                <ngx-datatable-column name="Phường, Xã" prop="commune" [summaryTemplate]="nameSummaryCell"
+                                    [cellClass]="d-block"></ngx-datatable-column>
+
+                                <!-- <ngx-datatable-column name="SL Đăng Ký" prop="total_register" [summaryFunc]="sumValue">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ row.total_register | number }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column> -->
+                                <ngx-datatable-column name="Đã Giao" prop="received" [summaryFunc]="sumValue"
+                                    [cellClass]="d-block">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ row.received | number }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column>
+                                <!-- <ngx-datatable-column name="Tỉ lệ" prop="percent" [cellClass]="d-block"
+                                    [summaryTemplate]="percentSummaryCell">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ roundPercent(row.percent) }}%
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column> -->
+                                <ngx-datatable-column name="TB Hoạt Động" prop="actived" [summaryFunc]="sumValue"
+                                    [cellClass]="d-block"><ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ row.actived | number }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column>
+                                <ngx-datatable-column name="TB Hoạt Động Lũy kế" prop="luy_ke_actived"
+                                    [summaryFunc]="sumValue" [cellClass]="d-block"><ng-template let-row="row"
+                                        ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ row.luy_ke_actived | number }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column>
+                                <ngx-datatable-column name="Hoàn thiện TTTB" prop="hoan_thien_tttb"
+                                    [summaryFunc]="sumValue" [cellClass]="d-block"><ng-template let-row="row"
+                                        ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ row.hoan_thien_tttb | number }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column>
+                                <ngx-datatable-column name="DT Tiêu dùng" prop="sum_cost" [summaryFunc]="sumValue"
+                                    [cellClass]="d-block"><ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ row.sum_cost | number }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column>
+                                <ngx-datatable-column name="DT Topup" prop="sum_topup" [summaryFunc]="sumValue"
+                                    [cellClass]="d-block"><ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="align-items-center">
+                                            <div class="cell-line-height">
+                                                <p class="font-medium-1 font-weight-bold line-height-1 mb-25 text-wrap">
+                                                    {{ row.sum_topup | number }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template></ngx-datatable-column>
+                            </ngx-datatable>
+
+                            <ng-template #nameSummaryCell>
+                                <div class="name-container">
+                                    Tổng
+                                </div>
+                            </ng-template>
+                            <ng-template #percentSummaryCell>
+                                <div class="name-container">
+                                    {{ sumItems.percent }}%
+                                </div>
+                            </ng-template>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

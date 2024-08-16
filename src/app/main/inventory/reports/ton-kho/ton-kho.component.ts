@@ -106,4 +106,24 @@ export class TonKhoComponent implements OnInit {
             a.remove();
         })
     }
+
+
+    exportExcelReportDetail(number) {
+        let data = {
+            "dau_so": number,
+            "channel_id": this.searchForm.channel_id
+        }
+        this.inventoryServie.reportInventoryExcelDetail(data).subscribe(res => {
+            var newBlob = new Blob([res.body], { type: res.body.type });
+            let url = window.URL.createObjectURL(newBlob);
+            let a = document.createElement('a');
+            document.body.appendChild(a);
+            a.setAttribute('style', 'display: none');
+            a.href = url;
+            a.download = "Báo cáo chi tiết đầu số";
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+        })
+    }
 }

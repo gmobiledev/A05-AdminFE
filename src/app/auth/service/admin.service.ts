@@ -81,6 +81,10 @@ export class AdminService {
     return this._http.get<any>(`${environment.apiUrl}/area/get-communes/${districtId}`);
   }
 
+  getDistrictsAll(){
+    return this._http.get<any>(`${environment.apiUrl}/area/get-all-districts`);
+  }
+
   getListAdmin(params = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/search`, {params: params});
   }
