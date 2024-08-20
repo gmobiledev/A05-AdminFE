@@ -41,6 +41,7 @@ import { DvkhSearchComponent } from './dvkh-search/dvkh-search.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { SearchEsimComponent } from './search-esim/search-esim.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { WayLockComponent } from './way-lock/way-lock.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: 'dvkh-search',
     component: DvkhSearchComponent
+  },
+  {
+    path: 'way-lock',
+    component: WayLockComponent
   },
   {
     path: 'transaction-history',
@@ -150,6 +155,7 @@ const routes: Routes = [
     DvkhSearchComponent,
     SearchEsimComponent,
     TransactionHistoryComponent,
+    WayLockComponent,
     ],
   imports: [
     CommonModule, 

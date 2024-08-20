@@ -680,7 +680,7 @@ export const menu: CoreMenu[] = [
         title: 'Tra cứu TTTB 2G',
         translate: '',
         type: 'item',
-        icon: 'database',
+        icon: 'search',
         url: 'sim-so/client2g'
       }
     ]

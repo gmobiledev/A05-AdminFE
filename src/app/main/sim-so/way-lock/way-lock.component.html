@@ -1,0 +1,98 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Khóa/Mở khóa 1 chiều/2 chiều</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <form >
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="keysearch" [(ngModel)]="searchSim.mobile"
+                                            class="form-control" placeholder="Nhập số điện thoại" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="row mt-1">
+                                    <div class="ml-1">
+                                       <h5>Khóa/Mở khóa 1 chiều : </h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button type="submit" (click)="onSubmitLock()" class="btn btn-block btn-danger">
+                                                Khoá <span [data-feather]="'lock'"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-block btn-success">
+                                                Mở khoá <span [data-feather]="'lock'"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="row mt-1">
+                                    <div class="ml-1">
+                                       <h5>Khóa/Mở khóa 2 chiều : </h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-block btn-danger">
+                                                Khoá <span [data-feather]="'lock'"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-block btn-success">
+                                                Mở khoá <span [data-feather]="'lock'"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalTransWh let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Chi tiết thông tin Sim/Số</h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div>
+            <!-- <h4>Thông tin Sim/Số</h4> -->
+            <div class="column">
+                <div class="col-md-6">MÃ LÔ: {{ item?.batch_id }}</div>
+                <div class="col-md-6">TÊN LÔ: {{ item?.batch?.title }}</div>
+                <div class="col-md-6">
+                    KHO: {{ item?.sell_channels[0]?.channel.name }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+            Đóng
+        </button>
+    </div>
+</ng-template>

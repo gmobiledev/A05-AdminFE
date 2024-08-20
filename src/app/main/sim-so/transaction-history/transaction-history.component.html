@@ -66,6 +66,7 @@
                                         <th>Số / Serial SIM</th>
                                         <th>Thời gian</th>
                                         <th>Số tiền phát sinh</th>
+                                        <th>Số điện thoại nhận</th>
                                         <th>Số dư sau giao dịch</th>
                                         <th>Trạng thái</th>
                                         <th>Ghi chú</th>
@@ -77,6 +78,7 @@
                                         <td>{{ item?.Account }}</td>
                                         <td>{{ item?.Time | date: 'dd/MM/yyyy H:mm':'GMT' }}</td>
                                         <td>{{ item?.BalanceChange | number }}</td>
+                                        <td>{{ item?.Destination }}</td>
                                         <td>{{ item?.BalanceAfter | number }}</td>
                                         <td>{{ item?.Action }}</td>
                                         <td>{{ item?.Note }}</td>
