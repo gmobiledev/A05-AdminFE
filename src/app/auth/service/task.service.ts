@@ -95,6 +95,16 @@ export class TaskService {
   checkGatewayTransaction(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/check-transaction`, {params: params});
   }
+  checkTransaction(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/service/check`, {params: params});
+  }
+  callbackTransaction(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/task/service/callback`, {params: params});
+  }
+
+  updateStateGateway(data) {
+    return this._http.put<any>(`${environment.apiUrl}/admin/task/service/update-manual`, data);
+  }
 
   getTaskByServiceCode(service_code, params = null) {
     return this._http.get<any>(`${environment.apiUrl}/admin/task/${service_code}`, { params: params });

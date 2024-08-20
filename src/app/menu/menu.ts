@@ -520,6 +520,28 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+  {
+    id: 'users',
+    title: 'TOPUP',
+    translate: '',
+    type: 'collapsible',
+    icon: 'phone-outgoing',
+    badge: {
+      title: '1',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'TOPUP',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'task/topup'
+      },
+    ]
+  },
 
   {
     id: 'users',
