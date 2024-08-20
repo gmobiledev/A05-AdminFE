@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'app/auth/service';
 import { TelecomService } from 'app/auth/service/telecom.service';
-import { STORAGE_KEY, TaskAction, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { STORAGE_KEY, TaskAction, TaskTelecom, TaskTelecomStatus, TelecomTaskSubAction } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { environment } from 'environments/environment';
@@ -77,6 +77,7 @@ export class ListTaskComponent implements OnInit {
   }
   dateRange: any;
   selectedNote: string;
+  telecomTaskSubAction = TelecomTaskSubAction;
 
   ranges: any = {
     'Hôm nay': [dayjs(), dayjs()],
