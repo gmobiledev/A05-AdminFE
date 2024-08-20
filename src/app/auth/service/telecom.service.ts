@@ -330,22 +330,16 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/change-esim`, data);
   }
 
-  lockOneWay(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-one-way`, data);
+  lockOneWay(data, type) {
+    if(type == 1){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-one-way`, data);
+    } else if(type == 2){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-two-way`, data);
+    } else if(type == 3){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-one-way`, data);
+    } else if(type == 4) {
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-two-way`, data);
+    }
   }
-
-  lockTwoWay(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-two-way`, data);
-  }
-
-  unlockOneWay(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-one-way`, data);
-  }
-
-  unlockTwoWay(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-two-way`, data);
-  }
-
-
-
+  
 }

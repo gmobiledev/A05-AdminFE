@@ -73,12 +73,24 @@ export class WayLockComponent implements OnInit {
   getData(): void {
   }
 
-  async onSubmitLock() {
+  async onSubmitLock(type) {
 
-    let confirmMessage: "Bạn có đồng ý khóa 1C không ?";
+    let titleS;
+    if (type == 1) {
+      titleS = "Bạn có đồng ý khóa 1C không ?";
+    }
+    if (type == 2) {
+      titleS = "Bạn có đồng ý khóa 2C không ?";
+    }
+    if (type == 3) {
+      titleS = "Bạn có đồng ý mở khóa 1C không ?";
+    }
+    if (type == 4) {
+      titleS = "Bạn có đồng ý mở khóa 2C không ?";
+    }
 
     Swal.fire({
-      title: "Bạn có đồng ý khóa 1C không ?",
+      title: titleS,
       input: 'textarea',
       inputAttributes: {
         autocapitalize: 'off'
@@ -95,7 +107,7 @@ export class WayLockComponent implements OnInit {
         }
         this.searchSim.message = note;
 
-        this.telecomService.lockOneWay(this.searchSim).subscribe(res => {
+        this.telecomService.lockOneWay(this.searchSim, type).subscribe(res => {
           if (!res.status) {
             Swal.showValidationMessage(
               res.message
@@ -113,6 +125,7 @@ export class WayLockComponent implements OnInit {
           this.alertService.showMess(error);
 
         });
+
 
       },
       allowOutsideClick: () => !Swal.isLoading()
