@@ -681,6 +681,14 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/transaction-history'
       },
+      {
+        id: 'way-lock',
+        title: 'Khoá/Mở 1C,2C',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/way-lock'
+      },
       // {
       //   id: 'search-balance-changes',
       //   title: 'Tra cứu cước',
