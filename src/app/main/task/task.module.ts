@@ -69,6 +69,14 @@ const routes: Routes = [
     },
     component: ListTaskComponent,
   },
+  {
+    path: 'topup',
+    data: {
+      service: ServiceCode.TELECOM_TOPUP,
+      single_service: 1
+    },
+    component: ListTaskComponent,
+  },
 ];
 
 @NgModule({

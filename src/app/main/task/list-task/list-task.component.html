@@ -36,7 +36,7 @@
                     <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                       <option value="">Chọn trạng thái task</option>
 
-                      <option value="2">Chờ duyệt</option>                      
+                      <option value="2">Chờ duyệt</option>
                       <option value="3">Đã duyệt</option>
                       <option value="1">Thành công</option>
                       <option value="-1">Hủy</option>
@@ -64,8 +64,8 @@
                     <th *ngIf="!isSingleService">Dịch vụ</th>
                     <th *ngIf="!isSingleService">Merchant</th>
                     <th>Tiêu đề</th>
-                    <th>{{ tableColumnName.amount }}</th>  
-                    <th *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)" >Nhà mạng</th>                  
+                    <th>{{ tableColumnName.amount }}</th>
+                    <th *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">Nhà mạng</th>
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -75,7 +75,7 @@
                   <tr *ngFor="let item of list; index as i">
                     <td>{{ (searchForm.page - 1) * searchForm.page_size + (i+1) }}</td>
                     <td>{{ item?.id }}</td>
-                    
+
                     <td>{{ item?.user?.people?.name }}
                       <br>{{ item?.user?.people?.mobile }}
                     </td>
@@ -89,9 +89,10 @@
                       {{ item?.title }}
                     </td>
                     <td>
+                      {{item.bill_id}}<br>
                       {{ item?.amount | number }} {{ currency }}
                     </td>
-                    <td *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)" >
+                    <td *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">
                       {{ getJSONDetail(item, 'mno') }}
                     </td>
                     <td>
@@ -102,50 +103,56 @@
                     </td>
 
                     <td>
-                      <ng-template *ngIf="item.service_code == 'BANK_LOAN_PVCOMBANK'">
-                        <a [routerLink]="['/loan-bank/view', item.id]">
-                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                        </a>
-                      </ng-template>
-                      <button title="View Webook" *ngIf="item.webhook_id" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalTransWh, item)">
+
+                      <button title="View Webook" *ngIf="item.webhook_id" class="btn btn-icon btn-flat-success btn-sm"
+                        (click)="modalOpen(modalTransWh, item)">
                         <i data-feather="monitor" class="text-primary cursor-pointer"></i>
                       </button>
-                      
+
                       <ng-container *ngIf="item.status == taskStatus.STATUS_WAITING">
-                        <button  title="Duyệt" class="btn btn-icon btn-flat-success btn-sm" (click)="modalOpen(modalDuyetSimprofile, item, false)">
+                        <button title="Duyệt" class="btn btn-icon btn-flat-success btn-sm"
+                          (click)="modalOpen(modalDuyetSimprofile, item, false)">
                           <i data-feather="check" class="text-primary cursor-pointer"></i>
                         </button>
-                        <button  title="Từ chối" class="btn btn-icon btn-flat-danger btn-sm" (click)="onUpdateStatus(item, 99)">
+                        <button title="Từ chối" class="btn btn-icon btn-flat-danger btn-sm"
+                          (click)="onUpdateStatus(item, 99)">
                           <i data-feather="x-circle" class="text-primary cursor-pointer"></i>
                         </button>
-                      </ng-container>                      
+                      </ng-container>
 
-                        <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm" (click)="checkGatewayTransaction(item)">
+                      <ng-container *ngIf="item.status==taskStatus.STATUS_IN_PROGRESS">
+                        <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm"
+                          (click)="checkTransaction(item)">
+                          <i data-feather="repeat" class="text-primary cursor-pointer"></i>
+                        </button>
+                        <button title="Xử lý thủ công thành công" class="btn btn-icon btn-flat-success btn-sm"
+                          (click)="modalOpen(updateStatusTask, item)">
+                          <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                        </button>
+                      </ng-container>
+
+                      <button title="Callback" class="btn btn-icon btn-flat-success btn-sm"
+                        (click)="callbackTransaction(item)">
+                        <i data-feather="send" class="text-primary cursor-pointer"></i>
+                      </button>
+
+                      <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm"
+                        (click)="checkGatewayTransaction(item)">
                         <i data-feather="info" class="text-primary cursor-pointer"></i>
                       </button>
-                      
+
                       <button
-                      *ngIf="[ServiceCode.ADD_DATA_BALANCE, ServiceCode.ADD_MONEY_BALANCE].includes(currentService)"
-                        ngbTooltip="Xem chi tiết"
-                        (click)="onViewDetail(modalDetail, item)"
-                        class="btn btn-icon btn-flat-success btn-sm"
-                      >
-                        <i
-                          data-feather="eye"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        *ngIf="[ServiceCode.ADD_DATA_BALANCE, ServiceCode.ADD_MONEY_BALANCE].includes(currentService)"
+                        ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)"
+                        class="btn btn-icon btn-flat-success btn-sm">
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
                       </button>
 
                       <button
-                      *ngIf="[ServiceCode.SIM_PROFILE, ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)"
-                        ngbTooltip="Xem danh sách"
-                        (click)="modalOpen(modalListSerial, item)"
-                        class="btn btn-icon btn-flat-success btn-sm"
-                      >
-                        <i
-                          data-feather="list"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        *ngIf="[ServiceCode.SIM_PROFILE, ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)"
+                        ngbTooltip="Xem danh sách" (click)="modalOpen(modalListSerial, item)"
+                        class="btn btn-icon btn-flat-success btn-sm">
+                        <i data-feather="list" class="text-primary cursor-pointer"></i>
                       </button>
                     </td>
                   </tr>
@@ -281,41 +288,27 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <div
-      class="row"
-      *ngIf="listFiles.files_request && listFiles.files_request.length > 0"
-    >
+    <div class="row" *ngIf="listFiles.files_request && listFiles.files_request.length > 0">
       <div class="col-12">Ảnh yêu cầu</div>
       <div class="col-6" *ngFor="let item of listFiles.files_request">
         <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
       </div>
     </div>
-    <div
-      class="row"
-      *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0"
-    >
+    <div class="row" *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0">
       <div class="col-12">Ảnh chuyển khoản</div>
       <div class="col-6" *ngFor="let item of listFiles.files_banking">
-        <img *ngIf="item.ext == 'png'"  src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+        <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
       </div>
     </div>
-    <div
-      class="row"
-      *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0"
-    >
+    <div class="row" *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0">
       <div class="col-12">Ảnh quyết định hoàn tiền</div>
       <div class="col-6" *ngFor="let item of listFiles.files_rollback">
-        <img *ngIf="item.ext == 'png'"  src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+        <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
       </div>
     </div>
 
@@ -326,25 +319,17 @@
     </div>
   </div>
   <div class="modal-footer">
-    <div
-      *ngIf="
+    <div *ngIf="
         selectedItem.status >= 30 &&
         selectedItem.status <= 39 &&
         checkRole('ACCOUNTING')
-      "
-    >
-      <button
-        (click)="onUpdateStatus(selectedItem, 1)"
-        class="btn btn-info btn-sm mb-2"
-      >
+      ">
+      <button (click)="onUpdateStatus(selectedItem, 1)" class="btn btn-info btn-sm mb-2">
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt đã
         nhận tiền
       </button>
 
-      <button
-        (click)="onUpdateStatus(selectedItem, 99)"
-        class="ml-2 btn btn-warning btn-sm mb-2"
-      >
+      <button (click)="onUpdateStatus(selectedItem, 99)" class="ml-2 btn btn-warning btn-sm mb-2">
         <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
         Từ chối
       </button>
@@ -355,12 +340,7 @@
 <ng-template #modalListSerial let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Danh sách Serial</h5>
-    <button
-      type="button"
-      class="close"
-      (click)="modalClose()"
-      aria-label="Close"
-    >
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -401,41 +381,84 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Số thuê bao" *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER]includes(currentService)">
-          <ng-template let-row="row"  ngx-datatable-cell-template>
-              <div class="align-items-center">
-                  <div class="cell-line-height">
-                      <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
-                          {{ row.msisdn }}
-                      </p>
-                  </div>
+        <ngx-datatable-column name="Số thuê bao"
+          *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER]includes(currentService)">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="align-items-center">
+              <div class="cell-line-height">
+                <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                  {{ row.msisdn }}
+                </p>
               </div>
+            </div>
           </ng-template>
-      </ngx-datatable-column> 
-      <ngx-datatable-column name="Serial" *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
-          <ng-template let-row="row"  ngx-datatable-cell-template>
-              <div class="align-items-center">
-                  <div class="cell-line-height">
-                      <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
-                          {{ row.serial }}
-                      </p>
-                  </div>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Serial"
+          *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="align-items-center">
+              <div class="cell-line-height">
+                <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                  {{ row.serial }}
+                </p>
               </div>
+            </div>
           </ng-template>
-      </ngx-datatable-column> 
-      <ngx-datatable-column name="Trạng thái" *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
-          <ng-template let-row="row"  ngx-datatable-cell-template>
-              <div class="align-items-center">
-                  <div class="cell-line-height">
-                      <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
-                          <span [innerHTML]="row.state | showStatusMsisdn"></span>                                                        
-                      </p>
-                  </div>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Trạng thái"
+          *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="align-items-center">
+              <div class="cell-line-height">
+                <p class="font-medium-1 font-weight-bold line-height-1 mb-25">
+                  <span [innerHTML]="row.state | showStatusMsisdn"></span>
+                </p>
               </div>
+            </div>
           </ng-template>
-      </ngx-datatable-column> 
+        </ngx-datatable-column>
       </ngx-datatable>
     </div>
+  </div>
+
+</ng-template>
+
+<ng-template #updateStatusTask let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Cập nhật - {{selectedItem.id}}</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="form-group">
+      <label for="">Cổng</label>
+      <select name="" id="" class="form-control" [(ngModel)]="frmUpdateStatusTask.gateway">
+        <option value="MANUAL">Thực hiện thủ công</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="">Trạng Thái</label>
+      <select name="" id="" class="form-control" [(ngModel)]="frmUpdateStatusTask.status">
+        <option value="1">Thành công</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="">Mã giao dịch</label>
+      <input type="text" name="trans_id" [(ngModel)]="frmUpdateStatusTask.gw_trans_id" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="">Ghi chú</label>
+      <input type="text" name="trans_id" [(ngModel)]="frmUpdateStatusTask.reason" class="form-control" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="onUpdateStatusGateway()" class="btn btn-primary" rippleEffect>
+      Xác nhận
+    </button>
+    <button (click)="modalClose()" type="button" class="btn btn-primary" rippleEffect>
+      Đóng
+    </button>
   </div>
 
 </ng-template>
