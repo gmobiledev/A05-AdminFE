@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 export class ListTaskComponent implements OnInit {
 
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
-  
+
   public contentHeader: any;
   public list: any;
   public totalItems: number;
@@ -53,6 +53,14 @@ export class ListTaskComponent implements OnInit {
     brand: '',
     id: ''
   }
+  public frmUpdateStatusTask = {
+    task_id: "",
+    gw_trans_id: '',
+    gateway: "",
+    status: "",
+    reason: ""
+  }
+
   listCurrentRoles;
   listCurrentAction;
   public listFiles: any;
@@ -62,7 +70,7 @@ export class ListTaskComponent implements OnInit {
   currency = 'VND'
   ServiceCode = ServiceCode;
   listSerial;
-  basicSelectedOption =  25;
+  basicSelectedOption = 25;
 
   constructor(
     private modalService: NgbModal,
@@ -71,12 +79,12 @@ export class ListTaskComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    const data = this.route.snapshot.data;  
+    const data = this.route.snapshot.data;
     this.currentService = data && data.service ? data.service : '';
-    if(this.currentService == ServiceCode.ADD_DATA_BALANCE) {
+    if (this.currentService == ServiceCode.ADD_DATA_BALANCE) {
       this.tableColumnName.amount = 'Số GB';
       this.currency = '';
-    } else if([ServiceCode.SIM_KITTING, ServiceCode.SIM_PROFILE, ServiceCode.SIM_REGISTER].includes(this.currentService)) {
+    } else if ([ServiceCode.SIM_KITTING, ServiceCode.SIM_PROFILE, ServiceCode.SIM_REGISTER].includes(this.currentService)) {
       this.tableColumnName.amount = 'Số lượng';
       this.currency = '';
     }
@@ -110,7 +118,7 @@ export class ListTaskComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
     this.listCurrentAction = user.actions;
     this.listCurrentRoles = user.roles;
-    
+
     this.contentHeader = {
       headerTitle: 'Danh sách task',
       actionButton: true,
@@ -129,27 +137,23 @@ export class ListTaskComponent implements OnInit {
         ]
       }
     };
-    if (this.searchForm.service_code == 'BANK_LOAN_PVCOMBANK') {
-      this.contentHeader.headerTitle = "Danh sách khoản vay";
-      this.contentHeader.breadcrumb.links[1].name = "Danh sách khoản vay";
-    }
   }
 
   modalOpen(modal, item = null, is_load = true) {
     this.selectedItem = item;
-    if(item && is_load) {      
+    if (item && is_load) {
       this.itemBlockUI.start();
       this.taskService.getTransWebhook(item.id).subscribe(res => {
         this.task = res.data.task;
         this.wh = res.data.wh;
         this.trans = res.data.trans;
-        if([ServiceCode.SIM_PROFILE].includes(this.currentService)) {
+        if ([ServiceCode.SIM_PROFILE].includes(this.currentService)) {
           this.listSerial = res.data.task.details.filter(x => x.attribute == 'serial');
-        } else if(this.currentService == ServiceCode.SIM_KITTING || this.currentService == ServiceCode.SIM_REGISTER) {
+        } else if (this.currentService == ServiceCode.SIM_KITTING || this.currentService == ServiceCode.SIM_REGISTER) {
           this.listSerial = res.data.task.msisdns;
         }
         this.itemBlockUI.stop();
-  
+
         this.modalRef = this.modalService.open(modal, {
           centered: true,
           windowClass: 'modal modal-primary',
@@ -166,7 +170,7 @@ export class ListTaskComponent implements OnInit {
         size: 'lg'
       });
     }
-    
+
   }
 
   modalClose() {
@@ -174,8 +178,8 @@ export class ListTaskComponent implements OnInit {
   }
 
   getJSONDetail(item, key) {
-    const r =  item.detail ? JSON.parse(item.detail) : null;
-    if(!r) {
+    const r = item.detail ? JSON.parse(item.detail) : null;
+    if (!r) {
       return null;
     }
     return r[key]
@@ -211,24 +215,53 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
+  checkTransaction(item) {
+    let dto = { task_id: item.id }
+    let self = this;
+    this.taskService.checkTransaction(dto).subscribe(res => {
+      if (res.status == 1)
+        self.alertService.showMess(JSON.stringify(res), 20000)
+      else {
+        self.alertService.showError(JSON.stringify(res), 20000)
+      }
+    }, error => {
+      self.alertService.showError(error, 20000)
+    })
+
+  }
+
+  callbackTransaction(item) {
+    let dto = { task_id: item.id }
+    let self = this;
+    this.taskService.callbackTransaction(dto).subscribe(res => {
+      if (res.status == 1)
+        self.alertService.showMess(JSON.stringify(res), 20000)
+      else {
+        self.alertService.showError(JSON.stringify(res), 20000)
+      }
+    }, error => {
+      self.alertService.showError(error, 20000)
+    })
+  }
+
   async onApproveTask() {
-    if(this.selectedItem.service_code == ServiceCode.SIM_PROFILE && !this.dataApprove.brand) {
+    if (this.selectedItem.service_code == ServiceCode.SIM_PROFILE && !this.dataApprove.brand) {
       this.alertService.showMess("Vui lòng chọn nhà mạng");
       return;
     }
     if ((await this.alertService.showConfirm("Bạn có đồng duyệt đơn?")).value) {
-      if(this.selectedItem.service_code == ServiceCode.SIM_PROFILE) {
+      if (this.selectedItem.service_code == ServiceCode.SIM_PROFILE) {
         this.approveSimProfileTask();
-      } else if(this.selectedItem.service_code == ServiceCode.SIM_KITTING) {
+      } else if (this.selectedItem.service_code == ServiceCode.SIM_KITTING) {
         this.approveSimKitting();
-      }  else if(this.selectedItem.service_code == ServiceCode.SIM_REGISTER) {
+      } else if (this.selectedItem.service_code == ServiceCode.SIM_REGISTER) {
         this.approveSimRegister();
       }
-    }    
+    }
   }
 
   approveSimProfileTask() {
-    
+
     let dataPost = {
       id: this.selectedItem.id,
       brand: this.dataApprove.brand
@@ -243,7 +276,7 @@ export class ListTaskComponent implements OnInit {
   }
 
   approveSimKitting() {
-    
+
     let dataPost = {
       id: this.selectedItem.id,
     }
@@ -257,7 +290,7 @@ export class ListTaskComponent implements OnInit {
   }
 
   approveSimRegister() {
-    
+
     let dataPost = {
       id: this.selectedItem.id,
     }
@@ -339,7 +372,7 @@ export class ListTaskComponent implements OnInit {
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
-        if (result.isConfirmed) {       
+        if (result.isConfirmed) {
           //this.updateStatus.emit({updated: true});
           // this.alertService.showSuccess('Thành công');
         }
@@ -368,6 +401,19 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
+  async onUpdateStatusGateway() {
+    if ((await this.alertService.showConfirm("Xác nhận")).value) {
+      this.frmUpdateStatusTask.task_id = this.selectedItem.id
+      this.taskService.updateStateGateway(this.frmUpdateStatusTask).subscribe(res => {
+        this.alertService.showSuccess(res.message);
+      }, error => {
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+
+  }
+
   getData(): void {
     this.taskService.getAllService().subscribe(res => {
       this.listService = res.data.reduce(function (map, obj) {
@@ -375,7 +421,7 @@ export class ListTaskComponent implements OnInit {
         return map;
       }, {});;
     })
-    if(this.isSingleService) {
+    if (this.isSingleService) {
       this.taskService.getTaskByServiceCode(this.currentService, this.searchForm).subscribe(res => {
         this.list = res.data.items;
         this.totalItems = res.data.count;
@@ -392,9 +438,9 @@ export class ListTaskComponent implements OnInit {
         console.log(error);
       })
     }
-    
+
   }
-  
+
   checkRole(item) {
     return this.listCurrentRoles.find(itemX => itemX.item_name.includes(item))
   }
