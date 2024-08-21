@@ -42,6 +42,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { SearchEsimComponent } from './search-esim/search-esim.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { WayLockComponent } from './way-lock/way-lock.component';
+import { SearchDetailSubscriptionComponent } from './search-detail-subscription/search-detail-subscription.component';
 
 const routes: Routes = [
   {
@@ -79,6 +80,10 @@ const routes: Routes = [
   {
     path: 'esim-search',
     component: SearchEsimComponent
+  },
+  {
+    path: 'search-tttb',
+    component: SearchDetailSubscriptionComponent
   },
   {
     path: 'search-subscription',
@@ -156,6 +161,7 @@ const routes: Routes = [
     SearchEsimComponent,
     TransactionHistoryComponent,
     WayLockComponent,
+    SearchDetailSubscriptionComponent,
     ],
   imports: [
     CommonModule, 

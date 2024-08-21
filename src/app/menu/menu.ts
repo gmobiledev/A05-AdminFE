@@ -651,7 +651,7 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: 'search-subscription',
-        title: 'Tra cứu TTTB',
+        title: 'Tra cứu tổng số TB',
         translate: '',
         type: 'item',
         icon: 'search',
@@ -688,6 +688,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'search',
         url: 'sim-so/way-lock'
+      },
+      {
+        id: 'search-tttb',
+        title: 'Tra cứu TTTB',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search-tttb'
       },
       // {
       //   id: 'search-balance-changes',

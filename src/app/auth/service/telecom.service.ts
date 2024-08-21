@@ -61,6 +61,10 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/search`, { params: params });
   }
 
+  getDetailTTTB(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/search/msisdn`, { params: params });
+  }
+
   getDetailSimDVKH(params = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/tra-cuu-kho`, { params: params });
   }
