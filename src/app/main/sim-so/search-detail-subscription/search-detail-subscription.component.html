@@ -50,80 +50,93 @@
                     </p>
                   </div>
 
-                  <div>
+                  <!-- <div>
                     <p>
-                      <b>Giá gói cam kết: </b>
+                      <b>Giá gói cam kết : </b>
                       {{ item.balance.msisdn }}
                     </p>
-                  </div>
+                  </div> -->
 
                   <div>
                     <p>
-                      <b>Mã gói viễn thông : </b>
+                      <b>Trạng thái của đối tác : </b>
                       {{ item.balance?.currentState }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Thời hạn cam kết : </b>
+                      <b>Thời gian kích hoạt : </b>
                       {{ item.balance?.activeDate }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Số kỳ chưa thanh toán : </b>
+                      <b>Tài khoản chính : </b>
                       {{ item.balance?.coreBalance }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Loại thanh toán : </b>
+                      <b>Data còn lại  : </b>
+                      {{ item.balance?.dataRemain }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Tổng Data : </b>
+                      {{ item.balance?.dataTotal }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Thời gian hết hạn sử dụng : </b>
                       {{ item.balance?.coreBalanceExp }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Tiền SIM : </b>
+                      <b>Gói cước : </b>
                       {{ item.packages[0]?.package }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Phí hào mạng : </b>
+                      <b>Thời gian đăng ký : </b>
                       {{ item.packages[0]?.timeStart }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Tổng giá tiền gói: </b>
+                      <b>Thời gian hết hạn : </b>
                       {{ item.packages[0]?.timeEnd }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Thời gian kích hoạt : </b>
+                      <b>Gia hạn : </b>
                       {{ item.packages[0]?.extension }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Thời gian kích hoạt : </b>
+                      <b>Tổng Data  : </b>
                       {{ item.packages[0]?.dataTotal }}
                     </p>
                   </div>
 
                   <div class="mb-1">
-                    <b>Trạng thái :
-                      {{ item.packages[0]?.dataRemain }}
-                    </b>
+                    <b>Data còn lại : </b>
+                    {{ item.packages[0]?.dataRemain }}
                   </div>
 
                 </div>
@@ -132,16 +145,16 @@
               <div *ngIf="item" class="col-6">
                 <div class="col border-light rounded bg-resolution">
                   <div class="mt-1">
-                    <p>
+                    <!-- <p>
                       <b>Yêu cầu : </b>
                       {{ item?.info?.msisdn }}
-                    </p>
+                    </p> -->
                     <p>
-                      <b>Số thuê bao : </b>
+                      <b>Thời gian đồng bộ : </b>
                       {{ item?.info?.sync_time }}
                     </p>
                     <p>
-                      <b>Số thuê bao : </b>
+                      <b>Trạng thái : </b>
                       {{ item?.info?.state }}
                     </p>
                   </div>
@@ -152,63 +165,63 @@
 
                   <div>
                     <p>
-                      <b>Giá gói cam kết: </b>
+                      <b>Họ và tên : </b>
                       {{ item?.info?.people?.name }}
                     </p>
                   </div>
 
                   <div>
                     <p>
-                      <b>Mã gói viễn thông : </b>
+                      <b>Mã số CCCD : </b>
                       {{ item?.info?.people?.identification_no }}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Thời hạn cam kết : </b>
+                      <b>Thời gian đăng ký : </b>
                       {{ item?.info?.people?.identification_date }}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Số kỳ chưa thanh toán : </b>
+                      <b>Địa chỉ đăng ký : </b>
                       {{ item?.info?.people?.identification_place }}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Loại thanh toán : </b>
+                      <b>Loại định danh : </b>
                       {{ item?.info?.people?.identification_type }}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Tiền SIM : </b>
+                      <b>Ngày sinh : </b>
                       {{ item?.info?.people?.birth }}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Phí hào mạng : </b>
+                      <b>Phường/Xã: </b>
                       {{ item?.info?.people?.communue }}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Tổng giá tiền gói: </b>
+                      <b>Tỉnh/Thành phố : </b>
                       {{ item?.info?.people?.province }}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <b>Thời gian kích hoạt : </b>
+                      <b>Quận/Huyện : </b>
                       {{ item?.info?.people?.district }}
                     </p>
                   </div>
                   <div class="mb-1">
-                    <b>Trạng thái :
-                      {{ item?.info?.people?.address }}
-                    </b>
+                    <b>Quê quán : </b>
+                    {{ item?.info?.people?.address }}
+
                   </div>
 
                 </div>
