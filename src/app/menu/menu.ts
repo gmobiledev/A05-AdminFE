@@ -643,7 +643,7 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: 'search-subscription',
-        title: 'Tra cứu TTTB',
+        title: 'Tra cứu tổng số TB',
         translate: '',
         type: 'item',
         icon: 'search',
@@ -673,6 +673,22 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/transaction-history'
       },
+      {
+        id: 'way-lock',
+        title: 'Khoá/Mở 1C,2C',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/way-lock'
+      },
+      {
+        id: 'search-tttb',
+        title: 'Tra cứu TTTB',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search-tttb'
+      },
       // {
       //   id: 'search-balance-changes',
       //   title: 'Tra cứu cước',
@@ -694,7 +710,7 @@ export const menu: CoreMenu[] = [
         title: 'Tra cứu TTTB 2G',
         translate: '',
         type: 'item',
-        icon: 'database',
+        icon: 'search',
         url: 'sim-so/client2g'
       }
     ]
