@@ -564,14 +564,6 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'sms-log'
       },
-      // {
-      //   id: 'users',
-      //   title: 'Đơn giao vật tư LTG',
-      //   translate: 'MENU.ORDERLTG',
-      //   type: 'item',
-      //   icon: 'database',
-      //   url: 'order-ltg'
-      // },
       {
         id: 'report-revenue',
         title: 'Báo cáo',
