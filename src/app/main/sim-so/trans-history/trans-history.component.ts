@@ -4,16 +4,14 @@ import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { UserService } from 'app/auth/service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
-import { NgIf } from '@angular/common';
 
 
 @Component({
-  selector: 'app-transaction-history',
-  templateUrl: './transaction-history.component.html',
-  styleUrls: ['./transaction-history.component.scss']
+  selector: 'app-trans-history',
+  templateUrl: './trans-history.component.html',
+  styleUrls: ['./trans-history.component.scss']
 })
-export class TransactionHistoryComponent implements OnInit {
+export class TransHistoryComponent implements OnInit {
 
   public total: any;
   public list: any;
@@ -35,25 +33,15 @@ export class TransactionHistoryComponent implements OnInit {
   constructor(
     private telecomService: TelecomService,
     private alertService: SweetAlertService,
-    private userService: UserService,
-    private modalService: NgbModal,
 
   ) {
-
-    this.taskTelecomStatus = Object.keys(TaskTelecomStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-      obj[key] = TaskTelecomStatus[key];
-      return obj;
-    }, {});
   }
   onSubmitSearch() {
-    console.log(this.searchSim);
-    this.itemBlockUI.start();
     this.telecomService.getBalanceChangeSimDVKH(this.searchSim.msisdn, this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;
         this.list = res.data;
-        // this.total = res.data.count;
       } else if (!res.data || Object.keys(res.data).length === 0) {
         this.list = null
         this.showMessage = true;
@@ -64,15 +52,12 @@ export class TransactionHistoryComponent implements OnInit {
       this.alertService.showMess(err);
     })
   }
+
   ngOnInit(): void {
-    this.getData();
+    
   }
   getData(): void {
-  }
 
-
-  getInvenstory(){
-    return this.list?.sell_channels ? this.list.sell_channels.map(x=>x.channel.name).join("-") : ""
   }
 
 }

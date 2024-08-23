@@ -596,14 +596,14 @@ export const menu: CoreMenu[] = [
         icon: 'list',
         url: 'user/list'
       },
-      {
-        id: 'ekyc',
-        title: 'Lô EKYC',
-        translate: 'MENU.EKYCBATCH',
-        type: 'item',
-        icon: 'database',
-        url: 'people/list-ekyc-batch'
-      },
+      // {
+      //   id: 'ekyc',
+      //   title: 'Lô EKYC',
+      //   translate: 'MENU.EKYCBATCH',
+      //   type: 'item',
+      //   icon: 'database',
+      //   url: 'people/list-ekyc-batch'
+      // },
     ]
   },
   {
@@ -642,12 +642,28 @@ export const menu: CoreMenu[] = [
     },
     children: [
       {
+        id: 'trans-history',
+        title: 'Lịch sử giao dịch',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/trans-history'
+      },
+      {
         id: 'search-subscription',
         title: 'Tra cứu tổng số TB',
         translate: '',
         type: 'item',
         icon: 'search',
         url: 'sim-so/search-subscription'
+      },
+      {
+        id: 'transaction-history',
+        title: 'Lịch sử giao dịch',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/transaction-history'
       },
       {
         id: 'dvkh-search',
@@ -664,14 +680,6 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'search',
         url: 'sim-so/esim-search'
-      },
-      {
-        id: 'transaction-history',
-        title: 'Lịch sử giao dịch',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/transaction-history'
       },
       {
         id: 'way-lock',

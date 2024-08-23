@@ -40,10 +40,10 @@ import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { DvkhSearchComponent } from './dvkh-search/dvkh-search.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { SearchEsimComponent } from './search-esim/search-esim.component';
-import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { WayLockComponent } from './way-lock/way-lock.component';
 import { SearchDetailSubscriptionComponent } from './search-detail-subscription/search-detail-subscription.component';
 import { PackageComponent } from './package/package.component';
+import { TransHistoryComponent } from './trans-history/trans-history.component';
 
 const routes: Routes = [
   {
@@ -75,8 +75,8 @@ const routes: Routes = [
     component: WayLockComponent
   },
   {
-    path: 'transaction-history',
-    component: TransactionHistoryComponent
+    path: 'trans-history',
+    component: TransHistoryComponent
   },
   {
     path: 'esim-search',
@@ -164,10 +164,10 @@ const routes: Routes = [
     WarningComponent,
     DvkhSearchComponent,
     SearchEsimComponent,
-    TransactionHistoryComponent,
     WayLockComponent,
     SearchDetailSubscriptionComponent,
     PackageComponent,
+    TransHistoryComponent,
     ],
   imports: [
     CommonModule, 
