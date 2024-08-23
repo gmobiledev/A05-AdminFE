@@ -21,6 +21,8 @@ export class TransHistoryComponent implements OnInit {
   public modalRef: any;
   productListAll: any;
 
+  maxToDate: string;
+
   public searchSim: any = {
     msisdn: '',
     from: '',
@@ -35,7 +37,27 @@ export class TransHistoryComponent implements OnInit {
     private alertService: SweetAlertService,
 
   ) {
+
   }
+
+  onFromDateChange() {
+    if (this.searchSim.from) {
+      const fromDate = new Date(this.searchSim.from);
+      const maxDate = new Date(fromDate);
+      maxDate.setDate(fromDate.getDate() + 30);
+  
+      const year = maxDate.getFullYear();
+      const month = String(maxDate.getMonth() + 1).padStart(2, '0');
+      const day = String(maxDate.getDate()).padStart(2, '0');
+      this.maxToDate = `${year}-${month}-${day}`;
+  
+      if (this.searchSim.to && this.searchSim.to > this.maxToDate) {
+        this.searchSim.to = this.maxToDate; // Reset 'to' date if it exceeds max
+      }
+    }
+  }
+  
+
   onSubmitSearch() {
     this.telecomService.getBalanceChangeSimDVKH(this.searchSim.msisdn, this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
@@ -60,5 +82,9 @@ export class TransHistoryComponent implements OnInit {
 
   }
 
+}
+
+function moment(from: any) {
+  throw new Error('Function not implemented.');
 }
 
