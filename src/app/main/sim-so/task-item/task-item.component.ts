@@ -1016,7 +1016,7 @@ export class TaskItemComponent implements OnInit {
           this.actionText = 'Cập nhật';          
         }
         const detailObj = JSON.parse(this.data.task.detail);
-        this.isCheckOCr = parseInt(detailObj['check_ocr']);
+        this.isCheckOCr = detailObj['check_ocr'] == undefined ? true : parseInt(detailObj['check_ocr']);
         if(this.data.task.sub_action == TelecomTaskSubAction.SIM_TO_ESIM) {
           this.dataResendMail.email = detailObj['email'];
           this.dataResendMail.task_id = this.data.task.id;
