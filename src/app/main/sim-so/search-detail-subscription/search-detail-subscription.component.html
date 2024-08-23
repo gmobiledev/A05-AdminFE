@@ -1,0 +1,260 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Thông tin chi tiết thuê bao</h4>
+          </div>
+
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <input type="text" name="keyword" [(ngModel)]="searchSim.keyword" class="form-control"
+                      placeholder="Tìm kiếm" />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả <span [data-feather]="'search'"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="row">
+              <h4 class="mb-1"></h4>
+
+              <div *ngIf="item" class="col-6">
+                <div class="col border-light rounded bg-resolution">
+                  <div class="mt-1">
+                    <p>
+                      <b>Kích hoạt : </b>
+                      {{item?.is_kit}}
+                    </p>
+                    <p>
+                      <b>Trạng thái : </b>
+                      {{item?.state}}
+                    </p>
+                    <p>
+                      <b>Số thuê bao : </b>
+                      {{item?.msisdn}}
+                    </p>
+                    <p>
+                      <b>Số serial : </b>
+                      {{item?.serial}}
+                    </p>
+                  </div>
+
+                  <!-- <div>
+                    <p>
+                      <b>Giá gói cam kết : </b>
+                      {{ item.balance.msisdn }}
+                    </p>
+                  </div> -->
+
+                  <div>
+                    <p>
+                      <b>Trạng thái của đối tác : </b>
+                      {{ item.balance?.currentState }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Thời gian kích hoạt : </b>
+                      {{ item.balance?.activeDate }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Tài khoản chính : </b>
+                      {{ item.balance?.coreBalance }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Data còn lại  : </b>
+                      {{ item.balance?.dataRemain }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Tổng Data : </b>
+                      {{ item.balance?.dataTotal }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Thời gian hết hạn sử dụng : </b>
+                      {{ item.balance?.coreBalanceExp }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Gói cước : </b>
+                      {{ item.packages[0]?.package }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Thời gian đăng ký : </b>
+                      {{ item.packages[0]?.timeStart }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Thời gian hết hạn : </b>
+                      {{ item.packages[0]?.timeEnd }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Gia hạn : </b>
+                      {{ item.packages[0]?.extension }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Tổng Data  : </b>
+                      {{ item.packages[0]?.dataTotal }}
+                    </p>
+                  </div>
+
+                  <div class="mb-1">
+                    <b>Data còn lại : </b>
+                    {{ item.packages[0]?.dataRemain }}
+                  </div>
+
+                </div>
+              </div>
+
+              <div *ngIf="item" class="col-6">
+                <div class="col border-light rounded bg-resolution">
+                  <div class="mt-1">
+                    <!-- <p>
+                      <b>Yêu cầu : </b>
+                      {{ item?.info?.msisdn }}
+                    </p> -->
+                    <p>
+                      <b>Thời gian đồng bộ : </b>
+                      {{ item?.info?.sync_time }}
+                    </p>
+                    <p>
+                      <b>Trạng thái : </b>
+                      {{ item?.info?.state }}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    <b>Nhà mạng : </b>
+                    <span [innerHTML]="item?.info?.mno | showIconMno"></span>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Họ và tên : </b>
+                      {{ item?.info?.people?.name }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      <b>Mã số CCCD : </b>
+                      {{ item?.info?.people?.identification_no }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Thời gian đăng ký : </b>
+                      {{ item?.info?.people?.identification_date }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Địa chỉ đăng ký : </b>
+                      {{ item?.info?.people?.identification_place }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Loại định danh : </b>
+                      {{ item?.info?.people?.identification_type }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Ngày sinh : </b>
+                      {{ item?.info?.people?.birth }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Phường/Xã: </b>
+                      {{ item?.info?.people?.communue }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Tỉnh/Thành phố : </b>
+                      {{ item?.info?.people?.province }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <b>Quận/Huyện : </b>
+                      {{ item?.info?.people?.district }}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    <b>Quê quán : </b>
+                    {{ item?.info?.people?.address }}
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalTransWh let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Chi tiết thông tin Sim/Số</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div>
+      <!-- <h4>Thông tin Sim/Số</h4> -->
+      <div class="column">
+        <div class="col-md-6">MÃ LÔ: {{ item?.batch_id }}</div>
+        <div class="col-md-6">TÊN LÔ: {{ item?.batch?.title }}</div>
+        <div class="col-md-6">KHO: {{ item?.sell_channels[0]?.channel.name}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+      Đóng
+    </button>
+  </div>
+</ng-template>

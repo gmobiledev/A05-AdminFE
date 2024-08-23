@@ -61,8 +61,16 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiUrl}/admin/inventory/search`, { params: params });
   }
 
+  getDetailTTTB(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/search/msisdn`, { params: params });
+  }
+
   getDetailSimDVKH(params = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/tra-cuu-kho`, { params: params });
+  }
+
+  getBalanceChangeSimDVKH(mobile, params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/balance-changes/${mobile}`, { params: params });
   }
 
   getDetaileSim(data) {
@@ -325,4 +333,17 @@ export class TelecomService {
   retryTask(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/change-esim`, data);
   }
+
+  lockOneWay(data, type) {
+    if(type == 1){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-one-way`, data);
+    } else if(type == 2){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-two-way`, data);
+    } else if(type == 3){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-one-way`, data);
+    } else if(type == 4) {
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-two-way`, data);
+    }
+  }
+  
 }

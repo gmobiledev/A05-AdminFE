@@ -520,6 +520,28 @@ export const menu: CoreMenu[] = [
       },
     ]
   },
+  {
+    id: 'users',
+    title: 'TOPUP',
+    translate: '',
+    type: 'collapsible',
+    icon: 'phone-outgoing',
+    badge: {
+      title: '1',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'TOPUP',
+        translate: '',
+        type: 'item',
+        icon: 'circle',
+        url: 'task/topup'
+      },
+    ]
+  },
 
   {
     id: 'users',
@@ -542,14 +564,6 @@ export const menu: CoreMenu[] = [
         icon: 'database',
         url: 'sms-log'
       },
-      // {
-      //   id: 'users',
-      //   title: 'Đơn giao vật tư LTG',
-      //   translate: 'MENU.ORDERLTG',
-      //   type: 'item',
-      //   icon: 'database',
-      //   url: 'order-ltg'
-      // },
       {
         id: 'report-revenue',
         title: 'Báo cáo',
@@ -622,14 +636,14 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '5',
+      title: '8',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
     children: [
       {
         id: 'search-subscription',
-        title: 'Tra cứu TTTB',
+        title: 'Tra cứu tổng số TB',
         translate: '',
         type: 'item',
         icon: 'search',
@@ -650,6 +664,30 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'search',
         url: 'sim-so/esim-search'
+      },
+      {
+        id: 'transaction-history',
+        title: 'Lịch sử giao dịch',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/transaction-history'
+      },
+      {
+        id: 'way-lock',
+        title: 'Khoá/Mở 1C,2C',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/way-lock'
+      },
+      {
+        id: 'search-tttb',
+        title: 'Tra cứu TTTB',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search-tttb'
       },
       // {
       //   id: 'search-balance-changes',
@@ -672,7 +710,7 @@ export const menu: CoreMenu[] = [
         title: 'Tra cứu TTTB 2G',
         translate: '',
         type: 'item',
-        icon: 'database',
+        icon: 'search',
         url: 'sim-so/client2g'
       }
     ]
