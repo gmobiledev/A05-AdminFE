@@ -44,6 +44,7 @@ import { WayLockComponent } from './way-lock/way-lock.component';
 import { SearchDetailSubscriptionComponent } from './search-detail-subscription/search-detail-subscription.component';
 import { PackageComponent } from './package/package.component';
 import { TransHistoryComponent } from './trans-history/trans-history.component';
+import { InfoESimComponent } from './info-e-sim/info-e-sim.component';
 
 const routes: Routes = [
   {
@@ -89,6 +90,10 @@ const routes: Routes = [
   {
     path: 'search-tttb',
     component: SearchDetailSubscriptionComponent
+  },
+  {
+    path: 'info-eSim',
+    component: InfoESimComponent
   },
   {
     path: 'search-subscription',
@@ -168,6 +173,7 @@ const routes: Routes = [
     SearchDetailSubscriptionComponent,
     PackageComponent,
     TransHistoryComponent,
+    InfoESimComponent,
     ],
   imports: [
     CommonModule, 

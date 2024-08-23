@@ -658,6 +658,14 @@ export const menu: CoreMenu[] = [
         url: 'sim-so/search-subscription'
       },
       {
+        id: 'info-eSim',
+        title: 'Thông tin eSIM',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/info-eSim'
+      },
+      {
         id: 'transaction-history',
         title: 'Lịch sử giao dịch',
         translate: '',
