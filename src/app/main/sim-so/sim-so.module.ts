@@ -83,7 +83,7 @@ const routes: Routes = [
     component: SearchEsimComponent
   },
   {
-    path: 'package',
+    path: 'select-package',
     component: PackageComponent
   },
   {

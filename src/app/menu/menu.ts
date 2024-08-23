@@ -689,6 +689,14 @@ export const menu: CoreMenu[] = [
         icon: 'search',
         url: 'sim-so/search-tttb'
       },
+      {
+        id: 'select-package',
+        title: 'Đăng ký gói cước',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/select-package'
+      },
       // {
       //   id: 'search-balance-changes',
       //   title: 'Tra cứu cước',

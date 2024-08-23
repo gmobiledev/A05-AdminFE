@@ -1,1 +1,48 @@
-<p>package works!</p>
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <div class="row" id="table-striped">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Đăng ký gói cước</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" name="msisdn" placeholder="Số thuê bao" [(ngModel)]="dataPost.msisdn"
+                                            class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <!-- <label for="">Chọn gói cước</label> -->
+                                        <select [(ngModel)]="dataPost.package" name="package" class="form-control">
+                                            <option value="" disabled selected>Chọn gói cước</option>
+                                            <option *ngFor="let item of list.result" [value]="item">{{ item }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <button [disabled]="" type="submit" (click)="onSubmit()"
+                                            class="btn btn-block btn-success">
+                                            Xác nhận
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

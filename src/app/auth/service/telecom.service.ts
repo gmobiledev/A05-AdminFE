@@ -69,6 +69,15 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/tra-cuu-kho`, { params: params });
   }
 
+  getPackageSimDVKH(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-packages`, { params: params });
+  }
+
+  postPackageSimDVKH(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/register-package`, data);
+  }
+
+
   getBalanceChangeSimDVKH(mobile, params = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/balance-changes/${mobile}`, { params: params });
   }
