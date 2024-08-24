@@ -139,8 +139,8 @@ export class ChiTietG59Component implements OnInit {
         this.submitted = false;
         this.sectionBlockUI.stop();
       })
-    } else {
-      this.inventoryService.reportChiTietSimByAdmin(paramsSearch).subscribe(res => {
+    } else if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-msisdn-by-admin')) {
+      this.inventoryService.reportChiTietSimG59ByAdmin(paramsSearch).subscribe(res => {
         this.submitted = false;
         this.sectionBlockUI.stop();
         this.list = res.data.items;
@@ -209,22 +209,43 @@ export class ChiTietG59Component implements OnInit {
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
     }
-    this.inventoryService.exportReportChiTietSim(null, paramsSearch).subscribe(res => {
-      this.sectionBlockUI.stop();
-      var newBlob = new Blob([res.body], { type: res.body.type });
-      let url = window.URL.createObjectURL(newBlob);
-      let a = document.createElement('a');
-      document.body.appendChild(a);
-      a.setAttribute('style', 'display: none');
-      a.href = url;
-      a.download = "Báo cáo chi tiet TB";
-      a.click();
-      window.URL.revokeObjectURL(url);
-      a.remove();
-      this.submitted = false;
-    }, error => {
-      console.log(error);
-    })
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    const listCurrentAction = currentUser.actions;
+    if (listCurrentAction.find(itemX => itemX == 'POST@/api/telecom-oracle-admin/report/g59-msisdn/excel')){
+      this.inventoryService.exportReportChiTietSimG59(null, paramsSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        var newBlob = new Blob([res.body], { type: res.body.type });
+        let url = window.URL.createObjectURL(newBlob);
+        let a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = url;
+        a.download = "Báo cáo chi tiet TB";
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        this.submitted = false;
+      },error => {
+        console.log(error);
+      })  
+    } else if (listCurrentAction.find(itemX => itemX == 'POST@/api/telecom-oracle-admin/report/g59-msisdn-by-admin/excel')) {
+      this.inventoryService.exportReportChiTietSimG59ByAdmin(null, paramsSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        var newBlob = new Blob([res.body], { type: res.body.type });
+        let url = window.URL.createObjectURL(newBlob);
+        let a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display: none');
+        a.href = url;
+        a.download = "Báo cáo chi tiet TB";
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        this.submitted = false;
+      },error => {
+        console.log(error);
+      })
+    }
   }
 
 }

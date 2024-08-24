@@ -121,7 +121,7 @@ export class TongHopComponent implements OnInit {
       }, error => {
         this.sectionBlockUI.stop();
       })
-    } else {
+    } else if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-msisdn-state-by-admin')) {
       this.inventoryService.reportTongHopSimByAdmin(paramsSearch).subscribe(res => {
         this.submitted = false;
         this.sectionBlockUI.stop();
