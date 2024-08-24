@@ -375,6 +375,18 @@ export class InventoryService {
   reportChiTietSimG59(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn`, {params: params});
   }
+
+  reportKetQuaSimG59ByAdmin(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-summary-by-admin`, {params: params} );
+  }
+
+  reportTongHopSimG59ByAdmin(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-state-by-admin`, {params: params} );
+  }
+
+  reportChiTietSimG59ByAdmin(params) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-by-admin`, {params: params});
+  }
   
   getAllProductStore(dto: any) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/product-store/get-all`, {params: dto});
@@ -382,5 +394,13 @@ export class InventoryService {
   
   reportChiTietSimByAdminG59(params) {
     return this._http.get<any>(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-by-admins`, {params: params});
+  }
+
+  exportReportChiTietSimG59(params = null, data = null): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
+  }
+
+  exportReportChiTietSimG59ByAdmin(params = null, data = null): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-by-admin/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
   }
 }

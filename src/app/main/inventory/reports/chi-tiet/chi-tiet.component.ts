@@ -111,7 +111,7 @@ export class ChiTietComponent implements OnInit {
         this.submitted = false;
         this.sectionBlockUI.stop();
       })
-    } else {
+    } else if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-msisdn-by-admins')) {
       this.inventoryService.reportChiTietSimByAdmin(paramsSearch).subscribe(res => {
         this.submitted = false;
         this.sectionBlockUI.stop();
@@ -176,7 +176,7 @@ export class ChiTietComponent implements OnInit {
       },error => {
         console.log(error);
       })  
-    } else {
+    } else if (listCurrentAction.find(itemX => itemX == 'POST@/api/telecom-oracle-admin/report/s99-msisdn-by-admins/excel')) {
       this.inventoryService.exportReportChiTietSimByAdmin(null, paramsSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         var newBlob = new Blob([res.body], { type: res.body.type });
