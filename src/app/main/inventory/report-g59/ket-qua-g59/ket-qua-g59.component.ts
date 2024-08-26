@@ -156,8 +156,8 @@ export class KetQuaG59Component implements OnInit {
         this.submitted = false;
         this.sectionBlockUI.stop();
       })  
-    } else {
-      this.inventoryService.reportTonghopS99Admin(paramsSearch).subscribe(res => {
+    } else if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-summary-by-admin')) {
+      this.inventoryService.reportKetQuaSimG59ByAdmin(paramsSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.submitted = false;
         this.list = res.data;      
@@ -216,14 +216,14 @@ export class KetQuaG59Component implements OnInit {
       { letter: 'A', header: 'Đơn vị', key: 'name' },
       { letter: 'B', header: 'Quận, Huyện', key: 'district' },
       { letter: 'C', header: 'Phường, Xã', key: 'commune' },
-      { letter: 'D', header: 'SL đăng ký', key: 'total_register' },
-      { letter: 'E', header: 'Bàn giao', key: 'received' },
-      { letter: 'F', header: 'Tỉ lệ(%)', key: 'percent' },
-      { letter: 'G', header: 'Số lượng TB hoạt động', key: 'actived' },
-      { letter: 'H', header: 'Số thuê bao hoạt động luỹ kế', key: 'luy_ke_actived' },
-      { letter: 'I', header: 'Số TB hoàn thiện TTTB', key: 'hoan_thien_tttb' },
-      { letter: 'J', header: 'Doanh thu topup', key: 'sum_topup' },
-      { letter: 'K', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
+      // { letter: 'D', header: 'SL đăng ký', key: 'total_register' },
+      { letter: 'D', header: 'Bàn giao', key: 'received' },
+      { letter: 'E', header: 'Tỉ lệ(%)', key: 'percent' },
+      { letter: 'F', header: 'Số lượng TB hoạt động', key: 'actived' },
+      { letter: 'G', header: 'Số thuê bao hoạt động luỹ kế', key: 'luy_ke_actived' },
+      { letter: 'H', header: 'Số TB hoàn thiện TTTB', key: 'hoan_thien_tttb' },
+      { letter: 'I', header: 'Doanh thu topup', key: 'sum_topup' },
+      { letter: 'J', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
     ];
     let exportData = this.list.map(obj => ({...obj}));
     for(let i = 0;i<exportData.length;i++) {

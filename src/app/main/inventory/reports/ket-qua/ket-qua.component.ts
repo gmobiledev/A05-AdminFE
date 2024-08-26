@@ -126,7 +126,7 @@ export class KetQuaComponent implements OnInit {
         this.submitted = false;
         this.sectionBlockUI.stop();
       })  
-    } else {
+    } else if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/s99-summary-by-admin')) {
       this.inventoryService.reportTonghopS99Admin(paramsSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.submitted = false;
