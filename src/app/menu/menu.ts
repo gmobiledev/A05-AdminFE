@@ -651,7 +651,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'history-topup',
-        title: 'Lịch sử thanh toán',
+        title: 'Lịch sử nạp tiền',
         translate: '',
         type: 'item',
         icon: 'search',
