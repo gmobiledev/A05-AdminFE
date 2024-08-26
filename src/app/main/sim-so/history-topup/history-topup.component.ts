@@ -58,8 +58,12 @@ export class HistoryTopupComponent implements OnInit {
   
 
   onSubmitSearch() {
-    if (!this.searchSim.msisdn || !this.searchSim.from || !this.searchSim.to) {
-      this.alertService.showMess("Vui lòng chọn ngày tháng và nhập STB!");
+    if (!this.searchSim.from || !this.searchSim.to) {
+      this.alertService.showMess("Vui lòng chọn ngày tháng!");
+      return;
+    }
+    if (!this.searchSim.msisdn) {
+      this.alertService.showMess("Vui lòng nhập STB!");
       return;
     }
 
