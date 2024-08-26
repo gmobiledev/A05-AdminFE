@@ -27,10 +27,9 @@
             </form>
 
             <div class="row">
-              <h4 class="mb-1"></h4>
-
-              <div *ngIf="item" class="col-6">
-                <div class="col border-light rounded bg-resolution">
+              
+              <div class="col-4">
+                <div *ngIf="item" class="col border-light rounded bg-resolution mt-2">
                   <div class="mt-1">
                     <p>
                       <b>Kích hoạt : </b>
@@ -49,13 +48,6 @@
                       {{item?.serial}}
                     </p>
                   </div>
-
-                  <!-- <div>
-                    <p>
-                      <b>Giá gói cam kết : </b>
-                      {{ item.balance.msisdn }}
-                    </p>
-                  </div> -->
 
                   <div>
                     <p>
@@ -80,7 +72,7 @@
 
                   <div>
                     <p>
-                      <b>Data còn lại  : </b>
+                      <b>Data còn lại : </b>
                       {{ item.balance?.dataRemain }}
                     </p>
                   </div>
@@ -129,7 +121,7 @@
 
                   <div>
                     <p>
-                      <b>Tổng Data  : </b>
+                      <b>Tổng Data : </b>
                       {{ item.packages[0]?.dataTotal }}
                     </p>
                   </div>
@@ -139,16 +131,8 @@
                     {{ item.packages[0]?.dataRemain }}
                   </div>
 
-                </div>
-              </div>
-
-              <div *ngIf="item" class="col-6">
-                <div class="col border-light rounded bg-resolution">
                   <div class="mt-1">
-                    <!-- <p>
-                      <b>Yêu cầu : </b>
-                      {{ item?.info?.msisdn }}
-                    </p> -->
+                   
                     <p>
                       <b>Thời gian đồng bộ : </b>
                       {{ item?.info?.sync_time }}
@@ -226,7 +210,321 @@
 
                 </div>
               </div>
+
+              <div class="col-4" *ngIf="item">GMOBILE<span [innerHTML]=" 'GMOBILE' | showIconMno"></span>
+                <div class="col border-light rounded bg-resolution mt-2">
+                  <div class="mt-1">
+                    <p>
+                      {{item?.is_kit}}
+                    </p>
+                    <p>
+                      {{item?.state}}
+                    </p>
+                    <p>
+                      {{item?.msisdn}}
+                    </p>
+                    <p>
+                      {{item?.serial}}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.currentState }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.activeDate }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.coreBalance }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.dataRemain }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.dataTotal }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.coreBalanceExp }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.package }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.timeStart }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                    
+                      {{ item.packages[0]?.timeEnd }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.extension }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.dataTotal }}
+                    </p>
+                  </div>
+
+                  <div class="mb-1">
+                    {{ item.packages[0]?.dataRemain }}
+                  </div>
+
+                  <div class="mt-1">
+                   
+                    <p>
+                      {{ item?.info?.sync_time }}
+                    </p>
+                    <p>
+                      {{ item?.info?.state }}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    <span [innerHTML]="item?.info?.mno | showIconMno"></span>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.name }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_no }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_date }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_place }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_type }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.birth }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.communue }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.province }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.district }}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    {{ item?.info?.people?.address }}
+
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-4" *ngIf="item">VNP<span [innerHTML]=" 'VNP' | showIconMno"></span>
+                <div class="col border-light rounded bg-resolution mt-2">
+                  <div class="mt-1">
+                    <p>
+                      {{item?.is_kit}}
+                    </p>
+                    <p>
+                      {{item?.state}}
+                    </p>
+                    <p>
+                      {{item?.msisdn}}
+                    </p>
+                    <p>
+                      {{item?.serial}}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.currentState }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.activeDate }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.coreBalance }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.dataRemain }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.dataTotal }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.balance?.coreBalanceExp }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.package }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.timeStart }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                    
+                      {{ item.packages[0]?.timeEnd }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.extension }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item.packages[0]?.dataTotal }}
+                    </p>
+                  </div>
+
+                  <div class="mb-1">
+                    {{ item.packages[0]?.dataRemain }}
+                  </div>
+
+                  <div class="mt-1">
+                   
+                    <p>
+                      {{ item?.info?.sync_time }}
+                    </p>
+                    <p>
+                      {{ item?.info?.state }}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    <span [innerHTML]="item?.info?.mno | showIconMno"></span>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.name }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_no }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_date }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_place }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.identification_type }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.birth }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.communue }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.province }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      {{ item?.info?.people?.district }}
+                    </p>
+                  </div>
+                  <div class="mb-1">
+                    {{ item?.info?.people?.address }}
+
+                  </div>
+
+                </div>
+              </div>
+
             </div>
+
+ 
+
           </div>
         </div>
       </div>

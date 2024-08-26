@@ -636,7 +636,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '8',
+      title: '11',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
