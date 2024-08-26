@@ -14,7 +14,6 @@ import { TaskCountdownComponent } from './task-countdown/task-countdown.componen
 import { SharedModule } from '../shared/share.module';
 import { SimPackagesComponent } from './sim-packages/sim-packages.component';
 import { QuillModule } from 'ngx-quill';
-import { ViewTaskComponent } from './view-task/view-task.component';
 import { SearchSimSoComponent } from './search-sim-so/search-sim-so.component';
 import { ActionLogsComponent } from './action-logs/action-logs.component';
 import { SellChannelComponent } from './sell-channel/sell-channel.component';
@@ -153,7 +152,6 @@ const routes: Routes = [
     TaskItemComponent,
     TaskCountdownComponent,
     SimPackagesComponent,
-    ViewTaskComponent,
     SearchSimSoComponent,
     ActionLogsComponent,
     SellChannelComponent,
