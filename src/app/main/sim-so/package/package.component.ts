@@ -59,7 +59,7 @@ export class PackageComponent implements OnInit {
     this.telecomService.getPackageSimDVKH().subscribe(res => {
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;
-        this.list = res.data.data;
+        this.list = res.data;
       } else if (!res.data || Object.keys(res.data).length === 0) {
         this.list = null
         this.showMessage = true;

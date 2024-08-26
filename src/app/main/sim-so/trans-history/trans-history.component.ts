@@ -59,6 +59,11 @@ export class TransHistoryComponent implements OnInit {
   
 
   onSubmitSearch() {
+    if (!this.searchSim.msisdn || !this.searchSim.from || !this.searchSim.to) {
+      this.alertService.showMess("Vui lòng chọn ngày tháng và nhập STB!");
+      return;
+    }
+
     this.telecomService.getBalanceChangeSimDVKH(this.searchSim.msisdn, this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
       if (res.data && Object.keys(res.data).length > 0) {
