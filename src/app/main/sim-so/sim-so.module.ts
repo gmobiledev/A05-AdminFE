@@ -45,6 +45,7 @@ import { SearchDetailSubscriptionComponent } from './search-detail-subscription/
 import { PackageComponent } from './package/package.component';
 import { TransHistoryComponent } from './trans-history/trans-history.component';
 import { InfoESimComponent } from './info-e-sim/info-e-sim.component';
+import { HistoryTopupComponent } from './history-topup/history-topup.component';
 
 const routes: Routes = [
   {
@@ -90,6 +91,10 @@ const routes: Routes = [
   {
     path: 'search-tttb',
     component: SearchDetailSubscriptionComponent
+  },
+  {
+    path: 'history-topup',
+    component: HistoryTopupComponent
   },
   {
     path: 'info-eSim',
@@ -174,6 +179,7 @@ const routes: Routes = [
     PackageComponent,
     TransHistoryComponent,
     InfoESimComponent,
+    HistoryTopupComponent,
     ],
   imports: [
     CommonModule, 
