@@ -73,6 +73,15 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-packages`, { params: params });
   }
 
+  getInfoSimDVKH(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-sim-info`, { params: params });
+  }
+
+  getInfoeSimDVKH(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-esim-info`, { params: params });
+  }
+
+
   postPackageSimDVKH(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/register-package`, data);
   }
@@ -80,6 +89,10 @@ export class TelecomService {
 
   getBalanceChangeSimDVKH(mobile, params = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/balance-changes/${mobile}`, { params: params });
+  }
+
+  getBalanceTopupSimDVKH(mobile, params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/recharge/${mobile}`, { params: params });
   }
 
   getDetaileSim(data) {

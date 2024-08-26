@@ -16,17 +16,9 @@ import { NgIf } from '@angular/common';
 })
 export class InfoESimComponent implements OnInit {
 
-  public total: any;
-  public item: any;
-  public showMessage: boolean
-  public selectedItem: any;
-  public taskTelecomStatus;
-  public modalRef: any;
-  productListAll: any;
+  public listeSim: any;
+  public listSim: any;
 
-  public searchSim: any = {
-    keyword: '',
-  }
 
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
 
@@ -38,62 +30,48 @@ export class InfoESimComponent implements OnInit {
 
   ) {
 
-    this.taskTelecomStatus = Object.keys(TaskTelecomStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-      obj[key] = TaskTelecomStatus[key];
-      return obj;
-    }, {});
   }
 
-  onSubmitSearch() {
-    console.log(this.searchSim);
-    this.itemBlockUI.start();
-    this.telecomService.getDetailTTTB(this.searchSim).subscribe(res => {
-      this.itemBlockUI.stop();
-      if (res.data && Object.keys(res.data).length > 0) {
-        this.showMessage = false;
-        this.item = res.data
-        this.total = res.data.count;
-      } else if (!res.data || Object.keys(res.data).length === 0) {
-        this.item = null
-        this.showMessage = true;
-      }
-
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+  dataPost = {
+    serial: "",
+    package: "",
   }
+  
+  onSubmit(type) {
+    if (!this.dataPost.serial || !this.dataPost.package) {
+      this.alertService.showMess("Vui lòng chọn Xem chi tiết eSIM/SIM và nhập STB/Serial!");
+      return;
+    }
+  
+    if (type == 1) {
+      this.telecomService.getInfoeSimDVKH(this.dataPost).subscribe(res => {
+        if (res.status == 1) {
+          this.listeSim = res.data
+        }
+      }, err => {
+        this.alertService.showMess(err);
+        this.listeSim = null
+      });
+    } else {
+      this.telecomService.getInfoSimDVKH(this.dataPost).subscribe(res => {
+        if (res.status == 1) {
+          this.listeSim = res.data
+        }
+      }, err => {
+        this.alertService.showMess(err);
+        this.listeSim = null
+      });
+    }
+  }  
 
   ngOnInit(): void {
     this.getData();
   }
 
   getData(): void {
-  }
 
-  getInvenstory(){
-    return this.item?.sell_channels ? this.item.sell_channels.map(x=>x.channel.name).join("-") : ""
-  }
-
-
-  async modalOpen(modal, item) {
-    if (item) {
-      this.selectedItem = item;
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'lg',
-        backdrop: 'static',
-        keyboard: false
-      });
-
-    }
-  }
-
-  modalClose() {
-    this.selectedItem = null;
-    this.getData();
-    this.modalRef.close();
   }
 
 }
+
+
