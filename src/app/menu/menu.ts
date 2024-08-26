@@ -659,7 +659,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'info-eSim',
-        title: 'Thông tin eSIM',
+        title: 'Thông tin SIM/eSIM',
         translate: '',
         type: 'item',
         icon: 'search',
