@@ -33,8 +33,8 @@
                   <thead>
                     <tr>
                       <th></th>
-                      <th>GMOBILE<span [innerHTML]=" 'GMOBILE' | showIconMno"></span></th>
-                      <th>VNP<span [innerHTML]=" 'VNP' | showIconMno"></span></th>
+                      <th>GMOBILE</th>
+                      <th>VNP</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -210,108 +210,108 @@
                       <td>
                         <div class="mt-1">
                           <p>
-                            {{item?.is_kit}}
+                            {{item?.is_kit ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{item?.state}}
+                            {{item?.state ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{item?.msisdn}}
+                            {{item?.msisdn ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{item?.serial}}
+                            {{item?.serial ?? "_" }}
                           </p>
                         </div>
                                                                          
                         <div>
                           <p>
-                            {{ item.balance?.currentState }}
+                            {{ item.balance?.currentState ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.activeDate }}
+                            {{ item.balance?.activeDate ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.coreBalance }}
+                            {{ item.balance?.coreBalance ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.dataRemain }}
+                            {{ item.balance?.dataRemain ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.dataTotal }}
+                            {{ item.balance?.dataTotal ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.coreBalanceExp }}
+                            {{ item.balance?.coreBalanceExp ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.package }}
+                            {{ item.packages[0]?.package ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.timeStart }}
+                            {{ item.packages[0]?.timeStart ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
 
-                            {{ item.packages[0]?.timeEnd }}
+                            {{ item.packages[0]?.timeEnd ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.extension }}
+                            {{ item.packages[0]?.extension ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.dataTotal }}
+                            {{ item.packages[0]?.dataTotal ?? "_" }}
                           </p>
                         </div>
 
                         <div class="mb-1">
-                          {{ item.packages[0]?.dataRemain }}
+                          {{ item.packages[0]?.dataRemain ?? "_" }}
                         </div>
 
                         <div class="mt-1">
                           <p>
-                            {{ item?.info?.sync_time }}
+                            {{ item?.info?.sync_time ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.state }}
+                            {{ item?.info?.state ?? "_" }}
                           </p>
                         </div>
 
@@ -321,60 +321,60 @@
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.name }}
+                            {{ item?.info?.people?.name ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_no }}
+                            {{ item?.info?.people?.identification_no ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_date }}
+                            {{ item?.info?.people?.identification_date ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_place }}
+                            {{ item?.info?.people?.identification_place ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_type }}
+                            {{ item?.info?.people?.identification_type ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.birth }}
+                            {{ item?.info?.people?.birth ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.communue }}
+                            {{ item?.info?.people?.communue ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.province }}
+                            {{ item?.info?.people?.province ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.district }}
+                            {{ item?.info?.people?.district ?? "_" }}
                           </p>
                         </div>
 
                         <div class="mb-1">
-                          {{ item?.info?.people?.address }}
+                          {{ item?.info?.people?.address ?? "_" }}
                         </div>
 
                       </td>
@@ -382,108 +382,108 @@
                       <td>
                         <div class="mt-1">
                           <p>
-                            {{item?.is_kit}}
+                            {{item?.is_kit ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{item?.state}}
+                            {{item?.state ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{item?.msisdn}}
+                            {{item?.msisdn ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{item?.serial}}
+                            {{item?.serial ?? "_" }}
                           </p>
                         </div>
                                                                          
                         <div>
                           <p>
-                            {{ item.balance?.currentState }}
+                            {{ item.balance?.currentState ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.activeDate }}
+                            {{ item.balance?.activeDate ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.coreBalance }}
+                            {{ item.balance?.coreBalance ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.dataRemain }}
+                            {{ item.balance?.dataRemain ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.dataTotal }}
+                            {{ item.balance?.dataTotal ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.balance?.coreBalanceExp }}
+                            {{ item.balance?.coreBalanceExp ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.package }}
+                            {{ item.packages[0]?.package ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.timeStart }}
+                            {{ item.packages[0]?.timeStart ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
 
-                            {{ item.packages[0]?.timeEnd }}
+                            {{ item.packages[0]?.timeEnd ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.extension }}
+                            {{ item.packages[0]?.extension ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item.packages[0]?.dataTotal }}
+                            {{ item.packages[0]?.dataTotal ?? "_" }}
                           </p>
                         </div>
 
                         <div class="mb-1">
-                          {{ item.packages[0]?.dataRemain }}
+                          {{ item.packages[0]?.dataRemain ?? "_" }}
                         </div>
 
                         <div class="mt-1">
                           <p>
-                            {{ item?.info?.sync_time }}
+                            {{ item?.info?.sync_time ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.state }}
+                            {{ item?.info?.state ?? "_" }}
                           </p>
                         </div>
 
@@ -493,60 +493,60 @@
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.name }}
+                            {{ item?.info?.people?.name ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_no }}
+                            {{ item?.info?.people?.identification_no ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_date }}
+                            {{ item?.info?.people?.identification_date ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_place }}
+                            {{ item?.info?.people?.identification_place ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.identification_type }}
+                            {{ item?.info?.people?.identification_type ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.birth }}
+                            {{ item?.info?.people?.birth ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.communue }}
+                            {{ item?.info?.people?.communue ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.province }}
+                            {{ item?.info?.people?.province ?? "_" }}
                           </p>
                         </div>
 
                         <div>
                           <p>
-                            {{ item?.info?.people?.district }}
+                            {{ item?.info?.people?.district ?? "_" }}
                           </p>
                         </div>
 
                         <div class="mb-1">
-                          {{ item?.info?.people?.address }}
+                          {{ item?.info?.people?.address ?? "_" }}
                         </div>
 
                       </td>
