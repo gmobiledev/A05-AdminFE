@@ -5,7 +5,7 @@ import { FormOrganirationComponent } from 'app/main/shared/form-organiration/for
 import { FormPersonalComponent } from 'app/main/shared/form-personal/form-personal.component';
 import { OrganizationDocComponent } from 'app/main/shared/organization-doc/organization-doc.component';
 import { CommonService } from 'app/utils/common.service';
-import { ObjectLocalStorage } from 'app/utils/constants';
+import { CustomerType, ObjectLocalStorage } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from 'app/auth/service/task.service';
@@ -22,6 +22,7 @@ export class CreateCustomerComponent implements OnInit {
 
   @ViewChild(FormOrganirationComponent) formOrganization: FormOrganirationComponent;
   @ViewChild(FormPersonalComponent) formPeopleComponent: FormPersonalComponent;
+  @ViewChild(FormPersonalComponent) formOrganPeopleComponent: FormPersonalComponent;
   @ViewChild(OrganizationDocComponent) formOrganDoc: OrganizationDocComponent;
 
   public countries;
@@ -34,6 +35,8 @@ export class CreateCustomerComponent implements OnInit {
   isCreate;
   submitted: boolean = false;
   public id: any;
+  customerType = CustomerType;
+  currentType;
 
   public contentHeader: any =  {
     headerTitle: 'Thêm khách hàng',
@@ -80,6 +83,14 @@ export class CreateCustomerComponent implements OnInit {
   }
 
   onSubmitCreate() {
+    if(this.currentType == CustomerType.ORGANIZATION) {
+      this.onSubmitCreateOrganization();
+    } else {
+      this.onSubmitCreatePersonal();
+    }
+  }
+
+  onSubmitCreatePersonal() {
     let dataCreate = {
       created_by: this.currentUser.username,
       id_no: this.formPeopleComponent.formPeople.controls['identification_no'].value,
@@ -173,6 +184,54 @@ export class CreateCustomerComponent implements OnInit {
     }
   }
 
+  onSubmitCreateOrganization() {
+    let dataCreate = {
+      created_by: this.currentUser.username,
+      id_no: this.formOrganization.formOrganization.controls['license_no'].value,
+      id_type: "LICENSE",
+      name: this.formOrganization.formOrganization.controls['name'].value,
+      customer_type: CustomerType.ORGANIZATION,
+      address: (this.formOrganization.formOrganization.controls['address'].value ? this.formOrganization.formOrganization.controls['address'].value + ','
+        : '' ) + this.formOrganization.formOrganization.controls['full_address'].value,
+      mobile: this.formOrganization.formOrganization.controls['mobile'].value,
+      apeople: {},
+      aorganization: {}
+    }
+
+    this.formOrganPeopleComponent.formPeople.controls['full_address'].setValue(this.formOrganPeopleComponent.formPeople.controls.residence_full_address.value);
+    this.formOrganPeopleComponent.formPeople.controls['birth'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formOrganPeopleComponent.formPeople.controls['birth_text'].value ))
+    this.formOrganPeopleComponent.formPeople.controls['identification_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formOrganPeopleComponent.formPeople.controls['identification_date_text'].value ))
+    this.formOrganPeopleComponent.formPeople.controls['identification_expire_date'].setValue(this.commonService.convertDateToUnixTime('DD/MM/YYYY', this.formOrganPeopleComponent.formPeople.controls['identification_expire_date_text'].value ))
+    
+    dataCreate.apeople = this.formOrganPeopleComponent.formPeople.value;
+    delete dataCreate.apeople['birth_text'];
+    delete dataCreate.apeople['identification_date_text'];
+    delete dataCreate.apeople['identification_expire_date_text'];
+    dataCreate.aorganization = { ...this.formOrganDoc.form.value, ...this.formOrganization.formOrganization.value}
+    dataCreate.aorganization['id_no'] = dataCreate.id_no;
+    delete dataCreate.aorganization['id'];
+    if (dataCreate.aorganization['license_issue_date'] && dataCreate.aorganization['license_issue_date'].year) {
+      dataCreate.aorganization['license_issue_date'] = `${dataCreate.aorganization['license_issue_date'].year}-${dataCreate.aorganization['license_issue_date'].month}-${dataCreate.aorganization['license_issue_date'].day}`
+    }
+    console.log(dataCreate);
+    // return;
+
+    this.userService.createCustomer(dataCreate).subscribe(res => {
+      this.submitted = false;
+      if(!res.status) {
+        this.alertService.showMess(res.message);
+        return;
+      }
+      this.alertService.showSuccess(res.message);
+      // setTimeout(function() {
+      //     document.location.reload();
+      // }, 2000);
+    }, error => {
+      this.submitted = false;
+      this.alertService.showMess(error);
+    })
+  }
+
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
     this.commonDataService.getContries().subscribe(res => {
@@ -183,9 +242,12 @@ export class CreateCustomerComponent implements OnInit {
     })
 
     if(this.id && this.id != undefined) {
+      this.contentHeader.breadcrumb.links[2].name = 'Cập nhật Khách hàng';
+      this.contentHeader.headerTitle = 'Cập nhật Khách hàng'
       this.taskService.getDetailCustomer(this.id).subscribe(res => {
         if (res.status && res.data) {
           this.dataInput = res.data;
+          this.currentType = res.data.customer_type
         }
       })
     }    
