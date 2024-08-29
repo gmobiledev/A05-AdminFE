@@ -122,16 +122,16 @@
                     <th>Giá vốn</th>
                     <th>Giá bán</th>
                     <th>Trạng thái</th>
-                    <th>Xuất cho kho</th>
-
+                    <th *ngIf="currentChannel.code != 'THUHOI'">Xuất cho kho</th>
                     <th *ngIf="searchForm.is_g59 == true ">Địa điểm</th>
-                    <th *ngIf="currentChannel.code== 'THUHOI'">Kho Nhập</th>
+                    <th *ngIf="currentChannel.code == 'THUHOI'">Kho Nhập</th>
 
                     <ng-container *ngIf="searchForm.is_sck == true ">
                       <th>Giá gói cam kết</th>
                       <th>Số kỳ</th>
                       <th>Giá gói</th>
                     </ng-container>
+                    <th title="Thời gian nhập kho">TG Nhập</th>
 
 
 
@@ -171,7 +171,7 @@
                       <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
 
-                    <td>
+                    <td *ngIf="currentChannel.code != 'THUHOI'">
                       <a (click)="modalChannelOpen(modalChannelInfo, item)"><u>{{ item.sub_channel_id }}</u></a>
                     </td>
 
@@ -179,8 +179,8 @@
                       {{ item?.address }}
                     </td>
 
-                    <th *ngIf="currentChannel.code== 'THUHOI'">{{item?.sell_channels[0]?.nearest_channel?.name
-                      ||item?.sell_channels[0]?.nearest_channel_id }}</th>
+                    <td  *ngIf="currentChannel.code== 'THUHOI'">{{item?.sell_channels[0]?.nearest_channel?.name
+                      ||item?.sell_channels[0]?.nearest_channel_id }}</td >
 
                     <ng-container *ngIf="searchForm.is_sck == true ">
                       <td>
@@ -193,6 +193,8 @@
                         {{ item?.sell_channels[0]?.commit_price | number }}
                       </td>
                     </ng-container>
+
+                    <td>{{item.created_at | date: 'dd/MM/yyyy H:mm'}}</td>
 
 
                   </tr>
