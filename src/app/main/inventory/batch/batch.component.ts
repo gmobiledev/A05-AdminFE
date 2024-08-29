@@ -9,6 +9,7 @@ import { TelecomService } from 'app/auth/service/telecom.service';
 import { CommonService } from 'app/utils/common.service';
 import { AdminChannelAction, BatchStatus, BatchType } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
+import { error } from 'console';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -474,6 +475,43 @@ export class BatchComponent implements OnInit {
 
     this.onListChannel();
 
+  }
+
+  onExportExcel() {
+    let paramSearch = {...this.searchForm};
+    for(let key in paramSearch) {
+      if(paramSearch[key] === '') {
+        delete paramSearch[key];
+      }
+    }
+    if(this.checkAction('staff/list/excel')) {
+      this.inventoryService.exportBatchStaffExcel(paramSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.downloadFile(res);
+      },error => {
+        this.alertService.showMess(error);
+      })
+    } else if (this.checkAction('user/list/excel')) {
+      this.inventoryService.exportBatchUserExcel(paramSearch).subscribe(res => {
+        this.sectionBlockUI.stop();
+        this.downloadFile(res);
+      }, error => {
+        this.alertService.showMess(error);
+      })
+    }
+  }
+
+  downloadFile(res) {
+    var newBlob = new Blob([res.body], { type: res.body.type });
+    let url = window.URL.createObjectURL(newBlob);
+    let a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.href = url;
+    a.download = "Báo cáo chi tiet TB";
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
   }
 
   checkAction(item) {

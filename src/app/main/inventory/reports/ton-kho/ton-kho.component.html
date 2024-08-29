@@ -16,6 +16,12 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        <input type="date" name="date"
+                                            [(ngModel)]="searchForm.date" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
                                         <button type="submit" class="btn btn-block btn-info">
                                             Lọc kết quả <span [data-feather]="'search'"></span>
                                         </button>
