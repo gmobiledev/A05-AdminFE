@@ -125,6 +125,7 @@
                     <th>Xuất cho kho</th>
 
                     <th *ngIf="searchForm.is_g59 == true ">Địa điểm</th>
+                    <th *ngIf="currentChannel.code== 'THUHOI'">Kho Nhập</th>
 
                     <ng-container *ngIf="searchForm.is_sck == true ">
                       <th>Giá gói cam kết</th>
@@ -177,7 +178,10 @@
                     <td *ngIf="searchForm.is_g59 == true ">
                       {{ item?.address }}
                     </td>
-                    
+
+                    <th *ngIf="currentChannel.code== 'THUHOI'">{{item?.sell_channels[0]?.nearest_channel?.name
+                      ||item?.sell_channels[0]?.nearest_channel_id }}</th>
+
                     <ng-container *ngIf="searchForm.is_sck == true ">
                       <td>
                         {{ item?.sell_channels[0]?.commit_package }}
