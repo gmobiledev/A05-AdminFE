@@ -596,14 +596,14 @@ export const menu: CoreMenu[] = [
         icon: 'list',
         url: 'user/list'
       },
-      {
-        id: 'ekyc',
-        title: 'Lô EKYC',
-        translate: 'MENU.EKYCBATCH',
-        type: 'item',
-        icon: 'database',
-        url: 'people/list-ekyc-batch'
-      },
+      // {
+      //   id: 'ekyc',
+      //   title: 'Lô EKYC',
+      //   translate: 'MENU.EKYCBATCH',
+      //   type: 'item',
+      //   icon: 'database',
+      //   url: 'people/list-ekyc-batch'
+      // },
     ]
   },
   {
@@ -636,11 +636,27 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '8',
+      title: '11',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
     children: [
+      {
+        id: 'trans-history',
+        title: 'Lịch sử giao dịch',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/trans-history'
+      },
+      {
+        id: 'history-topup',
+        title: 'Lịch sử nạp tiền',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/history-topup'
+      },
       {
         id: 'search-subscription',
         title: 'Tra cứu tổng số TB',
@@ -658,6 +674,30 @@ export const menu: CoreMenu[] = [
         url: 'sim-so/dvkh-search'
       },
       {
+        id: 'search-tttb',
+        title: 'Tra cứu TTTB',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search-tttb'
+      },
+      {
+        id: 'client2g',
+        title: 'Tra cứu TTTB 2G',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/client2g'
+      },
+      {
+        id: 'search',
+        title: 'Tìm Sim Số',
+        translate: '',
+        type: 'item',
+        icon: 'search',
+        url: 'sim-so/search'
+      },
+      {
         id: 'search-topup',
         title: 'Tái sử dụng eSim',
         translate: '',
@@ -666,12 +706,12 @@ export const menu: CoreMenu[] = [
         url: 'sim-so/esim-search'
       },
       {
-        id: 'transaction-history',
-        title: 'Lịch sử giao dịch',
+        id: 'info-eSim',
+        title: 'Thông tin SIM/eSIM',
         translate: '',
         type: 'item',
         icon: 'search',
-        url: 'sim-so/transaction-history'
+        url: 'sim-so/info-eSim'
       },
       {
         id: 'way-lock',
@@ -682,12 +722,12 @@ export const menu: CoreMenu[] = [
         url: 'sim-so/way-lock'
       },
       {
-        id: 'search-tttb',
-        title: 'Tra cứu TTTB',
+        id: 'select-package',
+        title: 'Đăng ký gói cước',
         translate: '',
         type: 'item',
         icon: 'search',
-        url: 'sim-so/search-tttb'
+        url: 'sim-so/select-package'
       },
       // {
       //   id: 'search-balance-changes',
@@ -697,22 +737,7 @@ export const menu: CoreMenu[] = [
       //   icon: 'search',
       //   url: 'sim-so/msisdn/balance-changes'
       // },
-      {
-        id: 'search',
-        title: 'Tìm Sim Số',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/search'
-      },
-      {
-        id: 'client2g',
-        title: 'Tra cứu TTTB 2G',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/client2g'
-      }
+
     ]
   },
 

@@ -6,6 +6,7 @@ import { MsisdnStatus, TaskAction, TaskTelecom, TaskTelecomStatus, TelecomTaskSu
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import JSZip from 'jszip';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -40,6 +41,7 @@ export class TaskItemComponent implements OnInit {
   public linkShipTracking;
   public imageSgnatureBase64;
   public isCheckOCr;
+
 
   public dataCreateSignature = {
     people: {
@@ -344,6 +346,10 @@ export class TaskItemComponent implements OnInit {
    */
   async asyncToMnoViaApi(item) {
     let confirmMessage = "Xác nhận đồng bộ thông tin"
+
+    if (item.action == this.listTaskAction.change_info.value) {
+      confirmMessage = "Xác nhận cập nhật TTTB"
+    }
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.sectionBlockUI.start();
       this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
@@ -361,22 +367,8 @@ export class TaskItemComponent implements OnInit {
   }
 
   async updateInfoSubscriber(item) {
-    let confirmMessage = "Xác nhận cập nhật TTTB"
-    if ((await this.alertService.showConfirm(confirmMessage)).value) {
-      this.sectionBlockUI.start();
-      item.action = this.listTaskAction.change_info
-      this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
-        this.sectionBlockUI.stop();
-        if (!res.status) {
-          this.alertService.showError(res.message, 30000);
-          return;
-        }
-        this.alertService.showSuccess(res.data.message, 15000);
-      }, error => {
-        this.sectionBlockUI.stop();
-        this.alertService.showError(error, 15000);
-      })
-    }
+    item.action = this.listTaskAction.change_info.value
+    this.asyncToMnoViaApi(item);
   }
 
 
@@ -756,20 +748,20 @@ export class TaskItemComponent implements OnInit {
   }
 
   async onResendMail() {
-    if(!this.dataResendMail.reason) {
+    if (!this.dataResendMail.reason) {
       this.alertService.showMess("Vui lòng nhập lý do");
       return;
     }
     if ((await this.alertService.showConfirm(`Bạn có đồng ý gửi lại vào email ${this.dataResendMail.email}`)).value) {
-      this.telecomService.resendMail(this.dataResendMail).subscribe(res => {        
-        if(res && !res.status) {
+      this.telecomService.resendMail(this.dataResendMail).subscribe(res => {
+        if (res && !res.status) {
           this.alertService.showMess(res.message);
           return;
         }
-        if(res){
+        if (res) {
           this.alertService.showSuccess(res.message);
         }
-        
+
         this.modalClose();
       }, error => {
         this.alertService.showMess(error);
@@ -783,15 +775,15 @@ export class TaskItemComponent implements OnInit {
       const data = {
         task_id: this.data.task.id
       }
-      this.telecomService.retryTask(data).subscribe(res => {        
-        if(res && !res.status) {
+      this.telecomService.retryTask(data).subscribe(res => {
+        if (res && !res.status) {
           this.alertService.showMess(res.message);
           return;
         }
-        if(res){
+        if (res) {
           this.alertService.showSuccess(res.message);
         }
-        
+
         this.modalClose();
       }, error => {
         this.alertService.showMess(error);
@@ -1013,11 +1005,11 @@ export class TaskItemComponent implements OnInit {
           this.mnos.push(msi.mno);
         }
         if (this.data.task.action == this.listTaskAction.change_sim) {
-          this.actionText = 'Cập nhật';          
+          this.actionText = 'Cập nhật';
         }
-        const detailObj = JSON.parse(this.data.task.detail);
+        const detailObj = this.data.task.detail ? JSON.parse(this.data.task.detail) : {};
         this.isCheckOCr = detailObj['check_ocr'] == undefined ? true : parseInt(detailObj['check_ocr']);
-        if(this.data.task.sub_action == TelecomTaskSubAction.SIM_TO_ESIM) {
+        if(this.data.task.sub_action == TelecomTaskSubAction.SIM_TO_ESIM || this.data.task.sub_action == TelecomTaskSubAction.BUY_ESIM) {
           this.dataResendMail.email = detailObj['email'];
           this.dataResendMail.task_id = this.data.task.id;
         }

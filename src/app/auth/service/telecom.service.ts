@@ -40,19 +40,19 @@ export class TelecomService {
     return this._http.get<any>(url);
   }
 
-    /**
-   * Xem lich su thanh toan
-   */
-    getPaymentTask(id) {
-      return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/payment-log/${id}`);
-    }
+  /**
+ * Xem lich su thanh toan
+ */
+  getPaymentTask(id) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/payment-log/${id}`);
+  }
 
-    getSetting() {
-      return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`);
-    }
-    postSetting(data) {
-      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`, data);
-    }
+  getSetting() {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`);
+  }
+  postSetting(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`, data);
+  }
 
   /**
  * Tìm Sim/Số
@@ -69,8 +69,30 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/tra-cuu-kho`, { params: params });
   }
 
+  getPackageSimDVKH(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-packages`, { params: params });
+  }
+
+  getInfoSimDVKH(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-sim-info`, { params: params });
+  }
+
+  getInfoeSimDVKH(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-esim-info`, { params: params });
+  }
+
+
+  postPackageSimDVKH(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/register-package`, data);
+  }
+
+
   getBalanceChangeSimDVKH(mobile, params = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/balance-changes/${mobile}`, { params: params });
+  }
+
+  getBalanceTopupSimDVKH(mobile, params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/recharge/${mobile}`, { params: params });
   }
 
   getDetaileSim(data) {
@@ -99,7 +121,7 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/manual-topup/${id}`, data);
   }
 
-  getHistoryTopup( id) {
+  getHistoryTopup(id) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/${id}/topup`);
   }
 
@@ -136,12 +158,14 @@ export class TelecomService {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-sim-vnm`, {});
     else if (task.action == this.listTaskAction.new_sim.value)
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
-    else if(task.action == this.listTaskAction.change_info)
+    else if (task.action == this.listTaskAction.change_info.value)
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/update-info-subsriber`, {});
+    else
+      console.log("asyncToMnoViaApi null")
 
   }
 
-  
+
 
   sendCallback(task) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/send-callback`, {});
@@ -335,15 +359,15 @@ export class TelecomService {
   }
 
   lockOneWay(data, type) {
-    if(type == 1){
+    if (type == 1) {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-one-way`, data);
-    } else if(type == 2){
+    } else if (type == 2) {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-two-way`, data);
-    } else if(type == 3){
+    } else if (type == 3) {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-one-way`, data);
-    } else if(type == 4) {
+    } else if (type == 4) {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/unlock-two-way`, data);
     }
   }
-  
+
 }

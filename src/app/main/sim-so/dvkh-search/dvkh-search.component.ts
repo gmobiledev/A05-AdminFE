@@ -22,6 +22,7 @@ export class DvkhSearchComponent implements OnInit {
   public taskTelecomStatus;
   public modalRef: any;
   productListAll: any;
+  currChannel;
 
   public searchSim: any = {
     keysearch: '',
@@ -53,6 +54,7 @@ export class DvkhSearchComponent implements OnInit {
         this.showMessage = false;
         this.item = res.data
         this.total = res.data.count;
+        this.getCurrChannel()
       } else if (!res.data || Object.keys(res.data).length === 0) {
         this.item = null
         this.showMessage = true;
@@ -93,8 +95,16 @@ export class DvkhSearchComponent implements OnInit {
     // }
   }
 
-  getInvenstory(){
-    return this.item?.sell_channels ? this.item.sell_channels.map(x=>x.channel.name).join("-") : ""
+  getCurrChannel() {
+    for (const element of this.item?.sell_channels) {
+      if (element.sub_channel_id == null) {
+        this.currChannel = element;
+      }
+    }
+  }
+
+  getInvenstory() {
+    return this.item?.sell_channels ? this.item.sell_channels.map(x => x.channel.name).join("-") : ""
   }
 
 

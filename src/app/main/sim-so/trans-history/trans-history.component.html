@@ -8,37 +8,40 @@
                     </div>
 
                     <div class="card-body">
+                        <label class="mb-1">
+                            * Lấy thông tin của một tháng. *
+                        </label>
                         <form (ngSubmit)="onSubmitSearch()">
                             <div class="row">
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Từ ngày</label>
-                                        <input type="date" name="from" [(ngModel)]="searchSim.from"
-                                            class="form-control" />
+                                      <label>Từ ngày</label>
+                                      <input type="date" name="from" [(ngModel)]="searchSim.from" class="form-control" (change)="onFromDateChange()" />
                                     </div>
-                                </div>
-
-                                <div class="col-md-3">
+                                  </div>
+                                  
+                                  <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Tới ngày</label>
-                                        <input type="date" name="to" [(ngModel)]="searchSim.to" class="form-control" />
+                                      <label>Tới ngày</label>
+                                      <input type="date" name="to" [(ngModel)]="searchSim.to" [max]="maxToDate" class="form-control" />
                                     </div>
-                                </div>
+                                  </div>
+                                  
 
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Số thuê bao</label>
-                                        <input type="text" name="msisdn" [(ngModel)]="searchSim.msisdn"
+                                        <input type="tel" name="msisdn" [(ngModel)]="searchSim.msisdn" mask="0000000000"
                                             class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="">Trạng thái</label>
+                                        <label for="">Loại giao dịch</label>
                                         <select [(ngModel)]="searchSim.type" name="type" class="form-control">
-                                            <option value="">Chọn trạng thái</option>
+                                            <option value="" disabled selected>Chọn trạng thái</option>
                                             <option value="all">All</option>
                                             <option value="sms">SMS</option>
                                             <option value="voice">Voice</option>

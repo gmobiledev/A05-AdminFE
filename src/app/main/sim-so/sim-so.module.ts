@@ -14,7 +14,6 @@ import { TaskCountdownComponent } from './task-countdown/task-countdown.componen
 import { SharedModule } from '../shared/share.module';
 import { SimPackagesComponent } from './sim-packages/sim-packages.component';
 import { QuillModule } from 'ngx-quill';
-import { ViewTaskComponent } from './view-task/view-task.component';
 import { SearchSimSoComponent } from './search-sim-so/search-sim-so.component';
 import { ActionLogsComponent } from './action-logs/action-logs.component';
 import { SellChannelComponent } from './sell-channel/sell-channel.component';
@@ -40,10 +39,12 @@ import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { DvkhSearchComponent } from './dvkh-search/dvkh-search.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { SearchEsimComponent } from './search-esim/search-esim.component';
-import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { WayLockComponent } from './way-lock/way-lock.component';
 import { SearchDetailSubscriptionComponent } from './search-detail-subscription/search-detail-subscription.component';
 import { PackageComponent } from './package/package.component';
+import { TransHistoryComponent } from './trans-history/trans-history.component';
+import { InfoESimComponent } from './info-e-sim/info-e-sim.component';
+import { HistoryTopupComponent } from './history-topup/history-topup.component';
 
 const routes: Routes = [
   {
@@ -75,20 +76,28 @@ const routes: Routes = [
     component: WayLockComponent
   },
   {
-    path: 'transaction-history',
-    component: TransactionHistoryComponent
+    path: 'trans-history',
+    component: TransHistoryComponent
   },
   {
     path: 'esim-search',
     component: SearchEsimComponent
   },
   {
-    path: 'package',
+    path: 'select-package',
     component: PackageComponent
   },
   {
     path: 'search-tttb',
     component: SearchDetailSubscriptionComponent
+  },
+  {
+    path: 'history-topup',
+    component: HistoryTopupComponent
+  },
+  {
+    path: 'info-eSim',
+    component: InfoESimComponent
   },
   {
     path: 'search-subscription',
@@ -143,7 +152,6 @@ const routes: Routes = [
     TaskItemComponent,
     TaskCountdownComponent,
     SimPackagesComponent,
-    ViewTaskComponent,
     SearchSimSoComponent,
     ActionLogsComponent,
     SellChannelComponent,
@@ -164,10 +172,12 @@ const routes: Routes = [
     WarningComponent,
     DvkhSearchComponent,
     SearchEsimComponent,
-    TransactionHistoryComponent,
     WayLockComponent,
     SearchDetailSubscriptionComponent,
     PackageComponent,
+    TransHistoryComponent,
+    InfoESimComponent,
+    HistoryTopupComponent,
     ],
   imports: [
     CommonModule, 

@@ -115,9 +115,9 @@ export class WayLockComponent implements OnInit {
             this.getData();
             return;
           }
-          this.modalClose();
-          this.getData();
           this.alertService.showSuccess(res.message);
+          // this.modalClose();
+          this.getData();
         }, error => {
           Swal.showValidationMessage(
             error

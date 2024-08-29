@@ -1,0 +1,69 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Thông tin chi tiết eSIM/SIM </h4>
+          </div>
+
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="serial" placeholder="Số thuê bao | Serial" [(ngModel)]="dataPost.serial"
+                      class="form-control">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <select name="package" [(ngModel)]="dataPost.package" class="form-control">
+                      <option value="" disabled selected>Xem chi tiết</option>
+                      <option value="1">eSIM</option>
+                      <option value="0">SIM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" (click)="onSubmit(dataPost.package)" class="btn btn-block btn-info">
+                      Lọc kết quả <span [data-feather]="'search'"></span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+
+            <div class="table-responsive mt-1" *blockUI="'section-block'">
+              <table class="table table-striped text-nowrap" *ngIf="listeSim">
+                <thead>
+                  <tr>
+                    <th>Số / Serial SIM</th>
+                    <th>Nhà mạng</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>{{ listeSim?.serial }}</td>
+                    <td>
+                      <span [innerHTML]="listeSim?.mno | showIconMno"></span>
+                    </td>
+                    <td>{{ listeSim?.status }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Thông tin chi tiết thuê bao</h4>
+            <h4 class="card-title">Tra cứu chi tiết TTTB</h4>
           </div>
 
           <div class="card-body">
@@ -26,205 +26,536 @@
               </div>
             </form>
 
-            <div class="row">
-              <h4 class="mb-1"></h4>
+            <div>
 
-              <div *ngIf="item" class="col-6">
-                <div class="col border-light rounded bg-resolution">
-                  <div class="mt-1">
-                    <p>
-                      <b>Kích hoạt : </b>
-                      {{item?.is_kit}}
-                    </p>
-                    <p>
-                      <b>Trạng thái : </b>
-                      {{item?.state}}
-                    </p>
-                    <p>
-                      <b>Số thuê bao : </b>
-                      {{item?.msisdn}}
-                    </p>
-                    <p>
-                      <b>Số serial : </b>
-                      {{item?.serial}}
-                    </p>
-                  </div>
+              <div class="table-responsive mt-1" *blockUI="'section-block'">
+                <table class="table table-striped text-nowrap" *ngIf="item">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>GMOBILE</th>
+                      <th>VNP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="mt-1">
+                          <p>
+                            <b>Kích hoạt</b>
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            <b>Trạng thái</b>
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            <b>Số thuê bao</b>
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            <b>Số serial</b>
+                          </p>
+                        </div>  
+                                            
+                        <div>
+                          <p>
+                            <b>Trạng thái của đối tác</b>
+                          </p>
+                        </div>
 
-                  <!-- <div>
-                    <p>
-                      <b>Giá gói cam kết : </b>
-                      {{ item.balance.msisdn }}
-                    </p>
-                  </div> -->
+                        <div>
+                          <p>
+                            <b>Thời gian kích hoạt</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Trạng thái của đối tác : </b>
-                      {{ item.balance?.currentState }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Tài khoản chính</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Thời gian kích hoạt : </b>
-                      {{ item.balance?.activeDate }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Data còn lại</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Tài khoản chính : </b>
-                      {{ item.balance?.coreBalance }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Tổng Data</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Data còn lại  : </b>
-                      {{ item.balance?.dataRemain }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Thời gian hết hạn sử dụng</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Tổng Data : </b>
-                      {{ item.balance?.dataTotal }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Gói cước</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Thời gian hết hạn sử dụng : </b>
-                      {{ item.balance?.coreBalanceExp }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Thời gian đăng ký</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Gói cước : </b>
-                      {{ item.packages[0]?.package }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Thời gian hết hạn</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Thời gian đăng ký : </b>
-                      {{ item.packages[0]?.timeStart }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Gia hạn</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Thời gian hết hạn : </b>
-                      {{ item.packages[0]?.timeEnd }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Tổng Data</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Gia hạn : </b>
-                      {{ item.packages[0]?.extension }}
-                    </p>
-                  </div>
+                        <div class="mb-1">
+                          <b>Data còn lại</b>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Tổng Data  : </b>
-                      {{ item.packages[0]?.dataTotal }}
-                    </p>
-                  </div>
+                        <div class="mt-1">
+                          <p>
+                            <b>Thời gian đồng bộ</b>
+                          </p>
+                        </div>
 
-                  <div class="mb-1">
-                    <b>Data còn lại : </b>
-                    {{ item.packages[0]?.dataRemain }}
-                  </div>
+                        <div>
+                          <p>
+                            <b>Trạng thái</b>
+                          </p>
+                        </div>
 
-                </div>
-              </div>
+                        <div class="mb-1">
+                          <b>Nhà mạng</b>
+                        </div>
 
-              <div *ngIf="item" class="col-6">
-                <div class="col border-light rounded bg-resolution">
-                  <div class="mt-1">
-                    <!-- <p>
-                      <b>Yêu cầu : </b>
-                      {{ item?.info?.msisdn }}
-                    </p> -->
-                    <p>
-                      <b>Thời gian đồng bộ : </b>
-                      {{ item?.info?.sync_time }}
-                    </p>
-                    <p>
-                      <b>Trạng thái : </b>
-                      {{ item?.info?.state }}
-                    </p>
-                  </div>
-                  <div class="mb-1">
-                    <b>Nhà mạng : </b>
-                    <span [innerHTML]="item?.info?.mno | showIconMno"></span>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Họ và tên</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Họ và tên : </b>
-                      {{ item?.info?.people?.name }}
-                    </p>
-                  </div>
+                        <div>
+                          <p>
+                            <b>Mã số CCCD</b>
+                          </p>
+                        </div>
 
-                  <div>
-                    <p>
-                      <b>Mã số CCCD : </b>
-                      {{ item?.info?.people?.identification_no }}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <b>Thời gian đăng ký : </b>
-                      {{ item?.info?.people?.identification_date }}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <b>Địa chỉ đăng ký : </b>
-                      {{ item?.info?.people?.identification_place }}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <b>Loại định danh : </b>
-                      {{ item?.info?.people?.identification_type }}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <b>Ngày sinh : </b>
-                      {{ item?.info?.people?.birth }}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <b>Phường/Xã: </b>
-                      {{ item?.info?.people?.communue }}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <b>Tỉnh/Thành phố : </b>
-                      {{ item?.info?.people?.province }}
-                    </p>
-                  </div>
-                  <div>
-                    <p>
-                      <b>Quận/Huyện : </b>
-                      {{ item?.info?.people?.district }}
-                    </p>
-                  </div>
-                  <div class="mb-1">
-                    <b>Quê quán : </b>
-                    {{ item?.info?.people?.address }}
+                        <div>
+                          <p>
+                            <b>Thời gian đăng ký</b>
+                          </p>
+                        </div>
 
-                  </div>
+                        <div>
+                          <p>
+                            <b>Địa chỉ đăng ký</b>
+                          </p>
+                        </div>
 
-                </div>
+                        <div>
+                          <p>
+                            <b>Loại định danh</b>
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            <b>Ngày sinh</b>
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            <b>Phường/Xã</b>
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            <b>Tỉnh/Thành phố</b>
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            <b>Quận/Huyện</b>
+                          </p>
+                        </div>
+
+                        <div class="mb-1">
+                          <b>Quê quán</b>
+                        </div>
+
+                      </td>
+
+                      <td>
+                        <div class="mt-1">
+                          <p>
+                            {{item?.is_kit ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{item?.state ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{item?.msisdn ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{item?.serial ?? "_" }}
+                          </p>
+                        </div>
+                                                                         
+                        <div>
+                          <p>
+                            {{ item.balance?.currentState ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.activeDate ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.coreBalance ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.dataRemain ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.dataTotal ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.coreBalanceExp ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.package ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.timeStart ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+
+                            {{ item.packages[0]?.timeEnd ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.extension ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.dataTotal ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div class="mb-1">
+                          {{ item.packages[0]?.dataRemain ?? "_" }}
+                        </div>
+
+                        <div class="mt-1">
+                          <p>
+                            {{ item?.info?.sync_time ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.state ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div class="mb-1">
+                          <span [innerHTML]="item?.info?.mno | showIconMno"></span>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.name ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_no ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_date ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_place ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_type ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.birth ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.communue ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.province ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.district ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div class="mb-1">
+                          {{ item?.info?.people?.address ?? "_" }}
+                        </div>
+
+                      </td>
+
+                      <td>
+                        <div class="mt-1">
+                          <p>
+                            {{item?.is_kit ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{item?.state ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{item?.msisdn ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{item?.serial ?? "_" }}
+                          </p>
+                        </div>
+                                                                         
+                        <div>
+                          <p>
+                            {{ item.balance?.currentState ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.activeDate ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.coreBalance ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.dataRemain ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.dataTotal ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.balance?.coreBalanceExp ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.package ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.timeStart ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+
+                            {{ item.packages[0]?.timeEnd ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.extension ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item.packages[0]?.dataTotal ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div class="mb-1">
+                          {{ item.packages[0]?.dataRemain ?? "_" }}
+                        </div>
+
+                        <div class="mt-1">
+                          <p>
+                            {{ item?.info?.sync_time ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.state ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div class="mb-1">
+                          <span [innerHTML]="item?.info?.mno | showIconMno"></span>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.name ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_no ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_date ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_place ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.identification_type ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.birth ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.communue ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.province ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p>
+                            {{ item?.info?.people?.district ?? "_" }}
+                          </p>
+                        </div>
+
+                        <div class="mb-1">
+                          {{ item?.info?.people?.address ?? "_" }}
+                        </div>
+
+                      </td>
+                   
+                    </tr>
+
+                  </tbody>
+                </table>
+
               </div>
             </div>
           </div>
@@ -233,28 +564,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #modalTransWh let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Chi tiết thông tin Sim/Số</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body" tabindex="0" ngbAutofocus>
-    <div>
-      <!-- <h4>Thông tin Sim/Số</h4> -->
-      <div class="column">
-        <div class="col-md-6">MÃ LÔ: {{ item?.batch_id }}</div>
-        <div class="col-md-6">TÊN LÔ: {{ item?.batch?.title }}</div>
-        <div class="col-md-6">KHO: {{ item?.sell_channels[0]?.channel.name}}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-footer">
-    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
-      Đóng
-    </button>
-  </div>
-</ng-template>

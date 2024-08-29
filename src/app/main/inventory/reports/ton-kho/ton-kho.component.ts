@@ -33,6 +33,7 @@ export class TonKhoComponent implements OnInit {
     list = [];
     public searchForm = {
         page: 1,
+        date: '',
         page_size: 15,
         startDate: '',
         endDate: '',
@@ -49,6 +50,7 @@ export class TonKhoComponent implements OnInit {
     ) {
         this.activeRouted.queryParams.subscribe(params => {
             this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
+            this.searchForm.date = params['date'] && params['date'] != undefined ? params['date'] : '';
             this.getData();
         })
     }

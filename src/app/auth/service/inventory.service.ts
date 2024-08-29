@@ -403,4 +403,12 @@ export class InventoryService {
   exportReportChiTietSimG59ByAdmin(params = null, data = null): Observable<any> {
     return this._http.post(`${environment.apiUrl}/admin/mcs/telecom-oracle/report/g59-msisdn-by-admin/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
   }
+
+  exportBatchStaffExcel(params = null, data = null): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/batch/staff/list/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
+  }
+
+  exportBatchUserExcel(params = null, data = null): Observable<any> {
+    return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/batch/staff/user/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
+  }
 }

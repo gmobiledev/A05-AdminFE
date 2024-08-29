@@ -10,8 +10,10 @@
           </div>
           <div class="card-body">
             <div>
-              <ul ngbNav #navWithIcons="ngbNav" class="nav-tabs">
-                <li ngbNavItem class="col">
+              <ul ngbNav #navWithIcons="ngbNav" class="nav-tabs" [(activeId)]="currentType">
+                <li [ngbNavItem]="customerType.PERSONAL" class="col" 
+                *ngIf="(dataInput && dataInput.customer_type == customerType.PERSONAL) || !id || id == undefined"
+                >
                   <a ngbNavLink
                     ><span [data-feather]="'user'"></span> Cá nhân</a
                   >
@@ -21,14 +23,16 @@
                       [countries]="countries"
                       [provinces]="provinces"
                       [submitted]="submitted"
-                      [dataInput]="dataInput"
+                      [dataInput]="dataInput && dataInput.customer_type == customerType.PERSONAL ? dataInput : null"
 
                       ></app-form-personal>
                     </ng-container>
                   </ng-template>
                 </li>
 
-                <!-- <li ngbNavItem class="col">
+                <li [ngbNavItem]="customerType.ORGANIZATION" class="col" 
+                *ngIf="(dataInput && dataInput.customer_type == customerType.ORGANIZATION) || !id || id == undefined"
+                >
                   <a ngbNavLink
                     ><span [data-feather]="'users'"></span> Doanh nghiệp</a
                   >
@@ -37,11 +41,24 @@
                       <app-organization-doc #formOrganDoc>
                       </app-organization-doc>
                       <app-form-organiration
+                        [countries]="countries"
+                        [provinces]="provinces"
+                        [submitted]="submitted"
+                        [dataInput]="dataInput && dataInput.customer_type == customerType.ORGANIZATION ? dataInput : null"
                         #formOrganization
                       ></app-form-organiration>
+
+                      <div class="row">
+                        <div class="col-12">
+                          <h4>Thông tin người đại diện</h4>
+                          <br />
+                        </div>
+                      </div>
+                      <app-form-personal #formOrganPeopleComponent [countries]="countries" [provinces]="provinces" [submitted]="submitted"
+                        [dataInput]="dataInput && dataInput.customer_type == customerType.ORGANIZATION ? dataInput : null"></app-form-personal>
                     </ng-container>
                   </ng-template>
-                </li>                 -->
+                </li>                 
               </ul>
             </div>
 
