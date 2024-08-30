@@ -67,7 +67,9 @@
                                         <td>{{ item?.time | date: 'dd/MM/yyyy H:mm':'GMT' }}</td>
                                         <td>{{ item?.balanceChange | number }}</td>
                                         <td>{{ item?.balanceAfter | number }}</td>
-                                        <td>{{ item?.status }}</td>
+                                        <td>
+                                            <span *ngIf="item?.status == 1">Thành công</span>
+                                        </td>
 
 
                                     </tr>

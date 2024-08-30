@@ -71,7 +71,7 @@
                                         <th>Số tiền phát sinh</th>
                                         <th>Số điện thoại nhận</th>
                                         <th>Số dư sau giao dịch</th>
-                                        <th>Trạng thái</th>
+                                        <th>Loại giao dịch</th>
                                         <th>Ghi chú</th>
                                     </tr>
                                 </thead>
@@ -83,7 +83,7 @@
                                         <td>{{ item?.BalanceChange | number }}</td>
                                         <td>{{ item?.Destination }}</td>
                                         <td>{{ item?.BalanceAfter | number }}</td>
-                                        <td>{{ item?.Action }}</td>
+                                        <td>{{ item?.Action | showTrans}}</td>
                                         <td>{{ item?.Note }}</td>
 
 
