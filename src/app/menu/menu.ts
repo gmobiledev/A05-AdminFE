@@ -715,7 +715,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'way-lock',
-        title: 'Khoá/Mở 1C,2C',
+        title: 'Khoá/Mở đến/đi',
         translate: '',
         type: 'item',
         icon: 'search',

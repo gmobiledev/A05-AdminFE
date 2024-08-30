@@ -16,8 +16,8 @@ import { NgIf } from '@angular/common';
 })
 export class InfoESimComponent implements OnInit {
 
+  public listStatus: any;
   public listeSim: any;
-  public listSim: any;
 
 
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
@@ -36,17 +36,44 @@ export class InfoESimComponent implements OnInit {
     serial: "",
     package: "",
   }
-  
+
+  checkStatus() {
+    this.telecomService.getInfoeSimDVKH(this.dataPost).subscribe(res => {
+      if (res.status == 1) {
+        this.listStatus = res.data.status
+        if (this.listStatus == "1") {
+          this.listStatus = "1: sẵn sàng sử dụng"
+        } else if (this.listStatus == "4") {
+          this.listStatus = "4: đã sử dụng"
+        } else if (this.listStatus == "NOT-SSSD: Không sẵn sàng sử dụng") {
+          this.listStatus = "NOT-SSSD: Không sẵn sàng sử dụng"
+        } else if (this.listStatus == "SSSD: Sẵn sàng sử dụng") {
+          this.listStatus = "SSSD: Sẵn sàng sử dụng"
+        }
+      }
+    }, err => {
+      this.alertService.showMess(err);
+      this.listStatus = null
+    });
+  }
+
   onSubmit(type) {
     if (!this.dataPost.serial || !this.dataPost.package) {
       this.alertService.showMess("Vui lòng chọn Xem chi tiết eSIM/SIM và nhập STB/Serial!");
       return;
     }
-  
     if (type == 1) {
       this.telecomService.getInfoeSimDVKH(this.dataPost).subscribe(res => {
         if (res.status == 1) {
           this.listeSim = res.data
+
+          this.listStatus = res.data.status
+          if (this.listStatus == "1") {
+            this.listStatus = "Sẵn sàng sử dụng"
+          } else if (this.listStatus == "4") {
+            this.listStatus = "Đã sử dụng"
+          }
+
         }
       }, err => {
         this.alertService.showMess(err);
@@ -56,13 +83,21 @@ export class InfoESimComponent implements OnInit {
       this.telecomService.getInfoSimDVKH(this.dataPost).subscribe(res => {
         if (res.status == 1) {
           this.listeSim = res.data
+
+          this.listStatus = res.data.status
+          if (this.listStatus == "NOT-SSSD") {
+            this.listStatus = "Không sẵn sàng sử dụng"
+          } else if (this.listStatus == "SSSD") {
+            this.listStatus = "Sẵn sàng sử dụng"
+          }
+
         }
       }, err => {
         this.alertService.showMess(err);
         this.listeSim = null
       });
     }
-  }  
+  }
 
   ngOnInit(): void {
     this.getData();
