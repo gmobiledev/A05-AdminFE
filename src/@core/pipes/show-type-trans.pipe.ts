@@ -5,7 +5,7 @@ export class ShowTransPipe implements PipeTransform {
   transform(value: number): string {
     let html = '';
     if(value == 0) {
-        html = 'Thoại'
+        html = 'Voice'
     } else if (value == 4) {
         html = 'SMS'
     } else if (value == 6) {

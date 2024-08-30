@@ -41,24 +41,13 @@
                   <tbody>
                     <tr>
                       <td>
-                        <b>Kích hoạt</b>
-                      </td>
-                      <td>
-                        {{item?.gmobile?.is_kit ?? "_" }}
-                      </td>
-                      <td>
-                        {{item?.other?.is_kit ?? "_" }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
                         <b>Trạng thái</b>
                       </td>
                       <td>
-                        {{item?.gmobile?.state ?? "_" }}
+                        {{item?.gmobile?.state ?? "_" | showStatusTrans }}
                       </td>
                       <td>
-                        {{item?.other?.state ?? "_" }}
+                        {{item?.other?.state ?? "_" | showStatusTrans }}
                       </td>
                     </tr>
                     <tr>
@@ -103,50 +92,6 @@
                       </td>
                       <td>
                         {{ item?.other?.balance?.activeDate ?? "_" }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>Tài khoản chính</b>
-                      </td>
-                      <td>
-                        {{ item?.gmobile?.balance?.coreBalance ?? "_" }}
-                      </td>
-                      <td>
-                        {{ item?.other?.balance?.coreBalance ?? "_" }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>Data còn lại</b>
-                      </td>
-                      <td>
-                        {{ item?.gmobile?.balance?.dataRemain ?? "_" }}
-                      </td>
-                      <td>
-                        {{ item?.other?.balance?.dataRemain ?? "_" }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>Tổng Data</b>
-                      </td>
-                      <td>
-                        {{ item?.gmobile?.balance?.dataTotal ?? "_" }}
-                      </td>
-                      <td>
-                        {{ item?.other?.balance?.dataTotal ?? "_" }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>Thời gian hết hạn sử dụng</b>
-                      </td>
-                      <td>
-                        {{ item?.gmobile?.balance?.coreBalanceExp ?? "_" }}
-                      </td>
-                      <td>
-                        {{item?.other?.msisdn ?? "_" }}
                       </td>
                     </tr>
                     <tr>
