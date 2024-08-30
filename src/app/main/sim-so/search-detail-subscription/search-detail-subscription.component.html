@@ -30,6 +30,7 @@
 
               <div class="table-responsive mt-1" *blockUI="'section-block'">
                 <table class="table table-striped text-nowrap" *ngIf="item">
+
                   <thead>
                     <tr>
                       <th></th>
@@ -40,519 +41,324 @@
                   <tbody>
                     <tr>
                       <td>
-                        <div class="mt-1">
-                          <p>
-                            <b>Kích hoạt</b>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <b>Trạng thái</b>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <b>Số thuê bao</b>
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <b>Số serial</b>
-                          </p>
-                        </div>  
-                                            
-                        <div>
-                          <p>
-                            <b>Trạng thái của đối tác</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Thời gian kích hoạt</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Tài khoản chính</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Data còn lại</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Tổng Data</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Thời gian hết hạn sử dụng</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Gói cước</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Thời gian đăng ký</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Thời gian hết hạn</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Gia hạn</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Tổng Data</b>
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          <b>Data còn lại</b>
-                        </div>
-
-                        <div class="mt-1">
-                          <p>
-                            <b>Thời gian đồng bộ</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Trạng thái</b>
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          <b>Nhà mạng</b>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Họ và tên</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Mã số CCCD</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Thời gian đăng ký</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Địa chỉ đăng ký</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Loại định danh</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Ngày sinh</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Phường/Xã</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Tỉnh/Thành phố</b>
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            <b>Quận/Huyện</b>
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          <b>Quê quán</b>
-                        </div>
-
+                        <b>Kích hoạt</b>
                       </td>
-
                       <td>
-                        <div class="mt-1">
-                          <p>
-                            {{item?.gmobile?.is_kit ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{item?.gmobile?.state ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{item?.gmobile?.msisdn ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{item?.gmobile?.serial ?? "_" }}
-                          </p>
-                        </div>
-                                                                         
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.balance?.currentState ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.balance?.activeDate ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.balance?.coreBalance ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.balance?.dataRemain ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.balance?.dataTotal ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.balance?.coreBalanceExp ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item.gmobile?.packages[0]?.package ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item.gmobile?.packages[0]?.timeStart ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-
-                            {{ item.gmobile?.packages[0]?.timeEnd ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item.gmobile?.packages[0]?.extension ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item.gmobile?.packages[0]?.dataTotal ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          {{ item.gmobile?.packages[0]?.dataRemain ?? "_" }}
-                        </div>
-
-                        <div class="mt-1">
-                          <p>
-                            {{ item?.gmobile?.info?.sync_time ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.state ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          <span [innerHTML]="item?.gmobile?.info?.mno | showIconMno"></span>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.name ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.identification_no ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.identification_date ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.identification_place ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.identification_type ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.birth ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.communue ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.province ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.gmobile?.info?.people?.district ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          {{ item?.gmobile?.info?.people?.address ?? "_" }}
-                        </div>
-
+                        {{item?.gmobile?.is_kit ?? "_" }}
                       </td>
-
                       <td>
-                        <div class="mt-1">
-                          <p>
-                            {{item?.other?.is_kit ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{item?.other?.state ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{item?.other?.msisdn ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{item?.other?.serial ?? "_" }}
-                          </p>
-                        </div>
-                                                                         
-                        <div>
-                          <p>
-                            {{ item?.other?.balance?.currentState ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.balance?.activeDate ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.balance?.coreBalance ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.balance?.dataRemain ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.balance?.dataTotal ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.balance?.coreBalanceExp ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.packages[0]?.package ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.packages[0]?.timeStart ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-
-                            {{ item?.other?.packages[0]?.timeEnd ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.packages[0]?.extension ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.packages[0]?.dataTotal ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          {{ item?.other?.packages[0]?.dataRemain ?? "_" }}
-                        </div>
-
-                        <div class="mt-1">
-                          <p>
-                            {{ item?.other?.info?.sync_time ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.state ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          <span [innerHTML]="item?.other?.info?.mno | showIconMno"></span>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.name ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.identification_no ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.identification_date ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.identification_place ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.identification_type ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.birth ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.communue ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.province ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div>
-                          <p>
-                            {{ item?.other?.info?.people?.district ?? "_" }}
-                          </p>
-                        </div>
-
-                        <div class="mb-1">
-                          {{ item?.other?.info?.people?.address ?? "_" }}
-                        </div>
-
+                        {{item?.other?.is_kit ?? "_" }}
                       </td>
-                   
                     </tr>
-
+                    <tr>
+                      <td>
+                        <b>Trạng thái</b>
+                      </td>
+                      <td>
+                        {{item?.gmobile?.state ?? "_" }}
+                      </td>
+                      <td>
+                        {{item?.other?.state ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Số thuê bao</b>
+                      </td>
+                      <td>
+                        {{item?.gmobile?.msisdn ?? "_" }}
+                      </td>
+                      <td>
+                        {{item?.other?.msisdn ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Số serial</b>
+                      </td>
+                      <td>
+                        {{item?.gmobile?.serial ?? "_" }}
+                      </td>
+                      <td>
+                        {{item?.other?.serial ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Trạng thái của đối tác</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.currentState ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.balance?.currentState ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Thời gian kích hoạt</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.activeDate ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.balance?.activeDate ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Tài khoản chính</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.coreBalance ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.balance?.coreBalance ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Data còn lại</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.dataRemain ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.balance?.dataRemain ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Tổng Data</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.dataTotal ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.balance?.dataTotal ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Thời gian hết hạn sử dụng</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.coreBalanceExp ?? "_" }}
+                      </td>
+                      <td>
+                        {{item?.other?.msisdn ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Gói cước</b>
+                      </td>
+                      <td>
+                        {{ item.gmobile?.packages[0]?.package ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.packages[0]?.package ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Thời gian đăng ký</b>
+                      </td>
+                      <td>
+                        {{ item.gmobile?.packages[0]?.timeStart ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.packages[0]?.timeStart ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Thời gian hết hạn</b>
+                      </td>
+                      <td>
+                        {{ item.gmobile?.packages[0]?.timeEnd ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.packages[0]?.timeEnd ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Gia hạn</b>
+                      </td>
+                      <td>
+                        {{ item.gmobile?.packages[0]?.extension ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.packages[0]?.extension ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Tổng Data</b>
+                      </td>
+                      <td>
+                        {{ item.gmobile?.packages[0]?.dataTotal ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.packages[0]?.dataTotal ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Data còn lại</b>
+                      </td>
+                      <td>
+                        {{ item.gmobile?.packages[0]?.dataRemain ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.packages[0]?.dataRemain ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Thời gian đồng bộ</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.sync_time ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.sync_time ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Trạng thái</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.state ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.state ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Nhà mạng</b>
+                      </td>
+                      <td>
+                        <span [innerHTML]="item?.gmobile?.info?.mno | showIconMno"></span>
+                      </td>
+                      <td>
+                        <span [innerHTML]="item?.other?.info?.mno | showIconMno"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Họ và tên</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.name ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.name ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Mã số CCCD</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.identification_no ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.identification_no ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Thời gian đăng ký</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.identification_date ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.identification_date ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Địa chỉ đăng ký</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.identification_place ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.identification_place ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Loại định danh</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.identification_type ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.identification_type ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Ngày sinh</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.birth ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.birth ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Phường/Xã</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.communue ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.communue ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Tỉnh/Thành phố</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.province ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.province ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Quận/Huyện</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.district ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.district ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Quê quán</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.people?.address ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.info?.people?.address ?? "_" }}
+                      </td>
+                    </tr>
+                    
                   </tbody>
                 </table>
 
