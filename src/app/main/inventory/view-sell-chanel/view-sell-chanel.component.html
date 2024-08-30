@@ -104,7 +104,7 @@
                 </button>
 
                 <a routerLink="/inventory/edit-products"
-                  *ngIf="currentChannel && currentChannel.admin_id == currentUser.id"
+                  *ngIf="currentChannel && currentChannel?.admin_id == currentUser.id"
                   [queryParams]="{channel_id: searchForm.channel_id}" class="btn btn-primary">Sửa danh sách số</a>
               </div>
             </div>
@@ -122,9 +122,11 @@
                     <th>Giá vốn</th>
                     <th>Giá bán</th>
                     <th>Trạng thái</th>
-                    <th *ngIf="currentChannel.code != 'THUHOI'">Xuất cho kho</th>
+                    <th>Ngày nhập kho</th>                    
+                    <th>Ngày xuất kho</th>
+                    <th *ngIf="currentChannel?.code != 'THUHOI'">Xuất cho kho</th>
                     <th *ngIf="searchForm.is_g59 == true ">Địa điểm</th>
-                    <th *ngIf="currentChannel.code == 'THUHOI'">Kho Nhập</th>
+                    <th *ngIf="currentChannel?.code == 'THUHOI'">Kho Nhập</th>
 
                     <ng-container *ngIf="searchForm.is_sck == true ">
                       <th>Giá gói cam kết</th>
@@ -170,16 +172,22 @@
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
-
-                    <td *ngIf="currentChannel.code != 'THUHOI'">
+                    <td>
+                      {{ item?.created_at | date : "dd/MM/yyyy H:mm":'GMT' }}
+                    </td>
+                    <td>
+                      {{ item?.export_date | date : "dd/MM/yyyy H:mm":'GMT' }}
+                    </td>
+                    <td *ngIf="currentChannel?.code != 'THUHOI'">
                       <a (click)="modalChannelOpen(modalChannelInfo, item)"><u>{{ item.sub_channel_id }}</u></a>
                     </td>
+                    
 
                     <td *ngIf="searchForm.is_g59 == true ">
                       {{ item?.address }}
                     </td>
 
-                    <td  *ngIf="currentChannel.code== 'THUHOI'">{{item?.sell_channels[0]?.nearest_channel?.name
+                    <td  *ngIf="currentChannel?.code== 'THUHOI'">{{item?.sell_channels[0]?.nearest_channel?.name
                       ||item?.sell_channels[0]?.nearest_channel_id }}</td >
 
                     <ng-container *ngIf="searchForm.is_sck == true ">
