@@ -722,7 +722,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   downloadFile(data, filename = 'data') {
     console.log("downloadFile")
-    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status']);
+    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status', 'created_at', 'export_date']);
     console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
     let dwldLink = document.createElement("a");

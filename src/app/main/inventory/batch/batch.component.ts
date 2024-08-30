@@ -508,7 +508,7 @@ export class BatchComponent implements OnInit {
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.href = url;
-    a.download = "Báo cáo chi tiet TB";
+    a.download = `danh-sach-batch-${this.searchForm.from_date}_${this.searchForm.to_date}`;
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();
