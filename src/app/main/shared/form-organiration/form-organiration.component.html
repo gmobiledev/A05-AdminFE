@@ -12,6 +12,27 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="name_international" class="col-md-3 col-form-label">Tên tiếng anh tổ chức/DN</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" max placeholder="Tên tổ chức/Doanh nghiệp"
+                        formControlName="name_international">
+                    <div *ngIf="submitted && f.name_international.errors" class="invalid-feedback">
+                        <div *ngIf="f.name_international.errors.required">Vui lòng nhập trường này</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="short_name" class="col-md-3 col-form-label">Tên viết tắt tổ chức/DN</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" max placeholder="Tên tổ chức/Doanh nghiệp"
+                        formControlName="short_name">
+                    <div *ngIf="submitted && f.short_name.errors" class="invalid-feedback">
+                        <div *ngIf="f.short_name.errors.required">Vui lòng nhập trường này</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
                 <label for="license_no" class="col-md-3 col-form-label">Số GPKD/MST</label>
                 <div class="col-md-9">
                     <input type="text" class="form-control" placeholder="Số GPKD/Mã số thuế"
@@ -39,16 +60,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label for="license_issue_place" class="col-md-3 col-form-label">Nơi cấp giấy phép</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="Nơi cấp giấy phép"
-                        formControlName="license_issue_place">
-                    <div *ngIf="submitted && f.license_issue_place.errors" class="invalid-feedback">
-                        <div *ngIf="f.license_issue_place.errors.required">Vui lòng nhập trường này</div>
-                    </div>
-                </div>
-            </div>
+            
 
 
         </div>
@@ -95,12 +107,23 @@
             <div class="form-group row">
                 <label for="commune" class="col-md-3 col-form-label">Phường/Xã Tổ chức</label>
                 <div class="col-md-9">
-                    <select name="" formControlName="commune" class="form-control">
+                    <select name="" formControlName="commune" class="form-control" (change)="onChangeCommnue($event)">
                         <option value="">--Chọn Phường/xã --</option>
                         <option *ngFor="let p of commues;" [value]="p.id">{{p.title}}
                     </select>
                     <div *ngIf="submitted && f.commune.errors" class="invalid-feedback">
                         <div *ngIf="f.commune.errors.required">Vui lòng nhập trường này</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="license_issue_place" class="col-md-3 col-form-label">Nơi cấp giấy phép</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" placeholder="Nơi cấp giấy phép"
+                        formControlName="license_issue_place">
+                    <div *ngIf="submitted && f.license_issue_place.errors" class="invalid-feedback">
+                        <div *ngIf="f.license_issue_place.errors.required">Vui lòng nhập trường này</div>
                     </div>
                 </div>
             </div>
@@ -216,7 +239,7 @@
                     <div class="col-md-9">
                         <div class="col-md-12">
                             <input type="file" class="form-control" id="delegation_file"
-                                formControlName="delegation_file" (change)="onSelectFileDelegation($event)" />
+                                 (change)="onSelectFileDelegation($event)" />
                             <label class="custom-file-label" for="delegation_file">{{delegation_file ?
                                 delegation_file.name :
                                 "Chọn tệp đính kèm" }}</label>

@@ -51,14 +51,15 @@ export class FormPersonalComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.dataInput && !this.formPeople.controls.identification_no.value) {
+    this.initForm();
+    if (this.dataInput && this.dataInput.people && !this.formPeople.controls.identification_no.value) {
       console.log("init set form data")
-      this.formPeople.controls.name.setValue(this.dataInput.name)
-      this.formPeople.controls.mobile.setValue(this.dataInput.mobile)
-      this.formPeople.controls.identification_type.setValue(this.dataInput.id_type)
+      this.formPeople.controls.name.setValue(this.dataInput.people.name)
+      this.formPeople.controls.mobile.setValue(this.dataInput.people.mobile)
+      this.formPeople.controls.identification_type.setValue(this.dataInput.people.identification_type)
       this.formPeople.controls.residence_full_address.setValue(this.dataInput.people.residence_full_address)
       this.formPeople.controls.identification_place.setValue(this.dataInput.people.identification_place)
-      this.formPeople.controls.identification_no.setValue(this.dataInput.id_no)
+      this.formPeople.controls.identification_no.setValue(this.dataInput.people.identification_no)
       this.formPeople.controls.home_country.setValue(this.dataInput.people.country)
       this.formPeople.controls.gender.setValue(this.dataInput.people.gender)
 
@@ -74,7 +75,7 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       if (this.dataInput.people.identification_expire_date !== null && this.dataInput.people.identification_expire_date !== '') {
         this.formPeople.controls.identification_expire_date_text.setValue(this.commonService.formatDateFromTimestamp(this.dataInput.people.identification_expire_date))
       }
-      this.formPeople.controls.residence_address.setValue(this.dataInput.address)
+      this.formPeople.controls.residence_address.setValue(this.dataInput.people.address)
       if (this.dataInput.people.residence_province && !this.residence_districts) {
         this.onChangeResidenceProvince({ target: { value: this.dataInput.people.residence_province } })
         this.formPeople.controls.residence_district.setValue(this.dataInput.people.residence_district)
@@ -104,7 +105,7 @@ export class FormPersonalComponent implements OnInit, OnChanges {
       this.imageSignature = this.dataInput.people.identification_signature_file
     }
     if (this.formPeople && this.formPeople.controls) {
-      console.log(this.formPeople,this.formPeople.controls);
+      console.log(this.formPeople.value);
 
       this.formPeople.controls.home_country.setValue("VN")
       this.formPeople.controls.country.setValue("VN")

@@ -281,6 +281,7 @@ export enum TaskStatus {
     STATUS_FAIL = -100
 }
 
+
 export enum TelecomTaskSubAction {
     GSIM_TO_SIM = 'GSIM_TO_SIM',
     TYPE_2G_CONVERSION = '2G_CONVERSION',
@@ -293,4 +294,9 @@ export enum TelecomTaskSubAction {
     SIM_TO_ESIM = 'sim_to_esim',
     ESIM_REKIT_SIM = 'esim_to_sim',
     BUY_ESIM = 'buy_esim'
+}
+
+export enum CustomerType {
+    PERSONAL = "PERSONAL",
+    ORGANIZATION = "ORGANIZATION"
 }
