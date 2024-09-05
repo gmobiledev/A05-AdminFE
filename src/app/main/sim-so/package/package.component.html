@@ -23,7 +23,7 @@
                                         <!-- <label for="">Chọn gói cước</label> -->
                                         <select [(ngModel)]="dataPost.package" name="package" class="form-control">
                                             <option value="" disabled selected>Chọn gói cước</option>
-                                            <option *ngFor="let item of list?.result" [value]="item">{{ item }}</option>
+                                            <option *ngFor="let item of list" [value]="item">{{ item }}</option>
                                         </select>
                                     </div>
                                 </div>
