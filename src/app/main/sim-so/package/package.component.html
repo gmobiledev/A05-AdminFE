@@ -13,8 +13,8 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" name="msisdn" placeholder="Số thuê bao" [(ngModel)]="dataPost.msisdn"
-                                            class="form-control">
+                                        <input type="text" name="msisdn" placeholder="Số thuê bao"
+                                            [(ngModel)]="dataPost.msisdn" class="form-control">
                                     </div>
                                 </div>
 
@@ -23,7 +23,8 @@
                                         <!-- <label for="">Chọn gói cước</label> -->
                                         <select [(ngModel)]="dataPost.package" name="package" class="form-control">
                                             <option value="" disabled selected>Chọn gói cước</option>
-                                            <option *ngFor="let item of list" [value]="item">{{ item }}</option>
+                                            <option *ngFor="let item of list" [value]="item.code">{{ item.code }}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>

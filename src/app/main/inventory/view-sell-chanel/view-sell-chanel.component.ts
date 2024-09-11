@@ -722,7 +722,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   downloadFile(data, filename = 'data') {
     console.log("downloadFile")
-    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status', 'created_at', 'export_date']);
+    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status', 'created_at', 'export_date', 'sell_channels']);
     console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
     let dwldLink = document.createElement("a");
@@ -753,8 +753,13 @@ export class ViewSellChanelComponent implements OnInit {
       let line = (i + 1) + '';
       for (let index in headerList) {
         let head = headerList[index];
-
-        line += ',' + array[i][head];
+        if(index == "sell_channels"){
+          let nearest_channel = array[i]["sell_channels"][0];
+          nearest_channel = nearest_channel['nearest_channel'] ? nearest_channel['nearest_channel']['name']:null
+          line +="," + nearest_channel
+        }else{
+          line += ',' + array[i][head];
+        }
       }
       str += line + '\r\n';
     }
