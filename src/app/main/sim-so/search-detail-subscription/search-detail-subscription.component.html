@@ -39,15 +39,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <tr>
+                    <!-- <tr style="background-color: bisque;">
                       <td>
-                        <b>Trạng thái</b>
                       </td>
                       <td>
-                        {{item?.gmobile?.state ?? "_" | showStatusTrans }}
                       </td>
                       <td>
-                        {{item?.other?.state ?? "_" | showStatusTrans }}
                       </td>
                     </tr> -->
                     <tr>
@@ -96,6 +93,39 @@
                     </tr>
                     <tr>
                       <td>
+<<<<<<< HEAD
+=======
+                        <b>Tài khoản chính</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.coreBalance  ?? "_" | number}}
+                      </td>
+                      <td>
+                        {{ item?.other?.balance?.coreBalance  ?? "_" | number}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Ngày hết hạn</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.balance?.coreBalanceExp ?? "_" }}
+                      </td>
+                      <td>
+                        {{ item?.other?.balance?.coreBalanceExp ?? "_" }}
+                      </td>
+                    </tr>
+                    <tr style="background-color: bisque;">
+                      <td>
+                      </td>
+                      <td>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+>>>>>>> dev
                         <b>Gói cước</b>
                       </td>
                       <td>
@@ -160,6 +190,17 @@
                         {{ item?.other?.packages[0]?.dataRemain ?? "_" }}
                       </td>
                     </tr>
+<<<<<<< HEAD
+=======
+                    <tr style="background-color: bisque;">
+                      <td>
+                      </td>
+                      <td>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+>>>>>>> dev
                     <tr>
                       <td>
                         <b>Thời gian đồng bộ</b>
