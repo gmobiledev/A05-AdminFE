@@ -24,10 +24,10 @@ export class HistoryTopupComponent implements OnInit {
   maxToDate: string;
 
   public searchSim: any = {
-    msisdn: '',
     from: '',
     to: '',
-  }
+    msisdn: ''
+  };
 
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
 
