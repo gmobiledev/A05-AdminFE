@@ -655,6 +655,13 @@ export class ViewSellChanelComponent implements OnInit {
     this.sectionBlockUI.start();
     this.inventoryService.getAllChannelProducts(this.searchForm).subscribe(async res => {
       let data: any = res.data.items;
+      data.forEach(element => {
+        element['short_desc'] = element['short_desc'] ? "'"+element['short_desc'] : '';
+        element['level'] = element['level'] ? element['level'] : '';
+        element['price'] = element['price'] ? element['price'] : '';
+        element['export_date'] = element['export_date'] ? element['export_date'] : '';
+        delete element['sell_channels']
+      })
       await this.downloadFile(data, 'jsontocsv')
       this.sectionBlockUI.stop();
     }, error => {
@@ -722,7 +729,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   downloadFile(data, filename = 'data') {
     console.log("downloadFile")
-    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status', 'created_at', 'export_date', 'sell_channels']);
+    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status', 'created_at', 'export_date']);
     console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
     let dwldLink = document.createElement("a");
