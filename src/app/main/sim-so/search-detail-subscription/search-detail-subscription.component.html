@@ -170,10 +170,10 @@
                         <b>Tổng Data</b>
                       </td>
                       <td>
-                        <!-- {{ item.gmobile?.packages[0]?.dataTotal ?? "_" }} -->
+                        {{ item.gmobile?.packages[0]?.dataTotal ? item.gmobile?.packages[0]?.dataTotal + ' MB' : "_" }}
                       </td>
                       <td>
-                        {{ item?.other?.packages[0]?.dataTotal === null ? "_" : item?.other?.packages[0]?.dataTotal ?? "_" }}
+                        {{ item?.other?.packages[0]?.dataTotal ? item.other?.packages[0]?.dataTotal + ' MB' : "_" }}
                       </td>
                     </tr>
                     <tr>
@@ -181,10 +181,10 @@
                         <b>Data còn lại</b>
                       </td>
                       <td>
-                        <!-- {{ item.gmobile?.packages[0]?.dataRemain ?? "_" }} -->
+                        {{ item.gmobile?.packages[0]?.dataRemain ? item.gmobile?.packages[0]?.dataRemain + ' MB' : "_" }}
                       </td>
                       <td>
-                        {{ item?.other?.packages[0]?.dataRemain === null ? "_" : item?.other?.packages[0]?.dataRemain ?? "_" }}
+                        {{ item?.other?.packages[0]?.dataRemain ? item.other?.packages[0]?.dataRemain + ' MB' : "_" }}
                       </td>
                     </tr>
 

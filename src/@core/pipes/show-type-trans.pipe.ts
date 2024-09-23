@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'showTrans'})
 export class ShowTransPipe implements PipeTransform {
-  transform(value): string {
+  transform(value ): string {
     let html = '';
     if(value == 0) {
         html = 'Voice'

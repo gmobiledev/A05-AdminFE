@@ -77,16 +77,16 @@ export class WayLockComponent implements OnInit {
 
     let titleS;
     if (type == 1) {
-      titleS = "Bạn có đồng ý khóa 1C không ?";
+      titleS = "Bạn có đồng ý khóa chiều đi ?";
     }
     if (type == 2) {
-      titleS = "Bạn có đồng ý khóa 2C không ?";
+      titleS = "Bạn có đồng ý khóa chiều đến ?";
     }
     if (type == 3) {
-      titleS = "Bạn có đồng ý mở khóa 1C không ?";
+      titleS = "Bạn có đồng ý mở khóa chiều đi ?";
     }
     if (type == 4) {
-      titleS = "Bạn có đồng ý mở khóa 2C không ?";
+      titleS = "Bạn có đồng ý mở khóa chiều đến ?";
     }
 
     Swal.fire({

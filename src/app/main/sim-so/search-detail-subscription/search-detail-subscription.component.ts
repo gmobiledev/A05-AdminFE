@@ -51,6 +51,8 @@ export class SearchDetailSubscriptionComponent implements OnInit {
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;
         this.item = res.data
+        console.log(this.item);
+
         this.total = res.data.count;
       } else if (!res.data || Object.keys(res.data).length === 0) {
         this.item = null
@@ -70,8 +72,8 @@ export class SearchDetailSubscriptionComponent implements OnInit {
   getData(): void {
   }
 
-  getInvenstory(){
-    return this.item?.sell_channels ? this.item.sell_channels.map(x=>x.channel.name).join("-") : ""
+  getInvenstory() {
+    return this.item?.sell_channels ? this.item.sell_channels.map(x => x.channel.name).join("-") : ""
   }
 
 
