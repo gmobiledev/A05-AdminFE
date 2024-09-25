@@ -16,9 +16,9 @@ const ExcelJS = require('exceljs');
 export class KetQuaG59Component implements OnInit {
   @ViewChild(DatatableComponent)      // import {DatatableComponent} from '@swimlane/ngx-datatable';
   private readonly table: DatatableComponent;
-  
+
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
-  
+
   public contentHeader = {
     headerTitle: 'Báo cáo kết quả triển khai',
     actionButton: true,
@@ -86,9 +86,9 @@ export class KetQuaG59Component implements OnInit {
       let currentDate = new Date(new Date().getTime() - tzoffset);
       let endDate = new Date(new Date().getTime() - tzoffset);
       endDate.setDate(endDate.getDate() - 2);
-      this.searchForm.start_date = new Date( new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0,10)
-      this.searchForm.end_date = endDate.toISOString().slice(0,10);
-      this.maxDate = endDate.toISOString().slice(0,10);
+      this.searchForm.start_date = new Date(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getTime() - tzoffset).toISOString().slice(0, 10)
+      this.searchForm.end_date = endDate.toISOString().slice(0, 10);
+      this.maxDate = endDate.toISOString().slice(0, 10);
       await this.getChannel();
       await this.getDistrict();
       this.getData();
@@ -116,11 +116,11 @@ export class KetQuaG59Component implements OnInit {
     this.communeID = null;
 
 
-    if (this.searchForm.g59_district_name != null){
+    if (this.searchForm.g59_district_name != null) {
       this.districtID = this.listDistrict.find(element => element.id === this.searchForm.g59_district_name);
     }
 
-    if (this.searchForm.g59_commune_name != null && this.listCommunes != null){
+    if (this.searchForm.g59_commune_name != null && this.listCommunes != null) {
       this.communeID = this.listCommunes.find(element => element.id === this.searchForm.g59_commune_name);
     }
 
@@ -128,19 +128,19 @@ export class KetQuaG59Component implements OnInit {
       start_date: this.searchForm.start_date ? this.searchForm.start_date + ' 00:00:00' : '',
       end_date: this.searchForm.end_date ? this.searchForm.end_date + ' 00:00:00' : '',
       district_name: this.districtID ? this.districtID.title : "",
-      commune_name: this.communeID ? this.communeID.title : "", 
+      commune_name: this.communeID ? this.communeID.title : "",
       channel_id: this.searchForm.channel_id ? this.searchForm.channel_id : '',
 
     }
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     const listCurrentAction = currentUser.actions;
-    
-    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-summary')){
+
+    if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-summary')) {
       this.inventoryService.reportKetQuaSimG59(paramsSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.submitted = false;
-        this.list = res.data;      
-        for(let item of this.list) {
+        this.list = res.data;
+        for (let item of this.list) {
           this.sumItems.total_register += item.total_register;
           this.sumItems.received += item.received;
           this.sumItems.actived += item.actived;
@@ -148,20 +148,20 @@ export class KetQuaG59Component implements OnInit {
           this.sumItems.hoan_thien_tttb += item.hoan_thien_tttb;
           this.sumItems.sum_cost += item.sum_cost;
           this.sumItems.sum_topup += item.sum_topup;
-          
+
         }
-        this.sumItems.percent =  Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
-  
+        this.sumItems.percent = Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
+
       }, error => {
         this.submitted = false;
         this.sectionBlockUI.stop();
-      })  
+      })
     } else if (listCurrentAction.find(itemX => itemX == 'GET@/api/telecom-oracle-admin/report/g59-summary-by-admin')) {
       this.inventoryService.reportKetQuaSimG59ByAdmin(paramsSearch).subscribe(res => {
         this.sectionBlockUI.stop();
         this.submitted = false;
-        this.list = res.data;      
-        for(let item of this.list) {
+        this.list = res.data;
+        for (let item of this.list) {
           this.sumItems.total_register += item.total_register;
           this.sumItems.received += item.received;
           this.sumItems.actived += item.actived;
@@ -169,17 +169,17 @@ export class KetQuaG59Component implements OnInit {
           this.sumItems.hoan_thien_tttb += item.hoan_thien_tttb;
           this.sumItems.sum_cost += item.sum_cost;
           this.sumItems.sum_topup += item.sum_topup;
-          
+
         }
-        this.sumItems.percent =  Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
-  
+        this.sumItems.percent = Math.round(((this.sumItems.received / this.sumItems.total_register) * 100))
+
       }, error => {
         this.submitted = false;
         this.sectionBlockUI.stop();
       })
     }
 
-    
+
   }
 
   async getDistrict() {
@@ -192,6 +192,25 @@ export class KetQuaG59Component implements OnInit {
     this.listChannel = res.data.items;
 
   }
+
+
+  async onChangeProvince(id) {
+    // console.log("onChangeProvince", id)
+    let channel = this.listChannel.find(o => o.code == id)
+    // console.log("channel", channel)
+    try {
+      const res = await this.adminSerivce.getDistricts(channel.province_id).toPromise();
+      if (res.status == 1) {
+
+        this.listDistrict = res.data
+
+      }
+    } catch (error) {
+
+    }
+  }
+
+
 
   async onChangeHomeDistrict(id, init = null) {
 
@@ -225,8 +244,8 @@ export class KetQuaG59Component implements OnInit {
       { letter: 'I', header: 'Doanh thu topup', key: 'sum_topup' },
       { letter: 'J', header: 'Doanh thu tiêu dùng', key: 'sum_cost' },
     ];
-    let exportData = this.list.map(obj => ({...obj}));
-    for(let i = 0;i<exportData.length;i++) {
+    let exportData = this.list.map(obj => ({ ...obj }));
+    for (let i = 0; i < exportData.length; i++) {
       exportData[i]['percent'] = Math.round((exportData[i]['percent'] * 100))
     }
     worksheet.addRows(exportData);
@@ -254,7 +273,7 @@ export class KetQuaG59Component implements OnInit {
   }
 
   roundPercent(value) {
-    return Math.round((value* 100))
+    return Math.round((value * 100))
   }
 
 }
