@@ -239,8 +239,16 @@
                         </div>
                         <div *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT
-                          ">
+                          && item.action != 'KHOI_PHUC'">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="eye" class="text-white cursor-pointer"></i>
+                            Xem chi tiết
+                          </a>
+                        </div>
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
+                          || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT
+                           && item.action == 'KHOI_PHUC'">
+                          <a class="ml-2 btn btn-info" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                             <i data-feather="eye" class="text-white cursor-pointer"></i>
                             Xem chi tiết
                           </a>
@@ -325,6 +333,18 @@
     <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)"
       (createNewTask)="onCreateTaskNewSim($event)" [currentUser]="currentUser"
       [currentUserId]="currentUser.id"></app-task-item>
+  </div>
+</ng-template>
+
+<ng-template #modalViewApproveRestore let-modal >
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160"></h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <app-view-approve [item]="selectedItem" (closePopup)="modalClose()"></app-view-approve>
   </div>
 </ng-template>
 

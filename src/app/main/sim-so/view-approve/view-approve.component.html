@@ -1,0 +1,66 @@
+<div class="pl-3 pr-3" *ngIf="dataTask">
+    <div class="row" *blockUI="'section-block'">
+        <div class="col-md-6">
+            <div>
+                <h3>{{ titleModal }}</h3>
+            </div>
+            <div>ID của yêu cầu: {{ dataTask.id }}</div>
+            <div>
+                <span>Trạng thái: </span><span [innerHTML]="dataTask.status | showStatusTelecom"></span>
+            </div>
+            <div><span>Admin thao tác: </span>{{ dataTask.user_sync }}</div>
+
+            <div *ngIf="dataTask.number_success_msisdn && dataTask.number_success_msisdn > 0">
+                <b class="text-info" *ngIf="dataTask && dataTask.task.otp">
+                    Đã xác nhận OTP ĐKTTTB
+                </b>
+                <b class="text-secondary" *ngIf="dataTask && !dataTask.otp">
+                    Chưa xác nhận OTP ĐKTTTB
+                </b>
+            </div>
+        </div>
+        <div class="col-md-12 mb-2">
+            <span>Thời gian tạo: </span>
+            {{ dataTask.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+            <span>Thời gian mua : </span>
+            {{ dataTask.buy_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+            <span>Thời gian cập nhật: </span>
+            {{ dataTask.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+            <span>Thời gian hoàn thành: </span>
+            {{ dataTask.sync_time | date : "dd/MM/yyyy H:mm" : "UTC" }}
+        </div>
+        <div class="col-md-12 mb-2" *ngIf="dataTask.note">
+            <span>Note: </span> {{ dataTask.note }}
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6 border">
+            <app-old-customer-information [dataText]="dataText"
+                [dataImages]="dataImages"></app-old-customer-information>
+        </div>
+        <div class="col-md-6 border">
+            <app-new-customer-information [dataText]="dataText"
+                [dataImages]="dataImages"></app-new-customer-information>
+        </div>
+    </div>
+    <div class="row mb-2" *ngIf="dataTask.note">
+        <span>Note: </span> {{ dataTask.note }}
+    </div>
+    <div class="row mb-2 box-button display-upload-file" *ngIf="isShowButtonApprove()">
+        <span>Upload file:</span>
+        <app-upload-file-image-pdf [task_id]="idSlug"></app-upload-file-image-pdf>
+        <p>*Chỉ tải file ảnh hoặc file pdf và tối đa 10 file*</p>
+    </div>
+    <div class="row box-button" *ngIf="isShowButtonApprove()">
+        <a class="ml-2 btn btn-success" (click)="select('approve')">
+            <i data-feather="check" class="text-white cursor-pointer"></i>
+            Duyệt
+        </a>
+
+        <a class="ml-2 btn btn-danger" (click)="select('reject')">
+            <i data-feather="slash" class="text-white cursor-pointer"></i>
+            Từ chối
+        </a>
+    </div>
+</div>

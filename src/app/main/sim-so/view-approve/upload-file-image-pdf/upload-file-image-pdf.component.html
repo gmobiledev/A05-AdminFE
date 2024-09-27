@@ -1,0 +1,20 @@
+<div class="upload-file-container">
+    <div class="view-file-upload">
+        <div class="view-file-body border" *ngIf="multiples.length > 0">
+            <div class="view-file-content" *ngFor="let multiple of multiples">
+                <img *ngIf="multiple.type == 'img'" [src]="multiple.url" style="width: 100%;" />
+                <pdf-viewer *ngIf="multiple.type == 'pdf'" [src]="multiple.url" [render-text]="true"
+                    [original-size]="false" style="height: 400px;"></pdf-viewer>
+            </div>
+        </div>
+    </div>
+    <div class="select-click-upload">
+        <div class="upload-file" [class.displayNone]="multiples.length == 10">
+            <label for="upload"><i class="fa fa-upload" aria-hidden="true"></i></label>
+            <input id="upload" type="file" accept="image/*, application/pdf" (change)="onSelectFile($event)"
+                multiple="multiple" />
+        </div>
+
+        <button (click)="upload()">Cập nhật</button>
+    </div>
+</div>
