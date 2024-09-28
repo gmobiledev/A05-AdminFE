@@ -5,6 +5,56 @@
         margin-bottom: 1.5rem;
 
         .view-file-body {
+            .view-file-task-body {
+                padding: 10px;
+                display: flex;
+                overflow: hidden;
+                flex-direction: column;
+
+                .view-file-task {
+                    overflow: hidden;
+                    cursor: pointer;
+
+                    .close {
+                        display: none;
+
+                        .close-red-icon {
+                            width: 25px;
+                        }
+                    }
+
+                    .img {
+                        display: flex;
+                        padding: 10px;
+                        align-items: center;
+                        justify-content: left;
+
+                        .img-file {
+                            width: 50px;
+                            height: 100%;
+                            margin-right: 10px;
+                        }
+
+                        span {
+                            font-size: 15px;
+                            font-weight: bold;
+                        }
+                    }
+
+                    &:hover {
+                        background: #c1bfbf;
+                        color: #fff;
+                        border-radius: 13px;
+
+                        .close {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+
+        .view-file-body-content {
             display: flex;
             justify-content: center;
             align-items: center;

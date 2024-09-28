@@ -85,6 +85,18 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/images`);
   }
 
+  getFileAttachedTask(idSlug = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/attachments`);
+  }
+
+  patchDeleteFileTask(idSlug = null, data) {
+    return this._http.patch<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug+`/delete-attachments`, data);
+  }
+
+  postViewFileTask(idSlug: any, data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/view-attachments`, data);
+  }
+
   postUpdateAttachments(data = null) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-attachments`, data);
   }

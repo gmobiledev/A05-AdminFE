@@ -51,6 +51,7 @@ import { ViewApproveComponent } from './view-approve/view-approve.component';
 import { OldCustomerInformationComponent } from './view-approve/old-customer-information/old-customer-information.component';
 import { NewCustomerInformationComponent } from './view-approve/new-customer-information/new-customer-information.component';
 import { UploadFileImagePdfComponent } from './view-approve/upload-file-image-pdf/upload-file-image-pdf.component';
+import { ViewFileTaskComponent } from './view-approve/upload-file-image-pdf/view-file-task/view-file-task.component';
 
 const routes: Routes = [
   {
@@ -193,7 +194,8 @@ const routes: Routes = [
     ViewApproveComponent,
     OldCustomerInformationComponent,
     NewCustomerInformationComponent,
-    UploadFileImagePdfComponent
+    UploadFileImagePdfComponent,
+    ViewFileTaskComponent
   ],
   imports: [
     CommonModule,

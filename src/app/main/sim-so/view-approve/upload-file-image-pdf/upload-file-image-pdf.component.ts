@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TelecomService } from 'app/auth/service/telecom.service';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -11,22 +12,80 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 export class UploadFileImagePdfComponent implements OnInit {
   @Input() task_id: any;
   file = [];
+  @ViewChild('modalViewFileTask') modalViewFileTask: ElementRef;
+  fileTask;
   urls: any[] = [];
+  itemFileTask;
+  lengthFileTask = 0;
   multiples: any[] = [];
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
+  public modalRef: any;
 
   constructor(
     private cf: ChangeDetectorRef,
     private telecomService: TelecomService,
     private alertService: SweetAlertService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
+    this.getFileAttachedTask();
+  }
 
+  modalClose() {
+    this.modalRef.close();
+  }
+
+  async modalOpenFileTask(modalViewFileTask, item = null) {
+
+    if (item) {
+      this.itemFileTask = item;
+      this.modalRef = this.modalService.open(modalViewFileTask);
+    }
+  }
+
+  deleteFileTask(item: any) {
+
+    const data = {
+      urls: [
+        item.path
+      ]
+    }
+
+    this.telecomService.patchDeleteFileTask(this.task_id, data).subscribe((res: any) => {
+
+      if (res.status === 1) {
+        this.getFileAttachedTask();
+        this.alertService.showMess(res.data.messsage);
+      }
+      this.itemBlockUI.stop();
+    }, err => {
+      this.itemBlockUI.stop();
+      this.alertService.showMess(err);
+    })
+  }
+
+  getFileAttachedTask() {
+    this.telecomService.getFileAttachedTask(this.task_id).subscribe((res: any) => {
+
+      if (res.status === 1 && res.data?.items?.length > 0) {
+        this.fileTask = res.data.items;
+        for (const file of this.fileTask) {
+          const file_name_replace = file.file_name.substring(file.file_name.indexOf('_') + 1);
+          file.file_name = file_name_replace;
+        }
+        this.lengthFileTask = res.data.items.length;
+      }
+      this.itemBlockUI.stop();
+    }, err => {
+      this.itemBlockUI.stop();
+      this.alertService.showMess(err);
+    })
   }
 
   onSelectFile(event) {
-    if (this.multiples.length == 10) {
+    const quantityFile = this.multiples.length + this.lengthFileTask;
+    if (quantityFile == 10) {
       this.alertService.showMess('Tải lên tối đa 10 file!');
       return;
     } else {
@@ -34,7 +93,7 @@ export class UploadFileImagePdfComponent implements OnInit {
         return;
       } else {
         this.file.push(event?.target?.files[0]);
-        console.log('file', this.file);
+        // console.log('file', this.file);
         let i: number = 0;
         for (const singlefile of event.target.files) {
           var reader = new FileReader();
@@ -53,7 +112,7 @@ export class UploadFileImagePdfComponent implements OnInit {
               url: url,
               type: type
             });
-            console.log(this.multiples);
+            // console.log(this.multiples);
             this.cf.detectChanges();
           };
         }
