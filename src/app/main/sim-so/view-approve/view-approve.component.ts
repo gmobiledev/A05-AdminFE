@@ -4,7 +4,7 @@ import { TaskTelecom } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Subject } from 'rxjs';
-import { ObjectLocalStorage } from 'app/utils/constants';
+import { ObjectLocalStorage, TaskTelecomStatus } from 'app/utils/constants';
 
 @Component({
   selector: 'app-view-approve',
@@ -22,6 +22,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   currentUser;
   private _unsubscribeAll: Subject<any>;
   public listTaskAction = TaskTelecom.ACTION;
+  public taskTelecomStatus = TaskTelecomStatus;
 
   constructor(
     private telecomService: TelecomService,
@@ -51,6 +52,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
       if (res.status === 1 && res.data) {
         this.dataText = res.data;
         this.dataTask = res.data?.task;
+
       } else {
         this.alertService.showMess(res.message);
       };

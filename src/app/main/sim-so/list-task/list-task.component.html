@@ -213,8 +213,20 @@
                             && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
                         || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
                         || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
-                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') )">
+                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action != 'KHOI_PHUC'">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+                            <i data-feather="bookmark" class="text-white cursor-pointer"></i>
+                            Tiếp nhận yêu cầu
+                          </a>
+                        </div>
+                        <div *ngIf="(
+                          ((item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
+                            || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
+                            && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
+                        || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
+                        || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
+                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action == 'KHOI_PHUC'">
+                          <a class="ml-2 btn btn-info" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
                             Tiếp nhận yêu cầu
                           </a>
@@ -336,7 +348,7 @@
   </div>
 </ng-template>
 
-<ng-template #modalViewApproveRestore let-modal >
+<ng-template #modalViewApproveRestore let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160"></h5>
     <button type="button" class="close" (click)="modalClose()" aria-label="Close">
