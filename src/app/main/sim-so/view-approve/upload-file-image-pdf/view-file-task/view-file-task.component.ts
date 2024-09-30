@@ -28,6 +28,7 @@ export class ViewFileTaskComponent implements OnInit {
     const data = {
       url: this.item.path
     }
+    this.itemBlockUI.start();
     this.telecomService.postViewFileTask(this.task_id, data).subscribe((res: any) => {
 
       if (res.status === 1) {
@@ -35,6 +36,8 @@ export class ViewFileTaskComponent implements OnInit {
           this.type = 'img';
         } else if (res.data[0].name.includes('pdf')) {
           this.type = 'pdf';
+        } else if (res.data[0].name.includes('mp4')) {
+          this.type = 'video';
         }
         this.url = res.data[0].value;
       }

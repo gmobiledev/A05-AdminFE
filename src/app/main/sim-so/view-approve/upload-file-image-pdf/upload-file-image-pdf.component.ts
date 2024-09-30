@@ -37,7 +37,6 @@ export class UploadFileImagePdfComponent implements OnInit {
   }
 
   async modalOpenFileTask(modalViewFileTask, item = null) {
-
     if (item) {
       this.itemFileTask = item;
       this.modalRef = this.modalService.open(modalViewFileTask);
@@ -51,7 +50,7 @@ export class UploadFileImagePdfComponent implements OnInit {
         item.path
       ]
     }
-
+    this.itemBlockUI.start();
     this.telecomService.patchDeleteFileTask(this.task_id, data).subscribe((res: any) => {
 
       if (res.status === 1) {
@@ -66,6 +65,7 @@ export class UploadFileImagePdfComponent implements OnInit {
   }
 
   getFileAttachedTask() {
+    this.itemBlockUI.start();
     this.telecomService.getFileAttachedTask(this.task_id).subscribe((res: any) => {
 
       if (res.status === 1 && res.data?.items?.length > 0) {
@@ -74,6 +74,8 @@ export class UploadFileImagePdfComponent implements OnInit {
           const file_name_replace = file.file_name.substring(file.file_name.indexOf('_') + 1);
           file.file_name = file_name_replace;
         }
+        console.log(this.fileTask);
+
         this.lengthFileTask = res.data.items.length;
       }
       this.itemBlockUI.stop();
@@ -84,6 +86,13 @@ export class UploadFileImagePdfComponent implements OnInit {
   }
 
   onSelectFile(event) {
+    const fileSize = event.target.files[0].size / 1024 / 1024; // in MB
+    if (event.target.files[0].type.includes('video') && fileSize > 50) {
+      this.alertService.showMess('Vui lòng tải lại video không quá 50MB!');
+      return;
+    } else if (fileSize > 5) {
+      this.alertService.showMess('Vui lòng tải lại file không quá 5MB!');
+    };
     const quantityFile = this.multiples.length + this.lengthFileTask;
     if (quantityFile == 10) {
       this.alertService.showMess('Tải lên tối đa 10 file!');
@@ -103,7 +112,9 @@ export class UploadFileImagePdfComponent implements OnInit {
           reader.onload = (event) => {
             const url = (<FileReader>event.target).result as string;
             let type = '';
-            if (url.includes('jpg') || url.includes('png') || url.includes('jpeg')) {
+            if (url.includes('video')) {
+              type = 'video';
+            } else if (url.includes('jpg') || url.includes('png') || url.includes('jpeg')) {
               type = 'img';
             } else if (url.includes('pdf')) {
               type = 'pdf';
@@ -124,7 +135,7 @@ export class UploadFileImagePdfComponent implements OnInit {
     const formData = new FormData();
     formData.append('task_id', this.task_id);
     this.file.forEach((file) => { formData.append('files', file); })
-
+    this.itemBlockUI.start();
     this.telecomService.postUpdateAttachments(formData).subscribe((res: any) => {
       if (res.status === 1) {
         this.alertService.showMess(res.message);
