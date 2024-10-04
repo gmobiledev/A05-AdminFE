@@ -107,7 +107,7 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
-      title: '4',
+      title: '5',
       translate: '',
       classes: 'badge-light-warning badge-pill'
     },
@@ -129,7 +129,6 @@ export const menu: CoreMenu[] = [
         icon: 'user',
         url: 'agent'
       },
-
       {
         id: 'agents',
         title: 'Lịch sử tác động',
@@ -145,6 +144,14 @@ export const menu: CoreMenu[] = [
         type: 'item',
         icon: 'user',
         url: 'sim-so/msisdn'
+      },
+        {
+        id: 'agents',
+        title: 'Phục hồi',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'sim-so/search-recovery-sim'
       },
     ]
   },

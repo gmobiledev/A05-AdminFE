@@ -1,0 +1,84 @@
+<div class="row mb-2 p-2" *ngIf="dataNewText">
+    <div class="col-12">
+        <h4>Thông tin Khách Hàng mới</h4>
+    </div>
+    <div class="col-md-6 col-sm-12 mb-1">
+        <span><u>Loại giấy tờ</u>:
+            <span class="text-info">{{ dataNewText?.identification_type }}</span></span>
+    </div>
+    <div class="col-md-6 col-sm-12 mb-1">
+        <span><u>Số giấy tờ</u>:
+            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataNewText?.identification_no" (click)="
+              copyTextClipboard(dataNewText?.identification_no)
+            ">
+                <span class="text-info">{{
+                    dataNewText?.identification_no
+                    }}</span>
+            </a></span>
+    </div>
+    <div class="col-md-6 col-sm-12 mb-1">
+        <span><u>Ngày cấp</u>:
+            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataNewText?.identification_date" (click)="
+              copyTextClipboard(dataNewText?.identification_date)
+            ">
+                <span class="text-info">{{dataNewText?.identification_date | date: 'dd/MM/yyyy'}}</span>
+            </a></span>
+    </div>
+    <div class="col-md-6 col-sm-12 mb-1">
+        <span><u>Nơi cấp</u>:
+            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataNewText?.identification_place" (click)="
+              copyTextClipboard(dataNewText?.identification_place)
+            ">
+                <span class="text-info">{{
+                    dataNewText?.identification_place
+                    }}</span>
+            </a></span>
+    </div>
+
+    <div class="col-md-6 col-sm-12 mb-1">
+        <span><u>Họ và tên</u>:
+            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataNewText?.name"
+                (click)="copyTextClipboard(dataNewText?.name)">
+                <span class="text-info">{{ dataNewText?.name }}</span>
+            </a></span>
+    </div>
+    <div class="col-md-6 col-sm-12 mb-1">
+        <span><u>Ngày sinh</u>:
+            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataNewText?.birth"
+                (click)="copyTextClipboard(dataNewText?.birth)">
+                <span class="text-info">{{dataNewText?.birth | date: 'dd/MM/yyyy'}}</span>
+            </a></span>
+    </div>
+    <div class="col-md-6 col-sm-12 mb-1">
+        <span><u>Số điện thoại liên hệ</u>:
+            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataNewText?.mobile"
+                (click)="copyTextClipboard(dataNewText?.mobile)">
+                <span class="text-info">{{
+                    dataNewText?.mobile
+                    }}</span>
+            </a></span>
+    </div>
+    <div class="col-md-12 col-sm-12 mt-1">
+        <h6>Địa chỉ thường trú:</h6>
+        <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataNewText?.full_address" (click)="
+            copyTextClipboard(dataNewText?.full_address)
+          ">
+            <span class="text-info">{{ dataNewText?.full_address }}</span></a>
+    </div>
+
+    <div class="col-md-6">
+        <label for>Ảnh giấy tờ mặt trước</label>
+        <img (click)="onViewImage(modalImage, 'cccd_front_compare')" class="img-fluid rounded mb-75"
+            src="data:image/png;base64,{{ dataImages?.compare_info?.identification_front_file }}" alt="avatar img" />
+    </div>
+    <div class="col-md-6">
+        <label for>Ảnh giấy tờ mặt sau</label>
+        <img (click)="onViewImage(modalImage, 'cccd_back_compare')" class="img-fluid rounded mb-75"
+            src="data:image/png;base64,{{ dataImages?.compare_info?.identification_back_file }}" alt="avatar img" />
+    </div>
+    <div class="col-md-6">
+        <label for>Ảnh chân dung</label>
+        <img (click)="onViewImage(modalImage, 'selfie_compare')" class="img-fluid rounded mb-75"
+            src="data:image/png;base64,{{ dataImages?.compare_info?.identification_selfie_file }}" alt="avatar img" />
+    </div>
+</div>

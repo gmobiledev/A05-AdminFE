@@ -69,6 +69,50 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/dvkh/tra-cuu-kho`, { params: params });
   }
 
+  postSearchRecoverySim(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/check-khoi-phuc`, data);
+  }
+
+  postSubmitRecoverySim(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/confirm-ekyc`, data);
+  }
+  
+  getTaskSlugText(idSlug = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/text`);
+  }
+
+  getTaskSlugImages(idSlug = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/images`);
+  }
+
+  getFileAttachedTask(idSlug = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/attachments`);
+  }
+
+  patchDeleteFileTask(idSlug = null, data) {
+    return this._http.patch<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug+`/delete-attachments`, data);
+  }
+
+  postViewFileTask(idSlug: any, data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/view-attachments`, data);
+  }
+
+  postUpdateAttachments(data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-attachments`, data);
+  }
+
+  postUpdateStatus(idSlug: any, data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/KHOI_PHUC/update-status`, data);
+  }
+
+  postCreateRecoverySim(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/create`, data);
+  }
+
+  postUploadIdDoc(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-id-doc`, data);
+  }
+
   getPackageSimDVKH(params = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/get-packages`, { params: params });
   }

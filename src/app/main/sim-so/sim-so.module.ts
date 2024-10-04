@@ -45,6 +45,13 @@ import { PackageComponent } from './package/package.component';
 import { TransHistoryComponent } from './trans-history/trans-history.component';
 import { InfoESimComponent } from './info-e-sim/info-e-sim.component';
 import { HistoryTopupComponent } from './history-topup/history-topup.component';
+import { SearchRecoverySimComponent } from './search-recovery-sim/search-recovery-sim.component';
+import { ViewRestorerInformationComponent } from './view-restorer-information/view-restorer-information.component';
+import { ViewApproveComponent } from './view-approve/view-approve.component';
+import { OldCustomerInformationComponent } from './view-approve/old-customer-information/old-customer-information.component';
+import { NewCustomerInformationComponent } from './view-approve/new-customer-information/new-customer-information.component';
+import { UploadFileImagePdfComponent } from './view-approve/upload-file-image-pdf/upload-file-image-pdf.component';
+import { ViewFileTaskComponent } from './view-approve/upload-file-image-pdf/view-file-task/view-file-task.component';
 
 const routes: Routes = [
   {
@@ -128,6 +135,10 @@ const routes: Routes = [
     component: ListSimComponent
   },
   {
+    path: 'search-recovery-sim',
+    component: SearchRecoverySimComponent
+  },
+  {
     path: 'client2g',
     component: Client2gComponent
   },
@@ -178,15 +189,22 @@ const routes: Routes = [
     TransHistoryComponent,
     InfoESimComponent,
     HistoryTopupComponent,
-    ],
+    SearchRecoverySimComponent,
+    ViewRestorerInformationComponent,
+    ViewApproveComponent,
+    OldCustomerInformationComponent,
+    NewCustomerInformationComponent,
+    UploadFileImagePdfComponent,
+    ViewFileTaskComponent
+  ],
   imports: [
-    CommonModule, 
-    RouterModule.forChild(routes), 
-    NgbModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
+    CommonModule,
+    RouterModule.forChild(routes),
+    NgbModule,
     FormsModule,
-    CoreCommonModule, 
+    ReactiveFormsModule,
+    FormsModule,
+    CoreCommonModule,
     ContentHeaderModule,
     BlockUIModule.forRoot(),
     NgxDaterangepickerMd.forRoot(),

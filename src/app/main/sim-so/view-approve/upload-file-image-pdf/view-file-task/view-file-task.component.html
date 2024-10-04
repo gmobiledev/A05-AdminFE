@@ -1,0 +1,5 @@
+<img *ngIf="type == 'img'" src="data:image/png;base64,{{url}}" style="width: 100%;" />
+<pdf-viewer *ngIf="type == 'pdf'" [src]="'data:application/pdf;base64,'+url" [render-text]="true"
+    [original-size]="false" style="height: 400px;"></pdf-viewer>
+<video *ngIf="type == 'video'" [src]="'data:video/mp4;base64,'+url" style="width: 300px;" autoplay controls>
+</video>

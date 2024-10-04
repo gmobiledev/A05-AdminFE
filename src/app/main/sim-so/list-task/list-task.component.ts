@@ -22,6 +22,7 @@ import dayjs from 'dayjs';
 export class ListTaskComponent implements OnInit {
 
   @ViewChild('modalItem') modalItem: ElementRef;
+  @ViewChild('modalViewApproveRestore') modalViewApproveRestore: ElementRef;
 
   public contentHeader: any = {
     headerTitle: 'Yêu cầu của đại lý',
@@ -144,6 +145,8 @@ export class ListTaskComponent implements OnInit {
   }
 
   async modalOpen(modal, item = null) {
+    console.log(modal, item);
+
     if (item) {
       let check;
       this.itemBlockDetailUI.start();
@@ -217,6 +220,20 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
+  async modalOpenApproveRestore(modalViewApproveRestore, item = null) {
+
+    if (item) {
+      this.selectedItem = item;
+      this.modalRef = this.modalService.open(modalViewApproveRestore, {
+        centered: true,
+        windowClass: 'modal modal-primary',
+        size: 'xl',
+        backdrop: 'static',
+        keyboard: false
+      });
+    }
+  }
+
   async modalApprovalOpen(modal, item = null, size = 'xl') {
     if (item) {
       this.selectedItem = item;
@@ -234,6 +251,7 @@ export class ListTaskComponent implements OnInit {
     this.selectedItem = null;
     this.selectedNote = '';
     this.getData();
+    
     this.modalRef.close();
   }
   async modalViewAgentOpen(modal, item = null) {

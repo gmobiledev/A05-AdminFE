@@ -1,0 +1,59 @@
+<div class="upload-file-container">
+    <div class="view-file-upload">
+        <div class="view-file-body border" *ngIf="fileTask?.length > 0" style="margin-bottom: 10px;">
+            <h4 style="margin: 10px;">File đính kèm task</h4>
+            <div class="view-file-task-body">
+                <div class="view-file-task" *ngFor="let file of fileTask">
+                    <div class="close">
+                        <img class="close-red-icon" src="assets/images/icons/close-red-icon.svg" alt=""
+                            (click)="deleteFileTask(file)">
+                    </div>
+                    <div class="img" (click)="modalOpenFileTask(modalViewFileTask, file)">
+                        <img class="img-file" *ngIf="file.ext !== '.pdf' && file.ext !== '.mp4'"
+                            src="assets/images/icons/jpg.png" alt="invoice" height="23" />
+                        <img class="img-file" *ngIf="file.ext === '.pdf'" src="assets/images/icons/pdf.png"
+                            alt="invoice" height="23" />
+                        <img class="img-file" *ngIf="file.ext === '.mp4'" src="assets/images/icons/video.png"
+                            alt="invoice" height="23" />
+                        <span>{{file.file_name}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="view-file-body border" *ngIf="multiples?.length > 0">
+            <h4 style="margin: 10px;">File upload mới</h4>
+            <div class="view-file-body-content">
+
+                <div class="view-file-content" *ngFor="let multiple of multiples">
+                    <img *ngIf="multiple.type == 'img'" [src]="multiple.url" style="width: 100%;" />
+                    <pdf-viewer *ngIf="multiple.type == 'pdf'" [src]="multiple.url" [render-text]="true"
+                        [original-size]="false" style="height: 400px;"></pdf-viewer>
+                    <video *ngIf="multiple.type == 'video'" [src]="multiple.url" style="width: 300px;" autoplay
+                        controls>
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="select-click-upload">
+        <div class="upload-file" [class.displayNone]="multiples.length == 10">
+            <label for="upload"><i class="fa fa-upload" aria-hidden="true"></i></label>
+            <input id="upload" type="file" accept="video/*, image/*, application/pdf" (change)="onSelectFile($event)"
+                multiple="multiple" />
+        </div>
+
+        <button (click)="upload()">Cập nhật</button>
+    </div>
+</div>
+
+<ng-template #modalViewFileTask let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160"></h5>
+        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0">
+        <app-view-file-task [item]="itemFileTask" [task_id]="task_id"></app-view-file-task>
+    </div>
+</ng-template>
