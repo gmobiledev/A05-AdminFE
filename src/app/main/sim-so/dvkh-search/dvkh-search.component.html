@@ -34,7 +34,7 @@
                     <th>Nhà mạng</th>
                     <th>Kho số</th>
                     <th>Trạng thái</th>
-                    <th *ngIf="currChannel.code == 'THUHOI'">Kho trước đó</th>
+                    <!-- <th *ngIf="currChannel[0].code == 'THUHOI'">Kho trước đó</th> -->
                   </tr>
                 </thead>
 
@@ -47,7 +47,7 @@
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
-                    <td *ngIf="currChannel.code == 'THUHOI'"> {{item.nearest_channel.name}}</td>
+                    <!-- <td *ngIf="currChannel[0].code == 'THUHOI'"> {{item.nearest_channel.name}}</td> -->
                   </tr>
                 </tbody>
               </table>
