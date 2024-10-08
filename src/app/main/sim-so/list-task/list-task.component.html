@@ -185,20 +185,25 @@
                     </td>
                     <td>
 
-                      <div *ngIf="item.sync_by && currentUser.id != item.sync_by">
+                      <div *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC'">
                         <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                           Xem chi tiết
                         </a>
                       </div>
 
-
+                      <div *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action == 'KHOI_PHUC'">
+                        <a class="ml-2 btn btn-info" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
+                          <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+                          Xem chi tiết
+                        </a>
+                      </div>
 
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
 
                         <div
                           *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+item.action+'/update-status')
-                        && item.status == taskTelecomStatus.STATUS_NEW_ORDER && !checkAction('telecom-admin/task/:slug(\\d+)/update-status') ">
+                        && item.status == taskTelecomStatus.STATUS_NEW_ORDER && !checkAction('telecom-admin/task/:slug(\\d+)/update-status') && item.action != 'KHOI_PHUC'">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-white cursor-pointer"></i>
                             Tiếp nhận yêu cầu
@@ -231,13 +236,19 @@
                             Tiếp nhận yêu cầu
                           </a>
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING">
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && item.action == 'KHOI_PHUC'">
+                          <a class="ml-2 btn btn-info" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
+                            <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
+                            Tiếp tục thực hiện
+                          </a>
+                        </div>
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && item.action != 'KHOI_PHUC'">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                             Tiếp tục thực hiện
                           </a>
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO">
+                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO && item.action != 'KHOI_PHUC'">
                           <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
                             <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                             Tiếp tục thực hiện

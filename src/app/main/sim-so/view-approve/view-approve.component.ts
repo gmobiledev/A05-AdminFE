@@ -19,6 +19,8 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   dataText;
   dataTask;
   idSlug;
+  showSelect = false;
+  showTask = true;
   currentUser;
   private _unsubscribeAll: Subject<any>;
   public listTaskAction = TaskTelecom.ACTION;
@@ -52,7 +54,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
       if (res.status === 1 && res.data) {
         this.dataText = res.data;
         this.dataTask = res.data?.task;
-
+        this.checkStatus();
       } else {
         this.alertService.showMess(res.message);
       };
@@ -61,6 +63,15 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
       this.itemBlockUI.stop();
       this.alertService.showMess(err);
     })
+  }
+
+  checkStatus() {
+    if (this.dataTask.status == this.taskTelecomStatus.STATUS_NEW_ORDER || this.dataTask?.status == TaskTelecomStatus.STATUS_PROCESSING) {
+      this.showSelect = true;
+    }
+    if (this.dataTask?.status == TaskTelecomStatus.STATUS_PROCESSING) {
+      this.showTask = this.dataTask.sync_by == this.currentUser.id ? true : false;
+    }
   }
 
   getTaskSlugImages(id: any) {
@@ -75,6 +86,25 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
       this.itemBlockUI.stop();
       this.alertService.showMess(err);
     })
+  }
+
+  async reception() {
+    this.itemBlockUI.start();
+    try {
+      const check = await this.telecomService.checkAvailabledTask(this.idSlug);
+      if (check.status === 1) {
+        this.alertService.showMess(check.message);
+        this.itemBlockUI.stop();
+        return;
+      } else {
+        this.alertService.showMess(check.message);
+        this.itemBlockUI.stop();
+        return;
+      }
+    } catch (error) {
+      this.itemBlockUI.stop();
+      return;
+    }
   }
 
   select(name: string) {
