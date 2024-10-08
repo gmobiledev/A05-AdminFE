@@ -43,7 +43,8 @@
                     <td>{{ item?.name }}</td>
                     <td>{{ item?.brand }} - {{item?.category_id == 2 ? "Serial": item?.category_id == 3 ? "SĐT" :
                       item?.category_id}}</td>
-                    <td>{{ currChannel.channel.name }}</td>
+                    <td>{{item?.nearest_channel ? currChannel.channel.name +' - '+ item.nearest_channel?.code :
+                      currChannel.channel.name}}</td>
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
