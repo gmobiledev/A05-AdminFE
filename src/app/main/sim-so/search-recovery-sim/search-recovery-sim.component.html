@@ -83,11 +83,11 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="image-upload" style="text-align:center;">
+                        <div class="image-upload" style="text-align:center;" *ngIf="!imageSelfie">
                             <label for="identification_selfie_file">
                                 <img *ngIf="!imageSelfie" src="/assets/images/icons/selfie.png"
                                     class="img-fluid img-margin-bottom" style="width:200px" alt="">
-                                <img *ngIf="imageSelfie" [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom">
+                                <!-- <img *ngIf="imageSelfie" [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom"> -->
                                 <h6 *ngIf="!imageSelfie" class="text-center">Tải ảnh chân dung</h6>
                             </label>
                             <input type="file" class="form-control input-display-none" id="identification_selfie_file"
@@ -97,14 +97,14 @@
                             </div> -->
                         </div>
 
-                        <!-- <div class="image-preview" *ngIf="imageSelfie">
-                            <img [src]="imageSelfie" alt="" class="img-fluid">
+                        <div class="image-preview" *ngIf="imageSelfie">
+                            <img [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom">
                             <button (click)="onReUpload('selfie')" type="button" class="btn btn-outline-primary btn-next"
                                 rippleEffect>
                                 <span class="align-middle ">Tải lại</span>
         
                             </button>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="col-12" style="margin-top: 20px;">
                         <button (click)="updateInformation()" type="button" class="btn btn-block btn-primary btn-next"
