@@ -186,7 +186,7 @@ export class ViewSellChanelComponent implements OnInit {
 
       if (params['is_sck'] && params['is_sck'] !== undefined && params['is_sck'] === 'false') {
         this.searchForm.is_sck = false
-      } else if (params['is_sck'] && params['is_sck'] !== undefined && params['is_sck'] === 'true'){
+      } else if (params['is_sck'] && params['is_sck'] !== undefined && params['is_sck'] === 'true') {
         this.searchForm.is_sck = true
       }
 
@@ -722,7 +722,15 @@ export class ViewSellChanelComponent implements OnInit {
 
   downloadFile(data, filename = 'data') {
     console.log("downloadFile")
-    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', 'status', 'created_at', 'export_date']);
+    let nearest_channel;
+    if (data[0]?.sell_channels[0]?.nearest_channel?.name) {
+      nearest_channel = 'nearest_channel_name';
+      data.map(x => x.nearest_channel_id = x?.sell_channels[0]?.nearest_channel?.name)
+    } else {
+      nearest_channel = 'nearest_channel_id';
+      data.map(x => x.nearest_channel_id = x?.sell_channels[0]?.nearest_channel_id)
+    }
+    let csvData = this.ConvertToCSV(data, ['name', 'short_desc', 'brand', 'level', 'category_id', 'is_kit', 'price', nearest_channel, 'status', 'created_at', 'export_date']);
     console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
     let dwldLink = document.createElement("a");

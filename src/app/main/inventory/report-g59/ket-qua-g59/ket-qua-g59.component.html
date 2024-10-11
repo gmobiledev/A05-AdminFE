@@ -24,14 +24,15 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                      <label for="">Đơn vị</label>
-                                      <ng-select name="sell_channel_id" [(ngModel)]="searchForm.channel_id">
-                                        <ng-option *ngFor="let p of listChannel" [value]="p.code">{{
-                                          p.name
-                                          }}</ng-option>
-                                      </ng-select>
+                                        <label for="">Đơn vị</label>
+                                        <ng-select name="sell_channel_id" [(ngModel)]="searchForm.channel_id"
+                                            (change)="onChangeProvince($event)">
+                                            <ng-option *ngFor="let p of listChannel" [value]="p.code">{{
+                                                p.name
+                                                }}</ng-option>
+                                        </ng-select>
                                     </div>
-                                </div>   
+                                </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Quận, Huyện</label>
@@ -77,7 +78,7 @@
                             <div class="mb-1">
                                 <!-- <span>Tổng số:</span> <b>{{ totalItems }}</b> -->
                             </div>
-                           
+
 
                             <ngx-datatable #table class="bootstrap core-bootstrap" [summaryRow]="enableSummary"
                                 [summaryPosition]="summaryPosition" [summaryHeight]="100"
@@ -88,15 +89,15 @@
                                         {{rowIndex+1}}
                                     </ng-template>
                                 </ngx-datatable-column>
-                                
+
                                 <ngx-datatable-column name="Tên Đơn Vị" prop="name" [summaryTemplate]="nameSummaryCell"
-                                [cellClass]="d-block"></ngx-datatable-column>
-
-                                <ngx-datatable-column name="Quận, Huyện" prop="district" [summaryTemplate]="nameSummaryCell"
                                     [cellClass]="d-block"></ngx-datatable-column>
 
-                                <ngx-datatable-column name="Phường, Xã" prop="commune" [summaryTemplate]="nameSummaryCell"
-                                    [cellClass]="d-block"></ngx-datatable-column>
+                                <ngx-datatable-column name="Quận, Huyện" prop="district"
+                                    [summaryTemplate]="nameSummaryCell" [cellClass]="d-block"></ngx-datatable-column>
+
+                                <ngx-datatable-column name="Phường, Xã" prop="commune"
+                                    [summaryTemplate]="nameSummaryCell" [cellClass]="d-block"></ngx-datatable-column>
 
                                 <!-- <ngx-datatable-column name="SL Đăng Ký" prop="total_register" [summaryFunc]="sumValue">
                                     <ng-template let-row="row" ngx-datatable-cell-template>

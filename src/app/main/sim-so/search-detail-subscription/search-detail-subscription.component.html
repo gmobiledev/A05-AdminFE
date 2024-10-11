@@ -35,7 +35,7 @@
                     <tr>
                       <th></th>
                       <th>GMOBILE</th>
-                      <th>OTHER</th>
+                      <th>{{item?.gmobile?.info?.mno}}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -96,7 +96,7 @@
                         <b>Tài khoản chính</b>
                       </td>
                       <td>
-                        {{ item?.gmobile?.balance?.coreBalance  ?? "_" | number}}
+                        <!-- {{ item?.gmobile?.balance?.coreBalance  ?? "_" | number}} -->
                       </td>
                       <td>
                         {{ item?.other?.balance?.coreBalance  ?? "_" | number}}
@@ -107,7 +107,7 @@
                         <b>Ngày hết hạn</b>
                       </td>
                       <td>
-                        {{ item?.gmobile?.balance?.coreBalanceExp ?? "_" }}
+                        <!-- {{ item?.gmobile?.balance?.coreBalanceExp ?? "_" }} -->
                       </td>
                       <td>
                         {{ item?.other?.balance?.coreBalanceExp ?? "_" }}
@@ -122,14 +122,14 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>
+                      <td> 
                         <b>Gói cước</b>
                       </td>
                       <td>
-                        {{ item.gmobile?.packages[0]?.package ?? "_" }}
+                        {{ item.gmobile?.packages?.package ?? "_" }}
                       </td>
                       <td>
-                        {{ item?.other?.packages[0]?.package ?? "_" }}
+                        {{ item?.other?.packages[0]?.package === null ? "_" : item?.other?.packages[0]?.package ?? "_" }}
                       </td>
                     </tr>
                     <tr>
@@ -137,10 +137,10 @@
                         <b>Thời gian đăng ký</b>
                       </td>
                       <td>
-                        {{ item.gmobile?.packages[0]?.timeStart ?? "_" }}
+                        <!-- {{ item.gmobile?.packages[0]?.timeStart ?? "_" }} -->
                       </td>
                       <td>
-                        {{ item?.other?.packages[0]?.timeStart ?? "_" }}
+                        {{ item?.other?.packages[0]?.timeStart === null ? "_" : item?.other?.packages[0]?.timeStart ?? "_" }}
                       </td>
                     </tr>
                     <tr>
@@ -148,10 +148,10 @@
                         <b>Thời gian hết hạn</b>
                       </td>
                       <td>
-                        {{ item.gmobile?.packages[0]?.timeEnd ?? "_" }}
+                        <!-- {{ item.gmobile?.packages[0]?.timeEnd ?? "_" }} -->
                       </td>
                       <td>
-                        {{ item?.other?.packages[0]?.timeEnd ?? "_" }}
+                        {{ item?.other?.packages[0]?.timeEnd === null ? "_" : item?.other?.packages[0]?.timeEnd ?? "_" }}
                       </td>
                     </tr>
                     <tr>
@@ -159,10 +159,10 @@
                         <b>Gia hạn</b>
                       </td>
                       <td>
-                        {{ item.gmobile?.packages[0]?.extension ?? "_" }}
+                        <!-- {{ item.gmobile?.packages[0]?.extension ?? "_" }} -->
                       </td>
                       <td>
-                        {{ item?.other?.packages[0]?.extension ?? "_" }}
+                        {{ item?.other?.packages[0]?.extension === null ? "_" : item?.other?.packages[0]?.extension ?? "_" }}
                       </td>
                     </tr>
                     <tr>
@@ -187,6 +187,7 @@
                         {{ item?.other?.packages[0]?.dataRemain ? item.other?.packages[0]?.dataRemain + ' MB' : "_" }}
                       </td>
                     </tr>
+
                     <tr style="background-color: bisque;">
                       <td>
                       </td>
