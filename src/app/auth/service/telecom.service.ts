@@ -402,6 +402,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/change-esim`, data);
   }
 
+  note(data){
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/change-status`, data);
+  }
+
   lockOneWay(data, type) {
     if (type == 1) {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-one-way`, data);

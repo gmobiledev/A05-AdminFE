@@ -34,6 +34,7 @@
                     <th>Nhà mạng</th>
                     <th>Kho số</th>
                     <th>Trạng thái</th>
+                    <th *ngIf="item.status == ProductStatus.STATUS_ACTIVE">Tác vụ</th>
                     <!-- <th *ngIf="currChannel[0].code == 'THUHOI'">Kho trước đó</th> -->
                   </tr>
                 </thead>
@@ -47,6 +48,9 @@
                       currChannel.channel.name}}</td>
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
+                    </td>
+                    <td *ngIf="item.status == ProductStatus.STATUS_ACTIVE">
+                      <img class="icon-note" src="assets/images/icons/file-text.svg" (click)="onNote()" alt="">
                     </td>
                     <!-- <td *ngIf="currChannel[0].code == 'THUHOI'"> {{item.nearest_channel.name}}</td> -->
                   </tr>

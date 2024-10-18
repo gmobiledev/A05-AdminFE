@@ -6,7 +6,8 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { NgIf } from '@angular/common';
-
+import { ProductStatus } from 'app/utils/constants';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dvkh-search',
@@ -14,7 +15,7 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./dvkh-search.component.scss']
 })
 export class DvkhSearchComponent implements OnInit {
-
+  ProductStatus = ProductStatus;
   public total: any;
   public item: any;
   public showMessage: boolean
@@ -53,6 +54,8 @@ export class DvkhSearchComponent implements OnInit {
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;
         this.item = res.data
+        console.log(this.item);
+
         this.total = res.data.count;
         this.getCurrChannel()
       } else if (!res.data || Object.keys(res.data).length === 0) {
@@ -107,6 +110,54 @@ export class DvkhSearchComponent implements OnInit {
     return this.item?.sell_channels ? this.item.sell_channels.map(x => x.channel.name).join("-") : ""
   }
 
+  async onNote() {
+
+    Swal.fire({
+      title: 'Note',
+      input: 'textarea',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Gửi',
+      showLoaderOnConfirm: true,
+      preConfirm: (note) => {
+        if (!note || note == '') {
+          Swal.showValidationMessage(
+            "Vui lòng nhập nội dung"
+          )
+          return;
+        }
+        const data = {
+          message: note,
+          mobile: this.searchSim.keysearch
+        }
+        console.log(data);
+
+        this.telecomService.note(data).subscribe(res => {
+          if (!res.status) {
+            Swal.showValidationMessage(
+              res.message
+            )
+            this.onSubmitSearch();
+            return;
+          }
+           this.onSubmitSearch();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          Swal.showValidationMessage(
+            error
+          )
+          this.alertService.showMess(error);
+
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+      }
+    })
+  }
 
   async modalOpen(modal, item) {
     if (item) {

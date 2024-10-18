@@ -55,6 +55,11 @@ export enum ProductStatus {
     STATUS_LOCKED = 3,
     LOCKED_BY_ADMIN = 4,
     STATUS_INIT = 0,
+    EXPORTED = 5, //Đã xuất kho tổng
+    CONNECTED = 6, // Đã đấu nối và chưa hoàn thiện TTTB
+    AWAIT_APPROVE = 21, // Chờ duyệt mới khởi tạo lô nhập, Không được thao tác khác
+    RETRIEVE_RENEW = 98, // Thu hồi và mở bán vòng đời mới
+    RETRIEVE = 99, //Thu hồi về kho THUHOI theo vòng đời
 }
 
 export enum ProductStoreStatus {
