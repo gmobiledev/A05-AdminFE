@@ -145,9 +145,6 @@ export class DvkhSearchComponent implements OnInit {
            this.onSubmitSearch();
           this.alertService.showSuccess(res.message);
         }, error => {
-          Swal.showValidationMessage(
-            error
-          )
           this.alertService.showMess(error);
 
         });
