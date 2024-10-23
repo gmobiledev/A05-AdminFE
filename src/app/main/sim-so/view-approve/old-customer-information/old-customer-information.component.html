@@ -105,17 +105,28 @@
 
     <div class="col-md-6">
         <label for>Ảnh giấy tờ mặt trước</label>
-        <img (click)="onViewImage(modalImage, 'cccd_front')" class="img-fluid rounded mb-75"
-            src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_front_file }}" alt="avatar img" />
+        <div class="lazy-load" *ngIf="!dataImages?.compare_info?.identification_front_file">
+            <div class="spinner-border text-secondary" role="status"></div>
+        </div>
+        <img (click)="onViewImage(modalImage, 'cccd_front')" class="img-fluid rounded mb-75" *ngIf="dataImages?.compare_info?.identification_front_file"
+            src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_front_file }}"
+            alt="avatar img" />
     </div>
     <div class="col-md-6">
         <label for>Ảnh giấy tờ mặt sau</label>
-        <img (click)="onViewImage(modalImage, 'cccd_back')" class="img-fluid rounded mb-75"
+        <div class="lazy-load" *ngIf="!dataImages?.compare_info?.identification_back_file">
+            <div class="spinner-border text-secondary" role="status"></div>
+        </div>
+        <img (click)="onViewImage(modalImage, 'cccd_back')" class="img-fluid rounded mb-75" *ngIf="dataImages?.compare_info?.identification_back_file"
             src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_back_file }}" alt="avatar img" />
     </div>
     <div class="col-md-6">
         <label for>Ảnh chân dung</label>
-        <img (click)="onViewImage(modalImage, 'selfie')" class="img-fluid rounded mb-75"
-            src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_selfie_file }}" alt="avatar img" />
+        <div class="lazy-load" *ngIf="!dataImages?.compare_info?.identification_selfie_file">
+            <div class="spinner-border text-secondary" role="status"></div>
+        </div>
+        <img (click)="onViewImage(modalImage, 'selfie')" class="img-fluid rounded mb-75" *ngIf="dataImages?.compare_info?.identification_selfie_file"
+            src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_selfie_file }}"
+            alt="avatar img" />
     </div>
 </div>

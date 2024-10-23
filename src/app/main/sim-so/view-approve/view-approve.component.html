@@ -47,12 +47,12 @@
     <div class="row mb-2" *ngIf="dataTask.note">
         <span>Note: </span> {{ dataTask.note }}
     </div>
-    <div class="row mb-2 box-button display-upload-file" *ngIf="isShowButtonApprove()">
+    <div class="row mb-2 box-button display-upload-file" *ngIf="isShowButtonApprove() && showTask">
         <span>Upload file:</span>
         <app-upload-file-image-pdf [task_id]="idSlug"></app-upload-file-image-pdf>
         <p>*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
     </div>
-    <div class="row box-button" *ngIf="isShowButtonApprove() && dataTask.status == taskTelecomStatus.STATUS_NEW_ORDER">
+    <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
         <a class="ml-2 btn btn-success" (click)="select('approve')">
             <i data-feather="check" class="text-white cursor-pointer"></i>
             Duyệt
@@ -61,6 +61,11 @@
         <a class="ml-2 btn btn-danger" (click)="select('reject')">
             <i data-feather="slash" class="text-white cursor-pointer"></i>
             Từ chối
+        </a>
+        <a class="ml-2 btn btn-success" (click)="reception()"
+            *ngIf="dataTask.status != taskTelecomStatus.STATUS_PROCESSING">
+            <i data-feather="check" class="text-white cursor-pointer"></i>
+            Tiếp nhận yêu cầu
         </a>
     </div>
 </div>

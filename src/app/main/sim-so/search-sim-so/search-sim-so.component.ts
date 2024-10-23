@@ -94,7 +94,11 @@ export class SearchSimSoComponent implements OnInit {
   }
 
   getInvenstory(){
-    return this.item?.sell_channels ? this.item.sell_channels.map(x=>x.channel.name).join("-") : ""
+    let textWarehouseNumber = this.item?.sell_channels ? this.item.sell_channels.map(x=>x.channel.name).join("-") : "";
+    if(this.item?.nearest_channel){
+      textWarehouseNumber = textWarehouseNumber + ' - ' + this.item?.nearest_channel?.code;
+    };
+    return textWarehouseNumber;
   }
 
 
