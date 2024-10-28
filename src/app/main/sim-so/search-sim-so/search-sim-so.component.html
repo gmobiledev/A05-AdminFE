@@ -59,6 +59,9 @@
                       <a class="ml-2" (click)="onSubmitLock(item.id, 2, item?.name)" *ngIf="!item.status">
                         <i data-feather="unlock" class="text-primary cursor-pointer"></i>
                       </a>
+                      <a class="ml-2" (click)="onNote()" alt="" *ngIf="item.status == ProductStatus.STATUS_ACTIVE">
+                        <i class="fa fa-sticky-note-o" aria-hidden="true" style="color: #fbb515 !important;"></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
