@@ -4,9 +4,9 @@ import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { UserService } from 'app/auth/service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { ProductStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { NgIf } from '@angular/common';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search-sim-so',
@@ -14,7 +14,7 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./search-sim-so.component.scss']
 })
 export class SearchSimSoComponent implements OnInit {
-
+  ProductStatus = ProductStatus;
   public total: any;
   public item: any;
   public showMessage: boolean
@@ -91,6 +91,52 @@ export class SearchSimSoComponent implements OnInit {
     //     this.alertService.showError(err);
     //   })
     // }
+  }
+
+  async onNote() {
+
+    Swal.fire({
+      title: 'Mở bán sim số',
+      input: 'textarea',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Gửi',
+      showLoaderOnConfirm: true,
+      preConfirm: (note) => {
+        if (!note || note == '') {
+          Swal.showValidationMessage(
+            "Vui lòng nhập nội dung"
+          )
+          return;
+        }
+        const data = {
+          message: note,
+          mobile: this.searchSim.keysearch
+        }
+        console.log(data);
+
+        this.telecomService.note(data).subscribe(res => {
+          if (!res.status) {
+            Swal.showValidationMessage(
+              res.message
+            )
+            this.onSubmitSearch();
+            return;
+          }
+           this.onSubmitSearch();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          this.alertService.showMess(error);
+
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+      }
+    })
   }
 
   getInvenstory(){

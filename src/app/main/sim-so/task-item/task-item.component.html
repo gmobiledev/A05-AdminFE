@@ -572,7 +572,7 @@
         <button *ngIf="allowChangeCmndToCccd(data.task)" class="ml-2 btn btn-primary" rippleEffect
           (click)="onChangeCmndToCccd()">Đổi CMND-CCCD</button>
 
-        <a *ngIf="data.task.status == 1" class="ml-2 btn btn-primary" (click)="sendCallback(item)">
+        <a class="ml-2 btn btn-primary" (click)="sendCallback(item)">
           <i data-feather="send" class="text-white cursor-pointer"></i>
           <span> Callback </span>
         </a>
