@@ -154,12 +154,12 @@ export class RootAccountComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
 
-    this.router.navigate(['/merchant/root'], { queryParams: this.searchForm})
+    this.router.navigate(['/airtime/root'], { queryParams: this.searchForm})
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/merchant/root'], { queryParams: this.searchForm });
+    this.router.navigate(['/airtime/root'], { queryParams: this.searchForm });
   }
 
   getData() {
