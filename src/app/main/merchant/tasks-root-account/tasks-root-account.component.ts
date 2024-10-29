@@ -130,7 +130,7 @@ export class TasksRootAccountComponent implements OnInit {
       this.dateRange.startDate.toISOString().slice(0, 10) + '|' + this.dateRange.endDate.toISOString().slice(0, 10) : '';
     this.searchForm.daterange = daterangeString;
     console.log(this.searchForm);
-    this.router.navigate(['/merchant/root-payment'], { queryParams: this.searchForm})
+    this.router.navigate(['/airtime/root-payment'], { queryParams: this.searchForm})
   }
 
   onSubmitExportExcelReport() {
@@ -157,7 +157,7 @@ export class TasksRootAccountComponent implements OnInit {
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/merchant/root-payment'], { queryParams: this.searchForm})
+    this.router.navigate(['/airtime/root-payment'], { queryParams: this.searchForm})
   }
 
   modalOpen(modal, item = null) {    

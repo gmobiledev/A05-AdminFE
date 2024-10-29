@@ -8,12 +8,11 @@ import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
-  selector: 'app-list-merchant',
-  templateUrl: './list-merchant.component.html',
-  styleUrls: ['./list-merchant.component.scss']
+  selector: 'app-list-agency',
+  templateUrl: './list-agency.component.html',
+  styleUrls: ['./list-agency.component.scss']
 })
-export class ListMerchantComponent implements OnInit {
-
+export class ListAgencyComponent implements OnInit {
   public modalRef: any;
   public contentHeader: any;
   public list: any;
@@ -70,13 +69,34 @@ export class ListMerchantComponent implements OnInit {
     })
   }
 
+  ngOnInit(): void {
+    this.contentHeader = {
+      headerTitle: 'Danh sách merchant',
+      actionButton: true,
+      breadcrumb: {
+        type: '',
+        links: [
+          {
+            name: 'Home',
+            isLink: true,
+            link: '/'
+          },
+          {
+            name: 'Danh sách merchant',
+            isLink: false
+          }
+        ]
+      }
+    };    
+  }
+
   onSubmitSearch(): void {
-    this.router.navigate(['/airtime/list'], { queryParams: {keyword: this.searchForm.keyword, status: this.searchForm.status}})
+    this.router.navigate(['/merchant/list'], { queryParams: {keyword: this.searchForm.keyword, status: this.searchForm.status}})
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/airtime/list'], { queryParams: this.searchForm})
+    this.router.navigate(['/merchant/list'], { queryParams: this.searchForm})
   }
 
   async onSubmitLock(id, status){
@@ -148,31 +168,6 @@ export class ListMerchantComponent implements OnInit {
     return;
   }
 
-  modalOpen(modal, item = null) {    
-    if(item) {
-      this.selectedUser = item;
-      this.dataCreatePayment.desc = this.selectedUser.mobile + ' thanh toan don hang';
-      this.userService.getMerchantService(item.id).subscribe(res => {
-        if(!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.listServices = res.data;
-        this.modalRef = this.modalService.open(modal, {
-          centered: true,
-          windowClass: 'modal modal-primary',
-          size: 'lg'
-        });
-      })
-    } else {
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'lg'
-      });
-    }        
-  }
-
   modalBalanceOpen(modal, item) {
     this.userService.getMerchantBalances(item.id).subscribe(res => {
       if(!res.status) {
@@ -221,27 +216,6 @@ export class ListMerchantComponent implements OnInit {
       const image = await this.commonService.resizeImage(event.target.files[0]) + '';
       this.dataCreatePayment.file = image.replace('data:image/png;base64,', '')
     }
-  }
-
-  ngOnInit(): void {
-    this.contentHeader = {
-      headerTitle: 'Danh sách merchant',
-      actionButton: true,
-      breadcrumb: {
-        type: '',
-        links: [
-          {
-            name: 'Home',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Danh sách merchant',
-            isLink: false
-          }
-        ]
-      }
-    };    
   }
 
   getData(): void {

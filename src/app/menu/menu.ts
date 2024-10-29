@@ -35,6 +35,28 @@ export const menu: CoreMenu[] = [
     type: 'collapsible',
     icon: 'package',
     badge: {
+      title: '1',
+      translate: '',
+      classes: 'badge-light-warning badge-pill'
+    },
+    children: [
+      {
+        id: 'users',
+        title: 'Danh sách merchant',
+        translate: '',
+        type: 'item',
+        icon: 'user',
+        url: 'merchant/list'
+      }
+    ]
+  },
+  {
+    id: 'users',
+    title: 'Airtime',
+    translate: '',
+    type: 'collapsible',
+    icon: 'package',
+    badge: {
       title: '4',
       translate: '',
       classes: 'badge-light-warning badge-pill'
@@ -47,7 +69,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'user',
-        url: 'merchant/list'
+        url: 'airtime/list'
       },
       {
         id: 'transaction',
@@ -63,7 +85,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'dollar-sign',
-        url: 'merchant/root-payment'
+        url: 'airtime/root-payment'
       },
       {
         id: 'users',
@@ -79,7 +101,7 @@ export const menu: CoreMenu[] = [
         translate: '',
         type: 'item',
         icon: 'circle',
-        url: 'merchant/root'
+        url: 'airtime/root'
       }
     ]
   },

@@ -133,6 +133,11 @@ const appRoutes: Routes = [
   },
   {
     path: 'merchant',
+    loadChildren: () => import('./main/agency/agency.module').then((m) => { return m.AgencyModule }),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'airtime',
     loadChildren: () => import('./main/merchant/merchant.module').then((m) => { return m.MerchantModule }),
     canActivate: [AuthGuard]
   },

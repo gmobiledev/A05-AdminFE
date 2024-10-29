@@ -957,7 +957,7 @@
   <div class="row mb-2" *ngIf="data.task.note">
     <span>Note: </span> {{ data.task.note }}
   </div>
-  <div class="row pull-right">
+  <div class="row pull-right" style="gap: 10px;">
     <ng-container *ngIf="isValidAsyncBy(data.task)">
       <div
         *ngIf="
@@ -1050,6 +1050,23 @@
         >
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
           <span> Cập nhật TTTB API </span>
+        </a>
+      </div>
+      <div
+        *ngIf="
+          checkAction('telecom-admin/task/:slug(\\d+)/update-status') &&
+          (data?.task?.status == taskTelecomStatus.STATUS_PROCESSING ||
+            data?.task?.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO) &&
+          (data.task.action == listTaskAction['change_user_info']['value'] ||
+            data.task.action == listTaskAction['new_sim']['value'])
+        "
+      >
+        <a
+          class="ml-2 btn btn-success"
+          (click)="convertInfoSubscriber(data.task)"
+        >
+        <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+        Chuyển đổi chủ quyền TTTB
         </a>
       </div>
       <div
