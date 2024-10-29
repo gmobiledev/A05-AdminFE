@@ -114,6 +114,10 @@ export class TaskTelecom {
             value: 'change_info',
             label: 'Cập nhật TTTB'
         },
+        convert_info: {
+            value: 'convert_info',
+            label: 'Chuyển đổi chủ quyền TTTB'
+        },
         change_sim: {
             value: 'change_sim',
             label: 'Đổi sim'

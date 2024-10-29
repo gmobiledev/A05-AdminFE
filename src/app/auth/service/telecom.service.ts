@@ -204,6 +204,8 @@ export class TelecomService {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
     else if (task.action == this.listTaskAction.change_info.value)
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/update-info-subsriber`, {});
+    else if (task.action == this.listTaskAction.convert_info.value)
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-customer-subsriber`, {});
     else
       console.log("asyncToMnoViaApi null")
 
