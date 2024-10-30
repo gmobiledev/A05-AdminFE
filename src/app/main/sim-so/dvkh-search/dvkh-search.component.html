@@ -12,8 +12,13 @@
               <div class="row">
                 <div class="col-md-10">
                   <div class="form-group">
-                    <input type="text" name="keysearch" [(ngModel)]="searchSim.keysearch" class="form-control"
-                      placeholder="Tìm kiếm" />
+                    <input
+                      type="text"
+                      name="keysearch"
+                      [(ngModel)]="searchSim.keysearch"
+                      class="form-control"
+                      placeholder="Tìm kiếm"
+                    />
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -32,6 +37,7 @@
                   <tr>
                     <th>Số / Serial SIM</th>
                     <th>Nhà mạng</th>
+                    <th *ngIf="item?.level">Hạng số</th>
                     <th>Kho số</th>
                     <th>Trạng thái</th>
                     <!-- <th *ngIf="currChannel[0].code == 'THUHOI'">Kho trước đó</th> -->
@@ -41,10 +47,26 @@
                 <tbody>
                   <tr>
                     <td>{{ item?.name }}</td>
-                    <td>{{ item?.brand }} - {{item?.category_id == 2 ? "Serial": item?.category_id == 3 ? "SĐT" :
-                      item?.category_id}}</td>
-                    <td>{{item?.nearest_channel ? currChannel.channel.name +' - '+ item.nearest_channel?.code :
-                      currChannel.channel.name}}</td>
+                    <td>
+                      {{ item?.brand }} -
+                      {{
+                        item?.category_id == 2
+                          ? "Serial"
+                          : item?.category_id == 3
+                          ? "SĐT"
+                          : item?.category_id
+                      }}
+                    </td>
+                    <td *ngIf="item?.level">{{ item?.level }}</td>
+                    <td>
+                      {{
+                        item?.nearest_channel
+                          ? currChannel.channel.name +
+                            " - " +
+                            item.nearest_channel?.code
+                          : currChannel.channel.name
+                      }}
+                    </td>
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
@@ -69,7 +91,12 @@
 <ng-template #modalTransWh let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Chi tiết thông tin Sim/Số</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -79,13 +106,20 @@
       <div class="column">
         <div class="col-md-6">MÃ LÔ: {{ item?.batch_id }}</div>
         <div class="col-md-6">TÊN LÔ: {{ item?.batch?.title }}</div>
-        <div class="col-md-6">KHO: {{ item?.sell_channels[0]?.channel.name}}</div>
+        <div class="col-md-6">
+          KHO: {{ item?.sell_channels[0]?.channel.name }}
+        </div>
       </div>
     </div>
   </div>
 
   <div class="modal-footer">
-    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+    <button
+      (click)="modalClose()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
       Đóng
     </button>
   </div>
