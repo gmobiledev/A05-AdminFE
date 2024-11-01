@@ -656,11 +656,11 @@ export class ViewSellChanelComponent implements OnInit {
     this.inventoryService.getAllChannelProducts(this.searchForm).subscribe(async res => {
       let data: any = res.data.items;
       data.forEach(element => {
-        element['short_desc'] = element['short_desc'] ? "'"+element['short_desc'] : '';
+        element['short_desc'] = element['short_desc'] ? "'" + element['short_desc'] : '';
         element['level'] = element['level'] ? element['level'] : '';
         element['price'] = element['price'] ? element['price'] : '';
         element['export_date'] = element['export_date'] ? element['export_date'] : '';
-        delete element['sell_channels']
+        // delete element['sell_channels']
       })
       await this.downloadFile(data, 'jsontocsv')
       this.sectionBlockUI.stop();
@@ -728,9 +728,9 @@ export class ViewSellChanelComponent implements OnInit {
 
 
   downloadFile(data, filename = 'data') {
-    console.log("downloadFile")
+    // console.log("downloadFile",data)
     let nearest_channel;
-    if (data[0]?.sell_channels[0]?.nearest_channel?.name) {
+    if (data[0]?.sell_channels && data[0]?.sell_channels[0]?.nearest_channel?.name) {
       nearest_channel = 'nearest_channel_name';
       data.map(x => x.nearest_channel_id = x?.sell_channels[0]?.nearest_channel?.name)
     } else {
@@ -768,11 +768,11 @@ export class ViewSellChanelComponent implements OnInit {
       let line = (i + 1) + '';
       for (let index in headerList) {
         let head = headerList[index];
-        if(index == "sell_channels"){
+        if (head == "nearest_channel_name") {
           let nearest_channel = array[i]["sell_channels"][0];
-          nearest_channel = nearest_channel['nearest_channel'] ? nearest_channel['nearest_channel']['name']:null
-          line +="," + nearest_channel
-        }else{
+          nearest_channel = nearest_channel['nearest_channel'] ? nearest_channel['nearest_channel']['name'] : null
+          line += "," + nearest_channel
+        } else {
           line += ',' + array[i][head];
         }
       }
