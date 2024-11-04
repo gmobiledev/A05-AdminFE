@@ -4,7 +4,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Tra cứu số thuê bao để phục hồi</h4>
+                        <h4 class="card-title">Khôi phục số thuê bao</h4>
                     </div>
 
                     <div class="card-body">
@@ -13,7 +13,7 @@
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <input type="text" name="searchSim" [(ngModel)]="searchSim" class="form-control"
-                                            placeholder="Tìm kiếm số thuê bao để phục hồi" />
+                                            placeholder="Nhập số thuê bao để khôi phục" />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -33,7 +33,7 @@
             <div class="form-container">
                 <div class="row">
                     <div class="col-12">
-                        <h4 style="padding-left: 5px;">Thông tin người phục hồi</h4>
+                        <h4 style="padding-left: 5px;">Thông tin người khôi phục số thuê bao</h4>
                         <br>
                     </div>
                     <div class="col-md-4">
@@ -106,12 +106,14 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-12" style="margin-top: 20px;">
-                        <button (click)="updateInformation()" type="button" class="btn btn-block btn-primary btn-next"
-                            rippleEffect>
-                            <span class="align-middle ">Cập nhật</span>
-                            <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
-                        </button>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <div class="col-md-2" style="margin-top: 20px;">
+                            <button (click)="updateInformation()" type="button" class="btn btn-block btn-primary btn-next"
+                                rippleEffect>
+                                <span class="align-middle ">Cập nhật</span>
+                                <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

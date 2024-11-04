@@ -81,12 +81,12 @@
 
                                 <tbody>
                                     <tr *ngFor="let item of list;let i = index">
-                                        <td>{{ item?.Action | showTrans}}</td>
-                                        <td>{{ item?.Time | date: 'dd/MM/yyyy H:mm:ss' }}</td>
-                                        <td>{{ item?.BalanceChange | number }}</td>
-                                        <td>{{ item?.BalanceAfter | number }}</td>
-                                        <td>{{ item?.Destination }}</td>
-                                        <td>{{ item?.Note }}</td>
+                                        <td>{{ item?.action | showTrans}}</td>
+                                        <td>{{ item?.time | date: 'dd/MM/yyyy H:mm:ss' }}</td>
+                                        <td>{{ item?.balanceChange | number }}</td>
+                                        <td>{{ item?.balanceAfter | number }}</td>
+                                        <td>{{ item?.destination }}</td>
+                                        <td>{{ item?.note }}</td>
 
 
                                     </tr>
