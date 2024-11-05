@@ -1,325 +1,313 @@
-import { CoreMenu } from '@core/types';
+import { CoreMenu } from "@core/types";
 
 //? DOC: http://localhost:7777/demo/vuexy-angular-admin-dashboard-template/documentation/guide/development/navigation-menus.html#interface
 
 export const menu: CoreMenu[] = [
-
   {
-    id: 'dashboard',
-    title: 'Console',
-    translate: '',
-    type: 'collapsible',
-    icon: 'home',
+    id: "dashboard",
+    title: "Console",
+    translate: "",
+    type: "collapsible",
+    icon: "home",
     badge: {
-      title: '2',
-      translate: 'MENU.DASHBOARD.BADGE',
-      classes: 'badge-light-warning badge-pill'
+      title: "2",
+      translate: "MENU.DASHBOARD.BADGE",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'ecommerce',
-        title: 'Báo cáo',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'dashboard/reports'
-      }
-    ]
+        id: "ecommerce",
+        title: "Báo cáo",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "dashboard/reports",
+      },
+    ],
   },
 
   // Apps & Pages
   {
-    id: 'users',
-    title: 'Merchant',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "Merchant",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '1',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "1",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'users',
-        title: 'Danh sách merchant',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'merchant/list'
-      }
-    ]
+        id: "users",
+        title: "Danh sách merchant",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "merchant/list",
+      },
+    ],
   },
   {
-    id: 'users',
-    title: 'Airtime',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "Airtime",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '4',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
-    },
-    children: [
-
-      {
-        id: 'users',
-        title: 'Danh sách merchant',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'airtime/list'
-      },
-      {
-        id: 'transaction',
-        title: 'Duyệt Airtime',
-        translate: '',
-        type: 'item',
-        icon: 'check-circle',
-        url: 'user/airtime'
-      },
-      {
-        id: 'users',
-        title: 'Duyệt tài khoản tổng',
-        translate: '',
-        type: 'item',
-        icon: 'dollar-sign',
-        url: 'airtime/root-payment'
-      },
-      {
-        id: 'users',
-        title: 'Chiết khấu',
-        translate: '',
-        type: 'item',
-        icon: 'trending-down',
-        url: 'services/discount'
-      },
-      {
-        id: 'users',
-        title: 'Báo cáo',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'airtime/root'
-      }
-    ]
-  },
-  {
-    id: 'users',
-    type: 'section',
-    title: 'Khách hàng',
-    translate: 'MENU.APPS.CUSTOMER.SECTION',
-    icon: 'package',
-    children: [
-      {
-        id: 'users',
-        title: 'Danh sách',
-        translate: 'MENU.LIST',
-        type: 'item',
-        icon: 'user',
-        url: 'customer/list'
-      }
-    ]
-  },
-  {
-    id: 'users',
-    title: 'Mua sim số',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
-    badge: {
-      title: '5',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "4",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'users',
-        title: 'Yêu cầu của đại lý',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/task'
-      },
-
-      {
-        id: 'agents',
-        title: 'Danh sách đại lý',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'agent'
+        id: "users",
+        title: "Danh sách merchant",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "airtime/list",
       },
       {
-        id: 'agents',
-        title: 'Lịch sử tác động',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/action-logs'
+        id: "transaction",
+        title: "Duyệt Airtime",
+        translate: "",
+        type: "item",
+        icon: "check-circle",
+        url: "user/airtime",
       },
       {
-        id: 'agents',
-        title: 'Msisdn',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/msisdn'
+        id: "users",
+        title: "Duyệt tài khoản tổng",
+        translate: "",
+        type: "item",
+        icon: "dollar-sign",
+        url: "airtime/root-payment",
       },
-        {
-        id: 'agents',
-        title: 'Phục hồi',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/search-recovery-sim'
+      {
+        id: "users",
+        title: "Chiết khấu",
+        translate: "",
+        type: "item",
+        icon: "trending-down",
+        url: "services/discount",
       },
-    ]
+      {
+        id: "users",
+        title: "Báo cáo",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "airtime/root",
+      },
+    ],
   },
   {
-    id: 'users',
-    title: 'Sim cam kết',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    type: "section",
+    title: "Khách hàng",
+    translate: "MENU.APPS.CUSTOMER.SECTION",
+    icon: "package",
+    children: [
+      {
+        id: "users",
+        title: "Danh sách",
+        translate: "MENU.LIST",
+        type: "item",
+        icon: "user",
+        url: "customer/list",
+      },
+    ],
+  },
+  {
+    id: "users",
+    title: "Mua sim số",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '3',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "5",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'users',
-        title: 'Đơn hàng',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/commitment'
+        id: "users",
+        title: "Yêu cầu của đại lý",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "sim-so/task",
       },
 
       {
-        id: 'agents',
-        title: 'Thiết lập thuê bao',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: 'sim-so/warning'
+        id: "agents",
+        title: "Danh sách đại lý",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "agent",
       },
-
       {
-        id: 'agents',
-        title: 'Báo cáo thống kê',
-        translate: '',
-        type: 'item',
-        icon: 'user',
-        url: ''
+        id: "agents",
+        title: "Lịch sử tác động",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "sim-so/action-logs",
       },
-      
-    ]
+      {
+        id: "agents",
+        title: "Msisdn",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "sim-so/msisdn",
+      },
+      {
+        id: "agents",
+        title: "Phục hồi",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "sim-so/search-recovery-sim",
+      },
+    ],
   },
   {
-    id: 'users',
-    title: 'SIM Du lịch',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "Sim cam kết",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '4',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "3",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'users',
-        title: 'Đơn SIM Profile',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'task/sim-profile'
+        id: "users",
+        title: "Đơn hàng",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "sim-so/commitment",
       },
 
       {
-        id: 'agents',
-        title: 'Đơn Kitting',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'task/sim-kitting'
+        id: "agents",
+        title: "Thiết lập thuê bao",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "sim-so/warning",
       },
 
       {
-        id: 'agents',
-        title: 'Đăng ký TTTB',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'task/sim-register'
+        id: "agents",
+        title: "Báo cáo thống kê",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "",
       },
-      {
-        id: 'agents',
-        title: 'Nạp tiền',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'task/balance'
-      },
-      {
-        id: 'agents',
-        title: 'Nạp Data',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'task/data'
-      },
-    ]
+    ],
   },
-
-
   {
-    id: 'users',
-    title: 'Kho số',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "SIM Du lịch",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '5',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "4",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'dashboard',
-        title: 'Thống kê',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'inventory/dashboard'
+        id: "users",
+        title: "Đơn SIM Profile",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "task/sim-profile",
       },
 
       {
-        id: 'batch-sim',
-        title: 'Xuất/nhập kho',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'inventory/batch-sim'
+        id: "agents",
+        title: "Đơn Kitting",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "task/sim-kitting",
+      },
+
+      {
+        id: "agents",
+        title: "Đăng ký TTTB",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "task/sim-register",
       },
       {
-        id: 'channel',
-        title: 'DS kênh bán hàng',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'inventory/channel'
+        id: "agents",
+        title: "Nạp Data",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "task/data",
+      },
+    ],
+  },
+
+  {
+    id: "users",
+    title: "Kho số",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
+    badge: {
+      title: "5",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
+    },
+    children: [
+      {
+        id: "dashboard",
+        title: "Thống kê",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "inventory/dashboard",
+      },
+
+      {
+        id: "batch-sim",
+        title: "Xuất/nhập kho",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "inventory/batch-sim",
       },
       {
-        id: 'sell-chanel',
-        title: 'Danh sách kho',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'inventory/sell-chanel'
+        id: "channel",
+        title: "DS kênh bán hàng",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "inventory/channel",
+      },
+      {
+        id: "sell-chanel",
+        title: "Danh sách kho",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "inventory/sell-chanel",
       },
 
       // {
@@ -332,298 +320,294 @@ export const menu: CoreMenu[] = [
       // },
 
       {
-        id: 'report-business',
-        title: 'Báo cáo tổng hợp',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/kinh-doanh'
+        id: "report-business",
+        title: "Báo cáo tổng hợp",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/kinh-doanh",
       },
       {
-        id: 'report-doanh-thu',
-        title: 'Báo cáo doanh thu',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/doanh-thu'
+        id: "report-doanh-thu",
+        title: "Báo cáo doanh thu",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/doanh-thu",
       },
       {
-        id: 'report-ton-kho-sim',
-        title: 'Báo cáo tồn SIM',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/ton-kho-sim'
-      }  ,
+        id: "report-ton-kho-sim",
+        title: "Báo cáo tồn SIM",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/ton-kho-sim",
+      },
       {
-        id: 'i-action-logs',
-        title: 'Nhật ký hoạt động',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/action-logs'
-      }       
-    ]
+        id: "i-action-logs",
+        title: "Nhật ký hoạt động",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/action-logs",
+      },
+    ],
   },
 
   {
-    id: 'users',
-    title: 'Báo cáo S99',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "Báo cáo S99",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '3',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "3",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
-
       {
-        id: 'report-business',
-        title: 'Tình trạng TB',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/tong-hop'
+        id: "report-business",
+        title: "Tình trạng TB",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/tong-hop",
       },
       {
-        id: 'report-business',
-        title: 'Chi tiết TB',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/chi-tiet'
+        id: "report-business",
+        title: "Chi tiết TB",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/chi-tiet",
       },
       {
-        id: 'report-business',
-        title: 'Tổng hợp kết quả',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/ket-qua'
-      }
-    ]
+        id: "report-business",
+        title: "Tổng hợp kết quả",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/ket-qua",
+      },
+    ],
   },
 
   {
-    id: 'users',
-    title: 'Báo cáo G59',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "Báo cáo G59",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '3',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
-    },
-    children: [
-
-      {
-        id: 'report-business',
-        title: 'Tình trạng TB',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/tong-hop-g59'
-      },
-      {
-        id: 'report-business',
-        title: 'Chi tiết TB',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/chi-tiet-g59'
-      },
-      {
-        id: 'report-business',
-        title: 'Tổng hợp kết quả',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'inventory/report/ket-qua-g59'
-      }
-    ]
-  },
-
-
-  {
-    id: 'users',
-    title: 'GSIM',
-    translate: '',
-    type: 'collapsible',
-    icon: 'phone-call',
-    badge: {
-      title: '4',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "3",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'g-task',
-        title: 'Task',
-        translate: '',
-        type: 'item',
-        icon: 'phone-call',
-        url: 'gtalk/task'
+        id: "report-business",
+        title: "Tình trạng TB",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/tong-hop-g59",
       },
       {
-        id: 'g-msisdn',
-        title: 'Msisdn',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gtalk/msisdn'
+        id: "report-business",
+        title: "Chi tiết TB",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/chi-tiet-g59",
       },
       {
-        id: 'g-customer',
-        title: 'Khách hàng',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gtalk/customer'
+        id: "report-business",
+        title: "Tổng hợp kết quả",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "inventory/report/ket-qua-g59",
       },
-      {
-        id: 'g-report',
-        title: 'Báo cáo',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gtalk/report'
-      },
-    ]
+    ],
   },
 
   {
-    id: 'users',
-    title: 'GIP',
-    translate: '',
-    type: 'collapsible',
-    icon: 'phone-outgoing',
+    id: "users",
+    title: "GSIM",
+    translate: "",
+    type: "collapsible",
+    icon: "phone-call",
     badge: {
-      title: '4',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "4",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'g-merchant',
-        title: 'Merchant GIP',
-        translate: '',
-        type: 'item',
-        icon: 'phone-outgoing',
-        url: 'gip/merchant'
+        id: "g-task",
+        title: "Task",
+        translate: "",
+        type: "item",
+        icon: "phone-call",
+        url: "gtalk/task",
       },
       {
-        id: 'list',
-        title: 'Thuê bao GIP',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gip/list'
+        id: "g-msisdn",
+        title: "Msisdn",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "gtalk/msisdn",
       },
       {
-        id: 'g-call',
-        title: 'Lịch sử cuộc gọi',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gip/call-history'
-      },
-
-      {
-        id: 'g-task',
-        title: 'Task',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gip/task'
+        id: "g-customer",
+        title: "Khách hàng",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "gtalk/customer",
       },
       {
-        id: 'g-task',
-        title: 'Gói cước GIP',
-        translate: '',
-        type: 'item',
-        icon: 'database',
-        url: 'gip/package'
+        id: "g-report",
+        title: "Báo cáo",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "gtalk/report",
       },
-    ]
-  },
-  {
-    id: 'users',
-    title: 'TOPUP',
-    translate: '',
-    type: 'collapsible',
-    icon: 'phone-outgoing',
-    badge: {
-      title: '1',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
-    },
-    children: [
-      {
-        id: 'users',
-        title: 'TOPUP',
-        translate: '',
-        type: 'item',
-        icon: 'circle',
-        url: 'task/topup'
-      },
-    ]
+    ],
   },
 
   {
-    id: 'users',
-    title: 'Khác',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "GIP",
+    translate: "",
+    type: "collapsible",
+    icon: "phone-outgoing",
     badge: {
-      title: '6',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "4",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
+      {
+        id: "g-merchant",
+        title: "Merchant GIP",
+        translate: "",
+        type: "item",
+        icon: "phone-outgoing",
+        url: "gip/merchant",
+      },
+      {
+        id: "list",
+        title: "Thuê bao GIP",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "gip/list",
+      },
+      {
+        id: "g-call",
+        title: "Lịch sử cuộc gọi",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "gip/call-history",
+      },
 
       {
-        id: 'users',
-        title: 'Sms log',
-        translate: 'MENU.SMSLOG',
-        type: 'item',
-        icon: 'database',
-        url: 'sms-log'
+        id: "g-task",
+        title: "Task",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "gip/task",
       },
       {
-        id: 'report-revenue',
-        title: 'Báo cáo',
-        translate: 'MENU.REPORT',
-        type: 'item',
-        icon: 'database',
-        url: 'task/report'
+        id: "g-task",
+        title: "Gói cước GIP",
+        translate: "",
+        type: "item",
+        icon: "database",
+        url: "gip/package",
+      },
+    ],
+  },
+  {
+    id: "users",
+    title: "TOPUP",
+    translate: "",
+    type: "collapsible",
+    icon: "phone-outgoing",
+    badge: {
+      title: "1",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
+    },
+    children: [
+      {
+        id: "users",
+        title: "TOPUP",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "task/topup",
+      },
+    ],
+  },
+
+  {
+    id: "users",
+    title: "Khác",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
+    badge: {
+      title: "6",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
+    },
+    children: [
+      {
+        id: "users",
+        title: "Sms log",
+        translate: "MENU.SMSLOG",
+        type: "item",
+        icon: "database",
+        url: "sms-log",
       },
       {
-        id: 'task',
-        title: 'Task',
-        translate: 'MENU.TASK',
-        type: 'item',
-        icon: 'database',
-        url: 'task/list'
+        id: "report-revenue",
+        title: "Báo cáo",
+        translate: "MENU.REPORT",
+        type: "item",
+        icon: "database",
+        url: "task/report",
       },
       {
-        id: 'transaction',
-        title: 'Giao dịch',
-        translate: 'MENU.TRANSACTION',
-        type: 'item',
-        icon: 'list',
-        url: 'transaction'
+        id: "task",
+        title: "Task",
+        translate: "MENU.TASK",
+        type: "item",
+        icon: "database",
+        url: "task/list",
       },
       {
-        id: 'transaction',
-        title: 'Tài khoản',
-        translate: '',
-        type: 'item',
-        icon: 'list',
-        url: 'user/list'
+        id: "transaction",
+        title: "Giao dịch",
+        translate: "MENU.TRANSACTION",
+        type: "item",
+        icon: "list",
+        url: "transaction",
+      },
+      {
+        id: "transaction",
+        title: "Tài khoản",
+        translate: "",
+        type: "item",
+        icon: "list",
+        url: "user/list",
       },
       // {
       //   id: 'ekyc',
@@ -633,130 +617,130 @@ export const menu: CoreMenu[] = [
       //   icon: 'database',
       //   url: 'people/list-ekyc-batch'
       // },
-    ]
+    ],
   },
   {
-    id: 'users',
-    title: 'Cộng tác viên',
-    translate: '',
-    type: 'collapsible',
-    icon: 'users',
+    id: "users",
+    title: "Cộng tác viên",
+    translate: "",
+    type: "collapsible",
+    icon: "users",
     badge: {
-      title: '1',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "1",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'users',
-        title: 'Cộng tác viên',
-        translate: '',
-        type: 'item',
-        icon: 'users',
-        url: 'collaborator'
-      }
-    ]
+        id: "users",
+        title: "Cộng tác viên",
+        translate: "",
+        type: "item",
+        icon: "users",
+        url: "collaborator",
+      },
+    ],
   },
 
   {
-    id: 'users',
-    title: 'CSKH',
-    translate: '',
-    type: 'collapsible',
-    icon: 'package',
+    id: "users",
+    title: "CSKH",
+    translate: "",
+    type: "collapsible",
+    icon: "package",
     badge: {
-      title: '11',
-      translate: '',
-      classes: 'badge-light-warning badge-pill'
+      title: "11",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
     },
     children: [
       {
-        id: 'trans-history',
-        title: 'Lịch sử giao dịch',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/trans-history'
+        id: "trans-history",
+        title: "Lịch sử giao dịch",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/trans-history",
       },
       {
-        id: 'history-topup',
-        title: 'Lịch sử nạp tiền',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/history-topup'
+        id: "history-topup",
+        title: "Lịch sử nạp tiền",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/history-topup",
       },
       {
-        id: 'search-subscription',
-        title: 'Tra cứu tổng số TB',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/search-subscription'
+        id: "search-subscription",
+        title: "Tra cứu tổng số TB",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/search-subscription",
       },
       {
-        id: 'dvkh-search',
-        title: 'Tra cứu Sim Số',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/dvkh-search'
+        id: "dvkh-search",
+        title: "Tra cứu Sim Số",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/dvkh-search",
       },
       {
-        id: 'search-tttb',
-        title: 'Tra cứu TTTB',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/search-tttb'
+        id: "search-tttb",
+        title: "Tra cứu TTTB",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/search-tttb",
       },
       {
-        id: 'client2g',
-        title: 'Tra cứu TTTB 2G',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/client2g'
+        id: "client2g",
+        title: "Tra cứu TTTB 2G",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/client2g",
       },
       {
-        id: 'search',
-        title: 'Tìm Sim Số',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/search'
+        id: "search",
+        title: "Tìm Sim Số",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/search",
       },
       {
-        id: 'search-topup',
-        title: 'Tái sử dụng eSim',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/esim-search'
+        id: "search-topup",
+        title: "Tái sử dụng eSim",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/esim-search",
       },
       {
-        id: 'info-eSim',
-        title: 'Thông tin SIM/eSIM',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/info-eSim'
+        id: "info-eSim",
+        title: "Thông tin SIM/eSIM",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/info-eSim",
       },
       {
-        id: 'way-lock',
-        title: 'Khoá/Mở đến/đi',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/way-lock'
+        id: "way-lock",
+        title: "Khoá/Mở đến/đi",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/way-lock",
       },
       {
-        id: 'select-package',
-        title: 'Đăng ký gói cước',
-        translate: '',
-        type: 'item',
-        icon: 'search',
-        url: 'sim-so/select-package'
+        id: "select-package",
+        title: "Đăng ký gói cước",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/select-package",
       },
       // {
       //   id: 'search-balance-changes',
@@ -766,34 +750,56 @@ export const menu: CoreMenu[] = [
       //   icon: 'search',
       //   url: 'sim-so/msisdn/balance-changes'
       // },
-
-    ]
+    ],
   },
 
   {
-    id: 'users',
-    type: 'section',
-    title: 'Users & Phân quyền',
-    translate: 'MENU.APPS.USER.USERPERMISSION',
-    icon: 'package',
+    id: "users",
+    title: "Tài Chính",
+    translate: "",
+    type: "collapsible",
+    icon: "dollar-sign",
+    badge: {
+      title: "1",
+      translate: "",
+      classes: "badge-light-warning badge-pill",
+    },
     children: [
       {
-        id: 'role',
-        title: 'Vai trò',
-        translate: 'MENU.APPS.USER.ROLE',
-        type: 'item',
-        icon: 'circle',
-        url: 'role/list'
+        id: "agents",
+        title: "Nạp tiền",
+        translate: "",
+        type: "item",
+        icon: "circle",
+        url: "task/balance",
+      },
+    ],
+  },
+
+  {
+    id: "users",
+    type: "section",
+    title: "Users & Phân quyền",
+    translate: "MENU.APPS.USER.USERPERMISSION",
+    icon: "package",
+    children: [
+      {
+        id: "role",
+        title: "Vai trò",
+        translate: "MENU.APPS.USER.ROLE",
+        type: "item",
+        icon: "circle",
+        url: "role/list",
       },
       {
-        id: 'users',
-        title: 'Admin',
-        translate: 'MENU.APPS.USER.ADMIN',
-        type: 'item',
-        icon: 'user',
-        url: 'admin/list'
-      }
-    ]
+        id: "users",
+        title: "Admin",
+        translate: "MENU.APPS.USER.ADMIN",
+        type: "item",
+        icon: "user",
+        url: "admin/list",
+      },
+    ],
   },
   // User Interface
 
