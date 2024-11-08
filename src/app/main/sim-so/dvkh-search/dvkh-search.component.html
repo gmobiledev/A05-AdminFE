@@ -40,6 +40,7 @@
                     <th *ngIf="item?.level">Hạng số</th>
                     <th>Kho số</th>
                     <th>Trạng thái</th>
+                    <th *ngIf="item.status == ProductStatus.STATUS_INIT">Thao tác</th>
                     <!-- <th *ngIf="currChannel[0].code == 'THUHOI'">Kho trước đó</th> -->
                   </tr>
                 </thead>
@@ -69,6 +70,12 @@
                     </td>
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
+                    </td>
+                    
+                    <td *ngIf="item.status == ProductStatus.STATUS_INIT">
+                      <a class="ml-2" (click)="onNote()" alt=""  ngbTooltip="Khôi phục số">
+                        <i class="fa fa-sticky-note-o" aria-hidden="true" style="color: #fbb515 !important;"></i>
+                      </a>
                     </td>
                     <!-- <td *ngIf="currChannel[0].code == 'THUHOI'"> {{item.nearest_channel.name}}</td> -->
                   </tr>
