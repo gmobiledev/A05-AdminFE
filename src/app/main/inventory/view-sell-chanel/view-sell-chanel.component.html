@@ -119,8 +119,11 @@
                     <th>Số thuê bao/Serial SIM</th>
                     <th>Nhà mạng</th>
                     <th>Hạng số</th>
-                    <th>Giá vốn</th>
-                    <th>Giá bán</th>
+                    <th>
+                      Giá vốn <br />
+                      Giá bán
+                    </th>
+                    <th>Gói</th>
                     <th>Trạng thái</th>
                     <th>Ngày nhập kho</th>                    
                     <th>Ngày xuất kho</th>
@@ -162,11 +165,31 @@
                     </td>
 
                     <td>
-                      {{ item.price || number }}
+                      <div
+                        class="d-flex justify-content-center align-items-center"
+                        style="gap: 5px" *ngIf="item.price != null"
+                      >
+                        {{ item.price || number }}
+                        <i
+                          class="fa fa-arrow-down"
+                          aria-hidden="true"
+                          ngbTooltip="Giá vốn"
+                        ></i>
+                      </div>
+                      <div
+                        class="d-flex justify-content-center align-items-center"
+                        style="gap: 5px" *ngIf="item.export_price != null"
+                      >
+                        {{ item.export_price || number }}
+                        <i 
+                          class="fa fa-arrow-up"
+                          aria-hidden="true"
+                          ngbTooltip="Giá bán"
+                        ></i>
+                      </div>
                     </td>
-
                     <td>
-                      {{ item.export_price || number }}
+                      {{ item?.package}}
                     </td>
 
                     <td>

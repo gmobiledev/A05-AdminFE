@@ -408,6 +408,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/change-status`, data);
   }
 
+  noteRestore(data){
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/change-status-eviction-mobile`, data);
+  }
+
   lockOneWay(data, type) {
     if (type == 1) {
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lock-one-way`, data);
