@@ -127,7 +127,8 @@
 
               <div class="col-md-6 col-sm-12 mb-1">
                 <span><u>Ngày cấp</u>: <a placement="right" (click)="copyTextClipboard('')">
-                    <span class="text-info">{{ data?.customer?.people?.identification_date * 1000 | date: 'dd/MM/yyyy':'UTC'
+                    <span class="text-info">{{ data?.customer?.people?.identification_date * 1000 | date:
+                      'dd/MM/yyyy':'UTC'
                       }}</span>
                   </a></span>
               </div>
@@ -138,10 +139,9 @@
                   </a></span>
               </div>
               <div class="col-md-6 col-sm-12 mb-1">
-                <span><u>Ngày sinh</u>: <a placement="right"
-                    (click)="copyTextClipboard('')">
+                <span><u>Ngày sinh</u>: <a placement="right" (click)="copyTextClipboard('')">
                     <span class="text-info">{{ data?.customer?.people?.birth * 1000 | date: 'dd/MM/yyyy':'UTC'
-                    }}</span>
+                      }}</span>
                   </a></span>
               </div>
               <div class="col-md-6 col-sm-12 mb-1">
@@ -281,7 +281,14 @@
       (click)="asyncToMnoViaApi(data.task)">
       <i data-feather="check-circle" class="text-white cursor-pointer"></i>
       <span>
-        Đồng bộ thông tin thuê bao qua API
+        Duyệt API
+      </span>
+    </a>
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING" class="ml-2 btn btn-sm btn-success"
+      (click)="convertInfoSubscriber(data.task)">
+      <i data-feather="check-circle" class="text-white cursor-pointer"></i>
+      <span>
+        CCQ API
       </span>
     </a>
 
@@ -363,7 +370,6 @@
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <app-task-item [item]="selectedItem" [typeDetail]="'msisdn'" [currentGPKD]="data?.organization?.base64LiceseFile"
-    [currentUser]="currentUser"
-      [currentUserId]="currentUser.id"></app-task-item>
+      [currentUser]="currentUser" [currentUserId]="currentUser.id"></app-task-item>
   </div>
 </ng-template>

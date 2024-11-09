@@ -153,6 +153,11 @@ export class ViewTaskOrganizationComponent implements OnInit {
     }
   }
 
+  async convertInfoSubscriber(item) {
+    item.action = this.listTaskAction.convert_info.value;
+    this.asyncToMnoViaApi(item);
+  }
+
   /**
    * 
    * Cap nhat trang thai cua msisnd
