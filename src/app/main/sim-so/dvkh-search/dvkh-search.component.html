@@ -40,7 +40,7 @@
                     <th *ngIf="item?.level">Hạng số</th>
                     <th>Kho số</th>
                     <th>Trạng thái</th>
-                    <th *ngIf="item.status == ProductStatus.STATUS_INIT">Thao tác</th>
+                    <th *ngIf="item.status == ProductStatus.STATUS_INIT || item.status == ProductStatus.RETRIEVE">Thao tác</th>
                     <!-- <th *ngIf="currChannel[0].code == 'THUHOI'">Kho trước đó</th> -->
                   </tr>
                 </thead>
