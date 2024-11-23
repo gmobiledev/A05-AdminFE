@@ -6,3 +6,66 @@
 .img-icon-mno {
     width: 35px !important;
 }
+
+/* Responsive Table */
+.responsive-table {
+    width: 100%;
+    table-layout: fixed; /* Ensures columns adhere to set widths */
+    border-collapse: collapse;
+  }
+  
+  .responsive-table th,
+  .responsive-table td {
+    text-align: center;
+    padding: 10px;
+    word-wrap: break-word; /* Prevents overflow */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Add ellipsis for truncated content */
+  }
+  
+  /* Column Sizes */
+  .col-stt {
+    width: 5%; /* Smallest column for STT */
+  }
+  
+  .col-id {
+    width: 10%;
+  }
+  
+  .col-type {
+    width: 15%;
+  }
+  
+  .col-info {
+    width: 20%;
+  }
+  
+  .col-amount {
+    width: 10%;
+  }
+  
+  .col-agent {
+    width: 15%;
+  }
+  
+  .col-time {
+    width: 10%;
+  }
+  
+  .col-status {
+    width: 10%;
+  }
+  
+  .col-actions {
+    width: 15%;
+  }
+  
+  /* Responsive Adjustments */
+  @media screen and (max-width: 768px) {
+    .responsive-table th, 
+    .responsive-table td {
+      font-size: 12px;
+      padding: 5px;
+    }
+  }
+  

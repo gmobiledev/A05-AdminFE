@@ -106,40 +106,40 @@
               <div class="mb-1">
                 <span>Tổng số:</span> <b>{{ totalItems }}</b>
               </div>
+              
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>STT</th>
-                    <th>ID</th>
-                    <th>Yêu cầu|Loại KH</th>
-                    <th>Số thuê bao | Serial | Nhà mạng</th>
-                    <th>Số tiền</th>
-                    <!-- <th>Serial sim</th>
-                <th>Nhà mạng</th> -->
-                    <th>Đại lý <br> Tham chiếu</th>
-                    <!-- <th>Người mua</th> -->
-                    <th>TG tạo/mua</th>
-                    <th>Thời gian tiếp nhận</th>
-                    <th>Trạng thái</th>
-                    <th>Thao tác</th>
+                    <th class="col-stt">STT</th>
+                    <th class="col-id">ID</th>
+                    <th class="col-type">Yêu cầu | Loại KH</th>
+                    <th class="col-info">Số thuê bao | Serial | Nhà mạng</th>
+                    <th class="col-amount">Số tiền</th>
+                    <th class="col-agent">Đại lý <br> Tham chiếu</th>
+                    <th class="col-time">TG tạo/mua</th>
+                    <th class="col-status">Trạng thái</th>
+                    <th class="col-actions">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list;let i = index">
-                    <td>
+                    <td class="col-stt">
                       {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
                     </td>
-                    <td>
+
+                    <td class="col-id">
                       <a placement="right" ngbTooltip="'Copy {{item.code}}'" (click)="copyTextClipboard(item.code)"><i
                           data-feather="copy" class="cursor-pointer"></i>{{ item.id }}</a>
                     </td>
-                    <td>
+
+                    <td class="col-type">
                       {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }} - {{
                       item.customer_type }}
                       <br>
                       {{ item.sub_action ? item.sub_action : '' }}
                     </td>
-                    <td>
+
+                    <td class="col-info">
                       <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
                         {{ item.msisdns[0].msisdn }} - {{ item.msisdns[0].serial }} -
                         <span [innerHTML]="item.msisdns[0].mno | showIconMno"></span>
@@ -156,40 +156,44 @@
                       </div>
 
                     </td>
-                    <td>
+
+                    <td class="col-amount">
                       <span class="text-info">{{ item.amount | number }}</span><br>
                       <span class="text-success">{{ item.charge_amount | number }}</span><br>
 
                     </td>
 
-                    <td>
+                    <td class="col-agent">
                       <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, item.request_by)">{{
                         item.request_by }}</a><br>
                       <span class="text-primary" title="Mã Kho">{{ item.reference_id }}</span><br>
                       <span class="text-success" title="Mã cổng thanh toán">{{ item.payment_reference_number }}</span>
                     </td>
-                    <!-- <td>
-                  
-                </td> -->
-                    <td>
+
+                    <td class="col-time">
                       {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
                       {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
                     </td>
-                    <td>
+
+                    <!-- <td>
                       {{ showDate(item.sync_lock, 'UTC', -10 * item.msisdns.length) }}
-                      <!-- {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }} -->
-                    </td>
-                    <td>
+                      {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }} 
+                    </td> -->
+
+                    <td class="col-status">
                       <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
                       {{ item.note }}
                     </td>
+
                     <td>
 
                       <div *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC'">
-                        <a class="ml-2 btn btn-info" (click)="modalOpen(modalItem, item)">
+
+                        <a class="ml-2" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-white cursor-pointer"></i>
                           Xem chi tiết
                         </a>
+
                       </div>
 
                       <div *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action == 'KHOI_PHUC'">
@@ -313,6 +317,7 @@
                         class="btn btn-sm btn-icon btn-info mt-1" (click)="modalApprovalOpen(modaNote, item, 'lg')">
                         <i data-feather="pen-tool" class="text-white cursor-pointer"></i>
                       </a>
+                      
                     </td>
                   </tr>
                 </tbody>
