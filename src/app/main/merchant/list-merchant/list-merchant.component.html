@@ -1,89 +1,94 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
-<div class="row" id="table-striped">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header"><h4 class="card-title">{{ contentHeader.headerTitle }}</h4></div>
-        <div class="card-body">
-          <form (ngSubmit)="onSubmitSearch()">
-          <div class="row">
-            <div class="col-md-5">
-              <div class="form-group">
-                <input type="text" name="keyword" [(ngModel)]="searchForm.keyword" class="form-control" placeholder="Nhập từ khóa tìm theo tên, sđt, email...">
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <select class="form-control" name="status" [(ngModel)]="searchForm.status">
-                  <option value="">Chọn trạng thái</option>
-                  <option value="1">Đang hoạt động</option>
-                  <option value="0">Đang khóa</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span [data-feather]="'search'"></span></button>
-              </div>
-            </div>
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
           </div>
-          <div class="row mt-2 mb-2 pull-right">
-            <div class="">
-              <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Thêm đại lý</button>              
-            </div>
-          </div>
-        </form>
-        <div class="table-responsive" *blockUI="'section-block'">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>SĐT</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Ngày tạo</th>
-                <!-- <th>Trạng thái</th>                 -->
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody *ngIf="list.length > 0">
-              <tr *ngFor="let item of list">
-                <td>
-                  {{ item?.id }}
-                </td>                
-                <td>
-                  {{ item?.mobile }}
-                </td>
-                <td>
-                  {{ item?.username }}
-                </td>
-                <td>{{ item?.email }}</td>
-                <td>
-                  {{ item?.create_date | date: 'dd/MM/yyyy H:mm':'UTC' }}
-              </td>
-                <!-- <td>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <input type="text" name="keyword" [(ngModel)]="searchForm.keyword" class="form-control"
+                      placeholder="Nhập từ khóa tìm theo tên, sđt, email...">
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                      <option value="">Chọn trạng thái</option>
+                      <option value="1">Đang hoạt động</option>
+                      <option value="0">Đang khóa</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
+                        [data-feather]="'search'"></span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2 mb-2 pull-right">
+                <div class="">
+                  <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Thêm đại
+                    lý</button>
+                </div>
+              </div>
+            </form>
+            <div class="table-responsive" *blockUI="'section-block'">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>SĐT</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Ngày tạo</th>
+                    <!-- <th>Trạng thái</th>                 -->
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="list.length > 0">
+                  <tr *ngFor="let item of list">
+                    <td>
+                      {{ item?.id }}
+                    </td>
+                    <td>
+                      {{ item?.mobile }}
+                    </td>
+                    <td>
+                      {{ item?.username }}
+                    </td>
+                    <td>{{ item?.email }}</td>
+                    <td>
+                      {{ item?.create_date | date: 'dd/MM/yyyy H:mm':'UTC' }}
+                    </td>
+                    <!-- <td>
                   <div [innerHTML]="item.status | showStatus"></div>                  
                 </td>                 -->
-                
-                <td>
-                    <a ngbTooltip="Xem số dư"  (click)="modalBalanceOpen(modalBalances, item)">
-                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                    </a>
-                    
-                    <!-- <a ngbTooltip="Tạo yêu cầu nạp" (click)="modalOpen(modalPayment, item)" class="ml-2">
-                        <i data-feather="credit-card" class="text-primary cursor-pointer"></i>
-                    </a> -->
-                </td>
-              </tr>
-            </tbody>
-            <tbody *ngIf="list.length == 0">
-             <tr>Không có dữ liệu</tr>
-            </tbody>
-          </table>
 
-          <!-- <ngb-pagination
+                    <td>
+                      <a ngbTooltip="Xem số dư" (click)="modalBalanceOpen(modalBalances, item)">
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                      </a>
+
+                      <a ngbTooltip="Tạo yêu cầu nạp" (click)="modalOpen(modalCreatePrepaidLimit)" class="ml-2">
+                        <i data-feather="plus" class="text-primary cursor-pointer"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="list.length == 0">
+                  <tr>Không có dữ liệu</tr>
+                </tbody>
+              </table>
+
+              <!-- <ngb-pagination
           class="d-flex justify-content-end pr-3 pt-2"
                 [collectionSize]="totalPage"
                 [(page)]="searchForm.page"
@@ -92,135 +97,189 @@
                 (pageChange)="loadPage($event)"
               ></ngb-pagination> -->
 
-              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalPage" [(page)]="searchForm.page"
-                [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalPage"
+                [(page)]="searchForm.page" [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="loadPage($event)">
                 <ng-template ngbPaginationPages let-page let-pages="pages">
                   <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
                     <div class="mb-3 d-flex flex-nowrap px-2">
-                      <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Trang</label>
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Trang</label>
                       <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
-                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)" (blur)="loadPage(i.value)"
-                        (input)="formatInput($any($event).target)" aria-labelledby="paginationInputLabel paginationDescription"
-                        style="width: 2.5rem" />
+                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
                       <span id="paginationDescription" class="col-form-label text-nowrap px-2">
                         của {{pages.length}}</span>
                     </div>
                   </li>
                 </ng-template>
               </ngb-pagination>
-          
+
+            </div>
+          </div>
+
         </div>
-        </div>
-        
       </div>
     </div>
   </div>
-    </div>
 </div>
 
 <ng-template #modalCreate let-modal>
   <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-      <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
 
-          <div class="form-group">
-              <label>Username (*)</label>
-              <input class="form-control"  type="text" 
-              (keydown.space)="$event.preventDefault()"
-              [(ngModel)]="dataCreateMerchant.username" />
-          </div>
+    <div class="form-group">
+      <label>Username (*)</label>
+      <input class="form-control" type="text" (keydown.space)="$event.preventDefault()"
+        [(ngModel)]="dataCreateMerchant.username" />
+    </div>
 
-          <div class="form-group">
-            <label>Số điện thoại (*)</label>
-            <input class="form-control"  placeholder="098 765 43 21" mask="000 000 00 00"
-            [(ngModel)]="dataCreateMerchant.mobile" />
-          </div>
+    <div class="form-group">
+      <label>Số điện thoại (*)</label>
+      <input class="form-control" placeholder="098 765 43 21" mask="000 000 00 00"
+        [(ngModel)]="dataCreateMerchant.mobile" />
+    </div>
 
-          <div class="form-group">
-            <label>Email (*)</label>
-            <input class="form-control"  
-            [(ngModel)]="dataCreateMerchant.email" />
-          </div>
+    <div class="form-group">
+      <label>Email (*)</label>
+      <input class="form-control" [(ngModel)]="dataCreateMerchant.email" />
+    </div>
 
-          <div class="form-group">
-            <label>Mật khẩu (*)</label>
-            <code-input 
-            style="width: 350px;"
-            [isCodeHidden]="true"
-            [isCharsCode]="false"
-              [codeLength]="6"
-              (codeCompleted)="onCompletedInputPassword($event)"></code-input>
-          </div>
-      </div>
-      <div class="modal-footer">
-          <a (click)="onCreateMerchant()">
-              <button type="submit" class="btn btn-primary" rippleEffect>
-                  Tạo đại lý
-              </button>
-          </a>
-      </div>
+    <div class="form-group">
+      <label>Mật khẩu (*)</label>
+      <code-input style="width: 350px;" [isCodeHidden]="true" [isCharsCode]="false" [codeLength]="6"
+        (codeCompleted)="onCompletedInputPassword($event)"></code-input>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a (click)="onCreateMerchant()">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Tạo đại lý
+      </button>
+    </a>
+  </div>
+</ng-template>
+
+
+<ng-template #modalCreatePrepaidLimit let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+
+    <div class="form-group">
+      <label>Tiêu đề</label>
+      <input type="text" class="form-control" name="title" [(ngModel)]="dataPrepaidLimit.title" />
+    </div>
+
+
+    <div class="form-group">
+      <label>Nội dụng đơn hàng</label>
+      <input type="text" class="form-control" placeholder="Nhập nội dung đơn hàng" name="desc"
+        [(ngModel)]="dataPrepaidLimit.desc" />
+    </div>
+
+    <div class="form-group">
+      <label>Nhập số tiền</label>
+      <input class="form-control" type="text" placeholder="100,000,000" mask="separator" thousandSeparator=","
+        (blur)="onInputAmount($event)" name="amount" [(ngModel)]="dataPrepaidLimit.amount" />
+    </div>
+
+    <div class="form-group">
+      <label>Chọn kiểu</label>
+      <select name="type" id="" placeholder="Chọn kiểu" class="form-control" [(ngModel)]="dataPrepaidLimit.type">
+        <option value="">Chọn kiểu</option>
+        <option value="Cộng tiền">Cộng tiền</option>
+        <option value="Trừ tiền">Trừ tiền</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tên dịch vụ</label>
+      <select name="service" id="" placeholder="Chọn kiểu" class="form-control" [(ngModel)]="dataPrepaidLimit.service">
+        <option value="">Chọn dịch vụ</option>
+        <option value="ADD_MONEY_BALANCE">ADD_MONEY_BALANCE</option>
+      </select>
+    </div>
+
+    <div class="image-upload mb-1">
+      <input id="file-front-input" type="file" accept="image/png, image/gif, image/jpeg, image/jpg"
+        (change)="onSelectFilePrepaidLimit($event)" />
+      <label>
+        <b>File đính kèm</b>
+      </label>
+    </div>
+
+    <h5>Số tiền nạp thực : {{ price | formatPrice }}</h5>
+    <i>{{ price | numberToText }}</i>
+
+
+  </div>
+  <div class="modal-footer">
+    <a (click)="onCreatePrepaidLimit()">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Tạo yêu cầu nạp
+      </button>
+    </a>
+  </div>
 </ng-template>
 
 <ng-template #modalPayment let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="form-group">
+      <label>Chọn dịch vụ</label>
+      <select name="service" id="" placeholder="Chọn dịch vụ" class="form-control"
+        [(ngModel)]="dataCreatePayment.service_code">
+        <option value="">Chọn dịch vụ</option>
+        <option value="{{ item.service_code }}" *ngFor="let item of listServices">{{ item.name }}</option>
+      </select>
     </div>
-        <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-            <div class="form-group">
-                <label>Chọn dịch vụ</label>
-                <select name="service" id="" placeholder="Chọn dịch vụ" class="form-control"
-                    [(ngModel)]="dataCreatePayment.service_code">
-                    <option value="">Chọn dịch vụ</option>
-                    <option value="{{ item.service_code }}" *ngFor="let item of listServices">{{ item.name }}</option>
-                </select>
-            </div>
 
-            <div class="form-group">
-                <label>Nhập số tiền</label>
-                <input class="form-control"  type="text" placeholder="100,000,000" 
-                mask="separator" thousandSeparator=","
-                (blur)="onInputAmount($event)"
-                name="amount"
-                [(ngModel)]="dataCreatePayment.amount" />
-                <i><small>Chiết khấu : <span *ngIf="discount">{{ discount }}%</span></small></i>
-            </div>
+    <div class="form-group">
+      <label>Nhập số tiền</label>
+      <input class="form-control" type="text" placeholder="100,000,000" mask="separator" thousandSeparator=","
+        (blur)="onInputAmount($event)" name="amount" [(ngModel)]="dataCreatePayment.amount" />
+      <i><small>Chiết khấu : <span *ngIf="discount">{{ discount }}%</span></small></i>
+    </div>
 
-            <div class="form-group">
-                <label>Nội dụng đơn hàng</label>
-                <input type="text" class="form-control" placeholder="Nhập nội dung đơn hàng"
-                name="desc"
-                    [(ngModel)]="dataCreatePayment.desc" />
-            </div>
+    <div class="form-group">
+      <label>Nội dụng đơn hàng</label>
+      <input type="text" class="form-control" placeholder="Nhập nội dung đơn hàng" name="desc"
+        [(ngModel)]="dataCreatePayment.desc" />
+    </div>
 
-            <div class="image-upload mb-1">
-              <input
-                id="file-front-input"
-                type="file"
-                accept="image/png, image/gif, image/jpeg, image/jpg"
-                (change)="onSelectFileFront($event)"
-              />
-              <label>
-                <b>File đính kèm</b>
-              </label>
-            </div>
+    <div class="image-upload mb-1">
+      <input id="file-front-input" type="file" accept="image/png, image/gif, image/jpeg, image/jpg"
+        (change)="onSelectFileFront($event)" />
+      <label>
+        <b>File đính kèm</b>
+      </label>
+    </div>
 
-            <h5>Số tiền nạp thực : {{ price | formatPrice }}</h5>
-            <i>{{ price | numberToText }}</i>
-        </div>
-        <div class="modal-footer">
-            <a (click)="onCreateTask()">
-                <button type="submit" class="btn btn-primary" rippleEffect>
-                    Tạo đơn hàng
-                </button>
-            </a>
-        </div>
+    <h5>Số tiền nạp thực : {{ price | formatPrice }}</h5>
+    <i>{{ price | numberToText }}</i>
+  </div>
+  <div class="modal-footer">
+    <a (click)="onCreateTask()">
+      <button type="submit" class="btn btn-primary" rippleEffect>
+        Tạo đơn hàng
+      </button>
+    </a>
+  </div>
 </ng-template>
 
 <ng-template #modalBalances let-modal>
@@ -236,7 +295,7 @@
         <thead>
           <tr>
             <th>Dịch vụ</th>
-            <th>Số dư</th>            
+            <th>Số dư</th>
           </tr>
         </thead>
         <tbody>
