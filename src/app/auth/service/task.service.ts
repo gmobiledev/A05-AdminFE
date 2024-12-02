@@ -81,7 +81,7 @@ export class TaskService {
   }
 
   createTaskPrepaidLimit( data) {
-    return this._http.post<any>(`${environment.apiUrl}/admin/balance/change`, data);
+    return this._http.post<any>(`${environment.apiUrl}/admin/balance/add`, data);
   }
 
   getFileMerchantAttach(id) {
