@@ -52,6 +52,10 @@ import { OldCustomerInformationComponent } from './view-approve/old-customer-inf
 import { NewCustomerInformationComponent } from './view-approve/new-customer-information/new-customer-information.component';
 import { UploadFileImagePdfComponent } from './view-approve/upload-file-image-pdf/upload-file-image-pdf.component';
 import { ViewFileTaskComponent } from './view-approve/upload-file-image-pdf/view-file-task/view-file-task.component';
+import { TransferSovereigntyComponent } from './transfer-sovereignty/transfer-sovereignty.component';
+import { TransferSovereigntyNewOwnerComponent } from './transfer-sovereignty/transfer-sovereignty-new-owner/transfer-sovereignty-new-owner.component';
+import { ViewCheckInfoNewComponent } from './transfer-sovereignty/view-check-info-new/view-check-info-new.component';
+import { TransferSovereigntyOldOwnerComponent } from './transfer-sovereignty/transfer-sovereignty-old-owner/transfer-sovereignty-old-owner.component';
 
 const routes: Routes = [
   {
@@ -154,6 +158,10 @@ const routes: Routes = [
     path: 'msisdn/TTTB',
     component: TTTBMsisdnComponent
   },
+  {
+    path: 'transfer-sovereignty',
+    component: TransferSovereigntyComponent
+  },
 ];
 
 @NgModule({
@@ -195,7 +203,11 @@ const routes: Routes = [
     OldCustomerInformationComponent,
     NewCustomerInformationComponent,
     UploadFileImagePdfComponent,
-    ViewFileTaskComponent
+    ViewFileTaskComponent,
+    TransferSovereigntyComponent,
+    TransferSovereigntyNewOwnerComponent,
+    ViewCheckInfoNewComponent,
+    TransferSovereigntyOldOwnerComponent
   ],
   imports: [
     CommonModule,

@@ -649,7 +649,7 @@ export const menu: CoreMenu[] = [
     type: "collapsible",
     icon: "package",
     badge: {
-      title: "11",
+      title: "12",
       translate: "",
       classes: "badge-light-warning badge-pill",
     },
@@ -741,6 +741,14 @@ export const menu: CoreMenu[] = [
         type: "item",
         icon: "search",
         url: "sim-so/select-package",
+      },
+      {
+        id: "transfer-sovereignty",
+        title: "Chuyển chủ quyền sử dụng",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/transfer-sovereignty",
       },
       // {
       //   id: 'search-balance-changes',

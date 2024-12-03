@@ -1,0 +1,92 @@
+<div
+  class="transfer-sovereignty-old-owner-container" *ngIf="data"
+>
+  <div class="col-12">
+    <h4 style="color: #888888">Thông tin chủ thuê bao cũ</h4>
+  </div>
+    <div class="form-container">
+      <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped" *ngIf="data?.customer_type == customerType.PERSONAL">
+                <tbody>
+                  <tr>
+                    <td>
+                      <label>Số thuê bao</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.msisdn}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Họ và tên chủ thuê bao</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.people?.name}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Trạng thái</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><div class="status">Hoạt động</div></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Số CCCD</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.people?.identification_no}}</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            <table class="table table-striped" *ngIf="data?.customer_type == customerType.ORGANIZATION">
+                <tbody>
+                  <tr>
+                    <td>
+                      <label>Số thuê bao</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.msisdn}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Tên doanh nghiệp</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.organization?.nameOrganization}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Mã số doanh nghiệp</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.organization?.id_organization}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Tên người đại diện</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.organization?.representativeName}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Tên người sử dụng</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><span>{{data?.organization?.userName}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Trạng thái</label>
+                    </td>
+                    <td class="justify-content-end d-flex"><div class="status">Hoạt động</div></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="col-md-12 d-flex justify-content-center">
+          <button
+            type="button"
+            (click)="submit()"
+            class="btn col-md-3 btn-block btn-primary btn-next"
+            rippleEffect
+            style="margin-top: 20px; border-radius: 12px"
+          >
+            <span class="align-middle">Tiếp tục</span>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>

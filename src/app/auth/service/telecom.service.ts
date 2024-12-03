@@ -32,6 +32,10 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/list-working`, { params: params });
   }
 
+  getSearchSim(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/search-sim`, { params: params });
+  }
+
   /**
    * Xem thong tin chi tiet
    */
