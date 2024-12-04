@@ -34,6 +34,19 @@ export class TransferSovereigntyComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  formatNumber(number: string): string {
+    return number.replace(/[^\d]/g, '');
+  }
+
+  onInputChange(item: string) {
+    if(item == 'searchSim'){
+      this.searchSim = this.formatNumber(this.searchSim);
+    }
+    if(item == 'identificationNo'){
+      this.identificationNo = this.formatNumber(this.identificationNo);
+    }
+  }
+
   onSubmitSearch() {
     if(!this.searchSim){
       this.alertService.showMess('Vui lòng không để trống số điện thoại');

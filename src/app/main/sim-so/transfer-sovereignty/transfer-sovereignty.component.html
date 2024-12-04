@@ -21,6 +21,7 @@
                       class="form-control"
                       placeholder="Nhập số thuê bao cũ"
                       style="color: rgba(0, 0, 0, 1)"
+                      (input)="onInputChange('searchSim')"
                       [class.pointer-events]="noneConfirm"
                     />
                   </div>
@@ -29,11 +30,12 @@
                   <div class="form-group">
                     <input
                       type="text"
-                      name="searchSim"
+                      name="identificationNo"
                       [(ngModel)]="identificationNo"
                       class="form-control"
                       placeholder="Nhập số CCCD chủ thuê bao cũ"
                       style="color: rgba(0, 0, 0, 1)"
+                      (input)="onInputChange('identificationNo')"
                       [class.pointer-events]="noneConfirm"
                     />
                   </div>
