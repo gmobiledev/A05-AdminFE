@@ -177,6 +177,7 @@ export class ListMerchantComponent implements OnInit {
         this.onInputAmount();
         this.modalClose();
         this.getData();
+        this.router.navigate(['/task/balance'])
       }, error => {
         this.itemBlockUI.stop();
         this.alertService.showMess(error);
