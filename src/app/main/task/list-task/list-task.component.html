@@ -55,7 +55,7 @@
                       <option value="debit">Trừ tiền</option>
                     </select>
                   </div>
-                </div>                
+                </div>
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
@@ -333,6 +333,18 @@
         selectedItem.status <= 39 &&
         checkRole('ACCOUNTING')
       ">
+      <button (click)="onUpdateStatus(selectedItem, 1)" class="btn btn-info btn-sm mb-2">
+        <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
+      </button>
+
+      <button (click)="onUpdateStatus(selectedItem, 99)" class="ml-2 btn btn-warning btn-sm mb-2">
+        <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
+        Từ chối
+      </button>
+    </div>
+
+    <div *ngIf="
+    selectedItem.status == 2">
       <button (click)="onUpdateStatus(selectedItem, 1)" class="btn btn-info btn-sm mb-2">
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
       </button>

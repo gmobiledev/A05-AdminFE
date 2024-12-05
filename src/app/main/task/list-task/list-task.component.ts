@@ -469,10 +469,10 @@ export class ListTaskComponent implements OnInit {
       });
     }
   }
-  
+
   applyFilter(items: any[]): void {
     const filterType = this.searchForm.type;
-  
+
     if (filterType === 'topup') {
       this.list = items.filter(item => item.amount > 0);
     } else if (filterType === 'debit') {
@@ -481,7 +481,7 @@ export class ListTaskComponent implements OnInit {
       this.list = items;
     }
   }
-  
+
 
   checkRole(item) {
     return this.listCurrentRoles.find(itemX => itemX.item_name.includes(item))
