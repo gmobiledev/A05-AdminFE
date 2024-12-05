@@ -53,7 +53,7 @@
                     <th>Thao tác</th>
                   </tr>
                 </thead>
-                <tbody *ngIf="list.length > 0">
+                <tbody *ngIf="list?.length > 0">
                   <tr *ngFor="let item of list">
                     <td>
                       {{ item?.id }}
@@ -77,13 +77,13 @@
                         <i data-feather="eye" class="text-primary cursor-pointer"></i>
                       </a>
 
-                      <a ngbTooltip="Tạo yêu cầu nạp" (click)="modalOpen(modalCreatePrepaidLimit)" class="ml-2">
+                      <a ngbTooltip="Tạo yêu cầu nạp" (click)="modalOpen(modalCreatePrepaidLimit, item)" class="ml-2">
                         <i data-feather="plus" class="text-primary cursor-pointer"></i>
                       </a>
                     </td>
                   </tr>
                 </tbody>
-                <tbody *ngIf="list.length == 0">
+                <tbody *ngIf="list?.length == 0">
                   <tr>Không có dữ liệu</tr>
                 </tbody>
               </table>
