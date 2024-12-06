@@ -36,6 +36,7 @@ export class ListTaskComponent implements OnInit {
     is_bank_sign: '',
     page: 1,
     service_code: '',
+    type: "topup, debit",
     page_size: 20
   }
   public isViewFile: boolean = false;
@@ -92,6 +93,8 @@ export class ListTaskComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
+      this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';
+
       this.searchForm.title = params['title'] && params['title'] != undefined ? params['title'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
       this.searchForm.service_code = params['service_code'] && params['service_code'] != undefined ? params['service_code'] : this.currentService;
@@ -361,6 +364,7 @@ export class ListTaskComponent implements OnInit {
               // this.alertService.showSuccess('Thành công');
               return;
             }
+            this.modalClose();
             this.getData();
             this.alertService.showSuccess(res.message);
           }, error => {

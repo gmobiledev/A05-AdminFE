@@ -49,6 +49,15 @@ export class ListMerchantComponent implements OnInit {
     email: ''
   }
 
+  public dataPrepaidLimit = {
+    title: "Giao dịch cộng tiền cho khách hàng",
+    desc: "Thực hiện giao dịch với khách hàng",
+    amount: 0,
+    service: "ADD_MONEY_BALANCE",
+    type: "Cộng tiền",
+    file: "",
+  }
+
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
 
@@ -60,7 +69,7 @@ export class ListMerchantComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private router: Router,
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
@@ -71,19 +80,19 @@ export class ListMerchantComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
-    this.router.navigate(['/airtime/list'], { queryParams: {keyword: this.searchForm.keyword, status: this.searchForm.status}})
+    this.router.navigate(['/airtime/list'], { queryParams: { keyword: this.searchForm.keyword, status: this.searchForm.status } })
   }
 
   loadPage(page) {
     this.searchForm.page = page;
-    this.router.navigate(['/airtime/list'], { queryParams: this.searchForm})
+    this.router.navigate(['/airtime/list'], { queryParams: this.searchForm })
   }
 
-  async onSubmitLock(id, status){
+  async onSubmitLock(id, status) {
     const confirmMessage = status ? "Bạn có đồng ý mở khóa user?" : "Bạn có đồng ý khóa user?";
-    if((await this.alertService.showConfirm(confirmMessage)).value) {
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.userService.lockUser(id, status, "").subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showError(res.message);
           return;
         }
@@ -99,7 +108,7 @@ export class ListMerchantComponent implements OnInit {
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu nạp airtime?")).value) {
       this.itemBlockUI.start();
       this.dataCreatePayment.bill_id = this.selectedUser.mobile;
-      this.taskService.createTask(this.selectedUser.id, this.dataCreatePayment).subscribe(res => {
+      this.taskService.createTask(1076, this.dataCreatePayment).subscribe(res => {
         this.itemBlockUI.stop();
         if (!res.status) {
           this.alertService.showMess(res.message);
@@ -143,17 +152,52 @@ export class ListMerchantComponent implements OnInit {
     }
   }
 
+  async onCreatePrepaidLimit() {
+    if (!this.dataPrepaidLimit.file) {
+      this.alertService.showMess("Vui lòng đính kèm ảnh thanh toán!");
+      return;
+    }
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu không?")).value) {
+      this.itemBlockUI.start();
+      this.taskService.createTaskPrepaidLimit(this.selectedUser.id, this.dataPrepaidLimit).subscribe(res => {
+        this.itemBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.dataPrepaidLimit = {
+          title: "Giao dịch cộng tiền cho khách hàng",
+          desc: "Thực hiện giao dịch với khách hàng",
+          amount: 0,
+          service: "ADD_MONEY_BALANCE",
+          type: "Cộng tiền",
+          file: "",
+        }
+        this.onInputAmount();
+        this.modalClose();
+        this.getData();
+        this.router.navigate(['/task/balance'])
+      }, error => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(error);
+        return;
+      })
+    }
+  }
+
+
   onViewBalance() {
     this.alertService.showMess("Tính năng đang phát triển");
     return;
   }
 
-  modalOpen(modal, item = null) {    
-    if(item) {
+  modalOpen(modal, item?) {
+    if (item) {
       this.selectedUser = item;
       this.dataCreatePayment.desc = this.selectedUser.mobile + ' thanh toan don hang';
       this.userService.getMerchantService(item.id).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
@@ -170,12 +214,12 @@ export class ListMerchantComponent implements OnInit {
         windowClass: 'modal modal-primary',
         size: 'lg'
       });
-    }        
+    }
   }
 
   modalBalanceOpen(modal, item) {
     this.userService.getMerchantBalances(item.id).subscribe(res => {
-      if(!res.status) {
+      if (!res.status) {
         this.alertService.showMess(res.message);
         return;
       }
@@ -208,13 +252,18 @@ export class ListMerchantComponent implements OnInit {
     // })
   }
 
-  onInputAmount(event) {
-  
-    this.taskService.calculatePriceDiscount({ service_code: this.dataCreatePayment.service_code, amount: this.dataCreatePayment.amount }).subscribe(res => {
+  onInputAmount() {
+    this.taskService.calculatePriceDiscount({ service_code: this.dataPrepaidLimit.service, amount: this.dataPrepaidLimit.amount }).subscribe(res => {
       this.price = res.data.amount
-      this.discount = res.data.discount      
+      // this.discount = res.data.discount
     })
+    // this.taskService.calculatePriceDiscount({ service_code: this.dataCreatePayment.service_code, amount: this.dataCreatePayment.amount }).subscribe(res => {
+    //   this.price = res.data.amount
+    //   this.discount = res.data.discount
+    // })
+
   }
+
 
   async onSelectFileFront(event) {
     if (event.target.files && event.target.files[0]) {
@@ -222,6 +271,31 @@ export class ListMerchantComponent implements OnInit {
       this.dataCreatePayment.file = image.replace('data:image/png;base64,', '')
     }
   }
+
+  async onSelectFilePrepaidLimit(event) {
+    if (event.target.files && event.target.files[0]) {
+      const image = await this.commonService.resizeImage(event.target.files[0]) + '';
+      this.dataPrepaidLimit.file = image.replace('data:image/png;base64,', '')
+    }
+  }
+
+  // async onSelectFileFront(event) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const ext = event.target.files[0].type;
+  //     if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
+  //       this.dataCreatePayment.file_ext = 'png';
+  //       let img = await this.commonService.resizeImage(event.target.files[0]);
+  //       this.dataCreatePayment.file = (img + '').replace('data:image/png;base64,', '')
+  //     } else if (ext.includes('pdf')) {
+  //       this.dataCreatePayment.file_ext = 'pdf';
+  //       this.dataCreatePayment.file = (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '');
+  //     }
+  //   }
+  //   // if (event.target.files && event.target.files[0]) {
+  //   //   let img = await this.commonService.resizeImage(event.target.files[0]);
+  //   //   this.dataCreatePayment.file = (img+'').replace('data:image/png;base64,', '')
+  //   // }
+  // }
 
   ngOnInit(): void {
     this.contentHeader = {
@@ -241,7 +315,7 @@ export class ListMerchantComponent implements OnInit {
           }
         ]
       }
-    };    
+    };
   }
 
   getData(): void {
