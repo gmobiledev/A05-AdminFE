@@ -418,70 +418,32 @@ export class ListTaskComponent implements OnInit {
 
   }
 
-  // getData(): void {
-  //   this.taskService.getAllService().subscribe(res => {
-  //     this.listService = res.data.reduce(function (map, obj) {
-  //       map[obj.code] = obj.desc;
-  //       return map;
-  //     }, {});;
-  //   })
-  //   if (this.isSingleService) {
-  //     this.taskService.getTaskByServiceCode(this.currentService, this.searchForm).subscribe(res => {
-  //       this.list = res.data.items;
-  //       this.totalItems = res.data.count;
-  //     }, error => {
-  //       console.log("ERRRR");
-  //       console.log(error);
-  //     })
-  //   } else {
-  //     this.taskService.getAll(this.searchForm).subscribe(res => {
-  //       this.list = res.data.items;
-  //       this.totalItems = res.data.count;
-  //     }, error => {
-  //       console.log("ERRRR");
-  //       console.log(error);
-  //     })
-  //   }
-
-  // }
-
   getData(): void {
     this.taskService.getAllService().subscribe(res => {
-      this.listService = res.data.reduce((map, obj) => {
+      this.listService = res.data.reduce(function (map, obj) {
         map[obj.code] = obj.desc;
         return map;
-      }, {});
-    });
-  
+      }, {});;
+    })
     if (this.isSingleService) {
       this.taskService.getTaskByServiceCode(this.currentService, this.searchForm).subscribe(res => {
-        this.applyFilter(res.data.items);
+        this.list = res.data.items;
         this.totalItems = res.data.count;
       }, error => {
-        console.error("Error fetching tasks by service code:", error);
-      });
+        console.log("ERRRR");
+        console.log(error);
+      })
     } else {
       this.taskService.getAll(this.searchForm).subscribe(res => {
-        this.applyFilter(res.data.items);
+        this.list = res.data.items;
         this.totalItems = res.data.count;
       }, error => {
-        console.error("Error fetching tasks:", error);
-      });
+        console.log("ERRRR");
+        console.log(error);
+      })
     }
+
   }
-
-  applyFilter(items: any[]): void {
-    const filterType = this.searchForm.type;
-
-    if (filterType === 'topup') {
-      this.list = items.filter(item => item.amount > 0);
-    } else if (filterType === 'debit') {
-      this.list = items.filter(item => item.amount < 0);
-    } else {
-      this.list = items;
-    }
-  }
-
 
   checkRole(item) {
     return this.listCurrentRoles.find(itemX => itemX.item_name.includes(item))

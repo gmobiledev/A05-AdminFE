@@ -157,7 +157,7 @@ export class ListMerchantComponent implements OnInit {
       this.alertService.showMess("Vui lòng đính kèm ảnh thanh toán!");
       return;
     }
-    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu nạp airtime?")).value) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý tạo yêu cầu không?")).value) {
       this.itemBlockUI.start();
       this.taskService.createTaskPrepaidLimit(this.selectedUser.id, this.dataPrepaidLimit).subscribe(res => {
         this.itemBlockUI.stop();
