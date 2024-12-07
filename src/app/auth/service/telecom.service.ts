@@ -58,6 +58,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`, data);
   }
 
+  postFileUploadOcr(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/file-upload`, data);
+  }
+
   /**
  * Tìm Sim/Số
  */

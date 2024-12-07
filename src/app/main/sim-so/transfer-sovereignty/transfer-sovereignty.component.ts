@@ -17,8 +17,8 @@ export class TransferSovereigntyComponent implements OnInit {
   selectBusinessOrIndividual;
   data;
   selectConversionObject = [
-    { name: "Cá nhân", id: 1, code: "individual" },
-    { name: "Doanh nghiệp", id: 2, code: "business" },
+    { name: "Cá nhân", id: 0, code: "individual" },
+    { name: "Doanh nghiệp", id: 1, code: "business" },
   ];
   showNewSubscriberRegistration = false;
 
@@ -79,8 +79,8 @@ export class TransferSovereigntyComponent implements OnInit {
     this.modalClose();
   }
 
-  onSelectConversionObject(item) {
-    this.selectBusinessOrIndividual = item;
+  onSelectConversionObject(id) {
+    this.selectBusinessOrIndividual = this.selectConversionObject[id];
   }
 
   modalClose() {

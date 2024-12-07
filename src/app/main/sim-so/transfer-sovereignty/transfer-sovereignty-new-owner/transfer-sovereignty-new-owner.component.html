@@ -1,6 +1,6 @@
 <div
   class="transfer-sovereignty-new-owner-container individual"
-  *ngIf="selectIndividual"
+  *ngIf="select.id == 0"
 >
   <div class="col-12">
     <h4 style="color: #888888">Thông tin chủ thuê bao mới</h4>
@@ -150,7 +150,7 @@
 
 <div
   class="transfer-sovereignty-new-owner-container business"
-  *ngIf="!selectIndividual"
+  *ngIf="select.id == 1"
 >
   <div class="col-12">
     <h4 style="color: #888888">Thông tin chủ thuê bao mới</h4>

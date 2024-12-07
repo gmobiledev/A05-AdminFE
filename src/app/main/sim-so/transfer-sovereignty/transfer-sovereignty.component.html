@@ -64,7 +64,8 @@
         </div>
         <div class="card" *ngIf="noneConfirm && showNewSubscriberRegistration">
           <app-transfer-sovereignty-new-owner
-            (showModal)="modalOpen(modalItemNew)"
+            (dataSplit)="modalOpen(modalItemNew)"
+            [data]="data"
             [select]="selectBusinessOrIndividual"
           ></app-transfer-sovereignty-new-owner>
         </div>
@@ -86,7 +87,7 @@
         >
           <option selected hidden>Chọn đối tượng chuyển đối</option>
           <option
-            value="{{ item.code }}"
+            value="{{ item.id }}"
             *ngFor="let item of selectConversionObject"
           >
             {{ item.name }}
