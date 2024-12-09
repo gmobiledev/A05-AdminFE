@@ -277,9 +277,10 @@
     <div class="form-group" *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">
       <label for="">Nhà mạng</label>
       <select name="" id="" class="form-control" [(ngModel)]="dataApprove.brand">
-        <option value="VMS">Mobifone</option>
+        <option value="VMS" *ngIf="typeSim == 1">Mobifone</option>
         <option value="VNP">Vinaphone</option>
       </select>
+      <label for="">Loại sim: {{typeSim == 1 ? 'vật lý' : 'esim'}}</label>
     </div>
   </div>
 

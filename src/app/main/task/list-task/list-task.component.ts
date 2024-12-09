@@ -71,6 +71,7 @@ export class ListTaskComponent implements OnInit {
   currency = 'VND'
   ServiceCode = ServiceCode;
   listSerial;
+  typeSim;
   basicSelectedOption = 25;
 
   constructor(
@@ -144,6 +145,8 @@ export class ListTaskComponent implements OnInit {
 
   modalOpen(modal, item = null, is_load = true) {
     this.selectedItem = item;
+    console.log('selectedItem', this.selectedItem);
+    this.typeSim = item.detail ? JSON.parse(item.detail).sim_type : null;
     if (item && is_load) {
       this.itemBlockUI.start();
       this.taskService.getTransWebhook(item.id).subscribe(res => {
