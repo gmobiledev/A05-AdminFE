@@ -30,4 +30,11 @@
     border: 1px #888888 solid;
     border-radius: 7px;
   }
+  p{
+    width: 300px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    transition: all 0.3s ease;
+  }
 }

@@ -64,7 +64,7 @@
         </div>
         <div class="card" *ngIf="noneConfirm && showNewSubscriberRegistration">
           <app-transfer-sovereignty-new-owner
-            (dataSplit)="modalOpen(modalItemNew)"
+            (dataSplit)="showViewCheckInfoNew($event)"
             [data]="data"
             [select]="selectBusinessOrIndividual"
           ></app-transfer-sovereignty-new-owner>
@@ -122,10 +122,11 @@
       </div>
     </div>
   </div>
-  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+  <div class="modal-body" tabindex="0">
     <app-view-check-info-new
-      (closePopup)="modalClose()"
+      (closePopup)="done()"
       [select]="selectBusinessOrIndividual"
+      [data]="dataSplit"
     ></app-view-check-info-new>
   </div>
 </ng-template>

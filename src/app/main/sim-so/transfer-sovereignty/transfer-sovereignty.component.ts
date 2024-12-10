@@ -16,6 +16,7 @@ export class TransferSovereigntyComponent implements OnInit {
   public modalRef: any;
   selectBusinessOrIndividual;
   data;
+  dataSplit;
   selectConversionObject = [
     { name: "Cá nhân", id: 0, code: "individual" },
     { name: "Doanh nghiệp", id: 1, code: "business" },
@@ -35,39 +36,56 @@ export class TransferSovereigntyComponent implements OnInit {
   ngOnInit(): void {}
 
   formatNumber(number: string): string {
-    return number.replace(/[^\d]/g, '');
+    return number.replace(/[^\d]/g, "");
   }
 
   onInputChange(item: string) {
-    if(item == 'searchSim'){
+    if (item == "searchSim") {
       this.searchSim = this.formatNumber(this.searchSim);
     }
-    if(item == 'identificationNo'){
+    if (item == "identificationNo") {
       this.identificationNo = this.formatNumber(this.identificationNo);
     }
   }
 
+  done(){
+    this.searchSim = "";
+    this.identificationNo = "";
+    this.noneConfirm = false;
+    this.showNewSubscriberRegistration = false;
+    this.modalClose();
+  }
+
   onSubmitSearch() {
-    if(!this.searchSim){
-      this.alertService.showMess('Vui lòng không để trống số điện thoại');
+    if (!this.searchSim) {
+      this.alertService.showMess("Vui lòng không để trống số điện thoại");
       return;
     }
-    if(!this.identificationNo){
-      this.alertService.showMess('Vui lòng không để trống số CCCD');
+    if (!this.identificationNo) {
+      this.alertService.showMess("Vui lòng không để trống số CCCD");
       return;
     }
     const data = {
       mobile: this.searchSim,
       identification_no: this.identificationNo,
     };
-    this.telecomService.getSearchSim(data).subscribe((res: any) => {
-      if (res.status == 1) {
-        this.noneConfirm = true;
-        this.data = res.data;
-      } else {
-        this.alertService.showMess(res.message);
+    this.itemBlockUI.start();
+    this.telecomService.getSearchSim(data).subscribe(
+      (res: any) => {
+        if (res.status == 1) {
+          this.noneConfirm = true;
+          this.data = res.data;
+          this.itemBlockUI.stop();
+        } else {
+          this.itemBlockUI.stop();
+          this.alertService.showMess(res.message);
+        }
+      },
+      (error) => {
+        this.itemBlockUI.stop();
+        this.alertService.showError(error);
       }
-    });
+    );
   }
 
   submitConversionObject() {
@@ -83,6 +101,11 @@ export class TransferSovereigntyComponent implements OnInit {
     this.selectBusinessOrIndividual = this.selectConversionObject[id];
   }
 
+  showViewCheckInfoNew(event) {
+    this.dataSplit = event;
+    this.modalOpen(this.modalItemNew);
+  }
+
   modalClose() {
     this.modalRef.close();
   }
@@ -93,6 +116,7 @@ export class TransferSovereigntyComponent implements OnInit {
       windowClass: "modal modal-primary",
       size: "l",
       backdrop: "static",
+      keyboard: true,
     });
   }
 
@@ -102,7 +126,7 @@ export class TransferSovereigntyComponent implements OnInit {
       windowClass: "modal modal-primary",
       size: "xl",
       backdrop: true,
-      keyboard: false,
+      keyboard: true,
     });
   }
 }

@@ -8,11 +8,19 @@
   <form [formGroup]="formOgzOcr">
     <div class="form-container">
       <div class="row">
-        <div class="col-12">
-          <h5 style="padding-left: 5px; color: #888888">
-            Tải ảnh giấy tờ của chủ thuê bao mới
-          </h5>
-          <br />
+        <div class="col-12 mb-1">
+          <label>Loại giấy tờ:</label>
+          <select
+            name=""
+            id=""
+            class="form-control col-3"
+            formControlName="documentType"
+          >
+            <option value="" disabled selected>Chọn loại giấy tờ</option>
+            <option value="0">CCCD gắn chip</option>
+            <option value="5">CĂN CƯỚC</option>
+            <option value="1">CCCD mã vạch</option>
+          </select>
         </div>
         <div class="col-md-4">
           <div
@@ -32,8 +40,8 @@
               class="input-display-none"
               id="identification_front_file"
               type="file"
-              (change)="onSelectFileFront($event)"
-              fromControlName="identification_front_file"
+              (change)="onSelectFileFront($event, 'identification_front_file')"
+              formControlName="identification_front_file"
             />
           </div>
 
@@ -45,7 +53,7 @@
             />
 
             <button
-              (click)="onReUpload('front')"
+              (click)="onReUpload('imageFront')"
               type="button"
               class="btn btn-outline-primary btn-next"
               rippleEffect
@@ -72,15 +80,15 @@
               id="identification_back_file"
               class="input-display-none"
               type="file"
-              (change)="onSelectFileBack($event)"
-              fromControlName="identification_back_file"
+              (change)="onSelectFileBack($event, 'identification_back_file')"
+              formControlName="identification_back_file"
             />
           </div>
 
           <div class="image-preview" *ngIf="imageBack">
             <img [src]="imageBack" alt="" class="img-fluid img-margin-bottom" />
             <button
-              (click)="onReUpload('back')"
+              (click)="onReUpload('imageBack')"
               type="button"
               class="btn btn-outline-primary btn-next"
               rippleEffect
@@ -111,8 +119,10 @@
               type="file"
               class="form-control input-display-none"
               id="identification_selfie_file"
-              (change)="onSelectFileSelfie($event)"
-              fromControlName="identification_selife_file"
+              (change)="
+                onSelectFileSelfie($event, 'identification_selfie_file')
+              "
+              formControlName="identification_selife_file"
             />
           </div>
 
@@ -123,7 +133,7 @@
               class="img-fluid img-margin-bottom"
             />
             <button
-              (click)="onReUpload('selfie')"
+              (click)="onReUpload('imageSelfie')"
               type="button"
               class="btn btn-outline-primary btn-next"
               rippleEffect
@@ -155,304 +165,396 @@
   <div class="col-12">
     <h4 style="color: #888888">Thông tin chủ thuê bao mới</h4>
   </div>
-  <!-- <form [formGroup]="formOgzOcrBusiness"> -->
-  <div class="form-container">
-    <div class="row">
-      <div class="col-12 mb-1">
-        <label>Mã số doanh nghiệp</label>
-        <input type="text" />
-      </div>
-      <div class="col-12 mb-1">
-        <label>Tên doanh nghiệp</label>
-        <input type="text" />
-      </div>
-      <div class="col-12 mb-1">
-        <label>Đia chỉ</label>
-        <input type="text" />
-      </div>
-      <div class="col-12 mb-2 d-flex align-items-center" style="gap: 15px">
-        <label style="width: unset">Ảnh đăng ký doanh nghiệp</label>
-        <input
-          class="input-display-none"
-          id="business_registration_photo"
-          type="file"
-        />
-        <label for="business_registration_photo" style="width: unset">
+  <form [formGroup]="formOgzOcr">
+    <div class="form-container">
+      <div class="row">
+        <div class="col-12 mb-1">
+          <label>Mã số doanh nghiệp</label>
+          <input type="text" formControlName="businessCode" />
+        </div>
+        <div class="col-12 mb-1">
+          <label>Tên doanh nghiệp</label>
+          <input type="text" formControlName="businessName" />
+        </div>
+        <div class="col-12 mb-1">
+          <label>Đia chỉ</label>
+          <input type="text" formControlName="businessAddress" />
+        </div>
+        <div class="col-12 mb-2 d-flex align-items-center" style="gap: 15px">
+          <label style="width: unset">Ảnh đăng ký doanh nghiệp</label>
+          <input
+            class="input-display-none"
+            id="imgageRegisterBusiness"
+            (change)="onFileSelected($event, 'imgageRegisterBusiness')"
+            type="file"
+          />
+          <label for="imgageRegisterBusiness" style="width: unset">
+            <img
+              src="/assets/images/icons/icon-update-black.svg"
+              class="img-fluid"
+              style="width: 24px"
+              alt=""
+            />
+          </label>
+          <!-- <button
+            class="btn"
+            style="background: #ababab; color: #ffffff; border-radius: 10px"
+          >
+            Cập nhật
+          </button> -->
           <img
-            src="/assets/images/icons/icon-update-black.svg"
-            class="img-fluid"
-            style="width: 24px"
+            *ngIf="nameImgageRegisterBusiness"
+            src="/assets/images/icons/jpg.png"
             alt=""
           />
-        </label>
-        <button
-          class="btn"
-          style="background: #ababab; color: #ffffff; border-radius: 10px"
-        >
-          Cập nhật
-        </button>
-        <img src="/assets/images/icons/jpg.png" alt="" />
-        <p style="margin-bottom: unset">photo.jpg</p>
-      </div>
-      <div
-        class="col-md-12 mb-2"
-        style="border-top: 1px rgba(136, 136, 136, 1) solid"
-      ></div>
-      <div class="col-md-12 mb-1">
-        <label>Tên người đai diện</label>
-        <input type="text" />
-      </div>
-      <div class="col-md-4">
+          <p style="margin-bottom: unset">{{ nameImgageRegisterBusiness }}</p>
+        </div>
         <div
-          class="image-upload"
-          *ngIf="!imageFront"
-          style="text-align: center"
-        >
-          <label for="identification_front_file" style="width: unset">
-            <img
-              src="/assets/images/icons/cccd_front.png"
-              class="img-fluid img-margin-bottom"
-              alt=""
+          class="col-md-12 mb-2"
+          style="border-top: 1px rgba(136, 136, 136, 1) solid"
+        ></div>
+        <div class="col-md-12 mb-1 d-flex">
+          <div class="col-6 d-flex">
+            <label>Tên người đai diện</label>
+            <input
+              class="col-8"
+              type="text"
+              style="height: 38px"
+              formControlName="representativeName"
             />
-            <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
-          </label>
+          </div>
+
+          <div class="col-6 d-flex">
+            <label>Loại giấy tờ:</label>
+            <select
+              name=""
+              id=""
+              style="height: 38px"
+              class="form-control col-8"
+              formControlName="documentType"
+            >
+            <option value="" disabled selected>Chọn loại giấy tờ</option>
+              <option value="0">CCCD gắn chip</option>
+              <option value="5">CĂN CƯỚC</option>
+              <option value="1">CCCD mã vạch</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 mb-1">
+          <div
+            class="image-upload"
+            *ngIf="!imageFrontAuthorizer"
+            style="text-align: center"
+          >
+            <label for="card_front_authorizer" style="width: unset">
+              <img
+                src="/assets/images/icons/cccd_front.png"
+                class="img-fluid img-margin-bottom"
+                alt=""
+              />
+              <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
+            </label>
+            <input
+              class="input-display-none"
+              id="card_front_authorizer"
+              type="file"
+              (change)="onSelectFileFront($event, 'card_front_authorizer')"
+              formControlName="card_front_authorizer"
+            />
+          </div>
+
+          <div class="image-preview" *ngIf="imageFrontAuthorizer">
+            <img
+              [src]="imageFrontAuthorizer"
+              alt=""
+              class="img-fluid img-margin-bottom"
+            />
+
+            <button
+              (click)="onReUpload('imageFrontAuthorizer')"
+              type="button"
+              class="btn btn-outline-primary btn-next"
+              rippleEffect
+            >
+              <span class="align-middle">Tải lại</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4 mb-1">
+          <div
+            class="image-upload"
+            *ngIf="!imageBackAuthorizer"
+            style="text-align: center"
+          >
+            <label for="card_back_authorizer" style="width: unset">
+              <img
+                src="/assets/images/icons/cccd_back.png"
+                class="img-fluid img-margin-bottom"
+                alt=""
+              />
+              <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
+            </label>
+            <input
+              id="card_back_authorizer"
+              class="input-display-none"
+              type="file"
+              (change)="onSelectFileBack($event, 'card_back_authorizer')"
+              formControlName="card_back_authorizer"
+            />
+          </div>
+
+          <div class="image-preview" *ngIf="imageBackAuthorizer">
+            <img
+              [src]="imageBackAuthorizer"
+              alt=""
+              class="img-fluid img-margin-bottom"
+            />
+            <button
+              (click)="onReUpload('imageBackAuthorizer')"
+              type="button"
+              class="btn btn-outline-primary btn-next"
+              rippleEffect
+            >
+              <span class="align-middle">Tải lại</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4 mb-1">
+          <div
+            class="image-upload"
+            style="text-align: center"
+            *ngIf="!imageSelfieAuthorizer"
+          >
+            <label for="selfie_authorizer" style="width: unset">
+              <img
+                *ngIf="!imageSelfieAuthorizer"
+                src="/assets/images/icons/selfie.png"
+                class="img-fluid img-margin-bottom"
+                style="width: 200px"
+                alt=""
+              />
+              <h6 *ngIf="!imageSelfieAuthorizer" class="text-center">
+                Tải ảnh chân dung
+              </h6>
+            </label>
+            <input
+              type="file"
+              class="form-control input-display-none"
+              id="selfie_authorizer"
+              (change)="onSelectFileSelfie($event, 'selfie_authorizer')"
+              formControlName="selfie_authorizer"
+            />
+          </div>
+
+          <div class="image-preview" *ngIf="imageSelfieAuthorizer">
+            <img
+              [src]="imageSelfieAuthorizer"
+              alt=""
+              class="img-fluid img-margin-bottom"
+            />
+            <button
+              (click)="onReUpload('imageSelfieAuthorizer')"
+              type="button"
+              class="btn btn-outline-primary btn-next"
+              rippleEffect
+            >
+              <span class="align-middle">Tải lại</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-12 mb-2 d-flex align-items-center" style="gap: 15px">
+          <label style="width: unset">Giấy ủy quyền của người đại diện</label>
           <input
             class="input-display-none"
-            id="identification_front_file"
+            id="imagePowerOfAttorney"
+            (change)="onFileSelected($event, 'imagePowerOfAttorney')"
             type="file"
-            (change)="onSelectFileFront($event)"
-            fromControlName="identification_front_file"
           />
-        </div>
-
-        <div class="image-preview" *ngIf="imageFront">
-          <img [src]="imageFront" alt="" class="img-fluid img-margin-bottom" />
-
-          <button
-            (click)="onReUpload('front')"
-            type="button"
-            class="btn btn-outline-primary btn-next"
-            rippleEffect
-          >
-            <span class="align-middle">Tải lại</span>
-          </button>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="image-upload" *ngIf="!imageBack" style="text-align: center">
-          <label for="identification_back_file" style="width: unset">
+          <label style="width: unset" for="imagePowerOfAttorney">
             <img
-              src="/assets/images/icons/cccd_back.png"
-              class="img-fluid img-margin-bottom"
+              src="/assets/images/icons/icon-update-black.svg"
+              class="img-fluid"
+              style="width: 24px"
               alt=""
             />
-            <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
           </label>
-          <input
-            id="identification_back_file"
-            class="input-display-none"
-            type="file"
-            (change)="onSelectFileBack($event)"
-            fromControlName="identification_back_file"
-          />
-        </div>
-
-        <div class="image-preview" *ngIf="imageBack">
-          <img [src]="imageBack" alt="" class="img-fluid img-margin-bottom" />
-          <button
-            (click)="onReUpload('back')"
-            type="button"
-            class="btn btn-outline-primary btn-next"
-            rippleEffect
+          <!-- <button
+            class="btn"
+            style="background: #ababab; color: #ffffff; border-radius: 10px"
           >
-            <span class="align-middle">Tải lại</span>
-          </button>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div
-          class="image-upload"
-          style="text-align: center"
-          *ngIf="!imageSelfie"
-        >
-          <label for="identification_selfie_file" style="width: unset">
-            <img
-              *ngIf="!imageSelfie"
-              src="/assets/images/icons/selfie.png"
-              class="img-fluid img-margin-bottom"
-              style="width: 200px"
-              alt=""
-            />
-            <h6 *ngIf="!imageSelfie" class="text-center">Tải ảnh chân dung</h6>
-          </label>
-          <input
-            type="file"
-            class="form-control input-display-none"
-            id="identification_selfie_file"
-            (change)="onSelectFileSelfie($event)"
-            fromControlName="identification_selife_file"
-          />
-        </div>
-
-        <div class="image-preview" *ngIf="imageSelfie">
-          <img [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom" />
-          <button
-            (click)="onReUpload('selfie')"
-            type="button"
-            class="btn btn-outline-primary btn-next"
-            rippleEffect
-          >
-            <span class="align-middle">Tải lại</span>
-          </button>
-        </div>
-      </div>
-      <div class="col-12 mb-2 d-flex align-items-center" style="gap: 15px">
-        <label style="width: unset">Giấy ủy quyền của người đại diện</label>
-        <input
-          class="input-display-none"
-          id="business_registration_photo"
-          type="file"
-        />
-        <label style="width: unset" for="business_registration_photo">
+            Cập nhật
+          </button> -->
           <img
-            src="/assets/images/icons/icon-update-black.svg"
-            class="img-fluid"
-            style="width: 24px"
+            *ngIf="nameImagePowerOfAttorney"
+            src="/assets/images/icons/jpg.png"
             alt=""
           />
-        </label>
-        <button
-          class="btn"
-          style="background: #ababab; color: #ffffff; border-radius: 10px"
-        >
-          Cập nhật
-        </button>
-        <img src="/assets/images/icons/jpg.png" alt="" />
-        <p style="margin-bottom: unset">photo.jpg</p>
-      </div>
-      <div
-        class="col-md-12 mb-2"
-        style="border-top: 1px rgba(136, 136, 136, 1) solid"
-      ></div>
-      <div class="col-md-12 mb-1">
-        <label>Tên người sử dụng</label>
-        <input type="text" />
-      </div>
-      <div class="col-md-4">
+          <p style="margin-bottom: unset">{{ nameImagePowerOfAttorney }}</p>
+        </div>
         <div
-          class="image-upload"
-          *ngIf="!imageFront"
-          style="text-align: center"
-        >
-          <label for="identification_front_file" style="width: unset">
-            <img
-              src="/assets/images/icons/cccd_front.png"
-              class="img-fluid img-margin-bottom"
-              alt=""
+          class="col-md-12 mb-2"
+          style="border-top: 1px rgba(136, 136, 136, 1) solid"
+        ></div>
+        <div class="col-md-12 mb-1 d-flex">
+          <div class="col-6 d-flex">
+            <label>Tên người sử dụng</label>
+            <input
+              type="text"
+              class="col-8"
+              style="height: 38px"
+              formControlName="userFullName"
             />
-            <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
-          </label>
-          <input
-            class="input-display-none"
-            id="identification_front_file"
-            type="file"
-            (change)="onSelectFileFront($event)"
-            fromControlName="identification_front_file"
-          />
+          </div>
+
+          <div class="col-6 d-flex">
+            <label>Loại giấy tờ:</label>
+            <select
+              name=""
+              id=""
+              style="height: 38px"
+              class="form-control col-8"
+              formControlName="documentTypeUser"
+            >
+              <option value="" disabled selected>Chọn loại giấy tờ</option>
+              <option value="0">CCCD gắn chip</option>
+              <option value="5">CĂN CƯỚC</option>
+              <option value="1">CCCD mã vạch</option>
+            </select>
+          </div>
         </div>
-
-        <div class="image-preview" *ngIf="imageFront">
-          <img [src]="imageFront" alt="" class="img-fluid img-margin-bottom" />
-
-          <button
-            (click)="onReUpload('front')"
-            type="button"
-            class="btn btn-outline-primary btn-next"
-            rippleEffect
+        <div class="col-md-4">
+          <div
+            class="image-upload"
+            *ngIf="!imageFrontUser"
+            style="text-align: center"
           >
-            <span class="align-middle">Tải lại</span>
+            <label for="card_front_user" style="width: unset">
+              <img
+                src="/assets/images/icons/cccd_front.png"
+                class="img-fluid img-margin-bottom"
+                alt=""
+              />
+              <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
+            </label>
+            <input
+              class="input-display-none"
+              id="card_front_user"
+              type="file"
+              (change)="onSelectFileFront($event, 'card_front_user')"
+              formControlName="card_front_user"
+            />
+          </div>
+
+          <div class="image-preview" *ngIf="imageFrontUser">
+            <img
+              [src]="imageFrontUser"
+              alt=""
+              class="img-fluid img-margin-bottom"
+            />
+
+            <button
+              (click)="onReUpload('imageFrontUser')"
+              type="button"
+              class="btn btn-outline-primary btn-next"
+              rippleEffect
+            >
+              <span class="align-middle">Tải lại</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div
+            class="image-upload"
+            *ngIf="!imageBackUser"
+            style="text-align: center"
+          >
+            <label for="card_back_user" style="width: unset">
+              <img
+                src="/assets/images/icons/cccd_back.png"
+                class="img-fluid img-margin-bottom"
+                alt=""
+              />
+              <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
+            </label>
+            <input
+              id="card_back_user"
+              class="input-display-none"
+              type="file"
+              (change)="onSelectFileBack($event, 'card_back_user')"
+              formControlName="card_back_user"
+            />
+          </div>
+
+          <div class="image-preview" *ngIf="imageBackUser">
+            <img
+              [src]="imageBackUser"
+              alt=""
+              class="img-fluid img-margin-bottom"
+            />
+            <button
+              (click)="onReUpload('imageBackUser')"
+              type="button"
+              class="btn btn-outline-primary btn-next"
+              rippleEffect
+            >
+              <span class="align-middle">Tải lại</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div
+            class="image-upload"
+            style="text-align: center"
+            *ngIf="!imageSelfieUser"
+          >
+            <label for="selfie_user" style="width: unset">
+              <img
+                *ngIf="!imageSelfieUser"
+                src="/assets/images/icons/selfie.png"
+                class="img-fluid img-margin-bottom"
+                style="width: 200px"
+                alt=""
+              />
+              <h6 *ngIf="!imageSelfieUser" class="text-center">
+                Tải ảnh chân dung
+              </h6>
+            </label>
+            <input
+              type="file"
+              class="form-control input-display-none"
+              id="selfie_user"
+              (change)="onSelectFileSelfie($event, 'selfie_user')"
+              formControlName="selfie_user"
+            />
+          </div>
+          <div class="image-preview" *ngIf="imageSelfieUser">
+            <img
+              [src]="imageSelfieUser"
+              alt=""
+              class="img-fluid img-margin-bottom"
+            />
+            <button
+              (click)="onReUpload('imageSelfieUser')"
+              type="button"
+              class="btn btn-outline-primary btn-next"
+              rippleEffect
+            >
+              <span class="align-middle">Tải lại</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-12 d-flex justify-content-center">
+          <button
+            type="button"
+            (click)="updateInformation()"
+            class="btn col-md-3 btn-block btn-success btn-next"
+            rippleEffect
+            style="margin-top: 20px; border-radius: 12px"
+          >
+            <span class="align-middle">Xác nhận</span>
           </button>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="image-upload" *ngIf="!imageBack" style="text-align: center">
-          <label for="identification_back_file" style="width: unset">
-            <img
-              src="/assets/images/icons/cccd_back.png"
-              class="img-fluid img-margin-bottom"
-              alt=""
-            />
-            <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
-          </label>
-          <input
-            id="identification_back_file"
-            class="input-display-none"
-            type="file"
-            (change)="onSelectFileBack($event)"
-            fromControlName="identification_back_file"
-          />
-        </div>
-
-        <div class="image-preview" *ngIf="imageBack">
-          <img [src]="imageBack" alt="" class="img-fluid img-margin-bottom" />
-          <button
-            (click)="onReUpload('back')"
-            type="button"
-            class="btn btn-outline-primary btn-next"
-            rippleEffect
-          >
-            <span class="align-middle">Tải lại</span>
-          </button>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div
-          class="image-upload"
-          style="text-align: center"
-          *ngIf="!imageSelfie"
-        >
-          <label for="identification_selfie_file" style="width: unset">
-            <img
-              *ngIf="!imageSelfie"
-              src="/assets/images/icons/selfie.png"
-              class="img-fluid img-margin-bottom"
-              style="width: 200px"
-              alt=""
-            />
-            <h6 *ngIf="!imageSelfie" class="text-center">Tải ảnh chân dung</h6>
-          </label>
-          <input
-            type="file"
-            class="form-control input-display-none"
-            id="identification_selfie_file"
-            (change)="onSelectFileSelfie($event)"
-            fromControlName="identification_selife_file"
-          />
-        </div>
-        <div class="image-preview" *ngIf="imageSelfie">
-          <img [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom" />
-          <button
-            (click)="onReUpload('selfie')"
-            type="button"
-            class="btn btn-outline-primary btn-next"
-            rippleEffect
-          >
-            <span class="align-middle">Tải lại</span>
-          </button>
-        </div>
-      </div>
-      <div class="col-md-12 d-flex justify-content-center">
-        <button
-          type="button"
-          (click)="updateInformation()"
-          class="btn col-md-3 btn-block btn-success btn-next"
-          rippleEffect
-          style="margin-top: 20px; border-radius: 12px"
-        >
-          <span class="align-middle">Xác nhận</span>
-        </button>
       </div>
     </div>
-  </div>
-  <!-- </form> -->
+  </form>
 </div>

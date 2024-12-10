@@ -44,6 +44,10 @@ export class TelecomService {
     return this._http.get<any>(url);
   }
 
+  postOwnershipTransfer(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/ownership-transfer`, data);
+  }
+
   /**
  * Xem lich su thanh toan
  */

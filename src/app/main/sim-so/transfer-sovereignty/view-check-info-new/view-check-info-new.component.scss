@@ -4,6 +4,7 @@
   }
   input {
     width: calc(100% - 100px);
+    text-overflow: ellipsis; 
   }
   select {
     width: calc(100% - 100px);
@@ -25,12 +26,20 @@ label {
   margin-right: 5px;
 }
 
-p{
-    margin-bottom: unset;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
+.name-image {
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+}
+
+p {
+  margin-bottom: unset;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 span {

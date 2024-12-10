@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { TelecomService } from "app/auth/service/telecom.service";
 import { SweetAlertService } from "app/utils/sweet-alert.service";
+import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 @Component({
   selector: "app-transfer-sovereignty-new-owner",
@@ -22,6 +23,12 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
   imageFrontUser;
   imageBackUser;
   imageSelfieUser;
+  imagePowerOfAttorney;
+  imgageRegisterBusiness;
+  nameImagePowerOfAttorney;
+  nameImgageRegisterBusiness;
+  base64File: string | null = null;
+  @BlockUI("section-block") itemBlockUI: NgBlockUI;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,8 +37,6 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.select);
-    console.log("data", this.data);
     this.initForm();
   }
 
@@ -78,7 +83,7 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
       const regex = /^.*base64,/i;
       if (name == "identification_front_file") {
         this.formOgzOcr.controls["identification_front_file"].setValue(
-          this.imageBack.replace(regex, "")
+          this.imageFront.replace(regex, "")
         );
       } else if (name == "card_front_authorizer") {
         this.formOgzOcr.controls["card_front_authorizer"].setValue(
@@ -121,105 +126,215 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
     }
   }
 
+  readFileAsBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async onFileSelected(event: Event, nameFile: string): Promise<void> {
+    const input = event.target as HTMLInputElement;
+  
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+  
+      try {
+        let base64String = await this.readFileAsBase64(file);
+  
+        if (nameFile === "imagePowerOfAttorney") {
+          this.nameImagePowerOfAttorney = file.name;
+          this.imagePowerOfAttorney = base64String;
+  
+          // Sử dụng dữ liệu khi đã có
+          console.log("Base64 String for Power of Attorney:", this.imagePowerOfAttorney);
+        } else if(nameFile === "imgageRegisterBusiness"){
+          this.nameImgageRegisterBusiness = file.name;
+          this.imgageRegisterBusiness = base64String;
+  
+        }
+      } catch (error) {
+        console.error("Error reading file as Base64:", error);
+      }
+    } else {
+      console.warn("No file selected.");
+    }
+  }
+
   updateInformation() {
     let data;
     if (this.select.id == 0) {
       if (!this.formOgzOcr.value.identification_back_file) {
-        this.alertService.showMess("Vui lòng không để trống ảnh CMND/CCCD mặt sau");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh CMND/CCCD mặt sau"
+        );
         return;
       }
       if (!this.formOgzOcr.value.identification_front_file) {
-        this.alertService.showMess("Vui lòng không để trống ảnh CMND/CCCD mặt trước");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh CMND/CCCD mặt trước"
+        );
         return;
       }
       if (!this.formOgzOcr.value.identification_selfie_file) {
-        this.alertService.showMess("Vui lòng không để trống ảnh chân dung");
+        this.alertService.showMess("Vui lòng không để chống ảnh chân dung");
+        return;
+      }
+      if (!this.formOgzOcr.value.documentType) {
+        this.alertService.showMess("Vui lòng chọn loại thẻ căn cước");
         return;
       }
       data = {
         task_id: this.data.task_id,
         personal: {
-          card_front:this.formOgzOcr.value.identification_front_file,
-          card_back:this.formOgzOcr.value.identification_back_file,
-          selfie:this.formOgzOcr.value.identification_selfie_file
+          card_front: this.formOgzOcr.value.identification_front_file,
+          card_back: this.formOgzOcr.value.identification_back_file,
+          selfie: this.formOgzOcr.value.identification_selfie_file,
         },
-        ownerType: 1
-      }
+        documentType: this.formOgzOcr.value.documentType == 5 ? 5 : "",
+        ownerType: 1,
+      };
     } else {
       if (!this.formOgzOcr.value.businessName) {
-        this.alertService.showMess("Vui lòng không để trống tên doanh nghiệp");
+        this.alertService.showMess("Vui lòng không để chống tên doanh nghiệp");
         return;
       }
       if (!this.formOgzOcr.value.businessCode) {
-        this.alertService.showMess("Vui lòng không để trống mã công ty");
+        this.alertService.showMess("Vui lòng không để chống mã công ty");
         return;
       }
       if (!this.formOgzOcr.value.businessAddress) {
-        this.alertService.showMess("Vui lòng không để trống địa chỉ");
+        this.alertService.showMess("Vui lòng không để chống địa chỉ");
         return;
       }
       if (!this.formOgzOcr.value.representativeName) {
-        this.alertService.showMess("Vui lòng không để trống tên người đại diện");
+        this.alertService.showMess(
+          "Vui lòng không để chống tên người đại diện"
+        );
         return;
       }
       if (!this.formOgzOcr.value.card_front_authorizer) {
-        this.alertService.showMess("Vui lòng không để trống ảnh CMND/CCCD mặt trước người đại diện");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh CMND/CCCD mặt trước người đại diện"
+        );
         return;
       }
       if (!this.formOgzOcr.value.card_back_authorizer) {
-        this.alertService.showMess("Vui lòng không để trống ảnh CMND/CCCD mặt sau người đại diện");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh CMND/CCCD mặt sau người đại diện"
+        );
         return;
       }
       if (!this.formOgzOcr.value.selfie_authorizer) {
-        this.alertService.showMess("Vui lòng không để trống ảnh chân dung người đại diện");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh chân dung người đại diện"
+        );
         return;
       }
       if (!this.formOgzOcr.value.card_front_user) {
-        this.alertService.showMess("Vui lòng không để trống ảnh CMND/CCCD mặt trước người sử dụng");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh CMND/CCCD mặt trước người sử dụng"
+        );
         return;
       }
       if (!this.formOgzOcr.value.card_back_user) {
-        this.alertService.showMess("Vui lòng không để trống ảnh CMND/CCCD mặt sau người sử dụng");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh CMND/CCCD mặt sau người sử dụng"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.documentType) {
+        this.alertService.showMess(
+          "Vui lòng chọn loại thẻ căn cước của người đại diện"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.documentTypeUser) {
+        this.alertService.showMess(
+          "Vui lòng chọn loại thẻ căn cước của người sử dụng"
+        );
         return;
       }
       if (!this.formOgzOcr.value.selfie_user) {
-        this.alertService.showMess("Vui lòng không để trống ảnh chân dung người sử dụng");
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh chân dung người sử dụng"
+        );
         return;
       }
       if (!this.formOgzOcr.value.userFullName) {
-        this.alertService.showMess("Vui lòng không để trống tên người sửa dụng");
+        this.alertService.showMess(
+          "Vui lòng không để chống tên người sửa dụng"
+        );
+        return;
+      }
+      if (!this.imagePowerOfAttorney) {
+        this.alertService.showMess("Vui lòng không để chống ảnh giấy ủy quyền");
+        return;
+      }
+      if (!this.imgageRegisterBusiness) {
+        this.alertService.showMess(
+          "Vui lòng không để chống ảnh đăng kí doanh nghiệp"
+        );
         return;
       }
       data = {
         task_id: this.data.task_id,
         business: {
-          businessName:this.formOgzOcr.value.businessName,
-          businessCode:this.formOgzOcr.value.businessCode,
-          businessAddress:this.formOgzOcr.value.businessAddress,
-          representativeName:this.formOgzOcr.value.representativeName,
-          card_front_authorizer:this.formOgzOcr.value.card_front_authorizer,
-          card_back_authorizer:this.formOgzOcr.value.card_back_authorizer,   
-          selfie_authorizer:this.formOgzOcr.value.selfie_authorizer,
-          card_front_user:this.formOgzOcr.value.card_front_user,
-          card_back_user:this.formOgzOcr.value.card_back_user,
-          selfie_user:this.formOgzOcr.value.selfie_user,
-          userFullName:this.formOgzOcr.value.userFullName
+          businessName: this.formOgzOcr.value.businessName,
+          businessCode: this.formOgzOcr.value.businessCode,
+          businessAddress: this.formOgzOcr.value.businessAddress,
+          representativeName: this.formOgzOcr.value.representativeName,
+          card_front_authorizer: this.formOgzOcr.value.card_front_authorizer,
+          card_back_authorizer: this.formOgzOcr.value.card_back_authorizer,
+          selfie_authorizer: this.formOgzOcr.value.selfie_authorizer,
+          card_front_user: this.formOgzOcr.value.card_front_user,
+          card_back_user: this.formOgzOcr.value.card_back_user,
+          selfie_user: this.formOgzOcr.value.selfie_user,
+          userFullName: this.formOgzOcr.value.userFullName,
         },
-        ownerType: 2
-      }
+        documentType:
+          this.formOgzOcr.value.documentType == 5 ||
+          this.formOgzOcr.value.documentTypeUser == 5
+            ? 5
+            : "",
+        ownerType: 2,
+      };
     }
+    this.itemBlockUI.start();
     this.telecomService.postFileUploadOcr(data).subscribe(
       (res: any) => {
         if (res.status == 1) {
-          this.dataSplit.emit({
-            image: data,
-            data: res.data,
-          });
+          if (this.select.id == 0) {
+            this.dataSplit.emit({
+              image: data,
+              data: res.data,
+              task_id: this.data.task_id,
+            });
+          } else {
+            this.dataSplit.emit({
+              image: data,
+              data: res.data,
+              task_id: this.data.task_id,
+              powerOfAttorney: {
+                imagePowerOfAttorney: this.imagePowerOfAttorney,
+                nameImagePowerOfAttorney: this.nameImagePowerOfAttorney
+              },
+              registerBusiness:{
+                nameImgageRegisterBusiness: this.nameImgageRegisterBusiness,
+                imgageRegisterBusiness: this.imgageRegisterBusiness
+              }
+            });
+          }
+          this.itemBlockUI.stop();
         } else {
+          this.itemBlockUI.stop();
           this.alertService.showMess(res.message);
         }
       },
       (err) => {
+        this.itemBlockUI.stop();
         this.alertService.showError(err);
       }
     );
@@ -230,7 +345,8 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
       identification_back_file: ["", Validators.required],
       identification_front_file: ["", Validators.required],
       identification_selfie_file: ["", Validators.required],
-
+      documentType: ["", Validators.required],
+      documentTypeUser: ["", Validators.required],
       businessName: ["", Validators.required],
       businessCode: ["", Validators.required],
       businessAddress: ["", Validators.required],
