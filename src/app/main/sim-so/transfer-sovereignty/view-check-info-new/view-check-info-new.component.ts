@@ -207,7 +207,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
   submit() {
     let data;
     console.log(this.formOgzOcr);
-    
+
     if (this.select.id == 0) {
       if (!this.data?.image?.personal?.card_back) {
         this.alertService.showMess(
@@ -228,11 +228,9 @@ export class ViewCheckInfoNewComponent implements OnInit {
       if (!this.formOgzOcr.value.identificationTypeUser) {
         this.alertService.showMess("Vui lòng chọn loại thẻ căn cước");
         return;
-      };
+      }
       if (!this.formOgzOcr.value.identificationNoUser) {
-        this.alertService.showMess(
-          "Vui lòng không để chống số giấy tờ"
-        );
+        this.alertService.showMess("Vui lòng không để chống số giấy tờ");
         return;
       }
       if (!this.formOgzOcr.value.identificationDateUser) {
@@ -244,9 +242,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
         return;
       }
       if (!this.formOgzOcr.value.userFullName) {
-        this.alertService.showMess(
-          "Vui lòng không để chống họ và tên"
-        );
+        this.alertService.showMess("Vui lòng không để chống họ và tên");
         return;
       }
       if (!this.formOgzOcr.value.birthUser) {
@@ -260,21 +256,30 @@ export class ViewCheckInfoNewComponent implements OnInit {
       data = {
         task_id: this.data.task_id,
         customer_type: "PERSONAL",
+        msisdn: this.mobileSearch,
         people: {
           identification_type: this.formOgzOcr.value.identificationTypeUser,
           identification_no: this.formOgzOcr.value.identificationNoUser,
-          identification_date: this.formOgzOcr.value.identificationDateUser,
+          identification_date: Math.floor(
+            new Date(
+              this.formOgzOcr.value.identificationDateUser
+                .split("-")
+                .reverse()
+                .join("-")
+            ).getTime() / 1000
+          ),
           identification_place: this.formOgzOcr.value.identificationPlaceUser,
           name: this.formOgzOcr.value.userFullName,
-          birth: this.formOgzOcr.value.birthUser,
+          birth: Math.floor(
+            new Date(
+              this.formOgzOcr.value.birthUser.split("-").reverse().join("-")
+            ).getTime() / 1000
+          ),
           mobile: this.mobileSearch,
           full_address: this.formOgzOcr.value.fullAddressUser,
-          identification_front_file:
-            this.data?.image?.personal?.card_front,
-          identification_back_file:
-            this.data?.image?.personal?.card_back,
-          identification_selfie_file:
-            this.data?.image?.personal?.selfie,
+          identification_front_file: this.data?.image?.personal?.card_front,
+          identification_back_file: this.data?.image?.personal?.card_back,
+          identification_selfie_file: this.data?.image?.personal?.selfie,
         },
       };
     }
@@ -283,7 +288,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
       (res) => {
         if (res.status == 1) {
           this.itemBlockUI.stop();
-          this.alertService.showMess(res.message);
+          this.alertService.showMess('Chuyển đổi chủ quyền cho thuê bao ' + this.mobileSearch + ' thành công');
           this.closePopup.next();
         } else {
           this.itemBlockUI.stop();
