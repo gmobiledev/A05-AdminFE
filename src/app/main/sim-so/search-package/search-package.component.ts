@@ -34,7 +34,7 @@ export class SearchPackageComponent implements OnInit {
   onSubmitSearch() {
     console.log(this.searchSim);
     this.itemBlockUI.start();
-    this.telecomService.getDetailTTTB(this.searchSim).subscribe(res => {
+    this.telecomService.getSearchPackage(this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;

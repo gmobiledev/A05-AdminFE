@@ -66,7 +66,7 @@ export class TelecomService {
   }
 
   getSearchPackage(params = null) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/api/msisdn/lookup/package`, { params: params });
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/lookup/package`, { params: params });
   }
 
   getDetailSimDVKH(params = null) {
