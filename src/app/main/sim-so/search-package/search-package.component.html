@@ -1,0 +1,118 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+      <div class="row" id="table-striped">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Tra cứu chi tiết TTTB</h4>
+            </div>
+  
+            <div class="card-body">
+              <form (ngSubmit)="onSubmitSearch()">
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="form-group">
+                      <input type="text" name="mobile" [(ngModel)]="searchSim.mobile" class="form-control"
+                        placeholder="Tìm kiếm" />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-block btn-info">
+                        Lọc kết quả <span [data-feather]="'search'"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+  
+              <div>
+  
+                <div class="table-responsive mt-1" *blockUI="'section-block'">
+                  <table class="table table-striped text-nowrap" *ngIf="item">
+  
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>GMOBILE</th>
+                        <th>{{item?.gmobile?.info?.mno}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td> 
+                          <b>Gói cước</b>
+                        </td>
+                        <td>
+                          {{ item.gmobile?.packages?.package ?? "_" }}
+                        </td>
+                        <td>
+                          {{ item?.other?.packages[0]?.package === null ? "_" : item?.other?.packages[0]?.package ?? "_" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Thời gian đăng ký</b>
+                        </td>
+                        <td>
+                          <!-- {{ item.gmobile?.packages[0]?.timeStart ?? "_" }} -->
+                        </td>
+                        <td>
+                          {{ item?.other?.packages[0]?.timeStart === null ? "_" : item?.other?.packages[0]?.timeStart ?? "_" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Thời gian hết hạn</b>
+                        </td>
+                        <td>
+                          <!-- {{ item.gmobile?.packages[0]?.timeEnd ?? "_" }} -->
+                        </td>
+                        <td>
+                          {{ item?.other?.packages[0]?.timeEnd === null ? "_" : item?.other?.packages[0]?.timeEnd ?? "_" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Gia hạn</b>
+                        </td>
+                        <td>
+                          <!-- {{ item.gmobile?.packages[0]?.extension ?? "_" }} -->
+                        </td>
+                        <td>
+                          {{ item?.other?.packages[0]?.extension === null ? "_" : item?.other?.packages[0]?.extension ?? "_" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Tổng Data</b>
+                        </td>
+                        <td>
+                          {{ item.gmobile?.packages[0]?.dataTotal ? item.gmobile?.packages[0]?.dataTotal + ' MB' : "_" }}
+                        </td>
+                        <td>
+                          {{ item?.other?.packages[0]?.dataTotal ? item.other?.packages[0]?.dataTotal + ' MB' : "_" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Data còn lại</b>
+                        </td>
+                        <td>
+                          {{ item.gmobile?.packages[0]?.dataRemain ? item.gmobile?.packages[0]?.dataRemain + ' MB' : "_" }}
+                        </td>
+                        <td>
+                          {{ item?.other?.packages[0]?.dataRemain ? item.other?.packages[0]?.dataRemain + ' MB' : "_" }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
