@@ -62,7 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private _coreTranslationService: CoreTranslationService,
     private _translateService: TranslateService,
     private _networkService: NetworkService,
-    private snackBar: MatSnackBar
+    // private snackBar: MatSnackBar
   ) {
     // Get the application main menu
     this.menu = menu.map(obj => ({...obj}));
@@ -94,34 +94,34 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
 
-    //  // Subscribe to network status
-    // this._networkService.isOnline$.subscribe(status => {
-    //   this.isOnline = status;
-    //   if (!status) {
-    //     alert('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!');
-    //   } else {
-    //     console.log('Kết nối mạng đã được khôi phục.');
-    //   }
-    // });
-
+     // Subscribe to network status
     this._networkService.isOnline$.subscribe(status => {
       this.isOnline = status;
       if (!status) {
-        this.snackBar.open('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!', 'OK', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['offline-snackbar']
-        });
+        alert('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!');
       } else {
-        this.snackBar.open('Kết nối mạng đã được khôi phục!', '', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['online-snackbar']
-        });
+        console.log('Kết nối mạng đã được khôi phục.');
       }
     });
+
+    // this._networkService.isOnline$.subscribe(status => {
+    //   this.isOnline = status;
+    //   if (!status) {
+    //     this.snackBar.open('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!', 'OK', {
+    //       duration: 5000,
+    //       horizontalPosition: 'center',
+    //       verticalPosition: 'top',
+    //       panelClass: ['offline-snackbar']
+    //     });
+    //   } else {
+    //     this.snackBar.open('Kết nối mạng đã được khôi phục!', '', {
+    //       duration: 3000,
+    //       horizontalPosition: 'center',
+    //       verticalPosition: 'top',
+    //       panelClass: ['online-snackbar']
+    //     });
+    //   }
+    // });
   
     // Init wave effect (Ripple effect)
     Waves.init();
