@@ -58,6 +58,10 @@ export class InfoESimComponent implements OnInit {
   }
 
   onSubmit(type) {
+    // Trim msisdn and package before submitting
+    this.dataPost.serial = this.dataPost.serial.trim();
+    this.dataPost.package = this.dataPost.package.trim();
+
     if (!this.dataPost.serial || !this.dataPost.package) {
       this.alertService.showMess("Vui lòng chọn Xem chi tiết eSIM/SIM và nhập STB/Serial!");
       return;

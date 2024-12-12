@@ -44,26 +44,37 @@ export class SearchSubscriptionComponent implements OnInit {
       return obj;
     }, {});
   }
+
   onSubmitSearch() {
-    // this.itemBlockUI.start();
+    // Trim id_no and name to remove leading and trailing whitespaces
+    this.searchSim.id_no = this.searchSim.id_no.trim();
+    this.searchSim.name = this.searchSim.name.trim();
+  
+    // Check if both id_no and name are empty
+    if (!this.searchSim.id_no && !this.searchSim.name) {
+      this.alertService.showMess("Vui lòng nhập thông tin tìm kiếm!");
+      return;
+    }
+  
     this.telecomService.searchSubscription({
       id_no: this.searchSim.id_no,
       name: this.searchSim.name
-    }).subscribe(res => {
-      if (!res.status) {
-        this.alertService.showMess(res.message);
-        return;
+    }).subscribe(
+      res => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.item = res.data.items;
+        this.totalItems = res.data.count;
+        this.showMessage = this.item.length === 0;
+      }, 
+      err => {
+        this.showMessage = true;
       }
-      this.item = res.data.items;
-      this.totalItems = res.data.count;
-      this.showMessage = false;
-      // this.alertService.showSuccess(res.message);
-    }, err => {
-      // this.alertService.showMess(err);
-      this.showMessage = true;
-    })
-
+    );
   }
+
   ngOnInit(): void {
     this.getData();
   }

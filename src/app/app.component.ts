@@ -19,13 +19,15 @@ import { locale as menuEnglish } from 'app/menu/i18n/en';
 import { locale as menuFrench } from 'app/menu/i18n/fr';
 import { locale as menuGerman } from 'app/menu/i18n/de';
 import { locale as menuPortuguese } from 'app/menu/i18n/pt';
-
+import { NetworkService } from './auth/service/network.service';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
+  isOnline: boolean;
   coreConfig: any;
   menu: any;
   defaultLanguage: 'vi'; // This language will be used as a fallback when a translation isn't found in the current language
@@ -58,7 +60,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private _coreLoadingScreenService: CoreLoadingScreenService,
     private _coreMenuService: CoreMenuService,
     private _coreTranslationService: CoreTranslationService,
-    private _translateService: TranslateService
+    private _translateService: TranslateService,
+    private _networkService: NetworkService,
+    // private snackBar: MatSnackBar
   ) {
     // Get the application main menu
     this.menu = menu.map(obj => ({...obj}));
@@ -89,6 +93,40 @@ export class AppComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
+
+
+     // Subscribe to network status
+    this._networkService.isOnline$.subscribe(status => {
+      console.log(status);
+
+      this.isOnline = status;
+      if (!status) {
+        console.log('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!');
+        alert('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!');
+      } else {
+        console.log('Kết nối mạng đã được khôi phục.');
+      }
+    });
+
+    // this._networkService.isOnline$.subscribe(status => {
+    //   this.isOnline = status;
+    //   if (!status) {
+    //     this.snackBar.open('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!', 'OK', {
+    //       duration: 5000,
+    //       horizontalPosition: 'center',
+    //       verticalPosition: 'top',
+    //       panelClass: ['offline-snackbar']
+    //     });
+    //   } else {
+    //     this.snackBar.open('Kết nối mạng đã được khôi phục!', '', {
+    //       duration: 3000,
+    //       horizontalPosition: 'center',
+    //       verticalPosition: 'top',
+    //       panelClass: ['online-snackbar']
+    //     });
+    //   }
+    // });
+  
     // Init wave effect (Ripple effect)
     Waves.init();
 

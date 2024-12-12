@@ -58,29 +58,36 @@ export class HistoryTopupComponent implements OnInit {
   
 
   onSubmitSearch() {
+    // Trim the msisdn to remove leading and trailing whitespaces
+    this.searchSim.msisdn = this.searchSim.msisdn.trim();
+  
     if (!this.searchSim.from || !this.searchSim.to) {
       this.alertService.showMess("Vui lòng chọn ngày tháng!");
       return;
     }
+  
     if (!this.searchSim.msisdn) {
       this.alertService.showMess("Vui lòng nhập STB!");
       return;
     }
-
-    this.telecomService.getBalanceTopupSimDVKH(this.searchSim.msisdn, this.searchSim).subscribe(res => {
-      this.itemBlockUI.stop();
-      if (res.data && Object.keys(res.data).length > 0) {
-        this.showMessage = false;
-        this.list = res.data;
-      } else if (!res.data || Object.keys(res.data).length === 0) {
-        this.list = null
-        this.showMessage = true;
+  
+    this.itemBlockUI.start(); // Add start to block UI during search
+    this.telecomService.getBalanceTopupSimDVKH(this.searchSim.msisdn, this.searchSim).subscribe(
+      res => {
+        this.itemBlockUI.stop();
+        if (res.data && Object.keys(res.data).length > 0) {
+          this.showMessage = false;
+          this.list = res.data;
+        } else {
+          this.list = null;
+          this.showMessage = true;
+        }
+      }, 
+      err => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
       }
-
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+    );
   }
 
   ngOnInit(): void {

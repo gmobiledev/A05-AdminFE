@@ -44,25 +44,42 @@ export class SearchSimSoComponent implements OnInit {
       return obj;
     }, {});
   }
-  onSubmitSearch() {
-    console.log(this.searchSim);
-    this.itemBlockUI.start();
-    this.telecomService.getDetailSim(this.searchSim).subscribe(res => {
-      this.itemBlockUI.stop();
-      if (res.data && Object.keys(res.data).length > 0) {
-        this.showMessage = false;
-        this.item = res.data
-        this.total = res.data.count;
-      } else if (!res.data || Object.keys(res.data).length === 0) {
-        this.item = null
-        this.showMessage = true;
-      }
 
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+  onSubmitSearch() {
+    // Trim the keysearch to remove leading and trailing whitespaces
+    this.searchSim.keysearch = this.searchSim.keysearch.trim();
+  
+    console.log(this.searchSim);
+    
+    // Check if the keysearch is not empty after trimming
+    if (this.searchSim.keysearch) {
+      this.itemBlockUI.start();
+      this.telecomService.getDetailSim(this.searchSim).subscribe(
+        res => {
+          this.itemBlockUI.stop();
+          
+          if (res.data && Object.keys(res.data).length > 0) {
+            this.showMessage = false;
+            this.item = res.data;
+            this.total = res.data.count;
+          } else {
+            this.item = null;
+            this.showMessage = true;
+          }
+        }, 
+        err => {
+          this.itemBlockUI.stop();
+          this.alertService.showMess(err);
+        }
+      );
+    } else {
+      // Optionally, show an alert or handle empty input
+      this.alertService.showMess('Vui lòng nhập SĐT tìm kiếm');
+    }
   }
+
+
+
   ngOnInit(): void {
     this.getData();
   }

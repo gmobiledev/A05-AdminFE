@@ -44,25 +44,37 @@ export class SearchDetailSubscriptionComponent implements OnInit {
   }
 
   onSubmitSearch() {
+    // Trim the keyword to remove leading and trailing whitespaces
+    this.searchSim.keyword = this.searchSim.keyword.trim();
+  
     console.log(this.searchSim);
-    this.itemBlockUI.start();
-    this.telecomService.getDetailTTTB(this.searchSim).subscribe(res => {
-      this.itemBlockUI.stop();
-      if (res.data && Object.keys(res.data).length > 0) {
-        this.showMessage = false;
-        this.item = res.data
-        console.log(this.item);
-
-        this.total = res.data.count;
-      } else if (!res.data || Object.keys(res.data).length === 0) {
-        this.item = null
-        this.showMessage = true;
-      }
-
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+    
+    // Check if the keyword is not empty after trimming
+    if (this.searchSim.keyword) {
+      this.itemBlockUI.start();
+      this.telecomService.getDetailTTTB(this.searchSim).subscribe(
+        res => {
+          this.itemBlockUI.stop();
+          
+          if (res.data && Object.keys(res.data).length > 0) {
+            this.showMessage = false;
+            this.item = res.data;
+            console.log(this.item);
+            this.total = res.data.count;
+          } else {
+            this.item = null;
+            this.showMessage = true;
+          }
+        }, 
+        err => {
+          this.itemBlockUI.stop();
+          this.alertService.showMess(err);
+        }
+      );
+    } else {
+      // Optionally, show an alert or handle empty input
+      this.alertService.showMess('Vui lòng nhập SĐT tìm kiếm');
+    }
   }
 
   ngOnInit(): void {
