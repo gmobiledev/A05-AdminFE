@@ -10,3 +10,13 @@
     z-index: 1000;
     font-weight: bold;
   }
+
+  .offline-snackbar {
+    background-color: #f44336; /* Red */
+    color: white;
+  }
+  
+  .online-snackbar {
+    background-color: #4caf50; /* Green */
+    color: white;
+  }
