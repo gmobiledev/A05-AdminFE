@@ -31,10 +31,34 @@ export class SearchPackageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  formatNumber(number: string): string {
+    return number.replace(/[^\d]/g, "");
+  }
+
+  onInputChange() {
+      this.searchSim.mobile = this.formatNumber(this.searchSim.mobile);
+  }
+
+  formatDatax(data: number): string {
+    if (data >= 1024**3) {
+      return (data / 1024 ** 3).toFixed(1) + " GB";
+    } else {
+      return data + " MB";
+    }
+  }
+
+  formatCall(data: number): string {
+      return (data / 60).toFixed(0);
+  }
+
+  formatPrice(price: number): string {
+    return price.toLocaleString('vi-VN') + ' đ';
+  }
+
   onSubmitSearch() {
     console.log(this.searchSim);
     this.itemBlockUI.start();
-    this.telecomService.getSearchPackage(this.searchSim).subscribe(res => {
+    this.telecomService.postSearchPackage(this.searchSim).subscribe(res => {
       this.itemBlockUI.stop();
       if (res.data && Object.keys(res.data).length > 0) {
         this.showMessage = false;

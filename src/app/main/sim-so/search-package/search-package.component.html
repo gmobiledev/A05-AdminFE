@@ -12,7 +12,7 @@
                 <div class="row">
                   <div class="col-md-10">
                     <div class="form-group">
-                      <input type="text" name="mobile" [(ngModel)]="searchSim.mobile" class="form-control"
+                      <input type="text" name="mobile" [(ngModel)]="searchSim.mobile" class="form-control"  (input)="onInputChange()"
                         placeholder="Tìm kiếm" />
                     </div>
                   </div>
@@ -29,36 +29,102 @@
               <div>
   
                 <div class="table-responsive mt-1" *blockUI="'section-block'">
-                  <table class="table table-striped text-nowrap" *ngIf="item">
-  
+                  <table class="table table-striped text-nowrap mb-1" *ngIf="item">
                     <thead>
                       <tr>
                         <th></th>
                         <th>GMOBILE</th>
-                        <th>{{item?.gmobile?.info?.mno}}</th>
+                        <th>{{item?.CooperationNetwork?.packages[0]?.mno}}</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody *ngFor="let packageGmobile of item?.GMOBILE?.packages; let packageNetwork of item?.CooperationNetwork?.packages; let i = index">
                       <tr>
                         <td> 
                           <b>Gói cước</b>
                         </td>
                         <td>
-                          {{ item.gmobile?.packages?.package ?? "_" }}
+                          {{ packageGmobile?.package ?? "_" }}
                         </td>
                         <td>
-                          {{ item?.other?.packages[0]?.package === null ? "_" : item?.other?.packages[0]?.package ?? "_" }}
+                          {{ packageNetwork?.package === null ? "_" : packageNetwork?.package ?? "_" }}
                         </td>
                       </tr>
+                      <tr>
+                        <td> 
+                          <b>Quyền lợi gói</b>
+                        </td>
+                        <td>
+                          {{ packageGmobile?.cycle ?? "_" }}
+                        </td>
+                        <td>
+                          {{ packageNetwork?.cycle === null ? "_" : packageNetwork?.cycle ?? "_" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td> 
+                          <b>Gọi nội mạng</b>
+                        </td>
+                        <td>
+                          {{packageGmobile?.voiceInRemain != null ? formatCall(packageGmobile?.voiceInRemain) : "_"}} / {{packageGmobile?.smsin != null ? formatCall(packageGmobile?.voicein) : "_"}} Phút
+                        </td>
+                        <td>
+                          {{packageNetwork?.voiceInRemain != null ? formatCall(packageNetwork?.voiceInRemain) : "_"}} / {{packageNetwork?.smsin != null ? formatCall(packageNetwork?.voicein) : "_"}} Phút
+                        </td>
+                      </tr>
+                      <tr>
+                        <td> 
+                          <b>Nhắn tin nội mạng</b>
+                        </td>
+                        <td>
+                          {{packageGmobile?.smsInRemain != null ? packageGmobile?.smsInRemain : "_"}} / {{packageGmobile?.smsin != null ? packageGmobile?.smsin : "_"}} SMS
+                        </td>
+                        <td>
+                          {{packageNetwork?.smsInRemain != null ? packageNetwork?.smsInRemain : "_"}} / {{packageNetwork?.smsin != null ? packageNetwork?.smsin : "_"}} SMS
+                        </td>
+                      </tr>
+                      <tr>
+                        <td> 
+                          <b>Gọi ngoại mạng</b>
+                        </td>
+                        <td>
+                          {{packageGmobile?.voiceOutRemain != null ? formatCall(packageGmobile?.voiceOutRemain) : "_"}} / {{packageGmobile?.voiceex != null ? formatCall(packageGmobile?.voiceex) : "_"}} Phút
+                        </td>
+                        <td>
+                          {{packageNetwork?.voiceOutRemain != null ? formatCall(packageNetwork?.voiceOutRemain) : "_"}} / {{packageNetwork?.voiceex != null ? formatCall(packageNetwork?.voiceex) : "_"}} Phút
+                        </td>
+                      </tr>
+                      <tr>
+                        <td> 
+                          <b>Nhắn tin ngoại mạng</b>
+                        </td>
+                        <td>
+                          {{packageGmobile?.smsOutRemain != null ? packageGmobile?.smsOutRemain : "_"}} / {{packageGmobile?.smsout != null ? packageGmobile?.smsout : "_"}} SMS
+                        </td>
+                        <td>
+                          {{packageNetwork?.smsOutRemain != null ? packageNetwork?.smsOutRemain : "_"}} / {{packageNetwork?.smsout != null ? packageNetwork?.smsout : "_"}} SMS
+                        </td>
+                      </tr>
+                      <tr>
+                        <td> 
+                          <b>Giá gói cước</b>
+                        </td>
+                        <td>
+                          {{ formatPrice(packageGmobile?.price) ?? "_" }}
+                        </td>
+                        <td>
+                          {{ packageNetwork?.price === null ? "_" : formatPrice(packageNetwork?.price) ?? "_" }}
+                        </td>
+                      </tr>
+
                       <tr>
                         <td>
                           <b>Thời gian đăng ký</b>
                         </td>
                         <td>
-                          <!-- {{ item.gmobile?.packages[0]?.timeStart ?? "_" }} -->
+                          <!-- {{ packageGmobile?.timeStart ?? "_" }} -->
                         </td>
                         <td>
-                          {{ item?.other?.packages[0]?.timeStart === null ? "_" : item?.other?.packages[0]?.timeStart ?? "_" }}
+                          {{ packageNetwork?.timeStart === null ? "_" : (packageNetwork?.timeStart | date:'dd/MM/yyyy') ?? "_" }}
                         </td>
                       </tr>
                       <tr>
@@ -66,10 +132,10 @@
                           <b>Thời gian hết hạn</b>
                         </td>
                         <td>
-                          <!-- {{ item.gmobile?.packages[0]?.timeEnd ?? "_" }} -->
+                          <!-- {{ packageGmobile?.timeEnd ?? "_" }} -->
                         </td>
                         <td>
-                          {{ item?.other?.packages[0]?.timeEnd === null ? "_" : item?.other?.packages[0]?.timeEnd ?? "_" }}
+                          {{ packageNetwork?.timeEnd === null ? "_" : (packageNetwork?.timeEnd | date:'dd/MM/yyyy') ?? "_" }}
                         </td>
                       </tr>
                       <tr>
@@ -77,10 +143,10 @@
                           <b>Gia hạn</b>
                         </td>
                         <td>
-                          <!-- {{ item.gmobile?.packages[0]?.extension ?? "_" }} -->
+                          <!-- {{ packageGmobile?.extension ?? "_" }} -->
                         </td>
                         <td>
-                          {{ item?.other?.packages[0]?.extension === null ? "_" : item?.other?.packages[0]?.extension ?? "_" }}
+                          {{ packageNetwork?.extension === null ? "_" : packageNetwork?.extension ?? "_" }}
                         </td>
                       </tr>
                       <tr>
@@ -88,10 +154,10 @@
                           <b>Tổng Data</b>
                         </td>
                         <td>
-                          {{ item.gmobile?.packages[0]?.dataTotal ? item.gmobile?.packages[0]?.dataTotal + ' MB' : "_" }}
+                          {{ packageGmobile?.datax ? formatDatax(packageGmobile?.datax) : "_" }}
                         </td>
                         <td>
-                          {{ item?.other?.packages[0]?.dataTotal ? item.other?.packages[0]?.dataTotal + ' MB' : "_" }}
+                          {{ packageNetwork?.datax ? formatDatax(packageNetwork?.datax) : "_" }}
                         </td>
                       </tr>
                       <tr>
@@ -99,10 +165,18 @@
                           <b>Data còn lại</b>
                         </td>
                         <td>
-                          {{ item.gmobile?.packages[0]?.dataRemain ? item.gmobile?.packages[0]?.dataRemain + ' MB' : "_" }}
+                          {{ packageGmobile?.dataRemain ? formatDatax(packageGmobile?.dataRemain ) : "_" }}
                         </td>
                         <td>
-                          {{ item?.other?.packages[0]?.dataRemain ? item.other?.packages[0]?.dataRemain + ' MB' : "_" }}
+                          {{ packageNetwork?.dataRemain ? formatDatax(packageNetwork?.dataRemain) : "_" }}
+                        </td>
+                      </tr>
+                      <tr style="background-color: bisque;" *ngIf="item?.CooperationNetwork?.packages.length != i + 1 ">
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
                         </td>
                       </tr>
                     </tbody>
