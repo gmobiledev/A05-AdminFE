@@ -20,7 +20,7 @@ import { locale as menuFrench } from 'app/menu/i18n/fr';
 import { locale as menuGerman } from 'app/menu/i18n/de';
 import { locale as menuPortuguese } from 'app/menu/i18n/pt';
 import { NetworkService } from './auth/service/network.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -94,10 +94,14 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
 
+
      // Subscribe to network status
     this._networkService.isOnline$.subscribe(status => {
+      console.log(status);
+
       this.isOnline = status;
       if (!status) {
+        console.log('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!');
         alert('Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!');
       } else {
         console.log('Kết nối mạng đã được khôi phục.');
