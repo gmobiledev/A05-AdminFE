@@ -93,6 +93,7 @@ export class ListTaskComponent implements OnInit {
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
   @BlockUI('item-block-detail') itemBlockDetailUI: NgBlockUI;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -495,11 +496,14 @@ export class ListTaskComponent implements OnInit {
     //   this.list = res.data.items;
     //   this.totalItems = res.data.count;
     // });
+    this.sectionBlockUI.start();
     this.telecomService.getAllTask(this.searchForm).subscribe(res => {
+      this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
     });
     this.telecomService.getSummary().subscribe(res => {
+      this.sectionBlockUI.stop();
       this.summaryTask = res.data;
     })
   }
