@@ -225,12 +225,19 @@ export class MsisdnComponent implements OnInit {
 
   onSubmitSearch() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    // Trim the mobile field and validate
+    this.searchForm.mobile = this.searchForm.mobile ? this.searchForm.mobile.trim() : '';
+    if (!this.searchForm.mobile) {
+      this.alertService.showMess('Vui lòng nhập số điện thoại di động hợp lệ!');
+      return;
+    }
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
     this.router.navigate([this.myUrl], { queryParams: this.searchForm });
   }
+
 
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;

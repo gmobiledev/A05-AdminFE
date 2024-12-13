@@ -37,7 +37,7 @@ export class ListAgentComponent implements OnInit {
   public currentService: any;
 
   public isCreate: boolean = false;
-  public submitted: boolean = false;  
+  public submitted: boolean = false;
   public exitsUser: boolean = false;
   public isShowAddInput: boolean = true;
 
@@ -60,8 +60,8 @@ export class ListAgentComponent implements OnInit {
   public formGroupUserCode: FormGroup;
 
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
-count: any;
-  
+  count: any;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -71,23 +71,23 @@ count: any;
     private alertService: SweetAlertService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
-      this.searchForm.ekyc_status = params['ekyc_status'] != undefined ? params['ekyc_status'] : '_all';   
+      this.searchForm.ekyc_status = params['ekyc_status'] != undefined ? params['ekyc_status'] : '_all';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : '';
 
       this.getData();
       this.getService();
       this.getSellChannel();
-    }) 
+    })
   }
-  loadPage(page): void { 
+  loadPage(page): void {
     this.searchForm.page = page;
-    this.router.navigate(['/agent'], { queryParams: this.searchForm})
+    this.router.navigate(['/agent'], { queryParams: this.searchForm })
   }
-  modalOpen(modal, item = null) { 
-    if(item) {
+  modalOpen(modal, item = null) {
+    if (item) {
       this.titleModal = "Cập nhật đại lý";
       this.isCreate = false;
       this.selectedUserId = item.id;
@@ -113,20 +113,20 @@ count: any;
         //   });
         // }
 
-        this.currentService = res.data.map( x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
+        this.currentService = res.data.map(x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
         let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
-        for (let i = 0; i < this.currentService.length; i++ ) {
+        for (let i = 0; i < this.currentService.length; i++) {
           const newGroup = this.formBuilder.group({
-            id: [{value:this.currentService[i]['id'], disabled: true}],
-            status: [{value:this.currentService[i]['status'], disabled: true}],
-            ref_code: [{value: this.currentService[i]['ref_code'], disabled: true}],
-            service_code: [{value: this.currentService[i]['service_code'], disabled: true}]
+            id: [{ value: this.currentService[i]['id'], disabled: true }],
+            status: [{ value: this.currentService[i]['status'], disabled: true }],
+            ref_code: [{ value: this.currentService[i]['ref_code'], disabled: true }],
+            service_code: [{ value: this.currentService[i]['service_code'], disabled: true }]
           });
           const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
           this.listServiceFilter[index]['disabled'] = 'disabled';
           arrayControl.push(newGroup);
         }
-        
+
         this.modalRef = this.modalService.open(modal, {
           centered: true,
           windowClass: 'modal modal-primary',
@@ -144,7 +144,7 @@ count: any;
     }
   }
 
-  modalClose() {    
+  modalClose() {
     this.modalRef.close();
     this.initForm();
   }
@@ -162,13 +162,13 @@ count: any;
       })
       this.modalUserCodeRef = this.modalService.open(modal, {
         centered: true,
-        windowClass: 'modal modal-primary', 
+        windowClass: 'modal modal-primary',
         size: 'lg'
       });
     } catch (error) {
-      
+
     }
-    
+
   }
 
   modalUserCodeClose() {
@@ -186,9 +186,9 @@ count: any;
     let data = {
       partner_user_code: this.formGroupUserCode.controls['partner_user_code'].value
     }
-    if((await this.alertService.showConfirm("Bạn có đồng ý lưu dữ liệu")).value) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý lưu dữ liệu")).value) {
       this.userService.updateAgentInfo(this.selectedUserId, data).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showMess(res.message);
           return;
         }
@@ -212,7 +212,7 @@ count: any;
           this.alertService.showSuccess(res.message);
           this.modalUserCodeClose();
         }
-        
+
       }, error => {
         this.alertService.showMess(error);
         return;
@@ -254,9 +254,11 @@ count: any;
   */
 
   onSubmitSearch(): void {
+    this.searchForm.keyword = this.searchForm.keyword ? this.searchForm.keyword.trim() : '';
     this.searchForm.page = 1;
-    this.router.navigate(['/agent'], { queryParams: this.searchForm})
+    this.router.navigate(['/agent'], { queryParams: this.searchForm });
   }
+  
 
   addInput() {
     let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
@@ -265,7 +267,7 @@ count: any;
       service_code: []
     });
     arrayControl.push(newGroup);
-    if(arrayControl.length == this.listAllService.length) {
+    if (arrayControl.length == this.listAllService.length) {
       this.isShowAddInput = false;
     }
   }
@@ -273,11 +275,11 @@ count: any;
   removeInput(index) {
     let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
     const i = this.listServiceFilter.findIndex(item => item.code == this.formGroup.controls['new_agents_service'].value[index]['service_code']);
-    if(i != -1) {
+    if (i != -1) {
       this.listServiceFilter[i]['disabled'] = '';
-    }    
+    }
     arrayControl.removeAt(index);
-    if(arrayControl.length < this.listAllService.length) {
+    if (arrayControl.length < this.listAllService.length) {
       this.isShowAddInput = true;
     }
   }
@@ -286,7 +288,7 @@ count: any;
     const index = this.listServiceFilter.findIndex(item => item.code == service_code);
     this.listServiceFilter[index]['disabled'] = 'disabled';
   }
-  
+
   onFocusMobile() {
     this.exitsUser = false;
     this.titleModal = "Thêm đại lý";
@@ -301,12 +303,12 @@ count: any;
       status: status
     }
 
-    if((await this.alertService.showConfirm(confirmMessage)).value) {
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.userService.updateStatusAgent(this.selectedUserId, data).subscribe(res => {
-        if(!res.status) {
+        if (!res.status) {
           this.alertService.showError(res.message);
           return;
-        }        
+        }
         this.modalRef.close();
         this.initForm();
         this.alertService.showSuccess(res.message);
@@ -330,7 +332,7 @@ count: any;
           this.exitsUser = true;
           return;
         } else if (res.status && res.data && res.data.is_agent) {
-          
+
           this.userService.getAgentServices(res.data.id).subscribe(res => {
             this.currentService = res.data.map(x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
             let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
@@ -366,8 +368,8 @@ count: any;
       if (this.formGroup.invalid) {
         return;
       }
-      const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => 
-        {return {ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value}
+      const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => {
+        return { ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value }
       })
       const data: CreateAgentDto = {
         name: this.formGroup.controls['name'].value,
@@ -379,7 +381,7 @@ count: any;
       if ((await this.alertService.showConfirm('Bạn có đồng ý lưu dữ liệu?')).value) {
         this.userService.createAgent(data).subscribe(res => {
           if (!res.status) {
-           
+
             this.alertService.showError(res.message);
             this.submitted = false;
             return;
@@ -401,7 +403,7 @@ count: any;
         })
       }
     } else {
-      this.userService.addServicesToAgent(this.selectedUserId,  this.formGroup.controls['new_agents_service'].value).subscribe(res => {
+      this.userService.addServicesToAgent(this.selectedUserId, this.formGroup.controls['new_agents_service'].value).subscribe(res => {
         if (!res.status) {
           this.alertService.showError(res.message);
           this.submitted = false;
@@ -421,7 +423,7 @@ count: any;
   }
 
   async onFileChangeExcel(event) {
-    this.filesData = event.target.files[0];    
+    this.filesData = event.target.files[0];
   }
 
   async onFileChangeImages(event) {
@@ -437,7 +439,7 @@ count: any;
       this.alertService.showError("Vui lòng nhập đủ dữ liệu");
       return;
     }
-    if(!this.channelId) {
+    if (!this.channelId) {
       this.alertService.showError("Vui lòng chọn kênh bán");
       return;
     }
@@ -523,7 +525,7 @@ count: any;
       }
     };
 
-    
+
     this.initForm();
   }
 
@@ -533,19 +535,23 @@ count: any;
 
   initForm() {
     this.formGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      mobile: ['', Validators.required],
-      password: ['', Validators.required], 
-      partner_user_code: [''],
+      name: ['', [Validators.required, Validators.maxLength(255)].map(validator =>
+        (control) => validator(control.value ? control.value.trim() : '')
+      )],
+      mobile: ['', [Validators.required].map(validator =>
+        (control) => validator(control.value ? control.value.trim() : '')
+      )],
+      password: ['', [Validators.required].map(validator =>
+        (control) => validator(control.value ? control.value.trim() : '')
+      )],
+      partner_user_code: ['', (control) => control.value ? control.value.trim() : ''],
       channel_id: [''],
-      // ref_code: [],
-      // service_code: new FormArray([]),
       agents_service: this.formBuilder.array([]),
       new_agents_service: this.formBuilder.array([])
     });
 
     this.formGroupUserCode = this.formBuilder.group({
-      partner_user_code: [''],
+      partner_user_code: ['', (control) => control.value ? control.value.trim() : ''],
       channel_id: [''],
     });
 
@@ -555,13 +561,13 @@ count: any;
 
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    if(this.currentUser && this.currentUser.roles) {
-      const arrayRoles = this.currentUser.roles.map( item => {return item.item_name.toLowerCase()});
-      if(arrayRoles.includes("admin") || arrayRoles.includes("root")) {
+    if (this.currentUser && this.currentUser.roles) {
+      const arrayRoles = this.currentUser.roles.map(item => { return item.item_name.toLowerCase() });
+      if (arrayRoles.includes("admin") || arrayRoles.includes("root")) {
         this.isAdmin = true;
-      }      
+      }
       this.adminId = this.currentUser ? this.currentUser.id : null;
-      if(!this.isAdmin) {
+      if (!this.isAdmin) {
         this.refCode = this.currentUser ? this.currentUser.username : null;
       }
     }
@@ -581,7 +587,7 @@ count: any;
   getService() {
     this.userService.getAgentTypes().subscribe(res => {
       this.listAllService = res.data;
-      this.listServiceFilter = res.data.map( x => {return { disabled: '', code: x.code, desc: x.desc }} );
+      this.listServiceFilter = res.data.map(x => { return { disabled: '', code: x.code, desc: x.desc } });
       this.listServiceTmp = res.data;
     })
   }

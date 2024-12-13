@@ -352,6 +352,11 @@ export class ListTaskComponent implements OnInit {
   }
 
   onSubmitSearch() {
+    // Trim input fields
+    this.searchForm.mobile = this.searchForm.mobile?.trim() || '';
+    this.searchForm.customer_name = this.searchForm.customer_name?.trim() || '';
+    this.searchForm.cccd = this.searchForm.cccd?.trim() || '';
+  
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
@@ -517,7 +522,10 @@ export class ListTaskComponent implements OnInit {
    * @returns 
    */
   async onSaveNote(content) {
-    if (!content || content == undefined) {
+    // Trim the content
+    content = content?.trim();
+  
+    if (!content) {
       this.alertService.showMess("Vui lòng nhập nội dung");
       return;
     }
