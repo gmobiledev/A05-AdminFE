@@ -86,6 +86,7 @@ export class MsisdnComponent implements OnInit {
   public modalRef: any;
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -225,12 +226,19 @@ export class MsisdnComponent implements OnInit {
 
   onSubmitSearch() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    // Trim the mobile field and validate
+    this.searchForm.mobile = this.searchForm.mobile ? this.searchForm.mobile.trim() : '';
+    if (!this.searchForm.mobile) {
+      this.alertService.showMess('Vui lòng nhập số điện thoại di động hợp lệ!');
+      return;
+    }
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
     this.router.navigate([this.myUrl], { queryParams: this.searchForm });
   }
+
 
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
@@ -278,13 +286,16 @@ export class MsisdnComponent implements OnInit {
 
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.sectionBlockUI.start();
     if (this.service == "gtalk") {
       this.gtalkService.getAllMsisdn(this.searchForm).subscribe(res => {
+        this.sectionBlockUI.stop();
         this.list = res.data.items;
         this.totalItems = res.data.count;
       });
     } else {
       this.telecomService.getAllMsisdn(this.searchForm).subscribe(res => {
+        this.sectionBlockUI.stop();
         this.list = res.data.items;
         this.totalItems = res.data.count;
       });

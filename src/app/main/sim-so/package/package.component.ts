@@ -7,7 +7,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
 import { NgIf } from '@angular/common';
 
-
 @Component({
   selector: 'app-package',
   templateUrl: './package.component.html',
@@ -30,20 +29,26 @@ export class PackageComponent implements OnInit {
     private alertService: SweetAlertService,
     private userService: UserService,
     private modalService: NgbModal,
-
-  ) {
-    
-  }
+  ) { }
 
   dataPost = {
     msisdn: "",
     package: "",
   }
 
-  onSubmit(){
+  onSubmit() {
+    // Trim msisdn and package before submitting
+    this.dataPost.msisdn = this.dataPost.msisdn.trim();
+    this.dataPost.package = this.dataPost.package.trim();
+
+    // Validate that fields are not empty after trimming
+    if (!this.dataPost.msisdn || !this.dataPost.package) {
+      this.alertService.showMess("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
 
     this.telecomService.postPackageSimDVKH(this.dataPost).subscribe(res => {
-      if(res.status == 1){
+      if (res.status == 1) {
         this.alertService.showSuccess(res.message);
       }
     }, err => {
@@ -64,16 +69,9 @@ export class PackageComponent implements OnInit {
         this.list = null
         this.showMessage = true;
       }
-
     }, err => {
       this.itemBlockUI.stop();
       this.alertService.showMess(err);
     })
   }
-
-
-
-
 }
-
-

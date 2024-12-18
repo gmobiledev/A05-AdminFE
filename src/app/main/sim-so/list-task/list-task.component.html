@@ -90,8 +90,10 @@
               <div class="row mt-2">
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
-                        [data-feather]="'search'"></span></button>
+                    <button type="submit" class="btn btn-block btn-info" [disabled]="isLoading">
+                      Lọc kết quả
+                      <span [data-feather]="'search'"></span>
+                    </button>
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -106,7 +108,7 @@
               <div class="mb-1">
                 <span>Tổng số:</span> <b>{{ totalItems }}</b>
               </div>
-              
+
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -189,7 +191,7 @@
 
                       <div *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC'">
 
-                        <a ngbTooltip="Xem chi tiết"  (click)="modalOpen(modalItem, item)">
+                        <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
                         </a>
 
@@ -206,13 +208,14 @@
                         <div
                           *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+item.action+'/update-status')
                         && item.status == taskTelecomStatus.STATUS_NEW_ORDER && !checkAction('telecom-admin/task/:slug(\\d+)/update-status') && item.action != 'KHOI_PHUC'">
-  
-                          <a ngbTooltip="Tiếp nhận yêu cầu"  (click)="modalOpen(modalItem, item)">
+
+                          <a ngbTooltip="Tiếp nhận yêu cầu" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
 
-                        <div *ngIf="(
+                        <div
+                          *ngIf="(
                           (
                             (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
                             || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value']
@@ -221,37 +224,41 @@
                         || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
                         || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
                         ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action != 'KHOI_PHUC'">
-                    
-                          <a ngbTooltip="Tiếp nhận yêu cầu"  (click)="modalOpen(modalItem, item)">
+
+                          <a ngbTooltip="Tiếp nhận yêu cầu" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="(
+                        <div
+                          *ngIf="(
                           ((item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
                             || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
                             && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
                         || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
                         || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
                         ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action == 'KHOI_PHUC'">
-                  
-                          <a ngbTooltip="Tiếp nhận yêu cầu"  (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
+
+                          <a ngbTooltip="Tiếp nhận yêu cầu"
+                            (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                             <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
                         <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && item.action == 'KHOI_PHUC'">
-                    
-                          <a ngbTooltip="Tiếp tục thực hiện"  (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
+
+                          <a ngbTooltip="Tiếp tục thực hiện"
+                            (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                             <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
                         <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && item.action != 'KHOI_PHUC'">
-                      
-                          <a ngbTooltip="Tiếp tục thực hiện"  (click)="modalOpen(modalItem, item)">
+
+                          <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
                             <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO && item.action != 'KHOI_PHUC'">
-                          <a ngbTooltip="Tiếp tục thực hiện"  (click)="modalOpen(modalItem, item)">
+                        <div
+                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO && item.action != 'KHOI_PHUC'">
+                          <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
                             <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
                           </a>
 
@@ -264,7 +271,7 @@
                         <div *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT
                           && item.action != 'KHOI_PHUC'">
-              
+
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
@@ -272,7 +279,7 @@
                         <div *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT
                            && item.action == 'KHOI_PHUC'">
-                    
+
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
@@ -292,17 +299,17 @@
                       (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']
                       || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
                       ) || item.status == taskTelecomStatus.STATUS_WAITING_SIM )">
-                        <a ngbTooltip="Tiếp tục thực hiện"  (click)="modalOpen(modalItem, item)">
+                        <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
                           <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
                         </a>
                       </div>
 
-                      <a ngbTooltip="Upload ảnh CMT cũ"  (click)="modalApprovalOpen(modalUpload, item)"
-                      *ngIf="[taskTelecomStatus.STATUS_APPROVED_2, taskTelecomStatus.STATUS_DVKHKD_REJECT].includes(item.status)">
+                      <a ngbTooltip="Upload ảnh CMT cũ" (click)="modalApprovalOpen(modalUpload, item)"
+                        *ngIf="[taskTelecomStatus.STATUS_APPROVED_2, taskTelecomStatus.STATUS_DVKHKD_REJECT].includes(item.status)">
                         <i data-feather="upload" class="text-primary cursor-pointer"></i>
                       </a>
 
-                      <a ngbTooltip="Thông tin Ship"  (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')">
+                      <a ngbTooltip="Thông tin Ship" (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')">
                         <i data-feather="info" class="text-primary cursor-pointer"></i>
                       </a>
 
@@ -311,7 +318,7 @@
                         class="btn btn-sm btn-icon" (click)="modalApprovalOpen(modaNote, item, 'lg')">
                         <i data-feather="pen-tool" class="text-primary cursor-pointer"></i>
                       </a>
-                      
+
                     </td>
                   </tr>
                 </tbody>

@@ -37,9 +37,19 @@ export class SearchRecoverySimComponent implements OnInit {
 
   onSubmitSearch() {
     this.showInformation = false;
+    // Trim the input value
+    const trimmedSim = this.searchSim.trim();
+
+    // Validate the input
+    if (!trimmedSim) {
+      this.alertService.showMess('Please enter a valid MSISDN.');
+      return;
+    }
+
     const body = {
-      msisdn: this.searchSim
+      msisdn: trimmedSim
     };
+
     this.taskId = null;
     this.itemBlockUI.start();
     this.telecomService.postSearchRecoverySim(body).subscribe(res => {

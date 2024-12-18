@@ -90,9 +90,11 @@ export class ListTaskComponent implements OnInit {
 
   public modalRef: any;
   listCurrentAction: any;
+  public isLoading: boolean = false; // Track loading state
 
   @BlockUI('item-block') itemBlockUI: NgBlockUI;
   @BlockUI('item-block-detail') itemBlockDetailUI: NgBlockUI;
+  @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   constructor(
     private modalService: NgbModal,
@@ -251,7 +253,7 @@ export class ListTaskComponent implements OnInit {
     this.selectedItem = null;
     this.selectedNote = '';
     this.getData();
-    
+
     this.modalRef.close();
   }
   async modalViewAgentOpen(modal, item = null) {
@@ -352,6 +354,11 @@ export class ListTaskComponent implements OnInit {
   }
 
   onSubmitSearch() {
+    // Trim input fields
+    this.searchForm.mobile = this.searchForm.mobile?.trim() || '';
+    this.searchForm.customer_name = this.searchForm.customer_name?.trim() || '';
+    this.searchForm.cccd = this.searchForm.cccd?.trim() || '';
+
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
@@ -490,11 +497,20 @@ export class ListTaskComponent implements OnInit {
     //   this.list = res.data.items;
     //   this.totalItems = res.data.count;
     // });
+    this.isLoading = true; // Disable the button
+    this.sectionBlockUI.start();
     this.telecomService.getAllTask(this.searchForm).subscribe(res => {
+      this.isLoading = false; // Enable the button
+      this.sectionBlockUI.stop();
       this.list = res.data.items;
       this.totalItems = res.data.count;
+    }, (err) => {
+      this.isLoading = false; // Enable the button even on error
+      this.sectionBlockUI.stop();
+      console.error(err);
     });
     this.telecomService.getSummary().subscribe(res => {
+      this.sectionBlockUI.stop();
       this.summaryTask = res.data;
     })
   }
@@ -517,7 +533,10 @@ export class ListTaskComponent implements OnInit {
    * @returns 
    */
   async onSaveNote(content) {
-    if (!content || content == undefined) {
+    // Trim the content
+    content = content?.trim();
+
+    if (!content) {
       this.alertService.showMess("Vui lòng nhập nội dung");
       return;
     }
