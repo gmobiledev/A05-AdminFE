@@ -10,6 +10,12 @@
 </ng-container>
 <!-- / horizontal-layout -->
 
+<div *ngIf="!isOnline" class="network-alert">
+  <p>Mất kết nối mạng. Vui lòng kiểm tra và kết nối lại!</p>
+</div>
+
+<!-- <router-outlet></router-outlet> -->
+
 <!-- theme customizer -->
 <!-- <core-sidebar
   name="themeCustomizer"

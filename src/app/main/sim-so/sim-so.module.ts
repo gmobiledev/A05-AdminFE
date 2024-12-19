@@ -56,107 +56,112 @@ import { TransferSovereigntyComponent } from './transfer-sovereignty/transfer-so
 import { TransferSovereigntyNewOwnerComponent } from './transfer-sovereignty/transfer-sovereignty-new-owner/transfer-sovereignty-new-owner.component';
 import { ViewCheckInfoNewComponent } from './transfer-sovereignty/view-check-info-new/view-check-info-new.component';
 import { TransferSovereigntyOldOwnerComponent } from './transfer-sovereignty/transfer-sovereignty-old-owner/transfer-sovereignty-old-owner.component';
+import { SearchPackageComponent } from './search-package/search-package.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: ListTaskComponent
+    path: "",
+    component: ListTaskComponent,
   },
   {
-    path: 'task',
-    component: ListTaskComponent
+    path: "task",
+    component: ListTaskComponent,
   },
   {
-    path: 'task/:id',
-    component: ViewTaskOrganizationComponent
+    path: "task/:id",
+    component: ViewTaskOrganizationComponent,
   },
   {
-    path: 'package',
-    component: SimPackagesComponent
+    path: "package",
+    component: SimPackagesComponent,
   },
   {
-    path: 'search',
-    component: SearchSimSoComponent
+    path: "search",
+    component: SearchSimSoComponent,
   },
   {
-    path: 'dvkh-search',
-    component: DvkhSearchComponent
+    path: "dvkh-search",
+    component: DvkhSearchComponent,
   },
   {
-    path: 'way-lock',
-    component: WayLockComponent
+    path: "way-lock",
+    component: WayLockComponent,
   },
   {
-    path: 'trans-history',
-    component: TransHistoryComponent
+    path: "trans-history",
+    component: TransHistoryComponent,
   },
   {
-    path: 'esim-search',
-    component: SearchEsimComponent
+    path: "esim-search",
+    component: SearchEsimComponent,
   },
   {
-    path: 'select-package',
-    component: PackageComponent
+    path: "select-package",
+    component: PackageComponent,
   },
   {
-    path: 'search-tttb',
-    component: SearchDetailSubscriptionComponent
+    path: "search-tttb",
+    component: SearchDetailSubscriptionComponent,
   },
   {
-    path: 'history-topup',
-    component: HistoryTopupComponent
+    path: "history-topup",
+    component: HistoryTopupComponent,
   },
   {
-    path: 'info-eSim',
-    component: InfoESimComponent
+    path: "info-eSim",
+    component: InfoESimComponent,
   },
   {
-    path: 'search-subscription',
-    component: SearchSubscriptionComponent
+    path: "search-subscription",
+    component: SearchSubscriptionComponent,
   },
   {
-    path: 'action-logs',
-    component: ActionLogsComponent
+    path: "action-logs",
+    component: ActionLogsComponent,
   },
   {
-    path: 'commitment',
-    component: CommitmentComponent
+    path: "commitment",
+    component: CommitmentComponent,
   },
   {
-    path: 'warning',
-    component: WarningComponent
+    path: "warning",
+    component: WarningComponent,
   },
   {
-    path: 'commitment-detail',
-    component: CommitmentDetailComponent
+    path: "commitment-detail",
+    component: CommitmentDetailComponent,
   },
   {
-    path: 'sell-channel',
-    component: SellChannelComponent
+    path: "sell-channel",
+    component: SellChannelComponent,
   },
   {
-    path: 'msisdn',
-    component: ListSimComponent
+    path: "msisdn",
+    component: ListSimComponent,
   },
   {
-    path: 'search-recovery-sim',
-    component: SearchRecoverySimComponent
+    path: "search-recovery-sim",
+    component: SearchRecoverySimComponent,
   },
   {
-    path: 'client2g',
-    component: Client2gComponent
+    path: "search-package",
+    component: SearchPackageComponent,
   },
   {
-    path: 'msisdn/topup',
-    component: TopupComponent
+    path: "client2g",
+    component: Client2gComponent,
   },
   {
-    path: 'msisdn/balance-changes',
-    component: BalanceChangesComponent
+    path: "msisdn/topup",
+    component: TopupComponent,
   },
   {
-    path: 'msisdn/TTTB',
-    component: TTTBMsisdnComponent
+    path: "msisdn/balance-changes",
+    component: BalanceChangesComponent,
+  },
+  {
+    path: "msisdn/TTTB",
+    component: TTTBMsisdnComponent,
   },
   {
     path: 'transfer-sovereignty',
@@ -207,7 +212,8 @@ const routes: Routes = [
     TransferSovereigntyComponent,
     TransferSovereigntyNewOwnerComponent,
     ViewCheckInfoNewComponent,
-    TransferSovereigntyOldOwnerComponent
+    TransferSovereigntyOldOwnerComponent,
+    SearchPackageComponent
   ],
   imports: [
     CommonModule,
@@ -225,7 +231,7 @@ const routes: Routes = [
     PdfViewerModule,
     QRCodeModule,
     Ng2FlatpickrModule,
-    NgxMaskModule
-  ]
+    NgxMaskModule,
+  ],
 })
-export class SimSoModule { }
+export class SimSoModule {}

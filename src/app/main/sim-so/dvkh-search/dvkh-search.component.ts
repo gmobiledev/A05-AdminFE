@@ -46,26 +46,37 @@ export class DvkhSearchComponent implements OnInit {
     }, {});
   }
   onSubmitSearch() {
+    // Trim the keysearch to remove leading and trailing whitespaces
+    this.searchSim.keysearch = this.searchSim.keysearch.trim();
+  
+    // Optional: Add a validation check if the keysearch is empty
+    if (!this.searchSim.keysearch) {
+      this.alertService.showMess('Vui lòng nhập SĐT tìm kiếm');
+      return;
+    }
+  
     console.log(this.searchSim);
     this.itemBlockUI.start();
-    this.telecomService.getDetailSimDVKH(this.searchSim).subscribe(res => {
-      this.itemBlockUI.stop();
-      if (res.data && Object.keys(res.data).length > 0) {
-        this.showMessage = false;
-        this.item = res.data
-        console.log(this.item);
-
-        this.total = res.data.count;
-        this.getCurrChannel()
-      } else if (!res.data || Object.keys(res.data).length === 0) {
-        this.item = null
-        this.showMessage = true;
+    this.telecomService.getDetailSimDVKH(this.searchSim).subscribe(
+      res => {
+        this.itemBlockUI.stop();
+        
+        if (res.data && Object.keys(res.data).length > 0) {
+          this.showMessage = false;
+          this.item = res.data;
+          console.log(this.item);
+          this.total = res.data.count;
+          this.getCurrChannel();
+        } else {
+          this.item = null;
+          this.showMessage = true;
+        }
+      }, 
+      err => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
       }
-
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+    );
   }
   ngOnInit(): void {
     this.getData();

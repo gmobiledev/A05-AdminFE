@@ -695,6 +695,14 @@ export const menu: CoreMenu[] = [
         url: "sim-so/search-tttb",
       },
       {
+        id: "search-package",
+        title: "Tra cứu gói cước",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/search-package",
+      },
+      {
         id: "client2g",
         title: "Tra cứu TTTB 2G",
         translate: "",

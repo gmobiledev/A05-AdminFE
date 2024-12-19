@@ -118,17 +118,17 @@ export class GMsisdnComponent implements OnInit {
   }
 
   async modalOpen(modal, item = null) {
-      this.itemBlockUI.start();
-      this.selectedItem = item;
+    this.itemBlockUI.start();
+    this.selectedItem = item;
 
-      this.itemBlockUI.stop();
-      this.modalRef = this.modalService.open(modal, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-        size: 'xl',
-        backdrop: 'static',
-        keyboard: false
-      });
+    this.itemBlockUI.stop();
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'xl',
+      backdrop: 'static',
+      keyboard: false
+    });
   }
 
   modalClose() {
@@ -219,12 +219,25 @@ export class GMsisdnComponent implements OnInit {
 
   onSubmitSearch() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    const daterangeString = this.dateRange.startDate && this.dateRange.endDate
-      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
+
+    // Trim the mobile field and validate
+    this.searchForm.mobile = this.searchForm.mobile ? this.searchForm.mobile.trim() : '';
+    if (!this.searchForm.mobile) {
+      this.alertService.showMess('Vui lòng nhập số điện thoại di động hợp lệ!');
+      return;
+    }
+
+    const daterangeString = this.dateRange?.startDate && this.dateRange?.endDate
+      ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10)
+      : '';
+
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
+
     this.router.navigate(['/gtalk/msisdn'], { queryParams: this.searchForm });
   }
+
+
 
   onSubmitExportExcelReport() {
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
