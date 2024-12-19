@@ -210,16 +210,23 @@ export class TelecomService {
   }
 
   asyncToMnoViaApi(task) {
-    if (task.action == this.listTaskAction.change_sim.value)
+    if (task.action == this.listTaskAction.change_sim.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-sim-vnm`, {});
-    else if (task.action == this.listTaskAction.new_sim.value)
+    }
+    else if (task.action == this.listTaskAction.new_sim.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
-    else if (task.action == this.listTaskAction.change_info.value)
+    }
+    else if (task.action == this.listTaskAction.change_info.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/update-info-subsriber`, {});
-    else if (task.action == this.listTaskAction.convert_info.value)
+    }
+    else if (task.action == this.listTaskAction.convert_info.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-customer-subsriber`, {});
-    else
+    }
+    else if (task.action == this.listTaskAction.change_user_info.value){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-customer-subsriber`, {});
+    }else{
       console.log("asyncToMnoViaApi null")
+    }
 
   }
 

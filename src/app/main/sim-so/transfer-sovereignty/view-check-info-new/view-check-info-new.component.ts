@@ -12,6 +12,7 @@ import { TelecomService } from "app/auth/service/telecom.service";
 import { SweetAlertService } from "app/utils/sweet-alert.service";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { UserService } from "app/auth/service";
 
 @Component({
   selector: "app-view-check-info-new",
@@ -26,12 +27,19 @@ export class ViewCheckInfoNewComponent implements OnInit {
   mobileSearch;
   formOgzOcr;
   dataImage;
+  listVideo;
+  showSubmit = false; 
+  listImage;
+  public selectedFilesVideo: File[] = [];
+  public selectedFilesImage: File[] = [];
+  public selectedFiles: File[] = [];
   public modalRef: any;
   @ViewChild("modalItem") modalItem: ElementRef;
-  @BlockUI("section-block") itemBlockUI: NgBlockUI;
+  @BlockUI("view-check-info-new-block") itemBlockUI: NgBlockUI;
 
   constructor(
     private alertService: SweetAlertService,
+    private userService: UserService,
     private telecomService: TelecomService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
@@ -99,10 +107,98 @@ export class ViewCheckInfoNewComponent implements OnInit {
     });
   }
 
+  // onFileSelected(event) {
+  //   for (let file of event) {
+  //     this.selectedFiles.push(file);
+  //   }
+  //   console.log(this.selectedFiles);
+
+  // }
+
+  deleteFile(index, name) {
+    console.log(index);
+    if (name == "video") {
+      if (index >= 0 && index < this.selectedFilesVideo.length) {
+        this.selectedFilesVideo.splice(index, 1);
+      }
+    } else {
+      if (index >= 0 && index < this.selectedFilesImage.length) {
+        this.selectedFilesImage.splice(index, 1);
+      }
+    }
+  }
+
+  onFileSelected(event: Event, name: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files[0] && input.files[0].size > 0) {
+      let file = input.files[0];
+      console.log(file);
+      if (name == "video") {
+        this.selectedFilesVideo.push(file);
+        console.log(this.selectedFilesVideo);
+      } else {
+        this.selectedFilesImage.push(file);
+        console.log(this.selectedFilesImage);
+      }
+    }
+  }
+
+  async onSubmitUpload() {
+    if (
+      this.selectedFilesImage.length <= 0 &&
+      this.selectedFilesVideo.length <= 0
+    ) {
+      this.alertService.showMess("Vui lòng không để chống file file");
+      return;
+    }
+    this.selectedFiles = this.selectedFilesImage.concat(
+      this.selectedFilesVideo
+    );
+    if (this.selectedFiles.length > 0) {
+      const formData = new FormData();
+      formData.append("entity", "people");
+      formData.append("key", "attachments");
+      formData.append("object_id", this.data.task_id);
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        const file = this.selectedFiles[i];
+        formData.append(`files`, file);
+      }
+      console.log(formData);
+      this.itemBlockUI.start();
+      await this.userService.sumitFile(formData).subscribe(
+        (res) => {
+          console.log(res);
+          if (!res.status) {
+            this.itemBlockUI.stop();
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.showSubmit = true;
+          this.itemBlockUI.stop();
+        },
+        (error) => {
+          this.itemBlockUI.stop();
+          this.alertService.showMess(error);
+          return;
+        }
+      );
+    }
+  }
+
   initForm() {
     this.formOgzOcr = this.formBuilder.group({
-      businessName: ["", Validators.required],
-      businessCode: ["", Validators.required],
+      businessName: [
+        this.data?.image?.business?.businessName
+          ? this.data?.image?.business?.businessName
+          : "",
+        Validators.required,
+      ],
+      businessCode: [
+        this.data?.image?.business?.businessCode
+          ? this.data?.image?.business?.businessCode
+          : "",
+        Validators.required,
+      ],
 
       representativeName: [
         this.data?.data?.authorizer?.name
@@ -130,7 +226,9 @@ export class ViewCheckInfoNewComponent implements OnInit {
       ],
       identificationTypeAuthorizer: [
         this.data?.data?.authorizer?.type
-          ? this.data?.data?.authorizer?.type
+          ? this.data?.data?.authorizer?.type == "CC"
+            ? "CAN_CUOC"
+            : this.data?.data?.authorizer?.type
           : "",
         Validators.required,
       ],
@@ -171,7 +269,11 @@ export class ViewCheckInfoNewComponent implements OnInit {
       ],
       identificationTypeUser: [
         this.select.id != 1
-          ? this.data?.data?.type
+          ? this.data?.data?.type == "CC"
+            ? "CAN_CUOC"
+            : this.data?.data?.type
+          : this.data?.data?.user?.type == "CC"
+          ? "CAN_CUOC"
           : this.data?.data?.user?.type,
         Validators.required,
       ],
@@ -204,55 +306,53 @@ export class ViewCheckInfoNewComponent implements OnInit {
     });
   }
 
-  submit() {
+  async submit() {
     let data;
     console.log(this.formOgzOcr);
-
+    const regex = /^.*base64,/i;
+    if (!this.formOgzOcr.value.identificationTypeUser) {
+      this.alertService.showMess(
+        "Vui lòng chọn loại thẻ căn cước người sử dụng"
+      );
+      return;
+    }
+    if (!this.formOgzOcr.value.identificationNoUser) {
+      this.alertService.showMess(
+        "Vui lòng không để chống số giấy tờ người sử dụng"
+      );
+      return;
+    }
+    if (!this.formOgzOcr.value.identificationDateUser) {
+      this.alertService.showMess(
+        "Vui lòng không để chống ngày cấp người sử dụng"
+      );
+      return;
+    }
+    if (!this.formOgzOcr.value.identificationPlaceUser) {
+      this.alertService.showMess(
+        "Vui lòng không để chống nơi cấp người sử dụng"
+      );
+      return;
+    }
+    if (!this.formOgzOcr.value.userFullName) {
+      this.alertService.showMess(
+        "Vui lòng không để chống họ và tên người sử dụng"
+      );
+      return;
+    }
+    if (!this.formOgzOcr.value.birthUser) {
+      this.alertService.showMess(
+        "Vui lòng không để chống ngày sinh người sử dụng"
+      );
+      return;
+    }
+    if (!this.formOgzOcr.value.fullAddressUser) {
+      this.alertService.showMess(
+        "Vui lòng không để chống địa chỉ người sử dụng"
+      );
+      return;
+    }
     if (this.select.id == 0) {
-      if (!this.data?.image?.personal?.card_back) {
-        this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt sau"
-        );
-        return;
-      }
-      if (!this.data?.image?.personal?.card_front) {
-        this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt trước"
-        );
-        return;
-      }
-      if (!this.data?.image?.personal?.selfie) {
-        this.alertService.showMess("Vui lòng không để chống ảnh chân dung");
-        return;
-      }
-      if (!this.formOgzOcr.value.identificationTypeUser) {
-        this.alertService.showMess("Vui lòng chọn loại thẻ căn cước");
-        return;
-      }
-      if (!this.formOgzOcr.value.identificationNoUser) {
-        this.alertService.showMess("Vui lòng không để chống số giấy tờ");
-        return;
-      }
-      if (!this.formOgzOcr.value.identificationDateUser) {
-        this.alertService.showMess("Vui lòng không để chống ngày cấp");
-        return;
-      }
-      if (!this.formOgzOcr.value.identificationPlaceUser) {
-        this.alertService.showMess("Vui lòng không để chống nơi cấp");
-        return;
-      }
-      if (!this.formOgzOcr.value.userFullName) {
-        this.alertService.showMess("Vui lòng không để chống họ và tên");
-        return;
-      }
-      if (!this.formOgzOcr.value.birthUser) {
-        this.alertService.showMess("Vui lòng không để chống ngày sinh");
-        return;
-      }
-      if (!this.formOgzOcr.value.fullAddressUser) {
-        this.alertService.showMess("Vui lòng không để chống địa chỉ");
-        return;
-      }
       data = {
         task_id: this.data.task_id,
         customer_type: "PERSONAL",
@@ -282,23 +382,157 @@ export class ViewCheckInfoNewComponent implements OnInit {
           identification_selfie_file: this.data?.image?.personal?.selfie,
         },
       };
-    }
-    this.itemBlockUI.start();
-    this.telecomService.postOwnershipTransfer(data).subscribe(
-      (res) => {
-        if (res.status == 1) {
-          this.itemBlockUI.stop();
-          this.alertService.showMess('Chuyển đổi chủ quyền cho thuê bao ' + this.mobileSearch + ' thành công');
-          this.closePopup.next();
-        } else {
-          this.itemBlockUI.stop();
-          this.alertService.showMess(res.message);
-        }
-      },
-      (err) => {
-        this.itemBlockUI.stop();
-        this.alertService.showMess(err);
+    } else {
+      if (!this.formOgzOcr.value.identificationTypeAuthorizer) {
+        this.alertService.showMess(
+          "Vui lòng chọn loại thẻ căn cước người đại diện"
+        );
+        return;
       }
-    );
+      if (!this.formOgzOcr.value.identificationNoAuthorizer) {
+        this.alertService.showMess(
+          "Vui lòng không để chống số giấy tờ người đại diện"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.identificationDateAuthorizer) {
+        this.alertService.showMess(
+          "Vui lòng không để chống ngày cấp người đại diện"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.identificationPlaceAuthorizer) {
+        this.alertService.showMess(
+          "Vui lòng không để chống nơi cấp người đại diện"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.representativeName) {
+        this.alertService.showMess(
+          "Vui lòng không để chống họ và tên người đại diện"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.birthAuthorizer) {
+        this.alertService.showMess(
+          "Vui lòng không để chống ngày sinh người đại diện"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.fullAddressAuthorizer) {
+        this.alertService.showMess(
+          "Vui lòng không để chống địa chỉ người đại diện"
+        );
+        return;
+      }
+      data = {
+        task_id: this.data.task_id,
+        customer_type: "ORGANIZATION",
+        msisdn: this.mobileSearch,
+        people: {
+          identification_type: this.formOgzOcr.value.identificationTypeUser,
+          identification_no: this.formOgzOcr.value.identificationNoUser,
+          identification_date: Math.floor(
+            new Date(
+              this.formOgzOcr.value.identificationDateUser
+                .split("-")
+                .reverse()
+                .join("-")
+            ).getTime() / 1000
+          ),
+          identification_place: this.formOgzOcr.value.identificationPlaceUser,
+          name: this.formOgzOcr.value.userFullName,
+          birth: Math.floor(
+            new Date(
+              this.formOgzOcr.value.birthUser.split("-").reverse().join("-")
+            ).getTime() / 1000
+          ),
+          mobile: this.mobileSearch,
+          full_address: this.formOgzOcr.value.fullAddressUser,
+          identification_front_file:
+            this.data?.image?.business?.card_front_user,
+          identification_back_file: this.data?.image?.business?.card_back_user,
+          identification_selfie_file: this.data?.image?.business?.selfie_user,
+        },
+        organization: {
+          name: this.data?.image?.business?.businessName,
+          id_type: "LICENSE",
+          full_address: this.data?.image?.business?.businessAddress,
+          id_no: this.data?.image?.business?.businessCode,
+          license_file:
+            this.data?.registerBusiness?.imgageRegisterBusiness.replace(
+              regex,
+              ""
+            ),
+            license_no: '99999',
+          name_international: this.data?.image?.business?.businessName,
+          short_name: this.data?.image?.business?.businessName,
+        },
+        representative: {
+          identification_type:
+            this.formOgzOcr.value.identificationTypeAuthorizer,
+          identification_no: this.formOgzOcr.value.identificationNoAuthorizer,
+          identification_date: Math.floor(
+            new Date(
+              this.formOgzOcr.value.identificationDateAuthorizer
+                .split("-")
+                .reverse()
+                .join("-")
+            ).getTime() / 1000
+          ),
+          identification_place:
+            this.formOgzOcr.value.identificationPlaceAuthorizer,
+          name: this.formOgzOcr.value.representativeName,
+          birth: Math.floor(
+            new Date(
+              this.formOgzOcr.value.birthAuthorizer
+                .split("-")
+                .reverse()
+                .join("-")
+            ).getTime() / 1000
+          ),
+          mobile: this.mobileSearch,
+          full_address: this.formOgzOcr.value.fullAddressAuthorizer,
+          identification_front_file:
+            this.data?.image?.business?.card_front_authorizer,
+          identification_back_file:
+            this.data?.image?.business?.card_back_authorizer,
+          identification_selfie_file:
+            this.data?.image?.business?.selfie_authorizer,
+        },
+        delegation: {
+          delegation_no: "555555555",
+          delegation_file:
+            this.data?.powerOfAttorney?.imagePowerOfAttorney.replace(regex, ""),
+          delegation_date: "1625875200",
+          delegation_type: "MOBILE",
+        },
+      };
+    }
+    try {
+      this.itemBlockUI.start();
+      this.telecomService.postOwnershipTransfer(data).subscribe(
+        (res) => {
+          if (res.status == 1) {
+            this.itemBlockUI.stop();
+            this.alertService.showMess(
+              "Chuyển đổi chủ quyền cho thuê bao " +
+                this.mobileSearch +
+                " thành công"
+            );
+            this.closePopup.next();
+          } else {
+            this.itemBlockUI.stop();
+            this.alertService.showMess(res.message);
+          }
+        },
+        (err) => {
+          this.itemBlockUI.stop();
+          this.alertService.showMess(err);
+        }
+      );
+    } catch (error) {
+      this.alertService.showError(error);
+    }
   }
 }

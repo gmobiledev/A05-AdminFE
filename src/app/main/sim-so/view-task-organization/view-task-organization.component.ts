@@ -137,9 +137,13 @@ export class ViewTaskOrganizationComponent implements OnInit {
    */
   async asyncToMnoViaApi(item) {
     let confirmMessage = "Xác nhận đồng bộ thông tin"
+    console.log('item' ,item);
+    
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.sectionBlockUI.start();
       this.telecomService.asyncToMnoViaApi(item).subscribe(res => {
+        console.log('res',res);
+        
         this.sectionBlockUI.stop();
         if (!res.status) {
           this.alertService.showError(res.message, 30000);
@@ -424,6 +428,8 @@ export class ViewTaskOrganizationComponent implements OnInit {
     this.telecomService.getDetailTask(this.id).subscribe(res => {
       this.sectionBlockUI.stop();
       this.data = res.data;
+      console.log(this.data);
+      
       if(this.data.organization.base64LiceseFile) {
         this.urlFileDKKD = this.commonService.base64ToArrayBuffer(this.data.organization.base64LiceseFile)
       }      

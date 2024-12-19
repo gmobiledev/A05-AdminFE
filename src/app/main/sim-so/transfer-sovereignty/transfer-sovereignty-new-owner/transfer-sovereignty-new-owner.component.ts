@@ -149,7 +149,6 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
           this.imagePowerOfAttorney = base64String;
   
           // Sử dụng dữ liệu khi đã có
-          console.log("Base64 String for Power of Attorney:", this.imagePowerOfAttorney);
         } else if(nameFile === "imgageRegisterBusiness"){
           this.nameImgageRegisterBusiness = file.name;
           this.imgageRegisterBusiness = base64String;

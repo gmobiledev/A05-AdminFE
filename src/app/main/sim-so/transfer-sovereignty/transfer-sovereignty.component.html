@@ -122,7 +122,7 @@
       </div>
     </div>
   </div>
-  <div class="modal-body" tabindex="0">
+  <div class="modal-body" tabindex="0" *blockUI="'view-check-info-new-block'">
     <app-view-check-info-new
       (closePopup)="done()"
       [select]="selectBusinessOrIndividual"
