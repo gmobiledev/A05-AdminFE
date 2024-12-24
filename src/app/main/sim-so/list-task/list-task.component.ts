@@ -74,7 +74,9 @@ export class ListTaskComponent implements OnInit {
     telco: '',
     customer_name: '',
     customer_type: '',
-    sub_action: ''
+    sub_action: '',
+    payment_reference_number: "",
+    reference_id: ""
   }
   dateRange: any;
   selectedNote: string;
@@ -127,6 +129,8 @@ export class ListTaskComponent implements OnInit {
       this.searchForm.date_range = params['date_range'] && params['date_range'] != undefined ? params['date_range'] : '';
       this.searchForm.array_status = params['array_status'] && params['array_status'] != undefined ? params['array_status'] : [];
       this.searchForm.sub_action = params['sub_action'] && params['sub_action'] != undefined ? params['sub_action'] : '';
+      this.searchForm.payment_reference_number = params['payment_reference_number'] && params['payment_reference_number'] != undefined ? params['payment_reference_number'] : '';
+      this.searchForm.reference_id = params['reference_id'] && params['reference_id'] != undefined ? params['reference_id'] : '';
       this.initActiveBoxSummary();
       if (this.searchForm.action && this.searchForm.array_status.length > 0) {
         this.setActiveBoxSummary(this.searchForm.array_status, this.searchForm.action);

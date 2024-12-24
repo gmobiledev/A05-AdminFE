@@ -66,6 +66,7 @@
                       <option value="VNM">Vietnammobile</option>
                       <option value="VMS">Mobifone</option>
                       <option value="VNP">Vinaphone</option>
+                      <option value="GSIM">GSIM</option>
                     </select>
                   </div>
                 </div>
@@ -81,6 +82,18 @@
                       <option value="SIM_CAM_KET">Sim Cam Kết</option>
                       <option value="S99_TOOL_BATCH">Tool theo lô</option>
                     </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="reference_id" [(ngModel)]="searchForm.reference_id" class="form-control"
+                      placeholder="Mã kho">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="payment_reference_number" [(ngModel)]="searchForm.payment_reference_number" class="form-control"
+                      placeholder="Mã thanh toán">
                   </div>
                 </div>
                 <div class="col-md-2">
