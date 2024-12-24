@@ -227,7 +227,6 @@ export class ListTaskComponent implements OnInit {
   }
 
   async modalOpenApproveRestore(modalViewApproveRestore, item = null) {
-
     if (item) {
       this.selectedItem = item;
       this.modalRef = this.modalService.open(modalViewApproveRestore, {

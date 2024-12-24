@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerType, TaskTelecom } from 'app/utils/constants';
 
 @Component({
   selector: 'app-old-customer-information',
@@ -9,16 +10,27 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class OldCustomerInformationComponent implements OnInit {
   @Input() dataText: any;
   @Input() dataImages: any;
+  @Input() item: any;
   dataOldText;
   public modalRef: any;
   public viewImage;
-
+  customerType = CustomerType;
+    public listTaskAction = TaskTelecom.ACTION;
+  
   constructor(
     private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
-    this.dataOldText = this.dataText?.customer;
+    if (this.item) {
+      if (this.item.action == "KHOI_PHUC") {
+        this.dataOldText = this.dataText?.customer;
+      } else if (
+        this.item.action == this.listTaskAction.change_user_info.value
+      ) {
+        this.dataOldText = this.dataText?.compare_info;
+      }
+    }
   }
 
   onViewImage(modal, type, mobile = null) {

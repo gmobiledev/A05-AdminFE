@@ -23,8 +23,8 @@ export class ViewCheckInfoNewComponent implements OnInit {
   @Output() closePopup = new EventEmitter<boolean>();
   @Input() select;
   @Input() data;
+  @Input() mobileSearch;
   dataUserOld;
-  mobileSearch;
   formOgzOcr;
   dataImage;
   listVideo;
@@ -48,7 +48,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
   ngOnInit(): void {
     console.log("data-app-view-check-info-new", this.data);
     console.log("this.select", this.select);
-
+    console.log("this.mobileSearch", this.mobileSearch);
     this.getData();
     this.initForm();
   }
@@ -59,7 +59,6 @@ export class ViewCheckInfoNewComponent implements OnInit {
       (res) => {
         if (res.status == 1) {
           this.itemBlockUI.stop();
-          this.mobileSearch = res.data?.task?.msisdn;
           this.dataUserOld = res.data?.customer;
           console.log(this.dataUserOld);
 
@@ -159,13 +158,14 @@ export class ViewCheckInfoNewComponent implements OnInit {
       formData.append("entity", "people");
       formData.append("key", "attachments");
       formData.append("object_id", this.data.task_id);
+      formData.append("action", 'change_user_info');
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const file = this.selectedFiles[i];
         formData.append(`files`, file);
       }
       console.log(formData);
       this.itemBlockUI.start();
-      await this.userService.sumitFile(formData).subscribe(
+      await this.telecomService.postUpdateAttachments(formData).subscribe(
         (res) => {
           console.log(res);
           if (!res.status) {

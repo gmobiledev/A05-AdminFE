@@ -1,135 +1,293 @@
 <div class="content-wrapper container-xxl p-0" *blockUI="'section-block'">
-    <div class="content-body">
-        <div class="row" id="table-striped">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Khôi phục số thuê bao</h4>
-                    </div>
+  <div class="content-body">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Khôi phục số thuê bao</h4>
+          </div>
 
-                    <div class="card-body">
-                        <form (ngSubmit)="onSubmitSearch()">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <input type="text" name="searchSim" [(ngModel)]="searchSim" class="form-control"
-                                            placeholder="Nhập số thuê bao để khôi phục" />
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-info">
-                                            Lọc kết quả <span [data-feather]="'search'"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="searchSim"
+                      [(ngModel)]="searchSim"
+                      class="form-control"
+                      (input)="onInputChange('searchSim')"
+                      placeholder="Nhập số thuê bao để khôi phục"
+                    />
+                  </div>
                 </div>
-            </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả <span [data-feather]="'search'"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <form [formGroup]="formOgzOcr" *ngIf="showInformation">
-            <div class="form-container">
-                <div class="row">
-                    <div class="col-12">
-                        <h4 style="padding-left: 5px;">Thông tin người khôi phục số thuê bao</h4>
-                        <br>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="image-upload" *ngIf="!imageFront" style="text-align:center">
-                            <label for="identification_front_file">
-                                <img src="/assets/images/icons/cccd_front.png" class="img-fluid img-margin-bottom"
-                                    alt="">
-                                <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
-                            </label>
-                            <input class="input-display-none" id="identification_front_file" type="file"
-                                (change)="onSelectFileFront($event)" fromControlName="identification_front_file" />
-                            <!-- <div *ngIf="submitted && f.identification_front_file.errors" class="invalid-feedback">
+      </div>
+    </div>
+    <form [formGroup]="formOgzOcr" *ngIf="showInformation">
+      <div class="form-container">
+        <div class="row">
+          <div class="col-12">
+            <h4 style="padding-left: 5px">
+              Thông tin người khôi phục số thuê bao
+            </h4>
+            <br />
+          </div>
+          <div class="col-12 mb-1">
+            <h5 for=""> New Serial </h5>
+            <input
+              type="number"
+              name="new_serial"
+              formControlName="new_serial"
+              class="form-control"
+              (input)="onInputChange('new_serial')"
+              placeholder="Nhập serial mới"
+            />
+          </div>
+          <div class="col-md-4">
+            <div
+              class="image-upload"
+              *ngIf="!imageFront"
+              style="text-align: center"
+            >
+              <label for="identification_front_file">
+                <img
+                  src="/assets/images/icons/cccd_front.png"
+                  class="img-fluid img-margin-bottom"
+                  alt=""
+                />
+                <h6 class="text-center">Ảnh CCCD/CMND mặt trước</h6>
+              </label>
+              <input
+                class="input-display-none"
+                id="identification_front_file"
+                type="file"
+                (change)="onSelectFileFront($event)"
+                fromControlName="identification_front_file"
+              />
+              <!-- <div *ngIf="submitted && f.identification_front_file.errors" class="invalid-feedback">
                                 <div *ngIf="f.identification_front_file.errors.required">Vui lòng nhập trường này</div>
                             </div> -->
-                        </div>
+            </div>
 
-                        <div class="image-preview" *ngIf="imageFront">
-                            <img [src]="imageFront" alt="" class="img-fluid img-margin-bottom">
+            <div class="image-preview" *ngIf="imageFront">
+              <img
+                [src]="imageFront"
+                alt=""
+                class="img-fluid img-margin-bottom"
+              />
 
-                            <button (click)="onReUpload('front')" type="button" class="btn btn-outline-primary btn-next"
-                                rippleEffect>
-                                <span class="align-middle ">Tải lại</span>
-
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="image-upload" *ngIf="!imageBack" style="text-align:center">
-                            <label for="identification_back_file">
-                                <img src="/assets/images/icons/cccd_back.png" class="img-fluid img-margin-bottom"
-                                    alt="">
-                                <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
-                            </label>
-                            <input id="identification_back_file" class="input-display-none" type="file"
-                                (change)="onSelectFileBack($event)" fromControlName="identification_back_file" />
-                            <!-- <div *ngIf="submitted && f.identification_back_file.errors" class="invalid-feedback">
+              <button
+                (click)="onReUpload('front')"
+                type="button"
+                class="btn btn-outline-primary btn-next"
+                rippleEffect
+              >
+                <span class="align-middle">Tải lại</span>
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              class="image-upload"
+              *ngIf="!imageBack"
+              style="text-align: center"
+            >
+              <label for="identification_back_file">
+                <img
+                  src="/assets/images/icons/cccd_back.png"
+                  class="img-fluid img-margin-bottom"
+                  alt=""
+                />
+                <h6 class="text-center">Ảnh CCCD/CMND mặt sau</h6>
+              </label>
+              <input
+                id="identification_back_file"
+                class="input-display-none"
+                type="file"
+                (change)="onSelectFileBack($event)"
+                fromControlName="identification_back_file"
+              />
+              <!-- <div *ngIf="submitted && f.identification_back_file.errors" class="invalid-feedback">
                                 <div *ngIf="f.identification_back_file.errors.required">Vui lòng nhập trường này</div>
                             </div> -->
-                        </div>
+            </div>
 
-                        <div class="image-preview" *ngIf="imageBack">
-                            <img [src]="imageBack" alt="" class="img-fluid img-margin-bottom">
-                            <button (click)="onReUpload('back')" type="button" class="btn btn-outline-primary btn-next"
-                                rippleEffect>
-                                <span class="align-middle ">Tải lại</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="image-upload" style="text-align:center;" *ngIf="!imageSelfie">
-                            <label for="identification_selfie_file">
-                                <img *ngIf="!imageSelfie" src="/assets/images/icons/selfie.png"
-                                    class="img-fluid img-margin-bottom" style="width:200px" alt="">
-                                <!-- <img *ngIf="imageSelfie" [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom"> -->
-                                <h6 *ngIf="!imageSelfie" class="text-center">Tải ảnh chân dung</h6>
-                            </label>
-                            <input type="file" class="form-control input-display-none" id="identification_selfie_file"
-                                (change)="onSelectFileSelfie($event)" fromControlName="identification_selife_file" />
-                            <!-- <div *ngIf="submitted && f.identification_selfie_file.errors" class="invalid-feedback">
+            <div class="image-preview" *ngIf="imageBack">
+              <img
+                [src]="imageBack"
+                alt=""
+                class="img-fluid img-margin-bottom"
+              />
+              <button
+                (click)="onReUpload('back')"
+                type="button"
+                class="btn btn-outline-primary btn-next"
+                rippleEffect
+              >
+                <span class="align-middle">Tải lại</span>
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              class="image-upload"
+              style="text-align: center"
+              *ngIf="!imageSelfie"
+            >
+              <label for="identification_selfie_file">
+                <img
+                  *ngIf="!imageSelfie"
+                  src="/assets/images/icons/selfie.png"
+                  class="img-fluid img-margin-bottom"
+                  style="width: 200px"
+                  alt=""
+                />
+                <!-- <img *ngIf="imageSelfie" [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom"> -->
+                <h6 *ngIf="!imageSelfie" class="text-center">
+                  Tải ảnh chân dung
+                </h6>
+              </label>
+              <input
+                type="file"
+                class="form-control input-display-none"
+                id="identification_selfie_file"
+                (change)="onSelectFileSelfie($event)"
+                fromControlName="identification_selife_file"
+              />
+              <!-- <div *ngIf="submitted && f.identification_selfie_file.errors" class="invalid-feedback">
                                 <div *ngIf="f.identification_selfie_file.errors.required">Vui lòng nhập trường này</div>
                             </div> -->
-                        </div>
-
-                        <div class="image-preview" *ngIf="imageSelfie">
-                            <img [src]="imageSelfie" alt="" class="img-fluid img-margin-bottom">
-                            <button (click)="onReUpload('selfie')" type="button" class="btn btn-outline-primary btn-next"
-                                rippleEffect>
-                                <span class="align-middle ">Tải lại</span>
-        
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-md-12 d-flex justify-content-center">
-                        <div class="col-md-2" style="margin-top: 20px;">
-                            <button (click)="updateInformation()" type="button" class="btn btn-block btn-primary btn-next"
-                                rippleEffect>
-                                <span class="align-middle ">Cập nhật</span>
-                                <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </form>
-    </div>
+
+            <div class="image-preview" *ngIf="imageSelfie">
+              <img
+                [src]="imageSelfie"
+                alt=""
+                class="img-fluid img-margin-bottom"
+              />
+              <button
+                (click)="onReUpload('selfie')"
+                type="button"
+                class="btn btn-outline-primary btn-next"
+                rippleEffect
+              >
+                <span class="align-middle">Tải lại</span>
+              </button>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="mb-1 mt-1">
+              <h5 >Upload file</h5>
+            </div>
+            <div
+              class="mb-1 d-flex align-items-end"
+              style="gap: 10px"
+              *ngIf="!showSubmit"
+            >
+              <label for="update-file" style="cursor: pointer"
+                >File đính kèm task</label
+              >
+              <input
+                class="input-display-none"
+                id="update-file"
+                (change)="onFileSelected($event)"
+                type="file"
+                accept="image/*,video/*"
+              />
+              <label for="update-file">
+                <img
+                  src="/assets/images/icons/icon-update-black.svg"
+                  class="img-fluid"
+                  style="width: 24px"
+                  alt=""
+                />
+              </label>
+            </div>
+            <div
+              class="mb-1 d-flex"
+              *ngIf="selectedFiles?.length > 0"
+              style="max-width: 100%; overflow: hidden"
+            >
+              <div class="d-flex name-file">
+                <div
+                  class="d-flex"
+                  *ngFor="let item of selectedFiles; let i = index"
+                >
+                  <div class="d-flex flex-column justify-content-around">
+                    <div class="text-right">
+                      <span
+                        style="cursor: pointer"
+                        (click)="deleteFile(i)"
+                        >x</span
+                      >
+                    </div>
+                    <p>{{ item?.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <button
+                class="btn"
+                *ngIf="!showSubmit"
+                style="background: #ababab; color: #ffffff"
+                (click)="onSubmitUpload()"
+              >
+                Cập nhật File
+              </button>
+            </div>
+          </div>
+          <div class="col-md-12 d-flex justify-content-center">
+            <div class="col-md-2" style="margin-top: 20px">
+              <button
+                (click)="updateInformation()"
+                type="button"
+                class="btn btn-block btn-primary btn-next"
+                [class.disabled]="!showSubmit"
+                rippleEffect
+              >
+                <span class="align-middle">Cập nhật</span>
+                <i
+                  data-feather="arrow-right"
+                  class="align-middle ml-sm-25 ml-0"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 <ng-template #modalItem let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160">Thông tin thuê bao mới nộp</h5>
-        <button type="button" class="close" (click)="modalClose()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-        <app-view-restorer-information [data]="dataRestorerInformation"
-            (closePopup)="modalClose()"></app-view-restorer-information>
-    </div>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Thông tin thuê bao mới nộp</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <app-view-restorer-information
+      [data]="dataRestorerInformation"
+      (closePopup)="modalClose()"
+    ></app-view-restorer-information>
+  </div>
 </ng-template>

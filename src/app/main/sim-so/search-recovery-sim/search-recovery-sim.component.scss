@@ -1,15 +1,29 @@
 .form-container {
-    box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
-    transition: all 0.3s ease-in-out, background 0s, color 0s, border-color 0s;
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 0.428rem;
+  box-shadow: 0 4px 24px 0 rgba(34, 41, 47, 0.1);
+  transition: all 0.3s ease-in-out, background 0s, color 0s, border-color 0s;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.428rem;
 }
 
 .img-margin-bottom {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .input-display-none {
-    display: none;
+  display: none;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.name-file {
+  gap: 15px;
+  border: 1px #888888 solid;
+  padding: 10px;
+  border-radius: 7px;
+  flex-direction: column;
 }
