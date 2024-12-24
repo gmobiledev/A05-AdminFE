@@ -124,7 +124,7 @@ export class TaskTelecom {
         },
         change_user_info: {
             value: 'change_user_info',
-            label: 'Đổi thông tin'
+            label: 'Chuyển chủ quyền'
         },
         CHECK_CONVERSION_2G: {
             value: 'CHECK_CONVERSION_2G',
