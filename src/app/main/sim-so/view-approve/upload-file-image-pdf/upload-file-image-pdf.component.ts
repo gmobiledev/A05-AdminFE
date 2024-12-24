@@ -11,6 +11,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 })
 export class UploadFileImagePdfComponent implements OnInit {
   @Input() task_id: any;
+  @Input() item: any;
   file = [];
   @ViewChild('modalViewFileTask') modalViewFileTask: ElementRef;
   fileTask;

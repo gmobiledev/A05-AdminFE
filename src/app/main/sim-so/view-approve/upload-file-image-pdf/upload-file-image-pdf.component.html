@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="select-click-upload">
+    <div class="select-click-upload" *ngIf="item.action == 'KHOI_PHUC'">
         <div class="upload-file" [class.displayNone]="multiples.length == 10">
             <label for="upload"><i class="fa fa-upload" aria-hidden="true"></i></label>
             <input id="upload" type="file" accept="video/*, image/*, application/pdf" (change)="onSelectFile($event)"

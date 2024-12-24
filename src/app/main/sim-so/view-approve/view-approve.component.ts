@@ -1,27 +1,38 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TelecomService } from 'app/auth/service/telecom.service';
-import { TaskTelecom } from 'app/utils/constants';
-import { SweetAlertService } from 'app/utils/sweet-alert.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { Subject } from 'rxjs';
-import { ObjectLocalStorage, TaskTelecomStatus } from 'app/utils/constants';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
+import { TelecomService } from "app/auth/service/telecom.service";
+import { TaskTelecom } from "app/utils/constants";
+import { SweetAlertService } from "app/utils/sweet-alert.service";
+import { BlockUI, NgBlockUI } from "ng-block-ui";
+import { Subject } from "rxjs";
+import { ObjectLocalStorage, TaskTelecomStatus } from "app/utils/constants";
+import Swal from "sweetalert2";
+import { AdminService } from "app/auth/service/admin.service";
 
 @Component({
-  selector: 'app-view-approve',
-  templateUrl: './view-approve.component.html',
-  styleUrls: ['./view-approve.component.scss']
+  selector: "app-view-approve",
+  templateUrl: "./view-approve.component.html",
+  styleUrls: ["./view-approve.component.scss"],
 })
 export class ViewApproveComponent implements OnInit, OnDestroy {
-  @BlockUI('section-block') itemBlockUI: NgBlockUI;
+  @BlockUI("section-block") itemBlockUI: NgBlockUI;
   @Output() closePopup = new EventEmitter<boolean>();
   @Input() item: any;
   dataImages;
   dataText;
   dataTask;
   idSlug;
+  titleModal;
   showSelect = false;
   showTask = true;
   currentUser;
+  public actionText = "Đấu nối";
   private _unsubscribeAll: Subject<any>;
   public listTaskAction = TaskTelecom.ACTION;
   public taskTelecomStatus = TaskTelecomStatus;
@@ -29,63 +40,103 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   constructor(
     private telecomService: TelecomService,
     private alertService: SweetAlertService,
-  ) { }
+    private adminService: AdminService
+  ) {}
 
   ngOnInit(): void {
+    console.log(this.item);
+    if (this.item) {
+      if (this.item.action == "KHOI_PHUC") {
+        this.titleModal = "Khôi phục sim";
+      } else if (
+        this.item.action == this.listTaskAction.change_user_info.value
+      ) {
+        this.titleModal = "Chuyển đổi chủ quyền";
+      }
+    }
     this.idSlug = this.item?.id;
-    this.currentUser = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
+    this.currentUser = JSON.parse(
+      localStorage.getItem(ObjectLocalStorage.CURRENT_USER)
+    );
     this.getTaskSlugText(this.idSlug);
     this.getTaskSlugImages(this.idSlug);
   }
 
   isShowButtonApprove() {
-    if (this.checkAction('telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status')) {
+    if (
+      this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status")
+    ) {
       return true;
     }
     return false;
   }
 
   checkAction(item) {
-    return this.currentUser ? this.currentUser.actions.find(itemX => itemX.includes(item)) : false;
+    return this.currentUser
+      ? this.currentUser.actions.find((itemX) => itemX.includes(item))
+      : false;
   }
 
   getTaskSlugText(id: any) {
-    this.telecomService.getTaskSlugText(id).subscribe(res => {
-      if (res.status === 1 && res.data) {
-        this.dataText = res.data;
-        this.dataTask = res.data?.task;
-        this.checkStatus();
-      } else {
-        this.alertService.showMess(res.message);
-      };
-      this.itemBlockUI.stop();
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+    this.telecomService.getTaskSlugText(id).subscribe(
+      (res) => {
+        console.log(res);
+
+        if (res.status === 1 && res.data) {
+          this.dataText = res.data;
+          this.dataTask = res.data?.task;
+          this.checkStatus();
+        } else {
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
   }
 
   checkStatus() {
-    if (this.dataTask.status == this.taskTelecomStatus.STATUS_NEW_ORDER || this.dataTask?.status == TaskTelecomStatus.STATUS_PROCESSING) {
+    if (
+      this.dataTask.status == this.taskTelecomStatus.STATUS_NEW_ORDER ||
+      this.dataTask?.status == TaskTelecomStatus.STATUS_PROCESSING
+    ) {
       this.showSelect = true;
     }
     if (this.dataTask?.status == TaskTelecomStatus.STATUS_PROCESSING) {
-      this.showTask = this.dataTask.sync_by == this.currentUser.id ? true : false;
+      this.showTask =
+        this.dataTask.sync_by == this.currentUser.id ? true : false;
     }
   }
 
   getTaskSlugImages(id: any) {
-    this.telecomService.getTaskSlugImages(id).subscribe(res => {
-      if (res.status === 1 && res.data) {
-        this.dataImages = res.data;
-      } else {
-        this.alertService.showMess(res.message);
-      };
-      this.itemBlockUI.stop();
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+    this.telecomService.getTaskSlugImages(id).subscribe(
+      (res) => {
+        if (res.status === 1 && res.data) {
+          if (this.item.action == "KHOI_PHUC") {
+            this.dataImages = res.data;
+          } else {
+            const dataCompareInfo = res.data.compare_info;
+            const dataCustomer = res.data.customer;
+            this.dataImages = {
+              customer: dataCompareInfo,
+              compare_info: dataCustomer
+            };
+          }
+          console.log(this.dataImages);
+          
+        } else {
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
   }
 
   async reception() {
@@ -108,33 +159,129 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   }
 
   select(name: string) {
-    let status;
-    let note = '';
-    if (name === 'approve') {
-      note = 'duyệt';
-      status = 1
-    } else {
-      note = 'hủy yêu cầu';
-      status = -1
-    }
-
-    const data = {
-      status: status,
-      note: note
-    }
-    this.telecomService.postUpdateStatus(this.idSlug, data).subscribe((res: any) => {
-      if (res.status === 1) {
-        this.closePopup.next();
-        this.alertService.showMess(res.message);
+    if (this.item.action == "KHOI_PHUC") {
+      let status;
+      let note = "";
+      if (name === "approve") {
+        note = "duyệt";
+        status = 1;
       } else {
-        this.closePopup.next();
-        this.alertService.showMess(res.message);
+        note = "hủy yêu cầu";
+        status = -1;
+      }
+      const data = {
+        status: status,
+        note: note,
       };
-      this.itemBlockUI.stop();
-    }, err => {
-      this.itemBlockUI.stop();
-      this.alertService.showMess(err);
-    })
+      this.telecomService.postUpdateStatus(this.idSlug, data).subscribe(
+        (res: any) => {
+          if (res.status === 1) {
+            this.closePopup.next();
+            this.alertService.showMess(res.message);
+          } else {
+            this.closePopup.next();
+            this.alertService.showMess(res.message);
+          }
+          this.itemBlockUI.stop();
+        },
+        (err) => {
+          this.itemBlockUI.stop();
+          this.alertService.showMess(err);
+        }
+      );
+    } else {
+      if (name === "approve") {
+        this.asyncToMnoViaApi();
+      } else {
+        this.onUpdateStatus(this.item, this.taskTelecomStatus.STATUS_REJECT);
+      }
+    }
+  }
+
+  async asyncToMnoViaApi() {
+    let confirmMessage = "Xác nhận chuyển đổi chủ quyền TTTB";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.itemBlockUI.start();
+      this.telecomService.asyncToMnoViaApi(this.item).subscribe(
+        (res) => {
+          if (res.status === 1) {
+            this.closePopup.next();
+            this.alertService.showMess(res.message);
+          } else {
+            this.closePopup.next();
+            this.alertService.showMess(res.message);
+          }
+          this.itemBlockUI.stop();
+        },
+        (error) => {
+          this.itemBlockUI.stop();
+          this.alertService.showError(error, 15000);
+        }
+      );
+    }
+  }
+
+  async onUpdateStatus(item, status) {
+    let titleS = "Từ chối yêu cầu, gửi lý do cho đại lý";
+    Swal.fire({
+      title: titleS,
+      input: "textarea",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Gửi",
+      showLoaderOnConfirm: true,
+      preConfirm: (note) => {
+        if (!note || note == "") {
+          Swal.showValidationMessage("Vui lòng nhập nội dung");
+          return;
+        }
+        this.telecomService
+          .updateTaskStatus(item.id, { status: status, note: note })
+          .subscribe(
+            (res) => {
+              if (!res.status) {
+                Swal.close();
+                Swal.showValidationMessage(res.message);
+                // this.alertService.showError(res.message);
+                return;
+              }
+              Swal.close();
+              this.closePopup.next();
+            },
+            (error) => {}
+          );
+
+        const listPhone =
+          this.item.msisdn.msisdns.length > 1
+            ? this.item.msisdn.msisdns
+                .map((x) => {
+                  return x.msisdn;
+                })
+                .join("-")
+            : this.item.msisdn.msisdns[0].msisdn;
+        const dataPushNotify = {
+          user_ids: [this.item.request_by],
+          message: `Yêu cầu ${this.actionText} ID ${this.item.id} bị từ chối: ${note}`,
+          title: `${this.actionText} số ${listPhone}`,
+          data: {
+            type: this.item.action,
+            status: status + "",
+            message: `Yêu cầu ${this.actionText} ID ${this.item.id} bị từ chối: ${note}`,
+            id: this.item.id + "",
+          },
+        };
+        console.log(dataPushNotify);
+        this.adminService.pushNotify(dataPushNotify).subscribe((res) => {});
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //this.updateStatus.emit({updated: true});
+        this.alertService.showSuccess("Thành công");
+      }
+    });
   }
 
   ngOnDestroy(): void {

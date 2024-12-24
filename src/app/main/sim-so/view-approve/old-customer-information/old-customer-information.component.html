@@ -1,132 +1,356 @@
+<div
+  class="row p-2"
+  *ngIf="dataOldText && dataOldText.customer_type == customerType.ORGANIZATION"
+>
+  <div class="col-md-12">
+    <h4>Thông tin Khách Hàng cũ</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Tên doanh nghiệp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.name"
+        (click)="copyTextClipboard(dataOldText?.name)"
+      >
+        <span class="text-info">{{ dataOldText?.name }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Mã số doanh nghiệp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.id_no"
+        (click)="copyTextClipboard(dataOldText?.id_no)"
+      >
+        <span class="text-info">{{ dataOldText?.id_no }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-12 col-sm-12 mb-1">
+    <span
+      ><u>Địa chỉ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.address"
+        (click)="copyTextClipboard(dataOldText?.address)"
+      >
+        <span class="text-info">{{ dataOldText?.address }}</span>
+      </a></span
+    >
+  </div>
+  <div
+    class="col-md-12 col-sm-12 mb-1 mt-1"
+    style="border-top: 1px rgba(136, 136, 136, 1) solid"
+  ></div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Họ và tên đại diện</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.representative_info?.name"
+        (click)="copyTextClipboard(dataOldText?.representative_info?.name)"
+      >
+        <span class="text-info">{{ dataOldText?.representative_info?.name }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Số giấy tờ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.representative_info?.identification_no"
+        (click)="copyTextClipboard(dataOldText?.representative_info?.identification_no)"
+      >
+        <span class="text-info">{{
+          dataOldText?.representative_info?.identification_no
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Ngày sinh</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.representative_info?.birth"
+        (click)="copyTextClipboard(dataOldText?.representative_info?.birth)"
+      >
+        <span class="text-info">{{
+          dataOldText?.representative_info?.birth | date : "dd/MM/yyyy"
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div
+    class="col-md-12 col-sm-12 mt-1"
+    style="border-top: 1px rgba(136, 136, 136, 1) solid"
+  ></div>
+</div>
 <div class="row mb-2 p-2" *ngIf="dataOldText">
-    <div class="col-md-12">
-        <h4>Thông tin Khách Hàng cũ</h4>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Loại giấy tờ</u>:
-            <span class="text-info">{{
-                dataOldText?.people?.identification_type
-                }}</span></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Số giấy tờ</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.identification_no" (click)="
-      copyTextClipboard(dataOldText?.people?.identification_no)
-    ">
-                <span class="text-info">{{ dataOldText?.people?.identification_no }}</span>
-            </a></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Ngày cấp</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.identification_date" (click)="
-      copyTextClipboard(dataOldText?.people?.customer?.identification_date)
-    ">
-                <span class="text-info">{{dataOldText?.people?.identification_date | date: 'dd/MM/yyyy'}}</span>
-            </a></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Nơi cấp</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.identification_place" (click)="
-      copyTextClipboard(dataOldText?.people?.identification_place)
-    ">
-                <span class="text-info">{{
-                    dataOldText?.people?.identification_place
-                    }}</span>
-            </a></span>
-    </div>
+  <div
+    class="col-md-12"
+    *ngIf="dataOldText.customer_type == customerType.PERSONAL"
+  >
+    <h4>Thông tin Khách Hàng cũ</h4>
+  </div>
 
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Họ và tên</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.name"
-                (click)="copyTextClipboard(dataOldText?.people?.name)">
-                <span class="text-info">{{ dataOldText?.people?.name }}</span>
-            </a></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Ngày sinh</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.birth"
-                (click)="copyTextClipboard(dataOldText?.people?.birth)">
-                <span class="text-info">{{dataOldText?.people?.birth | date: 'dd/MM/yyyy'}}</span>
-            </a></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Số điện thoại liên hệ</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.mobile"
-                (click)="copyTextClipboard(dataOldText?.mobile)">
-                <span class="text-info">{{
-                    dataOldText?.mobile
-                    }}</span>
-            </a></span>
-    </div>
-    <div class="col-md-12 col-sm-12 mt-1">
-        <h6>Địa chỉ thường trú:</h6>
-        <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.residence_full_address" (click)="
-    copyTextClipboard(dataOldText?.people?.residence_full_address)
-  ">
-            <span class="text-info">{{
-                dataOldText?.people?.residence_full_address
-                }}</span></a>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Thôn, số nhà</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.address"
-                (click)="copyTextClipboard(dataOldText?.people?.address)">
-                <span class="text-info">{{
-                    dataOldText?.people?.address
-                    }}</span></a></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Xã/phường</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.communue"
-                (click)="copyTextClipboard(dataOldText?.people?.communue)">
-                <span class="text-info">{{
-                    dataOldText?.people?.communue
-                    }}</span>
-            </a></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Quận/huyện</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.district"
-                (click)="copyTextClipboard(dataOldText?.people?.district)">
-                <span class="text-info">{{
-                    dataOldText?.people?.district
-                    }}</span>
-            </a></span>
-    </div>
-    <div class="col-md-6 col-sm-12 mb-1">
-        <span><u>Tỉnh/thành</u>:
-            <a placement="right" ngbTooltip="'Bấm để copy'" *ngIf="dataOldText?.people?.province"
-                (click)="copyTextClipboard(dataOldText?.people?.province)">
-                <span class="text-info">{{
-                    dataOldText?.people?.province
-                    }}</span>
-            </a></span>
-    </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u
+        >Họ và tên
+        <div *ngIf="dataOldText.customer_type == customerType.ORGANIZATION">
+          sử dụng
+        </div></u
+      >:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.name"
+        (click)="copyTextClipboard(dataOldText?.people?.name)"
+      >
+        <span class="text-info">{{ dataOldText?.people?.name }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Loại giấy tờ</u>:
+      <span class="text-info">{{
+        dataOldText?.people?.identification_type
+      }}</span></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Số giấy tờ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.identification_no"
+        (click)="copyTextClipboard(dataOldText?.people?.identification_no)"
+      >
+        <span class="text-info">{{
+          dataOldText?.people?.identification_no
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Ngày cấp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.identification_date"
+        (click)="
+          copyTextClipboard(dataOldText?.people?.customer?.identification_date)
+        "
+      >
+        <span class="text-info">{{
+          dataOldText?.people?.identification_date | date : "dd/MM/yyyy"
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Nơi cấp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.identification_place"
+        (click)="copyTextClipboard(dataOldText?.people?.identification_place)"
+      >
+        <span class="text-info">{{
+          dataOldText?.people?.identification_place
+        }}</span>
+      </a></span
+    >
+  </div>
 
-    <div class="col-md-6">
-        <label for>Ảnh giấy tờ mặt trước</label>
-        <div class="lazy-load" *ngIf="!dataImages?.compare_info?.identification_front_file">
-            <div class="spinner-border text-secondary" role="status"></div>
-        </div>
-        <img (click)="onViewImage(modalImage, 'cccd_front')" class="img-fluid rounded mb-75" *ngIf="dataImages?.compare_info?.identification_front_file"
-            src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_front_file }}"
-            alt="avatar img" />
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Ngày sinh</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.birth"
+        (click)="copyTextClipboard(dataOldText?.people?.birth)"
+      >
+        <span class="text-info">{{
+          dataOldText?.people?.birth | date : "dd/MM/yyyy"
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Số điện thoại liên hệ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.mobile"
+        (click)="copyTextClipboard(dataOldText?.mobile)"
+      >
+        <span class="text-info">{{ dataOldText?.mobile }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-12 col-sm-12 mt-1">
+    <h6>Địa chỉ thường trú:</h6>
+    <a
+      placement="right"
+      ngbTooltip="'Bấm để copy'"
+      *ngIf="dataOldText?.people?.full_address"
+      (click)="copyTextClipboard(dataOldText?.people?.full_address)"
+    >
+      <span class="text-info">{{
+        dataOldText?.people?.full_address
+      }}</span></a
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Thôn, số nhà</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.address"
+        (click)="copyTextClipboard(dataOldText?.people?.address)"
+      >
+        <span class="text-info">{{ dataOldText?.people?.address }}</span></a
+      ></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Xã/phường</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.communue"
+        (click)="copyTextClipboard(dataOldText?.people?.communue)"
+      >
+        <span class="text-info">{{ dataOldText?.people?.communue }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Quận/huyện</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.district"
+        (click)="copyTextClipboard(dataOldText?.people?.district)"
+      >
+        <span class="text-info">{{ dataOldText?.people?.district }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Tỉnh/thành</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.province"
+        (click)="copyTextClipboard(dataOldText?.people?.province)"
+      >
+        <span class="text-info">{{ dataOldText?.people?.province }}</span>
+      </a></span
+    >
+  </div>
+
+  <div class="col-md-6">
+    <label for>Ảnh giấy tờ mặt trước</label>
+    <div
+      class="lazy-load"
+      *ngIf="!dataImages?.customer?.people?.identification_front_file && !dataImages?.customer?.identification_front_file"
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
     </div>
-    <div class="col-md-6">
-        <label for>Ảnh giấy tờ mặt sau</label>
-        <div class="lazy-load" *ngIf="!dataImages?.compare_info?.identification_back_file">
-            <div class="spinner-border text-secondary" role="status"></div>
-        </div>
-        <img (click)="onViewImage(modalImage, 'cccd_back')" class="img-fluid rounded mb-75" *ngIf="dataImages?.compare_info?.identification_back_file"
-            src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_back_file }}" alt="avatar img" />
+    <img
+      (click)="onViewImage(modalImage, 'cccd_front')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_front_file"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_front_file
+      }}"
+      alt="avatar img"
+    />
+    <img
+    (click)="onViewImage(modalImage, 'cccd_front')"
+    class="img-fluid rounded mb-75"
+    *ngIf="dataImages?.customer?.identification_front_file"
+    src="data:image/png;base64,{{
+      dataImages?.customer?.identification_front_file
+    }}"
+    alt="avatar img"
+  />
+  </div>
+  <div class="col-md-6">
+    <label for>Ảnh giấy tờ mặt sau</label>
+    <div
+      class="lazy-load"
+      *ngIf="!dataImages?.customer?.people?.identification_back_file && !dataImages?.customer?.identification_back_file"
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
     </div>
-    <div class="col-md-6">
-        <label for>Ảnh chân dung</label>
-        <div class="lazy-load" *ngIf="!dataImages?.compare_info?.identification_selfie_file">
-            <div class="spinner-border text-secondary" role="status"></div>
-        </div>
-        <img (click)="onViewImage(modalImage, 'selfie')" class="img-fluid rounded mb-75" *ngIf="dataImages?.compare_info?.identification_selfie_file"
-            src="data:image/png;base64,{{ dataImages?.customer?.people?.identification_selfie_file }}"
-            alt="avatar img" />
+    <img
+      (click)="onViewImage(modalImage, 'cccd_back')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_back_file"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_back_file
+      }}"
+      alt="avatar img"
+    />
+    <img
+    (click)="onViewImage(modalImage, 'cccd_back')"
+    class="img-fluid rounded mb-75"
+    *ngIf="dataImages?.customer?.identification_back_file"
+    src="data:image/png;base64,{{
+      dataImages?.customer?.identification_back_file
+    }}"
+    alt="avatar img"
+  />
+  </div>
+  <div class="col-md-6">
+    <label for>Ảnh chân dung</label>
+    <div
+      class="lazy-load"
+      *ngIf="!dataImages?.customer?.people?.identification_selfie_file && !dataImages?.customer?.identification_selfie_file"
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
     </div>
+    <img
+      (click)="onViewImage(modalImage, 'selfie')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_selfie_file"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_selfie_file
+      }}"
+      alt="avatar img"
+    />
+    <img
+    (click)="onViewImage(modalImage, 'selfie')"
+    class="img-fluid rounded mb-75"
+    *ngIf="dataImages?.customer?.identification_selfie_file"
+    src="data:image/png;base64,{{
+      dataImages?.customer?.identification_selfie_file
+    }}"
+    alt="avatar img"
+  />
+  </div>
 </div>

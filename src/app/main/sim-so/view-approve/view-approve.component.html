@@ -36,11 +36,11 @@
 
     <div class="row mb-4">
         <div class="col-md-6 border">
-            <app-old-customer-information [dataText]="dataText"
+            <app-old-customer-information [dataText]="dataText" [item]="item"
                 [dataImages]="dataImages"></app-old-customer-information>
         </div>
         <div class="col-md-6 border">
-            <app-new-customer-information [dataText]="dataText"
+            <app-new-customer-information [dataText]="dataText" [item]="item"
                 [dataImages]="dataImages"></app-new-customer-information>
         </div>
     </div>
@@ -49,8 +49,8 @@
     </div>
     <div class="row mb-2 box-button display-upload-file" *ngIf="isShowButtonApprove() && showTask">
         <span>Upload file:</span>
-        <app-upload-file-image-pdf [task_id]="idSlug"></app-upload-file-image-pdf>
-        <p>*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
+        <app-upload-file-image-pdf [task_id]="idSlug" [item]="item"></app-upload-file-image-pdf>
+        <p *ngIf="item.action == 'KHOI_PHUC'">*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
     </div>
     <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
         <a class="ml-2 btn btn-success" (click)="select('approve')">
