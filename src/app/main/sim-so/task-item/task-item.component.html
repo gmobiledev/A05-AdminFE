@@ -971,7 +971,7 @@
             data.task.sub_action != 'sim_to_esim') ||
             (data.task.sub_action == 'sim_to_esim' && isCheckOCr == 0))
         "
-      >
+      > 
         <a
           class="ml-2 btn btn-success"
           (click)="
@@ -1005,6 +1005,7 @@
       >
         <a
           class="ml-2 btn btn-success"
+          *ngIf="data.task.action != listTaskAction['change_user_info']['value']"
           (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)"
         >
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
@@ -1046,6 +1047,7 @@
         </a>
         <a
           class="ml-2 btn btn-success"
+          *ngIf="data.task.action != listTaskAction['change_user_info']['value']"
           (click)="updateInfoSubscriber(data.task)"
         >
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
@@ -1057,7 +1059,7 @@
           checkAction('telecom-admin/task/:slug(\\d+)/update-status') &&
           (data?.task?.status == taskTelecomStatus.STATUS_PROCESSING ||
             data?.task?.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO) &&
-          (data.task.action == listTaskAction['change_user_info']['value'] ||
+          (data.task.action != listTaskAction['change_user_info']['value'] ||
             data.task.action == listTaskAction['new_sim']['value'])
         "
       >

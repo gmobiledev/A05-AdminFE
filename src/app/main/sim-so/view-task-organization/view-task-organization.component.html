@@ -264,7 +264,7 @@
       </span>
     </a>
 
-    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING" class="ml-2 btn-sm btn btn-success"
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING && data?.task?.action != listTaskAction['change_user_info']['value']" class="ml-2 btn-sm btn btn-success"
       (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)">
       <i data-feather="check-circle" class="text-white cursor-pointer"></i>
       <span *ngIf="data.task.action == listTaskAction['change_sim']['value']">
@@ -284,7 +284,7 @@
         Duyệt API
       </span>
     </a>
-    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING" class="ml-2 btn btn-sm btn-success"
+    <a *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING && data?.task?.action != listTaskAction['change_user_info']['value']" class="ml-2 btn btn-sm btn-success"
       (click)="convertInfoSubscriber(data.task)">
       <i data-feather="check-circle" class="text-white cursor-pointer"></i>
       <span>

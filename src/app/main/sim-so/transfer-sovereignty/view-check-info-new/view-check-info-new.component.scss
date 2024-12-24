@@ -1,0 +1,75 @@
+.col-md-6-left {
+  label {
+    width: 85px;
+  }
+  input {
+    width: calc(100% - 100px);
+    text-overflow: ellipsis;
+  }
+  select {
+    width: calc(100% - 100px);
+    padding: 0.3rem 0.5rem;
+    border: 1px #888888 solid;
+    border-radius: 7px;
+    color: black;
+  }
+}
+
+.input-display-none {
+  display: none;
+}
+
+label {
+  font-weight: 500;
+  font-size: 12px;
+  color: black;
+  margin-right: 5px;
+}
+
+.name-image {
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+}
+
+p {
+  margin-bottom: unset;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // max-width: 200px;
+}
+
+span {
+  font-weight: 500;
+  font-size: 12px;
+  color: black;
+}
+
+input {
+  padding: 0.3rem 0.5rem;
+  border: 1px #888888 solid;
+  border-radius: 7px;
+  color: black;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  pointer-events: none;
+}
+.name-file {
+  gap: 15px;
+  border: 1px #888888 solid;
+  padding: 10px;
+  border-radius: 7px;
+  flex-direction: column;
+}
+
+.name-file::-webkit-scrollbar {
+  width: 2px;
+  background-color: #888888;
+}
+

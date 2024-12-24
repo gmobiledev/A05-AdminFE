@@ -1,0 +1,40 @@
+.transfer-sovereignty-new-owner-container {
+  padding: 20px 30px;
+}
+
+.form-container {
+  transition: all 0.3s ease-in-out, background 0s, color 0s, border-color 0s;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 0.428rem;
+}
+
+.img-margin-bottom {
+  margin-bottom: 10px;
+}
+
+.input-display-none {
+  display: none;
+}
+
+.business {
+  label {
+    font-weight: 500;
+    font-size: 12px;
+    color: black;
+    width: 140px;
+  }
+  input {
+    width: 300px;
+    padding: 0.3rem 0.5rem;
+    border: 1px #888888 solid;
+    border-radius: 7px;
+  }
+  p{
+    width: 300px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    transition: all 0.3s ease;
+  }
+}

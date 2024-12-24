@@ -91,6 +91,10 @@ export class UserService {
     return this._http.get<any>(`${environment.apiUrl}/admin/users/agents`, { params: params });
   }
 
+  sumitFile(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/files/uploads-file`, data);
+  }
+
   createAgent(data: CreateAgentDto) {
     return this._http.post<any>(`${environment.apiUrl}/admin/users/agents`, data);
   }

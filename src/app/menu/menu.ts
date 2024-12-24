@@ -164,15 +164,7 @@ export const menu: CoreMenu[] = [
         type: "item",
         icon: "user",
         url: "sim-so/msisdn",
-      },
-      {
-        id: "agents",
-        title: "Phục hồi",
-        translate: "",
-        type: "item",
-        icon: "user",
-        url: "sim-so/search-recovery-sim",
-      },
+      }
     ],
   },
   {
@@ -649,7 +641,7 @@ export const menu: CoreMenu[] = [
     type: "collapsible",
     icon: "package",
     badge: {
-      title: "11",
+      title: "12",
       translate: "",
       classes: "badge-light-warning badge-pill",
     },
@@ -749,6 +741,22 @@ export const menu: CoreMenu[] = [
         type: "item",
         icon: "search",
         url: "sim-so/select-package",
+      },
+      {
+        id: "transfer-sovereignty",
+        title: "Chuyển chủ quyền sử dụng",
+        translate: "",
+        type: "item",
+        icon: "search",
+        url: "sim-so/transfer-sovereignty",
+      },
+      {
+        id: "agents",
+        title: "Phục hồi",
+        translate: "",
+        type: "item",
+        icon: "user",
+        url: "sim-so/search-recovery-sim",
       },
       // {
       //   id: 'search-balance-changes',

@@ -32,12 +32,20 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/list-working`, { params: params });
   }
 
+  getSearchSim(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/search-sim`, { params: params });
+  }
+
   /**
    * Xem thong tin chi tiet
    */
   getDetailTask(id, action_view = null) {
     let url = action_view ? `${environment.apiTelecomUrl}/telecom-admin/task/${id}?action_view=${action_view}` : `${environment.apiTelecomUrl}/telecom-admin/task/${id}`
     return this._http.get<any>(url);
+  }
+
+  postOwnershipTransfer(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/ownership-transfer`, data);
   }
 
   /**
@@ -52,6 +60,10 @@ export class TelecomService {
   }
   postSetting(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/setting/commitment`, data);
+  }
+
+  postFileUploadOcr(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/file-upload`, data);
   }
 
   /**
@@ -202,16 +214,23 @@ export class TelecomService {
   }
 
   asyncToMnoViaApi(task) {
-    if (task.action == this.listTaskAction.change_sim.value)
+    if (task.action == this.listTaskAction.change_sim.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-sim-vnm`, {});
-    else if (task.action == this.listTaskAction.new_sim.value)
+    }
+    else if (task.action == this.listTaskAction.new_sim.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/connect-vnm`, {});
-    else if (task.action == this.listTaskAction.change_info.value)
+    }
+    else if (task.action == this.listTaskAction.change_info.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/update-info-subsriber`, {});
-    else if (task.action == this.listTaskAction.convert_info.value)
+    }
+    else if (task.action == this.listTaskAction.convert_info.value){
       return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-customer-subsriber`, {});
-    else
+    }
+    else if (task.action == this.listTaskAction.change_user_info.value){
+      return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${task.id}/change-customer-subsriber`, {});
+    }else{
       console.log("asyncToMnoViaApi null")
+    }
 
   }
 

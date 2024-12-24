@@ -394,6 +394,7 @@ export class TaskItemComponent implements OnInit {
             this.alertService.showError(res.message, 30000);
             return;
           }
+          this.getData();
           this.alertService.showSuccess(res.data.message, 15000);
         },
         (error) => {

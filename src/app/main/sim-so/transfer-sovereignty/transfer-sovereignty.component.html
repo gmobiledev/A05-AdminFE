@@ -1,0 +1,132 @@
+<div class="content-wrapper container-xxl p-0" *blockUI="'section-block'">
+  <div class="content-body">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title" style="color: black; font-weight: 600">
+              Chuyển chủ quyền sử dụng
+            </h4>
+          </div>
+
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="searchSim"
+                      [(ngModel)]="searchSim"
+                      class="form-control"
+                      placeholder="Nhập số thuê bao cũ"
+                      style="color: rgba(0, 0, 0, 1)"
+                      (input)="onInputChange('searchSim')"
+                      [class.pointer-events]="noneConfirm"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="identificationNo"
+                      [(ngModel)]="identificationNo"
+                      class="form-control"
+                      placeholder="Nhập số CCCD chủ thuê bao cũ"
+                      style="color: rgba(0, 0, 0, 1)"
+                      (input)="onInputChange('identificationNo')"
+                      [class.pointer-events]="noneConfirm"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button
+                      type="submit"
+                      class="btn btn-block btn-success"
+                      [class.fade]="noneConfirm"
+                      [class.pointer-events]="noneConfirm"  
+                    >
+                      Xác nhận
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="card" *ngIf="noneConfirm && !showNewSubscriberRegistration">
+          <app-transfer-sovereignty-old-owner
+            (showModal)="modalOpenItemConversionObject(modalItemConversionObject)"
+            [data]="data"
+          ></app-transfer-sovereignty-old-owner>
+        </div>
+        <div class="card" *ngIf="noneConfirm && showNewSubscriberRegistration">
+          <app-transfer-sovereignty-new-owner
+            (dataSplit)="showViewCheckInfoNew($event)"
+            [data]="data"
+            [select]="selectBusinessOrIndividual"
+          ></app-transfer-sovereignty-new-owner>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalItemConversionObject let-modal data-bs-backdrop="true">
+  <div class="modal-body" tabindex="0">
+    <div class="conversion-object">
+      <h5>Đối tượng chuyển đổi</h5>
+      <div class="select mb-2 mt-2">
+        <select
+          class="form-select form-select-sm"
+          #select
+          (change)="onSelectConversionObject(select.value)"
+          aria-label="Small select example"
+        >
+          <option selected hidden>Chọn đối tượng chuyển đối</option>
+          <option
+            value="{{ item.id }}"
+            *ngFor="let item of selectConversionObject"
+          >
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div class="button d-flex justify-content-center">
+        <button
+          (click)="submitConversionObject()"
+          class="btn btn-block btn-success"
+          style="width: 200px; border-radius: 12px;"
+        >
+          Xác nhận
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalItemNew let-modal data-bs-backdrop="true">
+  <div class="modal-header">
+    <div class="col-md-12 d-flex">
+      <div class="col-md-6">
+        <h5 class="modal-title" id="myModalLabel160">
+          Thông tin chủ thuê bao mới
+        </h5>
+      </div>
+      <div class="col-md-6">
+        <h5 class="modal-title" id="myModalLabel160">
+          Thông tin chủ thuê bao cũ
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'view-check-info-new-block'">
+    <app-view-check-info-new
+      (closePopup)="done()"
+      [select]="selectBusinessOrIndividual"
+      [data]="dataSplit"
+    ></app-view-check-info-new>
+  </div>
+</ng-template>

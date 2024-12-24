@@ -1,0 +1,33 @@
+.pointer-events {
+  pointer-events: none;
+}
+
+.display-none{
+  display: none !important;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.conversion-object {
+  margin: 30px 10px;
+  .select {
+    select {
+      width: 100%;
+      border: 1px #888888 solid;
+      color: #888888;
+      padding: 0.5rem 0.8rem;
+      font-size: 14px;
+      font-weight: 400;
+      border-radius: 6px;
+    }
+  }
+}

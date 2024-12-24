@@ -33,6 +33,10 @@
                       <option value="change_sim">Đổi sim</option>
                       <option value="change_info">Cập nhật TTTB</option>
                       <option value="cancel_subcriber">Hủy SIM</option>
+                      <option value="topup">TOPUP</option>
+                      <option value="KHOI_PHUC">Khôi phục</option>
+                      <option value="CHANGE_USER_INFO">Chuyển chủ quyền</option>
+                      <option value="REGISTER_PACKAGE">Đăng ký gói</option>
                     </select>
                   </div>
                 </div>
@@ -62,6 +66,7 @@
                       <option value="VNM">Vietnammobile</option>
                       <option value="VMS">Mobifone</option>
                       <option value="VNP">Vinaphone</option>
+                      <option value="GSIM">GSIM</option>
                     </select>
                   </div>
                 </div>
@@ -77,6 +82,18 @@
                       <option value="SIM_CAM_KET">Sim Cam Kết</option>
                       <option value="S99_TOOL_BATCH">Tool theo lô</option>
                     </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="reference_id" [(ngModel)]="searchForm.reference_id" class="form-control"
+                      placeholder="Mã kho">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="payment_reference_number" [(ngModel)]="searchForm.payment_reference_number" class="form-control"
+                      placeholder="Mã thanh toán">
                   </div>
                 </div>
                 <div class="col-md-2">
