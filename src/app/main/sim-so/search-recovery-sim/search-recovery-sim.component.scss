@@ -27,3 +27,13 @@
   border-radius: 7px;
   flex-direction: column;
 }
+
+.update-file {
+  background: #ababab;
+  color: #ffffff;
+  border-radius: 10px;
+  
+  &:hover {
+    background: #959598;
+  }
+}

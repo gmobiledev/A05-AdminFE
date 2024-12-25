@@ -134,12 +134,14 @@ export class UploadFileImagePdfComponent implements OnInit {
 
   upload() {
     const formData = new FormData();
-    formData.append('task_id', this.task_id);
+    formData.append('object_id', this.task_id);
     this.file.forEach((file) => { formData.append('files', file); })
     this.itemBlockUI.start();
     this.telecomService.postUpdateAttachments(formData).subscribe((res: any) => {
       if (res.status === 1) {
         this.alertService.showMess(res.message);
+        this.getFileAttachedTask();
+        this.multiples = [];
       } else {
         this.alertService.showMess(res.message);
       };
