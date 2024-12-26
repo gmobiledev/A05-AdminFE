@@ -106,6 +106,12 @@ export class SearchRecoverySimComponent implements OnInit {
     }
   }
 
+  done(){
+    this.formOgzOcr.value.new_serial = '';
+    this.selectedFiles = [];
+    this.modalClose();
+  }
+
   onSubmitSearch() {
     this.showInformation = false;
     // Trim the input value

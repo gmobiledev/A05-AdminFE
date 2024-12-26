@@ -752,7 +752,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: "agents",
-        title: "Phục hồi",
+        title: "Khôi phục",
         translate: "",
         type: "item",
         icon: "user",

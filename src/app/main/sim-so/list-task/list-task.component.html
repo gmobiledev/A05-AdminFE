@@ -298,8 +298,8 @@
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
-                          || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT
+                        <div *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
+                          || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
                            && ( item.action == 'KHOI_PHUC'  || item.action == listTaskAction['change_user_info']['value'])">
 
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
