@@ -63,16 +63,12 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   }
 
   isShowButtonApprove() {
-    if(this.item.action == "KHOI_PHUC"){
       if (
-        this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status")
+        this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status") || this.checkAction("telecom-admin/task/:slug(\\d+)/change-customer-subsriber")
       ) {
         return true;
       }
       return false;
-    } else{
-      return true;
-    }
   }
 
   checkAction(item) {
