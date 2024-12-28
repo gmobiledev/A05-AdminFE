@@ -63,12 +63,16 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   }
 
   isShowButtonApprove() {
-    if (
-      this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status")
-    ) {
+    if(this.item.action == "KHOI_PHUC"){
+      if (
+        this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status")
+      ) {
+        return true;
+      }
+      return false;
+    } else{
       return true;
     }
-    return false;
   }
 
   checkAction(item) {
@@ -133,6 +137,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
       if (check.status === 1) {
         this.alertService.showMess(check.message);
         this.itemBlockUI.stop();
+        this.getTaskSlugText(this.idSlug);
         return;
       } else {
         this.alertService.showMess(check.message);
