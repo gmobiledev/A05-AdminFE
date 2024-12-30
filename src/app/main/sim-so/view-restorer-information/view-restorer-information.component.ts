@@ -24,7 +24,7 @@ export class ViewRestorerInformationComponent implements OnInit {
   timeStamp(time) {
     const myDate = time?.split("-");
     const newDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
-    const timeStamp = newDate.getTime();
+    const timeStamp = Math.floor(newDate.getTime() / 1000);
     return timeStamp;
   }
 
