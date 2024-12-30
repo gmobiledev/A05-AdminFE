@@ -240,9 +240,8 @@
             </div>
             <div class="mb-1">
               <button
-                class="btn"
+                class="btn update-file"
                 *ngIf="!showSubmit"
-                style="background: #ababab; color: #ffffff"
                 (click)="onSubmitUpload()"
               >
                 Cập nhật File
@@ -287,7 +286,7 @@
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <app-view-restorer-information
       [data]="dataRestorerInformation"
-      (closePopup)="modalClose()"
+      (closePopup)="done()"
     ></app-view-restorer-information>
   </div>
 </ng-template>

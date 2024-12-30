@@ -10,26 +10,18 @@ import { CustomerType, TaskTelecom } from "app/utils/constants";
 export class NewCustomerInformationComponent implements OnInit {
   @Input() dataText: any;
   @Input() dataImages: any;
-  @Input() item: any;
   dataNewText;
   public viewImage;
   public modalRef: any;
   customerType = CustomerType;
   public listTaskAction = TaskTelecom.ACTION;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    if (this.item) {
-      if (this.item.action == "KHOI_PHUC") {
-        this.dataNewText = this.dataText?.compare_info;
-      } else if (
-        this.item.action == this.listTaskAction.change_user_info.value
-      ) {
-        this.dataNewText = this.dataText?.customer;
-      }
-    }
+    this.dataNewText = this.dataText?.compare_info;
   }
+
   onViewImage(modal, type, mobile = null) {
     if (type == "cccd_front_compare") {
       this.viewImage =

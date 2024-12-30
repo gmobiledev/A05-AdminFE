@@ -10,27 +10,19 @@ import { CustomerType, TaskTelecom } from 'app/utils/constants';
 export class OldCustomerInformationComponent implements OnInit {
   @Input() dataText: any;
   @Input() dataImages: any;
-  @Input() item: any;
   dataOldText;
   public modalRef: any;
   public viewImage;
   customerType = CustomerType;
-    public listTaskAction = TaskTelecom.ACTION;
-  
+  public listTaskAction = TaskTelecom.ACTION;
+
   constructor(
     private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
-    if (this.item) {
-      if (this.item.action == "KHOI_PHUC") {
-        this.dataOldText = this.dataText?.customer;
-      } else if (
-        this.item.action == this.listTaskAction.change_user_info.value
-      ) {
-        this.dataOldText = this.dataText?.compare_info;
-      }
-    }
+    this.dataOldText = this.dataText?.customer;
+
   }
 
   onViewImage(modal, type, mobile = null) {

@@ -17,8 +17,9 @@ export class SearchRecoverySimComponent implements OnInit {
   imageBack;
   imageSelfie;
   formOgzOcr;
-  taskId;;
-  showSubmit = false; 
+  taskId;
+  showSubmit = false;
+  msisdn;
   dataRestorerInformation;
   public modalRef: any;
   showInformation = false;
@@ -53,31 +54,51 @@ export class SearchRecoverySimComponent implements OnInit {
       return;
     }
     if (this.selectedFiles.length > 0) {
-      const formData = new FormData();
-      formData.append("entity", "people");
-      formData.append("key", "attachments");
-      formData.append("object_id", this.taskId);
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        const file = this.selectedFiles[i];
-        formData.append(`files`, file);
-      }
-      console.log(formData);
+      const body = {
+        action: "KHOI_PHUC",
+        note: "KHOI_PHUC_SIM",
+        msisdn_id: this.msisdn,
+        file: "",
+      };
       this.itemBlockUI.start();
-      await this.telecomService.postUpdateAttachments(formData).subscribe(
+      this.telecomService.postCreateRecoverySim(body).subscribe(
         (res) => {
-          console.log(res);
-          if (!res.status) {
+          if (res.status === 1) {
+            this.taskId = res.data.id;
+            const formData = new FormData();
+            formData.append("entity", "people");
+            formData.append("key", "attachments");
+            formData.append("object_id", this.taskId);
+            for (let i = 0; i < this.selectedFiles.length; i++) {
+              const file = this.selectedFiles[i];
+              formData.append(`files`, file);
+            }
+            console.log(formData);
+            this.telecomService.postUpdateAttachments(formData).subscribe(
+              (res) => {
+                console.log(res);
+                if (!res.status) {
+                  this.itemBlockUI.stop();
+                  this.alertService.showMess(res.message);
+                  return;
+                }
+                this.showSubmit = true;
+                this.itemBlockUI.stop();
+              },
+              (error) => {
+                this.itemBlockUI.stop();
+                this.alertService.showMess(error);
+                return;
+              }
+            );
+          } else {
             this.itemBlockUI.stop();
-            this.alertService.showMess(res.message);
-            return;
+            this.showInformation = false;
           }
-          this.showSubmit = true;
-          this.itemBlockUI.stop();
         },
-        (error) => {
+        (err) => {
           this.itemBlockUI.stop();
-          this.alertService.showMess(error);
-          return;
+          this.alertService.showMess(err);
         }
       );
     }
@@ -106,6 +127,12 @@ export class SearchRecoverySimComponent implements OnInit {
     }
   }
 
+  done() {
+    this.formOgzOcr.value.new_serial = "";
+    this.selectedFiles = [];
+    this.modalClose();
+  }
+
   onSubmitSearch() {
     this.showInformation = false;
     // Trim the input value
@@ -129,35 +156,13 @@ export class SearchRecoverySimComponent implements OnInit {
           this.imageFront = null;
           this.imageBack = null;
           this.imageSelfie = null;
-          this.postCreateRecoverySim(res.data.msisdn.id);
+          this.msisdn = res.data.msisdn.id;
+          this.showInformation = true;
+          this.itemBlockUI.stop();
         } else {
+          this.itemBlockUI.stop();
           this.alertService.showMess(res.message);
         }
-      },
-      (err) => {
-        this.itemBlockUI.stop();
-        this.alertService.showMess(err);
-      }
-    );
-  }
-
-  postCreateRecoverySim(msisdn) {
-    const body = {
-      action: "KHOI_PHUC",
-      note: "KHOI_PHUC_SIM",
-      msisdn_id: msisdn,
-      file: "",
-    };
-
-    this.telecomService.postCreateRecoverySim(body).subscribe(
-      (res) => {
-        if (res.status === 1) {
-          this.showInformation = true;
-          this.taskId = res.data.id;
-        } else {
-          this.showInformation = false;
-        }
-        this.itemBlockUI.stop();
       },
       (err) => {
         this.itemBlockUI.stop();

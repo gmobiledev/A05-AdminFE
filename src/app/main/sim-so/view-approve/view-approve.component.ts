@@ -63,12 +63,12 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   }
 
   isShowButtonApprove() {
-    if (
-      this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status")
-    ) {
-      return true;
-    }
-    return false;
+      if (
+        this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status") || this.checkAction("telecom-admin/task/:slug(\\d+)/change-customer-subsriber")
+      ) {
+        return true;
+      }
+      return false;
   }
 
   checkAction(item) {
@@ -80,8 +80,6 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   getTaskSlugText(id: any) {
     this.telecomService.getTaskSlugText(id).subscribe(
       (res) => {
-        console.log(res);
-
         if (res.status === 1 && res.data) {
           this.dataText = res.data;
           this.dataTask = res.data?.task;
@@ -115,18 +113,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
     this.telecomService.getTaskSlugImages(id).subscribe(
       (res) => {
         if (res.status === 1 && res.data) {
-          if (this.item.action == "KHOI_PHUC") {
-            this.dataImages = res.data;
-          } else {
-            const dataCompareInfo = res.data.compare_info;
-            const dataCustomer = res.data.customer;
-            this.dataImages = {
-              customer: dataCompareInfo,
-              compare_info: dataCustomer
-            };
-          }
-          console.log(this.dataImages);
-          
+          this.dataImages = res.data;
         } else {
           this.alertService.showMess(res.message);
         }
@@ -146,6 +133,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
       if (check.status === 1) {
         this.alertService.showMess(check.message);
         this.itemBlockUI.stop();
+        this.getTaskSlugText(this.idSlug);
         return;
       } else {
         this.alertService.showMess(check.message);
@@ -158,21 +146,21 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
     }
   }
 
-  select(name: string) {
+  select(name: string, typeApprove?: number) {
     if (this.item.action == "KHOI_PHUC") {
-      let status;
-      let note = "";
+      let data;
       if (name === "approve") {
-        note = "duyệt";
-        status = 1;
+        data = {
+          status: 1,
+          note: "duyệt",
+          want_status: typeApprove
+        }
       } else {
-        note = "hủy yêu cầu";
-        status = -1;
+        data = {
+          status: -1,
+          note: "hủy yêu cầu"
+        }
       }
-      const data = {
-        status: status,
-        note: note,
-      };
       this.telecomService.postUpdateStatus(this.idSlug, data).subscribe(
         (res: any) => {
           if (res.status === 1) {

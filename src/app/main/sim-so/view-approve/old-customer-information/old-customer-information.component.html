@@ -85,9 +85,7 @@
         *ngIf="dataOldText?.representative_info?.birth"
         (click)="copyTextClipboard(dataOldText?.representative_info?.birth)"
       >
-        <span class="text-info">{{
-          dataOldText?.representative_info?.birth | date : "dd/MM/yyyy"
-        }}</span>
+        <span class="text-info">{{dataOldText?.representative_info?.birth}}</span>
       </a></span
     >
   </div>
@@ -153,12 +151,10 @@
         ngbTooltip="'Bấm để copy'"
         *ngIf="dataOldText?.people?.identification_date"
         (click)="
-          copyTextClipboard(dataOldText?.people?.customer?.identification_date)
+          copyTextClipboard(dataOldText?.people?.identification_date)
         "
       >
-        <span class="text-info">{{
-          dataOldText?.people?.identification_date | date : "dd/MM/yyyy"
-        }}</span>
+        <span class="text-info">{{ dataOldText?.people?.identification_date}}</span>
       </a></span
     >
   </div>
@@ -187,9 +183,7 @@
         *ngIf="dataOldText?.people?.birth"
         (click)="copyTextClipboard(dataOldText?.people?.birth)"
       >
-        <span class="text-info">{{
-          dataOldText?.people?.birth | date : "dd/MM/yyyy"
-        }}</span>
+        <span class="text-info">{{dataOldText?.people?.birth}}</span>
       </a></span
     >
   </div>

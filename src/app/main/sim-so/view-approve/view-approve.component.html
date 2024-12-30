@@ -8,7 +8,7 @@
             <div>
                 <span>Trạng thái: </span><span [innerHTML]="dataTask.status | showStatusTelecom"></span>
             </div>
-            <div><span>Admin thao tác: </span>{{ dataTask.user_sync }}</div>
+            <div><span>Admin thao tác: </span>{{ dataText.user_sync }}</div>
 
             <div *ngIf="dataTask.number_success_msisdn && dataTask.number_success_msisdn > 0">
                 <b class="text-info" *ngIf="dataTask && dataTask.task.otp">
@@ -50,7 +50,7 @@
     <div class="row mb-2 box-button display-upload-file" *ngIf="isShowButtonApprove() && showTask">
         <span>Upload file:</span>
         <app-upload-file-image-pdf [task_id]="idSlug" [item]="item"></app-upload-file-image-pdf>
-        <p *ngIf="item.action == 'KHOI_PHUC'">*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
+        <p *ngIf="item.action == 'KHOI_PHUC' && item.status != 1">*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
     </div>
     <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
         <a class="ml-2 btn btn-success" (click)="select('approve')">
