@@ -53,12 +53,14 @@
         <p *ngIf="item.action == 'KHOI_PHUC' && item.status != 1">*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
     </div>
     <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
-        <a class="ml-2 btn btn-success" (click)="select('approve')">
+        <a class="ml-2 btn btn-success" (click)="select('approve')"
+        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING">
             <i data-feather="check" class="text-white cursor-pointer"></i>
             Duyệt
         </a>
 
-        <a class="ml-2 btn btn-danger" (click)="select('reject')">
+        <a class="ml-2 btn btn-danger" (click)="select('reject')"
+        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING">
             <i data-feather="slash" class="text-white cursor-pointer"></i>
             Từ chối
         </a>
