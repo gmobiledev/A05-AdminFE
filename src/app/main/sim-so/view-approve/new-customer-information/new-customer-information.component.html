@@ -149,7 +149,7 @@
     <a
     placement="right"
     ngbTooltip="'Bấm để copy'"
-    *ngIf="dataNewText?.identification_no"
+    *ngIf="dataNewText?.identification_no && !dataNewText?.people?.identification_no"
     (click)="copyTextClipboard(dataNewText?.identification_no)"
   >
     <span class="text-info">{{ dataNewText?.identification_no }}</span>
@@ -169,7 +169,7 @@
       <a
         placement="right"
         ngbTooltip="'Bấm để copy'"
-        *ngIf="dataNewText?.identification_date"
+        *ngIf="dataNewText?.identification_date && !dataNewText?.people?.identification_date"
         (click)="copyTextClipboard(dataNewText?.identification_date)"
       >
         <span class="text-info">{{dataNewText?.identification_date}}</span>
@@ -190,7 +190,7 @@
       <a
       placement="right"
       ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.identification_place"
+      *ngIf="dataNewText?.identification_place && !dataNewText?.people?.identification_place"
       (click)="copyTextClipboard(dataNewText?.identification_place)"
     >
       <span class="text-info">{{ dataNewText?.identification_place }}</span>
@@ -212,7 +212,7 @@
       <a
       placement="right"
       ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.birth"
+      *ngIf="dataNewText?.birth && !dataNewText?.people?.birth"
       (click)="copyTextClipboard(dataNewText?.birth)"
     >
       <span class="text-info">{{dataNewText?.birth}}</span>
@@ -234,7 +234,7 @@
       <a
       placement="right"
       ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.mobile"
+      *ngIf="dataNewText?.mobile && !dataNewText?.people?.mobile"
       (click)="copyTextClipboard(dataNewText?.mobile)"
     >
       <span class="text-info">{{ dataNewText?.mobile }}</span>
@@ -255,7 +255,7 @@
     <a
     placement="right"
     ngbTooltip="'Bấm để copy'"
-    *ngIf="dataNewText?.full_address"
+    *ngIf="dataNewText?.full_address && !dataNewText?.people?.full_address"
     (click)="copyTextClipboard(dataNewText?.full_address)"
   >
     <span class="text-info">{{ dataNewText?.full_address }}</span></a
