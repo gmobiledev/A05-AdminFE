@@ -57,7 +57,9 @@
         *ngIf="dataNewText?.representative_info?.name"
         (click)="copyTextClipboard(dataNewText?.representative_info?.name)"
       >
-        <span class="text-info">{{ dataNewText?.representative_info?.name }}</span>
+        <span class="text-info">{{
+          dataNewText?.representative_info?.name
+        }}</span>
       </a></span
     >
   </div>
@@ -68,9 +70,13 @@
         placement="right"
         ngbTooltip="'Bấm để copy'"
         *ngIf="dataNewText?.representative_info?.identification_no"
-        (click)="copyTextClipboard(dataNewText?.representative_info?.identification_no)"
+        (click)="
+          copyTextClipboard(dataNewText?.representative_info?.identification_no)
+        "
       >
-        <span class="text-info">{{ dataNewText?.representative_info?.identification_no }}</span>
+        <span class="text-info">{{
+          dataNewText?.representative_info?.identification_no
+        }}</span>
       </a></span
     >
   </div>
@@ -83,7 +89,9 @@
         *ngIf="dataNewText?.representative_info?.birth"
         (click)="copyTextClipboard(dataNewText?.representative_info?.birth)"
       >
-        <span class="text-info">{{dataNewText?.representative_info?.birth}}</span>
+        <span class="text-info">{{
+          dataNewText?.representative_info?.birth
+        }}</span>
       </a></span
     >
   </div>
@@ -100,7 +108,8 @@
     <h4>Thông tin Khách Hàng mới</h4>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
-    <span><u
+    <span
+      ><u
         >Họ và tên
         <div *ngIf="dataNewText.customer_type == customerType.ORGANIZATION">
           sử dụng
@@ -114,15 +123,15 @@
       >
         <span class="text-info">{{ dataNewText?.people?.name }}</span>
       </a>
-    <a
-    placement="right"
-    ngbTooltip="'Bấm để copy'"
-    *ngIf="dataNewText?.name && !dataNewText?.people?.name"
-    (click)="copyTextClipboard(dataNewText?.name)"
-  >
-    <span class="text-info">{{ dataNewText?.name }}</span>
-  </a>
-  </span>
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.name && !dataNewText?.people?.name"
+        (click)="copyTextClipboard(dataNewText?.name)"
+      >
+        <span class="text-info">{{ dataNewText?.name }}</span>
+      </a>
+    </span>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
@@ -130,30 +139,34 @@
       <span class="text-info">{{
         dataNewText?.people?.identification_type
       }}</span>
-      <span class="text-info">{{
-        dataNewText?.identification_type
-      }}</span>
-      </span
-    >
+      <span class="text-info">{{ dataNewText?.identification_type }}</span>
+    </span>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
-    <span><u>Số giấy tờ</u>:
+    <span
+      ><u>Số giấy tờ</u>:
       <a
         placement="right"
         ngbTooltip="'Bấm để copy'"
         *ngIf="dataNewText?.people?.identification_no"
         (click)="copyTextClipboard(dataNewText?.people?.identification_no)"
       >
-        <span class="text-info">{{ dataNewText?.people?.identification_no }}</span>
+        <span class="text-info">{{
+          dataNewText?.people?.identification_no
+        }}</span>
       </a>
-    <a
-    placement="right"
-    ngbTooltip="'Bấm để copy'"
-    *ngIf="dataNewText?.identification_no && !dataNewText?.people?.identification_no"
-    (click)="copyTextClipboard(dataNewText?.identification_no)"
-  >
-    <span class="text-info">{{ dataNewText?.identification_no }}</span>
-  </a></span>
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="
+          dataNewText?.identification_no &&
+          !dataNewText?.people?.identification_no
+        "
+        (click)="copyTextClipboard(dataNewText?.identification_no)"
+      >
+        <span class="text-info">{{ dataNewText?.identification_no }}</span>
+      </a></span
+    >
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
@@ -164,15 +177,20 @@
         *ngIf="dataNewText?.people?.identification_date"
         (click)="copyTextClipboard(dataNewText?.people?.identification_date)"
       >
-        <span class="text-info">{{dataNewText?.people?.identification_date}}</span>
+        <span class="text-info">{{
+          dataNewText?.people?.identification_date
+        }}</span>
       </a>
       <a
         placement="right"
         ngbTooltip="'Bấm để copy'"
-        *ngIf="dataNewText?.identification_date && !dataNewText?.people?.identification_date"
+        *ngIf="
+          dataNewText?.identification_date &&
+          !dataNewText?.people?.identification_date
+        "
         (click)="copyTextClipboard(dataNewText?.identification_date)"
       >
-        <span class="text-info">{{dataNewText?.identification_date}}</span>
+        <span class="text-info">{{ dataNewText?.identification_date }}</span>
       </a>
     </span>
   </div>
@@ -185,18 +203,22 @@
         *ngIf="dataNewText?.people?.identification_place"
         (click)="copyTextClipboard(dataNewText?.people?.identification_place)"
       >
-        <span class="text-info">{{ dataNewText?.people?.identification_place }}</span>
+        <span class="text-info">{{
+          dataNewText?.people?.identification_place
+        }}</span>
       </a>
       <a
-      placement="right"
-      ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.identification_place && !dataNewText?.people?.identification_place"
-      (click)="copyTextClipboard(dataNewText?.identification_place)"
-    >
-      <span class="text-info">{{ dataNewText?.identification_place }}</span>
-    </a>
-      </span
-    >
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="
+          dataNewText?.identification_place &&
+          !dataNewText?.people?.identification_place
+        "
+        (click)="copyTextClipboard(dataNewText?.identification_place)"
+      >
+        <span class="text-info">{{ dataNewText?.identification_place }}</span>
+      </a>
+    </span>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
@@ -207,18 +229,17 @@
         *ngIf="dataNewText?.people?.birth"
         (click)="copyTextClipboard(dataNewText?.people?.birth)"
       >
-        <span class="text-info">{{dataNewText?.people?.birth}}</span>
+        <span class="text-info">{{ dataNewText?.people?.birth }}</span>
       </a>
       <a
-      placement="right"
-      ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.birth && !dataNewText?.people?.birth"
-      (click)="copyTextClipboard(dataNewText?.birth)"
-    >
-      <span class="text-info">{{dataNewText?.birth}}</span>
-    </a>
-      </span
-    >
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.birth && !dataNewText?.people?.birth"
+        (click)="copyTextClipboard(dataNewText?.birth)"
+      >
+        <span class="text-info">{{ dataNewText?.birth }}</span>
+      </a>
+    </span>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
@@ -226,21 +247,20 @@
       <a
         placement="right"
         ngbTooltip="'Bấm để copy'"
-        *ngIf="dataNewText?.people?.mobile"
-        (click)="copyTextClipboard(dataNewText?.people?.mobile)"
+        *ngIf="dataNewText?.people?.mobile ? dataNewText?.people?.mobile : dataNewText?.mobile"
+        (click)="copyTextClipboard(dataNewText?.people?.mobile ? dataNewText?.people?.mobile : dataNewText?.mobile)"
       >
-        <span class="text-info">{{ dataNewText?.people?.mobile }}</span>
+        <span class="text-info">{{ dataNewText?.people?.mobile ? dataNewText?.people?.mobile : dataNewText?.mobile }}</span>
       </a>
-      <a
-      placement="right"
-      ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.mobile && !dataNewText?.people?.mobile"
-      (click)="copyTextClipboard(dataNewText?.mobile)"
-    >
-      <span class="text-info">{{ dataNewText?.mobile }}</span>
-    </a>
-      </span
-    >
+      <!-- <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.mobile && !dataNewText?.people?.mobile"
+        (click)="copyTextClipboard(dataNewText?.mobile)"
+      >
+        <span class="text-info">{{ dataNewText?.mobile }}</span>
+      </a> -->
+    </span>
   </div>
   <div class="col-md-12 col-sm-12 mt-1">
     <h6>Địa chỉ thường trú:</h6>
@@ -253,72 +273,102 @@
       <span class="text-info">{{ dataNewText?.people?.full_address }}</span></a
     >
     <a
-    placement="right"
-    ngbTooltip="'Bấm để copy'"
-    *ngIf="dataNewText?.full_address && !dataNewText?.people?.full_address"
-    (click)="copyTextClipboard(dataNewText?.full_address)"
-  >
-    <span class="text-info">{{ dataNewText?.full_address }}</span></a
-  >
+      placement="right"
+      ngbTooltip="'Bấm để copy'"
+      *ngIf="dataNewText?.full_address && !dataNewText?.people?.full_address"
+      (click)="copyTextClipboard(dataNewText?.full_address)"
+    >
+      <span class="text-info">{{ dataNewText?.full_address }}</span></a
+    >
   </div>
 
   <div class="col-md-6">
     <label for>Ảnh giấy tờ mặt trước</label>
-    <div class="lazy-load" *ngIf="!dataImages?.compare_info?.people?.identification_front_file && !dataImages?.compare_info?.identification_front_file">
+    <div
+      class="lazy-load"
+      *ngIf="
+        !dataImages?.compare_info?.people?.identification_front_file &&
+        !dataImages?.compare_info?.identification_front_file
+      "
+    >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'cccd_front_compare')"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_front_file"
-      src="data:image/png;base64,{{ dataImages?.compare_info?.people?.identification_front_file }}"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.people?.identification_front_file
+      }}"
       alt="avatar img"
     />
     <img
-    (click)="onViewImage(modalImage, 'cccd_front_compare')"
-    class="img-fluid rounded mb-75"
-    *ngIf="dataImages?.compare_info?.identification_front_file"
-    src="data:image/png;base64,{{ dataImages?.compare_info?.identification_front_file }}"
-    alt="avatar img"
-  />
+      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.compare_info?.identification_front_file"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.identification_front_file
+      }}"
+      alt="avatar img"
+    />
   </div>
   <div class="col-md-6">
     <label for>Ảnh giấy tờ mặt sau</label>
-    <div class="lazy-load" *ngIf="!dataImages?.compare_info?.people?.identification_back_file && !dataImages?.compare_info?.identification_back_file">
+    <div
+      class="lazy-load"
+      *ngIf="
+        !dataImages?.compare_info?.people?.identification_back_file &&
+        !dataImages?.compare_info?.identification_back_file
+      "
+    >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'cccd_back_compare')"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_back_file"
-      src="data:image/png;base64,{{ dataImages?.compare_info?.people?.identification_back_file }}"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.people?.identification_back_file
+      }}"
       alt="avatar img"
     />
     <img
-    (click)="onViewImage(modalImage, 'cccd_back_compare')"
-    class="img-fluid rounded mb-75"
-    *ngIf="dataImages?.compare_info?.identification_back_file"
-    src="data:image/png;base64,{{ dataImages?.compare_info?.identification_back_file }}"
-    alt="avatar img"
-  />
+      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.compare_info?.identification_back_file"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.identification_back_file
+      }}"
+      alt="avatar img"
+    />
   </div>
   <div class="col-md-6">
     <label for>Ảnh chân dung</label>
-    <div class="lazy-load" *ngIf="!dataImages?.compare_info?.people?.identification_selfie_file && !dataImages?.compare_info?.identification_selfie_file">
+    <div
+      class="lazy-load"
+      *ngIf="
+        !dataImages?.compare_info?.people?.identification_selfie_file &&
+        !dataImages?.compare_info?.identification_selfie_file
+      "
+    >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'selfie_compare')"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_selfie_file"
-      src="data:image/png;base64,{{ dataImages?.compare_info?.people?.identification_selfie_file }}"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.people?.identification_selfie_file
+      }}"
       alt="avatar img"
     />
     <img
       (click)="onViewImage(modalImage, 'selfie_compare')"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.identification_selfie_file"
-      src="data:image/png;base64,{{ dataImages?.compare_info?.identification_selfie_file }}"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.identification_selfie_file
+      }}"
       alt="avatar img"
     />
   </div>
