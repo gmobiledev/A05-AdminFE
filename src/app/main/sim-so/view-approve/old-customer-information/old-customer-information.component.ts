@@ -10,6 +10,7 @@ import { CustomerType, TaskTelecom } from 'app/utils/constants';
 export class OldCustomerInformationComponent implements OnInit {
   @Input() dataText: any;
   @Input() dataImages: any;
+  @Input() item: any;
   dataOldText;
   public modalRef: any;
   public viewImage;

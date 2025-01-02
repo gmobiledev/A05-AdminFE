@@ -2,8 +2,11 @@
   class="row p-2"
   *ngIf="dataNewText && dataNewText.customer_type == customerType.ORGANIZATION"
 >
-  <div class="col-12">
+  <div class="col-12" *ngIf="item.action != 'app_request_change_user_info'">
     <h4>Thông tin Khách Hàng mới</h4>
+  </div>
+  <div class="col-12" *ngIf="item.action == 'app_request_change_user_info'">
+    <h4>Thông tin đối chiếu</h4>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
@@ -103,9 +106,12 @@
 <div class="row mb-2 p-2" *ngIf="dataNewText">
   <div
     class="col-12"
-    *ngIf="dataNewText.customer_type != customerType.ORGANIZATION"
+    *ngIf="dataNewText.customer_type != customerType.ORGANIZATION && item.action != 'app_request_change_user_info'"
   >
     <h4>Thông tin Khách Hàng mới</h4>
+  </div>
+  <div class="col-12" *ngIf="item.action == 'app_request_change_user_info' &&  dataNewText.customer_type != customerType.ORGANIZATION">
+    <h4>Thông tin đối chiếu</h4>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span

@@ -33,7 +33,7 @@
                     <thead>
                       <tr>
                         <th></th>
-                        <th>GMOBILE</th>
+                        <th *ngIf="item?.GMOBILE?.packages[0]">GMOBILE</th>
                         <th>{{item?.CooperationNetwork?.packages[0]?.mno}}</th>
                       </tr>
                     </thead>

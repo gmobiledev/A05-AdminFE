@@ -32,6 +32,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
   listImage;
   public selectedFilesVideo: File[] = [];
   public selectedFilesImage: File[] = [];
+  public selectedFilesPdf: File[] = [];
   public selectedFiles: File[] = [];
   public modalRef: any;
   @ViewChild("modalItem") modalItem: ElementRef;
@@ -106,23 +107,19 @@ export class ViewCheckInfoNewComponent implements OnInit {
     });
   }
 
-  // onFileSelected(event) {
-  //   for (let file of event) {
-  //     this.selectedFiles.push(file);
-  //   }
-  //   console.log(this.selectedFiles);
-
-  // }
-
   deleteFile(index, name) {
     console.log(index);
     if (name == "video") {
       if (index >= 0 && index < this.selectedFilesVideo.length) {
         this.selectedFilesVideo.splice(index, 1);
       }
-    } else {
+    } else if(name == "image"){
       if (index >= 0 && index < this.selectedFilesImage.length) {
         this.selectedFilesImage.splice(index, 1);
+      }
+    } else{
+      if (index >= 0 && index < this.selectedFilesPdf.length) {
+        this.selectedFilesPdf.splice(index, 1);
       }
     }
   }
@@ -135,9 +132,14 @@ export class ViewCheckInfoNewComponent implements OnInit {
       if (name == "video") {
         this.selectedFilesVideo.push(file);
         console.log(this.selectedFilesVideo);
-      } else {
+      } else if(name == "image") {
         this.selectedFilesImage.push(file);
         console.log(this.selectedFilesImage);
+      } else{
+        if (file.type === 'application/pdf' || file.type === 'pdf') {
+          this.selectedFilesPdf.push(file);
+          console.log(this.selectedFilesImage);
+        }
       }
     }
   }
@@ -145,14 +147,13 @@ export class ViewCheckInfoNewComponent implements OnInit {
   async onSubmitUpload() {
     if (
       this.selectedFilesImage.length <= 0 &&
-      this.selectedFilesVideo.length <= 0
+      this.selectedFilesVideo.length <= 0 &&
+      this.selectedFilesPdf.length <= 0 
     ) {
       this.alertService.showMess("Vui lòng không để chống file file");
       return;
     }
-    this.selectedFiles = this.selectedFilesImage.concat(
-      this.selectedFilesVideo
-    );
+    this.selectedFiles = this.selectedFilesImage.concat(this.selectedFilesVideo, this.selectedFilesPdf);
     if (this.selectedFiles.length > 0) {
       const formData = new FormData();
       formData.append("entity", "people");
