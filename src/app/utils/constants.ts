@@ -127,6 +127,10 @@ export class TaskTelecom {
             value: 'change_user_info',
             label: 'Chuyển chủ quyền'
         },
+        app_request_change_user_info: {
+            value: 'app_request_change_user_info',
+            label: 'Yêu cầu CCQ'
+        },
         CHECK_CONVERSION_2G: {
             value: 'CHECK_CONVERSION_2G',
             label: '2G sang 4G'

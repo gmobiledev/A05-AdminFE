@@ -2,8 +2,11 @@
   class="row p-2"
   *ngIf="dataOldText && dataOldText.customer_type == customerType.ORGANIZATION"
 >
-  <div class="col-md-12">
+  <div class="col-md-12" *ngIf="item.action != 'app_request_change_user_info'">
     <h4>Thông tin Khách Hàng cũ</h4>
+  </div>
+  <div class="col-md-12" *ngIf="item.action == 'app_request_change_user_info'">
+    <h4>Thông tin thuê bao</h4>
   </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
@@ -97,10 +100,16 @@
 <div class="row mb-2 p-2" *ngIf="dataOldText">
   <div
     class="col-md-12"
-    *ngIf="dataOldText.customer_type == customerType.PERSONAL"
+    *ngIf="dataOldText.customer_type == customerType.PERSONAL && item.action != 'app_request_change_user_info'"
   >
     <h4>Thông tin Khách Hàng cũ</h4>
   </div>
+  <div
+  class="col-md-12"
+  *ngIf="dataOldText.customer_type == customerType.PERSONAL && item.action == 'app_request_change_user_info'"
+>
+  <h4>Thông tin thuê bao</h4>
+</div>
 
   <div class="col-md-6 col-sm-12 mb-1">
     <span

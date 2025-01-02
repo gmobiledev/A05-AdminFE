@@ -9,6 +9,7 @@ import { CustomerType, TaskTelecom } from "app/utils/constants";
 })
 export class NewCustomerInformationComponent implements OnInit {
   @Input() dataText: any;
+  @Input() item: any;
   @Input() dataImages: any;
   dataNewText;
   public viewImage;

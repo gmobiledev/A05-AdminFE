@@ -121,6 +121,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/KHOI_PHUC/update-status`, data);
   }
 
+  approveRequestChangeInfo(data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-request-change-info`, data);
+  }
+
   postCreateRecoverySim(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/create`, data);
   }
