@@ -63,12 +63,17 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   }
 
   isShowButtonApprove() {
-      if (
-        this.checkAction("telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status") || this.checkAction("telecom-admin/task/:slug(\\d+)/change-customer-subsriber")
-      ) {
-        return true;
-      }
-      return false;
+    if (
+      this.checkAction(
+        "telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status"
+      ) ||
+      this.checkAction(
+        "telecom-admin/task/:slug(\\d+)/change-customer-subsriber"
+      )
+    ) {
+      return true;
+    }
+    return false;
   }
 
   checkAction(item) {
@@ -153,13 +158,13 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         data = {
           status: 1,
           note: "duyệt",
-          want_status: typeApprove
-        }
+          want_status: typeApprove,
+        };
       } else {
         data = {
           status: -1,
-          note: "hủy yêu cầu"
-        }
+          note: "hủy yêu cầu",
+        };
       }
       this.telecomService.postUpdateStatus(this.idSlug, data).subscribe(
         (res: any) => {
@@ -177,6 +182,62 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
           this.alertService.showMess(err);
         }
       );
+    } else if (this.item.action == "app_request_change_user_info") {
+      let titleS = "Từ chối yêu cầu, gửi lý do cho đại lý";
+      Swal.fire({
+        title: titleS,
+        input: "textarea",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "Gửi",
+        showLoaderOnConfirm: true,
+        preConfirm: (note) => {
+          if (!note || note == "") {
+            Swal.showValidationMessage("Vui lòng nhập nội dung");
+            return;
+          }
+          let data;
+          if (name === "approve") {
+            data = {
+              status: 1,
+              task_id: this.idSlug,
+              note: note,
+            };
+          } else {
+            data = {
+              status: 40,
+              task_id: this.idSlug,
+              note: note,
+            };
+          }
+          this.telecomService.approveRequestChangeInfo(data).subscribe(
+            (res: any) => {
+              if (res.status === 1) {
+                this.closePopup.next();
+                Swal.close();
+                this.alertService.showMess(res.message);
+              } else {
+                this.closePopup.next();
+                Swal.close();
+                this.alertService.showMess(res.message);
+              }
+              this.itemBlockUI.stop();
+            },
+            (err) => {
+              this.itemBlockUI.stop();
+              this.alertService.showMess(err);
+            }
+          );
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //this.updateStatus.emit({updated: true});
+          this.alertService.showSuccess("Thành công");
+        }
+      });
     } else {
       if (name === "approve") {
         this.asyncToMnoViaApi();
