@@ -52,6 +52,10 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         this.item.action == this.listTaskAction.change_user_info.value
       ) {
         this.titleModal = "Chuyển đổi chủ quyền";
+      } else if (
+        this.item.action == this.listTaskAction.app_request_change_user_info.value
+      ) {
+        this.titleModal = "Chuyển đổi chủ quyền";
       }
     }
     this.idSlug = this.item?.id;
