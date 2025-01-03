@@ -153,7 +153,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
       this.selectedFilesVideo.length <= 0 &&
       this.selectedFilesPdf.length <= 0 
     ) {
-      this.alertService.showMess("Vui lòng không để chống tệp");
+      this.alertService.showMess("Vui lòng không để trống tệp");
       return;
     }
     this.selectedFiles = this.selectedFilesImage.concat(this.selectedFilesVideo, this.selectedFilesPdf);
@@ -326,37 +326,37 @@ export class ViewCheckInfoNewComponent implements OnInit {
     }
     if (!this.formOgzOcr.value.identificationNoUser) {
       this.alertService.showMess(
-        "Vui lòng không để chống số giấy tờ người sử dụng"
+        "Vui lòng không để trống số giấy tờ người sử dụng"
       );
       return;
     }
     if (!this.formOgzOcr.value.identificationDateUser) {
       this.alertService.showMess(
-        "Vui lòng không để chống ngày cấp người sử dụng"
+        "Vui lòng không để trống ngày cấp người sử dụng"
       );
       return;
     }
     if (!this.formOgzOcr.value.identificationPlaceUser) {
       this.alertService.showMess(
-        "Vui lòng không để chống nơi cấp người sử dụng"
+        "Vui lòng không để trống nơi cấp người sử dụng"
       );
       return;
     }
     if (!this.formOgzOcr.value.userFullName) {
       this.alertService.showMess(
-        "Vui lòng không để chống họ và tên người sử dụng"
+        "Vui lòng không để trống họ và tên người sử dụng"
       );
       return;
     }
     if (!this.formOgzOcr.value.birthUser) {
       this.alertService.showMess(
-        "Vui lòng không để chống ngày sinh người sử dụng"
+        "Vui lòng không để trống ngày sinh người sử dụng"
       );
       return;
     }
     if (!this.formOgzOcr.value.fullAddressUser) {
       this.alertService.showMess(
-        "Vui lòng không để chống địa chỉ người sử dụng"
+        "Vui lòng không để trống địa chỉ người sử dụng"
       );
       return;
     }
@@ -399,37 +399,37 @@ export class ViewCheckInfoNewComponent implements OnInit {
       }
       if (!this.formOgzOcr.value.identificationNoAuthorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống số giấy tờ người đại diện"
+          "Vui lòng không để trống số giấy tờ người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.identificationDateAuthorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống ngày cấp người đại diện"
+          "Vui lòng không để trống ngày cấp người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.identificationPlaceAuthorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống nơi cấp người đại diện"
+          "Vui lòng không để trống nơi cấp người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.representativeName) {
         this.alertService.showMess(
-          "Vui lòng không để chống họ và tên người đại diện"
+          "Vui lòng không để trống họ và tên người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.birthAuthorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống ngày sinh người đại diện"
+          "Vui lòng không để trống ngày sinh người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.fullAddressAuthorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống địa chỉ người đại diện"
+          "Vui lòng không để trống địa chỉ người đại diện"
         );
         return;
       }

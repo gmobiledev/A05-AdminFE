@@ -167,18 +167,18 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
     if (this.select.id == 0) {
       if (!this.formOgzOcr.value.identification_back_file) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt sau"
+          "Vui lòng không để trống ảnh CMND/CCCD mặt sau"
         );
         return;
       }
       if (!this.formOgzOcr.value.identification_front_file) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt trước"
+          "Vui lòng không để trống ảnh CMND/CCCD mặt trước"
         );
         return;
       }
       if (!this.formOgzOcr.value.identification_selfie_file) {
-        this.alertService.showMess("Vui lòng không để chống ảnh chân dung");
+        this.alertService.showMess("Vui lòng không để trống ảnh chân dung");
         return;
       }
       if (!this.formOgzOcr.value.documentType) {
@@ -197,50 +197,50 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
       };
     } else {
       if (!this.formOgzOcr.value.businessName) {
-        this.alertService.showMess("Vui lòng không để chống tên doanh nghiệp");
+        this.alertService.showMess("Vui lòng không để trống tên doanh nghiệp");
         return;
       }
       if (!this.formOgzOcr.value.businessCode) {
-        this.alertService.showMess("Vui lòng không để chống mã công ty");
+        this.alertService.showMess("Vui lòng không để trống mã công ty");
         return;
       }
       if (!this.formOgzOcr.value.businessAddress) {
-        this.alertService.showMess("Vui lòng không để chống địa chỉ");
+        this.alertService.showMess("Vui lòng không để trống địa chỉ");
         return;
       }
       if (!this.formOgzOcr.value.representativeName) {
         this.alertService.showMess(
-          "Vui lòng không để chống tên người đại diện"
+          "Vui lòng không để trống tên người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.card_front_authorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt trước người đại diện"
+          "Vui lòng không để trống ảnh CMND/CCCD mặt trước người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.card_back_authorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt sau người đại diện"
+          "Vui lòng không để trống ảnh CMND/CCCD mặt sau người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.selfie_authorizer) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh chân dung người đại diện"
+          "Vui lòng không để trống ảnh chân dung người đại diện"
         );
         return;
       }
       if (!this.formOgzOcr.value.card_front_user) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt trước người sử dụng"
+          "Vui lòng không để trống ảnh CMND/CCCD mặt trước người sử dụng"
         );
         return;
       }
       if (!this.formOgzOcr.value.card_back_user) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh CMND/CCCD mặt sau người sử dụng"
+          "Vui lòng không để trống ảnh CMND/CCCD mặt sau người sử dụng"
         );
         return;
       }
@@ -258,23 +258,23 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
       }
       if (!this.formOgzOcr.value.selfie_user) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh chân dung người sử dụng"
+          "Vui lòng không để trống ảnh chân dung người sử dụng"
         );
         return;
       }
       if (!this.formOgzOcr.value.userFullName) {
         this.alertService.showMess(
-          "Vui lòng không để chống tên người sửa dụng"
+          "Vui lòng không để trống tên người sửa dụng"
         );
         return;
       }
       if (!this.imagePowerOfAttorney) {
-        this.alertService.showMess("Vui lòng không để chống ảnh giấy ủy quyền");
+        this.alertService.showMess("Vui lòng không để trống ảnh giấy ủy quyền");
         return;
       }
       if (!this.imgageRegisterBusiness) {
         this.alertService.showMess(
-          "Vui lòng không để chống ảnh đăng kí doanh nghiệp"
+          "Vui lòng không để trống ảnh đăng kí doanh nghiệp"
         );
         return;
       }

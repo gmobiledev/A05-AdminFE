@@ -50,7 +50,7 @@ export class SearchRecoverySimComponent implements OnInit {
 
   async onSubmitUpload() {
     if (this.selectedFiles.length <= 0) {
-      this.alertService.showMess("Vui lòng không để chống file");
+      this.alertService.showMess("Vui lòng không để trống file");
       return;
     }
     if (this.selectedFiles.length > 0) {
