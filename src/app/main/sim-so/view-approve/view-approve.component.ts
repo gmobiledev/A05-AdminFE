@@ -183,7 +183,12 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         }
       );
     } else if (this.item.action == "app_request_change_user_info") {
-      let titleS = "Từ chối yêu cầu, gửi lý do cho đại lý";
+      let titleS;
+      if (name === "approve") {
+        titleS = "Duyệt yêu cầu, gửi lý do cho đại lý";
+      } else {
+        titleS = "Từ chối yêu cầu, gửi lý do cho đại lý";
+      }
       Swal.fire({
         title: titleS,
         input: "textarea",
