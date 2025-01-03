@@ -126,21 +126,24 @@ export class ViewCheckInfoNewComponent implements OnInit {
 
   onFileSelected(event: Event, name: string): void {
     const input = event.target as HTMLInputElement;
-    if (input.files[0] && input.files[0].size > 0) {
-      let file = input.files[0];
-      console.log(file);
-      if (name == "video") {
-        this.selectedFilesVideo.push(file);
-        console.log(this.selectedFilesVideo);
-      } else if(name == "image") {
-        this.selectedFilesImage.push(file);
-        console.log(this.selectedFilesImage);
-      } else{
-        if (file.type === 'application/pdf' || file.type === 'pdf') {
-          this.selectedFilesPdf.push(file);
-          console.log(this.selectedFilesImage);
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files);
+      files.forEach((file) => {
+        if (file.size > 0) {
+          if (name === "video") {
+            this.selectedFilesVideo.push(file);
+            console.log(this.selectedFilesVideo);
+          } else if (name === "image") {
+            this.selectedFilesImage.push(file);
+            console.log(this.selectedFilesImage);
+          } else {
+            if (file.type === "application/pdf" || file.type === "pdf") {
+              this.selectedFilesPdf.push(file);
+              console.log(this.selectedFilesPdf);
+            }
+          }
         }
-      }
+      });
     }
   }
 
@@ -150,11 +153,15 @@ export class ViewCheckInfoNewComponent implements OnInit {
       this.selectedFilesVideo.length <= 0 &&
       this.selectedFilesPdf.length <= 0 
     ) {
-      this.alertService.showMess("Vui lòng không để chống file file");
+      this.alertService.showMess("Vui lòng không để chống tệp");
       return;
     }
     this.selectedFiles = this.selectedFilesImage.concat(this.selectedFilesVideo, this.selectedFilesPdf);
-    if (this.selectedFiles.length > 0) {
+    if (this.selectedFiles.length > 11 ) {
+      this.alertService.showMess("Vui lòng xóa bớt tệp. Bạn chỉ được chọn tối đa 11 tệp");
+      return;
+    }
+    if (this.selectedFiles.length > 0 && this.selectedFiles.length <= 11) {
       const formData = new FormData();
       formData.append("entity", "people");
       formData.append("key", "attachments");
