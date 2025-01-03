@@ -216,7 +216,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
             };
           } else {
             data = {
-              status: 40,
+              status: 0,
               task_id: this.idSlug,
               note: note,
             };
