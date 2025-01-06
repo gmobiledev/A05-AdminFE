@@ -389,7 +389,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
           full_address: this.formOgzOcr.value.fullAddressUser,
           identification_front_file: this.data?.image?.personal?.card_front,
           identification_back_file: this.data?.image?.personal?.card_back,
-          identification_selfie_file: this.data?.image?.personal?.selfie,
+          identification_selfie_file: this.data?.image?.personal?.selfie
         },
       };
     } else {
@@ -516,11 +516,12 @@ export class ViewCheckInfoNewComponent implements OnInit {
             this.data?.powerOfAttorney?.imagePowerOfAttorney.replace(regex, ""),
           delegation_date: "1625875200",
           delegation_type: "MOBILE",
-        },
-        cacheKey: localStorage.getItem(ObjectLocalStorage.UPLOAD_CACHE)
+        }
       };
     }
     try {
+      data.cacheKey = localStorage.getItem(ObjectLocalStorage.UPLOAD_CACHE)
+      console.log("cacheKey", localStorage.getItem(ObjectLocalStorage.UPLOAD_CACHE))
       this.itemBlockUI.start();
       this.telecomService.postOwnershipTransfer(data).subscribe(
         (res) => {
