@@ -52,6 +52,10 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         this.item.action == this.listTaskAction.change_user_info.value
       ) {
         this.titleModal = "Chuyển đổi chủ quyền";
+      } else if (
+        this.item.action == this.listTaskAction.app_request_change_user_info.value
+      ) {
+        this.titleModal = "Chuyển đổi chủ quyền";
       }
     }
     this.idSlug = this.item?.id;
@@ -183,7 +187,12 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         }
       );
     } else if (this.item.action == "app_request_change_user_info") {
-      let titleS = "Từ chối yêu cầu, gửi lý do cho đại lý";
+      let titleS;
+      if (name === "approve") {
+        titleS = "Duyệt yêu cầu, gửi lý do cho đại lý";
+      } else {
+        titleS = "Từ chối yêu cầu, gửi lý do cho đại lý";
+      }
       Swal.fire({
         title: titleS,
         input: "textarea",
@@ -207,7 +216,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
             };
           } else {
             data = {
-              status: 40,
+              status: 0,
               task_id: this.idSlug,
               note: note,
             };

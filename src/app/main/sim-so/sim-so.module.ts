@@ -57,6 +57,7 @@ import { TransferSovereigntyNewOwnerComponent } from './transfer-sovereignty/tra
 import { ViewCheckInfoNewComponent } from './transfer-sovereignty/view-check-info-new/view-check-info-new.component';
 import { TransferSovereigntyOldOwnerComponent } from './transfer-sovereignty/transfer-sovereignty-old-owner/transfer-sovereignty-old-owner.component';
 import { SearchPackageComponent } from './search-package/search-package.component';
+import { TaskDetailComponent } from './task-detail/task-detail.component';
 
 const routes: Routes = [
   {
@@ -213,7 +214,8 @@ const routes: Routes = [
     TransferSovereigntyNewOwnerComponent,
     ViewCheckInfoNewComponent,
     TransferSovereigntyOldOwnerComponent,
-    SearchPackageComponent
+    SearchPackageComponent,
+    TaskDetailComponent
   ],
   imports: [
     CommonModule,

@@ -50,7 +50,7 @@ export class SearchRecoverySimComponent implements OnInit {
 
   async onSubmitUpload() {
     if (this.selectedFiles.length <= 0) {
-      this.alertService.showMess("Vui lòng không để chống file");
+      this.alertService.showMess("Vui lòng không để trống file");
       return;
     }
     if (this.selectedFiles.length > 0) {
@@ -287,7 +287,7 @@ export class SearchRecoverySimComponent implements OnInit {
 
     this.telecomService.postUploadIdDoc(data).subscribe(
       (res) => {
-        if (res.data && res.status === 1) {
+        if (res.data && res.status === 1 && res.data != null) {
           const dataSim = {
             ...res.data,
             task_id: this.taskId,
@@ -295,6 +295,8 @@ export class SearchRecoverySimComponent implements OnInit {
           };
           this.dataRestorerInformation = dataSim;
           this.modalOpen(this.modalItem, this.dataRestorerInformation);
+        } else{
+          this.alertService.showMess('Không đọc được thông tin ảnh, vui lòng thử lại!');
         }
         this.itemBlockUI.stop();
       },
