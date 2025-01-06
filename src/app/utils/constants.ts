@@ -1,5 +1,6 @@
 export enum ObjectLocalStorage {
-    CURRENT_USER = 'currentUser'
+    CURRENT_USER = 'currentUser',
+    UPLOAD_CACHE = 'uploadCache'
 }
 
 export enum TaskTelecomStatus {

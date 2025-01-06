@@ -13,6 +13,7 @@ import { SweetAlertService } from "app/utils/sweet-alert.service";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UserService } from "app/auth/service";
+import { ObjectLocalStorage } from "app/utils/constants";
 
 @Component({
   selector: "app-view-check-info-new",
@@ -28,7 +29,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
   formOgzOcr;
   dataImage;
   listVideo;
-  showSubmit = false; 
+  showSubmit = false;
   listImage;
   public selectedFilesVideo: File[] = [];
   public selectedFilesImage: File[] = [];
@@ -44,7 +45,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
     private telecomService: TelecomService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     console.log("data-app-view-check-info-new", this.data);
@@ -113,11 +114,11 @@ export class ViewCheckInfoNewComponent implements OnInit {
       if (index >= 0 && index < this.selectedFilesVideo.length) {
         this.selectedFilesVideo.splice(index, 1);
       }
-    } else if(name == "image"){
+    } else if (name == "image") {
       if (index >= 0 && index < this.selectedFilesImage.length) {
         this.selectedFilesImage.splice(index, 1);
       }
-    } else{
+    } else {
       if (index >= 0 && index < this.selectedFilesPdf.length) {
         this.selectedFilesPdf.splice(index, 1);
       }
@@ -151,13 +152,13 @@ export class ViewCheckInfoNewComponent implements OnInit {
     if (
       this.selectedFilesImage.length <= 0 &&
       this.selectedFilesVideo.length <= 0 &&
-      this.selectedFilesPdf.length <= 0 
+      this.selectedFilesPdf.length <= 0
     ) {
       this.alertService.showMess("Vui lòng không để chống tệp");
       return;
     }
     this.selectedFiles = this.selectedFilesImage.concat(this.selectedFilesVideo, this.selectedFilesPdf);
-    if (this.selectedFiles.length > 11 ) {
+    if (this.selectedFiles.length > 11) {
       this.alertService.showMess("Vui lòng xóa bớt tệp. Bạn chỉ được chọn tối đa 11 tệp");
       return;
     }
@@ -182,6 +183,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
             return;
           }
           this.showSubmit = true;
+          localStorage.setItem(ObjectLocalStorage.UPLOAD_CACHE, res.data.cacheKey);
           this.itemBlockUI.stop();
         },
         (error) => {
@@ -281,8 +283,8 @@ export class ViewCheckInfoNewComponent implements OnInit {
             ? "CAN_CUOC"
             : this.data?.data?.type
           : this.data?.data?.user?.type == "CC"
-          ? "CAN_CUOC"
-          : this.data?.data?.user?.type,
+            ? "CAN_CUOC"
+            : this.data?.data?.user?.type,
         Validators.required,
       ],
       identificationNoUser: [
@@ -472,7 +474,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
               regex,
               ""
             ),
-            license_no: '99999',
+          license_no: '99999',
           name_international: this.data?.image?.business?.businessName,
           short_name: this.data?.image?.business?.businessName,
         },
@@ -515,6 +517,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
           delegation_date: "1625875200",
           delegation_type: "MOBILE",
         },
+        cacheKey: localStorage.getItem(ObjectLocalStorage.UPLOAD_CACHE)
       };
     }
     try {
@@ -525,8 +528,8 @@ export class ViewCheckInfoNewComponent implements OnInit {
             this.itemBlockUI.stop();
             this.alertService.showMess(
               "Chuyển đổi chủ quyền cho thuê bao " +
-                this.mobileSearch +
-                " thành công"
+              this.mobileSearch +
+              " thành công"
             );
             this.closePopup.next();
           } else {
