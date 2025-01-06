@@ -92,8 +92,8 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" name="payment_reference_number" [(ngModel)]="searchForm.payment_reference_number" class="form-control"
-                      placeholder="Mã thanh toán">
+                    <input type="text" name="payment_reference_number" [(ngModel)]="searchForm.payment_reference_number"
+                      class="form-control" placeholder="Mã thanh toán">
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -159,21 +159,9 @@
                     </td>
 
                     <td class="col-info">
-                      <div *ngIf="item.msisdns.length < 2 && item.msisdns.length > 0">
-                        {{ item.msisdns[0].msisdn }} - {{ item.msisdns[0].serial }} -
-                        <span [innerHTML]="item.msisdns[0].mno | showIconMno"></span>
-                      </div>
-                      <div *ngIf="item.msisdns.length >= 2">
-                        <div *ngFor="let number of item.msisdns">
-                          {{ number.msisdn }} - {{ number.serial }} - <span
-                            [innerHTML]="number.mno | showIconMno"></span>
-                        </div>
-                        <br>
-                      </div>
-                      <div *ngIf="item.msisdns.length < 1">
+                      <div>
                         {{ item.msisdn }}
                       </div>
-
                     </td>
 
                     <td class="col-amount">
@@ -194,10 +182,6 @@
                       {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
                     </td>
 
-                    <!-- <td>
-                      {{ showDate(item.sync_lock, 'UTC', -10 * item.msisdns.length) }}
-                      {{ item.sync_time | date: 'dd/MM/yyyy H:mm':'GMT' }} 
-                    </td> -->
 
                     <td class="col-status">
                       <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
@@ -206,7 +190,8 @@
 
                     <td>
 
-                      <div *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
+                      <div
+                        *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
 
                         <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
@@ -214,7 +199,8 @@
 
                       </div>
 
-                      <div *ngIf="item.sync_by && currentUser.id != item.sync_by && (item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
+                      <div
+                        *ngIf="item.sync_by && currentUser.id != item.sync_by && (item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
                         <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
                         </a>
@@ -260,14 +246,16 @@
                             <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
+                        <div
+                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
 
                           <a ngbTooltip="Tiếp tục thực hiện"
                             (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                             <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
+                        <div
+                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
 
                           <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
                             <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
@@ -280,17 +268,20 @@
                           </a>
 
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_REJECT  && (item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
+                        <div
+                          *ngIf="item.status == taskTelecomStatus.STATUS_REJECT  && (item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="item.status == taskTelecomStatus.STATUS_REJECT && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
+                        <div
+                          *ngIf="item.status == taskTelecomStatus.STATUS_REJECT && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
+                        <div
+                          *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
                           && (item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
 
@@ -298,7 +289,8 @@
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
+                        <div
+                          *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
                            && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
 
@@ -307,12 +299,12 @@
                           </a>
                         </div>
                         <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)"
-                        *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
+                          *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
                         && item.sub_action != listTaskAction['_4G_VNM_TO_VMS']['value'] 
                         && item.action == 'app_request_change_user_info'
                        && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)">
-                       <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                      </a>  
+                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        </a>
                       </div>
 
                       <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalApproveInfo, item)"
