@@ -1,5 +1,6 @@
 export enum ObjectLocalStorage {
-    CURRENT_USER = 'currentUser'
+    CURRENT_USER = 'currentUser',
+    UPLOAD_CACHE = 'uploadCache'
 }
 
 export enum TaskTelecomStatus {
@@ -125,7 +126,7 @@ export class TaskTelecom {
         },
         change_user_info: {
             value: 'change_user_info',
-            label: 'Đổi thông tin'
+            label: 'Chuyển chủ quyền'
         },
         app_request_change_user_info: {
             value: 'app_request_change_user_info',
