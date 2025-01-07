@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TelecomService } from 'app/auth/service/telecom.service';
+import { TaskTelecomStatus } from 'app/utils/constants';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
@@ -21,6 +22,7 @@ export class UploadFileImagePdfComponent implements OnInit {
   multiples: any[] = [];
   @BlockUI('section-block') itemBlockUI: NgBlockUI;
   public modalRef: any;
+  public taskTelecomStatus = TaskTelecomStatus;
 
   constructor(
     private cf: ChangeDetectorRef,
@@ -134,7 +136,7 @@ export class UploadFileImagePdfComponent implements OnInit {
 
   upload() {
     const formData = new FormData();
-    formData.append('object_id', this.task_id);
+    formData.append('task_id', this.task_id);
     this.file.forEach((file) => { formData.append('files', file); })
     this.itemBlockUI.start();
     this.telecomService.postUpdateAttachments(formData).subscribe((res: any) => {
