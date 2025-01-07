@@ -164,28 +164,36 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
           note: "duyệt",
           want_status: typeApprove,
         };
+        this.approveOrReject(data);
       } else {
-        data = {
-          status: -1,
-          note: "hủy yêu cầu",
-        };
-      }
-      this.telecomService.postUpdateStatus(this.idSlug, data).subscribe(
-        (res: any) => {
-          if (res.status === 1) {
-            this.closePopup.next();
-            this.alertService.showMess(res.message);
-          } else {
-            this.closePopup.next();
-            this.alertService.showMess(res.message);
+        Swal.fire({
+          title: "Từ chối yêu cầu, gửi lý do cho đại lý",
+          input: "textarea",
+          inputAttributes: {
+            autocapitalize: "off",
+          },
+          showCancelButton: true,
+          confirmButtonText: "Gửi",
+          showLoaderOnConfirm: true,
+          preConfirm: (note) => {
+            if (!note || note == "") {
+              Swal.showValidationMessage("Vui lòng nhập nội dung");
+              return;
+            }
+            data = {
+              status: -1,
+              note: note,
+            };
+            this.approveOrReject(data);
+          },
+          allowOutsideClick: () => !Swal.isLoading(),
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //this.updateStatus.emit({updated: true});
+            this.alertService.showSuccess("Thành công");
           }
-          this.itemBlockUI.stop();
-        },
-        (err) => {
-          this.itemBlockUI.stop();
-          this.alertService.showMess(err);
-        }
-      );
+        });
+      }
     } else if (this.item.action == "app_request_change_user_info") {
       let titleS;
       if (name === "approve") {
@@ -277,6 +285,25 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  approveOrReject(data: any){
+    this.telecomService.postUpdateStatus(this.idSlug, data).subscribe(
+      (res: any) => {
+        if (res.status === 1) {
+          this.closePopup.next();
+          this.alertService.showMess(res.message);
+        } else {
+          this.closePopup.next();
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
   }
 
   async onUpdateStatus(item, status) {
