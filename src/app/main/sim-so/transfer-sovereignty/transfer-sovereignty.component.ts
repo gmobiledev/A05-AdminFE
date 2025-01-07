@@ -17,6 +17,7 @@ export class TransferSovereigntyComponent implements OnInit {
   selectBusinessOrIndividual;
   data;
   dataSplit;
+  taskIdOld;
   selectConversionObject = [
     { name: "Cá nhân", id: 0, code: "individual" },
     { name: "Doanh nghiệp", id: 1, code: "business" },
@@ -75,6 +76,7 @@ export class TransferSovereigntyComponent implements OnInit {
         if (res.status == 1) {
           this.noneConfirm = true;
           this.data = res.data;
+          this.taskIdOld = res.data.task_id;
           this.itemBlockUI.stop();
         } else {
           this.itemBlockUI.stop();

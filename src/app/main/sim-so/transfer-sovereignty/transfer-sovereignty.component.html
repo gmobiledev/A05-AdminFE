@@ -68,6 +68,7 @@
           <app-transfer-sovereignty-new-owner
             (dataSplit)="showViewCheckInfoNew($event)"
             [data]="data"
+            [mobileSearch]="searchSim"
             [select]="selectBusinessOrIndividual"
           ></app-transfer-sovereignty-new-owner>
         </div>
@@ -147,6 +148,7 @@
       (closePopup)="done()"
       [select]="selectBusinessOrIndividual"
       [data]="dataSplit"
+      [taskIdOld]="taskIdOld"
       [mobileSearch]="searchSim"
     ></app-view-check-info-new>
   </div>

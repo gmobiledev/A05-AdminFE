@@ -12,6 +12,7 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 export class TransferSovereigntyNewOwnerComponent implements OnInit {
   @Output() dataSplit = new EventEmitter();
   @Input() select;
+  @Input() mobileSearch;
   @Input() data;
   formOgzOcr;
   imageFront;
@@ -187,6 +188,7 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
       }
       data = {
         task_id: this.data.task_id,
+        msisdn: this.mobileSearch,
         personal: {
           card_front: this.formOgzOcr.value.identification_front_file,
           card_back: this.formOgzOcr.value.identification_back_file,
@@ -280,6 +282,7 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
       }
       data = {
         task_id: this.data.task_id,
+        msisdn: this.mobileSearch,
         business: {
           businessName: this.formOgzOcr.value.businessName,
           businessCode: this.formOgzOcr.value.businessCode,
@@ -309,13 +312,13 @@ export class TransferSovereigntyNewOwnerComponent implements OnInit {
             this.dataSplit.emit({
               image: data,
               data: res.data,
-              task_id: this.data.task_id,
+              task_id: res.data.task_id,
             });
           } else {
             this.dataSplit.emit({
               image: data,
               data: res.data,
-              task_id: this.data.task_id,
+              task_id: res.data.task_id,
               powerOfAttorney: {
                 imagePowerOfAttorney: this.imagePowerOfAttorney,
                 nameImagePowerOfAttorney: this.nameImagePowerOfAttorney

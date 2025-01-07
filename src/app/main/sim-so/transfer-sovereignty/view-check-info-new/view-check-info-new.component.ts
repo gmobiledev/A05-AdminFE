@@ -23,6 +23,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
   @Output() closePopup = new EventEmitter<boolean>();
   @Input() select;
   @Input() data;
+  @Input() taskIdOld;
   @Input() mobileSearch;
   dataUserOld;
   formOgzOcr;
@@ -57,7 +58,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
 
   getData() {
     this.itemBlockUI.start();
-    this.telecomService.getDetailTask(this.data.task_id, 1).subscribe(
+    this.telecomService.getDetailTask(this.taskIdOld, 1).subscribe(
       (res) => {
         if (res.status == 1) {
           this.itemBlockUI.stop();
@@ -164,9 +165,9 @@ export class ViewCheckInfoNewComponent implements OnInit {
     }
     if (this.selectedFiles.length > 0 && this.selectedFiles.length <= 11) {
       const formData = new FormData();
-      formData.append("entity", "people");
-      formData.append("key", "attachments");
-      formData.append("object_id", this.data.task_id);
+      // formData.append("entity", "people");
+      // formData.append("key", "attachments");
+      formData.append("task_id", this.data.task_id);
       formData.append("action", 'change_user_info');
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const file = this.selectedFiles[i];
