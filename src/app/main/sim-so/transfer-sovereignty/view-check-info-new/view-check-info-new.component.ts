@@ -13,7 +13,6 @@ import { SweetAlertService } from "app/utils/sweet-alert.service";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UserService } from "app/auth/service";
-import { ObjectLocalStorage } from "app/utils/constants";
 
 @Component({
   selector: "app-view-check-info-new",
@@ -31,6 +30,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
   listVideo;
   showSubmit = false;
   listImage;
+  cacheKey;
   public selectedFilesVideo: File[] = [];
   public selectedFilesImage: File[] = [];
   public selectedFilesPdf: File[] = [];
@@ -183,7 +183,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
             return;
           }
           this.showSubmit = true;
-          localStorage.setItem(ObjectLocalStorage.UPLOAD_CACHE, res.data.cacheKey);
+          this.cacheKey = res.data.cacheKey;
           this.itemBlockUI.stop();
         },
         (error) => {
@@ -520,8 +520,8 @@ export class ViewCheckInfoNewComponent implements OnInit {
       };
     }
     try {
-      data.cacheKey = localStorage.getItem(ObjectLocalStorage.UPLOAD_CACHE)
-      console.log("cacheKey", localStorage.getItem(ObjectLocalStorage.UPLOAD_CACHE))
+      data.cacheKey = this.cacheKey;
+      console.log("cacheKey", this.cacheKey);
       this.itemBlockUI.start();
       this.telecomService.postOwnershipTransfer(data).subscribe(
         (res) => {

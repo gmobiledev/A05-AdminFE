@@ -129,8 +129,8 @@ export class TaskTelecom {
             label: 'Chuyển chủ quyền'
         },
         app_request_change_user_info: {
-            value: 'app_request_change_user_info',
-            label: 'Yêu cầu CCQ'
+            value: 'app_request_change_user_info', 
+            label: 'CCQ My Gmobile'
         },
         CHECK_CONVERSION_2G: {
             value: 'CHECK_CONVERSION_2G',

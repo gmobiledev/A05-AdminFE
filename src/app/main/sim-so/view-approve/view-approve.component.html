@@ -54,9 +54,15 @@
     </div>
     <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
         <a class="ml-2 btn btn-success" (click)="select('approve')"
-        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING">
+        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value">
             <i data-feather="check" class="text-white cursor-pointer"></i>
             Duyệt
+        </a>
+
+        <a class="ml-2 btn btn-success" (click)="select('approve')"
+        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action == listTaskAction.app_request_change_user_info.value">
+            <i data-feather="check" class="text-white cursor-pointer"></i>
+            Đã xử lý
         </a>
 
         <a class="ml-2 btn btn-danger" (click)="select('reject')"

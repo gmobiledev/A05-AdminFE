@@ -45,7 +45,7 @@
             <br />
           </div>
           <div class="col-12 mb-1">
-            <h5 for=""> New Serial </h5>
+            <h5 for=""> Serial mới </h5>
             <input
               type="number"
               name="new_serial"
@@ -204,7 +204,7 @@
                 id="update-file"
                 (change)="onFileSelected($event)"
                 type="file"
-                accept="image/*,video/*"
+                accept="image/*,video/*,application/pdf"
               />
               <label for="update-file">
                 <img
@@ -226,7 +226,7 @@
                   *ngFor="let item of selectedFiles; let i = index"
                 >
                   <div class="d-flex flex-column justify-content-around">
-                    <div class="text-right">
+                    <div class="text-right" *ngIf="!showSubmit">
                       <span
                         style="cursor: pointer"
                         (click)="deleteFile(i)"
@@ -240,7 +240,7 @@
             </div>
             <div class="mb-1">
               <button
-                class="btn update-file"
+                class="btn update-file btn-primary"
                 *ngIf="!showSubmit"
                 (click)="onSubmitUpload()"
               >
