@@ -68,7 +68,7 @@ export class SearchRecoverySimComponent implements OnInit {
             const formData = new FormData();
             formData.append("entity", "people");
             formData.append("key", "attachments");
-            formData.append("object_id", this.taskId);
+            formData.append("task_id", this.taskId);
             for (let i = 0; i < this.selectedFiles.length; i++) {
               const file = this.selectedFiles[i];
               formData.append(`files`, file);
