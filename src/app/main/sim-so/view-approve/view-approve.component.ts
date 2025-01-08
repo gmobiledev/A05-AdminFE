@@ -44,7 +44,6 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.item);
     if (this.item) {
       if (this.item.action == "KHOI_PHUC") {
         this.titleModal = "Khôi phục sim";
@@ -92,6 +91,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         if (res.status === 1 && res.data) {
           this.dataText = res.data;
           this.dataTask = res.data?.task;
+          this.item = res.data?.task; 
           this.checkStatus();
         } else {
           this.alertService.showMess(res.message);

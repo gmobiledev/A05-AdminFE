@@ -89,49 +89,58 @@ export class UploadFileImagePdfComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    const fileSize = event.target.files[0].size / 1024 / 1024; // in MB
-    if (event.target.files[0].type.includes('video') && fileSize > 50) {
-      this.alertService.showMess('Vui lòng tải lại video không quá 50MB!');
+    const files = event.target.files;
+    if (!files || files.length === 0) {
       return;
-    } else if (fileSize > 5) {
-      this.alertService.showMess('Vui lòng tải lại file không quá 5MB!');
-    };
-    const quantityFile = this.multiples.length + this.lengthFileTask;
-    if (quantityFile == 10) {
+    }
+  
+    let newFiles = [];
+  
+    for (const file of files) {
+      const fileSizeMB = file.size / 1024 / 1024; // in MB
+      const isVideo = file.type.includes('video');
+  
+      if (isVideo && fileSizeMB > 50) {
+        this.alertService.showMess('Vui lòng tải lại video không quá 50MB!');
+        return;
+      } else if (!isVideo && fileSizeMB > 5) {
+        this.alertService.showMess('Vui lòng tải lại file không quá 5MB!');
+        return;
+      }
+  
+      newFiles.push(file);
+    }
+  
+    // Kiểm tra tổng số file sau khi thêm các file mới
+    const totalFiles = this.multiples.length + this.lengthFileTask + newFiles.length;
+    if (totalFiles > 10) {
       this.alertService.showMess('Tải lên tối đa 10 file!');
       return;
-    } else {
-      if (event?.target?.files?.length == 0) {
-        return;
-      } else {
-        this.file.push(event?.target?.files[0]);
-        // console.log('file', this.file);
-        let i: number = 0;
-        for (const singlefile of event.target.files) {
-          var reader = new FileReader();
-          reader.readAsDataURL(singlefile);
-          this.cf.detectChanges();
-          i++;
-          reader.onload = (event) => {
-            const url = (<FileReader>event.target).result as string;
-            let type = '';
-            if (url.includes('video')) {
-              type = 'video';
-            } else if (url.includes('jpg') || url.includes('png') || url.includes('jpeg')) {
-              type = 'img';
-            } else if (url.includes('pdf')) {
-              type = 'pdf';
-            }
-            this.multiples.push({
-              url: url,
-              type: type
-            });
-            // console.log(this.multiples);
-            this.cf.detectChanges();
-          };
-        }
-      }
     }
+  
+    for (const file of newFiles) {
+      this.file.push(file);
+  
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+  
+      reader.onload = (event) => {
+        const url = (event.target as FileReader).result as string;
+        let type = '';
+        if (url.includes('video')) {
+          type = 'video';
+        } else if (url.includes('jpg') || url.includes('png') || url.includes('jpeg')) {
+          type = 'img';
+        } else if (url.includes('pdf')) {
+          type = 'pdf';
+        }
+  
+        this.multiples.push({ url, type });
+        this.cf.detectChanges();
+      };
+    }
+  
+    this.cf.detectChanges();
   }
 
   upload() {

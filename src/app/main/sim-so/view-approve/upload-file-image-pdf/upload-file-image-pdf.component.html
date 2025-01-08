@@ -35,11 +35,11 @@
             </div>
         </div>
     </div>
-    <div class="select-click-upload" *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS || item.status == taskTelecomStatus.STATUS_PROCESSING">
+    <div class="select-click-upload" *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING">
         <div class="upload-file" [class.displayNone]="multiples.length == 10">
             <label for="upload"><i class="fa fa-upload" aria-hidden="true"></i></label>
             <input id="upload" type="file" accept="video/*, image/*, application/pdf" (change)="onSelectFile($event)"
-                multiple="multiple" />
+             multiple/>
         </div>
 
         <button (click)="upload()">Cập nhật</button>
