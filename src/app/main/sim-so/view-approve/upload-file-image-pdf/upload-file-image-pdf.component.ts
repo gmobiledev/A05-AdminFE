@@ -153,6 +153,7 @@ export class UploadFileImagePdfComponent implements OnInit {
         this.alertService.showMess(res.message);
         this.getFileAttachedTask();
         this.multiples = [];
+        this.file = [];
       } else {
         this.alertService.showMess(res.message);
       };
@@ -162,4 +163,5 @@ export class UploadFileImagePdfComponent implements OnInit {
       this.alertService.showMess(err);
     })
   }
+  
 }
