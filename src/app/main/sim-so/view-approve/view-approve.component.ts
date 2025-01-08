@@ -31,6 +31,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   titleModal;
   showSelect = false;
   showTask = true;
+  newSerial;
   currentUser;
   public actionText = "Đấu nối";
   private _unsubscribeAll: Subject<any>;
@@ -92,6 +93,9 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
           this.dataText = res.data;
           this.dataTask = res.data?.task;
           this.item = res.data?.task; 
+          if(this.dataTask.action == 'KHOI_PHUC' && this.dataTask.detail){
+            this.newSerial = JSON.parse(this.dataTask.detail).new_serial;
+          }
           this.checkStatus();
         } else {
           this.alertService.showMess(res.message);

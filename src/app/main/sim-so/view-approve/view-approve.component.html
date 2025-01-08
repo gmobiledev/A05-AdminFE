@@ -47,6 +47,9 @@
     <div class="row mb-2" *ngIf="dataTask.note">
         <span>Note: </span> {{ dataTask.note }}
     </div>
+    <div class="row mb-2" *ngIf="newSerial">
+        <span>Serial mới: </span> {{ newSerial }}
+    </div>
     <div class="row mb-2 box-button display-upload-file" *ngIf="showTask">
         <span>Upload file:</span>
         <app-upload-file-image-pdf [task_id]="idSlug" [item]="item"></app-upload-file-image-pdf>
