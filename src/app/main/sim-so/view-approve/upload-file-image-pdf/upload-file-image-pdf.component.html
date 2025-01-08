@@ -4,7 +4,7 @@
             <h4 style="margin: 10px;">Tệp đính kèm</h4>
             <div class="view-file-task-body">
                 <div class="view-file-task" *ngFor="let file of fileTask">
-                    <div class="close">
+                    <div class="close" *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING">
                         <img class="close-red-icon" src="assets/images/icons/close-red-icon.svg" alt=""
                             (click)="deleteFileTask(file)">
                     </div>
