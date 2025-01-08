@@ -130,7 +130,7 @@ export class TaskTelecom {
         },
         app_request_change_user_info: {
             value: 'app_request_change_user_info', 
-            label: 'CCQ My Gmobile'
+            label: 'Hỗ trợ CCQ My Gmobile'
         },
         CHECK_CONVERSION_2G: {
             value: 'CHECK_CONVERSION_2G',
