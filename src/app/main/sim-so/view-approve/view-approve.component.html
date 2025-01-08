@@ -47,16 +47,24 @@
     <div class="row mb-2" *ngIf="dataTask.note">
         <span>Note: </span> {{ dataTask.note }}
     </div>
+    <div class="row mb-2" *ngIf="newSerial">
+        <span>Serial mới: </span> {{ newSerial }}
+    </div>
     <div class="row mb-2 box-button display-upload-file" *ngIf="showTask">
         <span>Upload file:</span>
         <app-upload-file-image-pdf [task_id]="idSlug" [item]="item"></app-upload-file-image-pdf>
         <p *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING">*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
     </div>
     <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
-        <a class="ml-2 btn btn-success" (click)="select('approve')"
+        <a class="ml-2 btn btn-success" (click)="select('approve', 0)"
         *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value">
             <i data-feather="check" class="text-white cursor-pointer"></i>
             Duyệt
+        </a>
+        <a class="ml-2 btn btn-success" (click)="select('approve', 1)"
+        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value && item.action == 'KHOI_PHUC'">
+            <i data-feather="check" class="text-white cursor-pointer"></i>
+            Duyệt đổi sim
         </a>
 
         <a class="ml-2 btn btn-success" (click)="select('approve')"

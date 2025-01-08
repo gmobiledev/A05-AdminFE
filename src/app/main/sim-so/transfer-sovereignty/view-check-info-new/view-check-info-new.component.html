@@ -375,7 +375,7 @@
         </div>
         <div class="mb-2">
           <label>Địa chỉ thường trú:</label>
-          <span>{{ dataUserOld?.people?.full_address }}</span>
+          <span>{{ dataUserOld?.people?.full_address ? dataUserOld?.people?.full_address : dataUserOld?.people?.address }}</span>
         </div>
         <div class="mb-2">
           <label style="color: black; font-weight: 600">Hình ảnh</label>
