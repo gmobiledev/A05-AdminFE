@@ -61,17 +61,7 @@
   <div class="row mb-2" *ngIf="newSerial">
     <span>Serial mới: </span> {{ newSerial }}
   </div>
-  <div
-    class="row mb-2"
-    *ngIf="
-      showTask &&
-      dataTask.action === listTaskAction.change_user_info.value &&
-      dataTask.status != taskTelecomStatus.STATUS_SUCCESS &&
-      dataTask.status == taskTelecomStatus.STATUS_PROCESSING
-    "
-  >
-    <span>Tiến độ: </span> <u style="cursor: pointer" (click)="modalOpenItem(modalItem)">Lịch sử tiến độ</u>
-  </div>
+  
   <div class="row mb-2 box-button display-upload-file">
     <span>Upload file:</span>
     <app-upload-file-image-pdf
@@ -89,6 +79,17 @@
       *Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế
       dung lượng tối đa 50MB file*
     </p>
+  </div>
+  <div
+    class="row mb-2"
+    *ngIf="
+      showTask &&
+      dataTask.action === listTaskAction.change_user_info.value &&
+      dataTask.status != taskTelecomStatus.STATUS_SUCCESS &&
+      dataTask.status == taskTelecomStatus.STATUS_PROCESSING
+    "
+  >
+    <span>Tiến độ: </span> <u style="cursor: pointer" (click)="modalOpenItem(modalItem)">Lịch sử tiến độ</u>
   </div>
   <div
     class="row mb-2"
