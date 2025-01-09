@@ -56,21 +56,27 @@
         <p *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING">*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
     </div>
     <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
+        <a class="ml-2 btn btn-success" (click)="select('approve', 4)"
+        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value">
+            <i data-feather="check" class="text-white cursor-pointer"></i>
+            Duyệt Xử lý thành công
+        </a>
         <a class="ml-2 btn btn-success" (click)="select('approve', 0)"
         *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value">
             <i data-feather="check" class="text-white cursor-pointer"></i>
-            Duyệt
+            Duyệt API ĐKTTB sim mới
         </a>
+
+        <a class="ml-2 btn btn-success" (click)="select('approve',2)"
+        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action == listTaskAction.app_request_change_user_info.value">
+            <i data-feather="check" class="text-white cursor-pointer"></i>
+            Duyệt API ĐKTTTB sim cũ
+        </a>
+
         <a class="ml-2 btn btn-success" (click)="select('approve', 1)"
         *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value && item.action == 'KHOI_PHUC'">
             <i data-feather="check" class="text-white cursor-pointer"></i>
-            Duyệt đổi sim
-        </a>
-
-        <a class="ml-2 btn btn-success" (click)="select('approve')"
-        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action == listTaskAction.app_request_change_user_info.value">
-            <i data-feather="check" class="text-white cursor-pointer"></i>
-            Đã xử lý
+            Duyệt đổi sim mới
         </a>
 
         <a class="ml-2 btn btn-danger" (click)="select('reject')"
