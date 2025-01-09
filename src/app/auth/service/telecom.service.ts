@@ -102,7 +102,7 @@ export class TelecomService {
   }
 
   getCcqLogs(idSlug = null) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/ccq-logs?page=1&page_size=30&orderby_key=action_at&orderby_value=DESC`);
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/logs?page=1&page_size=30&orderby_key=action_at&orderby_value=DESC`);
   }
 
   getTaskSlugImages(idSlug = null) {
