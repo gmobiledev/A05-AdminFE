@@ -84,7 +84,7 @@
     class="row mb-2"
     *ngIf="
       showTask &&
-      dataTask.action === listTaskAction.change_user_info.value &&
+      dataTask.action === listTaskAction.app_request_change_user_info.value &&
       dataTask.status != taskTelecomStatus.STATUS_SUCCESS &&
       dataTask.status == taskTelecomStatus.STATUS_PROCESSING
     "
@@ -99,7 +99,7 @@
     *ngIf="
       isShowButtonApprove() &&
       showTask &&
-      dataTask.action === listTaskAction.change_user_info.value &&
+      dataTask.action === listTaskAction.app_request_change_user_info.value &&
       dataTask.status != taskTelecomStatus.STATUS_SUCCESS &&
       dataTask.status == taskTelecomStatus.STATUS_PROCESSING
     "
