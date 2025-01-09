@@ -48,6 +48,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/ownership-transfer`, data);
   }
 
+  postUpdateProcess(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/update-process`, data);
+  }
+
   /**
  * Xem lich su thanh toan
  */
@@ -95,6 +99,10 @@ export class TelecomService {
   
   getTaskSlugText(idSlug = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/text`);
+  }
+
+  getCcqLogs(idSlug = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/ccq-logs?page=1&page_size=30&orderby_key=action_at&orderby_value=DESC`);
   }
 
   getTaskSlugImages(idSlug = null) {
