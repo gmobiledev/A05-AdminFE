@@ -1,87 +1,195 @@
 <div class="pl-3 pr-3" *ngIf="dataTask">
-    <div class="row" *blockUI="'section-block'">
-        <div class="col-md-6">
-            <div>
-                <h3>{{ titleModal }}</h3>
-            </div>
-            <div>ID của yêu cầu: {{ dataTask.id }}</div>
-            <div>
-                <span>Trạng thái: </span><span [innerHTML]="dataTask.status | showStatusTelecom"></span>
-            </div>
-            <div><span>Admin thao tác: </span>{{ dataText.user_sync }}</div>
+  <div class="row" *blockUI="'section-block'">
+    <div class="col-md-6">
+      <div>
+        <h3>{{ titleModal }}</h3>
+      </div>
+      <div>ID của yêu cầu: {{ dataTask.id }}</div>
+      <div>
+        <span>Trạng thái: </span
+        ><span [innerHTML]="dataTask.status | showStatusTelecom"></span>
+      </div>
+      <div><span>Admin thao tác: </span>{{ dataText.user_sync }}</div>
 
-            <div *ngIf="dataTask.number_success_msisdn && dataTask.number_success_msisdn > 0">
-                <b class="text-info" *ngIf="dataTask && dataTask.task.otp">
-                    Đã xác nhận OTP ĐKTTTB
-                </b>
-                <b class="text-secondary" *ngIf="dataTask && !dataTask.otp">
-                    Chưa xác nhận OTP ĐKTTTB
-                </b>
-            </div>
-        </div>
-        <div class="col-md-12 mb-2">
-            <span>Thời gian tạo: </span>
-            {{ dataTask.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
-            <span>Thời gian mua : </span>
-            {{ dataTask.buy_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
-            <span>Thời gian cập nhật: </span>
-            {{ dataTask.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
-            <span>Thời gian hoàn thành: </span>
-            {{ dataTask.sync_time | date : "dd/MM/yyyy H:mm" : "UTC" }}
-        </div>
-        <div class="col-md-12 mb-2" *ngIf="dataTask.note">
-            <span>Note: </span> {{ dataTask.note }}
-        </div>
+      <div
+        *ngIf="
+          dataTask.number_success_msisdn && dataTask.number_success_msisdn > 0
+        "
+      >
+        <b class="text-info" *ngIf="dataTask && dataTask.task.otp">
+          Đã xác nhận OTP ĐKTTTB
+        </b>
+        <b class="text-secondary" *ngIf="dataTask && !dataTask.otp">
+          Chưa xác nhận OTP ĐKTTTB
+        </b>
+      </div>
     </div>
+    <div class="col-md-12 mb-2">
+      <span>Thời gian tạo: </span>
+      {{ dataTask.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian mua : </span>
+      {{ dataTask.buy_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian cập nhật: </span>
+      {{ dataTask.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian hoàn thành: </span>
+      {{ dataTask.sync_time | date : "dd/MM/yyyy H:mm" : "UTC" }}
+    </div>
+    <div class="col-md-12 mb-2" *ngIf="dataTask.note">
+      <span>Note: </span> {{ dataTask.note }}
+    </div>
+  </div>
 
-    <div class="row mb-4">
-        <div class="col-md-6 border">
-            <app-old-customer-information [dataText]="dataText" [item]="item"
-                [dataImages]="dataImages"></app-old-customer-information>
-        </div>
-        <div class="col-md-6 border">
-            <app-new-customer-information [dataText]="dataText" [item]="item"
-                [dataImages]="dataImages"></app-new-customer-information>
-        </div>
+  <div class="row mb-4">
+    <div class="col-md-6 border">
+      <app-old-customer-information
+        [dataText]="dataText"
+        [item]="item"
+        [dataImages]="dataImages"
+      ></app-old-customer-information>
     </div>
-    <div class="row mb-2" *ngIf="dataTask.note">
-        <span>Note: </span> {{ dataTask.note }}
+    <div class="col-md-6 border">
+      <app-new-customer-information
+        [dataText]="dataText"
+        [item]="item"
+        [dataImages]="dataImages"
+      ></app-new-customer-information>
     </div>
-    <div class="row mb-2" *ngIf="newSerial">
-        <span>Serial mới: </span> {{ newSerial }}
+  </div>
+  <div class="row mb-2" *ngIf="dataTask.note">
+    <span>Note: </span> {{ dataTask.note }}
+  </div>
+  <div class="row mb-2" *ngIf="newSerial">
+    <span>Serial mới: </span> {{ newSerial }}
+  </div>
+  <div
+    class="row mb-2"
+    *ngIf="
+      showTask &&
+      dataTask.action === listTaskAction.change_user_info.value &&
+      dataTask.status != taskTelecomStatus.STATUS_SUCCESS &&
+      dataTask.status == taskTelecomStatus.STATUS_PROCESSING
+    "
+  >
+    <span>Tiến độ: </span> <u style="cursor: pointer" (click)="modalOpenItem(modalItem)">Lịch sử tiến độ</u>
+  </div>
+  <div class="row mb-2 box-button display-upload-file">
+    <span>Upload file:</span>
+    <app-upload-file-image-pdf
+      [task_id]="idSlug"
+      [item]="item"
+      [showTask]="showTask"
+    ></app-upload-file-image-pdf>
+    <p
+      *ngIf="
+        showTask &&
+        item.status != taskTelecomStatus.STATUS_SUCCESS &&
+        item.status == taskTelecomStatus.STATUS_PROCESSING
+      "
+    >
+      *Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế
+      dung lượng tối đa 50MB file*
+    </p>
+  </div>
+  <div
+    class="row mb-2"
+    *ngIf="
+      isShowButtonApprove() &&
+      showTask &&
+      dataTask.action === listTaskAction.change_user_info.value &&
+      dataTask.status != taskTelecomStatus.STATUS_SUCCESS &&
+      dataTask.status == taskTelecomStatus.STATUS_PROCESSING
+    "
+  >
+    <span class="mr-1">Cập nhật tiến độ xử lí:</span>
+    <div class="col-12 mt-1" style="position: relative">
+      <input
+        class="input-commit col-12"
+        type="text"
+        name=""
+        [(ngModel)]="textCommit"
+        id=""
+      />
+      <i
+        class="fa fa-paper-plane icon-send"
+        aria-hidden="true"
+        (click)="send()"
+      ></i>
     </div>
-    <div class="row mb-2 box-button display-upload-file" *ngIf="showTask">
-        <span>Upload file:</span>
-        <app-upload-file-image-pdf [task_id]="idSlug" [item]="item"></app-upload-file-image-pdf>
-        <p *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING">*Chỉ tải file Image hoặc file PDF hoặc Video và Tối đa 10 file - Hạn chế dung lượng tối đa 50MB file*</p>
-    </div>
-    <div class="row box-button" *ngIf="isShowButtonApprove() && showSelect && showTask">
-        <a class="ml-2 btn btn-success" (click)="select('approve', 0)"
-        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value">
-            <i data-feather="check" class="text-white cursor-pointer"></i>
-            Duyệt
-        </a>
-        <a class="ml-2 btn btn-success" (click)="select('approve', 1)"
-        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action != listTaskAction.app_request_change_user_info.value && item.action == 'KHOI_PHUC'">
-            <i data-feather="check" class="text-white cursor-pointer"></i>
-            Duyệt đổi sim
-        </a>
+  </div>
+  <div
+    class="row box-button"
+    *ngIf="isShowButtonApprove() && showSelect && showTask"
+  >
+    <a
+      class="ml-2 btn btn-success"
+      (click)="select('approve', 0)"
+      *ngIf="
+        dataTask?.status == taskTelecomStatus.STATUS_PROCESSING &&
+        item.action != listTaskAction.app_request_change_user_info.value
+      "
+    >
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Duyệt
+    </a>
+    <a
+      class="ml-2 btn btn-success"
+      (click)="select('approve', 1)"
+      *ngIf="
+        dataTask?.status == taskTelecomStatus.STATUS_PROCESSING &&
+        item.action != listTaskAction.app_request_change_user_info.value &&
+        item.action == 'KHOI_PHUC'
+      "
+    >
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Duyệt đổi sim
+    </a>
 
-        <a class="ml-2 btn btn-success" (click)="select('approve')"
-        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING && item.action == listTaskAction.app_request_change_user_info.value">
-            <i data-feather="check" class="text-white cursor-pointer"></i>
-            Đã xử lý
-        </a>
+    <a
+      class="ml-2 btn btn-success"
+      (click)="select('approve')"
+      *ngIf="
+        dataTask?.status == taskTelecomStatus.STATUS_PROCESSING &&
+        item.action == listTaskAction.app_request_change_user_info.value
+      "
+    >
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Đã xử lý
+    </a>
 
-        <a class="ml-2 btn btn-danger" (click)="select('reject')"
-        *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING">
-            <i data-feather="slash" class="text-white cursor-pointer"></i>
-            Từ chối
-        </a>
-        <a class="ml-2 btn btn-success" (click)="reception()"
-            *ngIf="dataTask.status != taskTelecomStatus.STATUS_PROCESSING">
-            <i data-feather="check" class="text-white cursor-pointer"></i>
-            Tiếp nhận yêu cầu
-        </a>
-    </div>
+    <a
+      class="ml-2 btn btn-danger"
+      (click)="select('reject')"
+      *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING"
+    >
+      <i data-feather="slash" class="text-white cursor-pointer"></i>
+      Từ chối
+    </a>
+    <a
+      class="ml-2 btn btn-success"
+      (click)="reception()"
+      *ngIf="dataTask.status != taskTelecomStatus.STATUS_PROCESSING"
+    >
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Tiếp nhận yêu cầu
+    </a>
+  </div>
 </div>
+
+<ng-template #modalItem let-modal data-bs-backdrop="true">
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Lịch sử tiến độ</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <div class="show-progress-history" *ngFor="let item of commitTask">
+      <span>{{ item.detail }}</span>
+    </div>
+  </div>
+</ng-template>

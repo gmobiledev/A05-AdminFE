@@ -1,95 +1,124 @@
 .container {
-    width: 100%;
+  width: 100%;
 }
 
 .progressbar {
-    counter-reset: step;
+  counter-reset: step;
 }
 
 .progressbar li {
-    list-style: none;
-    display: inline-block;
-    width: 20%;
-    position: relative;
-    text-align: center;
-    cursor: pointer;
-    z-index: 0;
+  list-style: none;
+  display: inline-block;
+  width: 20%;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  z-index: 0;
 }
 
 .progressbar li:before {
-    content: counter(step);
-    counter-increment: step;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border: 1px solid #ddd;
-    border-radius: 100%;
-    display: block;
-    text-align: center;
-    margin: 0 auto 10px auto;
-    background-color: #fff;
+  content: counter(step);
+  counter-increment: step;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 100%;
+  display: block;
+  text-align: center;
+  margin: 0 auto 10px auto;
+  background-color: #fff;
 }
 
 .progressbar li:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    background-color: #ddd;
-    top: 15px;
-    left: -50%;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+  top: 15px;
+  left: -50%;
+  z-index: -1;
 }
 
 .progressbar li:first-child:after {
-    content: none;
+  content: none;
 }
 
 .progressbar li.active {
-    color: green;
+  color: green;
 }
 
 .progressbar li.active:before {
-    border-color: green;
+  border-color: green;
 }
 
-.progressbar li.active+li:after {
-    background-color: green;
+.progressbar li.active + li:after {
+  background-color: green;
 }
 
 .img-icon-mno {
-    width: 35px !important;
+  width: 35px !important;
 }
 
 .hide_content::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: hsla(0, 0%, 100%, 0);
-    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0), #fff);
-    height: 80px;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: hsla(0, 0%, 100%, 0);
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, 0), #fff);
+  height: 80px;
 }
 
 span {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .box-button {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+.input-commit {
+  padding: 0.5rem 2.3rem 0.5rem 0.5rem;
+  border: 1px #b0b0b0 dashed;
+  border-radius: 8px;
+  height: 40px;
+  color: #000000;
+  .focus-visible {
+    outline: 1px dashed #b0b0b0;
+  }
+}
+.icon-send {
+  position: absolute;
+  top: 10px;
+  right: 22px;
+  color: #b0b0b0;
+  cursor: pointer;
+  font-size: 17px;
+  &:hover {
+    color: #6b6b6b;
+  }
+}
+
+.show-progress-history {
+  border: 1px #b0b0b0 dashed;
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .display-upload-file {
-    flex-direction: column;
+  flex-direction: column;
 
-    span {
-        margin: 10px 0;
-        font-size: 16px;
-    }
+  span {
+    margin: 10px 0;
+    font-size: 16px;
+  }
 
-    p {
-        text-align: center;
-    }
+  p {
+    text-align: center;
+  }
 }
