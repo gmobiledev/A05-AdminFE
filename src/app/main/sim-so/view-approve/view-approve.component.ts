@@ -27,7 +27,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   @BlockUI("section-block") itemBlockUI: NgBlockUI;
   @Output() closePopup = new EventEmitter<boolean>();
   @Input() item: any;
-  textCommit: string = '';
+  textCommit: string = "";
   public modalRef: any;
   dataImages;
   commitTask;
@@ -43,27 +43,31 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   public listTaskAction = TaskTelecom.ACTION;
   public taskTelecomStatus = TaskTelecomStatus;
-   @ViewChild("modalItem") modalItem: ElementRef;
+  @ViewChild("modalItem") modalItem: ElementRef;
 
   constructor(
     private telecomService: TelecomService,
     private alertService: SweetAlertService,
     private adminService: AdminService,
-     private modalService: NgbModal
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     if (this.item) {
       if (this.item.action == "KHOI_PHUC") {
-        this.titleModal = "Khôi phục sim";
+        this.titleModal = "Khôi phục sim : " + this.item.msisdn;
       } else if (
         this.item.action == this.listTaskAction.change_user_info.value
       ) {
-        this.titleModal = "Chuyển đổi chủ quyền";
+        this.titleModal = "Chuyển đổi chủ quyền : " + this.item.msisdn;
       } else if (
-        this.item.action == this.listTaskAction.app_request_change_user_info.value
+        this.item.action ==
+        this.listTaskAction.app_request_change_user_info.value
       ) {
-        this.titleModal = this.listTaskAction.app_request_change_user_info.label;
+        this.titleModal =
+          this.listTaskAction.app_request_change_user_info.label +
+          " : " +
+          this.item.msisdn;
       }
     }
     this.idSlug = this.item?.id;
@@ -72,9 +76,6 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
     );
     this.getTaskSlugText(this.idSlug);
     this.getTaskSlugImages(this.idSlug);
-    if(this.item.action == this.listTaskAction.change_user_info.value){
-      this.getCcqLogs(this.idSlug);
-    }
   }
 
   modalClose() {
@@ -82,6 +83,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   }
 
   async modalOpenItem(modal, item = null) {
+    this.getCcqLogs(this.idSlug);
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: "modal modal-primary",
@@ -105,11 +107,11 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  getCcqLogs(id){
+  getCcqLogs(id) {
     this.telecomService.getCcqLogs(id).subscribe(
       (res) => {
         if (res.status === 1 && res.data) {
-         this.commitTask = res.data.items;
+          this.commitTask = res.data.items;
         } else {
           this.alertService.showMess(res.message);
         }
@@ -134,8 +136,8 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
         if (res.status === 1 && res.data) {
           this.dataText = res.data;
           this.dataTask = res.data?.task;
-          this.item = res.data?.task; 
-          if(this.dataTask.action == 'KHOI_PHUC' && this.dataTask.detail){
+          this.item = res.data?.task;
+          if (this.dataTask.action == "KHOI_PHUC" && this.dataTask.detail) {
             this.newSerial = JSON.parse(this.dataTask.detail).new_serial;
           }
           this.checkStatus();
@@ -151,23 +153,21 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
     );
   }
 
-  send(){
+  send() {
     if (!this.textCommit) {
-      this.alertService.showMess(
-        "Vui lòng không để trống!"
-      );
+      this.alertService.showMess("Vui lòng không để trống!");
       return;
     }
     const data = {
       task_id: this.idSlug,
       note: this.textCommit,
-      msisdn: this.dataTask.msisdn
-  };
+      msisdn: this.dataTask.msisdn,
+    };
     this.telecomService.postUpdateProcess(data).subscribe(
       (res) => {
         if (res.status === 1 && res.data) {
           this.alertService.showMess(res.message);
-          this.textCommit = '';
+          this.textCommit = "";
           this.getCcqLogs(this.idSlug);
         } else {
           this.alertService.showMess(res.message);
@@ -363,7 +363,7 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
     }
   }
 
-  approveOrReject(data: any){
+  approveOrReject(data: any) {
     this.telecomService.postUpdateStatus(this.idSlug, data).subscribe(
       (res: any) => {
         if (res.status === 1) {
