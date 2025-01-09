@@ -4,7 +4,7 @@
             <h4 style="margin: 10px;">Tệp đính kèm</h4>
             <div class="view-file-task-body">
                 <div class="view-file-task" *ngFor="let file of fileTask">
-                    <div class="close" *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING">
+                    <div class="close" *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING && showTask">
                         <img class="close-red-icon" src="assets/images/icons/close-red-icon.svg" alt=""
                             (click)="deleteFileTask(file)">
                     </div>
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="select-click-upload" *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING">
+    <div class="select-click-upload" *ngIf="item.status != taskTelecomStatus.STATUS_SUCCESS && item.status == taskTelecomStatus.STATUS_PROCESSING && showTask">
         <div class="upload-file" [class.displayNone]="multiples.length == 10">
             <label for="upload"><i class="fa fa-upload" aria-hidden="true"></i></label>
             <input id="upload" type="file" accept="video/*, image/*, application/pdf" (change)="onSelectFile($event)"

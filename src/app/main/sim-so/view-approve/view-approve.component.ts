@@ -1,10 +1,12 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from "@angular/core";
 import { TelecomService } from "app/auth/service/telecom.service";
 import { TaskTelecom } from "app/utils/constants";
@@ -14,6 +16,7 @@ import { Subject } from "rxjs";
 import { ObjectLocalStorage, TaskTelecomStatus } from "app/utils/constants";
 import Swal from "sweetalert2";
 import { AdminService } from "app/auth/service/admin.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-view-approve",
@@ -24,7 +27,10 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   @BlockUI("section-block") itemBlockUI: NgBlockUI;
   @Output() closePopup = new EventEmitter<boolean>();
   @Input() item: any;
+  textCommit: string = '';
+  public modalRef: any;
   dataImages;
+  commitTask;
   dataText;
   dataTask;
   idSlug;
@@ -37,11 +43,13 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   public listTaskAction = TaskTelecom.ACTION;
   public taskTelecomStatus = TaskTelecomStatus;
+   @ViewChild("modalItem") modalItem: ElementRef;
 
   constructor(
     private telecomService: TelecomService,
     private alertService: SweetAlertService,
-    private adminService: AdminService
+    private adminService: AdminService,
+     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +72,23 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
     );
     this.getTaskSlugText(this.idSlug);
     this.getTaskSlugImages(this.idSlug);
+    if(this.item.action == this.listTaskAction.change_user_info.value){
+      this.getCcqLogs(this.idSlug);
+    }
+  }
+
+  modalClose() {
+    this.modalRef.close();
+  }
+
+  async modalOpenItem(modal, item = null) {
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: "modal modal-primary",
+      size: "l",
+      backdrop: "static",
+      keyboard: true,
+    });
   }
 
   isShowButtonApprove() {
@@ -78,6 +103,23 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
+  }
+
+  getCcqLogs(id){
+    this.telecomService.getCcqLogs(id).subscribe(
+      (res) => {
+        if (res.status === 1 && res.data) {
+         this.commitTask = res.data.items;
+        } else {
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
   }
 
   checkAction(item) {
@@ -97,6 +139,36 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
             this.newSerial = JSON.parse(this.dataTask.detail).new_serial;
           }
           this.checkStatus();
+        } else {
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
+  }
+
+  send(){
+    if (!this.textCommit) {
+      this.alertService.showMess(
+        "Vui lòng không để trống!"
+      );
+      return;
+    }
+    const data = {
+      task_id: this.idSlug,
+      note: this.textCommit,
+      msisdn: this.dataTask.msisdn
+  };
+    this.telecomService.postUpdateProcess(data).subscribe(
+      (res) => {
+        if (res.status === 1 && res.data) {
+          this.alertService.showMess(res.message);
+          this.textCommit = '';
+          this.getCcqLogs(this.idSlug);
         } else {
           this.alertService.showMess(res.message);
         }
