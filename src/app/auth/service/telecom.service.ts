@@ -327,7 +327,7 @@ export class TelecomService {
   }
 
   taskDetail(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/gmobile-task/task-detail`, data);
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/task-detail`, data);
   }
 
   paymentRetry(data) {
