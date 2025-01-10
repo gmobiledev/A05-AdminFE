@@ -334,6 +334,18 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel`, data);
   }
 
+  taskDetail(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/task-detail`, data);
+  }
+
+  paymentRetry(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/payment/retry`, data);
+  }
+
+  paymentResend(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/payment/resend`, data);
+  }
+
   sellChannelAddUser(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel/add-user`, data);
   }

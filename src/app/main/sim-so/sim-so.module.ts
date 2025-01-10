@@ -137,6 +137,10 @@ const routes: Routes = [
     component: SellChannelComponent,
   },
   {
+    path: "task-detail",
+    component: TaskDetailComponent,
+  },
+  {
     path: "msisdn",
     component: ListSimComponent,
   },
