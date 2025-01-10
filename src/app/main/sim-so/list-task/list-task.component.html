@@ -161,7 +161,7 @@
 
                     <td class="col-info">
                       <div>
-                        {{ item.msisdn }}
+                        {{ item.msisdn }} 
                       </div>
                     </td>
 
@@ -274,6 +274,12 @@
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
+                        </div>
+                        <div
+                        *ngIf="item.status == taskTelecomStatus.STATUS_PAID_WAITING_EKYC  && (item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
+                        <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
+                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        </a>
                         </div>
                         <div
                           *ngIf="(item.status == taskTelecomStatus.STATUS_REJECT || item.status == 40) && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
