@@ -48,6 +48,7 @@ export class ListTaskComponent implements OnInit {
   public list: any;
   public totalItems: number;
   public summaryTask: any;
+  public listTask: any;
 
   public isActivedBoxNewInit: boolean = false;
   public isActivedBoxNewProcessing: boolean = false;
@@ -236,6 +237,11 @@ export class ListTaskComponent implements OnInit {
   async modalOpenDetail(modal, item = null) {
     this.itemBlockUI.start();
     this.selectedItem = item;
+
+    if (item) {
+      this.selectedItem = item;
+      this.detailTask(item.id);
+    }
 
     this.itemBlockUI.stop();
     this.modalRef = this.modalService.open(modal, {
@@ -649,6 +655,14 @@ export class ListTaskComponent implements OnInit {
       console.log('An error occurred while retrieving token. ', err);
       // ...
     });
+  }
+
+
+  detailTask(id) {
+    this.telecomService.taskDetail(id).subscribe(res => {
+      this.listTask = res.data;
+      // this.totalItems = res.data.count;
+    })
   }
 
 
