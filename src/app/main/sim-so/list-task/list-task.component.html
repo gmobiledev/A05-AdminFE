@@ -313,21 +313,25 @@
                           *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
                           && (item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
-                          <a class="m-1" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
+                          <a class="mr-1" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
 
-                          <a class="m-1" ngbTooltip="Thực hiện lại" (click)="modalOpen(modalItem, item)">
+                          <a class="" ngbTooltip="Xem thông tin" (click)="modalOpenDetail(modalDetail, item)">
+                            <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
+                          </a>
+
+                          <!-- <a class="m-1" ngbTooltip="Thực hiện lại" (click)="onSubmitAgain(item.id, 0)">
                             <i data-feather="refresh-ccw" class="text-primary cursor-pointer"></i>
                           </a>
 
-                          <a class="m-1" ngbTooltip="Yêu cầu hoàn tiền" (click)="modalOpen(modalItem, item)">
+                          <a class="m-1" ngbTooltip="Yêu cầu hoàn tiền" (click)="onSubmitRequest(item.id, 0)">
                             <i data-feather="pocket" class="text-primary cursor-pointer"></i>
                           </a>
 
-                          <a class="m-1" ngbTooltip="Xác nhận đã hoàn tiền" (click)="modalOpen(modalItem, item)">
+                          <a class="m-1" ngbTooltip="Xác nhận đã hoàn tiền" (click)="onSubmitConfirm(item.id, 0)">
                             <i data-feather="check" class="text-primary cursor-pointer"></i>
-                          </a>
+                          </a> -->
 
                         </div>
                         <div
@@ -522,5 +526,98 @@
         </span>
       </a>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #modalDetail let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Chi tiết số điện thoại</h5>
+    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <div class="row">
+      <div class="col-md-6 ">
+        <div>
+          Số thuê bao: 0993110120
+        </div>
+        <div>
+          <span>Số tiền: 9,750</span>
+        </div>
+        <div>
+          <span>Thời gian tạo/mua: 24/12/2024 10:29</span>
+        </div>
+      </div>
+      <div class="col-md-6 ">
+        <div>
+          Note: Đại lý không hoàn thiện hồ sơ trong vòng 6h, trả số về kho lúc 24/12/2024 11:00
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-1">
+        <button (click)="onSubmitRequest(5, 0)" type="submit" class="btn btn-info" rippleEffect>
+          Yêu cầu hoàn tiền
+        </button>
+      </div>
+
+      <div class="col-md-6 mt-1">
+        <button (click)="onSubmitAgain(5, 0)" type="submit" class="btn btn-info" rippleEffect>
+          Thực hiện lại
+        </button>
+      </div>
+
+      <div class="col-md-6 mt-1">
+        <button (click)="onSubmitConfirm(5, 0)" type="submit" class="btn btn-info" rippleEffect>
+          Xác nhận đã hoàn tiền
+        </button>
+
+      </div>
+
+      <div class="col-md-6 mt-1">
+        <button (click)="onUpdateStatus(5, 1)" type="submit" class="btn btn-info" rippleEffect>
+          Gửi lại mã kích hoạt
+        </button>
+      </div>
+
+      <div class="col-md-6 mt-1">
+        <!-- <button (click)="modalOpenSuccess(modalSuccess)" type="submit" class="btn btn-info" rippleEffect>
+          Xem mã kích hoạt
+        </button> -->
+        <button
+        type="button"
+        class="btn btn-outline-primary"
+        (click)="modalOpenSuccess(modalSuccess)"
+        rippleEffect
+      >
+      Xem mã kích hoạt
+      </button>
+    
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+      Đóng
+    </button>
+  </div>
+</ng-template>
+
+<!-- Modal -->
+<ng-template #modalSuccess let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Mã kích hoạt</h5>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    Mã kích hoạt của bạn là :
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>
+      Đóng
+    </button>
   </div>
 </ng-template>

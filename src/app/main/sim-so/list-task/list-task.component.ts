@@ -12,6 +12,9 @@ import { AdminService } from 'app/auth/service/admin.service';
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import dayjs from 'dayjs';
+import { GServiceService } from 'app/auth/service/gservice.service';
+import Swal from 'sweetalert2';
+import { TaskService } from 'app/auth/service/task.service';
 
 @Component({
   selector: 'app-list-task',
@@ -104,7 +107,11 @@ export class ListTaskComponent implements OnInit {
     private activeRouted: ActivatedRoute,
     private adminService: AdminService,
     private telecomService: TelecomService,
-    private alertService: SweetAlertService
+    private alertService: SweetAlertService,
+    private readonly gServiceService: GServiceService,
+    private readonly taskService: TaskService,
+
+
   ) {
     this.dateRange = null;
     this.activeRouted.queryParams.subscribe(params => {
@@ -225,6 +232,172 @@ export class ListTaskComponent implements OnInit {
       }
     }
   }
+
+  async modalOpenDetail(modal, item = null) {
+    this.itemBlockUI.start();
+    this.selectedItem = item;
+
+    this.itemBlockUI.stop();
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+      size: 'lg',
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  async onSubmitAgain(taskId, status) {
+    const confirmMessage = "Bạn có đồng ý thực hiện lại?";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.gServiceService.lockService(taskId, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
+  }
+
+  async onSubmitRequest(taskId, status, newEmail) {
+    const confirmMessage = "Bạn có đồng ý yêu cầu hoàn tiền ?";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.gServiceService.lockService(taskId, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
+  }
+
+  async onSubmitConfirm(taskId, status) {
+    const confirmMessage = "Bạn có đồng ý xác nhận đã hoàn tiền ?";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.gServiceService.lockService(taskId, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
+  }
+
+
+  async onSubmitMKH(taskId, status) {
+    const confirmMessage = "Nhập email của bạn";
+
+
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.gServiceService.lockService(taskId, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
+  }
+
+
+  async onSubmitViewMKH(taskId, status) {
+    const confirmMessage = "Mã kích hoạt của bạn là: ";
+    if ((await this.alertService.showConfirm(confirmMessage)).value) {
+      this.gServiceService.lockService(taskId, status, "").subscribe(res => {
+        if (!res.status) {
+          this.alertService.showError(res.message);
+          return;
+        }
+        this.alertService.showSuccess(res.message);
+        this.getData();
+      }, err => {
+        this.alertService.showError(err);
+      })
+    }
+  }
+
+
+  async onUpdateStatus(item, status) {
+    let data = {
+      id: item.id,
+      status: status,
+      note: ''
+    }
+
+
+    let titleS = 'Nhập địa chỉ email của bạn!'
+
+    Swal.fire({
+      title: titleS,
+      input: 'textarea',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Gửi',
+      showLoaderOnConfirm: true,
+      preConfirm: (note) => {
+        if (!note || note == '') {
+          Swal.showValidationMessage(
+            "Vui lòng nhập nội dung"
+          )
+          return;
+        }
+        data.note = note;
+        this.taskService.departmentUpdateTaskStatus(data).subscribe(res => {
+          if (!res.status) {
+            Swal.showValidationMessage(
+              res.message
+            )
+            this.getData();
+            //this.updateStatus.emit({updated: true});
+            // this.alertService.showSuccess('Thành công');
+            return;
+          }
+          this.modalClose();
+          this.getData();
+          this.alertService.showSuccess(res.message);
+        }, error => {
+          Swal.showValidationMessage(
+            error
+          )
+        });
+
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //this.updateStatus.emit({updated: true});
+        // this.alertService.showSuccess('Thành công');
+      }
+    })
+
+  }
+
+
+  // modal Open Success
+  modalOpenSuccess(modalSuccess) {
+    this.modalService.open(modalSuccess, {
+      centered: true,
+      windowClass: 'modal modal-primary'
+    });
+  }
+
 
   async modalOpenApproveRestore(modalViewApproveRestore, item = null) {
     if (item) {
