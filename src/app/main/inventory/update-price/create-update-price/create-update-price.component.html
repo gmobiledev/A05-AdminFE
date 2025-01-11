@@ -1,0 +1,83 @@
+<div class="col-12">
+  <form [formGroup]="form" (ngSubmit)="onSubmitCreate()">
+    <div class="form-group">
+      <label for="">Tiêu đề</label>
+      <input type="text" class="form-control" formControlName="name" />
+      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+        <div *ngIf="f.name.errors.required">Vui lòng nhập tiêu đề</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Mã phiếu</label>
+      <input type="text" class="form-control" formControlName="code" />
+      <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+        <div *ngIf="f.code.errors.required">Vui lòng nhập mã phiếu</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Tên hàng</label>
+      <input type="text" class="form-control" formControlName="nameproduct" />
+      <div *ngIf="submitted && f.nameproduct.errors" class="invalid-feedback">
+        <div *ngIf="f.nameproduct.errors.required">Vui lòng nhập tên hàng</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Nhập số lượng</label>
+      <input type="text" class="form-control" formControlName="quantity" />
+      <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+        <div *ngIf="f.quantity.errors.required">Vui lòng nhập số lượng</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Ghi chú</label>
+      <input type="text" class="form-control" formControlName="note" />
+      <div *ngIf="submitted && f.note.errors" class="invalid-feedback">
+        <div *ngIf="f.note.errors.required">Vui lòng nhập ghi chú</div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col-6 d-flex align-items-center">
+        <input
+          class="input-display-none"
+          id="update-file"
+          (change)="onFileSelected($event)"
+          type="file"
+        />
+        <label for="update-file" class="mr-1 d-flex"  style="gap: 10px;">
+          <img
+            src="/assets/images/icons/icon-update-file.svg"
+            class="img-fluid"
+            alt=""
+          />
+          <button class="btn button-file">Tải tài liệu</button>
+        </label>
+        <span>Chưa chọn tài liệu</span>
+      </div>
+      <div class="col-6"><span>Tải lên file chứng từ</span></div>
+    </div>
+
+    <div class="row mb-1">
+        <div class="col-6 d-flex align-items-center">
+          <input
+            class="input-display-none"
+            id="update-file"
+            (change)="onFileSelected($event)"
+            type="file"
+          />
+          <label for="update-file" class="mr-1 d-flex" style="gap: 10px;">
+            <img
+              src="/assets/images/icons/icon-update-file.svg"
+              class="img-fluid"
+              alt=""
+            />
+            <button class="btn button-file">Tải tài liệu</button>
+          </label>
+          <span>Chưa chọn tài liệu</span>
+        </div>
+        <div class="col-6"><span class="mr-1">Tải lên file chứng từ</span> <span style="color: rgba(252, 183, 30, 1);">File mẫu tại đây</span></div>
+      </div>
+    <div class="row justify-content-end">
+      <button class="btn btn-primary">Tạo phiếu</button>
+    </div>
+  </form>
+</div>
