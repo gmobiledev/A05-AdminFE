@@ -102,7 +102,7 @@ export class TelecomService {
   }
 
   getCcqLogs(idSlug = null) {
-    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/ccq-logs?page=1&page_size=30&orderby_key=action_at&orderby_value=DESC`);
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/logs?page=1&page_size=30&orderby_key=action_at&orderby_value=DESC`);
   }
 
   getTaskSlugImages(idSlug = null) {
@@ -332,6 +332,18 @@ export class TelecomService {
 
   sellChannelCreate(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/sell-channel`, data);
+  }
+
+  taskDetail(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/task-detail`, data);
+  }
+
+  paymentRetry(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/payment/retry`, data);
+  }
+
+  paymentResend(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/payment/resend`, data);
   }
 
   sellChannelAddUser(data) {

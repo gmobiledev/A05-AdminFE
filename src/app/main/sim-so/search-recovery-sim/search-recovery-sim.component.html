@@ -47,13 +47,27 @@
           <div class="col-12 mb-1">
             <h5 for=""> Serial mới </h5>
             <input
-              type="number"
+              type="text"
               name="new_serial"
               formControlName="new_serial"
               class="form-control"
               (input)="onInputChange('new_serial')"
               placeholder="Nhập serial mới"
             />
+          </div>
+          <div class="col-12 mb-1">
+            <label>Loại giấy tờ:</label>
+            <select
+              name=""
+              id=""
+              class="form-control col-3"
+              formControlName="documentType"
+            >
+              <option value="" disabled selected>Chọn loại giấy tờ</option>
+              <option value="0">CCCD gắn chip</option>
+              <option value="5">CĂN CƯỚC</option>
+              <option value="1">CCCD mã vạch</option>
+            </select>
           </div>
           <div class="col-md-4">
             <div
@@ -277,7 +291,7 @@
     <button
       type="button"
       class="close"
-      (click)="modalClose()"
+      (click)="modalClose2()"
       aria-label="Close"
     >
       <span aria-hidden="true">&times;</span>

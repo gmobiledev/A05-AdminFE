@@ -235,6 +235,7 @@ export class SearchRecoverySimComponent implements OnInit {
       identification_front_file: ["", Validators.required],
       identification_selfie_file: ["", Validators.required],
       new_serial: ["", Validators.required],
+      documentType: ["", Validators.required]
     });
   }
 
@@ -244,6 +245,11 @@ export class SearchRecoverySimComponent implements OnInit {
     this.dataRestorerInformation = null;
     this.modalRef.close();
   }
+
+  modalClose2() {
+    this.modalRef.close();
+  }
+
 
   async modalOpen(modal, item = null) {
     // this.itemBlockUI.start();
@@ -276,12 +282,17 @@ export class SearchRecoverySimComponent implements OnInit {
   }
 
   updateInformation() {
+    if (!this.formOgzOcr.value.documentType) {
+      this.alertService.showMess("Vui lòng chọn loại thẻ căn cước");
+      return;
+    }
     const data = {
       task_id: this.taskId,
       card_front: this.formOgzOcr.value.identification_front_file,
       card_back: this.formOgzOcr.value.identification_back_file,
       selfie: this.formOgzOcr.value.identification_selfie_file,
       new_serial: this.formOgzOcr.value.new_serial,
+      documentType: this.formOgzOcr.value.documentType == 5 ? 5 :''
     };
     this.itemBlockUI.start();
 
