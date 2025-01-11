@@ -331,11 +331,23 @@ export class TelecomService {
   }
 
   paymentRetry(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/payment/retry`, data);
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/retry`, data);
+  }
+
+  paymentRefund(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/refund`, data);
+  }
+
+  paymentConfirm(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/confirm-refund`, data);
   }
 
   paymentResend(data) {
-    return this._http.post<any>(`${environment.apiTelecomUrl}/payment/resend`, data);
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/resend`, data);
+  }
+
+  paymentOTP(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/otp`, data);
   }
 
   sellChannelAddUser(data) {
