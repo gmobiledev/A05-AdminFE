@@ -5,6 +5,10 @@ export enum ObjectLocalStorage {
 
 export enum TaskTelecomStatus {
     STATUS_CANCEL = -1,
+    STATUS_FAIL = -100, //Giao dịch thất bại (vd GD Topup thất bại)
+    STATUS_WAITING = -101, //Giao dịch chờ xử lý
+    STATUS_WAITING_REFUND = -102, //Chờ hoàn tiền
+    STATUS_REFUNDED = -103, //Đã hoàn tiền
     STATUS_INIT = 0,
     STATUS_PROCESSING = 2, //giao dịch viên đã bấm tiếp nhận yêu cầu
     STATUS_PROCESS_TO_MNO = 3, //Đã đẩy sang đối tác nhà mạng
@@ -24,7 +28,7 @@ export enum TaskTelecomStatus {
     STATUS_WAITING_SIM = 60,
     STATUS_WAITING_CONTRACT = 61,
     WAITING_FOR_ACTIVATION = 62,
-    STATUS_NEW_ORDER_ORGANIZATION = 50
+    STATUS_NEW_ORDER_ORGANIZATION = 50,
 }
 
 export enum MsisdnStatus {

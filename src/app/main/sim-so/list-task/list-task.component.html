@@ -27,10 +27,10 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select class="form-control" name="action" [(ngModel)]="searchForm.customer_type">
+                    <select class="form-control" name="action" [(ngModel)]="searchForm.payment_gateway">
                       <option value=""> -- Cổng thanh toán --</option>
-                      <option value="PERSONAL">Paytech</option>
-                      <option value="ORGANIZATION">Vitapay</option>
+                      <option value="PAYTECH">Paytech</option>
+                      <option value="G99">G99</option>
                     </select>
                   </div>
                 </div>
@@ -115,24 +115,32 @@
                 <div class="col-md-2">
                   <div class="">
                     <label for="" style="font-size: 1rem">Bundle Gói</label>
-                    <input type="checkbox" [(ngModel)]="mineTask" [ngModelOptions]="{standalone: true}">
+                    <input type="checkbox" [(ngModel)]="checkPackage" [ngModelOptions]="{standalone: true}">
                   </div>
                 </div>
 
                 <div class="col-md-4">
-
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                      value="option1" checked />
+                    <input class="form-check-input" type="radio" name="timeOption" id="inlineRadio1"
+                      [(ngModel)]="searchForm.timeOption" value="sync_time" checked />
                     <label class="form-check-label" for="inlineRadio1">Thời gian tạo</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                      value="option2" />
+                    <input class="form-check-input" type="radio" name="timeOption" id="inlineRadio2"
+                      [(ngModel)]="searchForm.timeOption" value="request_time" />
                     <label class="form-check-label" for="inlineRadio2">Thời gian đấu nối</label>
                   </div>
-
                 </div>
+
+                <!-- <div class="col-md-4">
+                  <div class="form-check form-check-inline change_type"><input type="radio" name="price_action" 
+                      [(ngModel)]="dataUpdatePrice.change_type"
+                      (change)="onChangeType()"
+                      value="{{ listPriceAction.FIX }}"  class="form-check-input"><label 
+                      
+                      class="form-check-label">Thay đổi giá bán</label></div>
+              </div> -->
+
               </div>
               <div class="row mt-2">
                 <div class="col-md-2">
@@ -309,31 +317,36 @@
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
-                        <div
-                          *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
-                          || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
-                          && (item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
+                        <div *ngIf="
+                        item.action != 'topup' &&
+                        (item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||
+                        item.status == taskTelecomStatus.STATUS_SUCCESS || 
+                        item.status == taskTelecomStatus.STATUS_CANCEL || 
+                        item.status == taskTelecomStatus.STATUS_INIT || 
+                        item.status == taskTelecomStatus.STATUS_FAIL) && 
+                        (item.action != 'KHOI_PHUC' && 
+                        item.action != 'app_request_change_user_info' &&
+                        item.action != listTaskAction['change_user_info']['value'])                      
+                        ">
                           <a class="mr-1" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
-
-                          <a class="" ngbTooltip="Xem thông tin" (click)="modalOpenDetail(modalDetail, item)">
-                            <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
-                          </a>
-
-                          <!-- <a class="m-1" ngbTooltip="Thực hiện lại" (click)="onSubmitAgain(item.id, 0)">
-                            <i data-feather="refresh-ccw" class="text-primary cursor-pointer"></i>
-                          </a>
-
-                          <a class="m-1" ngbTooltip="Yêu cầu hoàn tiền" (click)="onSubmitRequest(item.id, 0)">
-                            <i data-feather="pocket" class="text-primary cursor-pointer"></i>
-                          </a>
-
-                          <a class="m-1" ngbTooltip="Xác nhận đã hoàn tiền" (click)="onSubmitConfirm(item.id, 0)">
-                            <i data-feather="check" class="text-primary cursor-pointer"></i>
-                          </a> -->
-
                         </div>
+
+                        <div *ngIf="
+                          ( item.action == 'topup')">
+                          <a ngbTooltip="Xem chi tiết" (click)="modalOpenDetail(modalDetail, item)">
+                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                          </a>
+                        </div>
+
+                        <div *ngIf="
+                        ( item.action == 'new_sim')">
+                        <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
+                          <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
+                        </a>
+                      </div>
+
                         <div
                           *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
@@ -537,7 +550,7 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
-    <div class="row"  *ngIf="listTask">
+    <div class="row" *ngIf="listTask">
       <div class="col-md-6">
         <div>
           <strong>Số thuê bao:</strong> {{ listTask?.msisdn }}
@@ -555,41 +568,38 @@
         </div>
       </div>
 
-      <div class="col-md-6 mt-1">
+      <div class="col-md-6 mt-1"
+        *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
         <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
           Yêu cầu hoàn tiền
         </button>
       </div>
 
-      <div class="col-md-6 mt-1">
+      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
         <button (click)="paymentRetry(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
           Thực hiện lại
         </button>
       </div>
 
-      <div class="col-md-6 mt-1">
+      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND">
         <button (click)="paymentConfirm(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
           Xác nhận đã hoàn tiền
         </button>
 
       </div>
 
-      <div class="col-md-6 mt-1">
+      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'new_sim'">
         <button (click)="resendOtp(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
           Gửi lại mã kích hoạt
         </button>
       </div>
 
-      <div class="col-md-6 mt-1">
-        <button
-        type="button"
-        class="btn btn-outline-primary"
-        (click)="modalOpenOTP(modalOTP, listTask?.id)"
-        rippleEffect
-      >
-      Xem mã kích hoạt
-      </button>
-    
+      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'new_sim'">
+        <button type="button" class="btn btn-outline-primary" (click)="modalOpenOTP(modalOTP, listTask?.id)"
+          rippleEffect>
+          Xem mã kích hoạt
+        </button>
+
       </div>
 
     </div>

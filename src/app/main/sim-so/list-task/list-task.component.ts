@@ -63,6 +63,7 @@ export class ListTaskComponent implements OnInit {
   public selectedItem: any;
   public selectedAgent: any;
   public mineTask = false;
+  public checkPackage = false;
   public currentUser: any;
   public isAdmin: boolean = false;
   public mnos: any = []
@@ -79,7 +80,12 @@ export class ListTaskComponent implements OnInit {
     telco: '',
     customer_name: '',
     customer_type: '',
+    payment_gateway: '',
+    timeOption: 'sync_time', // Mặc định là "Thời gian tạo"
+    // request_time: '', // Mặc định là "Thời gian tạo"
+    // sync_time: '', // Mặc định là "Thời gian đồng bộ"
     sub_action: '',
+    bundle_package: '',
     payment_reference_number: "",
     reference_id: ""
   }
@@ -127,6 +133,13 @@ export class ListTaskComponent implements OnInit {
       delete this.taskTelecomStatus['STATUS_DVKHKD_REJECT'];
       delete this.taskTelecomStatus['STATUS_PROCESS_TO_MNO'];
       console.log(this.taskTelecomStatus);
+
+      this.searchForm.timeOption = params['timeOption'] && params['timeOption'] != undefined ? params['timeOption'] : 'sync_time';
+      this.searchForm.payment_gateway = params['payment_gateway'] && params['payment_gateway'] != undefined ? params['payment_gateway'] : '';
+      this.searchForm.bundle_package = params['bundle_package'] && params['bundle_package'] != undefined ? params['bundle_package'] : '';
+      // this.searchForm.request_time = params['request_time'] && params['request_time'] != undefined ? params['request_time'] : '';
+      // this.searchForm.sync_time = params['sync_time'] && params['sync_time'] != undefined ? params['sync_time'] : '';
+
 
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.cccd = params['cccd'] && params['cccd'] != undefined ? params['cccd'] : '';
@@ -300,6 +313,7 @@ export class ListTaskComponent implements OnInit {
           return;
         }
         this.alertService.showSuccess(res.data.message);
+        this.modalClose();
         this.getData();
       }, err => {
         this.alertService.showError(err);
@@ -319,6 +333,7 @@ export class ListTaskComponent implements OnInit {
           return;
         }
         this.alertService.showSuccess(res.message);
+        this.modalClose();
         this.getData();
       }, err => {
         this.alertService.showError(err);
@@ -590,6 +605,8 @@ export class ListTaskComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
+    this.searchForm.bundle_package = this.checkPackage ? 1 : '';
+
     this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
   }
 
