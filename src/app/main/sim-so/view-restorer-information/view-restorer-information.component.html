@@ -6,7 +6,7 @@
                     <h4>Thông tin thuê bao - {{data.msisdn}}</h4>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
-                    <span><u>Loại giấy tờ</u>: <span class="text-info">{{ data?.type }}</span></span>
+                    <span><u>Loại giấy tờ</u>: <span class="text-info">{{ data?.type == "CC" ? "CAN_CUOC" : data?.type }}</span></span>
                 </div>
                 <div class="col-md-6 col-sm-12 mb-1">
                     <span><u>Số giấy tờ</u>: <a placement="right" ngbTooltip="'Bấm để copy'"
