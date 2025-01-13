@@ -341,11 +341,11 @@
                         </div>
 
                         <div *ngIf="
-                        ( item.action == 'new_sim')">
-                        <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
-                          <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
-                        </a>
-                      </div>
+                         item.action == 'new_sim'">
+                          <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
+                            <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
+                          </a>
+                        </div>
 
                         <div
                           *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
@@ -568,8 +568,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 mt-1"
-        *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
+      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
         <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
           Yêu cầu hoàn tiền
         </button>
@@ -581,20 +580,21 @@
         </button>
       </div>
 
-      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND">
+      <div class="col-md-6 mt-1"
+        *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND">
         <button (click)="paymentConfirm(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
           Xác nhận đã hoàn tiền
         </button>
 
       </div>
 
-      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'new_sim'">
+      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'new_sim' && listTask.status != taskTelecomStatus.STATUS_CANCEL && listTask.status != taskTelecomStatus.STATUS_SUCCESS">
         <button (click)="resendOtp(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
           Gửi lại mã kích hoạt
         </button>
       </div>
 
-      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'new_sim'">
+      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'new_sim' && listTask.status != taskTelecomStatus.STATUS_CANCEL && listTask.status != taskTelecomStatus.STATUS_SUCCESS">
         <button type="button" class="btn btn-outline-primary" (click)="modalOpenOTP(modalOTP, listTask?.id)"
           rippleEffect>
           Xem mã kích hoạt
@@ -631,7 +631,7 @@
   </div>
 
   <div class="modal-footer">
-    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+    <button (click)="modalCloseOTP()" type="submit" class="btn btn-primary" rippleEffect>
       Đóng
     </button>
   </div>

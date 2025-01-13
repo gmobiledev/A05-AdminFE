@@ -102,6 +102,8 @@ export class ListTaskComponent implements OnInit {
   }
 
   public modalRef: any;
+  public modalRefOTP: any;
+
   listCurrentAction: any;
   public isLoading: boolean = false; // Track loading state
 
@@ -274,7 +276,7 @@ export class ListTaskComponent implements OnInit {
     
 
     this.itemBlockUI.stop();
-    this.modalRef = this.modalService.open(modal, {
+    this.modalRefOTP = this.modalService.open(modal, {
       centered: true,
       windowClass: 'modal modal-primary',
       size: 'sm',
@@ -496,6 +498,14 @@ export class ListTaskComponent implements OnInit {
     this.getData();
 
     this.modalRef.close();
+  }
+
+  modalCloseOTP() {
+    this.selectedItem = null;
+    this.selectedNote = '';
+    this.getData();
+
+    this.modalRefOTP.close();
   }
   async modalViewAgentOpen(modal, item = null) {
     if (item) {
