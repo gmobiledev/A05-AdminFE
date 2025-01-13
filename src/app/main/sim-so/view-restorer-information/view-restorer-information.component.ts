@@ -31,7 +31,7 @@ export class ViewRestorerInformationComponent implements OnInit {
   submit() {
     const data = {
       task_id: this.data.task_id,
-      identification_type: this.data.type,
+      identification_type: this.data.type == 'CC' ? 'CAN_CUOC' : this.data.type,
       name: this.data.name,
       identification_no: this.data.id,
       birth: this.timeStamp(this.data?.dob),

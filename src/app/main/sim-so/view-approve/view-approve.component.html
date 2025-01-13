@@ -89,7 +89,7 @@
       dataTask.status == taskTelecomStatus.STATUS_PROCESSING
     "
   >
-    <span>Tiến độ: </span>
+    <span class="mr-1">Tiến độ: </span>
     <u style="cursor: pointer" (click)="modalOpenItem(modalItem)"
       >Lịch sử tiến độ</u
     >
@@ -104,7 +104,7 @@
       dataTask.status == taskTelecomStatus.STATUS_PROCESSING
     "
   >
-    <span class="mr-1">Cập nhật tiến độ xử lí:</span>
+    <span class="mr-1">Cập nhật tiến độ xử lý:</span>
     <div class="col-12 mt-1" style="position: relative">
       <input
         class="input-commit col-12"
@@ -204,8 +204,9 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0">
-    <div class="show-progress-history" *ngFor="let item of commitTask">
+    <div class="show-progress-history d-flex" *ngFor="let item of commitTask" style="flex-direction: column;">
       <span>{{ item.detail }}</span>
+      <span>Thời gian: {{ item.created_at | date: 'dd/MM/yyyy H:mm'}}</span>
     </div>
   </div>
 </ng-template>
