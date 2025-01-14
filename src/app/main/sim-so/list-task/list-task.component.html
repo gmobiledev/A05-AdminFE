@@ -113,7 +113,7 @@
                     <input type="checkbox" [(ngModel)]="mineTask" [ngModelOptions]="{standalone: true}">
                   </div>
                 </div>
-                
+
                 <!-- <div class="col-md-2">
                   <div class="">
                     <label for="" style="font-size: 1rem">Bundle Gói</label>
@@ -570,20 +570,20 @@
       </div>
 
       <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
-        <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
+        <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Yêu cầu hoàn tiền
         </button>
       </div>
 
       <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
-        <button (click)="paymentRetry(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
+        <button (click)="paymentRetry(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Thực hiện lại
         </button>
       </div>
 
       <div class="col-md-6 mt-1"
         *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND">
-        <button (click)="paymentConfirm(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
+        <button (click)="paymentConfirm(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Xác nhận đã hoàn tiền
         </button>
 
@@ -591,7 +591,7 @@
 
       <div class="col-md-6 mt-1"
         *ngIf="listTask.action == 'new_sim' && listTask.status != taskTelecomStatus.STATUS_CANCEL && listTask.status != taskTelecomStatus.STATUS_SUCCESS">
-        <button (click)="resendOtp(listTask?.id)" type="submit" class="btn btn-info" rippleEffect>
+        <button (click)="resendOtp(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Gửi lại mã kích hoạt
         </button>
       </div>
