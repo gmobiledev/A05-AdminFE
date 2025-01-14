@@ -81,11 +81,10 @@ export class ListTaskComponent implements OnInit {
     customer_name: '',
     customer_type: '',
     payment_gateway: '',
-    timeOption: 'sync_time', // Mặc định là "Thời gian tạo"
-    // request_time: '', // Mặc định là "Thời gian tạo"
-    // sync_time: '', // Mặc định là "Thời gian đồng bộ"
+    request_time: '', // Dùng cho API khi chọn "Thời gian đấu nối"
+    sync_time: '', // Dùng cho API khi chọn "Thời gian tạo"
+    timeOption: 'request_time', // Mặc định là "Thời gian đấu nối"
     sub_action: '',
-    bundle_package: '',
     payment_reference_number: "",
     reference_id: ""
   }
@@ -136,13 +135,19 @@ export class ListTaskComponent implements OnInit {
       delete this.taskTelecomStatus['STATUS_PROCESS_TO_MNO'];
       console.log(this.taskTelecomStatus);
 
-      this.searchForm.timeOption = params['timeOption'] && params['timeOption'] != undefined ? params['timeOption'] : 'sync_time';
+      // Kiểm tra `timeOption` và gán giá trị mặc định nếu cần
+      this.searchForm.timeOption = params['timeOption'] && params['timeOption'] !== undefined
+        ? params['timeOption']
+        : 'request_time';
+
+      // Gán giá trị cho `sync_time` hoặc `request_time` theo `timeOption`
+      if (this.searchForm.timeOption === 'sync_time') {
+        this.searchForm.sync_time = params['sync_time'] && params['sync_time'] !== undefined ? params['sync_time'] : '';
+      } else {
+        this.searchForm.request_time = params['request_time'] && params['request_time'] !== undefined ? params['request_time'] : '';
+      }
+
       this.searchForm.payment_gateway = params['payment_gateway'] && params['payment_gateway'] != undefined ? params['payment_gateway'] : '';
-      this.searchForm.bundle_package = params['bundle_package'] && params['bundle_package'] != undefined ? params['bundle_package'] : '';
-      // this.searchForm.request_time = params['request_time'] && params['request_time'] != undefined ? params['request_time'] : '';
-      // this.searchForm.sync_time = params['sync_time'] && params['sync_time'] != undefined ? params['sync_time'] : '';
-
-
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.cccd = params['cccd'] && params['cccd'] != undefined ? params['cccd'] : '';
       this.searchForm.customer_name = params['customer_name'] && params['customer_name'] != undefined ? params['customer_name'] : '';
@@ -273,7 +278,7 @@ export class ListTaskComponent implements OnInit {
     this.itemBlockUI.start();
 
     this.viewOTP(id);
-    
+
 
     this.itemBlockUI.stop();
     this.modalRefOTP = this.modalService.open(modal, {
@@ -285,23 +290,23 @@ export class ListTaskComponent implements OnInit {
     });
   }
 
-    // modal Open Success
-    modalOpenSuccess(modalSuccess, item = null) {
+  // modal Open Success
+  modalOpenSuccess(modalSuccess, item = null) {
 
-      this.itemBlockUI.start();
+    this.itemBlockUI.start();
+    this.selectedItem = item;
+
+    if (item) {
       this.selectedItem = item;
-  
-      if (item) {
-        this.selectedItem = item;
-        this.viewOTP(item.id);
-      }
-  
-      this.itemBlockUI.stop();
-      this.modalService.open(modalSuccess, {
-        centered: true,
-        windowClass: 'modal modal-primary'
-      });
+      this.viewOTP(item.id);
     }
+
+    this.itemBlockUI.stop();
+    this.modalService.open(modalSuccess, {
+      centered: true,
+      windowClass: 'modal modal-primary'
+    });
+  }
 
   async paymentConfirm(id, status) {
     const confirmMessage = "Bạn có đồng ý xác nhận đã hoàn tiền?";
@@ -362,11 +367,11 @@ export class ListTaskComponent implements OnInit {
     }
   }
 
-  async paymentResend(id,newEmail = ' ') {
+  async paymentResend(id, newEmail = ' ') {
     const confirmMessage = "Bạn có đồng ý gửi lại mã kích hoạt?";
     const data = {
       taskId: id,
-      newEmail : newEmail,
+      newEmail: newEmail,
     }
     if ((await this.alertService.showConfirm(confirmMessage)).value) {
       this.telecomService.paymentResend(data).subscribe(res => {
@@ -404,9 +409,9 @@ export class ListTaskComponent implements OnInit {
       taskId: id,
       newEmail: '', // Email sẽ được gán sau
     };
-  
+
     const titleS = 'Nhập địa chỉ email của bạn!';
-    
+
     Swal.fire({
       title: titleS,
       input: 'email', // Đảm bảo người dùng nhập email đúng định dạng
@@ -458,12 +463,12 @@ export class ListTaskComponent implements OnInit {
       }
     });
   }
-    
+
   private validateEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
-  
+
 
 
   async modalOpenApproveRestore(modalViewApproveRestore, item = null) {
@@ -615,8 +620,6 @@ export class ListTaskComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
-    this.searchForm.bundle_package = this.checkPackage ? 1 : '';
-
     this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
   }
 
@@ -730,7 +733,7 @@ export class ListTaskComponent implements OnInit {
 
 
   detailTask(id) {
-    const data ={
+    const data = {
       taskId: id
     }
     this.telecomService.taskDetail(data).subscribe(res => {
@@ -740,7 +743,7 @@ export class ListTaskComponent implements OnInit {
   }
 
   viewOTP(id) {
-    const data ={
+    const data = {
       taskId: id
     }
     this.telecomService.paymentOTP(data).subscribe(res => {
