@@ -431,7 +431,7 @@ export class ListTaskComponent implements OnInit {
           return;
         }
         data.newEmail = email.trim(); // Cập nhật email vào dữ liệu gửi lên server
-        return this.telecomService.paymentOTP(data).toPromise().then(
+        return this.telecomService.paymentResend(data).toPromise().then(
           (res: any) => {
             if (!res.status) {
               // Nếu API trả về lỗi với mã "ERROR"
