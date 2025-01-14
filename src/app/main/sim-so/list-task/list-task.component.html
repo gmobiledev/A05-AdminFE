@@ -124,16 +124,18 @@
                 <!-- Lựa chọn thời gian -->
                 <div class="col-md-4">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="timeOption" id="inlineRadio1"
-                      [(ngModel)]="searchForm.timeOption" value="sync_time" />
-                    <label class="form-check-label" for="inlineRadio1">Thời gian tạo</label>
+                    <input class="form-check-input" type="radio" name="timeOption" id="timeOptionSync"
+                      [(ngModel)]="searchForm.timeOption" value="request_time" (change)="onTimeOptionChange()" />
+                    <label class="form-check-label" for="timeOptionSync">Thời gian tạo</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="timeOption" id="inlineRadio2"
-                      [(ngModel)]="searchForm.timeOption" value="request_time"  />
-                    <label class="form-check-label" for="inlineRadio2">Thời gian đấu nối</label>
+                    <input class="form-check-input" type="radio" name="timeOption" id="timeOptionRequest"
+                      [(ngModel)]="searchForm.timeOption" value="sync_time" (change)="onTimeOptionChange()" />
+                    <label class="form-check-label" for="timeOptionRequest">Thời gian đấu nối</label>
                   </div>
                 </div>
+
+
 
 
               </div>

@@ -81,8 +81,8 @@ export class ListTaskComponent implements OnInit {
     customer_name: '',
     customer_type: '',
     payment_gateway: '',
-    request_time: '', // Dùng cho API khi chọn "Thời gian đấu nối"
-    sync_time: '', // Dùng cho API khi chọn "Thời gian tạo"
+    // request_time: '', // Dùng cho API khi chọn "Thời gian đấu nối"
+    // sync_time: '', // Dùng cho API khi chọn "Thời gian tạo"
     timeOption: 'request_time', // Mặc định là "Thời gian đấu nối"
     sub_action: '',
     payment_reference_number: "",
@@ -135,18 +135,6 @@ export class ListTaskComponent implements OnInit {
       delete this.taskTelecomStatus['STATUS_PROCESS_TO_MNO'];
       console.log(this.taskTelecomStatus);
 
-      // Kiểm tra `timeOption` và gán giá trị mặc định nếu cần
-      this.searchForm.timeOption = params['timeOption'] && params['timeOption'] !== undefined
-        ? params['timeOption']
-        : 'request_time';
-
-      // Gán giá trị cho `sync_time` hoặc `request_time` theo `timeOption`
-      if (this.searchForm.timeOption === 'sync_time') {
-        this.searchForm.sync_time = params['sync_time'] && params['sync_time'] !== undefined ? params['sync_time'] : '';
-      } else {
-        this.searchForm.request_time = params['request_time'] && params['request_time'] !== undefined ? params['request_time'] : '';
-      }
-
       this.searchForm.payment_gateway = params['payment_gateway'] && params['payment_gateway'] != undefined ? params['payment_gateway'] : '';
       this.searchForm.mobile = params['mobile'] && params['mobile'] != undefined ? params['mobile'] : '';
       this.searchForm.cccd = params['cccd'] && params['cccd'] != undefined ? params['cccd'] : '';
@@ -177,6 +165,17 @@ export class ListTaskComponent implements OnInit {
       this.getData();
     })
 
+  }
+
+  // Hàm xử lý khi thay đổi loại thời gian
+  onTimeOptionChange() {
+    if (this.searchForm.timeOption === 'request_time') {
+      this.searchForm.request_time = ''; 
+      delete this.searchForm.sync_time;
+    } else {
+      this.searchForm.sync_time = ''; 
+      delete this.searchForm.request_time;
+    }
   }
 
   async modalOpen(modal, item = null) {
