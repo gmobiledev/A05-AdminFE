@@ -86,6 +86,7 @@ export class ListTaskComponent implements OnInit {
     timeOption: 'request_time', // Mặc định là "Thời gian đấu nối"
     sub_action: '',
     payment_reference_number: "",
+    bundle_package: '',
     reference_id: ""
   }
   dateRange: any;
@@ -619,6 +620,8 @@ export class ListTaskComponent implements OnInit {
       ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0, 10) : '';
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
+    this.searchForm.bundle_package = this.checkPackage ? 1 : '';
+
     this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
   }
 
