@@ -32,9 +32,11 @@ export class ViewCheckInfoNewComponent implements OnInit {
   showSubmit = false;
   listImage;
   cacheKey;
+  public viewSelectedFilesContract = [];
   public selectedFilesVideo: File[] = [];
   public selectedFilesImage: File[] = [];
   public selectedFilesPdf: File[] = [];
+  public selectedFilesContract: File[] = [];
   public selectedFiles: File[] = [];
   public modalRef: any;
   @ViewChild("modalItem") modalItem: ElementRef;
@@ -46,7 +48,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
     private telecomService: TelecomService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     console.log("data-app-view-check-info-new", this.data);
@@ -119,6 +121,13 @@ export class ViewCheckInfoNewComponent implements OnInit {
       if (index >= 0 && index < this.selectedFilesImage.length) {
         this.selectedFilesImage.splice(index, 1);
       }
+    } else if (name == "contract") {
+      if (index >= 0 && index < this.selectedFilesContract.length) {
+        this.selectedFilesContract.splice(index, 1);
+      }
+      if (index >= 0 && index < this.viewSelectedFilesContract.length) {
+        this.viewSelectedFilesContract.splice(index, 1);
+      }
     } else {
       if (index >= 0 && index < this.selectedFilesPdf.length) {
         this.selectedFilesPdf.splice(index, 1);
@@ -134,14 +143,19 @@ export class ViewCheckInfoNewComponent implements OnInit {
         if (file.size > 0) {
           if (name === "video") {
             this.selectedFilesVideo.push(file);
-            console.log(this.selectedFilesVideo);
           } else if (name === "image") {
             this.selectedFilesImage.push(file);
-            console.log(this.selectedFilesImage);
+          } else if (name === "contract") {
+            console.log(file);
+            if(file.type === "application/pdf" || file.type === "pdf"){
+              this.viewSelectedFilesContract.push({name: file.name, type:'pdf'});
+            } else{
+              this.viewSelectedFilesContract.push({name: file.name, type:'image'});
+            }
+            this.selectedFilesContract.push(file);
           } else {
             if (file.type === "application/pdf" || file.type === "pdf") {
               this.selectedFilesPdf.push(file);
-              console.log(this.selectedFilesPdf);
             }
           }
         }
@@ -153,14 +167,21 @@ export class ViewCheckInfoNewComponent implements OnInit {
     if (
       this.selectedFilesImage.length <= 0 &&
       this.selectedFilesVideo.length <= 0 &&
-      this.selectedFilesPdf.length <= 0
+      this.selectedFilesPdf.length <= 0 &&
+      this.selectedFilesContract.length <= 0
     ) {
       this.alertService.showMess("Vui lòng không để trống tệp");
       return;
     }
-    this.selectedFiles = this.selectedFilesImage.concat(this.selectedFilesVideo, this.selectedFilesPdf);
+    this.selectedFiles = this.selectedFilesContract.concat(
+      this.selectedFilesImage,
+      this.selectedFilesVideo,
+      this.selectedFilesPdf
+    );
     if (this.selectedFiles.length > 11) {
-      this.alertService.showMess("Vui lòng xóa bớt tệp. Bạn chỉ được chọn tối đa 11 tệp");
+      this.alertService.showMess(
+        "Vui lòng xóa bớt tệp. Bạn chỉ được chọn tối đa 11 tệp"
+      );
       return;
     }
     if (this.selectedFiles.length > 0 && this.selectedFiles.length <= 11) {
@@ -168,7 +189,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
       // formData.append("entity", "people");
       // formData.append("key", "attachments");
       formData.append("task_id", this.data.task_id);
-      formData.append("action", 'change_user_info');
+      formData.append("action", "change_user_info");
       for (let i = 0; i < this.selectedFiles.length; i++) {
         const file = this.selectedFiles[i];
         formData.append(`files`, file);
@@ -284,8 +305,8 @@ export class ViewCheckInfoNewComponent implements OnInit {
             ? "CAN_CUOC"
             : this.data?.data?.type
           : this.data?.data?.user?.type == "CC"
-            ? "CAN_CUOC"
-            : this.data?.data?.user?.type,
+          ? "CAN_CUOC"
+          : this.data?.data?.user?.type,
         Validators.required,
       ],
       identificationNoUser: [
@@ -390,7 +411,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
           full_address: this.formOgzOcr.value.fullAddressUser,
           identification_front_file: this.data?.image?.personal?.card_front,
           identification_back_file: this.data?.image?.personal?.card_back,
-          identification_selfie_file: this.data?.image?.personal?.selfie
+          identification_selfie_file: this.data?.image?.personal?.selfie,
         },
       };
     } else {
@@ -475,7 +496,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
               regex,
               ""
             ),
-          license_no: '99999',
+          license_no: "99999",
           name_international: this.data?.image?.business?.businessName,
           short_name: this.data?.image?.business?.businessName,
         },
@@ -517,7 +538,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
             this.data?.powerOfAttorney?.imagePowerOfAttorney.replace(regex, ""),
           delegation_date: "1625875200",
           delegation_type: "MOBILE",
-        }
+        },
       };
     }
     try {
@@ -530,8 +551,8 @@ export class ViewCheckInfoNewComponent implements OnInit {
             this.itemBlockUI.stop();
             this.alertService.showMess(
               "Chuyển đổi chủ quyền cho thuê bao " +
-              this.mobileSearch +
-              " thành công"
+                this.mobileSearch +
+                " thành công"
             );
             this.closePopup.next();
           } else {
