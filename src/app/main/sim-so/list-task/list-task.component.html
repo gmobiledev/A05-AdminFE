@@ -344,6 +344,13 @@
                         </div>
 
                         <div *ngIf="
+                        item.action == 'register_package'">
+                         <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
+                           <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
+                         </a>
+                       </div>
+
+                        <div *ngIf="
                          item.action == 'new_sim'">
                           <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
                             <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
