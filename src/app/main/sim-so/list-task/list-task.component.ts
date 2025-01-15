@@ -64,6 +64,7 @@ export class ListTaskComponent implements OnInit {
   public selectedAgent: any;
   public mineTask = false;
   public checkPackage = false;
+  public checkTime = false;
   public currentUser: any;
   public isAdmin: boolean = false;
   public mnos: any = []
@@ -82,8 +83,8 @@ export class ListTaskComponent implements OnInit {
     customer_type: '',
     payment_gateway: '',
     // request_time: '', // Dùng cho API khi chọn "Thời gian đấu nối"
-    // sync_time: '', // Dùng cho API khi chọn "Thời gian tạo"
-    timeOption: 'request_time', // Mặc định là "Thời gian đấu nối"
+    sync_time: '', // Dùng cho API khi chọn "Thời gian tạo"
+    // timeOption: 'request_time', // Mặc định là "Thời gian đấu nối"
     sub_action: '',
     payment_reference_number: "",
     bundle_package: '',
@@ -621,6 +622,7 @@ export class ListTaskComponent implements OnInit {
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : '';
     this.searchForm.bundle_package = this.checkPackage ? 1 : '';
+    this.searchForm.sync_time = this.checkTime ? 1 : '';
 
     this.router.navigate(['/sim-so/task'], { queryParams: this.searchForm });
   }

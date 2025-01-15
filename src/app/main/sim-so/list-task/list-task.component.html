@@ -89,16 +89,16 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" name="reference_id" [(ngModel)]="searchForm.reference_id" class="form-control"
-                      placeholder="Mã kho">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
                     <input type="text" placeholder="Khoảng thời gian" [ngModelOptions]="{standalone: true}"
                       ngxDaterangepickerMd [(ngModel)]="dateRange" [ranges]="ranges"
                       [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
                       [alwaysShowCalendars]="true" name="daterange" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="reference_id" [(ngModel)]="searchForm.reference_id" class="form-control"
+                      placeholder="Mã kho">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -121,8 +121,15 @@
                   </div>
                 </div>
 
+                <div class="col-md-2">
+                  <div class="">
+                    <label for="" style="font-size: 1rem">Thời gian đấu nối</label>
+                    <input type="checkbox" [(ngModel)]="checkTime" [ngModelOptions]="{standalone: true}">
+                  </div>
+                </div>
+
                 <!-- Lựa chọn thời gian -->
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="timeOption" id="timeOptionSync"
                       [(ngModel)]="searchForm.timeOption" value="request_time" (change)="onTimeOptionChange()" />
@@ -133,7 +140,7 @@
                       [(ngModel)]="searchForm.timeOption" value="sync_time" (change)="onTimeOptionChange()" />
                     <label class="form-check-label" for="timeOptionRequest">Thời gian đấu nối</label>
                   </div>
-                </div>
+                </div> -->
 
 
 
@@ -569,7 +576,7 @@
           <strong>Số tiền:</strong> {{ listTask?.amount | formatPrice }}
         </div>
         <div>
-          <strong>Thời gian tạo/mua:</strong> {{ listTask?.updated_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
+          <strong>Thời gian tạo/mua:</strong> {{ listTask?.request_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
         </div>
       </div>
       <div class="col-md-6 ">
