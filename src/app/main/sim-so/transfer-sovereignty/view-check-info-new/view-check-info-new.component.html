@@ -515,17 +515,17 @@
       style="gap: 10px"
       *ngIf="!showSubmit"
     >
-      <label for="update-file-pdf" style="cursor: pointer"
+      <label for="update-file-contract" style="cursor: pointer"
         >File hợp đồng đính kèm task</label
       >
       <input
         class="input-display-none"
-        id="update-file-pdf"
+        id="update-file-contract"
         (change)="onFileSelected($event, 'contract')"
         type="file"
         accept=".pdf, image/png, image/gif, image/jpeg"
       />
-      <label for="update-file-pdf">
+      <label for="update-file-contract">
         <img
           src="/assets/images/icons/icon-update-black.svg"
           class="img-fluid"
