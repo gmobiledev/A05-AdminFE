@@ -345,10 +345,10 @@
 
                         <div *ngIf="
                         item.action == 'register_package'">
-                         <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
-                           <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
-                         </a>
-                       </div>
+                          <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
+                            <i data-feather="alert-octagon" class="text-primary cursor-pointer"></i>
+                          </a>
+                        </div>
 
                         <div *ngIf="
                          item.action == 'new_sim'">
@@ -578,20 +578,22 @@
         </div>
       </div>
 
-      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
+      <div class="col-md-6 mt-1"
+        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && listTask.status == taskTelecomStatus.STATUS_FAIL">
         <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Yêu cầu hoàn tiền
         </button>
       </div>
 
-      <div class="col-md-6 mt-1" *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_FAIL">
+      <div class="col-md-6 mt-1"
+        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && listTask.status == taskTelecomStatus.STATUS_FAIL">
         <button (click)="paymentRetry(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Thực hiện lại
         </button>
       </div>
 
       <div class="col-md-6 mt-1"
-        *ngIf="listTask.action == 'topup' && listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND">
+        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND">
         <button (click)="paymentConfirm(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Xác nhận đã hoàn tiền
         </button>
