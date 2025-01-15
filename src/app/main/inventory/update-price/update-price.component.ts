@@ -36,7 +36,12 @@ export class UpdatePriceComponent implements OnInit {
     page: 1,
   };
   public totalPage: number;
-  public list: any;
+  public list = [{code: 123123,
+    name: 'ancs',
+    desc: 'sdfsd',
+    admin_id: 12312,
+    status: 0
+  }];
   public totalItems: number;
   @BlockUI("section-block") itemBlockUI: NgBlockUI;
   @ViewChild("modalItemCreate") modalItemCreate: ElementRef;
