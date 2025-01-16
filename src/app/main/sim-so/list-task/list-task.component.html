@@ -562,9 +562,9 @@
 <ng-template #modalDetail let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Chi tiết số điện thoại</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <!-- <button type="button" class="close" (click)="modalClose()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> -->
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="row" *ngIf="listTask">
@@ -639,16 +639,16 @@
 <ng-template #modalOTP let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Chi tiết số điện thoại</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <!-- <button type="button" class="close" (click)="modalCloseOTP()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> -->
   </div>
 
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="row" *ngIf="otpCode">
       <div class="col-md-6 ">
         <div>
-          Mã kích hoạt của bạn là : {{otpCode?.otp}}
+          Mã kích hoạt của bạn là: {{otpCode?.otp}}
         </div>
       </div>
 
