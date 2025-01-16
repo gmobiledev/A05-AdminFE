@@ -51,9 +51,6 @@ export class ViewCheckInfoNewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("data-app-view-check-info-new", this.data);
-    console.log("this.select", this.select);
-    console.log("this.mobileSearch", this.mobileSearch);
     this.getData();
     this.initForm();
   }
@@ -65,11 +62,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
         if (res.status == 1) {
           this.itemBlockUI.stop();
           this.dataUserOld = res.data?.customer;
-          console.log(this.dataUserOld);
 
-          // if(this.data.organization.base64LiceseFile) {
-          //   this.urlFileDKKD = this.commonService.base64ToArrayBuffer(this.data.organization.base64LiceseFile)
-          // }
         } else {
           this.itemBlockUI.stop();
           this.alertService.showMess(res.message);
@@ -81,20 +74,6 @@ export class ViewCheckInfoNewComponent implements OnInit {
       }
     );
   }
-
-  // onChangeIdentificationType(event) {
-  //   let id = event.target.value
-  //   if (id == "CCCD" || id == "CCCD_CHIP") {
-  //     this.formPeople.patchValue({
-  //       identification_place: "CỤC TRƯỞNG CỤC CẢNH SÁT QUẢN LÝ HÀNH CHÍNH VỀ TRẬT TỰ XÃ HỘI"
-  //     })
-  //   } else {
-  //     this.formPeople.patchValue({
-  //       identification_place: ""
-  //     })
-  //   }
-
-  // }
 
   modalClose() {
     this.modalRef.close();
@@ -146,7 +125,6 @@ export class ViewCheckInfoNewComponent implements OnInit {
           } else if (name === "image") {
             this.selectedFilesImage.push(file);
           } else if (name === "contract") {
-            console.log(file);
             if(file.type === "application/pdf" || file.type === "pdf"){
               this.viewSelectedFilesContract.push({name: file.name, type:'pdf'});
             } else{
