@@ -573,10 +573,14 @@
           <strong>Số thuê bao:</strong> {{ listTask?.msisdn }}
         </div>
         <div>
-          <strong>Số tiền:</strong> {{ listTask?.amount | formatPrice }}
+          <strong>Số tiền:</strong>
+          {{ (listTask?.charge_amount || 0) + (listTask?.amount || 0) | formatPrice }}
         </div>
         <div>
           <strong>Thời gian tạo/mua:</strong> {{ listTask?.request_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
+        </div>
+        <div>
+          <strong>Thời gian cập nhật:</strong> {{ listTask?.updated_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
         </div>
       </div>
       <div class="col-md-6 ">
