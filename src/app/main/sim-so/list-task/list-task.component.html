@@ -579,7 +579,7 @@
         <div>
           <strong>Thời gian tạo/mua:</strong> {{ listTask?.request_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
         </div>
-        <div>
+        <div *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package')">
           <strong>Thời gian cập nhật:</strong> {{ listTask?.updated_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
         </div>
       </div>
