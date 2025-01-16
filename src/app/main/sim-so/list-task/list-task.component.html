@@ -216,7 +216,9 @@
                       <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, item.request_by)">{{
                         item.request_by }}</a><br>
                       <span class="text-primary" title="Mã Kho">{{ item.reference_id }}</span><br>
-                      <span class="text-success" title="Mã cổng thanh toán">{{ item.payment_reference_number }}</span>
+                      <span class="text-success" title="Mã cổng thanh toán">{{ item.payment_reference_number }}</span><br>
+                      <span class="text-success" title="Cổng thanh toán">{{ item?.payment_gateway }}</span>
+
                     </td>
 
                     <td class="col-time">
