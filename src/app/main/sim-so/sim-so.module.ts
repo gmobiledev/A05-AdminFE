@@ -58,6 +58,7 @@ import { ViewCheckInfoNewComponent } from './transfer-sovereignty/view-check-inf
 import { TransferSovereigntyOldOwnerComponent } from './transfer-sovereignty/transfer-sovereignty-old-owner/transfer-sovereignty-old-owner.component';
 import { SearchPackageComponent } from './search-package/search-package.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
@@ -225,7 +226,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     NgbModule,
-    FormsModule,
     ReactiveFormsModule,
     FormsModule,
     CoreCommonModule,
@@ -238,6 +238,7 @@ const routes: Routes = [
     QRCodeModule,
     Ng2FlatpickrModule,
     NgxMaskModule,
+    NgSelectModule
   ],
 })
 export class SimSoModule {}
