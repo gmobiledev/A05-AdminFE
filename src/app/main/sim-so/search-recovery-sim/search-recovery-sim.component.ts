@@ -132,8 +132,10 @@ export class SearchRecoverySimComponent implements OnInit {
   }
 
   done() {
-    this.formOgzOcr.value.new_serial = "";
+    this.formOgzOcr.controls["new_serial"].setValue("");
+    this.formOgzOcr.controls["documentType"].setValue("");
     this.selectedFiles = [];
+    this.showSubmit = false;
     this.modalClose();
   }
 
@@ -312,9 +314,7 @@ export class SearchRecoverySimComponent implements OnInit {
       (res) => {
         if (
           res.data &&
-          res.status === 1 &&
-          res.data != null &&
-          JSON.stringify(res.data) !== "{}"
+          res.status === 1
         ) {
           const dataSim = {
             ...res.data,
