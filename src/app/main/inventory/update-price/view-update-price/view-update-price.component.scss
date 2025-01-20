@@ -1,0 +1,66 @@
+.label-upload-input {
+  font-size: 17px;
+  font-weight: 500;
+  display: flex;
+  gap: 7px;
+  cursor: pointer;
+  img {
+    width: 17px;
+  }
+}
+
+.view-content-container {
+  border: 1px rgba(216, 216, 216, 1) solid;
+  padding: 20px 30px;
+
+  .view-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    label {
+      font-weight: 400;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    select {
+      text-align: center;
+      padding: 0.3rem 0.5rem;
+      border: 1px rgba(197, 197, 207, 1) solid;
+      color: rgba(136, 136, 136, 1);
+    }
+
+    input[type="text"] {
+      padding: 0.3rem 0.5rem;
+      border: 1px rgba(197, 197, 207, 1) solid;
+      color: rgba(136, 136, 136, 1);
+    }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    thead {
+      background-color: #f1f1f1;
+      th {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+    }
+    tbody {
+      tr {
+        border-bottom: 1px solid #ddd;
+      }
+
+      td {
+        padding: 10px;
+      }
+    }
+  }
+
+  .footer {
+    margin-top: 10px;
+    font-weight: 300;
+    font-size: 11px;
+  }
+}

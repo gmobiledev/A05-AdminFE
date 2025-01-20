@@ -45,6 +45,7 @@ export class UpdatePriceComponent implements OnInit {
   public totalItems: number;
   @BlockUI("section-block") itemBlockUI: NgBlockUI;
   @ViewChild("modalItemCreate") modalItemCreate: ElementRef;
+  @ViewChild("modalItemView") modalItemView: ElementRef;
   public modalRef: any;
 
   constructor(
@@ -81,9 +82,6 @@ export class UpdatePriceComponent implements OnInit {
   }
 
   async modalOpen(modal, item = null) {
-    // this.itemBlockUI.start();
-
-    // this.itemBlockUI.stop();
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: "modal modal-primary",

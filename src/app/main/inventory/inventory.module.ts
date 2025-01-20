@@ -50,6 +50,7 @@ import { TonKhoG59Component } from './report-g59/ton-kho-g59/ton-kho-g59.compone
 import { TonKhoSimG59Component } from './report-g59/ton-kho-sim-g59/ton-kho-sim-g59.component';
 import { UpdatePriceComponent } from './update-price/update-price.component';
 import { CreateUpdatePriceComponent } from './update-price/create-update-price/create-update-price.component';
+import { ViewUpdatePriceComponent } from './update-price/view-update-price/view-update-price.component';
 
 const routes: Routes = [
   {
@@ -227,7 +228,7 @@ const routes: Routes = [
     TonKhoSimComponent, 
     TongHopComponent,
     ChiTietComponent, 
-    KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent, ChiTietG59Component, TongHopG59Component, DoanhThuG59Component, KetQuaG59Component, KinhDoanhG59Component, TonKhoG59Component, TonKhoSimG59Component, UpdatePriceComponent, CreateUpdatePriceComponent,
+    KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent, ChiTietG59Component, TongHopG59Component, DoanhThuG59Component, KetQuaG59Component, KinhDoanhG59Component, TonKhoG59Component, TonKhoSimG59Component, UpdatePriceComponent, CreateUpdatePriceComponent, ViewUpdatePriceComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,141 @@
+<div class="pl-1 pr-1">
+  <div class="row" *blockUI="'section-block'">
+    <div class="col-md-6">
+      <div>
+        <h3>Khôi phục sim</h3>
+      </div>
+      <div>ID của yêu cầu: {{ dataTask?.id }}</div>
+      <div>
+        <span>Trạng thái: </span
+        ><span [innerHTML]="dataTask?.status | showStatusTelecom"></span>
+      </div>
+      <div><span>Admin thao tác: </span>{{ dataText?.user_sync }}</div>
+
+      <div
+        *ngIf="
+          dataTask?.number_success_msisdn && dataTask?.number_success_msisdn > 0
+        "
+      >
+        <b class="text-info" *ngIf="dataTask && dataTask?.task?.otp">
+          Đã xác nhận OTP ĐKTTTB
+        </b>
+        <b class="text-secondary" *ngIf="dataTask && !dataTask?.otp">
+          Chưa xác nhận OTP ĐKTTTB
+        </b>
+      </div>
+    </div>
+    <div class="col-md-12 mb-1">
+      <span>Thời gian tạo: </span>
+      {{ dataTask?.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian mua : </span>
+      {{ dataTask?.buy_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian cập nhật: </span>
+      {{ dataTask?.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian hoàn thành: </span>
+      {{ dataTask?.sync_time | date : "dd/MM/yyyy H:mm" : "UTC"
+      }}<span>Note: </span> {{ dataTask?.note }}
+    </div>
+  </div>
+
+  <div class="view-content-container mb-1">
+    <div class="view-content">
+      <div class="view-content-left">
+        <label for="display">Hiển thị</label>
+      <select id="display">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      </div>
+      <div class="view-content-right">
+        <label for="search">Tìm kiếm</label>
+        <input type="text" id="search" placeholder="Nhập từ khóa" />
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Số thuê bao</th>
+          <th>Serial</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listDataSim">
+          <td>{{ item?.msisdn }}</td>
+          <td>{{ item?.serial }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer">Tổng {{ listDataSim?.length }}</div>
+  </div>
+  <div
+    class="col-12 pt-1 pb-1 pr-2 pl-2 mb-1"
+    style="border: 1px rgba(216, 216, 216, 1) solid"
+  >
+    <div class="col-12 mb-1">
+      <label for="update-file-image" class="label-upload-input"
+        >Upload-file
+        <img
+          src="/assets/images/icons/icon-update-file.svg"
+          class="img-fluid"
+          alt=""
+      /></label>
+      <input
+        class="input-display-none"
+        id="update-file-image"
+        type="file"
+        (change)="onFileSelected($event)"
+        multiple
+        style="display: none"
+        accept="image/png, image/gif, image/jpeg"
+      />
+    </div>
+    <div class="col-12">
+      <div class="mb-1">
+        <h4 style="font-size: 15px; font-weight: 500">File đính kèm task</h4>
+      </div>
+      <div
+        class="mb-1 d-flex"
+        *ngIf="selectedFilesImage?.length > 0"
+        style="max-width: 100%; overflow: hidden"
+      >
+        <div class="d-flex name-file flex-column">
+          <div
+            class="d-flex"
+            *ngFor="let itemImage of selectedFilesImage; let i = index"
+          >
+            <img
+              style="margin-right: 15px"
+              src="/assets/images/icons/icon-image-jpg-black.svg"
+              alt=""
+            />
+            <div class="d-flex flex-column justify-content-around">
+              <div class="text-right">
+                <span style="cursor: pointer" (click)="deleteFile(i)">x</span>
+              </div>
+              <p>{{ itemImage?.name }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row box-button" style="gap: 10px; justify-content: center">
+    <a class="ml-2 btn btn-danger" (click)="select('reject')">
+      <i data-feather="slash" class="text-white cursor-pointer"></i>
+      Từ chối yêu cầu
+    </a>
+    <a class="ml-2 btn btn-success" (click)="select('approve')">
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Duyệt
+    </a>
+    <a class="ml-2 btn btn-success" (click)="reception()">
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Tiếp nhận yêu cầu
+    </a>
+  </div>
+</div>
