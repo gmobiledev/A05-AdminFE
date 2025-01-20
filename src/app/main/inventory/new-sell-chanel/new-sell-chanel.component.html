@@ -47,6 +47,31 @@
               </div>
 
               <div class="form-group">
+                <div class="d-flex">
+                  <div class="d-flex justify-content-start mr-1" style="gap: 5px;">
+                    <label for="isPublic1">Public</label>
+                    <input
+                      type="radio"
+                      [value]="1"
+                      name="isPublic"
+                      id="isPublic1"
+                      [(ngModel)]="dataSell.is_public"
+                    />
+                  </div>
+                  <div class="d-flex justify-content-start" style="gap: 5px;">
+                    <label for="isPublic0">Private</label>
+                    <input
+                      type="radio"
+                      [value]="0"
+                      name="isPublic"
+                      id="isPublic0"
+                      [(ngModel)]="dataSell.is_public"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
                 <i class="fa fa-upload" aria-hidden="true"></i>
                 <input
                   type="file"
@@ -94,15 +119,14 @@
                     </select> -->
 
                     <ng-select
-                    (clear)="onClearProvince()"
-                    (change)="onChangeProvince($event)"
-                    [(ngModel)]="dataSell.province_id"
-                  >
-                    <ng-option *ngFor="let p of provinces" [value]="p.id">{{
-                      p.title
-                    }}</ng-option>
-                  </ng-select>
-
+                      (clear)="onClearProvince()"
+                      (change)="onChangeProvince($event)"
+                      [(ngModel)]="dataSell.province_id"
+                    >
+                      <ng-option *ngFor="let p of provinces" [value]="p.id">{{
+                        p.title
+                      }}</ng-option>
+                    </ng-select>
                   </div>
                 </div>
 
@@ -123,12 +147,14 @@
                       </option>
                     </select> -->
 
-                    <ng-select (change)="onChangeDistrict($event)" [(ngModel)]="dataSell.district_id">
+                    <ng-select
+                      (change)="onChangeDistrict($event)"
+                      [(ngModel)]="dataSell.district_id"
+                    >
                       <ng-option *ngFor="let p of districts" [value]="p.id">{{
                         p.title
-                        }}</ng-option>
+                      }}</ng-option>
                     </ng-select>
-
                   </div>
                 </div>
 
@@ -148,10 +174,10 @@
                       </option>
                     </select> -->
 
-                    <ng-select  [(ngModel)]="dataSell.commune_id">
+                    <ng-select [(ngModel)]="dataSell.commune_id">
                       <ng-option *ngFor="let p of commues" [value]="p.id">{{
                         p.title
-                        }}</ng-option>
+                      }}</ng-option>
                     </ng-select>
                   </div>
                 </div>
@@ -200,49 +226,53 @@
                   </div>
                 </div>
 
-                <ng-container >
-                <div class="form-group row mt-1">
-                  <label for="commune" class="col-md-3 col-form-label"
-                    >Người tạo xuất/thu hồi</label
-                  >
-                  <div class="col-md-9">
-                    <ng-select name="" [(ngModel)]="dataSell.create_export">
-                      <ng-option value="">-- Chọn tài khoản --</ng-option>
-                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
-                        {{ p.username }}
-                      </ng-option>
-                    </ng-select>
+                <ng-container>
+                  <div class="form-group row mt-1">
+                    <label for="commune" class="col-md-3 col-form-label"
+                      >Người tạo xuất/thu hồi</label
+                    >
+                    <div class="col-md-9">
+                      <ng-select name="" [(ngModel)]="dataSell.create_export">
+                        <ng-option value="">-- Chọn tài khoản --</ng-option>
+                        <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                          {{ p.username }}
+                        </ng-option>
+                      </ng-select>
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group row mt-1">
-                  <label for="commune" class="col-md-3 col-form-label"
-                    >Kế toán</label
-                  >
-                  <div class="col-md-9">
-                    <ng-select name="" [(ngModel)]="dataSell.approval_1" (clear)="onClearApproval1()">
-                      <ng-option value="">-- Chọn tài khoản --</ng-option>
-                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
-                        {{ p.username }}
-                      </ng-option>
-                    </ng-select>
+                  <div class="form-group row mt-1">
+                    <label for="commune" class="col-md-3 col-form-label"
+                      >Kế toán</label
+                    >
+                    <div class="col-md-9">
+                      <ng-select
+                        name=""
+                        [(ngModel)]="dataSell.approval_1"
+                        (clear)="onClearApproval1()"
+                      >
+                        <ng-option value="">-- Chọn tài khoản --</ng-option>
+                        <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                          {{ p.username }}
+                        </ng-option>
+                      </ng-select>
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group row mt-1">
-                  <label for="commune" class="col-md-3 col-form-label"
-                    >Người duyệt xuất kho/thu hồi</label
-                  >
-                  <div class="col-md-9">
-                    <ng-select name="" [(ngModel)]="dataSell.approval_2">
-                      <ng-option value="">-- Chọn tài khoản --</ng-option>
-                      <ng-option *ngFor="let p of listAdmin" [value]="p.id">
-                        {{ p.username }}
-                      </ng-option>
-                    </ng-select>
+                  <div class="form-group row mt-1">
+                    <label for="commune" class="col-md-3 col-form-label"
+                      >Người duyệt xuất kho/thu hồi</label
+                    >
+                    <div class="col-md-9">
+                      <ng-select name="" [(ngModel)]="dataSell.approval_2">
+                        <ng-option value="">-- Chọn tài khoản --</ng-option>
+                        <ng-option *ngFor="let p of listAdmin" [value]="p.id">
+                          {{ p.username }}
+                        </ng-option>
+                      </ng-select>
+                    </div>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
               </div>
             </div>
             <div class="modal-footer">
