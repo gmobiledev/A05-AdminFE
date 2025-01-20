@@ -1,10 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { TelecomService } from "app/auth/service/telecom.service";
 import { SweetAlertService } from "app/utils/sweet-alert.service";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import { FormBuilder, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UserService } from "app/auth/service";
+import { CommonDataService } from "app/auth/service/common-data.service";
 
 @Component({
   selector: "app-search-recovery-sim",
@@ -13,6 +14,7 @@ import { UserService } from "app/auth/service";
 })
 export class SearchRecoverySimComponent implements OnInit {
   searchSim = "";
+  provinces;
   imageFront;
   imageBack;
   imageSelfie;
@@ -32,11 +34,13 @@ export class SearchRecoverySimComponent implements OnInit {
     private alertService: SweetAlertService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
+    private commonDataService: CommonDataService,
     private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
+    this.getProvinces();
   }
 
   onFileSelected(event: Event): void {
@@ -128,8 +132,10 @@ export class SearchRecoverySimComponent implements OnInit {
   }
 
   done() {
-    this.formOgzOcr.value.new_serial = "";
+    this.formOgzOcr.controls["new_serial"].setValue("");
+    this.formOgzOcr.controls["documentType"].setValue("");
     this.selectedFiles = [];
+    this.showSubmit = false;
     this.modalClose();
   }
 
@@ -235,7 +241,7 @@ export class SearchRecoverySimComponent implements OnInit {
       identification_front_file: ["", Validators.required],
       identification_selfie_file: ["", Validators.required],
       new_serial: ["", Validators.required],
-      documentType: ["", Validators.required]
+      documentType: ["", Validators.required],
     });
   }
 
@@ -250,6 +256,14 @@ export class SearchRecoverySimComponent implements OnInit {
     this.modalRef.close();
   }
 
+  getProvinces() {
+    this.commonDataService.getProvinces().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.provinces = res.data;
+        console.log(this.provinces);
+      }
+    });
+  }
 
   async modalOpen(modal, item = null) {
     // this.itemBlockUI.start();
@@ -259,7 +273,7 @@ export class SearchRecoverySimComponent implements OnInit {
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: "modal modal-primary",
-      size: "xl",
+      size: "lg",
       backdrop: "static",
       keyboard: false,
     });
@@ -292,13 +306,16 @@ export class SearchRecoverySimComponent implements OnInit {
       card_back: this.formOgzOcr.value.identification_back_file,
       selfie: this.formOgzOcr.value.identification_selfie_file,
       new_serial: this.formOgzOcr.value.new_serial,
-      documentType: this.formOgzOcr.value.documentType == 5 ? 5 :''
+      documentType: this.formOgzOcr.value.documentType == 5 ? 5 : "",
     };
     this.itemBlockUI.start();
 
     this.telecomService.postUploadIdDoc(data).subscribe(
       (res) => {
-        if (res.data && res.status === 1 && res.data != null && JSON.stringify(res.data) !== '{}') {
+        if (
+          res.data &&
+          res.status === 1
+        ) {
           const dataSim = {
             ...res.data,
             task_id: this.taskId,
@@ -306,11 +323,13 @@ export class SearchRecoverySimComponent implements OnInit {
           };
           this.dataRestorerInformation = dataSim;
           this.modalOpen(this.modalItem, this.dataRestorerInformation);
-        } else{
+        } else {
           this.imageFront = null;
           this.imageBack = null;
           this.imageSelfie = null;
-          this.alertService.showMess('Không nhận diện được giấy tờ, vui lòng thử lại!');
+          this.alertService.showMess(
+            "Không nhận diện được giấy tờ, vui lòng thử lại!"
+          );
         }
         this.itemBlockUI.stop();
       },

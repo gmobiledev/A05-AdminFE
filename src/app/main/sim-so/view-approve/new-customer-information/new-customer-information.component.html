@@ -1,6 +1,6 @@
 <div
   class="row p-2"
-  *ngIf="dataNewText && dataNewText.customer_type == customerType.ORGANIZATION"
+  *ngIf="dataNewText && dataNewText.customer_type == customerType.ORGANIZATION && dataText?.task?.action !== listTaskAction.change_user_info.value"
 >
   <div class="col-12" *ngIf="item.action != 'app_request_change_user_info'">
     <h4>Thông tin Khách Hàng mới</h4>
@@ -103,10 +103,112 @@
     style="border-top: 1px rgba(136, 136, 136, 1) solid"
   ></div>
 </div>
+<div
+  class="row p-2"
+  *ngIf="dataNewText && dataNewText?.representative_info?.customer_customer_type == customerType.ORGANIZATION && dataText?.task?.action == listTaskAction.change_user_info.value"
+>
+  <div class="col-12" >
+    <h4>Thông tin Khách Hàng mới</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Tên doanh nghiệp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.representative_info?.customer_name"
+        (click)="copyTextClipboard(dataNewText?.representative_info?.customer_name)"
+      >
+        <span class="text-info">{{ dataNewText?.representative_info?.customer_name }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Mã số doanh nghiệp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.representative_info?.id_no"
+        (click)="copyTextClipboard(dataNewText?.representative_info?.id_no)"
+      >
+        <span class="text-info">{{ dataNewText?.representative_info?.id_no }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-12 col-sm-12 mb-1">
+    <span
+      ><u>Địa chỉ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.representative_info?.customer_address"
+        (click)="copyTextClipboard(dataNewText?.representative_info?.customer_address)"
+      >
+        <span class="text-info">{{ dataNewText?.representative_info?.customer_address }}</span>
+      </a></span
+    >
+  </div>
+  <div
+    class="col-md-12 col-sm-12 mb-1 mt-1"
+    style="border-top: 1px rgba(136, 136, 136, 1) solid"
+  ></div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Họ và tên đại diện</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.representative_info?.name"
+        (click)="copyTextClipboard(dataNewText?.representative_info?.name)"
+      >
+        <span class="text-info">{{
+          dataNewText?.representative_info?.name
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Số giấy tờ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.representative_info?.identification_no"
+        (click)="
+          copyTextClipboard(dataNewText?.representative_info?.identification_no)
+        "
+      >
+        <span class="text-info">{{
+          dataNewText?.representative_info?.identification_no
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Ngày sinh</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.representative_info?.birth"
+        (click)="copyTextClipboard(dataNewText?.representative_info?.birth)"
+      >
+        <span class="text-info">{{
+          dataNewText?.representative_info?.birth
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div
+    class="col-md-12 col-sm-12 mt-1"
+    style="border-top: 1px rgba(136, 136, 136, 1) solid"
+  ></div>
+</div>
 <div class="row mb-2 p-2" *ngIf="dataNewText">
   <div
     class="col-12"
-    *ngIf="dataNewText.customer_type != customerType.ORGANIZATION && item.action != 'app_request_change_user_info'"
+    *ngIf="(dataNewText.customer_type != customerType.ORGANIZATION || dataText?.task?.action === listTaskAction.change_user_info.value) && item.action != 'app_request_change_user_info'"
   >
     <h4>Thông tin Khách Hàng mới</h4>
   </div>
@@ -117,7 +219,7 @@
     <span
       ><u
         >Họ và tên
-        <div *ngIf="dataNewText.customer_type == customerType.ORGANIZATION">
+        <div *ngIf="(dataNewText.customer_type == customerType.ORGANIZATION) || (dataNewText?.representative_info?.customer_customer_type == customerType.ORGANIZATION && dataText?.task?.action === listTaskAction.change_user_info.value)">
           sử dụng
         </div></u
       >:
