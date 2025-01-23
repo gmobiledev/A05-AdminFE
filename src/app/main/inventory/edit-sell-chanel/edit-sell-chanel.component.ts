@@ -279,6 +279,7 @@ export class EditSellChanelComponent implements OnInit {
       district_id: ['', Validators.required],
       commune_id: ['', Validators.required],
       address: ['', Validators.required],
+      isPublic: ['', Validators.required],
       isFileChanged: ['', Validators.required],
       attached_file_name: ['', Validators.required],
       attached_file_content: ['', Validators.required],
@@ -355,7 +356,7 @@ export class EditSellChanelComponent implements OnInit {
         district_id: res.data.items[0] && res.data.items[0].district_id ? parseInt(res.data.items[0].district_id) : '',
         commune_id: res.data.items[0] && res.data.items[0].commune_id ? parseInt(res.data.items[0].commune_id) : '',
         address: res.data.items[0].address,
-
+        isPublic: res.data.items[0].is_public
       })
 
       this.listEdit = res.data.items;
@@ -404,7 +405,7 @@ export class EditSellChanelComponent implements OnInit {
       approval_1: this.formGroup.controls['approval_1'].value,
       approval_2: this.formGroup.controls['approval_2'].value,
       create_export: this.formGroup.controls['create_export'].value,
-
+      is_public: this.formGroup.controls['isPublic'].value,
     }
     if ((await this.alertService.showConfirm("Bạn có đồng ý sửa kho")).value) {
       this.submittedUpload = true;

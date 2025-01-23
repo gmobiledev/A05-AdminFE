@@ -88,6 +88,7 @@ export class NewSellChanelComponent implements OnInit {
     create_retrieve: 0,
     approval_1: 0,
     approval_2: 0,
+    is_public: 0
   }
 
   constructor(
