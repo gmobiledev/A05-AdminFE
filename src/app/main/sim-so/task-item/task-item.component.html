@@ -643,10 +643,10 @@
             <a
               placement="right"
               ngbTooltip="'Bấm để copy'"
-              *ngIf="itemN?.serial"
-              (click)="copyTextClipboard(itemN?.serial)"
+              *ngIf="data?.msisdn?.newInfo[itemN?.msisdn]['old-serial']"
+              (click)="copyTextClipboard(data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'])"
             >
-              <span class="text-info">{{ itemN?.serial }}</span></a
+              <span class="text-info">{{ data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'] }}</span></a
             ></span
           >
         </div>

@@ -21,7 +21,7 @@ export class OldCustomerInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataOldText = this.dataText?.customer;
-    if (this.dataOldText.customer_type == this.customerType.ORGANIZATION && this.item.action == this.listTaskAction.change_user_info.value) {
+    if (this.dataOldText.customer_type == this.customerType.ORGANIZATION && (this.item.action == this.listTaskAction.change_user_info.value || this.item.action == this.listTaskAction.app_request_change_user_info.value)) {
       const representative_info = this.dataOldText?.representative_info;
       const people =  this.dataOldText?.people;
       this.dataOldText.people = representative_info;

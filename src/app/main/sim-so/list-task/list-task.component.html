@@ -244,7 +244,7 @@
                       </div>
 
                       <div
-                        *ngIf="item.sync_by && currentUser.id != item.sync_by && (item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
+                        *ngIf=" currentUser.id != item.sync_by && (item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
                         <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
                         </a>
