@@ -261,7 +261,6 @@ export class ListTaskComponent implements OnInit {
     this.selectedItem = item;
 
     if (item) {
-      this.selectedItem = item;
       this.detailTask(item.id);
     }
 
@@ -411,7 +410,7 @@ export class ListTaskComponent implements OnInit {
       newEmail: '', // Email sẽ được gán sau
     };
 
-    const titleS = 'Nhập địa chỉ email của bạn!';
+    const titleS = 'Nhập địa chỉ email';
 
     Swal.fire({
       title: titleS,
@@ -420,6 +419,7 @@ export class ListTaskComponent implements OnInit {
         autocapitalize: 'off',
       },
       showCancelButton: true,
+      inputValue: this.listTask?.email ? this.listTask?.email : '',
       confirmButtonText: 'Gửi',
       showLoaderOnConfirm: true,
       preConfirm: (email) => {
@@ -742,6 +742,7 @@ export class ListTaskComponent implements OnInit {
     }
     this.telecomService.taskDetail(data).subscribe(res => {
       this.listTask = res.data;
+      
       // this.totalItems = res.data.count;
     })
   }
