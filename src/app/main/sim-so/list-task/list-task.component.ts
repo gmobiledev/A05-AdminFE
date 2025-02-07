@@ -923,9 +923,6 @@ export class ListTaskComponent implements OnInit {
         this.isLoading = false; // Enable the button
         this.sectionBlockUI.stop();
         this.list = res.data.items;
-        this.list.forEach((item) => {
-          item.detail = JSON.parse(item.detail);
-        });
         this.totalItems = res.data.count;
       },
       (err) => {

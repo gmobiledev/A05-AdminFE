@@ -136,7 +136,10 @@
           </button>
 
           <button  *ngIf="url != 'login-otp'" [routerLink]="['/auth/login-otp']" [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Đăng nhập bằng Smart OTP
+            Đăng nhập bằng Smart OTP
+          </button>
+          <button  *ngIf="url == 'login-otp'" [routerLink]="['/auth/login']" [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+            Đăng nhập bằng tài khoản
           </button>
         </form>
       </div>
