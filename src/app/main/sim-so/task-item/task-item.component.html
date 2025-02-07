@@ -866,7 +866,7 @@
             <span
               *ngIf="
                 data.task.action == listTaskAction['new_sim']['value'] &&
-                !data.customer.people.identification_signature_file
+                !data?.customer?.people?.identification_signature_file
               "
             >
               <a

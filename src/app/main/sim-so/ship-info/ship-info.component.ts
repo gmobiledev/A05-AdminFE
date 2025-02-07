@@ -25,7 +25,11 @@ export class ShipInfoComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.item) {
-      this.detail = JSON.parse(this.item.detail);
+      console.log(this.item);
+      
+      this.detail = JSON?.parse(this.item.detail);
+      console.log(9999, this.detail);
+      
       if (this.detail["ship_tracking"]) {
         this.ship_tracking = this.detail["ship_tracking"];
       }
