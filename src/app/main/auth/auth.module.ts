@@ -17,6 +17,10 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'login-otp',
+    component: LoginComponent
+  },
+  {
     path: 'forgot-password',
     component: ForgotPasswordComponent
   },

@@ -31,8 +31,8 @@
             <p>{{ error }}</p>
           </div>
         </ngb-alert>
-        <form class="auth-login-form mt-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
+        <form class="auth-login-form mt-2" [formGroup]="loginForm">
+          <div class="form-group" *ngIf="url != 'login-otp'">
             <label class="form-label" for="login-email">Username</label>
             <input
               type="text"
@@ -50,7 +50,7 @@
               <div *ngIf="f.email.errors.required">Vui lòng nhập username</div>              
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="url != 'login-otp'">
             <div class="d-flex justify-content-between">
               <label for="login-password">Mật khẩu</label
               ><a routerLink="/auth/forgot-password"><small>Quên mật khẩu?</small></a>
@@ -85,14 +85,58 @@
               <div *ngIf="f.password.errors.required">VUi lòng nhập mật khẩu</div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="url == 'login-otp'">
+            <label class="form-label" for="login-mobile">Số tài khoản của Đại Lý</label>
+            <input
+              type="text"
+              formControlName="mobile"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }"
+              placeholder="Nhập số tài khoản của đại lý"
+              aria-describedby="login-mobile"
+              autofocus=""
+              (focus)="onFocusInput()"
+              (keydown.space)="$event.preventDefault()"
+              tabindex="1"
+            />
+            <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+              <div *ngIf="f.mobile.errors.required">Vui lòng nhập số tài khoản của đại lý</div>              
+            </div>
+          </div>
+          <div class="form-group" *ngIf="url == 'login-otp'">
+            <div class="d-flex justify-content-between">
+              <label for="login-otp">Smart OTP(Lấy Smart OTP trong app MyGmobile)</label>
+            </div>
+            <div class="input-group input-group-merge form-password-toggle">
+              <input
+                type="text"
+                formControlName="otp"
+                class="form-control form-control-merge"
+                [ngClass]="{ 'is-invalid error': submitted && f.password.errors }"
+                placeholder="Nhập mã OTP"
+                aria-describedby="login-otp"
+                (focus)="onFocusInput()"
+                tabindex="2"
+              />
+            </div>
+            <div
+              *ngIf="submitted && f.otp.errors" class="invalid-feedback"
+              [ngClass]="{ 'd-block': submitted && f.otp.errors }">
+              <div *ngIf="f.otp.errors.required">VUi lòng nhập otp</div>
+            </div>
+          </div>
+          <div class="form-group"  *ngIf="url != 'login-otp'">
             <div class="custom-control custom-checkbox">
               <input class="custom-control-input" id="remember-me" type="checkbox" tabindex="3" />
               <label class="custom-control-label" for="remember-me"> Ghi nhớ</label>
             </div>
           </div>
-          <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+          <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect (click)="onSubmit()">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Đăng nhập
+          </button>
+
+          <button  *ngIf="url != 'login-otp'" [routerLink]="['/auth/login-otp']" [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Đăng nhập bằng Smart OTP
           </button>
         </form>
       </div>
