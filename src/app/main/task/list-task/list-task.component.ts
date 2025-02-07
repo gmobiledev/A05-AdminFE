@@ -73,6 +73,7 @@ export class ListTaskComponent implements OnInit {
   listSerial;
   typeSim;
   basicSelectedOption = 25;
+  showSubmit = true;
 
   constructor(
     private modalService: NgbModal,
@@ -357,8 +358,10 @@ export class ListTaskComponent implements OnInit {
             return;
           }
           data.note = note;
+          this.showSubmit = false;
           this.taskService.departmentUpdateTaskStatus(data).subscribe(res => {
             if (!res.status) {
+              this.showSubmit = true;
               Swal.showValidationMessage(
                 res.message
               )
@@ -367,10 +370,12 @@ export class ListTaskComponent implements OnInit {
               // this.alertService.showSuccess('Thành công');
               return;
             }
+            this.showSubmit = true;
             this.modalClose();
             this.getData();
             this.alertService.showSuccess(res.message);
           }, error => {
+            this.showSubmit = true;
             Swal.showValidationMessage(
               error
             )
@@ -391,16 +396,20 @@ export class ListTaskComponent implements OnInit {
         data.note = "Xác nhận"
       }
 
+      this.showSubmit = false;
       if ((await this.alertService.showConfirm(confirmMessage)).value) {
         this.taskService.departmentUpdateTaskStatus(data).subscribe(res => {
           if (!res.status) {
+            this.showSubmit = true;
             this.alertService.showMess(res.message);
             return;
           }
+          this.showSubmit = true;
           this.modalClose();
           this.getData();
           this.alertService.showSuccess(res.message);
         }, error => {
+          this.showSubmit = true;
           this.alertService.showMess(error);
           return;
         })
