@@ -168,6 +168,12 @@
       </a></span
     >
   </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <span
+      ><u>Loại giấy tờ</u>:
+      <span class="text-info">{{ dataNewText?.representative_info?.identification_type }}</span>
+    </span>
+  </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
       ><u>Số giấy tờ</u>:
@@ -185,6 +191,36 @@
       </a></span
     >
   </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <span
+      ><u>Ngày cấp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="
+        dataNewText?.representative_info?.identification_date
+        "
+        (click)="copyTextClipboard(dataNewText?.representative_info?.identification_date)"
+      >
+        <span class="text-info">{{ dataNewText?.representative_info?.identification_date }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <span
+      ><u>Nơi cấp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="
+        dataNewText?.representative_info?.identification_place
+        "
+        (click)="copyTextClipboard(dataNewText?.representative_info?.identification_place)"
+      >
+        <span class="text-info">{{ dataNewText?.representative_info?.identification_place }}</span>
+      </a>
+    </span>
+  </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
       ><u>Ngày sinh</u>:
@@ -200,6 +236,92 @@
       </a></span
     >
   </div>
+
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <span
+      ><u>Số điện thoại liên hệ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.representative_info?.mobile"
+        (click)="copyTextClipboard(dataNewText?.representative_info?.mobile)"
+      >
+        <span class="text-info">{{ dataNewText?.representative_info?.mobile }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-12 col-sm-12 mt-1" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <h6>Địa chỉ thường trú:</h6>
+    <a
+      placement="right"
+      ngbTooltip="'Bấm để copy'"
+      *ngIf="dataNewText?.representative_info?.customer_address"
+      (click)="copyTextClipboard(dataNewText?.representative_info?.customer_address)"
+    >
+      <span class="text-info">{{ dataNewText?.representative_info?.customer_address }}</span></a
+    >
+  </div>
+  <div class="col-md-6" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <label for>Ảnh giấy tờ mặt trước</label>
+    <div
+      class="lazy-load"
+      *ngIf="
+        !dataImages?.compare_info?.inforepresentative?.identification_front_file
+      "
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+    <img
+      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.compare_info?.inforepresentative?.identification_front_file"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.inforepresentative?.identification_front_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  <div class="col-md-6" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <label for>Ảnh giấy tờ mặt sau</label>
+    <div
+      class="lazy-load"
+      *ngIf="
+        !dataImages?.compare_info?.inforepresentative?.identification_back_file
+      "
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+    <img
+      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.compare_info?.inforepresentative?.identification_back_file"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.inforepresentative?.identification_back_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  <div class="col-md-6" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <label for>Ảnh chân dung</label>
+    <div
+      class="lazy-load"
+      *ngIf="
+        !dataImages?.compare_info?.inforepresentative?.identification_selfie_file
+      "
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+    <img
+      (click)="onViewImage(modalImage, 'selfie_compare')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.compare_info?.inforepresentative?.identification_selfie_file"
+      src="data:image/png;base64,{{
+        dataImages?.compare_info?.inforepresentative?.identification_selfie_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  
   <div
     class="col-md-12 col-sm-12 mt-1"
     style="border-top: 1px rgba(136, 136, 136, 1) solid"
@@ -208,7 +330,7 @@
 <div class="row mb-2 p-2" *ngIf="dataNewText">
   <div
     class="col-12"
-    *ngIf="(dataNewText.customer_type != customerType.ORGANIZATION || dataText?.task?.action === listTaskAction.change_user_info.value) && item.action != 'app_request_change_user_info'"
+    *ngIf="(item.customer_type != customerType.ORGANIZATION && item?.action === listTaskAction.change_user_info.value) && item.action != 'app_request_change_user_info'"
   >
     <h4>Thông tin Khách Hàng mới</h4>
   </div>

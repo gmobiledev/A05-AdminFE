@@ -64,6 +64,14 @@
       </a></span
     >
   </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="item?.action == 'change_user_info'">
+    <span
+      ><u>Loại giấy tờ</u>:
+      <span class="text-info">{{
+        dataOldText?.representative_info?.identification_type
+      }}</span></span
+    >
+  </div>
   <div class="col-md-6 col-sm-12 mb-1">
     <span
       ><u>Số giấy tờ</u>:
@@ -75,6 +83,36 @@
       >
         <span class="text-info">{{
           dataOldText?.representative_info?.identification_no
+        }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="item?.action == 'change_user_info'">
+    <span
+      ><u>Ngày cấp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.representative_info?.identification_date"
+        (click)="
+          copyTextClipboard(dataOldText?.representative_info?.identification_date)
+        "
+      >
+        <span class="text-info">{{ dataOldText?.representative_info?.identification_date}}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="item?.action == 'change_user_info'">
+    <span
+      ><u>Nơi cấp</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.representative_info?.identification_place"
+        (click)="copyTextClipboard(dataOldText?.representative_info?.identification_place)"
+      >
+        <span class="text-info">{{
+          dataOldText?.representative_info?.identification_place
         }}</span>
       </a></span
     >
@@ -92,6 +130,87 @@
       </a></span
     >
   </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="item?.action == 'change_user_info'">
+    <span
+      ><u>Số điện thoại liên hệ</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.representative_info?.mobile"
+        (click)="copyTextClipboard(dataOldText?.representative_info?.mobile)"
+      >
+        <span class="text-info">{{ dataOldText?.representative_info?.mobile }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-12 col-sm-12 mt-1" *ngIf="item?.action == 'change_user_info'">
+    <h6>Địa chỉ thường trú:</h6>
+    <a
+      placement="right"
+      ngbTooltip="'Bấm để copy'"
+      *ngIf="dataOldText?.representative_info?.full_address"
+      (click)="copyTextClipboard(dataOldText?.representative_info?.full_address)"
+    >
+      <span class="text-info">{{
+        dataOldText?.representative_info?.full_address
+      }}</span></a
+    >
+  </div>
+  <div class="col-md-6">
+    <label for>Ảnh giấy tờ mặt trước</label>
+    <div
+      class="lazy-load"
+      *ngIf="!dataImages?.customer?.people?.identification_front_file"
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+    <img
+      (click)="onViewImage(modalImage, 'cccd_front')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_front_file"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_front_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for>Ảnh giấy tờ mặt sau</label>
+    <div
+      class="lazy-load"
+      *ngIf="!dataImages?.customer?.people?.identification_back_file"
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+    <img
+      (click)="onViewImage(modalImage, 'cccd_back')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_back_file"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_back_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for>Ảnh chân dung</label>
+    <div
+      class="lazy-load"
+      *ngIf="!dataImages?.customer?.people?.identification_selfie_file"
+    >
+      <div class="spinner-border text-secondary" role="status"></div>
+    </div>
+    <img
+      (click)="onViewImage(modalImage, 'selfie')"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_selfie_file"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_selfie_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  
   <div
     class="col-md-12 col-sm-12 mt-1"
     style="border-top: 1px rgba(136, 136, 136, 1) solid"
@@ -279,16 +398,16 @@
     <label for>Ảnh giấy tờ mặt trước</label>
     <div
       class="lazy-load"
-      *ngIf="!dataImages?.customer?.people?.identification_front_file && !dataImages?.customer?.identification_front_file"
+      *ngIf="!dataImages?.customer?.user_people?.identification_front_file && !dataImages?.customer?.identification_front_file"
     >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'cccd_front')"
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.customer?.people?.identification_front_file"
+      *ngIf="dataImages?.customer?.user_people?.identification_front_file"
       src="data:image/png;base64,{{
-        dataImages?.customer?.people?.identification_front_file
+        dataImages?.customer?.user_people?.identification_front_file
       }}"
       alt="avatar img"
     />
@@ -306,16 +425,16 @@
     <label for>Ảnh giấy tờ mặt sau</label>
     <div
       class="lazy-load"
-      *ngIf="!dataImages?.customer?.people?.identification_back_file && !dataImages?.customer?.identification_back_file"
+      *ngIf="!dataImages?.customer?.user_people?.identification_back_file && !dataImages?.customer?.identification_back_file"
     >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'cccd_back')"
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.customer?.people?.identification_back_file"
+      *ngIf="dataImages?.customer?.user_people?.identification_back_file"
       src="data:image/png;base64,{{
-        dataImages?.customer?.people?.identification_back_file
+        dataImages?.customer?.user_people?.identification_back_file
       }}"
       alt="avatar img"
     />
@@ -333,16 +452,16 @@
     <label for>Ảnh chân dung</label>
     <div
       class="lazy-load"
-      *ngIf="!dataImages?.customer?.people?.identification_selfie_file && !dataImages?.customer?.identification_selfie_file"
+      *ngIf="!dataImages?.customer?.user_people?.identification_selfie_file && !dataImages?.customer?.identification_selfie_file"
     >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'selfie')"
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.customer?.people?.identification_selfie_file"
+      *ngIf="dataImages?.customer?.user_people?.identification_selfie_file"
       src="data:image/png;base64,{{
-        dataImages?.customer?.people?.identification_selfie_file
+        dataImages?.customer?.user_people?.identification_selfie_file
       }}"
       alt="avatar img"
     />
