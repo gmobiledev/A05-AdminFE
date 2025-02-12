@@ -70,7 +70,7 @@
                     <th>STT</th>
                     <th>Mã GD</th>
                     <th>Người dùng</th>
-                    <th *ngIf="!isSingleService">Dịch vụ</th>
+                    <th *ngIf="!isSingleService || showServiceAddMoneyBalancePackageBalance">Dịch vụ</th>
                     <th *ngIf="!isSingleService">Merchant</th>
                     <th>Tiêu đề</th>
                     <th>{{ tableColumnName.amount }}</th>
@@ -88,7 +88,7 @@
                     <td>{{ item?.user?.people?.name }}
                       <br>{{ item?.user?.people?.mobile }}
                     </td>
-                    <td *ngIf="!isSingleService">
+                    <td *ngIf="!isSingleService || showServiceAddMoneyBalancePackageBalance">
                       {{ item?.service_code }}
                     </td>
                     <td *ngIf="!isSingleService">

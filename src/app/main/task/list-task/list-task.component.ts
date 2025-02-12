@@ -48,6 +48,7 @@ export class ListTaskComponent implements OnInit {
   public modalRef: any;
   public currentService;
   isSingleService;
+  showServiceAddMoneyBalancePackageBalance;
   public selectedItem;
   public taskStatus = TaskStatus;
   public dataApprove = {
@@ -92,7 +93,7 @@ export class ListTaskComponent implements OnInit {
       this.currency = '';
     }
     this.isSingleService = data && data.single_service ? true : false;
-
+    this.showServiceAddMoneyBalancePackageBalance = data && data.service == 'ADD_MONEY_BALANCE&&PACKAGE_BALANCE' ? true : false;
     this.route.queryParams.subscribe(params => {
       this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
       this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';

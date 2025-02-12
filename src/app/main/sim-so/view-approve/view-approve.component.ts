@@ -55,18 +55,18 @@ export class ViewApproveComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.item) {
       if (this.item.action == "KHOI_PHUC") {
-        this.titleModal = "Khôi phục sim : " + this.item.msisdn;
+        this.titleModal = "Khôi phục sim: " + this.item.msisdn;
       } else if (
         this.item.action == this.listTaskAction.change_user_info.value
       ) {
-        this.titleModal = "Chuyển đổi chủ quyền : " + this.item.msisdn;
+        this.titleModal = "Chuyển đổi chủ quyền: " + this.item.msisdn;
       } else if (
         this.item.action ==
         this.listTaskAction.app_request_change_user_info.value
       ) {
         this.titleModal =
           this.listTaskAction.app_request_change_user_info.label +
-          " : " +
+          ": " +
           this.item.msisdn;
       }
     }
