@@ -127,7 +127,7 @@
                         <i data-feather="monitor" class="text-primary cursor-pointer"></i>
                       </button>
 
-                      <ng-container *ngIf="item.status == taskStatus.STATUS_WAITING">
+                      <!-- <ng-container *ngIf="item.status == taskStatus.STATUS_WAITING">
                         <button title="Duyệt" class="btn btn-icon btn-flat-success btn-sm"
                           (click)="modalOpen(modalDuyetSimprofile, item, false)">
                           <i data-feather="check" class="text-primary cursor-pointer"></i>
@@ -136,7 +136,7 @@
                           (click)="onUpdateStatus(item, 99)">
                           <i data-feather="x-circle" class="text-primary cursor-pointer"></i>
                         </button>
-                      </ng-container>
+                      </ng-container> -->
 
                       <ng-container *ngIf="item.status==taskStatus.STATUS_IN_PROGRESS">
                         <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm"
