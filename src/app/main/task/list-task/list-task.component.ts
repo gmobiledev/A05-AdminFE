@@ -37,7 +37,8 @@ export class ListTaskComponent implements OnInit {
     page: 1,
     service_code: '',
     type: "topup, debit",
-    page_size: 20
+    page_size: 20,
+    service_name: ''
   }
   public isViewFile: boolean = false;
   public urlFile: any;

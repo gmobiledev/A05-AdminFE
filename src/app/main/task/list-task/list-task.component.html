@@ -56,6 +56,15 @@
                     </select>
                   </div>
                 </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <select class="form-control" name="type" [(ngModel)]="searchForm.service_name">
+                      <option value="">Chọn dịch vụ</option>
+                      <option value="ADD_MONEY_BALANCE">ADD_MONEY_BALANCE</option>
+                      <option value="PACKAGE_BALANCE">PACKAGE_BALANCE</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
