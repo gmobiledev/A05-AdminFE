@@ -174,6 +174,9 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="form-group">
+      <h4>Username : {{selectedUser?.full_name ? selectedUser?.full_name : selectedUser?.username}}</h4>
+    </div>
 
     <div class="form-group">
       <label>Tiêu đề</label>
@@ -207,6 +210,7 @@
       <select name="service" id="" placeholder="Chọn kiểu" class="form-control" [(ngModel)]="dataPrepaidLimit.service">
         <option value="">Chọn dịch vụ</option>
         <option value="ADD_MONEY_BALANCE">ADD_MONEY_BALANCE</option>
+        <option value="PACKAGE_BALANCE">PACKAGE_BALANCE</option>
       </select>
     </div>
 

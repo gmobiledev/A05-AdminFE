@@ -37,7 +37,8 @@ export class ListTaskComponent implements OnInit {
     page: 1,
     service_code: '',
     type: "topup, debit",
-    page_size: 20
+    page_size: 20,
+    service_name: ''
   }
   public isViewFile: boolean = false;
   public urlFile: any;
@@ -48,6 +49,7 @@ export class ListTaskComponent implements OnInit {
   public modalRef: any;
   public currentService;
   isSingleService;
+  showServiceAddMoneyBalancePackageBalance;
   public selectedItem;
   public taskStatus = TaskStatus;
   public dataApprove = {
@@ -92,7 +94,7 @@ export class ListTaskComponent implements OnInit {
       this.currency = '';
     }
     this.isSingleService = data && data.single_service ? true : false;
-
+    this.showServiceAddMoneyBalancePackageBalance = data && data.service == 'ADD_MONEY_BALANCE&&PACKAGE_BALANCE' ? true : false;
     this.route.queryParams.subscribe(params => {
       this.searchForm.user = params['user'] && params['user'] != undefined ? params['user'] : '';
       this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : '';

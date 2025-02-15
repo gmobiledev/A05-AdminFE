@@ -32,6 +32,7 @@
                   <tr>
                     <th>Số / Serial SIM</th>
                     <th>Nhà mạng</th>
+                    <th *ngIf="item?.level">Hạng số</th>
                     <th>Kho số</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -43,6 +44,7 @@
                     <td>{{ item?.name }}</td>
                     <td>{{ item?.brand }} - {{item?.category_id == 2 ? "Serial": item?.category_id == 3 ? "SĐT" :
                       item?.category_id}}</td>
+                    <td *ngIf="item?.level">{{ item?.level }}</td>
                     <td>{{ getInvenstory() }}</td>
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
