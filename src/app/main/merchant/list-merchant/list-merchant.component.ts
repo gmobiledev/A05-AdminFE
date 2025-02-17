@@ -153,6 +153,26 @@ export class ListMerchantComponent implements OnInit {
   }
 
   async onCreatePrepaidLimit() {
+    if (!this.dataPrepaidLimit.title) {
+      this.alertService.showMess("Vui lòng không để trống tiêu đề!");
+      return;
+    }
+    if (!this.dataPrepaidLimit.desc) {
+      this.alertService.showMess("Vui lòng không để trống nội dung đơn hàng!");
+      return;
+    }
+    if (!this.dataPrepaidLimit.amount) {
+      this.alertService.showMess("Vui lòng không để trống số tiền!");
+      return;
+    }
+    if (!this.dataPrepaidLimit.type) {
+      this.alertService.showMess("Vui lòng chọn kiểu!");
+      return;
+    }
+    if (!this.dataPrepaidLimit.service) {
+      this.alertService.showMess("Vui lòng chọn kiểu dịch vụ!");
+      return;
+    }
     if (!this.dataPrepaidLimit.file) {
       this.alertService.showMess("Vui lòng đính kèm ảnh thanh toán!");
       return;

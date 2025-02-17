@@ -82,6 +82,31 @@ export class Client2gComponent implements OnInit {
     });
   }
 
+  async onConfirmThanhToanNoCuoc(item, modal) {
+    if ((await this.alertService.showConfirm("Bạn có xác nhận đã thanh toán toán nợ cước cho số " + item.msisdn.msisdn)).value) {
+      //goi api xác nhận thu nợ cước tại quầy
+      this.sectionBlock.start();
+      const data = {
+        msisdn: item.msisdn.msisdn,
+        amount: Math.abs(item.msisdn.amount)
+      }
+      try {
+        const rpayment = await this.telecomService.confirmPayDebit(data).toPromise();
+        this.sectionBlock.stop();
+        if(!rpayment || !rpayment.status) {
+          this.alertService.showMess(rpayment.message);
+          return;
+        }       
+        this.alertService.showMess(rpayment.message);
+        this.getData();
+      } catch (error) {
+        this.sectionBlock.stop();
+        this.alertService.showMess(error);
+      }
+      
+    }
+  }
+
   // Rest of the methods remain the same...
   async modalOpen(modal, item = null) {
     this.modalRef = this.modalService.open(modal, {

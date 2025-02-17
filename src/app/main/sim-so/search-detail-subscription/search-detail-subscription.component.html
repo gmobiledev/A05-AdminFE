@@ -12,8 +12,13 @@
               <div class="row">
                 <div class="col-md-10">
                   <div class="form-group">
-                    <input type="text" name="keyword" [(ngModel)]="searchSim.keyword" class="form-control"
-                      placeholder="Tìm kiếm" />
+                    <input
+                      type="text"
+                      name="keyword"
+                      [(ngModel)]="searchSim.keyword"
+                      class="form-control"
+                      placeholder="Tìm kiếm"
+                    />
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -27,15 +32,13 @@
             </form>
 
             <div>
-
               <div class="table-responsive mt-1" *blockUI="'section-block'">
                 <table class="table table-striped text-nowrap" *ngIf="item">
-
                   <thead>
                     <tr>
                       <th></th>
                       <th>GMOBILE</th>
-                      <th>{{item?.gmobile?.info?.mno}}</th>
+                      <th>{{ item?.gmobile?.info?.mno }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -52,10 +55,10 @@
                         <b>Số thuê bao</b>
                       </td>
                       <td>
-                        {{item?.gmobile?.msisdn ?? "_" }}
+                        {{ item?.gmobile?.msisdn ?? "_" }}
                       </td>
                       <td>
-                        {{item?.other?.msisdn ?? "_" }}
+                        {{ item?.other?.msisdn ?? "_" }}
                       </td>
                     </tr>
                     <tr>
@@ -63,10 +66,10 @@
                         <b>Số serial</b>
                       </td>
                       <td>
-                        {{item?.gmobile?.serial ?? "_" }}
+                        {{ item?.gmobile?.serial ?? "_" }}
                       </td>
                       <td>
-                        {{item?.other?.serial ?? "_" }}
+                        {{ item?.other?.serial ?? "_" }}
                       </td>
                     </tr>
                     <tr>
@@ -74,7 +77,10 @@
                         <b>Trạng thái của đối tác</b>
                       </td>
                       <td>
-                        {{ item?.gmobile?.balance?.currentState ?? "_" | showStatusTrans }}
+                        {{
+                          item?.gmobile?.balance?.currentState ?? "_"
+                            | showStatusTrans
+                        }}
                       </td>
                       <td>
                         {{ item?.other?.balance?.currentState ?? "_" }}
@@ -99,7 +105,7 @@
                         <!-- {{ item?.gmobile?.balance?.coreBalance  ?? "_" | number}} -->
                       </td>
                       <td>
-                        {{ item?.other?.balance?.coreBalance  ?? "_" | number}}
+                        {{ item?.other?.balance?.coreBalance ?? "_" | number }}
                       </td>
                     </tr>
                     <tr>
@@ -113,13 +119,10 @@
                         {{ item?.other?.balance?.coreBalanceExp ?? "_" }}
                       </td>
                     </tr>
-                    <tr style="background-color: bisque;">
-                      <td>
-                      </td>
-                      <td>
-                      </td>
-                      <td>
-                      </td>
+                    <tr style="background-color: bisque">
+                      <td></td>
+                      <td></td>
+                      <td></td>
                     </tr>
                     <tr>
                       <td>
@@ -132,16 +135,20 @@
                         {{ item?.other?.info?.sync_time ?? "_" }}
                       </td>
                     </tr>
-                  
+
                     <tr>
                       <td>
                         <b>Nhà mạng</b>
                       </td>
                       <td>
-                        <span [innerHTML]="item?.gmobile?.info?.mno | showIconMno"></span>
+                        <span
+                          [innerHTML]="item?.gmobile?.info?.mno | showIconMno"
+                        ></span>
                       </td>
                       <td>
-                        <span [innerHTML]="item?.other?.info?.mno | showIconMno"></span>
+                        <span
+                          [innerHTML]="item?.other?.info?.mno | showIconMno"
+                        ></span>
                       </td>
                     </tr>
                     <tr>
@@ -160,10 +167,14 @@
                         <b>Mã số CCCD</b>
                       </td>
                       <td>
-                        {{ item?.gmobile?.info?.people?.identification_no ?? "_" }}
+                        {{
+                          item?.gmobile?.info?.people?.identification_no ?? "_"
+                        }}
                       </td>
                       <td>
-                        {{ item?.other?.info?.people?.identification_no ?? "_" }}
+                        {{
+                          item?.other?.info?.people?.identification_no ?? "_"
+                        }}
                       </td>
                     </tr>
                     <tr>
@@ -171,10 +182,15 @@
                         <b>Thời gian đăng ký</b>
                       </td>
                       <td>
-                        {{ item?.gmobile?.info?.people?.identification_date ?? "_" }}
+                        {{
+                          item?.gmobile?.info?.people?.identification_date ??
+                            "_"
+                        }}
                       </td>
                       <td>
-                        {{ item?.other?.info?.people?.identification_date ?? "_" }}
+                        {{
+                          item?.other?.info?.people?.identification_date ?? "_"
+                        }}
                       </td>
                     </tr>
                     <tr>
@@ -182,10 +198,15 @@
                         <b>Địa chỉ đăng ký</b>
                       </td>
                       <td>
-                        {{ item?.gmobile?.info?.people?.identification_place ?? "_" }}
+                        {{
+                          item?.gmobile?.info?.people?.identification_place ??
+                            "_"
+                        }}
                       </td>
                       <td>
-                        {{ item?.other?.info?.people?.identification_place ?? "_" }}
+                        {{
+                          item?.other?.info?.people?.identification_place ?? "_"
+                        }}
                       </td>
                     </tr>
                     <tr>
@@ -193,10 +214,15 @@
                         <b>Loại định danh</b>
                       </td>
                       <td>
-                        {{ item?.gmobile?.info?.people?.identification_type ?? "_" }}
+                        {{
+                          item?.gmobile?.info?.people?.identification_type ??
+                            "_"
+                        }}
                       </td>
                       <td>
-                        {{ item?.other?.info?.people?.identification_type ?? "_" }}
+                        {{
+                          item?.other?.info?.people?.identification_type ?? "_"
+                        }}
                       </td>
                     </tr>
                     <tr>
@@ -254,10 +280,126 @@
                         {{ item?.other?.info?.people?.address ?? "_" }}
                       </td>
                     </tr>
-                    
+                    <tr
+                      style="background-color: bisque"
+                      *ngIf="item?.gmobile?.type == 'ORGANIZATION'"
+                    >
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Họ và tên người đại diện</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.representative?.name ?? "_" }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Mã số CCCD</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative
+                            ?.identification_no ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Thời gian đăng ký</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative
+                            ?.identification_date ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Địa chỉ đăng ký</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative
+                            ?.identification_place ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Loại định danh</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative
+                            ?.identification_type ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Ngày sinh</b>
+                      </td>
+                      <td>
+                        {{ item?.gmobile?.info?.representative?.birth ?? "_" }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Phường/Xã</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative?.communue ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Tỉnh/Thành phố</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative?.province ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Quận/Huyện</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative?.district ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr *ngIf="item?.gmobile?.type == 'ORGANIZATION'">
+                      <td>
+                        <b>Quê quán</b>
+                      </td>
+                      <td>
+                        {{
+                          item?.gmobile?.info?.representative?.address ?? "_"
+                        }}
+                      </td>
+                      <td></td>
+                    </tr>
                   </tbody>
                 </table>
-
               </div>
             </div>
           </div>
