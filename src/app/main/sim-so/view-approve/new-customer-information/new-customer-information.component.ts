@@ -23,27 +23,18 @@ export class NewCustomerInformationComponent implements OnInit {
     this.dataNewText = this.dataText?.compare_info;
   }
 
-  onViewImage(modal, type, mobile = null) {
-    if (type == "cccd_front_compare") {
-      this.viewImage =
-        "data:image/png;base64," +
-        this.dataImages?.compare_info?.people?.identification_front_file;
-    }
-    if (type == "cccd_back_compare") {
-      this.viewImage =
-        "data:image/png;base64," +
-        this.dataImages?.compare_info?.people?.identification_back_file;
-    }
-    if (type == "selfie_compare") {
-      this.viewImage =
-        "data:image/png;base64," +
-        this.dataImages?.compare_info?.people?.identification_selfie_file;
-    }
+  onViewImage(modal, type, imageBase64) {
+      this.viewImage ="data:image/png;base64," + imageBase64;
 
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: "modal modal-primary",
       size: "xl",
     });
+  }
+
+  onCloseModalImage() {
+    this.viewImage = null;
+    this.modalRef.close();
   }
 }
