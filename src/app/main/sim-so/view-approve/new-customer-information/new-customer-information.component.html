@@ -272,7 +272,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      (click)="onViewImage(modalImage, 'cccd_front_compare', dataImages?.compare_info?.inforepresentative?.identification_front_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.inforepresentative?.identification_front_file"
       src="data:image/png;base64,{{
@@ -292,7 +292,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      (click)="onViewImage(modalImage, 'cccd_back_compare', dataImages?.compare_info?.inforepresentative?.identification_back_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.inforepresentative?.identification_back_file"
       src="data:image/png;base64,{{
@@ -312,7 +312,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'selfie_compare')"
+      (click)="onViewImage(modalImage, 'selfie_compare', dataImages?.compare_info?.inforepresentative?.identification_selfie_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.inforepresentative?.identification_selfie_file"
       src="data:image/png;base64,{{
@@ -524,7 +524,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      (click)="onViewImage(modalImage, 'cccd_front_compare', dataImages?.compare_info?.people?.identification_front_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_front_file"
       src="data:image/png;base64,{{
@@ -533,7 +533,7 @@
       alt="avatar img"
     />
     <img
-      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      (click)="onViewImage(modalImage, 'cccd_front_compare', dataImages?.compare_info?.identification_front_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.identification_front_file"
       src="data:image/png;base64,{{
@@ -554,7 +554,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      (click)="onViewImage(modalImage, 'cccd_back_compare', dataImages?.compare_info?.people?.identification_back_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_back_file"
       src="data:image/png;base64,{{
@@ -563,7 +563,7 @@
       alt="avatar img"
     />
     <img
-      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      (click)="onViewImage(modalImage, 'cccd_back_compare', dataImages?.compare_info?.identification_back_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.identification_back_file"
       src="data:image/png;base64,{{
@@ -584,7 +584,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'selfie_compare')"
+      (click)="onViewImage(modalImage, 'selfie_compare', dataImages?.compare_info?.people?.identification_selfie_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_selfie_file"
       src="data:image/png;base64,{{
@@ -593,7 +593,7 @@
       alt="avatar img"
     />
     <img
-      (click)="onViewImage(modalImage, 'selfie_compare')"
+      (click)="onViewImage(modalImage, 'selfie_compare', dataImages?.compare_info?.identification_selfie_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.identification_selfie_file"
       src="data:image/png;base64,{{
@@ -603,3 +603,16 @@
     />
   </div>
 </div>
+
+<ng-template #modalImage let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel160"></h4>
+      <button type="button" class="close" (click)="onCloseModalImage()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+      <app-poup-view-image [srcImage]="viewImage"></app-poup-view-image>
+  </div>
+</ng-template>
+

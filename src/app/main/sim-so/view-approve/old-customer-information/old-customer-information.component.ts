@@ -21,31 +21,27 @@ export class OldCustomerInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataOldText = this.dataText?.customer;
-    if (this.dataOldText.customer_type == this.customerType.ORGANIZATION && (this.item.action == this.listTaskAction.change_user_info.value || this.item.action == this.listTaskAction.app_request_change_user_info.value)) {
+    if (
+      this.dataOldText.customer_type == this.customerType.ORGANIZATION &&
+      (this.item.action == this.listTaskAction.change_user_info.value ||
+        this.item.action ==
+          this.listTaskAction.app_request_change_user_info.value)
+    ) {
       const representative_info = this.dataOldText?.representative_info;
-      const people =  this.dataOldText?.people;
+      const people = this.dataOldText?.people;
       this.dataOldText.people = representative_info;
       this.dataOldText.representative_info = people;
     }
   }
 
-  onViewImage(modal, type, mobile = null) {
-    if (type == "cccd_front") {
-      this.viewImage =
-        "data:image/png;base64," +
-        this.dataImages?.customer?.people?.identification_front_file;
-    }
-    if (type == "cccd_back") {
-      this.viewImage =
-        "data:image/png;base64," +
-        this.dataImages?.customer?.people?.identification_back_file;
-    }
-    if (type == "selfie") {
-      this.viewImage =
-        "data:image/png;base64," +
-        this.dataImages?.customer?.people?.identification_selfie_file;
-    }
+  onCloseModalImage() {
+    this.viewImage = null;
+    this.modalRef.close();
+  }
 
+  onViewImage(modal, type, imageBase64) {
+    this.viewImage = "data:image/png;base64," + imageBase64;
+    
     this.modalRef = this.modalService.open(modal, {
       centered: true,
       windowClass: "modal modal-primary",
