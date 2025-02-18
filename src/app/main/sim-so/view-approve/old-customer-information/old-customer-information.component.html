@@ -398,19 +398,28 @@
     <label for>Ảnh giấy tờ mặt trước</label>
     <div
       class="lazy-load"
-      *ngIf="!dataImages?.customer?.user_people?.identification_front_file && !dataImages?.customer?.identification_front_file"
+      *ngIf="(!dataImages?.customer?.user_people?.identification_front_file && !dataImages?.customer?.people?.identification_front_file) && !dataImages?.customer?.identification_front_file"
     >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'cccd_front', dataImages?.customer?.user_people?.identification_front_file)"
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.customer?.user_people?.identification_front_file"
+      *ngIf="dataImages?.customer?.user_people?.identification_front_file && item.action != 'KHOI_PHUC'"
       src="data:image/png;base64,{{
         dataImages?.customer?.user_people?.identification_front_file
       }}"
       alt="avatar img"
     />
+    <img
+    (click)="onViewImage(modalImage, 'cccd_front', dataImages?.customer?.people?.identification_front_file)"
+    class="img-fluid rounded mb-75"
+    *ngIf="dataImages?.customer?.people?.identification_front_file && item.action == 'KHOI_PHUC'"
+    src="data:image/png;base64,{{
+      dataImages?.customer?.people?.identification_front_file
+    }}"
+    alt="avatar img"
+  />
     <img
     (click)="onViewImage(modalImage, 'cccd_front', dataImages?.customer?.identification_front_file)"
     class="img-fluid rounded mb-75"
@@ -425,16 +434,25 @@
     <label for>Ảnh giấy tờ mặt sau</label>
     <div
       class="lazy-load"
-      *ngIf="!dataImages?.customer?.user_people?.identification_back_file && !dataImages?.customer?.identification_back_file"
+      *ngIf="(!dataImages?.customer?.user_people?.identification_back_file && !dataImages?.customer?.people?.identification_back_file) && !dataImages?.customer?.identification_back_file"
     >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'cccd_back', dataImages?.customer?.user_people?.identification_back_file)"
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.customer?.user_people?.identification_back_file"
+      *ngIf="dataImages?.customer?.user_people?.identification_back_file && item.action != 'KHOI_PHUC'"
       src="data:image/png;base64,{{
         dataImages?.customer?.user_people?.identification_back_file
+      }}"
+      alt="avatar img"
+    />
+    <img
+      (click)="onViewImage(modalImage, 'cccd_back', dataImages?.customer?.people?.identification_back_file)"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_back_file && item.action == 'KHOI_PHUC'"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_back_file
       }}"
       alt="avatar img"
     />
@@ -452,16 +470,25 @@
     <label for>Ảnh chân dung</label>
     <div
       class="lazy-load"
-      *ngIf="!dataImages?.customer?.user_people?.identification_selfie_file && !dataImages?.customer?.identification_selfie_file"
+      *ngIf="(!dataImages?.customer?.user_people?.identification_selfie_file && !dataImages?.customer?.people?.identification_selfie_file) && !dataImages?.customer?.identification_selfie_file"
     >
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
       (click)="onViewImage(modalImage, 'selfie', dataImages?.customer?.user_people?.identification_selfie_file)"
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.customer?.user_people?.identification_selfie_file"
+      *ngIf="dataImages?.customer?.user_people?.identification_selfie_file && item.action != 'KHOI_PHUC'"
       src="data:image/png;base64,{{
         dataImages?.customer?.user_people?.identification_selfie_file
+      }}"
+      alt="avatar img"
+    />
+    <img
+      (click)="onViewImage(modalImage, 'selfie', dataImages?.customer?.people?.identification_selfie_file)"
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.customer?.people?.identification_selfie_file && item.action == 'KHOI_PHUC'"
+      src="data:image/png;base64,{{
+        dataImages?.customer?.people?.identification_selfie_file
       }}"
       alt="avatar img"
     />
