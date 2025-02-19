@@ -9,11 +9,11 @@
                             (click)="deleteFileTask(file)">
                     </div>
                     <div class="img" (click)="modalOpenFileTask(modalViewFileTask, file)">
-                        <img class="img-file" *ngIf="file.ext !== '.pdf' && file.ext !== '.mp4'"
+                        <img class="img-file" *ngIf="file.ext !== '.pdf' && file.ext !== '.mp4' && file.ext !== '.MP4'"
                             src="assets/images/icons/jpg.png" alt="invoice" height="23" />
                         <img class="img-file" *ngIf="file.ext === '.pdf'" src="assets/images/icons/pdf.png"
                             alt="invoice" height="23" />
-                        <img class="img-file" *ngIf="file.ext === '.mp4'" src="assets/images/icons/video.png"
+                        <img class="img-file" *ngIf="file.ext === '.mp4' || file.ext === '.MP4'" src="assets/images/icons/video.png"
                             alt="invoice" height="23" />
                         <span>{{file.file_name}}</span>
                     </div>
