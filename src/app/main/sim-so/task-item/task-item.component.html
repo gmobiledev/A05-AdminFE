@@ -646,6 +646,13 @@
               (click)="copyTextClipboard(data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'])"
             >
               <span class="text-info">{{ data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'] }}</span></a>
+            <a
+              placement="right"
+              ngbTooltip="'Bấm để copy'"
+              *ngIf="!data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'] && data?.msisdn?.msisdns[0].serial"
+              (click)="copyTextClipboard(data?.msisdn?.msisdns[0].serial)"
+            >
+              <span class="text-info">{{ data?.msisdn?.msisdns[0].serial }}</span></a>
           </span>
 
           <span *ngIf="data.task.action != listTaskAction['change_sim']['value']"><u>Serial</u>:

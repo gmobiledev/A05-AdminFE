@@ -622,7 +622,7 @@ export class TaskItemComponent implements OnInit {
           res.data.short_desc &&
           res.data.short_desc.includes("8984")
         ) {
-          this.disabled_kit = true;
+          this.disabled_kit = false;
           this.kit_serial = res.data.short_desc;
         }
         this.modalRef = this.modalService.open(this.modalUploadSim, {
