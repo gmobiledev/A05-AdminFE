@@ -255,10 +255,10 @@
     <a
       placement="right"
       ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.representative_info?.customer_address"
-      (click)="copyTextClipboard(dataNewText?.representative_info?.customer_address)"
+      *ngIf="dataNewText?.representative_info?.full_address"
+      (click)="copyTextClipboard(dataNewText?.representative_info?.full_address)"
     >
-      <span class="text-info">{{ dataNewText?.representative_info?.customer_address }}</span></a
+      <span class="text-info">{{ dataNewText?.representative_info?.full_address }}</span></a
     >
   </div>
   <div class="col-md-6" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
@@ -509,6 +509,14 @@
       (click)="copyTextClipboard(dataNewText?.full_address)"
     >
       <span class="text-info">{{ dataNewText?.full_address }}</span></a
+    >
+    <a
+      placement="right"
+      ngbTooltip="'Bấm để copy'"
+      *ngIf="!dataNewText?.full_address && !dataNewText?.people?.full_address && dataNewText?.people?.address"
+      (click)="copyTextClipboard(dataNewText?.people?.address)"
+    >
+      <span class="text-info">{{ dataNewText?.people?.address }}</span></a
     >
   </div>
 
