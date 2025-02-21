@@ -59,6 +59,9 @@ import { TransferSovereigntyOldOwnerComponent } from './transfer-sovereignty/tra
 import { SearchPackageComponent } from './search-package/search-package.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ViewSubscriberInformationComponent } from './view-subscriber-information/view-subscriber-information.component';
+import { OldDocumentInformationComponent } from './view-subscriber-information/old-document-information/old-document-information.component';
+import { NewDocumentInformationComponent } from './view-subscriber-information/new-document-information/new-document-information.component';
 
 const routes: Routes = [
   {
@@ -220,7 +223,10 @@ const routes: Routes = [
     ViewCheckInfoNewComponent,
     TransferSovereigntyOldOwnerComponent,
     SearchPackageComponent,
-    TaskDetailComponent
+    TaskDetailComponent,
+    ViewSubscriberInformationComponent,
+    OldDocumentInformationComponent,
+    NewDocumentInformationComponent
   ],
   imports: [
     CommonModule,

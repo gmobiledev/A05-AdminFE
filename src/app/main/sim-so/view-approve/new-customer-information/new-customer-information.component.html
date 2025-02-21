@@ -255,10 +255,10 @@
     <a
       placement="right"
       ngbTooltip="'Bấm để copy'"
-      *ngIf="dataNewText?.representative_info?.customer_address"
-      (click)="copyTextClipboard(dataNewText?.representative_info?.customer_address)"
+      *ngIf="dataNewText?.representative_info?.full_address"
+      (click)="copyTextClipboard(dataNewText?.representative_info?.full_address)"
     >
-      <span class="text-info">{{ dataNewText?.representative_info?.customer_address }}</span></a
+      <span class="text-info">{{ dataNewText?.representative_info?.full_address }}</span></a
     >
   </div>
   <div class="col-md-6" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
@@ -272,7 +272,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      (click)="onViewImage(modalImage, 'cccd_front_compare', dataImages?.compare_info?.inforepresentative?.identification_front_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.inforepresentative?.identification_front_file"
       src="data:image/png;base64,{{
@@ -292,7 +292,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      (click)="onViewImage(modalImage, 'cccd_back_compare', dataImages?.compare_info?.inforepresentative?.identification_back_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.inforepresentative?.identification_back_file"
       src="data:image/png;base64,{{
@@ -312,7 +312,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'selfie_compare')"
+      (click)="onViewImage(modalImage, 'selfie_compare', dataImages?.compare_info?.inforepresentative?.identification_selfie_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.inforepresentative?.identification_selfie_file"
       src="data:image/png;base64,{{
@@ -510,6 +510,14 @@
     >
       <span class="text-info">{{ dataNewText?.full_address }}</span></a
     >
+    <a
+      placement="right"
+      ngbTooltip="'Bấm để copy'"
+      *ngIf="!dataNewText?.full_address && !dataNewText?.people?.full_address && dataNewText?.people?.address"
+      (click)="copyTextClipboard(dataNewText?.people?.address)"
+    >
+      <span class="text-info">{{ dataNewText?.people?.address }}</span></a
+    >
   </div>
 
   <div class="col-md-6">
@@ -524,7 +532,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      (click)="onViewImage(modalImage, 'cccd_front_compare', dataImages?.compare_info?.people?.identification_front_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_front_file"
       src="data:image/png;base64,{{
@@ -533,7 +541,7 @@
       alt="avatar img"
     />
     <img
-      (click)="onViewImage(modalImage, 'cccd_front_compare')"
+      (click)="onViewImage(modalImage, 'cccd_front_compare', dataImages?.compare_info?.identification_front_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.identification_front_file"
       src="data:image/png;base64,{{
@@ -554,7 +562,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      (click)="onViewImage(modalImage, 'cccd_back_compare', dataImages?.compare_info?.people?.identification_back_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_back_file"
       src="data:image/png;base64,{{
@@ -563,7 +571,7 @@
       alt="avatar img"
     />
     <img
-      (click)="onViewImage(modalImage, 'cccd_back_compare')"
+      (click)="onViewImage(modalImage, 'cccd_back_compare', dataImages?.compare_info?.identification_back_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.identification_back_file"
       src="data:image/png;base64,{{
@@ -584,7 +592,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <img
-      (click)="onViewImage(modalImage, 'selfie_compare')"
+      (click)="onViewImage(modalImage, 'selfie_compare', dataImages?.compare_info?.people?.identification_selfie_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.people?.identification_selfie_file"
       src="data:image/png;base64,{{
@@ -593,7 +601,7 @@
       alt="avatar img"
     />
     <img
-      (click)="onViewImage(modalImage, 'selfie_compare')"
+      (click)="onViewImage(modalImage, 'selfie_compare', dataImages?.compare_info?.identification_selfie_file)"
       class="img-fluid rounded mb-75"
       *ngIf="dataImages?.compare_info?.identification_selfie_file"
       src="data:image/png;base64,{{
@@ -603,3 +611,16 @@
     />
   </div>
 </div>
+
+<ng-template #modalImage let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel160"></h4>
+      <button type="button" class="close" (click)="onCloseModalImage()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+      <app-poup-view-image [srcImage]="viewImage"></app-poup-view-image>
+  </div>
+</ng-template>
+

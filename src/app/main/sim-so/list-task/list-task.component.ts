@@ -37,6 +37,7 @@ import { TaskService } from "app/auth/service/task.service";
 export class ListTaskComponent implements OnInit {
   @ViewChild("modalItem") modalItem: ElementRef;
   @ViewChild("modalViewApproveRestore") modalViewApproveRestore: ElementRef;
+  @ViewChild("modalViewSubscriberInformation") modalViewSubscriberInformation: ElementRef;
 
   public contentHeader: any = {
     headerTitle: "Yêu cầu của đại lý",
@@ -563,6 +564,19 @@ export class ListTaskComponent implements OnInit {
     if (item) {
       this.selectedItem = item;
       this.modalRef = this.modalService.open(modalViewApproveRestore, {
+        centered: true,
+        windowClass: "modal modal-primary",
+        size: "xl",
+        backdrop: "static",
+        keyboard: false,
+      });
+    }
+  }
+
+  async modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item = null) {
+    if (item) {
+      this.selectedItem = item;
+      this.modalRef = this.modalService.open(modalViewSubscriberInformation, {
         centered: true,
         windowClass: "modal modal-primary",
         size: "xl",

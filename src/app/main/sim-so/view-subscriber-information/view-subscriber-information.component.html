@@ -1,0 +1,86 @@
+<div class="pl-3 pr-3" *ngIf="dataTask">
+  <div class="row" *blockUI="'section-block'">
+    <div class="col-md-6">
+      <div>
+        <h3>Cập nhật giấy tờ</h3>
+      </div>
+      <div>ID của yêu cầu: {{ dataTask?.id }}</div>
+      <div>
+        <span>Trạng thái: </span
+        ><span [innerHTML]="dataTask?.status | showStatusTelecom"></span>
+      </div>
+      <div><span>Admin thao tác: </span>{{ dataText?.user_sync }}</div>
+
+      <!-- <div
+        *ngIf="
+          dataTask.number_success_msisdn && dataTask.number_success_msisdn > 0
+        "
+      >
+        <b class="text-info" *ngIf="dataTask && dataTask.task.otp">
+          Đã xác nhận OTP ĐKTTTB
+        </b>
+        <b class="text-secondary" *ngIf="dataTask && !dataTask.otp">
+          Chưa xác nhận OTP ĐKTTTB
+        </b>
+      </div> -->
+    </div>
+    <div class="col-md-12">
+      <!-- <span>Thời gian tạo: </span>
+      {{ dataTask.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br /> -->
+      <!-- <span>Thời gian mua : </span>
+      {{ dataTask.buy_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br /> -->
+      <span>Thời gian cập nhật: </span>
+      {{ dataTask?.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <!-- <span>Thời gian hoàn thành: </span>
+      {{ dataTask.sync_time | date : "dd/MM/yyyy H:mm" : "UTC" }} -->
+    </div>
+    <div class="col-md-12 mb-2"><span>Note: </span> {{ dataTask?.note }}</div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6" style="color: black">
+      <app-old-document-information
+        [dataText]="dataText"
+        [item]="item"
+        [dataImages]="dataImages"
+      ></app-old-document-information>
+    </div>
+    <div class="col-md-6" style="color: black">
+      <app-new-document-information
+        [dataText]="dataText"
+        [item]="item"
+        [dataImages]="dataImages"
+      ></app-new-document-information>
+    </div>
+  </div>
+  <div
+    class="row box-button d-flex"
+    style="gap: 10px; justify-content: center;"
+    *ngIf="isShowButtonApprove() && showSelect && showTask"
+  >
+    <a
+      class="ml-2 btn btn-success"
+      (click)="select('approve', 1)"
+      *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING"
+    >
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Duyệt
+    </a>
+    <a
+      class="ml-2 btn btn-danger"
+      (click)="select('reject')"
+      *ngIf="dataTask?.status == taskTelecomStatus.STATUS_PROCESSING"
+    >
+      <i data-feather="slash" class="text-danger cursor-pointer"></i>
+      Từ chối
+    </a>
+    <a
+      class="ml-2 btn"
+      (click)="reception()"
+      style="background-color: rgba(48, 133, 214, 1); color: #fff;"
+      *ngIf="dataTask.status != taskTelecomStatus.STATUS_PROCESSING"
+    >
+      Tiếp nhận yêu cầu
+    </a>
+  </div>
+</div>
