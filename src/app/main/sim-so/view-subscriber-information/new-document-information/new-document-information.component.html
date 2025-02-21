@@ -89,72 +89,72 @@
 
   <div class="col-md-6 mb-1">
     <span for>Ảnh giấy tờ mặt trước </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_front_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img *ngIf="!dataImages?.newPeopleImages?.identification_front_file" src="/assets/images/icons/icon-image-black.svg" alt="">
     <img
       (click)="
         onViewImage(
           modalImage,
-          dataImages?.oldPeopleImages?.identification_front_file
+          dataImages?.newPeopleImages?.identification_front_file
         )
       "
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.oldPeopleImages?.identification_front_file"
+      *ngIf="dataImages?.newPeopleImages?.identification_front_file"
       src="data:image/png;base64,{{
-        dataImages?.oldPeopleImages?.identification_front_file
+        dataImages?.newPeopleImages?.identification_front_file
       }}"
       alt="avatar img"
     />
   </div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh giấy tờ mặt sau </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_back_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img *ngIf="!dataImages?.newPeopleImages?.identification_back_file" src="/assets/images/icons/icon-image-black.svg" alt="">
     <img
       (click)="
         onViewImage(
           modalImage,
-          dataImages?.oldPeopleImages?.identification_back_file
+          dataImages?.newPeopleImages?.identification_back_file
         )
       "
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.oldPeopleImages?.identification_back_file"
+      *ngIf="dataImages?.newPeopleImages?.identification_back_file"
       src="data:image/png;base64,{{
-        dataImages?.oldPeopleImages?.identification_back_file
+        dataImages?.newPeopleImages?.identification_back_file
       }}"
       alt="avatar img"
     />
   </div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh chân dung </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_selfie_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img *ngIf="!dataImages?.newPeopleImages?.identification_selfie_file" src="/assets/images/icons/icon-image-black.svg" alt="">
     <img
       (click)="
         onViewImage(
           modalImage,
-          dataImages?.oldPeopleImages?.identification_selfie_file
+          dataImages?.newPeopleImages?.identification_selfie_file
         )
       "
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.oldPeopleImages?.identification_selfie_file"
+      *ngIf="dataImages?.newPeopleImages?.identification_selfie_file"
       src="data:image/png;base64,{{
-        dataImages?.oldPeopleImages?.identification_selfie_file
+        dataImages?.newPeopleImages?.identification_selfie_file
       }}"
       alt="avatar img"
     />
   </div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh chữ ký </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_signature_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img *ngIf="!dataImages?.newPeopleImages?.identification_signature_file" src="/assets/images/icons/icon-image-black.svg" alt="">
     <img
       (click)="
         onViewImage(
           modalImage,
-          dataImages?.oldPeopleImages?.identification_signature_file
+          dataImages?.newPeopleImages?.identification_signature_file
         )
       "
       class="img-fluid rounded mb-75"
-      *ngIf="dataImages?.oldPeopleImages?.identification_signature_file"
+      *ngIf="dataImages?.newPeopleImages?.identification_signature_file"
       src="data:image/png;base64,{{
-        dataImages?.oldPeopleImages?.identification_signature_file
+        dataImages?.newPeopleImages?.identification_signature_file
       }}"
       alt="avatar img"
     />
