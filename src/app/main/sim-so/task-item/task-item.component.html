@@ -1159,8 +1159,11 @@
 
 <ng-template #modalUploadSim let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="myModalLabel160">
+    <h4 class="modal-title" id="myModalLabel160" *ngIf="item?.action != listTaskAction?.change_sim?.value">
       Tải ảnh sim và nhập số serial
+    </h4>
+    <h4 class="modal-title" id="myModalLabel160" *ngIf="item?.action == listTaskAction?.change_sim?.value">
+      Đổi SIM: Tải ảnh SIM và nhập số serial SIM mới
     </h4>
     <button
       type="button"
@@ -1177,7 +1180,8 @@
       <input type="file" (change)="onSelectFile($event, 'sim')" />
     </div>
     <div class="form-group">
-      <label for>Số serial</label>
+      <label *ngIf="item?.action != listTaskAction?.change_sim?.value" for>Số serial</label>
+      <label *ngIf="item?.action == listTaskAction?.change_sim?.value" for>Serial đang sử dụng</label>
       <input
         type="text"
         #serial_input
@@ -1186,10 +1190,19 @@
         [attr.disabled]="disabled_kit ? '' : null"
       />
     </div>
+    <div class="form-group" *ngIf="item?.action == listTaskAction?.change_sim.value">
+      <label for>Serial mới</label>
+      <input
+        type="text"
+        #serial_input_new
+        [(ngModel)]="kit_serial_new"
+        class="form-control"
+      />
+    </div>
     <div class="form-group">
       <a
         class="btn btn-success"
-        (click)="onSubmitUploadSimInfo(serial_input?.value)"
+        (click)="onSubmitUploadSimInfo(item?.action == listTaskAction?.change_sim.value ? kit_serial_new : serial_input?.value)"
       >
         <i data-feather="check-circle" class="text-white cursor-pointer"></i>
         <span> Gửi </span>

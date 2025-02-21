@@ -71,6 +71,7 @@ export class TaskItemComponent implements OnInit {
   simFile: any;
   disabled_kit: boolean = false;
   kit_serial: string;
+  kit_serial_new: string;
   public viewImage;
   public modalRef: any;
   @BlockUI("section-block") sectionBlockUI: NgBlockUI;
@@ -186,7 +187,6 @@ export class TaskItemComponent implements OnInit {
               id: this.data.task.id + "",
             },
           };
-          console.log(dataPushNotify);
           this.adminService.pushNotify(dataPushNotify).subscribe((res) => {});
         },
         allowOutsideClick: () => !Swal.isLoading(),
@@ -234,7 +234,6 @@ export class TaskItemComponent implements OnInit {
               id: this.data.task.id + "",
             },
           };
-          console.log(dataPushNotify);
           this.adminService.pushNotify(dataPushNotify).subscribe((res) => {});
         }
       }
@@ -305,7 +304,6 @@ export class TaskItemComponent implements OnInit {
               id: this.data.task.id + "",
             },
           };
-          console.log(dataPushNotify);
           this.adminService.pushNotify(dataPushNotify).subscribe((res) => {});
         },
         allowOutsideClick: () => !Swal.isLoading(),
@@ -367,7 +365,6 @@ export class TaskItemComponent implements OnInit {
               id: this.data.task.id + "",
             },
           };
-          console.log(dataPushNotify);
           this.adminService.pushNotify(dataPushNotify).subscribe((res) => {});
         }
       }
@@ -610,6 +607,7 @@ export class TaskItemComponent implements OnInit {
    * @param serial
    */
   onUploadSimInfo(item) {
+    
     this.telecomService
       .getDetailSim({
         keysearch: this.data.task.msisdn,
@@ -622,7 +620,7 @@ export class TaskItemComponent implements OnInit {
           res.data.short_desc &&
           res.data.short_desc.includes("8984")
         ) {
-          this.disabled_kit = false;
+          this.disabled_kit = true;
           this.kit_serial = res.data.short_desc;
         }
         this.modalRef = this.modalService.open(this.modalUploadSim, {
@@ -638,6 +636,9 @@ export class TaskItemComponent implements OnInit {
   onCloseModal() {
     this.disabled_kit = false;
     this.kit_serial = "";
+    if(this.item?.action == this.listTaskAction?.change_sim.value){
+      this.kit_serial_new = "";
+    }
     this.modalRef.close();
   }
 
@@ -675,11 +676,9 @@ export class TaskItemComponent implements OnInit {
       fr.onload = () => {
         var img = new Image();
         img.onload = () => {
-          console.log(img.width);
           let width = img.width < 900 ? img.width : 900;
           let height =
             img.width < 900 ? img.height : (width * img.height) / img.width;
-          console.log(width, height);
           let canvas = document.createElement("canvas");
           canvas.width = width;
           canvas.height = height;
@@ -1096,14 +1095,13 @@ export class TaskItemComponent implements OnInit {
       }
       this.getData(1);
     }
+    
   }
 
   getData(action_view = null) {
     if (this.typeDetail && this.typeDetail == "msisdn") {
       this.telecomService.getDetailTaskMsisdn(this.item.id).subscribe((res) => {
         this.data = res.data;
-
-        console.log(this.data);
         for (const msi of this.data.msisdn.msisdns) {
           this.mnos.push(msi.mno);
         }
@@ -1116,8 +1114,6 @@ export class TaskItemComponent implements OnInit {
         .getDetailTask(this.item.id, action_view)
         .subscribe((res) => {
           this.data = res.data;
-
-          console.log(this.data);
           for (const msi of this.data.msisdn.msisdns) {
             this.mnos.push(msi.mno);
           }
@@ -1213,7 +1209,6 @@ export class TaskItemComponent implements OnInit {
 
   onChangeCmndToCccd() {
     let self = this;
-    console.log("MyItem", this.item);
     Swal.mixin({
       input: "text",
       confirmButtonText: "Next &rarr;",
@@ -1237,7 +1232,6 @@ export class TaskItemComponent implements OnInit {
         };
         self.telecomService.convertCmndToCCCD(body).subscribe(
           (res) => {
-            console.log("res", res);
             Swal.fire({
               title: res.code,
               html: res.message + " - Thoát ra và xem chi tiết",
@@ -1246,7 +1240,6 @@ export class TaskItemComponent implements OnInit {
             });
           },
           (err) => {
-            console.log("err", err);
             Swal.fire({
               title: err,
               html: err,
