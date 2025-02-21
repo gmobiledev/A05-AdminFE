@@ -1,0 +1,218 @@
+<div class="col-12" style="font-weight: bold; padding: unset">
+  <h4>Thông tin giấy tờ</h4>
+</div>
+<div class="row mb-2 p-1 border" *ngIf="dataNewText">
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Loại giấy tờ:
+      <a placement="right" *ngIf="dataNewText?.identification_type">
+        <span>{{ dataNewText?.identification_type }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Số giấy tờ:
+      <a placement="right" *ngIf="dataNewText?.identification_no">
+        <span>{{ dataNewText?.identification_no }}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Ngày cấp:
+      <a placement="right" *ngIf="dataNewText?.identification_date">
+        <span>{{
+          dataNewText?.identification_date * 1000 | date : "dd/MM/yyyy" : "UTC"
+        }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Nơi cấp:
+      <a placement="right" *ngIf="dataNewText?.identification_place">
+        <span>{{ dataNewText?.identification_place }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Họ và tên:
+      <a placement="right" *ngIf="dataNewText?.name">
+        <span>{{ dataNewText?.name }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Ngày sinh:
+      <a placement="right" *ngIf="dataNewText?.birth">
+        <span>{{
+          dataNewText?.birth * 1000 | date : "dd/MM/yyyy" : "UTC"
+        }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Số điện thoại liên hệ:
+      <a placement="right" *ngIf="dataNewText?.mobile">
+        <span>{{ dataNewText?.mobile }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="dataNewText">
+    <span>Địa chỉ thường trú: </span>
+    <a placement="right" *ngIf="dataNewText?.residence_address">
+      <span>{{ dataNewText?.residence_address }}</span></a
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span>Xã/phường: </span>
+    <a placement="right" *ngIf="dataNewText?.residence_commune">
+      <span>{{ dataNewText?.residence_commune }}</span></a
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span>Quận/huyện: </span>
+    <a placement="right" *ngIf="dataNewText?.residence_district">
+      <span>{{ dataNewText?.residence_district }}</span></a
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span>Tỉnh/thành: </span>
+    <a placement="right" *ngIf="dataNewText?.residence_province">
+      <span>{{ dataNewText?.residence_province }}</span></a
+    >
+  </div>
+
+  <div class="col-md-6 mb-1">
+    <span for>Ảnh giấy tờ mặt trước </span>
+    <img *ngIf="!dataImages?.oldPeopleImages?.identification_front_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      (click)="
+        onViewImage(
+          modalImage,
+          dataImages?.oldPeopleImages?.identification_front_file
+        )
+      "
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.oldPeopleImages?.identification_front_file"
+      src="data:image/png;base64,{{
+        dataImages?.oldPeopleImages?.identification_front_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  <div class="col-md-6 mb-1">
+    <span for>Ảnh giấy tờ mặt sau </span>
+    <img *ngIf="!dataImages?.oldPeopleImages?.identification_back_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      (click)="
+        onViewImage(
+          modalImage,
+          dataImages?.oldPeopleImages?.identification_back_file
+        )
+      "
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.oldPeopleImages?.identification_back_file"
+      src="data:image/png;base64,{{
+        dataImages?.oldPeopleImages?.identification_back_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  <div class="col-md-6 mb-1">
+    <span for>Ảnh chân dung </span>
+    <img *ngIf="!dataImages?.oldPeopleImages?.identification_selfie_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      (click)="
+        onViewImage(
+          modalImage,
+          dataImages?.oldPeopleImages?.identification_selfie_file
+        )
+      "
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.oldPeopleImages?.identification_selfie_file"
+      src="data:image/png;base64,{{
+        dataImages?.oldPeopleImages?.identification_selfie_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+  <div class="col-md-6 mb-1">
+    <span for>Ảnh chữ ký </span>
+    <img *ngIf="!dataImages?.oldPeopleImages?.identification_signature_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      (click)="
+        onViewImage(
+          modalImage,
+          dataImages?.oldPeopleImages?.identification_signature_file
+        )
+      "
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.oldPeopleImages?.identification_signature_file"
+      src="data:image/png;base64,{{
+        dataImages?.oldPeopleImages?.identification_signature_file
+      }}"
+      alt="avatar img"
+    />
+  </div>
+</div>
+<div class="row mb-2 p-1 border" *ngIf="dataNewText">
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span>Số thuê bao: </span>
+    <a placement="right" *ngIf="dataText?.msisdn?.msisdn">
+      <span>{{ dataText?.msisdn?.msisdn }}</span></a
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span>Serial: </span>
+    <a placement="right" *ngIf="dataText?.msisdn?.serial">
+      <span>{{ dataText?.msisdn?.serial }}</span></a
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span>Nhà mạng: </span>
+    <a placement="right" *ngIf="dataText?.msisdn?.mno">
+      <span>{{ dataText?.msisdn?.mno }}</span></a
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span>Gói cước: </span>
+    <a placement="right" *ngIf="dataText?.msisdn?.package">
+      <span>{{ dataText?.msisdn?.package }}</span></a
+    >
+  </div>
+  <div class="col-md-6 mb-1">
+    <span for>Ảnh sim </span>
+    <img *ngIf="!dataImages?.msisdnImage" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      (click)="
+        onViewImage(modalImage, 'selfie_compare', dataImages?.msisdnImage)
+      "
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.msisdnImage"
+      src="data:image/png;base64,{{ dataImages?.msisdnImage }}"
+      alt="avatar img"
+    />
+  </div>
+</div>
+
+<ng-template #modalImage let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalspan160"></h4>
+    <button
+      type="button"
+      class="close"
+      (click)="onCloseModalImage()"
+      aria-span="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <app-poup-view-image [srcImage]="viewImage"></app-poup-view-image>
+  </div>
+</ng-template>

@@ -100,6 +100,13 @@ export class TelecomService {
   getTaskSlugText(idSlug = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/text`);
   }
+  
+  postTextCompareDoc(idSlug = null) {
+    const data = {
+      taskId: idSlug
+    }
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/compare-doc`, data);
+  }
 
   getCcqLogs(idSlug = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/logs?page=1&page_size=30&orderby_key=action_at&orderby_value=DESC`);
@@ -107,6 +114,13 @@ export class TelecomService {
 
   getTaskSlugImages(idSlug = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/images`);
+  }
+
+  postCompareImage(idSlug = null) {
+    const data = {
+      taskId: idSlug
+    }
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/compare-image`, data);
   }
 
   getFileAttachedTask(idSlug = null) {
@@ -127,6 +141,10 @@ export class TelecomService {
 
   postUpdateStatus(idSlug: any, data = null) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/KHOI_PHUC/update-status`, data);
+  }
+
+  postApproveUpdateDoc(data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-update-doc`, data);
   }
 
   approveRequestChangeInfo(data = null) {
