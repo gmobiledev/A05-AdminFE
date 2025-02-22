@@ -22,9 +22,7 @@
     <span
       >Ngày cấp:
       <a placement="right" *ngIf="dataOldText?.identification_date">
-        <span>{{
-          dataOldText?.identification_date * 1000 | date : "dd/MM/yyyy" : "UTC"
-        }}</span>
+        <span>{{dataOldText?.identification_date}}</span>
       </a>
     </span>
   </div>
@@ -48,9 +46,7 @@
     <span
       >Ngày sinh:
       <a placement="right" *ngIf="dataOldText?.birth">
-        <span>{{
-          dataOldText?.birth * 1000 | date : "dd/MM/yyyy" : "UTC"
-        }}</span>
+        <span>{{dataOldText?.birth}}</span>
       </a>
     </span>
   </div>

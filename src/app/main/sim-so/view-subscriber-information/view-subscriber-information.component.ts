@@ -57,7 +57,7 @@ export class ViewSubscriberInformationComponent implements OnInit {
     let data;
     if (name === "approve") {
       data = {
-        status: 30,
+        status: 1,
         note: "duyệt",
         taskId: this.idSlug,
       };
