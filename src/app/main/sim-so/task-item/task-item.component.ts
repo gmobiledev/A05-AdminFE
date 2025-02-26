@@ -616,16 +616,15 @@ export class TaskItemComponent implements OnInit {
       })
       .subscribe((res) => {
         
-        // if (
-        //   res.data &&
-        //   res.data.short_desc &&
-        //   res.data.short_desc.includes("8984")
-        // ) {
-        //   this.disabled_kit = true;
-        //   this.kit_serial = res.data.short_desc;
-        // }
-        this.disabled_kit = true;
-          this.kit_serial = this.data?.msisdn?.msisdns[0]?.serial;
+        if (
+          res.data &&
+          res.data.short_desc &&
+          res.data.short_desc.includes("8984")
+        ) {
+          this.disabled_kit = true;
+          // this.kit_serial = res.data.short_desc;
+        this.kit_serial = this.data?.msisdn?.msisdns[0]?.serial;
+        }
         this.modalRef = this.modalService.open(this.modalUploadSim, {
           centered: true,
           windowClass: "modal modal-primary",
