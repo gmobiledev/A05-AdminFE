@@ -13,35 +13,16 @@ import { TelecomService } from "app/auth/service/telecom.service";
 export class UpdatePriceComponent implements OnInit {
   public contentHeader: any;
   public searchForm = {
-    id: "",
     name: "",
     code: "",
-    desc: "",
-    parent_id: "",
-    business_id: "",
-    type: "",
     status: "",
-    admin_id: "",
-    admin2_id: "",
-    province_id: "",
-    district_id: "",
-    skip: 0,
-    commune_id: "",
-    address: "",
-    attach_file_name: "",
-    customer_id: "",
-    user_sell_channels: "",
-    quantity: "",
-    page_size: 10,
+    page_size: 20,
     page: 1,
   };
+  selectView;
+  dataProducts;
   public totalPage: number;
-  public list = [{code: 123123,
-    name: 'ancs',
-    desc: 'sdfsd',
-    admin_id: 12312,
-    status: 0
-  }];
+  listdata;
   public totalItems: number;
   @BlockUI("section-block") itemBlockUI: NgBlockUI;
   @ViewChild("modalItemCreate") modalItemCreate: ElementRef;
@@ -75,10 +56,51 @@ export class UpdatePriceComponent implements OnInit {
         ],
       },
     };
+    this.getData();
+  }
+
+  getData() {
+    this.itemBlockUI.start();
+    this.telecomService.getDataBatchs(this.searchForm).subscribe(
+      (res) => {
+        if (res.status === 1 && res.data) {
+          this.listdata = res.data.data;
+          this.totalItems = res.data.totalRecords;
+          this.totalPage = res.data.totalRecords;
+        } else {
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
+  }
+
+  viewDetailPriceUpdate(id, name:string){
+    this.selectView = name;
+    this.telecomService.getDataDetailPriceUpdate(id).subscribe(
+      (res) => {
+        if (res.status === 1 && res.data) {
+          this.dataProducts = res.data.data;
+          this.modalOpen(this.modalItemView);
+        } else {
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
   }
 
   modalClose() {
     this.modalRef.close();
+    this.getData();
   }
 
   async modalOpen(modal, item = null) {
@@ -93,10 +115,14 @@ export class UpdatePriceComponent implements OnInit {
 
   loadPage(page): void {
     this.searchForm.page = page;
-    this.onSubmitSearch();
+    this.getData();
   }
 
-  onSubmitSearch() {}
+  onSubmitSearch() {
+    console.log('searchForm', this.searchForm);
+    
+    this.getData();
+  }
 
   onSubmitExportExcelReport() {
     this.inventoryService

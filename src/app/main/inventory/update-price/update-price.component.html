@@ -100,33 +100,38 @@
                     <th>SỐ LƯỢNG</th>
                     <th>THỜI GIAN</th>
                     <th>TRẠNG THÁI</th>
+                    <th>GHI CHÚ</th>
                     <th>THAO TÁC</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of list">
+                  <tr *ngFor="let item of listdata">
                     <td>
-                      {{ item.code }}
+                      {{ item?.id }}
                     </td>
-                    <td>{{ item.name }}</td>
+                    <td>{{ item?.title }}</td>
                     <td>
-                      {{ item.desc }}
-                    </td>
-                    <td>
-                      {{ item.admin_id }}
+                      {{ item?.quantility }}
                     </td>
                     <td>
-                      <div [innerHTML]="item.status | showStatusSell"></div>
+                      {{ item?.created_at | date: 'dd/MM/yyyy HH:mm:ss' }}
+                    </td>
+                    <td>
+                      <div [innerHTML]="item?.status | showStatusSell"></div>
+                    </td>
+
+                    <td>
+                      {{ item?.note }}
                     </td>
 
                     <td class="d-flex" style="gap: 10px;">
-                      <div class="cursor-pointer icon-operation" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItemView, 0, 'view')">
+                      <div class="cursor-pointer icon-operation" ngbTooltip="Xem chi tiết" (click)="viewDetailPriceUpdate(item.id,'view')">
                         <img
                           src="/assets/images/icons/icon-view-yellow.svg"
                           alt=""
                         />
                       </div>
-                      <div class="cursor-pointer icon-operation" ngbTooltip="Chỉnh sửa" (click)="modalOpen(modalItemView, 0, 'edit')">
+                      <div class="cursor-pointer icon-operation" ngbTooltip="Chỉnh sửa" (click)="viewDetailPriceUpdate(item.id, 'edit')">
                         <img
                           src="/assets/images/icons/icon-edit-yellow.svg"
                           alt=""
@@ -204,8 +209,8 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-create-update-price></app-create-update-price>
+  <div class="modal-body" tabindex="0">
+    <app-create-update-price (closePopup)="modalClose()"></app-create-update-price>
   </div>
 </ng-template>
 
@@ -227,7 +232,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-view-update-price></app-view-update-price>
+  <div class="modal-body" tabindex="0">
+    <app-view-update-price  [dataProducts]="dataProducts" [selectView]="selectView" ></app-view-update-price>
   </div>
 </ng-template>

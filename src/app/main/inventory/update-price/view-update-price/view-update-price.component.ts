@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 @Component({
@@ -8,6 +8,9 @@ import { BlockUI, NgBlockUI } from "ng-block-ui";
 })
 export class ViewUpdatePriceComponent implements OnInit {
   @BlockUI("section-block") itemBlockUI: NgBlockUI;
+  @Input() dataProducts: any;
+  @Input() selectView: any;
+  
   dataTask = {
     note: "sdfsadf",
     sync_time: null,
@@ -20,28 +23,15 @@ export class ViewUpdatePriceComponent implements OnInit {
     status: 5,
     id: 123132121,
   };
-  listDataSim = [
-    {
-      msisdn: "0999999999",
-      serial: 12345678910,
-      status: 1,
-    },
-    {
-      msisdn: "0999999999",
-      serial: 12345678910,
-      status: 1,
-    },
-    {
-      msisdn: "0999999999",
-      serial: 12345678910,
-      status: 1,
-    }
-  ];
+
   public selectedFilesImage: File[] = [];
+  countDataSim;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.countDataSim = this.dataProducts.products.count;
+  }
 
   isShowButtonApprove() {
     // if (

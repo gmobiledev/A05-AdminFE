@@ -21,6 +21,14 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task`, { params: params });
   }
 
+  getDataBatchs(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/product/batchs`, { params: params });
+  }
+
+  getDataDetailPriceUpdate(id) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/product/batch/` + id);
+  }
+
   /**
    * Get all task
    */
@@ -68,6 +76,10 @@ export class TelecomService {
 
   postFileUploadOcr(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/file-upload`, data);
+  }
+
+  postUpdatePriceBatch(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/update-price-batch`, data);
   }
 
   /**

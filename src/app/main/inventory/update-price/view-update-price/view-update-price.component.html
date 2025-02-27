@@ -32,8 +32,8 @@
       <span>Thời gian cập nhật: </span>
       {{ dataTask?.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
       <span>Thời gian hoàn thành: </span>
-      {{ dataTask?.sync_time | date : "dd/MM/yyyy H:mm" : "UTC"
-      }}<span>Note: </span> {{ dataTask?.note }}
+      {{ dataTask?.sync_time | date : "dd/MM/yyyy H:mm" : "UTC"}}<br />
+      <span>Note: </span> {{ dataTask?.note }}
     </div>
   </div>
 
@@ -62,20 +62,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of listDataSim">
+        <tr *ngFor="let item of dataProducts?.products?.items">
           <td>{{ item?.msisdn }}</td>
           <td>{{ item?.serial }}</td>
-          <td></td>
+          <td> <div [innerHTML]="item?.status | showStatusSell"></div></td>
         </tr>
       </tbody>
     </table>
-    <div class="footer">Tổng {{ listDataSim?.length }}</div>
+    <div class="footer">Tổng {{ countDataSim }}</div>
   </div>
   <div
     class="col-12 pt-1 pb-1 pr-2 pl-2 mb-1"
     style="border: 1px rgba(216, 216, 216, 1) solid"
   >
-    <div class="col-12 mb-1">
+    <div class="col-12 mb-1" *ngIf="selectView == 'edit'">
       <label for="update-file-image" class="label-upload-input"
         >Upload-file
         <img
@@ -124,7 +124,7 @@
     </div>
   </div>
 
-  <div class="row box-button" style="gap: 10px; justify-content: center">
+  <div class="row box-button" style="gap: 10px; justify-content: center" *ngIf="selectView == 'edit'">
     <a class="ml-2 btn btn-danger" (click)="select('reject')">
       <i data-feather="slash" class="text-white cursor-pointer"></i>
       Từ chối yêu cầu
