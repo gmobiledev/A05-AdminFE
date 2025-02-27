@@ -236,7 +236,7 @@
                     <td>
 
                       <div
-                        *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']  && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')">
+                        *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']  && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber'">
 
                         <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                           <i data-feather="eye" class="text-primary cursor-pointer"></i>
@@ -251,7 +251,7 @@
                         </a>
                       </div>
                       <div
-                      *ngIf=" currentUser.id != item.sync_by && item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc'">
+                      *ngIf=" currentUser.id != item.sync_by && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
                       <a ngbTooltip="Xem chi tiết" (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
                         <i data-feather="eye" class="text-primary cursor-pointer"></i>
                       </a>
@@ -260,7 +260,7 @@
                       <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
                         <div
                           *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+item.action+'/update-status')
-                        && item.status == taskTelecomStatus.STATUS_NEW_ORDER && !checkAction('telecom-admin/task/:slug(\\d+)/update-status') && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
+                        && item.status == taskTelecomStatus.STATUS_NEW_ORDER && !checkAction('telecom-admin/task/:slug(\\d+)/update-status') && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'] && item.action != 'cancel_subcriber'">
 
                           <a ngbTooltip="Tiếp nhận yêu cầu" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
@@ -276,7 +276,7 @@
                             && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
                         || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
                         || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
-                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'] && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')">
+                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'] && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber'">
 
                           <a ngbTooltip="Tiếp nhận yêu cầu" (click)="modalOpen(modalItem, item)">
                             <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
@@ -303,7 +303,7 @@
                           && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
                       || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
                       || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
-                      ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc'">
+                      ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
 
                         <a ngbTooltip="Tiếp nhận yêu cầu"
                           (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
@@ -319,7 +319,7 @@
                           </a>
                         </div>
                         <div
-                        *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc'">
+                        *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
 
                         <a ngbTooltip="Tiếp tục thực hiện"
                           (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
@@ -327,27 +327,27 @@
                         </a>
                       </div>
                         <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
+                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
 
                           <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
                             <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
                         <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
+                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
                           <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
                             <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
                           </a>
 
                         </div>
                         <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_REJECT  && (item.action != 'KHOI_PHUC' && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
+                          *ngIf="item.status == taskTelecomStatus.STATUS_REJECT  && (item.action != 'KHOI_PHUC' && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
                         </div>
                         <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_PAID_WAITING_EKYC  && (item.action != 'KHOI_PHUC' && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
+                          *ngIf="item.status == taskTelecomStatus.STATUS_PAID_WAITING_EKYC  && (item.action != 'KHOI_PHUC' && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
@@ -359,7 +359,7 @@
                           </a>
                         </div>
                         <div
-                          *ngIf="(item.status == taskTelecomStatus.STATUS_REJECT || item.status == 40) && item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc'">
+                          *ngIf="(item.status == taskTelecomStatus.STATUS_REJECT || item.status == 40) && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
@@ -374,7 +374,8 @@
                         (item.action != 'KHOI_PHUC' && 
                         item.action != 'app_request_change_user_info' &&
                         item.action != listTaskAction['change_user_info']['value'] &&
-                        item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')                             
+                        item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')  && 
+                        item.action != 'cancel_subcriber'                           
                         ">
                           <a class="mr-1" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
@@ -414,7 +415,7 @@
                         <div
                           *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
                           || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
-                          && item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc'">
+                          && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
 
                           <a ngbTooltip="Xem chi tiết" (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
@@ -527,8 +528,11 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0">
+  <div class="modal-body" tabindex="0" *ngIf="selectedItem.action == listTaskAction['change_info']['value'] && selectedItem.sub_action == 'update_doc'">
     <app-view-subscriber-information [item]="selectedItem" (closePopup)="modalClose()"></app-view-subscriber-information>
+  </div>
+  <div class="modal-body" tabindex="0" *ngIf="selectedItem.action == 'cancel_subcriber'">
+    <app-view-cancel-subscription [item]="selectedItem" (closePopup)="modalClose()"></app-view-cancel-subscription>
   </div>
 </ng-template>
 

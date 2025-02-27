@@ -1,0 +1,309 @@
+<div class="pl-3 pr-3" *ngIf="data">
+  <div class="row" *blockUI="'section-block'">
+    <div class="col-md-6">
+      <div>
+        <h3>Hủy thuê bao</h3>
+      </div>
+      <div>ID của yêu cầu: {{ data?.task?.id }}</div>
+      <div>
+        <span>Trạng thái: </span
+        ><span [innerHTML]="data?.task?.status | showStatusTelecom"></span>
+      </div>
+      <div><span>Admin thao tác: </span>{{ dataText?.task?.user_sync }}</div>
+
+      <!-- <div
+          *ngIf="
+            data.number_success_msisdn && data.number_success_msisdn > 0
+          "
+        >
+          <b class="text-info" *ngIf="data && data.task.otp">
+            Đã xác nhận OTP ĐKTTTB
+          </b>
+          <b class="text-secondary" *ngIf="data && !data.otp">
+            Chưa xác nhận OTP ĐKTTTB
+          </b>
+        </div> -->
+    </div>
+    <div class="col-md-12">
+      <!-- <span>Thời gian tạo: </span>
+        {{ data.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br /> -->
+      <!-- <span>Thời gian mua : </span>
+        {{ data.buy_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br /> -->
+      <span>Thời gian hủy thuê bao: </span>
+      {{ data?.task?.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian cập nhật: </span>
+      {{ data?.task?.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <!-- <span>Thời gian hoàn thành: </span>
+        {{ data.sync_time | date : "dd/MM/yyyy H:mm" : "UTC" }} -->
+    </div>
+    <div class="col-md-12 mb-2"><span>Note: </span> {{ data?.task?.note }}</div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6" style="color: black">
+      <div class="row mb-2 p-1 border" *ngIf="data?.customer?.people">
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Loại giấy tờ:
+            <a placement="right" *ngIf="data?.customer?.people?.identification_type">
+              <span>{{ data?.customer?.people?.identification_type }}</span>
+            </a></span
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Số giấy tờ:
+            <a placement="right" *ngIf="data?.customer?.people?.identification_no">
+              <span>{{ data?.customer?.people?.identification_no }}</span>
+            </a></span
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Ngày cấp:
+            <a placement="right" *ngIf="data?.customer?.people?.identification_date">
+              <span>{{ data?.customer?.people?.identification_date }}</span>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Nơi cấp:
+            <a placement="right" *ngIf="data?.customer?.people?.identification_place">
+              <span>{{ data?.customer?.people?.identification_place }}</span>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Họ và tên:
+            <a placement="right" *ngIf="data?.customer?.people?.name">
+              <span>{{ data?.customer?.people?.name }}</span>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Ngày sinh:
+            <a placement="right" *ngIf="data?.customer?.people?.birth">
+              <span>{{ data?.customer?.people?.birth }}</span>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Số điện thoại liên hệ:
+            <a placement="right" *ngIf="data?.customer?.people?.mobile">
+              <span>{{ data?.customer?.people?.mobile }}</span>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Địa chỉ thường trú: </span>
+          <a placement="right" *ngIf="data?.customer?.people?.full_address">
+            <span>{{ data?.customer?.people?.full_address }}</span></a
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Xã/phường: </span>
+          <a placement="right" *ngIf="data?.customer?.people?.commune">
+            <span>{{ data?.customer?.people?.commune }}</span></a
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Quận/huyện: </span>
+          <a placement="right" *ngIf="data?.customer?.people?.district">
+            <span>{{ data?.customer?.people?.district }}</span></a
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Tỉnh/thành: </span>
+          <a placement="right" *ngIf="data?.customer?.people?.province">
+            <span>{{ data?.customer?.people?.province }}</span></a
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1"></div>
+        <div class="col-md-6 mb-1">
+          <span for>Ảnh giấy tờ mặt trước </span>
+          <img
+            *ngIf="!data?.customer?.people?.identification_front_file"
+            src="/assets/images/icons/icon-image-black.svg"
+            alt=""
+          />
+          <img
+            (click)="
+              onViewImage(
+                modalImage,
+                data?.customer?.people?.identification_front_file
+              )
+            "
+            class="img-fluid rounded mb-75"
+            *ngIf="data?.customer?.people?.identification_front_file"
+            src="data:image/png;base64,{{
+              data?.customer?.people?.identification_front_file
+            }}"
+            alt="avatar img"
+          />
+        </div>
+        <div class="col-md-6 mb-1">
+          <span for>Ảnh giấy tờ mặt sau </span>
+          <img
+            *ngIf="!data?.customer?.people?.identification_back_file"
+            src="/assets/images/icons/icon-image-black.svg"
+            alt=""
+          />
+          <img
+            (click)="
+              onViewImage(
+                modalImage,
+                data?.customer?.people?.identification_back_file
+              )
+            "
+            class="img-fluid rounded mb-75"
+            *ngIf="data?.customer?.people?.identification_back_file"
+            src="data:image/png;base64,{{
+              data?.customer?.people?.identification_back_file
+            }}"
+            alt="avatar img"
+          />
+        </div>
+        <div class="col-md-6 mb-1">
+          <span for>Ảnh chân dung </span>
+          <img
+            *ngIf="!data?.customer?.people?.identification_selfie_file"
+            src="/assets/images/icons/icon-image-black.svg"
+            alt=""
+          />
+          <img
+            (click)="
+              onViewImage(
+                modalImage,
+                data?.customer?.people?.identification_selfie_file
+              )
+            "
+            class="img-fluid rounded mb-75"
+            *ngIf="data?.customer?.people?.identification_selfie_file"
+            src="data:image/png;base64,{{
+              data?.customer?.people?.identification_selfie_file
+            }}"
+            alt="avatar img"
+          />
+        </div>
+        <div class="col-md-6 mb-1">
+          <span for>Ảnh chữ ký </span>
+          <img
+            *ngIf="!data?.customer?.people?.identification_signature_file"
+            src="/assets/images/icons/icon-image-black.svg"
+            alt=""
+          />
+          <img
+            (click)="
+              onViewImage(
+                modalImage,
+                data?.customer?.people?.identification_signature_file
+              )
+            "
+            class="img-fluid rounded mb-75"
+            *ngIf="data?.customer?.people?.identification_signature_file"
+            src="data:image/png;base64,{{
+              data?.customer?.people?.identification_signature_file
+            }}"
+            alt="avatar img"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" style="color: black">
+      <div class="row mb-2 p-1 border" *ngIf="data?.msisdn">
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Số thuê bao: </span>
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].msisdn">
+            <span>{{ data?.msisdn?.msisdns[0].msisdn }}</span></a
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Serial: </span>
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].serial">
+            <span>{{ data?.msisdn?.msisdns[0].serial }}</span></a
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Nhà mạng: </span>
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].mno">
+            <span>{{ data?.msisdn?.msisdns[0].mno }}</span></a
+          >
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span>Gói cước: </span>
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].package">
+            <span>{{ data?.msisdn?.msisdns[0].package }}</span></a
+          >
+        </div>
+        <div class="col-md-6 mb-1">
+          <span for>Ảnh sim </span>
+          <img
+            *ngIf="!dataImages?.msisdnImage"
+            src="/assets/images/icons/icon-image-black.svg"
+            alt=""
+          />
+          <img
+            (click)="
+              onViewImage(modalImage, 'selfie_compare', dataImages?.msisdnImage)
+            "
+            class="img-fluid rounded mb-75"
+            *ngIf="dataImages?.msisdnImage"
+            src="data:image/png;base64,{{ dataImages?.msisdnImage }}"
+            alt="avatar img"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row box-button d-flex"
+    style="gap: 10px; justify-content: center"
+    *ngIf="isShowButtonApprove() && showSelect && showTask"
+  >
+    <a
+      class="ml-2 btn btn-success"
+      (click)="select('approve', 1)"
+      *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING"
+    >
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Duyệt
+    </a>
+    <a
+      class="ml-2 btn btn-danger"
+      (click)="select('reject')"
+      *ngIf="data?.task?.status == taskTelecomStatus.STATUS_PROCESSING"
+    >
+      <i data-feather="slash" class="text-danger cursor-pointer"></i>
+      Từ chối
+    </a>
+    <a
+      class="ml-2 btn"
+      (click)="reception()"
+      style="background-color: rgba(48, 133, 214, 1); color: #fff"
+      *ngIf="data?.task?.status != taskTelecomStatus.STATUS_PROCESSING"
+    >
+      Tiếp nhận yêu cầu
+    </a>
+  </div>
+</div>
+
+<ng-template #modalImage let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalspan160"></h4>
+    <button
+      type="button"
+      class="close"
+      (click)="onCloseModalImage()"
+      aria-span="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <app-poup-view-image [srcImage]="viewImage"></app-poup-view-image>
+  </div>
+</ng-template>
