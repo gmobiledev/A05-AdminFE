@@ -208,6 +208,22 @@
   </div>
   <div class="col-md-6 col-sm-12 mb-1" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
     <span
+      ><u>Giới tính</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="
+        dataNewText?.representative_info?.gender
+        "
+        (click)="copyTextClipboard(dataNewText?.representative_info?.gender)"
+      >
+      <span class="text-info" *ngIf="dataNewText?.representative_info?.gender== 'FEMALE'">Nữ</span>
+      <span class="text-info" *ngIf="dataNewText?.representative_info?.gender == 'MALE'">Nam</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="dataText?.task?.action == listTaskAction.change_user_info.value">
+    <span
       ><u>Nơi cấp</u>:
       <a
         placement="right"
@@ -421,6 +437,32 @@
         (click)="copyTextClipboard(dataNewText?.identification_date)"
       >
         <span class="text-info">{{ dataNewText?.identification_date }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Giới tính</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataNewText?.people?.gender"
+        (click)="copyTextClipboard(dataNewText?.people?.gender)"
+      >
+      <span class="text-info" *ngIf="dataNewText?.people?.gender == 'FEMALE'">Nữ</span>
+      <span class="text-info" *ngIf="dataNewText?.people?.gender == 'MALE'">Nam</span>
+      </a>
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="
+          dataNewText?.gender &&
+          !dataNewText?.people?.gender
+        "
+        (click)="copyTextClipboard(dataNewText?.gender)"
+      >
+      <span class="text-info" *ngIf="dataNewText?.gender == 'FEMALE'">Nữ</span>
+      <span class="text-info" *ngIf="dataNewText?.gender == 'MALE'">Nam</span>
       </a>
     </span>
   </div>

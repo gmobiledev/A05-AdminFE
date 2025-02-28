@@ -374,7 +374,7 @@
                         (item.action != 'KHOI_PHUC' && 
                         item.action != 'app_request_change_user_info' &&
                         item.action != listTaskAction['change_user_info']['value'] &&
-                        item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')                             
+                        (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc'))                             
                         ">
                           <a class="mr-1" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
