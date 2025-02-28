@@ -217,29 +217,29 @@
       <div class="row mb-2 p-1 border" *ngIf="data?.msisdn">
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Số thuê bao: </span>
-          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].msisdn">
-            <span>{{ data?.msisdn?.msisdns[0].msisdn }}</span></a
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0]?.msisdn">
+            <span>{{ data?.msisdn?.msisdns[0]?.msisdn }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Serial: </span>
-          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].serial">
-            <span>{{ data?.msisdn?.msisdns[0].serial }}</span></a
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0]?.serial">
+            <span>{{ data?.msisdn?.msisdns[0]?.serial }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Nhà mạng: </span>
-          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].mno">
-            <span>{{ data?.msisdn?.msisdns[0].mno }}</span></a
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0]?.mno">
+            <span>{{ data?.msisdn?.msisdns[0]?.mno }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Gói cước: </span>
-          <a placement="right" *ngIf="data?.msisdn?.msisdns[0].package">
-            <span>{{ data?.msisdn?.msisdns[0].package }}</span></a
+          <a placement="right" *ngIf="data?.msisdn?.msisdns[0]?.package">
+            <span>{{ data?.msisdn?.msisdns[0]?.package }}</span></a
           >
         </div>
-        <div class="col-md-6 mb-1">
+        <!-- <div class="col-md-6 mb-1">
           <span for>Ảnh sim </span>
           <img
             *ngIf="!dataImages?.msisdnImage"
@@ -255,7 +255,7 @@
             src="data:image/png;base64,{{ dataImages?.msisdnImage }}"
             alt="avatar img"
           />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

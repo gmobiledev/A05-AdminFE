@@ -147,6 +147,15 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-update-doc`, data);
   }
 
+  postCancelApprove(data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/cancel/approve`, data);
+  }
+
+  postCancelReject(data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/cancel/reject`, data);
+  }
+
+
   approveRequestChangeInfo(data = null) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-request-change-info`, data);
   }

@@ -4,6 +4,7 @@ import { TelecomService } from "app/auth/service/telecom.service";
 import { ObjectLocalStorage, TaskTelecomStatus } from "app/utils/constants";
 import { SweetAlertService } from "app/utils/sweet-alert.service";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-view-cancel-subscription",
@@ -38,60 +39,95 @@ export class ViewCancelSubscriptionComponent implements OnInit {
   }
 
   select(name: string) {
-    // let data;
-    // if (name === "approve") {
-    //   data = {
-    //     status: 1,
-    //     note: "duyệt",
-    //     taskId: this.idSlug,
-    //   };
-    //   this.approveUpdateDoc(data);
-    // } else {
-    //   Swal.fire({
-    //     title: "Từ chối yêu cầu, gửi lý do cho đại lý",
-    //     input: "textarea",
-    //     inputAttributes: {
-    //       autocapitalize: "off",
-    //     },
-    //     showCancelButton: true,
-    //     confirmButtonText: "Gửi",
-    //     showLoaderOnConfirm: true,
-    //     preConfirm: (note) => {
-    //       if (!note || note == "") {
-    //         Swal.showValidationMessage("Vui lòng nhập nội dung");
-    //         return;
-    //       }
-    //       data = {
-    //         status: 40,
-    //         note: note,
-    //         taskId: this.idSlug,
-    //       };
-    //       this.approveUpdateDoc(data);
-    //     },
-    //     allowOutsideClick: () => !Swal.isLoading(),
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       //this.updateStatus.emit({updated: true});
-    //       this.alertService.showSuccess("Thành công");
-    //     }
-    //   });
-    // }
+    let data;
+    if (name === "approve") {
+      data = {
+        task_id: this.idSlug,
+      };
+      this.postCancelApprove(data);
+    } else {
+      Swal.fire({
+        title: "Từ chối yêu cầu, gửi lý do cho đại lý",
+        input: "textarea",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "Gửi",
+        showLoaderOnConfirm: true,
+        preConfirm: (note) => {
+          if (!note || note == "") {
+            Swal.showValidationMessage("Vui lòng nhập nội dung");
+            return;
+          }
+          data = {
+            reason: note,
+            task_id: this.idSlug,
+          };
+          this.postCancelReject(data);
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //this.updateStatus.emit({updated: true});
+          this.alertService.showSuccess("Thành công");
+        }
+      });
+    }
+  }
+
+  postCancelApprove(data: any) {
+    this.telecomService.postCancelApprove(data).subscribe(
+      (res: any) => {
+        if (res.status === 1) {
+          this.closePopup.next();
+          this.alertService.showMess(res.message);
+        } else {
+          this.closePopup.next();
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
+  }
+
+  postCancelReject(data: any) {
+    this.telecomService.postCancelReject(data).subscribe(
+      (res: any) => {
+        if (res.status === 1) {
+          this.closePopup.next();
+          this.alertService.showMess(res.message);
+        } else {
+          this.closePopup.next();
+          this.alertService.showMess(res.message);
+        }
+        this.itemBlockUI.stop();
+      },
+      (err) => {
+        this.itemBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
   }
 
   async reception() {
     this.itemBlockUI.start();
     try {
-      // const check = await this.telecomService.checkAvailabledTask(this.idSlug);
-      // if (check.status === 1) {
-      //   this.alertService.showMess(check.message);
-      //   this.itemBlockUI.stop();
-      //   // this.getTaskSlugText(this.idSlug);
-      //   return;
-      // } else {
-      //   this.alertService.showMess(check.message);
-      //   this.itemBlockUI.stop();
-      //   return;
-      // }
+      const check = await this.telecomService.checkAvailabledTask(this.idSlug);
+      if (check.status === 1) {
+        this.alertService.showMess(check.message);
+        this.itemBlockUI.stop();
+        this.getData();
+        return;
+      } else {
+        this.alertService.showMess(check.message);
+        this.itemBlockUI.stop();
+        return;
+      }
     } catch (error) {
       this.itemBlockUI.stop();
       return;
@@ -117,14 +153,20 @@ export class ViewCancelSubscriptionComponent implements OnInit {
   }
 
   isShowButtonApprove() {
-    // if (
-    //   this.checkAction("telecom-admin/task/:slug(\\d+)/check-available") &&
-    //   this.checkAction("telecom-admin/task/approve-update-doc")
-    // ) {
-    //   return true;
-    // }
-    // return false;
-    return true;
+    if (
+      this.checkAction("telecom-admin/task/:slug(\\d+)/check-available") &&
+      this.checkAction("telecom-admin/task/cancel/reject") &&
+      this.checkAction("telecom-admin/task/cancel/approve")
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  checkAction(item) {
+    return this.currentUser
+      ? this.currentUser.actions.find((itemX) => itemX.includes(item))
+      : false;
   }
 
   checkStatus() {
