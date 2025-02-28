@@ -59,6 +59,7 @@ export class ViewRestorerInformationComponent implements OnInit {
         this.data?.type == "CC" ? "CAN_CUOC" : this.data?.type,
         Validators.required,
       ],
+      gender: [this.data?.sex, Validators.required],
       identificationNo: [this.data?.id, Validators.required],
       identificationDate: [this.data?.issue_date, Validators.required],
       identificationPlace: [this.data?.issue_loc, Validators.required],
@@ -169,6 +170,12 @@ export class ViewRestorerInformationComponent implements OnInit {
       );
       return;
     }
+    if (!this.formOgzOcr.value.gender) {
+      this.alertService.showMess(
+        "Vui lòng không để trống giới tính người sử dụng"
+      );
+      return;
+    }
     if (!this.formOgzOcr.value.birth) {
       this.alertService.showMess(
         "Vui lòng không để trống ngày sinh người sử dụng"
@@ -204,7 +211,7 @@ export class ViewRestorerInformationComponent implements OnInit {
       name: this.formOgzOcr.value.name,
       identification_no: this.formOgzOcr.value.identificationNo,
       birth: this.timeStamp(this.formOgzOcr.value.birth),
-      gender: this.data.sex,
+      gender: this.formOgzOcr.value.gender,
       country: this.data.nationality,
       home_country: this.data.nationality,
       home_province: parseInt(this.formOgzOcr.value.province_code),
