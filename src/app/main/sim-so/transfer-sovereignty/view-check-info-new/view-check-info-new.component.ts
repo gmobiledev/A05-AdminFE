@@ -252,6 +252,12 @@ export class ViewCheckInfoNewComponent implements OnInit {
           : "",
         Validators.required,
       ],
+      genderAuthorizer: [
+        this.data?.data?.authorizer?.sex
+          ? this.data?.data?.authorizer?.sex
+          : "",
+        Validators.required,
+      ],
       identificationPlaceAuthorizer: [
         this.data?.data?.authorizer?.issue_loc
           ? this.data?.data?.authorizer?.issue_loc
@@ -297,6 +303,12 @@ export class ViewCheckInfoNewComponent implements OnInit {
           : this.data?.data?.user?.issue_date,
         Validators.required,
       ],
+      genderUser: [
+        this.select.id != 1
+          ? this.data?.data?.sex
+          : this.data?.data?.user?.sex,
+        Validators.required,
+      ],
       identificationPlaceUser: [
         this.select.id != 1
           ? this.data?.data?.issue_loc
@@ -335,6 +347,12 @@ export class ViewCheckInfoNewComponent implements OnInit {
     if (!this.formOgzOcr.value.identificationDateUser) {
       this.alertService.showMess(
         "Vui lòng không để trống ngày cấp người sử dụng"
+      );
+      return;
+    }
+    if (!this.formOgzOcr.value.genderUser) {
+      this.alertService.showMess(
+        "Vui lòng không để trống giới tính người sử dụng"
       );
       return;
     }
@@ -378,6 +396,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
                 .join("-")
             ).getTime() / 1000
           ),
+          gender: this.formOgzOcr.value.genderUser,
           identification_place: this.formOgzOcr.value.identificationPlaceUser,
           name: this.formOgzOcr.value.userFullName,
           birth: Math.floor(
@@ -408,6 +427,12 @@ export class ViewCheckInfoNewComponent implements OnInit {
       if (!this.formOgzOcr.value.identificationDateAuthorizer) {
         this.alertService.showMess(
           "Vui lòng không để trống ngày cấp người đại diện"
+        );
+        return;
+      }
+      if (!this.formOgzOcr.value.genderAuthorizer) {
+        this.alertService.showMess(
+          "Vui lòng không để trống giới tính người đại diện"
         );
         return;
       }
@@ -450,6 +475,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
                 .join("-")
             ).getTime() / 1000
           ),
+          gender: this.formOgzOcr.value.genderUser,
           identification_place: this.formOgzOcr.value.identificationPlaceUser,
           name: this.formOgzOcr.value.userFullName,
           birth: Math.floor(
@@ -490,6 +516,7 @@ export class ViewCheckInfoNewComponent implements OnInit {
                 .join("-")
             ).getTime() / 1000
           ),
+          gender: this.formOgzOcr.value.genderAuthorizer,
           identification_place:
             this.formOgzOcr.value.identificationPlaceAuthorizer,
           name: this.formOgzOcr.value.representativeName,
