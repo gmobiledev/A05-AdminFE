@@ -22,7 +22,28 @@ export class ViewCancelSubscriptionComponent implements OnInit {
   data;
   idSlug;
   currentUser;
+  countDataSim = "1";
   public taskTelecomStatus = TaskTelecomStatus;
+  dataProducts = [
+    {
+      msisdn: "0999999999",
+      serial: "12345678910",
+      user: "Nguyễn Anh A",
+      status: 1,
+    },
+    {
+      msisdn: "0999999999",
+      serial: "12345678910",
+      user: "Nguyễn Anh A",
+      status: 1,
+    },
+    {
+      msisdn: "0999999999",
+      serial: "12345678910",
+      user: "Nguyễn Anh A",
+      status: 1,
+    },
+  ];
 
   constructor(
     private modalService: NgbModal,
