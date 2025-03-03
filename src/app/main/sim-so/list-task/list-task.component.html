@@ -649,7 +649,7 @@
       </div>
 
       <div class="col-md-6 mt-1"
-        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && listTask.status == taskTelecomStatus.STATUS_FAIL">
+        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && (listTask.status == taskTelecomStatus.STATUS_FAIL || listTask.status == taskTelecomStatus.STATUS_WAITING)">
         <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Yêu cầu hoàn tiền
         </button>
