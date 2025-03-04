@@ -82,6 +82,7 @@
                     <th *ngIf="!isSingleService || showServiceAddMoneyBalancePackageBalance">Dịch vụ</th>
                     <th *ngIf="!isSingleService">Merchant</th>
                     <th>Tiêu đề</th>
+                    <th>Số dư tài khoản</th>
                     <th>{{ tableColumnName.amount }}</th>
                     <th *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">Nhà mạng</th>
                     <th>Ngày tạo</th>
@@ -105,6 +106,9 @@
                     </td>
                     <td>
                       {{ item?.title }}
+                    </td>
+                    <td>
+                      {{ getJSONDetail(item, 'balance_after') ? getJSONDetail(item, 'balance_after') : 0 | number}} {{ currency }}
                     </td>
                     <td>
                       {{item?.bill_id}}<br>
