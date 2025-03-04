@@ -105,6 +105,15 @@
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span
+            >Giới tính:
+            <a placement="right" *ngIf="data?.customer?.people?.gender">
+              <span *ngIf="data?.customer?.people?.gender == 'FEMALE'">Nữ</span>
+              <span *ngIf="data?.customer?.people?.gender == 'MALE'">Nam</span>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
             >Số điện thoại liên hệ:
             <a placement="right" *ngIf="data?.customer?.people?.mobile">
               <span>{{ data?.customer?.people?.mobile }}</span>
@@ -228,17 +237,17 @@
     </div>
     <div class="col-md-6" style="color: black">
       <div class="col-md-12">
-        <h4>Thông tin giấy tờ đăng ký</h4>
+        <h4>Thông tin giấy tờ đối chiếu</h4>
       </div>
-      <div class="row mb-2 p-1 border" *ngIf="data?.customer?.people">
+      <div class="row mb-2 p-1 border" *ngIf="data?.people">
         <div class="col-md-6 col-sm-12 mb-1">
           <span
             >Loại giấy tờ:
             <a
               placement="right"
-              *ngIf="data?.customer?.people?.identification_type"
+              *ngIf="data?.people?.identification_type"
             >
-              <span>{{ data?.customer?.people?.identification_type }}</span>
+              <span>{{ data?.people?.identification_type }}</span>
             </a></span
           >
         </div>
@@ -247,9 +256,9 @@
             >Số giấy tờ:
             <a
               placement="right"
-              *ngIf="data?.customer?.people?.identification_no"
+              *ngIf="data?.people?.identification_no"
             >
-              <span>{{ data?.customer?.people?.identification_no }}</span>
+              <span>{{ data?.people?.identification_no }}</span>
             </a></span
           >
         </div>
@@ -258,9 +267,9 @@
             >Ngày cấp:
             <a
               placement="right"
-              *ngIf="data?.customer?.people?.identification_date"
+              *ngIf="data?.people?.identification_date"
             >
-              <span>{{ data?.customer?.people?.identification_date }}</span>
+              <span>{{ data?.people?.identification_date }}</span>
             </a>
           </span>
         </div>
@@ -269,65 +278,74 @@
             >Nơi cấp:
             <a
               placement="right"
-              *ngIf="data?.customer?.people?.identification_place"
+              *ngIf="data?.people?.identification_place"
             >
-              <span>{{ data?.customer?.people?.identification_place }}</span>
+              <span>{{ data?.people?.identification_place }}</span>
             </a>
           </span>
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span
             >Họ và tên:
-            <a placement="right" *ngIf="data?.customer?.people?.name">
-              <span>{{ data?.customer?.people?.name }}</span>
+            <a placement="right" *ngIf="data?.people?.name">
+              <span>{{ data?.people?.name }}</span>
             </a>
           </span>
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span
             >Ngày sinh:
-            <a placement="right" *ngIf="data?.customer?.people?.birth">
-              <span>{{ data?.customer?.people?.birth }}</span>
+            <a placement="right" *ngIf="data?.people?.birth">
+              <span>{{ data?.people?.birth }}</span>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-6 col-sm-12 mb-1">
+          <span
+            >Giới tính:
+            <a placement="right" *ngIf="data?.people?.gender">
+              <span *ngIf="data?.people?.gender == 'FEMALE'">Nữ</span>
+              <span *ngIf="data?.people?.gender == 'MALE'">Nam</span>
             </a>
           </span>
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span
             >Số điện thoại liên hệ:
-            <a placement="right" *ngIf="data?.customer?.people?.mobile">
-              <span>{{ data?.customer?.people?.mobile }}</span>
+            <a placement="right" *ngIf="data?.people?.mobile">
+              <span>{{ data?.people?.mobile }}</span>
             </a>
           </span>
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Địa chỉ thường trú: </span>
-          <a placement="right" *ngIf="data?.customer?.people?.full_address">
-            <span>{{ data?.customer?.people?.full_address }}</span></a
+          <a placement="right" *ngIf="data?.people?.full_address">
+            <span>{{ data?.people?.full_address }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Xã/phường: </span>
-          <a placement="right" *ngIf="data?.customer?.people?.commune">
-            <span>{{ data?.customer?.people?.commune }}</span></a
+          <a placement="right" *ngIf="data?.people?.commune">
+            <span>{{ data?.people?.commune }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Quận/huyện: </span>
-          <a placement="right" *ngIf="data?.customer?.people?.district">
-            <span>{{ data?.customer?.people?.district }}</span></a
+          <a placement="right" *ngIf="data?.people?.district">
+            <span>{{ data?.people?.district }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Tỉnh/thành: </span>
-          <a placement="right" *ngIf="data?.customer?.people?.province">
-            <span>{{ data?.customer?.people?.province }}</span></a
+          <a placement="right" *ngIf="data?.people?.province">
+            <span>{{ data?.people?.province }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1"></div>
         <div class="col-md-6 mb-1">
           <span for>Ảnh giấy tờ mặt trước </span>
           <img
-            *ngIf="!data?.customer?.people?.identification_front_file"
+            *ngIf="!data?.people?.identification_front_file"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -335,13 +353,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.customer?.people?.identification_front_file
+                data?.people?.identification_front_file
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.customer?.people?.identification_front_file"
+            *ngIf="data?.people?.identification_front_file"
             src="data:image/png;base64,{{
-              data?.customer?.people?.identification_front_file
+              data?.people?.identification_front_file
             }}"
             alt="avatar img"
           />
@@ -349,7 +367,7 @@
         <div class="col-md-6 mb-1">
           <span for>Ảnh giấy tờ mặt sau </span>
           <img
-            *ngIf="!data?.customer?.people?.identification_back_file"
+            *ngIf="!data?.people?.identification_back_file"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -357,13 +375,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.customer?.people?.identification_back_file
+                data?.people?.identification_back_file
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.customer?.people?.identification_back_file"
+            *ngIf="data?.people?.identification_back_file"
             src="data:image/png;base64,{{
-              data?.customer?.people?.identification_back_file
+              data?.people?.identification_back_file
             }}"
             alt="avatar img"
           />
@@ -371,7 +389,7 @@
         <div class="col-md-6 mb-1">
           <span for>Ảnh chân dung </span>
           <img
-            *ngIf="!data?.customer?.people?.identification_selfie_file"
+            *ngIf="!data?.people?.identification_selfie_file"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -379,13 +397,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.customer?.people?.identification_selfie_file
+                data?.people?.identification_selfie_file
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.customer?.people?.identification_selfie_file"
+            *ngIf="data?.people?.identification_selfie_file"
             src="data:image/png;base64,{{
-              data?.customer?.people?.identification_selfie_file
+              data?.people?.identification_selfie_file
             }}"
             alt="avatar img"
           />
@@ -393,7 +411,7 @@
         <div class="col-md-6 mb-1">
           <span for>Ảnh chữ ký </span>
           <img
-            *ngIf="!data?.customer?.people?.identification_signature_file"
+            *ngIf="!data?.people?.identification_signature_file"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -401,13 +419,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.customer?.people?.identification_signature_file
+                data?.people?.identification_signature_file
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.customer?.people?.identification_signature_file"
+            *ngIf="data?.people?.identification_signature_file"
             src="data:image/png;base64,{{
-              data?.customer?.people?.identification_signature_file
+              data?.people?.identification_signature_file
             }}"
             alt="avatar img"
           />
@@ -465,14 +483,14 @@
   <div class="row mb-1">
     <div class="col-md-12 d-flex align-items-center">
       <span class="pr-1">Xem file đính kèm</span>
-      <img src="/assets/images/icons/icon-image-black.svg" alt="" />
+      <!-- <img src="/assets/images/icons/icon-image-black.svg" alt="" /> -->
     </div>
     <div class="col-md-12 d-flex align-items-center">
       <span class="pr-1">Bố sung thêm chứng</span>
-      <button class="btn button-update-file">Tải tài liệu</button>
+      <!-- <button class="btn button-update-file">Tải tài liệu</button> -->
     </div>
   </div>
-  <div class="row mb-4">
+  <!-- <div class="row mb-4">
     <h4 style="color: #666666">Danh sách sản phẩm</h4>
     <div class="col-md-12">
       <div class="view-content">
@@ -508,7 +526,7 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </div> -->
   <div
     class="row box-button d-flex"
     style="gap: 10px; justify-content: center"
