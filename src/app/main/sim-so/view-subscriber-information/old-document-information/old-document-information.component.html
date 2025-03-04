@@ -22,7 +22,16 @@
     <span
       >Ngày cấp:
       <a placement="right" *ngIf="dataOldText?.identification_date">
-        <span>{{dataOldText?.identification_date}}</span>
+        <span>{{ dataOldText?.identification_date }}</span>
+      </a>
+    </span>
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      >Giới tính:
+      <a placement="right" *ngIf="dataOldText?.gender">
+        <span *ngIf="dataOldText?.gender == 'FEMALE'">Nữ</span>
+        <span *ngIf="dataOldText?.gender == 'MALE'">Nam</span>
       </a>
     </span>
   </div>
@@ -46,7 +55,7 @@
     <span
       >Ngày sinh:
       <a placement="right" *ngIf="dataOldText?.birth">
-        <span>{{dataOldText?.birth}}</span>
+        <span>{{ dataOldText?.birth }}</span>
       </a>
     </span>
   </div>
@@ -85,7 +94,11 @@
   <div class="col-md-6 col-sm-12 mb-1"></div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh giấy tờ mặt trước </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_front_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      *ngIf="!dataImages?.oldPeopleImages?.identification_front_file"
+      src="/assets/images/icons/icon-image-black.svg"
+      alt=""
+    />
     <img
       (click)="
         onViewImage(
@@ -103,7 +116,11 @@
   </div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh giấy tờ mặt sau </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_back_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      *ngIf="!dataImages?.oldPeopleImages?.identification_back_file"
+      src="/assets/images/icons/icon-image-black.svg"
+      alt=""
+    />
     <img
       (click)="
         onViewImage(
@@ -121,7 +138,11 @@
   </div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh chân dung </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_selfie_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      *ngIf="!dataImages?.oldPeopleImages?.identification_selfie_file"
+      src="/assets/images/icons/icon-image-black.svg"
+      alt=""
+    />
     <img
       (click)="
         onViewImage(
@@ -139,7 +160,11 @@
   </div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh chữ ký </span>
-    <img *ngIf="!dataImages?.oldPeopleImages?.identification_signature_file" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      *ngIf="!dataImages?.oldPeopleImages?.identification_signature_file"
+      src="/assets/images/icons/icon-image-black.svg"
+      alt=""
+    />
     <img
       (click)="
         onViewImage(
@@ -183,7 +208,11 @@
   </div>
   <div class="col-md-6 mb-1">
     <span for>Ảnh sim </span>
-    <img *ngIf="!dataImages?.msisdnImage" src="/assets/images/icons/icon-image-black.svg" alt="">
+    <img
+      *ngIf="!dataImages?.msisdnImage"
+      src="/assets/images/icons/icon-image-black.svg"
+      alt=""
+    />
     <img
       (click)="
         onViewImage(modalImage, 'selfie_compare', dataImages?.msisdnImage)

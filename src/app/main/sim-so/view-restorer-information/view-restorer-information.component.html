@@ -18,6 +18,13 @@
               <option value="CMND">CCCD mã vạch</option>
             </select>
           </div>
+          <div class="col-md-6 mb-1 d-flex">
+            <label>Giới tính:</label>
+            <select formControlName="gender" id="gender" class="form-control">
+              <option value="MALE">Nam</option>
+              <option value="FEMALE">Nữ</option>
+            </select>
+          </div>
           <div class="col-md-6 mb-1">
             <label>Số giấy tờ:</label>
             <input
@@ -105,7 +112,12 @@
           </div>
           <div class="col-md-6 mb-1 d-flex">
             <label>Xã/phường:</label>
-            <select name="" formControlName="ward_code" class="form-control"  (change)="onChangeResidenceCommune($event)">
+            <select
+              name=""
+              formControlName="ward_code"
+              class="form-control"
+              (change)="onChangeResidenceCommune($event)"
+            >
               <option selected value="">--Chọn Phường/xã --</option>
               <option *ngFor="let p of wards" [value]="p.id">
                 {{ p.title }}

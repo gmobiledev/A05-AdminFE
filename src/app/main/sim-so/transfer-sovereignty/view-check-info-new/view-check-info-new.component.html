@@ -18,6 +18,17 @@
           </select>
         </div>
         <div class="mb-1">
+          <label>Giới tính:</label>
+          <select
+            formControlName="genderUser"
+            id="gender_user"
+            class="form-control"
+          >
+            <option value="MALE">Nam</option>
+            <option value="FEMALE">Nữ</option>
+          </select>
+        </div>
+        <div class="mb-1">
           <label>Số giấy tờ:</label>
           <input
             type="text"
@@ -173,6 +184,17 @@
           </select>
         </div>
         <div class="mb-1">
+          <label>Giới tính:</label>
+          <select
+            formControlName="genderAuthorizer"
+            id="gender_authorizer"
+            class="form-control"
+          >
+            <option value="MALE">Nam</option>
+            <option value="FEMALE">Nữ</option>
+          </select>
+        </div>
+        <div class="mb-1">
           <label>Số giấy tờ:</label>
           <input
             type="text"
@@ -305,6 +327,17 @@
           </select>
         </div>
         <div class="mb-1">
+          <label>Giới tính:</label>
+          <select
+            formControlName="genderUser"
+            id="gender_user"
+            class="form-control"
+          >
+            <option value="MALE">Nam</option>
+            <option value="FEMALE">Nữ</option>
+          </select>
+        </div>
+        <div class="mb-1">
           <label>Số giấy tờ:</label>
           <input
             type="text"
@@ -430,6 +463,11 @@
             dataUserOld?.people?.identification_date * 1000
               | date : "dd/MM/yyyy"
           }}</span>
+        </div>
+        <div class="mb-1">
+          <label>Giới tính:</label>
+          <span *ngIf="dataUserOld?.people?.gender == 'FEMALE'">Nữ</span>
+          <span *ngIf="dataUserOld?.people?.gender == 'MALE'">Nam</span>
         </div>
         <div class="mb-1">
           <label>Nơi cấp:</label>

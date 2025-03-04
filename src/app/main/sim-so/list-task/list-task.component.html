@@ -374,9 +374,8 @@
                         (item.action != 'KHOI_PHUC' && 
                         item.action != 'app_request_change_user_info' &&
                         item.action != listTaskAction['change_user_info']['value'] &&
-                        item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')  && 
-                        item.action != 'cancel_subcriber'                           
-                        ">
+                        (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')  && 
+                        item.action != 'cancel_subcriber')">
                           <a class="mr-1" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
                             <i data-feather="eye" class="text-primary cursor-pointer"></i>
                           </a>
@@ -653,7 +652,7 @@
       </div>
 
       <div class="col-md-6 mt-1"
-        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && listTask.status == taskTelecomStatus.STATUS_FAIL">
+        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && (listTask.status == taskTelecomStatus.STATUS_FAIL || listTask.status == taskTelecomStatus.STATUS_WAITING)">
         <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
           Yêu cầu hoàn tiền
         </button>

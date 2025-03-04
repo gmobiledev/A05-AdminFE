@@ -104,6 +104,22 @@
   </div>
   <div class="col-md-6 col-sm-12 mb-1" *ngIf="item?.action == 'change_user_info'">
     <span
+      ><u>Giới tính</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.representative_info?.gender"
+        (click)="
+          copyTextClipboard(dataOldText?.representative_info?.gender)
+        "
+      >
+      <span class="text-info" *ngIf="dataOldText?.representative_info?.gender == 'FEMALE'">Nữ</span>
+      <span class="text-info" *ngIf="dataOldText?.representative_info?.gender == 'MALE'">Nam</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1" *ngIf="item?.action == 'change_user_info'">
+    <span
       ><u>Nơi cấp</u>:
       <a
         placement="right"
@@ -283,6 +299,22 @@
         "
       >
         <span class="text-info">{{ dataOldText?.people?.identification_date}}</span>
+      </a></span
+    >
+  </div>
+  <div class="col-md-6 col-sm-12 mb-1">
+    <span
+      ><u>Giới tính</u>:
+      <a
+        placement="right"
+        ngbTooltip="'Bấm để copy'"
+        *ngIf="dataOldText?.people?.gender"
+        (click)="
+          copyTextClipboard(dataOldText?.people?.gender)
+        "
+      >
+      <span class="text-info" *ngIf="dataOldText?.people?.gender == 'FEMALE'">Nữ</span>
+      <span class="text-info" *ngIf="dataOldText?.people?.gender == 'MALE'">Nam</span>
       </a></span
     >
   </div>
