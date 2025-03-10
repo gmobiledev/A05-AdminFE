@@ -2,14 +2,14 @@
   <div class="row" *blockUI="'section-block'">
     <div class="col-md-6">
       <div>
-        <h3>Hủy thuê bao</h3>
+        <h3>Hủy sim</h3>
       </div>
       <div>ID của yêu cầu: {{ data?.task?.id }}</div>
       <div>
         <span>Trạng thái: </span
         ><span [innerHTML]="data?.task?.status | showStatusTelecom"></span>
       </div>
-      <div><span>Admin thao tác: </span>{{ dataText?.task?.user_sync }}</div>
+      <div><span>Admin thao tác: </span>{{ data?.user_sync }}</div>
 
       <!-- <div
           *ngIf="
