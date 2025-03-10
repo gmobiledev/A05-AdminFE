@@ -144,7 +144,6 @@
             <span>{{ data?.customer?.people?.province }}</span></a
           >
         </div>
-        <div class="col-md-6 col-sm-12 mb-1"></div>
         <div class="col-md-6 mb-1">
           <span for>Ảnh giấy tờ mặt trước </span>
           <img
@@ -325,8 +324,8 @@
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span>Xã/phường: </span>
-          <a placement="right" *ngIf="data?.people?.commune">
-            <span>{{ data?.people?.commune }}</span></a
+          <a placement="right" *ngIf="data?.people?.communue">
+            <span>{{ data?.people?.communue }}</span></a
           >
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
@@ -341,11 +340,10 @@
             <span>{{ data?.people?.province }}</span></a
           >
         </div>
-        <div class="col-md-6 col-sm-12 mb-1"></div>
         <div class="col-md-6 mb-1">
           <span for>Ảnh giấy tờ mặt trước </span>
           <img
-            *ngIf="!data?.people?.identification_front_file"
+            *ngIf="!data?.people?.base64FrontCompare"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -353,13 +351,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.people?.identification_front_file
+                data?.people?.base64FrontCompare
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.people?.identification_front_file"
+            *ngIf="data?.people?.base64FrontCompare"
             src="data:image/png;base64,{{
-              data?.people?.identification_front_file
+              data?.people?.base64FrontCompare
             }}"
             alt="avatar img"
           />
@@ -367,7 +365,7 @@
         <div class="col-md-6 mb-1">
           <span for>Ảnh giấy tờ mặt sau </span>
           <img
-            *ngIf="!data?.people?.identification_back_file"
+            *ngIf="!data?.people?.base64BackCompare"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -375,13 +373,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.people?.identification_back_file
+                data?.people?.base64BackCompare
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.people?.identification_back_file"
+            *ngIf="data?.people?.base64BackCompare"
             src="data:image/png;base64,{{
-              data?.people?.identification_back_file
+              data?.people?.base64BackCompare
             }}"
             alt="avatar img"
           />
@@ -389,7 +387,7 @@
         <div class="col-md-6 mb-1">
           <span for>Ảnh chân dung </span>
           <img
-            *ngIf="!data?.people?.identification_selfie_file"
+            *ngIf="!data?.people?.base64SelfieCompare"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -397,13 +395,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.people?.identification_selfie_file
+                data?.people?.base64SelfieCompare
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.people?.identification_selfie_file"
+            *ngIf="data?.people?.base64SelfieCompare"
             src="data:image/png;base64,{{
-              data?.people?.identification_selfie_file
+              data?.people?.base64SelfieCompare
             }}"
             alt="avatar img"
           />
@@ -411,7 +409,7 @@
         <div class="col-md-6 mb-1">
           <span for>Ảnh chữ ký </span>
           <img
-            *ngIf="!data?.people?.identification_signature_file"
+            *ngIf="!data?.people?.base64SignatureCompare"
             src="/assets/images/icons/icon-image-black.svg"
             alt=""
           />
@@ -419,13 +417,13 @@
             (click)="
               onViewImage(
                 modalImage,
-                data?.people?.identification_signature_file
+                data?.people?.base64SignatureCompare
               )
             "
             class="img-fluid rounded mb-75"
-            *ngIf="data?.people?.identification_signature_file"
+            *ngIf="data?.people?.base64SignatureCompare"
             src="data:image/png;base64,{{
-              data?.people?.identification_signature_file
+              data?.people?.base64SignatureCompare
             }}"
             alt="avatar img"
           />
