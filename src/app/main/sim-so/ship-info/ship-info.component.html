@@ -46,11 +46,11 @@
   <input type="text" class="form-control" [(ngModel)]="ship_code" />
 </div>
 <div class="row mt-1" style="gap: 5px">
-  <a class="btn btn-success" (click)="onSubmitShipTracking()" [class.disabled]="!showSubmit">
+  <a class="btn btn-success" (click)="onSubmitShipTracking()" [class.disabled]="showSubmit">
     <i data-feather="save" class="text-white cursor-pointer"></i>
     <span> Lưu </span>
   </a>
-  <a class="btn btn-success" (click)="modalOpen(modalUpdateDeliveryStatus)" [class.disabled]="!showSubmit">
+  <a class="btn btn-success" (click)="modalOpen(modalUpdateDeliveryStatus)" [class.disabled]="showSubmit">
     <span> Cập nhật trạng thái giao hàng </span>
   </a>
 </div>

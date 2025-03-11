@@ -33,7 +33,7 @@ export class ShipInfoComponent implements OnInit {
     if (this.item) {
       this.detail = JSON?.parse(this.item.detail);
       console.log(9999, this.detail);
-      if (this.detail?.ship_status !== 1 && this.detail?.ship_status) {
+      if (this.detail?.ship_status === 1 && this.detail?.ship_status) {
         this.showSubmit = true;
       }
       if (this.detail["ship_tracking"]) {
