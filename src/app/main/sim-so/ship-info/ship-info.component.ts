@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AdminService } from "app/auth/service/admin.service";
 import { TelecomService } from "app/auth/service/telecom.service";
 import { SweetAlertService } from "app/utils/sweet-alert.service";
@@ -13,23 +14,28 @@ export class ShipInfoComponent implements OnInit {
   public detail;
   public ship_tracking;
   public ship_code;
+  shipDateNote;
   nameProvinces;
   nameDistricts;
   nameCommunes;
+  showSubmit = false;
+  public modalRef: any;
+  @ViewChild("modalUpdateDeliveryStatus") modalUpdateDeliveryStatus: ElementRef;
 
   constructor(
     private alertService: SweetAlertService,
     private adminSerivce: AdminService,
-    private telecomService: TelecomService
+    private telecomService: TelecomService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     if (this.item) {
-      console.log(this.item);
-      
       this.detail = JSON?.parse(this.item.detail);
       console.log(9999, this.detail);
-      
+      if (this.detail?.ship_status !== 1 && this.detail?.ship_status) {
+        this.showSubmit = true;
+      }
       if (this.detail["ship_tracking"]) {
         this.ship_tracking = this.detail["ship_tracking"];
       }
@@ -48,6 +54,20 @@ export class ShipInfoComponent implements OnInit {
     }
   }
 
+  modalClose() {
+    this.modalRef.close();
+  }
+
+  async modalOpen(modal) {
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: "modal modal-primary",
+      size: "lg",
+      backdrop: "static",
+      keyboard: false,
+    });
+  }
+
   async getProvinces() {
     await this.adminSerivce.getProvinces().subscribe((res: any) => {
       if (res.status == 1) {
@@ -60,7 +80,9 @@ export class ShipInfoComponent implements OnInit {
 
   async getDistricts() {
     try {
-      const res = await this.adminSerivce.getDistricts(this.detail.province).toPromise();
+      const res = await this.adminSerivce
+        .getDistricts(this.detail.province)
+        .toPromise();
       if (res.status == 1) {
         this.nameDistricts = res.data.find(
           (x) => x.id == Number(this.detail.district)
@@ -71,7 +93,9 @@ export class ShipInfoComponent implements OnInit {
 
   async getCommunes() {
     try {
-      const res = await this.adminSerivce.getCommunes(this.detail.district).toPromise();
+      const res = await this.adminSerivce
+        .getCommunes(this.detail.district)
+        .toPromise();
       if (res.status == 1) {
         this.nameCommunes = res.data.find(
           (x) => x.id == Number(this.detail.commune)
@@ -120,11 +144,43 @@ export class ShipInfoComponent implements OnInit {
               return;
             }
             this.alertService.showSuccess(res.message);
+            this.modalClose()
           },
           (err) => {
             this.alertService.showMess(err);
           }
         );
     }
+  }
+
+  async submit() {
+    if (!this.shipDateNote) {
+      this.alertService.showMess("Vui lòng nhập ngày nhận sim");
+      return;
+    }
+    console.log();
+
+    const [year, month, day] = this.shipDateNote.split("-");
+    const ship_date_note = `${day}/${month}/${year}`;
+
+    this.telecomService
+      .updateShippingInfo({
+        ship_date_note: ship_date_note,
+        ship_status: 1,
+        task_id: this.item.id,
+      })
+      .subscribe(
+        (res) => {
+          if (!res.status) {
+            this.alertService.showMess(res.message);
+            return;
+          }
+          this.alertService.showSuccess(res.message);
+          this.modalClose();
+        },
+        (err) => {
+          this.alertService.showMess(err);
+        }
+      );
   }
 }

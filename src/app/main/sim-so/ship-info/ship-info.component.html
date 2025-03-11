@@ -16,6 +16,11 @@
     ><span class="text-info ml-2">{{ detail?.ship_address }}</span></a
   >
 </div>
+<div class="row mb-1" *ngIf="detail?.ship_status == 1">
+  <span>Note: </span>
+  <a><span class="text-info ml-2">Đã giao hàng vào ngày {{detail?.ship_date_note}}</span></a
+>
+</div>
 <div
   class="row mb-1"
   *ngIf="detail?.province && detail?.district && detail?.commune"
@@ -40,9 +45,42 @@
   <span>Mã đơn hàng: </span>
   <input type="text" class="form-control" [(ngModel)]="ship_code" />
 </div>
-<div class="row mt-1">
-  <a class="btn btn-success" (click)="onSubmitShipTracking()">
+<div class="row mt-1" style="gap: 5px">
+  <a class="btn btn-success" (click)="onSubmitShipTracking()" [class.disabled]="!showSubmit">
     <i data-feather="save" class="text-white cursor-pointer"></i>
     <span> Lưu </span>
   </a>
+  <a class="btn btn-success" (click)="modalOpen(modalUpdateDeliveryStatus)" [class.disabled]="!showSubmit">
+    <span> Cập nhật trạng thái giao hàng </span>
+  </a>
 </div>
+
+<ng-template #modalUpdateDeliveryStatus let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">
+      Cập nhật trạng thái giao hàng
+    </h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" *blockUI="'item-block'">
+    <div class="row">
+      <span>Ngày giao hàng: </span>
+      <input type="date" class="form-control" [(ngModel)]="shipDateNote" />
+    </div>
+    <div class="row mt-1" style="gap: 5px">
+      <a class="btn btn-warning" (click)="modalClose()">
+        <span> Hủy </span>
+      </a>
+      <a class="btn btn-success" (click)="submit()">
+        <span> Xác nhận </span>
+      </a>
+    </div>
+  </div>
+</ng-template>

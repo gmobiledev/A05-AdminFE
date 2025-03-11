@@ -108,7 +108,7 @@
                       {{ item?.title }}
                     </td>
                     <td>
-                      {{ getJSONDetail(item, 'balance_after') ? getJSONDetail(item, 'balance_after') : 0 | number}} {{ currency }}
+                      {{ (getJSONDetail(item, 'balance_after') ? getJSONDetail(item, 'balance_after') : getJSONDetail(item, 'balance_before')) | number}} {{ currency }}
                     </td>
                     <td>
                       {{item?.bill_id}}<br>
