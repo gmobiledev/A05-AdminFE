@@ -72,7 +72,7 @@
               placement="right"
               *ngIf="data?.customer?.people?.identification_date"
             >
-              <span>{{ data?.customer?.people?.identification_date }}</span>
+              <span>{{ data?.customer?.people?.identification_date *1000 | date: 'dd/MM/yyyy'}}</span>
             </a>
           </span>
         </div>
@@ -99,7 +99,7 @@
           <span
             >Ngày sinh:
             <a placement="right" *ngIf="data?.customer?.people?.birth">
-              <span>{{ data?.customer?.people?.birth }}</span>
+              <span>{{ data?.customer?.people?.birth *1000 | date: 'dd/MM/yyyy'}}</span>
             </a>
           </span>
         </div>
