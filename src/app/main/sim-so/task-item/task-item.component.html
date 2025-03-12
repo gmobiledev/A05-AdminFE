@@ -1038,9 +1038,7 @@
   <div
     class="row mb-2"
     *ngIf="
-      data.task.action == listTaskAction['new_sim']['value'] &&
-      data.task.status != taskTelecomStatus.STATUS_SUCCESS &&
-      data.task.status == taskTelecomStatus.STATUS_PROCESSING
+      data.task.action == listTaskAction['new_sim']['value']
     "
   >
     <span class="mr-1">Tiến độ: </span>
