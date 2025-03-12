@@ -194,6 +194,18 @@ export class ListTaskComponent implements OnInit {
     return r[key]
   }
 
+  getJSONDetailBalance(item, key) {
+    const r = item.detail ? JSON.parse(item.detail) : null;
+    if (!r) {
+      return null;
+    }
+    if (r.data) {
+      return r.data
+    } else{
+      return r
+    }
+  }
+
   filterList(event) {
 
   }
