@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 
 @Component({
@@ -26,8 +27,12 @@ export class ViewUpdatePriceComponent implements OnInit {
 
   public selectedFilesImage: File[] = [];
   countDataSim;
+   @ViewChild("modalItemViewOtp") modalItemViewOtp: ElementRef;
+    public modalRef: any;
 
-  constructor() {}
+  constructor(
+     private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.countDataSim = this.dataProducts.products.count;
@@ -56,14 +61,9 @@ export class ViewUpdatePriceComponent implements OnInit {
 
   select(name: string, typeApprove?: number) {
     // let data;
-    // if (name === "approve") {
-    //   data = {
-    //     status: 1,
-    //     note: "duyệt",
-    //     want_status: typeApprove,
-    //   };
-    //   this.approveOrReject(data);
-    // } else {
+    if (name === "approve") {
+    this.modalOpen(this.modalItemViewOtp);
+    } else {
     //   Swal.fire({
     //     title: "Từ chối yêu cầu, gửi lý do cho đại lý",
     //     input: "textarea",
@@ -91,7 +91,7 @@ export class ViewUpdatePriceComponent implements OnInit {
     //       this.alertService.showSuccess("Thành công");
     //     }
     //   });
-    // }
+    }
   }
 
   async reception() {
@@ -131,5 +131,19 @@ export class ViewUpdatePriceComponent implements OnInit {
     if (index >= 0 && index < this.selectedFilesImage.length) {
       this.selectedFilesImage.splice(index, 1);
     }
+  }
+
+  modalClose() {
+    this.modalRef.close();
+  }
+
+  async modalOpen(modal, item = null) {
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: "modal modal-primary",
+      size: "md",
+      backdrop: "static",
+      keyboard: false,
+    });
   }
 }

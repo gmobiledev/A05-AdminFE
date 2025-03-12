@@ -78,26 +78,26 @@ export class CreateUpdatePriceComponent implements OnInit {
       );
       return;
     }
+    const formData: FormData = new FormData();
+    formData.append('quantity', this.formCreatePrice.value.quantity);
+    formData.append('receipt_code', this.formCreatePrice.value.code);
+    formData.append('name', this.formCreatePrice.value.nameproduct);
+    formData.append('channel_id', '1');
+    formData.append('title', this.formCreatePrice.value.name);
+    formData.append('attachments', this.attachments);
+    formData.append('files', this.file);
+    formData.append('note', this.formCreatePrice.value.note);
 
-    const data = {
-      quantity: this.formCreatePrice.value.quantity,
-      receipt_code: this.formCreatePrice.value.code,
-      name: this.formCreatePrice.value.nameproduct,
-      channel_id: '1',
-      title: this.formCreatePrice.value.name,
-      attachments: this.attachments,
-      files: this.file,
-      note: this.formCreatePrice.value.note
-    };
-    console.log('data', data);
-    
-    this.telecomService.postUpdatePriceBatch(data).subscribe((res: any) => {
-      if(res.status == 1){
-        this.alertService.showMess(res.message);
-        this.closePopup.next();
-      }
-    },(err) => {
-      this.alertService.showMess(err);
-    });
+      console.log('data', formData);
+      this.telecomService.postUpdatePriceBatch(formData).subscribe((res: any) => {
+        if(res.status == 1){
+          this.alertService.showMess(res.message);
+          this.closePopup.next();
+        } else{
+          this.alertService.showMess(res.message); 
+        }
+      },(err) => {
+        this.alertService.showMess(err);
+      });
   }
 }
