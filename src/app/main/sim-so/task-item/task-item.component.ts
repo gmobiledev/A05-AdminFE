@@ -1226,8 +1226,9 @@ export class TaskItemComponent implements OnInit {
       const showTaskNote =
         this.data.task.sync_by == this.currentUser.id ? true : false;
         return showTaskNote;
+    } else{
+      return true;
     }
-    return false;
   }
 
   isShowButtonNote() {
