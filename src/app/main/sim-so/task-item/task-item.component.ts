@@ -58,7 +58,6 @@ export class TaskItemComponent implements OnInit {
   commitTask;
   public isCheckOCr;
   textCommit: string = "";
-  showTaskNote = true;
 
   public dataCreateSignature = {
     people: {
@@ -1224,9 +1223,11 @@ export class TaskItemComponent implements OnInit {
 
   checkStatus() {
     if (this.data.task?.status == TaskTelecomStatus.STATUS_PROCESSING) {
-      this.showTaskNote =
+      const showTaskNote =
         this.data.task.sync_by == this.currentUser.id ? true : false;
+        return showTaskNote;
     }
+    return false;
   }
 
   isShowButtonNote() {

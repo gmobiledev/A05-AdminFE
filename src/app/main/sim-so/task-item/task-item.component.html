@@ -32,14 +32,12 @@
       class="mb-2 col-md-6"
       *ngIf="
         data?.task?.status == taskTelecomStatus.STATUS_PAID_WAITING_EKYC &&
-        data.task.action == listTaskAction['new_sim']['value'] && 
+        data.task.action == listTaskAction['new_sim']['value'] &&
         dataDetail?.expire_time_dktttb
       "
     >
-    <div>Thời gian thu hồi</div>
-      <app-task-countdown
-        [endDate]="expire_time_dktttb"
-      ></app-task-countdown>
+      <div>Thời gian thu hồi</div>
+      <app-task-countdown [endDate]="expire_time_dktttb"></app-task-countdown>
     </div>
     <div class="col-md-12 mb-2">
       <span>Thời gian tạo: </span>
@@ -1037,9 +1035,7 @@
   </div>
   <div
     class="row mb-2"
-    *ngIf="
-      data.task.action == listTaskAction['new_sim']['value']
-    "
+    *ngIf="data.task.action == listTaskAction['new_sim']['value']"
   >
     <span class="mr-1">Tiến độ: </span>
     <u style="cursor: pointer" (click)="modalOpenItem(modalItem)"
@@ -1049,11 +1045,11 @@
   <div
     class="row mb-2"
     *ngIf="
-      showTaskNote &&
       isShowButtonNote() &&
       data.task.action == listTaskAction['new_sim']['value'] &&
-      data.task.status != taskTelecomStatus.STATUS_SUCCESS &&
-      data.task.status == taskTelecomStatus.STATUS_PROCESSING
+      data.task.status != taskTelecomStatus.STATUS_CANCEL &&
+      checkStatus() &&
+      data.task.status != taskTelecomStatus.STATUS_SUCCESS
     "
   >
     <span class="mr-1">Cập nhật tiến độ xử lý:</span>
