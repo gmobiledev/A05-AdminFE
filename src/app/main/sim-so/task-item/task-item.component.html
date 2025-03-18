@@ -27,6 +27,18 @@
       <div>Thời gian thao tác</div>
       <app-task-countdown [endDate]="data.task.sync_lock"></app-task-countdown>
     </div>
+
+    <div
+      class="mb-2 col-md-6"
+      *ngIf="
+        data?.task?.status == taskTelecomStatus.STATUS_PAID_WAITING_EKYC &&
+        data.task.action == listTaskAction['new_sim']['value'] &&
+        dataDetail?.expire_time_dktttb
+      "
+    >
+      <div>Thời gian thu hồi</div>
+      <app-task-countdown [endDate]="expire_time_dktttb"></app-task-countdown>
+    </div>
     <div class="col-md-12 mb-2">
       <span>Thời gian tạo: </span>
       {{ data.task.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
@@ -128,15 +140,20 @@
               placement="right"
               ngbTooltip="'Bấm để copy'"
               *ngIf="data?.customer?.people?.gender"
-              (click)="
-                copyTextClipboard(data?.customer?.people?.gender)
-              "
+              (click)="copyTextClipboard(data?.customer?.people?.gender)"
             >
-              <span class="text-info" *ngIf="data?.customer?.people?.gender == 'FEMALE'">Nữ</span>
-              <span class="text-info" *ngIf="data?.customer?.people?.gender == 'MALE'">Nam</span>
+              <span
+                class="text-info"
+                *ngIf="data?.customer?.people?.gender == 'FEMALE'"
+                >Nữ</span
+              >
+              <span
+                class="text-info"
+                *ngIf="data?.customer?.people?.gender == 'MALE'"
+                >Nam</span
+              >
             </a>
-            </span
-          >
+          </span>
         </div>
         <div class="col-md-6 col-sm-12 mb-1">
           <span
@@ -447,9 +464,7 @@
               placement="right"
               ngbTooltip="'Bấm để copy'"
               *ngIf="data?.people_history?.gender"
-              (click)="
-                copyTextClipboard(data?.people_history?.gender)
-              "
+              (click)="copyTextClipboard(data?.people_history?.gender)"
             >
             <span class="text-info" *ngIf="data?.people_history?.gender == 'FEMALE'">Nữ</span>
             <span class="text-info" *ngIf="data?.people_history?.gender == 'MALE'">Nam</span>
@@ -671,31 +686,49 @@
           >
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 mb-2">
-          <span *ngIf="data.task.action == listTaskAction['change_sim']['value']"><u>Serial</u>:
+          <span
+            *ngIf="data.task.action == listTaskAction['change_sim']['value']"
+            ><u>Serial</u>:
             <a
               placement="right"
               ngbTooltip="'Bấm để copy'"
               *ngIf="data?.msisdn?.newInfo[itemN?.msisdn]['old-serial']"
-              (click)="copyTextClipboard(data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'])"
+              (click)="
+                copyTextClipboard(
+                  data?.msisdn?.newInfo[itemN?.msisdn]['old-serial']
+                )
+              "
             >
-              <span class="text-info">{{ data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'] }}</span></a>
+              <span class="text-info">{{
+                data?.msisdn?.newInfo[itemN?.msisdn]["old-serial"]
+              }}</span></a
+            >
             <a
               placement="right"
               ngbTooltip="'Bấm để copy'"
-              *ngIf="!data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'] && data?.msisdn?.msisdns[0].serial"
+              *ngIf="
+                !data?.msisdn?.newInfo[itemN?.msisdn]['old-serial'] &&
+                data?.msisdn?.msisdns[0].serial
+              "
               (click)="copyTextClipboard(data?.msisdn?.msisdns[0].serial)"
             >
-              <span class="text-info">{{ data?.msisdn?.msisdns[0].serial }}</span></a>
+              <span class="text-info">{{
+                data?.msisdn?.msisdns[0].serial
+              }}</span></a
+            >
           </span>
 
-          <span *ngIf="data.task.action != listTaskAction['change_sim']['value']"><u>Serial</u>:
+          <span
+            *ngIf="data.task.action != listTaskAction['change_sim']['value']"
+            ><u>Serial</u>:
             <a
               placement="right"
               ngbTooltip="'Bấm để copy'"
               *ngIf="itemN?.serial"
               (click)="copyTextClipboard(itemN?.serial)"
             >
-              <span class="text-info">{{ itemN?.serial }}</span></a>
+              <span class="text-info">{{ itemN?.serial }}</span></a
+            >
           </span>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 mb-2">
@@ -952,13 +985,14 @@
           *ngIf="
             data.task.status != taskTelecomStatus.STATUS_CANCEL &&
             checkAction('POST@/api/telecom-admin/task/resend-email') &&
-            ['sim_to_esim', 'buy_esim', 'SIM_CAM_KET'].includes(
+            ['sim_to_esim', 'buy_esim', 'renew_esim', 'SIM_CAM_KET'].includes(
               this.data.task.sub_action
             ) &&
             [
               taskTelecomStatus.STATUS_NEW_ORDER,
               taskTelecomStatus.STATUS_PROCESSING,
-              taskTelecomStatus.STATUS_SUCCESS
+              taskTelecomStatus.STATUS_SUCCESS,
+              taskTelecomStatus.STATUS_PAID_WAITING_EKYC
             ].includes(this.data.task.status)
           "
           class="ml-2 btn btn-info"
@@ -993,6 +1027,41 @@
   </div>
   <div
     class="row mb-2"
+    *ngIf="data.task.action == listTaskAction['new_sim']['value']"
+  >
+    <span class="mr-1">Tiến độ: </span>
+    <u style="cursor: pointer" (click)="modalOpenItem(modalItem)"
+      >Lịch sử tiến độ</u
+    >
+  </div>
+  <div
+    class="row mb-2"
+    *ngIf="
+      isShowButtonNote() &&
+      data.task.action == listTaskAction['new_sim']['value'] &&
+      data.task.status != taskTelecomStatus.STATUS_CANCEL &&
+      checkStatus() &&
+      data.task.status != taskTelecomStatus.STATUS_SUCCESS
+    "
+  >
+    <span class="mr-1">Cập nhật tiến độ xử lý:</span>
+    <div class="col-12 mt-1" style="position: relative">
+      <input
+        class="input-commit col-12"
+        type="text"
+        name=""
+        [(ngModel)]="textCommit"
+        id=""
+      />
+      <i
+        class="fa fa-paper-plane icon-send"
+        aria-hidden="true"
+        (click)="send()"
+      ></i>
+    </div>
+  </div>
+  <div
+    class="row mb-2"
     *ngIf="
       data?.task?.status == taskTelecomStatus.STATUS_SUCCESS_PART ||
       data?.task?.status == taskTelecomStatus.STATUS_SUCCESS ||
@@ -1005,7 +1074,7 @@
   <div class="row mb-2" *ngIf="data.task.note">
     <span>Note: </span> {{ data.task.note }}
   </div>
-  <div class="row pull-right" style="gap: 10px;">
+  <div class="row pull-right" style="gap: 10px">
     <ng-container *ngIf="isValidAsyncBy(data.task)">
       <div
         *ngIf="
@@ -1019,7 +1088,7 @@
             data.task.sub_action != 'sim_to_esim') ||
             (data.task.sub_action == 'sim_to_esim' && isCheckOCr == 0))
         "
-      > 
+      >
         <a
           class="ml-2 btn btn-success"
           (click)="
@@ -1043,6 +1112,7 @@
           Từ chối yêu cầu
         </a>
       </div>
+
       <div
         *ngIf="
           data?.task?.status == taskTelecomStatus.STATUS_PROCESSING &&
@@ -1053,7 +1123,9 @@
       >
         <a
           class="ml-2 btn btn-success"
-          *ngIf="data.task.action != listTaskAction['change_user_info']['value']"
+          *ngIf="
+            data.task.action != listTaskAction['change_user_info']['value']
+          "
           (click)="onUpdateStatus(data.task, taskTelecomStatus.STATUS_SUCCESS)"
         >
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
@@ -1095,7 +1167,9 @@
         </a>
         <a
           class="ml-2 btn btn-success"
-          *ngIf="data.task.action != listTaskAction['change_user_info']['value']"
+          *ngIf="
+            data.task.action != listTaskAction['change_user_info']['value']
+          "
           (click)="updateInfoSubscriber(data.task)"
         >
           <i data-feather="check-circle" class="text-white cursor-pointer"></i>
@@ -1159,6 +1233,21 @@
         </ng-container>
       </div>
     </ng-container>
+    <div
+      *ngIf="
+        data?.task?.status == taskTelecomStatus.STATUS_PAID_WAITING_EKYC &&
+        checkAction('telecom-admin/task/send-noti-terminate') &&
+        data.task.action == listTaskAction['new_sim']['value'] &&
+        !dataDetail?.expire_time_dktttb
+      "
+    >
+      <a
+        class="ml-2 btn btn-success"
+        (click)="confirmRecallCountdown(data.task.id)"
+      >
+        <span> Xác nhận đếm ngược thu hồi </span>
+      </a>
+    </div>
     <a
       *ngIf="data.task.status == taskTelecomStatus.STATUS_WAITING_SIM"
       class="ml-2 btn btn-info"
@@ -1192,10 +1281,18 @@
 
 <ng-template #modalUploadSim let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="myModalLabel160" *ngIf="item?.action != listTaskAction?.change_sim?.value">
+    <h4
+      class="modal-title"
+      id="myModalLabel160"
+      *ngIf="item?.action != listTaskAction?.change_sim?.value"
+    >
       Tải ảnh sim và nhập số serial
     </h4>
-    <h4 class="modal-title" id="myModalLabel160" *ngIf="item?.action == listTaskAction?.change_sim?.value">
+    <h4
+      class="modal-title"
+      id="myModalLabel160"
+      *ngIf="item?.action == listTaskAction?.change_sim?.value"
+    >
       Đổi SIM: Tải ảnh SIM và nhập số serial SIM mới
     </h4>
     <button
@@ -1213,8 +1310,12 @@
       <input type="file" (change)="onSelectFile($event, 'sim')" />
     </div>
     <div class="form-group">
-      <label *ngIf="item?.action != listTaskAction?.change_sim?.value" for>Số serial</label>
-      <label *ngIf="item?.action == listTaskAction?.change_sim?.value" for>Serial đang sử dụng</label>
+      <label *ngIf="item?.action != listTaskAction?.change_sim?.value" for
+        >Số serial</label
+      >
+      <label *ngIf="item?.action == listTaskAction?.change_sim?.value" for
+        >Serial đang sử dụng</label
+      >
       <input
         type="text"
         #serial_input
@@ -1223,7 +1324,10 @@
         [attr.disabled]="disabled_kit ? '' : null"
       />
     </div>
-    <div class="form-group" *ngIf="item?.action == listTaskAction?.change_sim.value">
+    <div
+      class="form-group"
+      *ngIf="item?.action == listTaskAction?.change_sim.value"
+    >
       <label for>Serial mới</label>
       <input
         type="text"
@@ -1235,7 +1339,13 @@
     <div class="form-group">
       <a
         class="btn btn-success"
-        (click)="onSubmitUploadSimInfo(item?.action == listTaskAction?.change_sim.value ? kit_serial_new : serial_input?.value)"
+        (click)="
+          onSubmitUploadSimInfo(
+            item?.action == listTaskAction?.change_sim.value
+              ? kit_serial_new
+              : serial_input?.value
+          )
+        "
       >
         <i data-feather="check-circle" class="text-white cursor-pointer"></i>
         <span> Gửi </span>
@@ -1385,6 +1495,30 @@
         <i data-feather="check-circle" class="text-white cursor-pointer"></i>
         <span> Gửi </span>
       </a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalItem let-modal data-bs-backdrop="true">
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Lịch sử tiến độ</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <div
+      class="show-progress-history d-flex"
+      *ngFor="let item of commitTask"
+      style="flex-direction: column"
+    >
+      <span>{{ item.detail }}</span>
+      <span>Thời gian: {{ item.created_at | date : "dd/MM/yyyy H:mm" :'UTC'}}</span>
     </div>
   </div>
 </ng-template>

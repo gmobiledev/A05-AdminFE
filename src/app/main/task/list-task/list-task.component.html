@@ -13,27 +13,50 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
-                    <input type="text" name="trans_id" [(ngModel)]="searchForm.trans_id" class="form-control"
-                      placeholder="Nhập mã giao dịch">
+                    <input
+                      type="text"
+                      name="trans_id"
+                      [(ngModel)]="searchForm.trans_id"
+                      class="form-control"
+                      placeholder="Nhập mã giao dịch"
+                    />
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <input type="text" name="user" [(ngModel)]="searchForm.user" class="form-control"
-                      placeholder="Nhập tìm theo SĐT của khách hàng">
+                    <input
+                      type="text"
+                      name="user"
+                      [(ngModel)]="searchForm.user"
+                      class="form-control"
+                      placeholder="Nhập tìm theo SĐT của khách hàng"
+                    />
                   </div>
                 </div>
                 <div class="col-md-3" *ngIf="!isSingleService">
                   <div class="form-group">
-                    <select class="form-control" name="service_code" [(ngModel)]="searchForm.service_code">
+                    <select
+                      class="form-control"
+                      name="service_code"
+                      [(ngModel)]="searchForm.service_code"
+                    >
                       <option value="">Chọn dịch vụ</option>
-                      <option *ngFor="let item of listService | keyvalue" [value]="item.key">{{ item.value }}</option>
+                      <option
+                        *ngFor="let item of listService | keyvalue"
+                        [value]="item.key"
+                      >
+                        {{ item.value }}
+                      </option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                    >
                       <option value="">Chọn trạng thái task</option>
 
                       <option value="2">Chờ duyệt</option>
@@ -49,7 +72,11 @@
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <select class="form-control" name="type" [(ngModel)]="searchForm.type">
+                    <select
+                      class="form-control"
+                      name="type"
+                      [(ngModel)]="searchForm.type"
+                    >
                       <option value="">Chọn kiểu nạp</option>
                       <option value="topup">Cộng tiền</option>
                       <option value="debit">Trừ tiền</option>
@@ -58,32 +85,55 @@
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <select class="form-control" name="type" [(ngModel)]="searchForm.service_name">
+                    <select
+                      class="form-control"
+                      name="type"
+                      [(ngModel)]="searchForm.service_name"
+                    >
                       <option value="">Chọn dịch vụ</option>
-                      <option value="ADD_MONEY_BALANCE">ADD_MONEY_BALANCE</option>
+                      <option value="ADD_MONEY_BALANCE">
+                        ADD_MONEY_BALANCE
+                      </option>
                       <option value="PACKAGE_BALANCE">PACKAGE_BALANCE</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả</button>
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả
+                    </button>
                   </div>
                 </div>
               </div>
             </form>
             <div class="table-responsive">
-              <table class="table table-striped text-nowrap" *blockUI="'section-block'">
+              <table
+                class="table table-striped text-nowrap"
+                *blockUI="'section-block'"
+              >
                 <thead>
                   <tr>
                     <th>STT</th>
                     <th>Mã GD</th>
                     <th>Người dùng</th>
-                    <th *ngIf="!isSingleService || showServiceAddMoneyBalancePackageBalance">Dịch vụ</th>
+                    <th
+                      *ngIf="
+                        !isSingleService ||
+                        showServiceAddMoneyBalancePackageBalance
+                      "
+                    >
+                      Dịch vụ
+                    </th>
                     <th *ngIf="!isSingleService">Merchant</th>
                     <th>Tiêu đề</th>
+                    <th>Số dư tài khoản</th>
                     <th>{{ tableColumnName.amount }}</th>
-                    <th *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">Nhà mạng</th>
+                    <th
+                      *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)"
+                    >
+                      Nhà mạng
+                    </th>
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -91,40 +141,77 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list; index as i">
-                    <td>{{ (searchForm.page - 1) * searchForm.page_size + (i+1) }}</td>
+                    <td>
+                      {{
+                        (searchForm.page - 1) * searchForm.page_size + (i + 1)
+                      }}
+                    </td>
                     <td>{{ item?.trans_id }}</td>
 
-                    <td>{{ item?.user?.people?.name }}
-                      <br>{{ item?.user?.people?.mobile }}
+                    <td>
+                      {{ item?.user?.people?.name }} <br />{{
+                        item?.user?.people?.mobile
+                      }}
                     </td>
-                    <td *ngIf="!isSingleService || showServiceAddMoneyBalancePackageBalance">
+                    <td
+                      *ngIf="
+                        !isSingleService ||
+                        showServiceAddMoneyBalancePackageBalance
+                      "
+                    >
                       {{ item?.service_code }}
                     </td>
                     <td *ngIf="!isSingleService">
-                      {{item?.merchant_id}}
+                      {{ item?.merchant_id }}
                     </td>
                     <td>
                       {{ item?.title }}
                     </td>
                     <td>
-                      {{item?.bill_id}}<br>
-                      {{ item?.amount | number }} {{ currency }}
-                    </td>
-                    <td *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">
-                      {{ getJSONDetail(item, 'mno') }}
+                      <div class="d-flex" *ngIf="getJSONDetailBalance(item) as balance">
+                        <div>
+                          {{(balance.balance_after ? balance.balance_after : balance.balance_before) | number}}
+                        </div>
+                        <div
+                          *ngIf="
+                          balance.balance_after ||
+                          balance.balance_before
+                          "
+                          style="margin-left: 5px;"
+                        >
+                          {{ currency }}
+                        </div>
+                      </div>
                     </td>
                     <td>
-                      {{ item?.created_at | date: 'dd/MM/yyyy H:mm' : "+0000" }}
+                      {{ item?.bill_id }}<br />
+                      {{ item?.amount | number }} {{ currency }}
+                    </td>
+                    <td
+                      *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)"
+                    >
+                      {{ getJSONDetail(item, "mno") }}
+                    </td>
+                    <td>
+                      {{
+                        item?.created_at | date : "dd/MM/yyyy H:mm" : "+0000"
+                      }}
                     </td>
                     <td>
                       <div [innerHTML]="item.status | showStatusLoan"></div>
                     </td>
 
                     <td>
-
-                      <button title="View Webook" *ngIf="item.webhook_id" class="btn btn-icon btn-flat-success btn-sm"
-                        (click)="modalOpen(modalTransWh, item)">
-                        <i data-feather="monitor" class="text-primary cursor-pointer"></i>
+                      <button
+                        title="View Webook"
+                        *ngIf="item.webhook_id"
+                        class="btn btn-icon btn-flat-success btn-sm"
+                        (click)="modalOpen(modalTransWh, item)"
+                      >
+                        <i
+                          data-feather="monitor"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </button>
 
                       <!-- <ng-container *ngIf="item.status == taskStatus.STATUS_WAITING">
@@ -138,67 +225,135 @@
                         </button>
                       </ng-container> -->
 
-                      <ng-container *ngIf="item.status==taskStatus.STATUS_IN_PROGRESS">
-                        <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm"
-                          (click)="checkTransaction(item)">
-                          <i data-feather="repeat" class="text-primary cursor-pointer"></i>
+                      <ng-container
+                        *ngIf="item.status == taskStatus.STATUS_IN_PROGRESS"
+                      >
+                        <button
+                          title="Check giao dịch"
+                          class="btn btn-icon btn-flat-success btn-sm"
+                          (click)="checkTransaction(item)"
+                        >
+                          <i
+                            data-feather="repeat"
+                            class="text-primary cursor-pointer"
+                          ></i>
                         </button>
-                        <button title="Xử lý thủ công thành công" class="btn btn-icon btn-flat-success btn-sm"
-                          (click)="modalOpen(updateStatusTask, item)">
-                          <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                        <button
+                          title="Xử lý thủ công thành công"
+                          class="btn btn-icon btn-flat-success btn-sm"
+                          (click)="modalOpen(updateStatusTask, item)"
+                        >
+                          <i
+                            data-feather="edit"
+                            class="text-primary cursor-pointer"
+                          ></i>
                         </button>
                       </ng-container>
 
-                      <button title="Callback" class="btn btn-icon btn-flat-success btn-sm"
-                        (click)="callbackTransaction(item)">
-                        <i data-feather="send" class="text-primary cursor-pointer"></i>
-                      </button>
-
-                      <button title="Check giao dịch" class="btn btn-icon btn-flat-success btn-sm"
-                        (click)="checkGatewayTransaction(item)">
-                        <i data-feather="info" class="text-primary cursor-pointer"></i>
+                      <button
+                        title="Callback"
+                        class="btn btn-icon btn-flat-success btn-sm"
+                        (click)="callbackTransaction(item)"
+                      >
+                        <i
+                          data-feather="send"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </button>
 
                       <button
-                        *ngIf="[ServiceCode.ADD_DATA_BALANCE, ServiceCode.ADD_MONEY_BALANCE].includes(currentService)"
-                        ngbTooltip="Xem chi tiết" (click)="onViewDetail(modalDetail, item)"
-                        class="btn btn-icon btn-flat-success btn-sm">
-                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        title="Check giao dịch"
+                        class="btn btn-icon btn-flat-success btn-sm"
+                        (click)="checkGatewayTransaction(item)"
+                      >
+                        <i
+                          data-feather="info"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </button>
 
                       <button
-                        *ngIf="[ServiceCode.SIM_PROFILE, ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)"
-                        ngbTooltip="Xem danh sách" (click)="modalOpen(modalListSerial, item)"
-                        class="btn btn-icon btn-flat-success btn-sm">
-                        <i data-feather="list" class="text-primary cursor-pointer"></i>
+                        *ngIf="
+                          [
+                            ServiceCode.ADD_DATA_BALANCE,
+                            ServiceCode.ADD_MONEY_BALANCE
+                          ].includes(currentService)
+                        "
+                        ngbTooltip="Xem chi tiết"
+                        (click)="onViewDetail(modalDetail, item)"
+                        class="btn btn-icon btn-flat-success btn-sm"
+                      >
+                        <i
+                          data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
+                      </button>
+
+                      <button
+                        *ngIf="
+                          [
+                            ServiceCode.SIM_PROFILE,
+                            ServiceCode.SIM_KITTING,
+                            ServiceCode.SIM_REGISTER
+                          ].includes(currentService)
+                        "
+                        ngbTooltip="Xem danh sách"
+                        (click)="modalOpen(modalListSerial, item)"
+                        class="btn btn-icon btn-flat-success btn-sm"
+                      >
+                        <i
+                          data-feather="list"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
-                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
-                (pageChange)="loadPage($event)">
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalItems"
+                [(page)]="searchForm.page"
+                [pageSize]="searchForm.page_size"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
                 <ng-template ngbPaginationPages let-page let-pages="pages">
                   <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
                     <div class="mb-3 d-flex flex-nowrap px-2">
-                      <label id="paginationInputLabel" for="paginationInput"
-                        class="col-form-label me-2 ms-1">Trang</label>
-                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
-                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
-                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
-                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 4.5rem" />
-                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
-                        của {{pages.length}}</span>
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 4.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
                     </div>
                   </li>
                 </ng-template>
               </ngb-pagination>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>
@@ -208,7 +363,12 @@
 <ng-template #modalTransWh let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Chi tiết</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -216,118 +376,147 @@
     <div>
       <h4>Thông tin webhook</h4>
       <div class="row">
-        <div class="col-md-6">
-          trans_id: {{ wh?.trans_id }}
-        </div>
-        <div class="col-md-6">
-          order_id: {{ wh?.order_id }}
-        </div>
-        <div class="col-md-6">
-          Số tiền: {{ wh?.amount }}
-        </div>
-        <div class="col-md-6">
-          gateway: {{ wh?.gateway }}
-        </div>
+        <div class="col-md-6">trans_id: {{ wh?.trans_id }}</div>
+        <div class="col-md-6">order_id: {{ wh?.order_id }}</div>
+        <div class="col-md-6">Số tiền: {{ wh?.amount }}</div>
+        <div class="col-md-6">gateway: {{ wh?.gateway }}</div>
         <div class="col-md-6">
           detail: <code>{{ wh?.detail }}</code>
         </div>
-        <div class="col-md-6">
-          status: {{ wh?.status }}
-        </div>
+        <div class="col-md-6">status: {{ wh?.status }}</div>
       </div>
     </div>
     <div>
       <h4>Thông tin transaction</h4>
 
       <div class="row">
-        <div class="col-md-6">
-          trans_type: {{ trans?.trans_type }}
-        </div>
-        <div class="col-md-6">
-          merchant_id: {{ trans?.merchant_id }}
-        </div>
-        <div class="col-md-6">
-          user_id: {{ trans?.user_id }}
-        </div>
-        <div class="col-md-6">
-          Số tiền: {{ trans?.amount }}
-        </div>
-        <div class="col-md-6">
-          Phí: {{ trans?.fee }}
-        </div>
-        <div class="col-md-6">
-          Phí merchant: {{ trans?.merchant_fee }}
-        </div>
-        <div class="col-md-6">
-          gateway: {{ trans?.gateway }}
-        </div>
-        <div class="col-md-6">
-          status: {{ trans?.status }}
-        </div>
+        <div class="col-md-6">trans_type: {{ trans?.trans_type }}</div>
+        <div class="col-md-6">merchant_id: {{ trans?.merchant_id }}</div>
+        <div class="col-md-6">user_id: {{ trans?.user_id }}</div>
+        <div class="col-md-6">Số tiền: {{ trans?.amount }}</div>
+        <div class="col-md-6">Phí: {{ trans?.fee }}</div>
+        <div class="col-md-6">Phí merchant: {{ trans?.merchant_fee }}</div>
+        <div class="col-md-6">gateway: {{ trans?.gateway }}</div>
+        <div class="col-md-6">status: {{ trans?.status }}</div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+    <button
+      (click)="modalClose()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
       Đóng
     </button>
   </div>
-
 </ng-template>
 
 <ng-template #modalDuyetSimprofile let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Duyệt đơn</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
-    <div class="form-group" *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">
+    <div
+      class="form-group"
+      *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)"
+    >
       <label for="">Nhà mạng</label>
-      <select name="" id="" class="form-control" [(ngModel)]="dataApprove.brand">
+      <select
+        name=""
+        id=""
+        class="form-control"
+        [(ngModel)]="dataApprove.brand"
+      >
         <option value="VMS" *ngIf="typeSim == 1">Mobifone</option>
         <option value="VNP">Vinaphone</option>
       </select>
-      <label for="">Loại sim: {{typeSim == 1 ? 'vật lý' : 'esim'}}</label>
+      <label for="">Loại sim: {{ typeSim == 1 ? "vật lý" : "esim" }}</label>
     </div>
   </div>
 
   <div class="modal-footer">
-    <button (click)="onApproveTask()" type="submit" class="btn btn-primary" rippleEffect>
+    <button
+      (click)="onApproveTask()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
       Duyệt
     </button>
-    <button (click)="modalClose()" type="submit" class="btn btn-danger" rippleEffect>
+    <button
+      (click)="modalClose()"
+      type="submit"
+      class="btn btn-danger"
+      rippleEffect
+    >
       Từ chối
     </button>
   </div>
 </ng-template>
 
-
 <ng-template #modalDetail let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Ảnh chứng từ</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <div class="row" *ngIf="listFiles.files_request && listFiles.files_request.length > 0">
+    <div
+      class="row"
+      *ngIf="listFiles.files_request && listFiles.files_request.length > 0"
+    >
       <div class="col-12">Ảnh yêu cầu</div>
       <div class="col-6" *ngFor="let item of listFiles.files_request">
-        <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+        <img
+          *ngIf="item.ext == 'png'"
+          src="data:image/png;base64,{{ item.base64 }}"
+          alt=""
+          class="img-fluid"
+        />
       </div>
     </div>
-    <div class="row" *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0">
+    <div
+      class="row"
+      *ngIf="listFiles.files_banking && listFiles.files_banking.length > 0"
+    >
       <div class="col-12">Ảnh chuyển khoản</div>
       <div class="col-6" *ngFor="let item of listFiles.files_banking">
-        <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+        <img
+          *ngIf="item.ext == 'png'"
+          src="data:image/png;base64,{{ item.base64 }}"
+          alt=""
+          class="img-fluid"
+        />
       </div>
     </div>
-    <div class="row" *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0">
+    <div
+      class="row"
+      *ngIf="listFiles.files_rollback && listFiles.files_rollback.length > 0"
+    >
       <div class="col-12">Ảnh quyết định hoàn tiền</div>
       <div class="col-6" *ngFor="let item of listFiles.files_rollback">
-        <img *ngIf="item.ext == 'png'" src="data:image/png;base64,{{ item.base64 }}" alt="" class="img-fluid" />
+        <img
+          *ngIf="item.ext == 'png'"
+          src="data:image/png;base64,{{ item.base64 }}"
+          alt=""
+          class="img-fluid"
+        />
       </div>
     </div>
 
@@ -338,28 +527,45 @@
     </div>
   </div>
   <div class="modal-footer">
-    <div *ngIf="
+    <div
+      *ngIf="
         selectedItem.status >= 30 &&
         selectedItem.status <= 39 &&
         checkRole('ACCOUNTING')
-      ">
-      <button (click)="onUpdateStatus(selectedItem, 1)"  [class.disabled]="!showSubmit" class="btn btn-info btn-sm mb-2">
+      "
+    >
+      <button
+        (click)="onUpdateStatus(selectedItem, 1)"
+        [class.disabled]="!showSubmit"
+        class="btn btn-info btn-sm mb-2"
+      >
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
       </button>
 
-      <button (click)="onUpdateStatus(selectedItem, 99)"  [class.disabled]="!showSubmit" class="ml-2 btn btn-warning btn-sm mb-2">
+      <button
+        (click)="onUpdateStatus(selectedItem, 99)"
+        [class.disabled]="!showSubmit"
+        class="ml-2 btn btn-warning btn-sm mb-2"
+      >
         <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
         Từ chối
       </button>
     </div>
 
-    <div *ngIf="
-    selectedItem.status == 2">
-      <button (click)="onUpdateStatus(selectedItem, 1)"  [class.disabled]="!showSubmit" class="btn btn-info btn-sm mb-2">
+    <div *ngIf="selectedItem.status == 2">
+      <button
+        (click)="onUpdateStatus(selectedItem, 1)"
+        [class.disabled]="!showSubmit"
+        class="btn btn-info btn-sm mb-2"
+      >
         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
       </button>
 
-      <button (click)="onUpdateStatus(selectedItem, 99)"  [class.disabled]="!showSubmit" class="ml-2 btn btn-warning btn-sm mb-2">
+      <button
+        (click)="onUpdateStatus(selectedItem, 99)"
+        [class.disabled]="!showSubmit"
+        class="ml-2 btn btn-warning btn-sm mb-2"
+      >
         <i data-feather="alert-triangle" class="text-white cursor-pointer"></i>
         Từ chối
       </button>
@@ -370,7 +576,12 @@
 <ng-template #modalListSerial let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Danh sách Serial</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -378,28 +589,50 @@
     <div class="row">
       <div class="col-md-6 col-12">
         <div class="d-flex justify-content-between align-items-center m-1">
-          <label class="d-flex align-items-center">Show
-            <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+          <label class="d-flex align-items-center"
+            >Show
+            <select
+              class="form-control mx-25"
+              [(ngModel)]="basicSelectedOption"
+            >
               <option value="10">10</option>
               <option value="25">25</option>
               <option value="50">50</option>
               <option value="100">100</option>
             </select>
-            entries</label>
+            entries</label
+          >
         </div>
       </div>
       <div class="col-md-6 col-12 d-flex justify-content-md-end">
-        <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-          <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
-              class="form-control ml-25" (keyup)="filterList($event)" /></label>
+        <div
+          class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0"
+        >
+          <label class="d-flex align-items-center"
+            >Search<input
+              type="search"
+              placeholder="Search"
+              class="form-control ml-25"
+              (keyup)="filterList($event)"
+          /></label>
         </div>
       </div>
     </div>
-    <div style="height: 500px;
-        overflow-y: auto;">
-      <ngx-datatable [rows]="listSerial" rowHeight="auto" class="bootstrap core-bootstrap" [limit]="25"
-        [columnMode]="'force'" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true">
-        <ngx-datatable-column name="Serial" *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)">
+    <div style="height: 500px; overflow-y: auto">
+      <ngx-datatable
+        [rows]="listSerial"
+        rowHeight="auto"
+        class="bootstrap core-bootstrap"
+        [limit]="25"
+        [columnMode]="'force'"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [scrollbarH]="true"
+      >
+        <ngx-datatable-column
+          name="Serial"
+          *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)"
+        >
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div class="align-items-center">
               <div class="cell-line-height">
@@ -411,8 +644,13 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Số thuê bao"
-          *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER]includes(currentService)">
+        <ngx-datatable-column
+          name="Số thuê bao"
+          *ngIf="
+            [ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER];
+            includes: currentService
+          "
+        >
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div class="align-items-center">
               <div class="cell-line-height">
@@ -423,8 +661,14 @@
             </div>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Serial"
-          *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
+        <ngx-datatable-column
+          name="Serial"
+          *ngIf="
+            [ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(
+              currentService
+            )
+          "
+        >
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div class="align-items-center">
               <div class="cell-line-height">
@@ -435,8 +679,14 @@
             </div>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Trạng thái"
-          *ngIf="[ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(currentService)">
+        <ngx-datatable-column
+          name="Trạng thái"
+          *ngIf="
+            [ServiceCode.SIM_KITTING, ServiceCode.SIM_REGISTER].includes(
+              currentService
+            )
+          "
+        >
           <ng-template let-row="row" ngx-datatable-cell-template>
             <div class="align-items-center">
               <div class="cell-line-height">
@@ -450,45 +700,79 @@
       </ngx-datatable>
     </div>
   </div>
-
 </ng-template>
 
 <ng-template #updateStatusTask let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Cập nhật - {{selectedItem.id}}</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <h5 class="modal-title" id="myModalLabel160">
+      Cập nhật - {{ selectedItem.id }}
+    </h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="form-group">
       <label for="">Cổng</label>
-      <select name="" id="" class="form-control" [(ngModel)]="frmUpdateStatusTask.gateway">
+      <select
+        name=""
+        id=""
+        class="form-control"
+        [(ngModel)]="frmUpdateStatusTask.gateway"
+      >
         <option value="MANUAL">Thực hiện thủ công</option>
       </select>
     </div>
     <div class="form-group">
       <label for="">Trạng Thái</label>
-      <select name="" id="" class="form-control" [(ngModel)]="frmUpdateStatusTask.status">
+      <select
+        name=""
+        id=""
+        class="form-control"
+        [(ngModel)]="frmUpdateStatusTask.status"
+      >
         <option value="1">Thành công</option>
       </select>
     </div>
     <div class="form-group">
       <label for="">Mã giao dịch</label>
-      <input type="text" name="trans_id" [(ngModel)]="frmUpdateStatusTask.gw_trans_id" class="form-control" />
+      <input
+        type="text"
+        name="trans_id"
+        [(ngModel)]="frmUpdateStatusTask.gw_trans_id"
+        class="form-control"
+      />
     </div>
     <div class="form-group">
       <label for="">Ghi chú</label>
-      <input type="text" name="trans_id" [(ngModel)]="frmUpdateStatusTask.reason" class="form-control" />
+      <input
+        type="text"
+        name="trans_id"
+        [(ngModel)]="frmUpdateStatusTask.reason"
+        class="form-control"
+      />
     </div>
   </div>
   <div class="modal-footer">
-    <button (click)="onUpdateStatusGateway()" class="btn btn-primary" rippleEffect>
+    <button
+      (click)="onUpdateStatusGateway()"
+      class="btn btn-primary"
+      rippleEffect
+    >
       Xác nhận
     </button>
-    <button (click)="modalClose()" type="button" class="btn btn-primary" rippleEffect>
+    <button
+      (click)="modalClose()"
+      type="button"
+      class="btn btn-primary"
+      rippleEffect
+    >
       Đóng
     </button>
   </div>
-
 </ng-template>

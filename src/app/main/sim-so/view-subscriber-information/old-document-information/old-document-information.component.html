@@ -180,6 +180,28 @@
       alt="avatar img"
     />
   </div>
+  <div class="col-md-6 mb-1">
+    <span for>Ảnh phiếu thay đổi thông tin</span>
+    <img
+      *ngIf="!dataImages?.taskImage"
+      src="/assets/images/icons/icon-image-black.svg"
+      alt=""
+    />
+    <img
+      (click)="
+        onViewImage(
+          modalImage,
+          dataImages?.taskImage
+        )
+      "
+      class="img-fluid rounded mb-75"
+      *ngIf="dataImages?.taskImage"
+      src="data:image/png;base64,{{
+        dataImages?.taskImage
+      }}"
+      alt="avatar img"
+    />
+  </div>
 </div>
 <div class="row mb-2 p-1 border" *ngIf="dataOldText">
   <div class="col-md-6 col-sm-12 mb-1">

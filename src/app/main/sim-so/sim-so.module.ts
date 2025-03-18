@@ -62,6 +62,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ViewSubscriberInformationComponent } from './view-subscriber-information/view-subscriber-information.component';
 import { OldDocumentInformationComponent } from './view-subscriber-information/old-document-information/old-document-information.component';
 import { NewDocumentInformationComponent } from './view-subscriber-information/new-document-information/new-document-information.component';
+import { ViewCancelSubscriptionComponent } from './view-cancel-subscription/view-cancel-subscription.component';
 
 const routes: Routes = [
   {
@@ -226,7 +227,8 @@ const routes: Routes = [
     TaskDetailComponent,
     ViewSubscriberInformationComponent,
     OldDocumentInformationComponent,
-    NewDocumentInformationComponent
+    NewDocumentInformationComponent,
+    ViewCancelSubscriptionComponent
   ],
   imports: [
     CommonModule,

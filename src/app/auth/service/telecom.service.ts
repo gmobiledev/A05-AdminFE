@@ -112,6 +112,10 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/logs?page=1&page_size=30&orderby_key=action_at&orderby_value=DESC`);
   }
 
+  getLogsNewSim(idSlug = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/check/logs??page=1&page_size=30&typeAction=new_sim&orderby_key=action_at&orderby_value=DESC`);
+  }
+
   getTaskSlugImages(idSlug = null) {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/`+ idSlug + `/images`);
   }
@@ -146,6 +150,15 @@ export class TelecomService {
   postApproveUpdateDoc(data = null) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-update-doc`, data);
   }
+
+  postCancelApprove(data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/cancel/approve`, data);
+  }
+
+  postCancelReject(data = null) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/cancel/reject`, data);
+  }
+
 
   approveRequestChangeInfo(data = null) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/approve-request-change-info`, data);
@@ -241,6 +254,10 @@ export class TelecomService {
 
   updateTaskStatusV2(action, id, data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/${action}/update-status`, data);
+  }
+
+  confirmRecallCountdown(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/send-noti-terminate`, data);
   }
 
   asyncToMnoViaApi(task) {
@@ -434,6 +451,10 @@ export class TelecomService {
 
   submitShipTracking(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/submit-shipping-info`, data);
+  }
+
+  updateShippingInfo(data) {
+    return this._http.put<any>(`${environment.apiTelecomUrl}/telecom-admin/task/update-shipping-info`, data);
   }
 
   saveNote(data) {

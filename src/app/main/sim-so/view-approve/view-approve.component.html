@@ -206,7 +206,7 @@
   <div class="modal-body" tabindex="0">
     <div class="show-progress-history d-flex" *ngFor="let item of commitTask" style="flex-direction: column;">
       <span>{{ item.detail }}</span>
-      <span>Thời gian: {{ item.created_at | date: 'dd/MM/yyyy H:mm'}}</span>
+      <span>Thời gian: {{ item.created_at | date:'dd/MM/yyyy HH:mm' :'UTC'}}</span>
     </div>
   </div>
 </ng-template>

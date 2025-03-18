@@ -152,6 +152,10 @@ export class TaskTelecom {
             value: 'cancel_subcriber',
             label: 'Hủy sim'
         },
+        cancel_subcriber: {
+            value: 'cancel_subcriber',
+            label: 'Hủy SIM'
+        },
         _4G_VNM_TO_VMS: {
             value: '4G_VNM_TO_VMS',
             label: 'Chuyển VNM sang Mobifone'

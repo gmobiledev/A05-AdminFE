@@ -41,10 +41,11 @@ export class TaskItemComponent implements OnInit {
   @Output() uploadImages = new EventEmitter<{ updated: boolean }>();
 
   @ViewChild("modalUploadSim") modalUploadSim: ElementRef;
-
+  @ViewChild("modalItem") modalItem: ElementRef;
   public data: any;
   listCurrentAction: any;
-
+  expire_time_dktttb;
+  dataDetail;
   public taskTelecomStatus = TaskTelecomStatus;
   public listTaskAction = TaskTelecom.ACTION;
   public msisdnStatus = MsisdnStatus;
@@ -54,7 +55,9 @@ export class TaskItemComponent implements OnInit {
   public mnos: string[] = [];
   public linkShipTracking;
   public imageSgnatureBase64;
+  commitTask;
   public isCheckOCr;
+  textCommit: string = "";
 
   public dataCreateSignature = {
     people: {
@@ -374,6 +377,24 @@ export class TaskItemComponent implements OnInit {
   /**
    * Đồng bộ với nhà mạng khác
    */
+  confirmRecallCountdown(id) {
+    this.sectionBlockUI.start();
+    this.telecomService.confirmRecallCountdown({ task_id: id }).subscribe(
+      (res) => {
+        this.sectionBlockUI.stop();
+        if (!res.status) {
+          this.alertService.showError(res.message, 30000);
+          return;
+        }
+        this.alertService.showSuccess(res.data.message, 15000);
+      },
+      (error) => {
+        this.sectionBlockUI.stop();
+        this.alertService.showError(error, 15000);
+      }
+    );
+  }
+
   async asyncToMnoViaApi(item) {
     let confirmMessage = "Xác nhận đồng bộ thông tin";
     if (item.action == this.listTaskAction.change_info.value) {
@@ -607,7 +628,6 @@ export class TaskItemComponent implements OnInit {
    * @param serial
    */
   onUploadSimInfo(item) {
-    
     this.telecomService
       .getDetailSim({
         keysearch: this.data.task.msisdn,
@@ -615,7 +635,6 @@ export class TaskItemComponent implements OnInit {
         take: 10,
       })
       .subscribe((res) => {
-        
         if (
           res.data &&
           res.data.short_desc &&
@@ -623,7 +642,7 @@ export class TaskItemComponent implements OnInit {
         ) {
           this.disabled_kit = true;
           // this.kit_serial = res.data.short_desc;
-        this.kit_serial = this.data?.msisdn?.msisdns[0]?.serial;
+          this.kit_serial = this.data?.msisdn?.msisdns[0]?.serial;
         }
         this.modalRef = this.modalService.open(this.modalUploadSim, {
           centered: true,
@@ -638,7 +657,7 @@ export class TaskItemComponent implements OnInit {
   onCloseModal() {
     this.disabled_kit = false;
     this.kit_serial = "";
-    if(this.item?.action == this.listTaskAction?.change_sim.value){
+    if (this.item?.action == this.listTaskAction?.change_sim.value) {
       this.kit_serial_new = "";
     }
     this.modalRef.close();
@@ -1097,7 +1116,6 @@ export class TaskItemComponent implements OnInit {
       }
       this.getData(1);
     }
-    
   }
 
   getData(action_view = null) {
@@ -1116,28 +1134,48 @@ export class TaskItemComponent implements OnInit {
         .getDetailTask(this.item.id, action_view)
         .subscribe((res) => {
           this.data = res.data;
+
           for (const msi of this.data.msisdn.msisdns) {
             this.mnos.push(msi.mno);
           }
           if (this.data.task.action == this.listTaskAction.change_sim) {
             this.actionText = "Cập nhật";
           }
-          const detailObj = this.data.task.detail
+          this.dataDetail = this.data.task.detail
             ? JSON.parse(this.data.task.detail)
             : {};
+          if (this.dataDetail?.expire_time_dktttb) {
+            this.convertTime();
+          }
           this.isCheckOCr =
-            detailObj["check_ocr"] == undefined
+            this.dataDetail["check_ocr"] == undefined
               ? true
-              : parseInt(detailObj["check_ocr"]);
+              : parseInt(this.dataDetail["check_ocr"]);
           if (
             this.data.task.sub_action == TelecomTaskSubAction.SIM_TO_ESIM ||
             this.data.task.sub_action == TelecomTaskSubAction.BUY_ESIM
           ) {
-            this.dataResendMail.email = detailObj["email"];
+            this.dataResendMail.email = this.dataDetail["email"];
             this.dataResendMail.task_id = this.data.task.id;
           }
         });
     }
+  }
+
+  convertTime() {
+    const parts = this.dataDetail.expire_time_dktttb.split(/[- :]/); // Tách ngày, tháng, năm, giờ, phút, giây
+
+    const dateObj = new Date(
+      Number(parts[2]), // Năm
+      Number(parts[1]) - 1, // Tháng (JS tính từ 0)
+      Number(parts[0]), // Ngày
+      Number(parts[3]), // Giờ
+      Number(parts[4]), // Phút
+      Number(parts[5]) // Giây
+    );
+
+    // Chuyển sang UTC ISO String
+    this.expire_time_dktttb = dateObj.toISOString();
   }
 
   async modalOpen(modal, item = null, size = "lg") {
@@ -1181,6 +1219,76 @@ export class TaskItemComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  checkStatus() {
+    if (this.data.task?.status == TaskTelecomStatus.STATUS_PROCESSING) {
+      const showTaskNote =
+        this.data.task.sync_by == this.currentUser.id ? true : false;
+        return showTaskNote;
+    } else{
+      return true;
+    }
+  }
+
+  isShowButtonNote() {
+    if (this.checkAction("telecom-admin/task/update-process")) {
+      return true;
+    }
+    return false;
+  }
+
+  async modalOpenItem(modal, item = null) {
+    this.getlogs(this.data.task.id);
+    this.modalRef = this.modalService.open(modal, {
+      centered: true,
+      windowClass: "modal modal-primary",
+      size: "l",
+      backdrop: "static",
+      keyboard: true,
+    });
+  }
+
+  getlogs(id) {
+    this.telecomService.getLogsNewSim(id).subscribe(
+      (res) => {
+        if (res.status === 1 && res.data) {
+          this.commitTask = res.data.items;
+        } else {
+          this.alertService.showMess(res.message);
+        }
+        this.sectionBlockUI.stop();
+      },
+      (err) => {
+        this.sectionBlockUI.stop();
+        this.alertService.showMess(err);
+      }
+    );
+  }
+
+  send() {
+    if (!this.textCommit) {
+      this.alertService.showMess("Vui lòng không để trống!");
+      return;
+    }
+    const data = {
+      task_id: this.data.task.id,
+      note: this.textCommit,
+      msisdn: this.data.task.msisdn,
+    };
+    this.telecomService.postUpdateProcess(data).subscribe(
+      (res) => {
+        if (res.status === 1 && res.data) {
+          this.alertService.showMess(res.message);
+          this.textCommit = "";
+        } else {
+          this.alertService.showMess(res.message);
+        }
+      },
+      (err) => {
+        this.alertService.showMess(err);
+      }
+    );
   }
 
   onUploadImages() {
