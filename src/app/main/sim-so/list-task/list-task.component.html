@@ -588,7 +588,7 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-ship-info [item]="selectedItem"></app-ship-info>
+    <app-ship-info [item]="selectedItem" (closePopup)="modalClose()"></app-ship-info>
   </div>
 </ng-template>
 
