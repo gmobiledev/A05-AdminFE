@@ -158,7 +158,6 @@ export class ShipInfoComponent implements OnInit {
       this.alertService.showMess("Vui lòng nhập ngày nhận sim");
       return;
     }
-    console.log();
 
     const [year, month, day] = this.shipDateNote.split("-");
     const ship_date_note = `${day}/${month}/${year}`;
@@ -177,6 +176,7 @@ export class ShipInfoComponent implements OnInit {
           }
           this.alertService.showSuccess(res.message);
           this.modalClose();
+          this.closePopup.next();
         },
         (err) => {
           this.alertService.showMess(err);
