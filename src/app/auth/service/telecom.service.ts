@@ -240,6 +240,10 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/check-available`, {}).toPromise();
   }
 
+  checkRequestAvailable(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/check-request-available`, data).toPromise();
+  }
+
   /**
    * Cap nhat trang thai
    * 

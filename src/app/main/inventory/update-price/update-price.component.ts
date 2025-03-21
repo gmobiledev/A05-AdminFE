@@ -19,10 +19,11 @@ export class UpdatePriceComponent implements OnInit {
     page_size: 20,
     page: 1,
   };
-  selectView;
   dataProducts;
+  selectView;
   public totalPage: number;
   listdata;
+  idTask
   public totalItems: number;
   @BlockUI("section-block") itemBlockUI: NgBlockUI;
   @ViewChild("modalItemCreate") modalItemCreate: ElementRef;
@@ -64,28 +65,9 @@ export class UpdatePriceComponent implements OnInit {
     this.telecomService.getDataBatchs(this.searchForm).subscribe(
       (res) => {
         if (res.status === 1 && res.data) {
-          this.listdata = res.data.data;
-          this.totalItems = res.data.totalRecords;
-          this.totalPage = res.data.totalRecords;
-        } else {
-          this.alertService.showMess(res.message);
-        }
-        this.itemBlockUI.stop();
-      },
-      (err) => {
-        this.itemBlockUI.stop();
-        this.alertService.showMess(err);
-      }
-    );
-  }
-
-  viewDetailPriceUpdate(id, name:string){
-    this.selectView = name;
-    this.telecomService.getDataDetailPriceUpdate(id).subscribe(
-      (res) => {
-        if (res.status === 1 && res.data) {
-          this.dataProducts = res.data.data;
-          this.modalOpen(this.modalItemView);
+          this.listdata = res.data.results.data;
+          this.totalItems = res.data.results.totalRecords;
+          this.totalPage = res.data.results.totalRecords;
         } else {
           this.alertService.showMess(res.message);
         }
@@ -101,6 +83,12 @@ export class UpdatePriceComponent implements OnInit {
   modalClose() {
     this.modalRef.close();
     this.getData();
+  }
+
+  openViewEdit(id, name: string){
+    this.idTask = id;
+    this.selectView = name;
+    this.modalOpen(this.modalItemView);
   }
 
   async modalOpen(modal, item = null) {

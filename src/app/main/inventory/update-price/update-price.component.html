@@ -125,13 +125,13 @@
                     </td>
 
                     <td class="d-flex" style="gap: 10px;">
-                      <div class="cursor-pointer icon-operation" ngbTooltip="Xem chi tiết" (click)="viewDetailPriceUpdate(item.id,'view')">
+                      <div class="cursor-pointer icon-operation" ngbTooltip="Xem chi tiết" (click)="openViewEdit(item.id,'view')">
                         <img
                           src="/assets/images/icons/icon-view-yellow.svg"
                           alt=""
                         />
                       </div>
-                      <div class="cursor-pointer icon-operation" ngbTooltip="Chỉnh sửa" (click)="viewDetailPriceUpdate(item.id, 'edit')">
+                      <div class="cursor-pointer icon-operation" ngbTooltip="Chỉnh sửa" (click)="openViewEdit(item.id, 'edit')">
                         <img
                           src="/assets/images/icons/icon-edit-yellow.svg"
                           alt=""
@@ -233,6 +233,6 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0">
-    <app-view-update-price  [dataProducts]="dataProducts" [selectView]="selectView" ></app-view-update-price>
+    <app-view-update-price  [idTask]="idTask" [selectView]="selectView"></app-view-update-price>
   </div>
 </ng-template>
