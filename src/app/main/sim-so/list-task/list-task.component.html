@@ -12,14 +12,23 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" name="mobile" [(ngModel)]="searchForm.mobile" class="form-control"
-                      placeholder="Nhập số điện thoại">
+                    <input
+                      type="text"
+                      name="mobile"
+                      [(ngModel)]="searchForm.mobile"
+                      class="form-control"
+                      placeholder="Nhập số điện thoại"
+                    />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select class="form-control" name="action" [(ngModel)]="searchForm.customer_type">
-                      <option value=""> -- Loại khách hàng --</option>
+                    <select
+                      class="form-control"
+                      name="action"
+                      [(ngModel)]="searchForm.customer_type"
+                    >
+                      <option value="">-- Loại khách hàng --</option>
                       <option value="PERSONAL">Cá nhân</option>
                       <option value="ORGANIZATION">Doanh nghiệp</option>
                     </select>
@@ -27,8 +36,12 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select class="form-control" name="action" [(ngModel)]="searchForm.payment_gateway">
-                      <option value=""> -- Cổng thanh toán --</option>
+                    <select
+                      class="form-control"
+                      name="action"
+                      [(ngModel)]="searchForm.payment_gateway"
+                    >
+                      <option value="">-- Cổng thanh toán --</option>
                       <option value="PAYTECH">Paytech</option>
                       <option value="G99">G99</option>
                     </select>
@@ -36,8 +49,12 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select class="form-control" name="action" [(ngModel)]="searchForm.action">
-                      <option value=""> -- Loại --</option>
+                    <select
+                      class="form-control"
+                      name="action"
+                      [(ngModel)]="searchForm.action"
+                    >
+                      <option value="">-- Loại --</option>
                       <option value="new_sim">Đấu nối mới</option>
                       <option value="change_sim">Đổi sim</option>
                       <option value="change_info">Cập nhật TTTB</option>
@@ -45,7 +62,9 @@
                       <option value="topup">TOPUP</option>
                       <option value="KHOI_PHUC">Khôi phục</option>
                       <option value="CHANGE_USER_INFO">Chuyển chủ quyền</option>
-                      <option value="app_request_change_user_info">Hỗ trợ CCQ My Gmobile</option>
+                      <option value="app_request_change_user_info">
+                        Hỗ trợ CCQ My Gmobile
+                      </option>
                       <option value="REGISTER_PACKAGE">Đăng ký gói</option>
                     </select>
                   </div>
@@ -53,10 +72,20 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select class="form-control" name="status" [(ngModel)]="searchForm.status">
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                    >
                       <option value="">Chọn trạng thái</option>
-                      <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value" [id]="item.key">
-                        <span [innerHTML]="item.value | showStatusTelecom"></span>
+                      <option
+                        *ngFor="let item of taskTelecomStatus | keyvalue"
+                        [value]="item.value"
+                        [id]="item.key"
+                      >
+                        <span
+                          [innerHTML]="item.value | showStatusTelecom"
+                        ></span>
                       </option>
                     </select>
                   </div>
@@ -64,7 +93,11 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select class="form-control" name="telco" [(ngModel)]="searchForm.telco">
+                    <select
+                      class="form-control"
+                      name="telco"
+                      [(ngModel)]="searchForm.telco"
+                    >
                       <option value="">Chọn nhà mạng</option>
                       <option value="VNM">Vietnammobile</option>
                       <option value="VMS">Mobifone</option>
@@ -75,13 +108,19 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <select class="form-control" name="telco" [(ngModel)]="searchForm.sub_action">
+                    <select
+                      class="form-control"
+                      name="telco"
+                      [(ngModel)]="searchForm.sub_action"
+                    >
                       <option value="">-- Lọc thêm --</option>
                       <option value="GSIM_TO_SIM">Gsim sang SIM</option>
                       <option value="2G_CONVERSION">2G sang 4G</option>
                       <option value="S99-GMB">S99</option>
                       <option value="MY_GMOBILE">My Gmobile</option>
-                      <option value="4G_VNM_TO_VMS">4G VNM sang Mobifone</option>
+                      <option value="4G_VNM_TO_VMS">
+                        4G VNM sang Mobifone
+                      </option>
                       <option value="SIM_CAM_KET">Sim Cam Kết</option>
                       <option value="S99_TOOL_BATCH">Tool theo lô</option>
                     </select>
@@ -89,42 +128,78 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" placeholder="Khoảng thời gian" [ngModelOptions]="{standalone: true}"
-                      ngxDaterangepickerMd [(ngModel)]="dateRange" [ranges]="ranges"
-                      [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
-                      [alwaysShowCalendars]="true" name="daterange" class="form-control" />
+                    <input
+                      type="text"
+                      placeholder="Khoảng thời gian"
+                      [ngModelOptions]="{ standalone: true }"
+                      ngxDaterangepickerMd
+                      [(ngModel)]="dateRange"
+                      [ranges]="ranges"
+                      [locale]="{ applyLabel: 'Chọn', format: 'DD/MM/YYYY' }"
+                      [showCustomRangeLabel]="true"
+                      [alwaysShowCalendars]="true"
+                      name="daterange"
+                      class="form-control"
+                    />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" name="reference_id" [(ngModel)]="searchForm.reference_id" class="form-control"
-                      placeholder="Mã kho">
+                    <input
+                      type="text"
+                      name="reference_id"
+                      [(ngModel)]="searchForm.reference_id"
+                      class="form-control"
+                      placeholder="Mã kho"
+                    />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" name="payment_reference_number" [(ngModel)]="searchForm.payment_reference_number"
-                      class="form-control" placeholder="Mã thanh toán">
+                    <input
+                      type="text"
+                      name="payment_reference_number"
+                      [(ngModel)]="searchForm.payment_reference_number"
+                      class="form-control"
+                      placeholder="Mã thanh toán"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="telco"
+                      [(ngModel)]="searchForm.bundle_package"
+                    >
+                      <option value="">-- Chọn gói cước --</option>
+                      <option [value]="p.code" *ngFor="let p of listBundlePackage">{{ p.name }}</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="">
-                    <label for="" style="font-size: 1rem">Tôi đang thực hiện</label>
-                    <input type="checkbox" [(ngModel)]="mineTask" [ngModelOptions]="{standalone: true}">
+                    <label for="" style="font-size: 1rem"
+                      >Tôi đang thực hiện</label
+                    >
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="mineTask"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
                   </div>
                 </div>
 
                 <div class="col-md-2">
                   <div class="">
-                    <label for="" style="font-size: 1rem">Bundle Gói</label>
-                    <input type="checkbox" [(ngModel)]="checkPackage" [ngModelOptions]="{standalone: true}">
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="">
-                    <label for="" style="font-size: 1rem">Thời gian đấu nối</label>
-                    <input type="checkbox" [(ngModel)]="checkTime" [ngModelOptions]="{standalone: true}">
+                    <label for="" style="font-size: 1rem"
+                      >Thời gian đấu nối</label
+                    >
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="checkTime"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
                   </div>
                 </div>
 
@@ -141,15 +216,15 @@
                     <label class="form-check-label" for="timeOptionRequest">Thời gian đấu nối</label>
                   </div>
                 </div> -->
-
-
-
-
               </div>
               <div class="row mt-2">
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info" [disabled]="isLoading">
+                    <button
+                      type="submit"
+                      class="btn btn-block btn-info"
+                      [disabled]="isLoading"
+                    >
                       Lọc kết quả
                       <span [data-feather]="'search'"></span>
                     </button>
@@ -157,8 +232,13 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="button" (click)="onSubmitExportExcelReport()" class="btn btn-block btn-success">Xuất
-                      báo cáo excel <span [data-feather]="'file'"></span></button>
+                    <button
+                      type="button"
+                      (click)="onSubmitExportExcelReport()"
+                      class="btn btn-block btn-success"
+                    >
+                      Xuất báo cáo excel <span [data-feather]="'file'"></span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -176,318 +256,786 @@
                     <th class="col-type">Yêu cầu | Loại KH</th>
                     <th class="col-info">Số thuê bao | Serial | Nhà mạng</th>
                     <th class="col-amount">Số tiền</th>
-                    <th class="col-agent">Đại lý <br> Tham chiếu</th>
+                    <th class="col-agent">
+                      Đại lý <br />
+                      Tham chiếu
+                    </th>
                     <th class="col-time">TG tạo/mua</th>
                     <th class="col-status">Trạng thái</th>
                     <th class="col-actions">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of list;let i = index">
+                  <tr *ngFor="let item of list; let i = index">
                     <td class="col-stt">
-                      {{ (searchForm.page-1)*searchForm.page_size + (i+1) }}
+                      {{
+                        (searchForm.page - 1) * searchForm.page_size + (i + 1)
+                      }}
                     </td>
 
                     <td class="col-id">
-                      <a placement="right" ngbTooltip="'Copy {{item.code}}'" (click)="copyTextClipboard(item.code)"><i
-                          data-feather="copy" class="cursor-pointer"></i>{{ item.id }}</a>
+                      <a
+                        placement="right"
+                        ngbTooltip="'Copy {{ item.code }}'"
+                        (click)="copyTextClipboard(item.code)"
+                        ><i data-feather="copy" class="cursor-pointer"></i
+                        >{{ item.id }}</a
+                      >
                     </td>
 
                     <td class="col-type">
-                      {{ listTaskAction[item.action] ? listTaskAction[item.action]['label'] : item.action }} - {{
-                      item.customer_type }}
-                      <br>
-                      {{ item.sub_action ? item.sub_action : '' }}
+                      {{
+                        listTaskAction[item.action]
+                          ? listTaskAction[item.action]["label"]
+                          : item.action
+                      }}
+                      - {{ item.customer_type }}
+                      <br />
+                      {{ item.sub_action ? item.sub_action : "" }}
                     </td>
 
                     <td class="col-info">
                       <div>
-                        {{ item.msisdn }} <br>
+                        {{ item.msisdn }} <br />
                         {{ getDetail(item)?.serial }}
                       </div>
                     </td>
 
                     <td class="col-amount">
-                      <span class="text-info">{{ item.amount | number }}</span><br>
-                      <span class="text-success">{{ item.charge_amount | number }}</span><br>
-
+                      <span class="text-info">{{ item.amount | number }}</span
+                      ><br />
+                      <span class="text-success">{{
+                        item.charge_amount | number
+                      }}</span
+                      ><br />
                     </td>
 
                     <td class="col-agent">
-                      <a class="text-info" (click)="modalViewAgentOpen(modalViewAgent, item.request_by)">{{
-                        item.request_by }}</a><br>
-                      <span class="text-primary" title="Mã Kho">{{ item.reference_id }}</span><br>
-                      <span class="text-success" title="Mã cổng thanh toán">{{ item.payment_reference_number }}</span><br>
-                      <span class="text-success" title="Cổng thanh toán">{{ item?.payment_gateway }}</span>
-
+                      <a
+                        class="text-info"
+                        (click)="
+                          modalViewAgentOpen(modalViewAgent, item.request_by)
+                        "
+                        >{{ item.request_by }}</a
+                      ><br />
+                      <span class="text-primary" title="Mã Kho">{{
+                        item.reference_id
+                      }}</span
+                      ><br />
+                      <span class="text-success" title="Mã cổng thanh toán">{{
+                        item.payment_reference_number
+                      }}</span
+                      ><br />
+                      <span class="text-success" title="Cổng thanh toán">{{
+                        item?.payment_gateway
+                      }}</span>
                     </td>
 
                     <td class="col-time">
-                      {{ item.request_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
-                      {{ item.buy_time | date: 'dd/MM/yyyy H:mm':'GMT' }}
+                      {{ item.request_time | date : "dd/MM/yyyy H:mm" : "GMT" }}
+                      {{ item.buy_time | date : "dd/MM/yyyy H:mm" : "GMT" }}
                     </td>
 
-
                     <td class="col-status">
-                      <div [innerHTML]="item.status | showStatusTelecom" class="mb-1"></div>
+                      <div
+                        [innerHTML]="item.status | showStatusTelecom"
+                        class="mb-1"
+                      ></div>
                       {{ item.note }}
                     </td>
 
                     <td>
+                      <div
+                        *ngIf="
+                          item.sync_by &&
+                          currentUser.id != item.sync_by &&
+                          item.action != 'KHOI_PHUC' &&
+                          item.action != 'app_request_change_user_info' &&
+                          item.action !=
+                            listTaskAction['change_user_info']['value'] &&
+                          (item.action !=
+                            listTaskAction['change_info']['value'] ||
+                            item.sub_action != 'update_doc') &&
+                          item.action != 'cancel_subcriber'
+                        "
+                      >
+                        <a
+                          ngbTooltip="Xem chi tiết"
+                          (click)="modalOpen(modalItem, item)"
+                        >
+                          <i
+                            data-feather="eye"
+                            class="text-primary cursor-pointer"
+                          ></i>
+                        </a>
+                      </div>
 
                       <div
-                        *ngIf="item.sync_by && currentUser.id != item.sync_by && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']  && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber'">
-
-                        <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
-                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        *ngIf="
+                          currentUser.id != item.sync_by &&
+                          (item.action == 'KHOI_PHUC' ||
+                            item.action == 'app_request_change_user_info' ||
+                            item.action ==
+                              listTaskAction['change_user_info']['value'])
+                        "
+                      >
+                        <a
+                          ngbTooltip="Xem chi tiết"
+                          (click)="
+                            modalOpenApproveRestore(
+                              modalViewApproveRestore,
+                              item
+                            )
+                          "
+                        >
+                          <i
+                            data-feather="eye"
+                            class="text-primary cursor-pointer"
+                          ></i>
                         </a>
-
+                      </div>
+                      <div
+                        *ngIf="
+                          currentUser.id != item.sync_by &&
+                          ((item.action ==
+                            listTaskAction['change_info']['value'] &&
+                            item.sub_action == 'update_doc') ||
+                            item.action == 'cancel_subcriber')
+                        "
+                      >
+                        <a
+                          ngbTooltip="Xem chi tiết"
+                          (click)="
+                            modalOpenViewSubscriberInformation(
+                              modalViewSubscriberInformation,
+                              item
+                            )
+                          "
+                        >
+                          <i
+                            data-feather="eye"
+                            class="text-primary cursor-pointer"
+                          ></i>
+                        </a>
                       </div>
 
                       <div
-                        *ngIf=" currentUser.id != item.sync_by && (item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
-                        <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
-                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        *ngIf="!item.sync_by || currentUser.id == item.sync_by"
+                      >
+                        <div
+                          *ngIf="
+                            checkAction(
+                              'telecom-admin/task/:slug(\\d+)/' +
+                                item.action +
+                                '/update-status'
+                            ) &&
+                            item.status == taskTelecomStatus.STATUS_NEW_ORDER &&
+                            !checkAction(
+                              'telecom-admin/task/:slug(\\d+)/update-status'
+                            ) &&
+                            item.action != 'KHOI_PHUC' &&
+                            item.action != 'app_request_change_user_info' &&
+                            item.action !=
+                              listTaskAction['change_user_info']['value'] &&
+                            item.action != 'cancel_subcriber'
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp nhận yêu cầu"
+                            (click)="modalOpen(modalItem, item)"
+                          >
+                            <i
+                              data-feather="bookmark"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+
+                        <div
+                          *ngIf="
+                            ((item.sub_action ==
+                              listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+                              item.sub_action ==
+                                listTaskAction['_4G_VNM_TO_VMS']['value']) &&
+                              item.status ==
+                                taskTelecomStatus.STATUS_NEW_ORDER) ||
+                            ((item.status ==
+                              taskTelecomStatus.STATUS_NEW_ORDER ||
+                              item.status ==
+                                taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION) &&
+                              checkAction(
+                                'telecom-admin/task/:slug(\\d+)/update-status'
+                              ) &&
+                              item.action != 'KHOI_PHUC' &&
+                              item.action != 'app_request_change_user_info' &&
+                              item.action !=
+                                listTaskAction['change_user_info']['value'] &&
+                              (item.action !=
+                                listTaskAction['change_info']['value'] ||
+                                item.sub_action != 'update_doc') &&
+                              item.action != 'cancel_subcriber')
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp nhận yêu cầu"
+                            (click)="modalOpen(modalItem, item)"
+                          >
+                            <i
+                              data-feather="bookmark"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            ((item.sub_action ==
+                              listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+                              item.sub_action ==
+                                listTaskAction['_4G_VNM_TO_VMS']['value']) &&
+                              item.status ==
+                                taskTelecomStatus.STATUS_NEW_ORDER) ||
+                            ((item.status ==
+                              taskTelecomStatus.STATUS_NEW_ORDER ||
+                              item.status ==
+                                taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION) &&
+                              checkAction(
+                                'telecom-admin/task/:slug(\\d+)/update-status'
+                              ) &&
+                              (item.action == 'KHOI_PHUC' ||
+                                item.action == 'app_request_change_user_info' ||
+                                item.action ==
+                                  listTaskAction['change_user_info']['value']))
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp nhận yêu cầu"
+                            (click)="
+                              modalOpenApproveRestore(
+                                modalViewApproveRestore,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="bookmark"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            ((item.sub_action ==
+                              listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+                              item.sub_action ==
+                                listTaskAction['_4G_VNM_TO_VMS']['value']) &&
+                              item.status ==
+                                taskTelecomStatus.STATUS_NEW_ORDER) ||
+                            ((item.status ==
+                              taskTelecomStatus.STATUS_NEW_ORDER ||
+                              item.status ==
+                                taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION) &&
+                              checkAction(
+                                'telecom-admin/task/:slug(\\d+)/update-status'
+                              ) &&
+                              ((item.action ==
+                                listTaskAction['change_info']['value'] &&
+                                item.sub_action == 'update_doc') ||
+                                item.action == 'cancel_subcriber'))
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp nhận yêu cầu"
+                            (click)="
+                              modalOpenViewSubscriberInformation(
+                                modalViewSubscriberInformation,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="bookmark"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            item.status ==
+                              taskTelecomStatus.STATUS_PROCESSING &&
+                            (item.action == 'KHOI_PHUC' ||
+                              item.action == 'app_request_change_user_info' ||
+                              item.action ==
+                                listTaskAction['change_user_info']['value'])
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp tục thực hiện"
+                            (click)="
+                              modalOpenApproveRestore(
+                                modalViewApproveRestore,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="arrow-right-circle"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            item.status ==
+                              taskTelecomStatus.STATUS_PROCESSING &&
+                            ((item.action ==
+                              listTaskAction['change_info']['value'] &&
+                              item.sub_action == 'update_doc') ||
+                              item.action == 'cancel_subcriber')
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp tục thực hiện"
+                            (click)="
+                              modalOpenViewSubscriberInformation(
+                                modalViewSubscriberInformation,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="arrow-right-circle"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            item.status ==
+                              taskTelecomStatus.STATUS_PROCESSING &&
+                            (item.action !=
+                              listTaskAction['change_info']['value'] ||
+                              item.sub_action != 'update_doc') &&
+                            item.action != 'cancel_subcriber' &&
+                            item.action != 'KHOI_PHUC' &&
+                            item.action != 'app_request_change_user_info' &&
+                            item.action !=
+                              listTaskAction['change_user_info']['value']
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp tục thực hiện"
+                            (click)="modalOpen(modalItem, item)"
+                          >
+                            <i
+                              data-feather="arrow-right-circle"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            item.status ==
+                              taskTelecomStatus.STATUS_PROCESS_TO_MNO &&
+                            (item.action !=
+                              listTaskAction['change_info']['value'] ||
+                              item.sub_action != 'update_doc') &&
+                            item.action != 'cancel_subcriber' &&
+                            item.action != 'KHOI_PHUC' &&
+                            item.action != 'app_request_change_user_info' &&
+                            item.action !=
+                              listTaskAction['change_user_info']['value']
+                          "
+                        >
+                          <a
+                            ngbTooltip="Tiếp tục thực hiện"
+                            (click)="modalOpen(modalItem, item)"
+                          >
+                            <i
+                              data-feather="arrow-right-circle"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            item.status == taskTelecomStatus.STATUS_REJECT &&
+                            item.action != 'KHOI_PHUC' &&
+                            (item.action !=
+                              listTaskAction['change_info']['value'] ||
+                              item.sub_action != 'update_doc') &&
+                            item.action != 'cancel_subcriber' &&
+                            item.action != 'app_request_change_user_info' &&
+                            item.action !=
+                              listTaskAction['change_user_info']['value']
+                          "
+                        >
+                          <a
+                            ngbTooltip="Xem chi tiết"
+                            (click)="modalOpen(modalItem, item)"
+                          >
+                            <i
+                              data-feather="eye"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            item.status ==
+                              taskTelecomStatus.STATUS_PAID_WAITING_EKYC &&
+                            item.action != 'KHOI_PHUC' &&
+                            (item.action !=
+                              listTaskAction['change_info']['value'] ||
+                              item.sub_action != 'update_doc') &&
+                            item.action != 'cancel_subcriber' &&
+                            item.action != 'app_request_change_user_info' &&
+                            item.action !=
+                              listTaskAction['change_user_info']['value']
+                          "
+                        >
+                          <a
+                            ngbTooltip="Xem chi tiết"
+                            (click)="modalOpen(modalItem, item)"
+                          >
+                            <i
+                              data-feather="eye"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            (item.status == taskTelecomStatus.STATUS_REJECT ||
+                              item.status == 40) &&
+                            (item.action == 'KHOI_PHUC' ||
+                              item.action == 'app_request_change_user_info' ||
+                              item.action ==
+                                listTaskAction['change_user_info']['value'])
+                          "
+                        >
+                          <a
+                            ngbTooltip="Xem chi tiết"
+                            (click)="
+                              modalOpenApproveRestore(
+                                modalViewApproveRestore,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="eye"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            (item.status == taskTelecomStatus.STATUS_REJECT ||
+                              item.status == 40) &&
+                            ((item.action ==
+                              listTaskAction['change_info']['value'] &&
+                              item.sub_action == 'update_doc') ||
+                              item.action == 'cancel_subcriber')
+                          "
+                        >
+                          <a
+                            ngbTooltip="Xem chi tiết"
+                            (click)="
+                              modalOpenViewSubscriberInformation(
+                                modalViewSubscriberInformation,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="eye"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            item.action != 'topup' &&
+                            (item.status ==
+                              taskTelecomStatus.STATUS_SUCCESS_PART ||
+                              item.status == taskTelecomStatus.STATUS_SUCCESS ||
+                              item.status == taskTelecomStatus.STATUS_CANCEL ||
+                              item.status == taskTelecomStatus.STATUS_INIT ||
+                              item.status == taskTelecomStatus.STATUS_FAIL) &&
+                            item.action != 'KHOI_PHUC' &&
+                            item.action != 'app_request_change_user_info' &&
+                            item.action !=
+                              listTaskAction['change_user_info']['value'] &&
+                            (item.action !=
+                              listTaskAction['change_info']['value'] ||
+                              item.sub_action != 'update_doc') &&
+                            item.action != 'cancel_subcriber'
+                          "
+                        >
+                          <a
+                            class="mr-1"
+                            ngbTooltip="Xem chi tiết"
+                            (click)="modalOpen(modalItem, item)"
+                          >
+                            <i
+                              data-feather="eye"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+
+                        <div *ngIf="item.action == 'topup'">
+                          <a
+                            ngbTooltip="Xem chi tiết"
+                            (click)="modalOpenDetail(modalDetail, item)"
+                          >
+                            <i
+                              data-feather="edit"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+
+                        <div *ngIf="item.action == 'register_package'">
+                          <a
+                            ngbTooltip="Xem thông tin thuê bao"
+                            (click)="modalOpenDetail(modalDetail, item)"
+                          >
+                            <i
+                              data-feather="edit"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+
+                        <div *ngIf="item.action == 'new_sim'">
+                          <a
+                            ngbTooltip="Xem thông tin thuê bao"
+                            (click)="modalOpenDetail(modalDetail, item)"
+                          >
+                            <i
+                              data-feather="edit"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+
+                        <div
+                          *ngIf="
+                            (item.status ==
+                              taskTelecomStatus.STATUS_SUCCESS_PART ||
+                              item.status == taskTelecomStatus.STATUS_SUCCESS ||
+                              item.status == taskTelecomStatus.STATUS_CANCEL ||
+                              item.status == taskTelecomStatus.STATUS_INIT) &&
+                            (item.action == 'KHOI_PHUC' ||
+                              item.action == 'app_request_change_user_info' ||
+                              item.action ==
+                                listTaskAction['change_user_info']['value'])
+                          "
+                        >
+                          <a
+                            ngbTooltip="Xem chi tiết"
+                            (click)="
+                              modalOpenApproveRestore(
+                                modalViewApproveRestore,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="eye"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <div
+                          *ngIf="
+                            (item.status ==
+                              taskTelecomStatus.STATUS_SUCCESS_PART ||
+                              item.status == taskTelecomStatus.STATUS_SUCCESS ||
+                              item.status == taskTelecomStatus.STATUS_CANCEL ||
+                              item.status == taskTelecomStatus.STATUS_INIT) &&
+                            ((item.action ==
+                              listTaskAction['change_info']['value'] &&
+                              item.sub_action == 'update_doc') ||
+                              item.action == 'cancel_subcriber')
+                          "
+                        >
+                          <a
+                            ngbTooltip="Xem chi tiết"
+                            (click)="
+                              modalOpenViewSubscriberInformation(
+                                modalViewSubscriberInformation,
+                                item
+                              )
+                            "
+                          >
+                            <i
+                              data-feather="eye"
+                              class="text-primary cursor-pointer"
+                            ></i>
+                          </a>
+                        </div>
+                        <a
+                          ngbTooltip="Xem chi tiết"
+                          (click)="
+                            modalOpenApproveRestore(
+                              modalViewApproveRestore,
+                              item
+                            )
+                          "
+                          *ngIf="
+                            item.sub_action !=
+                              listTaskAction['TYPE_2G_CONVERSION']['value'] &&
+                            item.sub_action !=
+                              listTaskAction['_4G_VNM_TO_VMS']['value'] &&
+                            item.action == 'app_request_change_user_info' &&
+                            [
+                              taskTelecomStatus.STATUS_APPROVED_1,
+                              taskTelecomStatus.STATUS_APPROVED
+                            ].includes(item.status)
+                          "
+                        >
+                          <i
+                            data-feather="eye"
+                            class="text-primary cursor-pointer"
+                          ></i>
                         </a>
                       </div>
-                      <div
-                      *ngIf=" currentUser.id != item.sync_by && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
-                      <a ngbTooltip="Xem chi tiết" (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
-                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                      </a>
-                    </div>
 
-                      <div *ngIf="!item.sync_by || currentUser.id == item.sync_by">
-                        <div
-                          *ngIf=" checkAction('telecom-admin/task/:slug(\\d+)/'+item.action+'/update-status')
-                        && item.status == taskTelecomStatus.STATUS_NEW_ORDER && !checkAction('telecom-admin/task/:slug(\\d+)/update-status') && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'] && item.action != 'cancel_subcriber'">
-
-                          <a ngbTooltip="Tiếp nhận yêu cầu" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-
-                        <div
-                          *ngIf="(
-                          (
-                            (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
-                            || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value']
-                          )
-                            && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
-                        || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
-                        || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
-                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'] && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber'">
-
-                          <a ngbTooltip="Tiếp nhận yêu cầu" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                          *ngIf="(
-                          ((item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
-                            || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
-                            && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
-                        || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
-                        || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
-                        ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info'  || item.action == listTaskAction['change_user_info']['value'])">
-
-                          <a ngbTooltip="Tiếp nhận yêu cầu"
-                            (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
-                            <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                        *ngIf="(
-                        ((item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value'])
-                          || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
-                          && item.status == taskTelecomStatus.STATUS_NEW_ORDER)
-                      || ((item.status == taskTelecomStatus.STATUS_NEW_ORDER 
-                      || item.status == taskTelecomStatus.STATUS_NEW_ORDER_ORGANIZATION
-                      ) && checkAction('telecom-admin/task/:slug(\\d+)/update-status') ) && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
-
-                        <a ngbTooltip="Tiếp nhận yêu cầu"
-                          (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
-                          <i data-feather="bookmark" class="text-primary cursor-pointer"></i>
-                        </a>
-                      </div>
-                        <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
-
-                          <a ngbTooltip="Tiếp tục thực hiện"
-                            (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
-                            <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                        *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
-
-                        <a ngbTooltip="Tiếp tục thực hiện"
-                          (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
-                          <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
-                        </a>
-                      </div>
-                        <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESSING && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
-
-                          <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_PROCESS_TO_MNO && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'KHOI_PHUC' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value']">
-                          <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
-                          </a>
-
-                        </div>
-                        <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_REJECT  && (item.action != 'KHOI_PHUC' && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
-                          <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                          *ngIf="item.status == taskTelecomStatus.STATUS_PAID_WAITING_EKYC  && (item.action != 'KHOI_PHUC' && (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc') && item.action != 'cancel_subcriber' && item.action != 'app_request_change_user_info' && item.action != listTaskAction['change_user_info']['value'])">
-                          <a ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                          *ngIf="(item.status == taskTelecomStatus.STATUS_REJECT || item.status == 40) && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
-                          <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                          *ngIf="(item.status == taskTelecomStatus.STATUS_REJECT || item.status == 40) && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
-                          <a ngbTooltip="Xem chi tiết" (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div *ngIf="
-                        item.action != 'topup' &&
-                        (item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||
-                        item.status == taskTelecomStatus.STATUS_SUCCESS || 
-                        item.status == taskTelecomStatus.STATUS_CANCEL || 
-                        item.status == taskTelecomStatus.STATUS_INIT || 
-                        item.status == taskTelecomStatus.STATUS_FAIL) && 
-                        (item.action != 'KHOI_PHUC' && 
-                        item.action != 'app_request_change_user_info' &&
-                        item.action != listTaskAction['change_user_info']['value'] &&
-                        (item.action != listTaskAction['change_info']['value'] || item.sub_action != 'update_doc')  && 
-                        item.action != 'cancel_subcriber')">
-                          <a class="mr-1" ngbTooltip="Xem chi tiết" (click)="modalOpen(modalItem, item)">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-
-                        <div *ngIf="
-                          ( item.action == 'topup')">
-                          <a ngbTooltip="Xem chi tiết" (click)="modalOpenDetail(modalDetail, item)">
-                            <i data-feather="edit" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-
-                        <div *ngIf="
-                        item.action == 'register_package'">
-                          <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
-                            <i data-feather="edit" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-
-                        <div *ngIf="
-                         item.action == 'new_sim'">
-                          <a ngbTooltip="Xem thông tin thuê bao" (click)="modalOpenDetail(modalDetail, item)">
-                            <i data-feather="edit" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-
-                        <div
-                          *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
-                          || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
-                           && ( item.action == 'KHOI_PHUC' || item.action == 'app_request_change_user_info' || item.action == listTaskAction['change_user_info']['value'])">
-
-                          <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <div
-                          *ngIf="(item.status == taskTelecomStatus.STATUS_SUCCESS_PART ||item.status == taskTelecomStatus.STATUS_SUCCESS 
-                          || item.status == taskTelecomStatus.STATUS_CANCEL || item.status == taskTelecomStatus.STATUS_INIT)
-                          && ((item.action == listTaskAction['change_info']['value'] && item.sub_action == 'update_doc') || item.action == 'cancel_subcriber')">
-
-                          <a ngbTooltip="Xem chi tiết" (click)="modalOpenViewSubscriberInformation(modalViewSubscriberInformation, item)">
-                            <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                          </a>
-                        </div>
-                        <a ngbTooltip="Xem chi tiết" (click)="modalOpenApproveRestore(modalViewApproveRestore, item)"
-                          *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
-                        && item.sub_action != listTaskAction['_4G_VNM_TO_VMS']['value'] 
-                        && item.action == 'app_request_change_user_info'
-                       && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)">
-                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                        </a>
-                      </div>
-
-                      <a class="ml-2 btn btn-info" (click)="modalApprovalOpen(modalApproveInfo, item)"
-                        *ngIf="item.sub_action != listTaskAction['TYPE_2G_CONVERSION']['value'] 
-                        && item.sub_action != listTaskAction['_4G_VNM_TO_VMS']['value'] 
-                        && item.action != 'app_request_change_user_info'
-                       && [taskTelecomStatus.STATUS_APPROVED_1, taskTelecomStatus.STATUS_APPROVED].includes(item.status)">
-                        <i data-feather="user-check" class="text-primary cursor-pointer"></i>
+                      <a
+                        class="ml-2 btn btn-info"
+                        (click)="modalApprovalOpen(modalApproveInfo, item)"
+                        *ngIf="
+                          item.sub_action !=
+                            listTaskAction['TYPE_2G_CONVERSION']['value'] &&
+                          item.sub_action !=
+                            listTaskAction['_4G_VNM_TO_VMS']['value'] &&
+                          item.action != 'app_request_change_user_info' &&
+                          [
+                            taskTelecomStatus.STATUS_APPROVED_1,
+                            taskTelecomStatus.STATUS_APPROVED
+                          ].includes(item.status)
+                        "
+                      >
+                        <i
+                          data-feather="user-check"
+                          class="text-primary cursor-pointer"
+                        ></i>
                         {{ showApproveText(item.status) }}
                       </a>
-                      <div *ngIf="((item.status == taskTelecomStatus.STATUS_APPROVED 
-                      &&
-                      (item.sub_action == listTaskAction['TYPE_2G_CONVERSION']['value']
-                      || item.sub_action == listTaskAction['_4G_VNM_TO_VMS']['value'])
-                      ) || item.status == taskTelecomStatus.STATUS_WAITING_SIM )">
-                        <a ngbTooltip="Tiếp tục thực hiện" (click)="modalOpen(modalItem, item)">
-                          <i data-feather="arrow-right-circle" class="text-primary cursor-pointer"></i>
+                      <div
+                        *ngIf="
+                          (item.status == taskTelecomStatus.STATUS_APPROVED &&
+                            (item.sub_action ==
+                              listTaskAction['TYPE_2G_CONVERSION']['value'] ||
+                              item.sub_action ==
+                                listTaskAction['_4G_VNM_TO_VMS']['value'])) ||
+                          item.status == taskTelecomStatus.STATUS_WAITING_SIM
+                        "
+                      >
+                        <a
+                          ngbTooltip="Tiếp tục thực hiện"
+                          (click)="modalOpen(modalItem, item)"
+                        >
+                          <i
+                            data-feather="arrow-right-circle"
+                            class="text-primary cursor-pointer"
+                          ></i>
                         </a>
                       </div>
 
-                      <a ngbTooltip="Upload ảnh CMT cũ" (click)="modalApprovalOpen(modalUpload, item)"
-                        *ngIf="[taskTelecomStatus.STATUS_APPROVED_2, taskTelecomStatus.STATUS_DVKHKD_REJECT].includes(item.status)">
-                        <i data-feather="upload" class="text-primary cursor-pointer"></i>
+                      <a
+                        ngbTooltip="Upload ảnh CMT cũ"
+                        (click)="modalApprovalOpen(modalUpload, item)"
+                        *ngIf="
+                          [
+                            taskTelecomStatus.STATUS_APPROVED_2,
+                            taskTelecomStatus.STATUS_DVKHKD_REJECT
+                          ].includes(item.status)
+                        "
+                      >
+                        <i
+                          data-feather="upload"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </a>
 
-                      <a ngbTooltip="Thông tin Ship" (click)="modalApprovalOpen(modalUpdateShipTracking, item, 'lg')">
-                        <i data-feather="info" class="text-primary cursor-pointer"></i>
+                      <a
+                        ngbTooltip="Thông tin Ship"
+                        (click)="
+                          modalApprovalOpen(modalUpdateShipTracking, item, 'lg')
+                        "
+                      >
+                        <i
+                          data-feather="info"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </a>
 
-                      <a ngbTooltip="Lưu note"
-                        *ngIf="item.status == 1 && item.action == listTaskAction['new_sim']['value'] && item.request_id != null "
-                        class="btn btn-sm btn-icon" (click)="modalApprovalOpen(modaNote, item, 'lg')">
-                        <i data-feather="pen-tool" class="text-primary cursor-pointer"></i>
+                      <a
+                        ngbTooltip="Lưu note"
+                        *ngIf="
+                          item.status == 1 &&
+                          item.action == listTaskAction['new_sim']['value'] &&
+                          item.request_id != null
+                        "
+                        class="btn btn-sm btn-icon"
+                        (click)="modalApprovalOpen(modaNote, item, 'lg')"
+                      >
+                        <i
+                          data-feather="pen-tool"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </a>
-
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-              <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalItems"
-                [(page)]="searchForm.page" [pageSize]="searchForm.page_size" [boundaryLinks]="true"
-                (pageChange)="loadPage($event)">
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalItems"
+                [(page)]="searchForm.page"
+                [pageSize]="searchForm.page_size"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
                 <ng-template ngbPaginationPages let-page let-pages="pages">
                   <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
                     <div class="mb-3 d-flex flex-nowrap px-2">
-                      <label id="paginationInputLabel" for="paginationInput"
-                        class="col-form-label me-2 ms-1">Trang</label>
-                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
-                        id="paginationInput" [value]="searchForm.page" (keyup.enter)="loadPage(i.value)"
-                        (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
-                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
-                      <span id="paginationDescription" class="col-form-label text-nowrap px-2"> của
-                        {{pages.length}}</span>
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 2.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
                     </div>
                   </li>
                 </ng-template>
               </ngb-pagination>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -497,125 +1045,205 @@
 <ng-template #modalItem let-modal *blockUI="'item-block-detail'">
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160"></h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0">
-    <app-task-item [item]="selectedItem" (updateStatus)="onUpdateStatusSuccess($event)"
-      (createNewTask)="onCreateTaskNewSim($event)" [currentUser]="currentUser"
-      [currentUserId]="currentUser.id"></app-task-item>
+    <app-task-item
+      [item]="selectedItem"
+      (updateStatus)="onUpdateStatusSuccess($event)"
+      (createNewTask)="onCreateTaskNewSim($event)"
+      [currentUser]="currentUser"
+      [currentUserId]="currentUser.id"
+    ></app-task-item>
   </div>
 </ng-template>
 
 <ng-template #modalViewApproveRestore let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160"></h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0">
-    <app-view-approve [item]="selectedItem" (closePopup)="modalClose()"></app-view-approve>
+    <app-view-approve
+      [item]="selectedItem"
+      (closePopup)="modalClose()"
+    ></app-view-approve>
   </div>
 </ng-template>
 
 <ng-template #modalViewSubscriberInformation let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Chi tiết phiếu</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" *ngIf="selectedItem.action == listTaskAction['change_info']['value'] && selectedItem.sub_action == 'update_doc'">
-    <app-view-subscriber-information [item]="selectedItem" (closePopup)="modalClose()"></app-view-subscriber-information>
+  <div
+    class="modal-body"
+    tabindex="0"
+    *ngIf="
+      selectedItem.action == listTaskAction['change_info']['value'] &&
+      selectedItem.sub_action == 'update_doc'
+    "
+  >
+    <app-view-subscriber-information
+      [item]="selectedItem"
+      (closePopup)="modalClose()"
+    ></app-view-subscriber-information>
   </div>
-  <div class="modal-body" tabindex="0" *ngIf="selectedItem.action == 'cancel_subcriber'">
-    <app-view-cancel-subscription [item]="selectedItem" (closePopup)="modalClose()"></app-view-cancel-subscription>
+  <div
+    class="modal-body"
+    tabindex="0"
+    *ngIf="selectedItem.action == 'cancel_subcriber'"
+  >
+    <app-view-cancel-subscription
+      [item]="selectedItem"
+      (closePopup)="modalClose()"
+    ></app-view-cancel-subscription>
   </div>
 </ng-template>
 
 <ng-template #modalViewAgent let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Thông tin đại lý</h5>
-    <button type="button" class="close" (click)="modalViewAgentClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalViewAgentClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="row">
-      <div class="col-md-6">
-        SĐT đại lý: {{ selectedAgent?.user?.mobile }}
-      </div>
+      <div class="col-md-6">SĐT đại lý: {{ selectedAgent?.user?.mobile }}</div>
       <div class="col-md-6">
         Tên đại lý: {{ selectedAgent?.peopleInfo.name }}
       </div>
     </div>
   </div>
-
 </ng-template>
 
 <ng-template #modalApproveInfo let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160"></h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-approve-convert2g-item [item]="selectedItem" [currentUserId]="currentUser.id"></app-approve-convert2g-item>
+    <app-approve-convert2g-item
+      [item]="selectedItem"
+      [currentUserId]="currentUser.id"
+    ></app-approve-convert2g-item>
   </div>
 </ng-template>
 
 <ng-template #modalUpload let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160"></h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-approve-convert2g-identification [item]="selectedItem"
-      [currentUserId]="currentUser.id"></app-approve-convert2g-identification>
+    <app-approve-convert2g-identification
+      [item]="selectedItem"
+      [currentUserId]="currentUser.id"
+    ></app-approve-convert2g-identification>
   </div>
 </ng-template>
 
 <ng-template #modalUpdateShipTracking let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Thông tin Ship</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
-    <app-ship-info [item]="selectedItem" (closePopup)="modalClose()"></app-ship-info>
+    <app-ship-info
+      [item]="selectedItem"
+      (closePopup)="modalClose()"
+    ></app-ship-info>
   </div>
 </ng-template>
 
 <ng-template #modaNote let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Lưu note</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <div class="form-group">
       <label for="">Note</label>
-      <select name="" id="" class="form-control mb-2" [(ngModel)]="selectedNote">
+      <select
+        name=""
+        id=""
+        class="form-control mb-2"
+        [(ngModel)]="selectedNote"
+      >
         <option value="">- Chọn nội dung -</option>
-        <option value="Ảnh giấy tờ bị mờ, mất góc">Ảnh giấy tờ bị mờ, mất góc</option>
+        <option value="Ảnh giấy tờ bị mờ, mất góc">
+          Ảnh giấy tờ bị mờ, mất góc
+        </option>
         <option value="Hệ thống đấu nối bận">Hệ thống đấu nối bận</option>
         <option value="Hệ thống đấu nối bận">Mất SIM</option>
       </select>
-      <input type="text" class="form-control" #note placeholder="Tự nhập nội dung ở đây" value="{{ selectedNote }}">
+      <input
+        type="text"
+        class="form-control"
+        #note
+        placeholder="Tự nhập nội dung ở đây"
+        value="{{ selectedNote }}"
+      />
     </div>
     <div class="form-group">
       <a class="btn btn-success" (click)="onSaveNote(note?.value)">
         <i data-feather="check-circle" class="text-primary cursor-pointer"></i>
-        <span>
-          Lưu
-        </span>
+        <span> Lưu </span>
       </a>
     </div>
   </div>
@@ -631,68 +1259,130 @@
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="row" *ngIf="listTask">
       <div class="col-md-6">
-        <div>
-          <strong>Số thuê bao:</strong> {{ listTask?.msisdn }}
-        </div>
+        <div><strong>Số thuê bao:</strong> {{ listTask?.msisdn }}</div>
         <div>
           <strong>Số tiền:</strong>
-          {{ (listTask?.charge_amount || 0) + (listTask?.amount || 0) | formatPrice }}
+          {{
+            (listTask?.charge_amount || 0) + (listTask?.amount || 0)
+              | formatPrice
+          }}
         </div>
         <div>
-          <strong>Thời gian tạo/mua:</strong> {{ listTask?.request_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
+          <strong>Thời gian tạo/mua:</strong>
+          {{ listTask?.request_time | date : "dd/MM/yyyy H:mm" : "UTC" }}
         </div>
-        <div *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package')">
-          <strong>Thời gian cập nhật:</strong> {{ listTask?.updated_time | date: 'dd/MM/yyyy H:mm':'UTC' }}
+        <div
+          *ngIf="
+            listTask.action == 'topup' || listTask.action == 'register_package'
+          "
+        >
+          <strong>Thời gian cập nhật:</strong>
+          {{ listTask?.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}
         </div>
       </div>
-      <div class="col-md-6 ">
-        <div>
-          <strong>Ghi chú:</strong> {{ listTask?.note }}
-        </div>
+      <div class="col-md-6">
+        <div><strong>Ghi chú:</strong> {{ listTask?.note }}</div>
       </div>
 
-      <div class="col-md-6 mt-1"
-        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && (listTask.status == taskTelecomStatus.STATUS_FAIL || listTask.status == taskTelecomStatus.STATUS_WAITING)">
-        <button (click)="paymentRefund(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
+      <div
+        class="col-md-6 mt-1"
+        *ngIf="
+          (listTask.action == 'topup' ||
+            listTask.action == 'register_package') &&
+          (listTask.status == taskTelecomStatus.STATUS_FAIL ||
+            listTask.status == taskTelecomStatus.STATUS_WAITING)
+        "
+      >
+        <button
+          (click)="paymentRefund(listTask?.id)"
+          type="submit"
+          class="btn btn-primary"
+          rippleEffect
+        >
           Yêu cầu hoàn tiền
         </button>
       </div>
 
-      <div class="col-md-6 mt-1"
-        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && listTask.status == taskTelecomStatus.STATUS_FAIL">
-        <button (click)="paymentRetry(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
+      <div
+        class="col-md-6 mt-1"
+        *ngIf="
+          (listTask.action == 'topup' ||
+            listTask.action == 'register_package') &&
+          listTask.status == taskTelecomStatus.STATUS_FAIL
+        "
+      >
+        <button
+          (click)="paymentRetry(listTask?.id)"
+          type="submit"
+          class="btn btn-primary"
+          rippleEffect
+        >
           Thực hiện lại
         </button>
       </div>
 
-      <div class="col-md-6 mt-1"
-        *ngIf="(listTask.action == 'topup'|| listTask.action == 'register_package') && listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND">
-        <button (click)="paymentConfirm(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
+      <div
+        class="col-md-6 mt-1"
+        *ngIf="
+          (listTask.action == 'topup' ||
+            listTask.action == 'register_package') &&
+          listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND
+        "
+      >
+        <button
+          (click)="paymentConfirm(listTask?.id)"
+          type="submit"
+          class="btn btn-primary"
+          rippleEffect
+        >
           Xác nhận đã hoàn tiền
         </button>
-
       </div>
 
-      <div class="col-md-6 mt-1"
-        *ngIf="listTask.action == 'new_sim' && listTask.status != taskTelecomStatus.STATUS_CANCEL && listTask.status != taskTelecomStatus.STATUS_SUCCESS">
-        <button (click)="resendOtp(listTask?.id)" type="submit" class="btn btn-primary" rippleEffect>
+      <div
+        class="col-md-6 mt-1"
+        *ngIf="
+          listTask.action == 'new_sim' &&
+          listTask.status != taskTelecomStatus.STATUS_CANCEL &&
+          listTask.status != taskTelecomStatus.STATUS_SUCCESS
+        "
+      >
+        <button
+          (click)="resendOtp(listTask?.id)"
+          type="submit"
+          class="btn btn-primary"
+          rippleEffect
+        >
           Gửi lại mã kích hoạt
         </button>
       </div>
 
-      <div class="col-md-6 mt-1"
-        *ngIf="listTask.action == 'new_sim' && listTask.status != taskTelecomStatus.STATUS_CANCEL && listTask.status != taskTelecomStatus.STATUS_SUCCESS">
-        <button type="button" class="btn btn-outline-primary" (click)="modalOpenOTP(modalOTP, listTask?.id)"
-          rippleEffect>
+      <div
+        class="col-md-6 mt-1"
+        *ngIf="
+          listTask.action == 'new_sim' &&
+          listTask.status != taskTelecomStatus.STATUS_CANCEL &&
+          listTask.status != taskTelecomStatus.STATUS_SUCCESS
+        "
+      >
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="modalOpenOTP(modalOTP, listTask?.id)"
+          rippleEffect
+        >
           Xem mã kích hoạt
         </button>
-
       </div>
-
     </div>
   </div>
   <div class="modal-footer">
-    <button (click)="modalClose()" type="submit" class="btn btn-primary" rippleEffect>
+    <button
+      (click)="modalClose()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
       Đóng
     </button>
   </div>
@@ -708,17 +1398,19 @@
 
   <div class="modal-body" tabindex="0" ngbAutofocus>
     <div class="row" *ngIf="otpCode">
-      <div class="col-md-6 ">
-        <div>
-          Mã kích hoạt của bạn là: {{otpCode?.otp}}
-        </div>
+      <div class="col-md-6">
+        <div>Mã kích hoạt của bạn là: {{ otpCode?.otp }}</div>
       </div>
-
     </div>
   </div>
 
   <div class="modal-footer">
-    <button (click)="modalCloseOTP()" type="submit" class="btn btn-primary" rippleEffect>
+    <button
+      (click)="modalCloseOTP()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
       Đóng
     </button>
   </div>

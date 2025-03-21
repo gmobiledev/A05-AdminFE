@@ -21,6 +21,10 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task`, { params: params });
   }
 
+  getListBundlePackage() {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/bundle`);
+  }
+
   /**
    * Get all task
    */
