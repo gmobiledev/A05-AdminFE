@@ -173,6 +173,7 @@
                       [(ngModel)]="searchForm.bundle_package"
                     >
                       <option value="">-- Chọn gói cước --</option>
+                      <option value="All">Tất cả</option>
                       <option [value]="p.code" *ngFor="let p of listBundlePackage">{{ p.name }}</option>
                     </select>
                   </div>
@@ -1290,7 +1291,10 @@
           (listTask.action == 'topup' ||
             listTask.action == 'register_package') &&
           (listTask.status == taskTelecomStatus.STATUS_FAIL ||
-            listTask.status == taskTelecomStatus.STATUS_WAITING)
+            listTask.status == taskTelecomStatus.STATUS_WAITING) &&
+            listTask.status != taskTelecomStatus.STATUS_SUCCESS && 
+            listTask.payment_gateway == 'PAYTECH' &&
+            listTask.payment_reference_number != null
         "
       >
         <button
