@@ -255,7 +255,7 @@
                     <th class="col-stt">STT</th>
                     <th class="col-id">ID</th>
                     <th class="col-type">Yêu cầu | Loại KH</th>
-                    <th class="col-info">Số thuê bao | Serial | Nhà mạng</th>
+                    <th class="col-info">Số thuê bao | Serial | Nhà mạng | Gói cước</th>
                     <th class="col-amount">Số tiền</th>
                     <th class="col-agent">
                       Đại lý <br />
@@ -298,7 +298,8 @@
                     <td class="col-info">
                       <div>
                         {{ item.msisdn }} <br />
-                        {{ getDetail(item)?.serial }}
+                        {{ getDetail(item)?.serial }} <br />
+                        {{ item?.bundle_package !=null ? item?.bundle_package : '' }}
                       </div>
                     </td>
 
@@ -1284,14 +1285,9 @@
       <div class="col-md-6">
         <div><strong>Ghi chú:</strong> {{ listTask?.note }}</div>
       </div>
-
       <div
         class="col-md-6 mt-1"
         *ngIf="
-          (listTask.action == 'topup' ||
-            listTask.action == 'register_package') &&
-          (listTask.status == taskTelecomStatus.STATUS_FAIL ||
-            listTask.status == taskTelecomStatus.STATUS_WAITING) &&
             listTask.status != taskTelecomStatus.STATUS_SUCCESS && 
             listTask.payment_gateway == 'PAYTECH' &&
             listTask.payment_reference_number != null
@@ -1310,9 +1306,9 @@
       <div
         class="col-md-6 mt-1"
         *ngIf="
-          (listTask.action == 'topup' ||
-            listTask.action == 'register_package') &&
-          listTask.status == taskTelecomStatus.STATUS_FAIL
+        listTask.status != taskTelecomStatus.STATUS_SUCCESS && 
+        listTask.payment_gateway == 'PAYTECH' &&
+        listTask.payment_reference_number != null
         "
       >
         <button
