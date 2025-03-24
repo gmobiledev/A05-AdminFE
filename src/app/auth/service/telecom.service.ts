@@ -21,6 +21,14 @@ export class TelecomService {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task`, { params: params });
   }
 
+  getDataBatchs(params = null) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/product/batchs`, { params: params });
+  }
+
+  getDataDetailPriceUpdate(id) {
+    return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/product/batch/` + id);
+  }
+
   getListBundlePackage() {
     return this._http.get<any>(`${environment.apiTelecomUrl}/telecom-admin/task/bundle`);
   }
@@ -72,6 +80,10 @@ export class TelecomService {
 
   postFileUploadOcr(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/msisdn/file-upload`, data);
+  }
+
+  postUpdatePriceBatch(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/update-price-batch`, data);
   }
 
   /**
@@ -172,6 +184,14 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/create`, data);
   }
 
+  postVerifyOtp(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/price-update/verify-otp`, data);
+  }
+
+  postRejectBatch(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/reject-batch`, data);
+  }
+
   postUploadIdDoc(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-id-doc`, data);
   }
@@ -243,6 +263,10 @@ export class TelecomService {
    */
   checkAvailabledTask(id) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/${id}/check-available`, {}).toPromise();
+  }
+
+  checkRequestAvailable(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/check-request-available`, data).toPromise();
   }
 
   /**

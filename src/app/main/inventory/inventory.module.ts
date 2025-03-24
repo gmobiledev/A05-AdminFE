@@ -48,6 +48,10 @@ import { KetQuaG59Component } from './report-g59/ket-qua-g59/ket-qua-g59.compone
 import { KinhDoanhG59Component } from './report-g59/kinh-doanh-g59/kinh-doanh-g59.component';
 import { TonKhoG59Component } from './report-g59/ton-kho-g59/ton-kho-g59.component';
 import { TonKhoSimG59Component } from './report-g59/ton-kho-sim-g59/ton-kho-sim-g59.component';
+import { UpdatePriceComponent } from './update-price/update-price.component';
+import { CreateUpdatePriceComponent } from './update-price/create-update-price/create-update-price.component';
+import { ViewUpdatePriceComponent } from './update-price/view-update-price/view-update-price.component';
+import { OtpComponent } from './update-price/view-update-price/otp/otp.component';
 
 const routes: Routes = [
   {
@@ -194,6 +198,10 @@ const routes: Routes = [
     path: 'search-product-transfer',
     component: SearchProductsTransferComponent
   },
+  {
+    path: 'update-price',
+    component: UpdatePriceComponent
+  },
 ];
 
 @NgModule({
@@ -221,7 +229,7 @@ const routes: Routes = [
     TonKhoSimComponent, 
     TongHopComponent,
     ChiTietComponent, 
-    KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent, ChiTietG59Component, TongHopG59Component, DoanhThuG59Component, KetQuaG59Component, KinhDoanhG59Component, TonKhoG59Component, TonKhoSimG59Component,
+    KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent, ChiTietG59Component, TongHopG59Component, DoanhThuG59Component, KetQuaG59Component, KinhDoanhG59Component, TonKhoG59Component, TonKhoSimG59Component, UpdatePriceComponent, CreateUpdatePriceComponent, ViewUpdatePriceComponent, OtpComponent,
   ],
   imports: [
     CommonModule,

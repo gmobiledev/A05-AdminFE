@@ -1,0 +1,9 @@
+.icon-operation{
+    img{
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+        &:hover {
+            opacity: unset;
+          }
+    }
+}

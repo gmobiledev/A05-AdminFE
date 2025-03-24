@@ -1,0 +1,238 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ contentHeader.headerTitle }}</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitSearch()">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                    >
+                      <option value="">Tất cả</option>
+                      <option value="0">Khởi tạo</option>
+                      <option value="1">Kích hoạt</option>
+                      <option value="-2">Khóa</option>
+                      <option value="-1">Hủy</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      [(ngModel)]="searchForm.name"
+                      class="form-control"
+                      placeholder="Tên phiếu"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="code"
+                      [(ngModel)]="searchForm.code"
+                      class="form-control"
+                      placeholder="Mã phiếu"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả <span [data-feather]="'search'"></span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <button
+                      type="button"
+                      (click)="onSubmitExportExcelReport()"
+                      class="btn btn-block btn-success"
+                    >
+                      Xuất báo cáo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="mt-2 mb-2 overflow-hidden">
+              <div class="pull-left">
+                Tổng: <b>{{ totalPage }}</b>
+              </div>
+              <div class="pull-right">
+                <button
+                  type="button"
+                  (click)="modalOpen(modalItemCreate)"
+                  class="btn btn-success mr-25 d-flex align-items-center btn-block" style="gap: 5px;"
+                >
+                  Tạo phiếu
+                  <img
+                    src="/assets/images/icons/icon-add.svg"
+                    width="15px"
+                    alt=""
+                  />
+                </button>
+              </div>
+            </div>
+            <div class="table-responsive" *blockUI="'section-block'">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>MÃ</th>
+                    <th>TIÊU ĐỀ</th>
+                    <th>SỐ LƯỢNG</th>
+                    <th>THỜI GIAN</th>
+                    <th>TRẠNG THÁI</th>
+                    <th>GHI CHÚ</th>
+                    <th>THAO TÁC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listdata">
+                    <td>
+                      {{ item?.id }}
+                    </td>
+                    <td>{{ item?.title }}</td>
+                    <td>
+                      {{ item?.quantility }}
+                    </td>
+                    <td>
+                      {{ item?.created_at | date: 'dd/MM/yyyy HH:mm:ss' }}
+                    </td>
+                    <td>
+                      <div [innerHTML]="item?.status | showStatusUpdatePrice"></div>
+                    </td>
+
+                    <td>
+                      {{ item?.note }}
+                    </td>
+
+                    <td class="d-flex" style="gap: 10px;">
+                      <div class="cursor-pointer icon-operation" ngbTooltip="Xem chi tiết" (click)="openViewEdit(item.id,'view')">
+                        <img
+                          src="/assets/images/icons/icon-view-yellow.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="cursor-pointer icon-operation" ngbTooltip="Chỉnh sửa" (click)="openViewEdit(item.id, 'edit')">
+                        <img
+                          src="/assets/images/icons/icon-edit-yellow.svg"
+                          alt=""
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalItems"
+                [(page)]="searchForm.page"
+                [pageSize]="searchForm.page_size"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="searchForm.page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 2.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalItemCreate let-modal>
+  <div class="modal-header">
+    <h5
+      class="modal-title"
+      id="myModalLabel160"
+      style="color: rgba(0, 207, 232, 1)"
+    >
+      Cập nhật giá
+    </h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <app-create-update-price (closePopup)="modalClose()"></app-create-update-price>
+  </div>
+</ng-template>
+
+<ng-template #modalItemView let-modal>
+  <div class="modal-header">
+    <h5
+      class="modal-title"
+      id="myModalLabel160"
+      style="color: rgba(252, 183, 30, 1)"
+    >
+      Chi tiết phiếu
+    </h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <app-view-update-price  [idTask]="idTask" [selectView]="selectView" (close)="modalClose()"></app-view-update-price>
+  </div>
+</ng-template>
