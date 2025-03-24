@@ -22,6 +22,7 @@ export class ForgotPasswordComponent implements OnInit {
   public forgotPasswordForm: FormGroup;
   public submitted = false;
   timeCountdown;
+  timeCountdownExpired;
   otp;
   showReset = false;
   public passwordTextType: boolean;
@@ -83,6 +84,7 @@ export class ForgotPasswordComponent implements OnInit {
         if (res.status === 1 && res.data) {
           this.showReset = true;
           this.countdown(1);
+          this.countdownExpired();
         } else {
           this.alertService.showMess(res.message);
         }
@@ -156,6 +158,31 @@ export class ForgotPasswordComponent implements OnInit {
       if (seconds == 0) {
         clearInterval(timer);
         this.noneShowSubmitOtp = true;
+      }
+    }, 1000);
+  }
+
+  countdownExpired() {
+    let minute = 1.5;
+    let seconds: number = 90;
+    let textSec: any = "0";
+    let statSec: number = 30;
+
+    const prefix = minute < 10 ? "0" : "";
+
+    const timer = setInterval(() => {
+      seconds--;
+      if (statSec != 0) statSec--;
+      else statSec = 59;
+
+      if (statSec < 10) {
+        textSec = "0" + statSec;
+      } else textSec = statSec;
+
+      this.timeCountdownExpired = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
+
+      if (seconds == 0) {
+        clearInterval(timer);
       }
     }, 1000);
   }

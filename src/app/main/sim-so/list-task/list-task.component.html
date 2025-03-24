@@ -1290,7 +1290,8 @@
         *ngIf="
             listTask.status != taskTelecomStatus.STATUS_SUCCESS && 
             listTask.payment_gateway == 'PAYTECH' &&
-            listTask.payment_reference_number != null
+            listTask.payment_reference_number != null &&
+            listTask.status != taskTelecomStatus.STATUS_WAITING_REFUND
         "
       >
         <button
@@ -1324,8 +1325,8 @@
       <div
         class="col-md-6 mt-1"
         *ngIf="
-          (listTask.action == 'topup' ||
-            listTask.action == 'register_package') &&
+        listTask.payment_gateway == 'PAYTECH' &&
+        listTask.payment_reference_number != null &&
           listTask.status == taskTelecomStatus.STATUS_WAITING_REFUND
         "
       >
