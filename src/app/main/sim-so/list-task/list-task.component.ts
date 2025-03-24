@@ -75,7 +75,6 @@ export class ListTaskComponent implements OnInit {
   public selectedItem: any;
   public selectedAgent: any;
   public mineTask = false;
-  public checkPackage = false;
   public checkTime = false;
   public currentUser: any;
   public isAdmin: boolean = false;
@@ -105,6 +104,7 @@ export class ListTaskComponent implements OnInit {
   dateRange: any;
   selectedNote: string;
   telecomTaskSubAction = TelecomTaskSubAction;
+  listBundlePackage;
 
   ranges: any = {
     "Hôm nay": [dayjs(), dayjs()],
@@ -752,7 +752,6 @@ export class ListTaskComponent implements OnInit {
         : "";
     this.searchForm.date_range = daterangeString;
     this.searchForm.mine = this.mineTask ? 1 : "";
-    this.searchForm.bundle_package = this.checkPackage ? 1 : "";
     this.searchForm.sync_time = this.checkTime ? 1 : "";
 
     this.router.navigate(["/sim-so/task"], { queryParams: this.searchForm });
@@ -837,6 +836,22 @@ export class ListTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSubscribe();
+    this.getListBundlePackage();
+  }
+
+  getListBundlePackage(){
+    this.telecomService.getListBundlePackage().subscribe(
+      (res) => {
+        if (!res.status) {
+          this.alertService.showMess(res.message);
+          return;
+        }
+        this.listBundlePackage = res.data.liskPackage;
+      },
+      (err) => {
+        this.alertService.showError(err);
+      }
+    );
   }
 
   getSubscribe() {

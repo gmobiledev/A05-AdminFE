@@ -28,6 +28,7 @@ import { ShowStatusProductPipe } from './show-status-product';
 import { ShowStatusProductStorePipe } from './show-status-product-store.pipe';
 import { ShowTransPipe } from './show-type-trans.pipe';
 import { ShowStatusTransPipe } from './show-status-trans.pipe';
+import { ShowStatusUpdatePricePipe } from './show-status-update-price.pipe';
 
 @NgModule({
   declarations: [ShowStatusSimPipe,InitialsPipe, ShowStatusEkycPipe, FilterPipe, StripHtmlPipe, 
@@ -35,6 +36,7 @@ import { ShowStatusTransPipe } from './show-status-trans.pipe';
     ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe,ShowStatusBatchPipe,
     TypeBalanceChangesPipe, TypeBatchFormPipe,
     ShowStatusSellPipe,
+    ShowStatusUpdatePricePipe,
     ShowStatusProductPipe,
     ShowStatusProductStorePipe, ShowTransPipe, ShowStatusTransPipe
   ],
@@ -44,6 +46,7 @@ import { ShowStatusTransPipe } from './show-status-trans.pipe';
     ShowStatusMsisdnPipe, ShowStatusTaskPipe, NumberToTextPipe, FormatPricePipe, ShowStatusTelecomGsimPipe, ShowStatusBatchPipe,
     TypeBalanceChangesPipe, TypeBatchFormPipe,
     ShowStatusSellPipe,
+    ShowStatusUpdatePricePipe,
     ShowStatusProductPipe,
     ShowStatusProductStorePipe,ShowTransPipe, ShowStatusTransPipe
   ]

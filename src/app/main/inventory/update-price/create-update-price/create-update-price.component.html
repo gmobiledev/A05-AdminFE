@@ -1,0 +1,99 @@
+<div class="col-12">
+  <form [formGroup]="formCreatePrice" (ngSubmit)="onSubmitCreate()">
+    <div class="form-group">
+      <label for="">Tiêu đề</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nhập tiêu đề"
+        formControlName="name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Mã phiếu</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nhập mã phiếu"
+        formControlName="code"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Tên hàng</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nhập tên hàng"
+        formControlName="nameproduct"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Nhập số lượng</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nhập số lượng"
+        formControlName="quantity"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Ghi chú</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nhập ghi chú"
+        formControlName="note"
+      />
+    </div>
+    <div class="row mb-1">
+      <div class="col-6 d-flex align-items-center">
+        <input
+          class="input-display-none"
+          id="update-file-document"
+          (change)="onFileSelected($event, 'document')"
+          type="file"
+        />
+        <label for="update-file-document" class="mr-1 d-flex" style="gap: 10px">
+          <img
+            src="/assets/images/icons/icon-update-file.svg"
+            class="img-fluid"
+            alt=""
+          />
+          <span class="btn button-file">Tải tài liệu</span>
+        </label>
+        <span *ngIf="attachments == null">Chưa chọn tài liệu</span>
+        <span *ngIf="attachments != null">{{attachments?.name}}</span>
+      </div>
+      <div class="col-6"><span>Tải lên file chứng từ</span></div>
+    </div>
+
+    <div class="row mb-1">
+      <div class="col-6 d-flex align-items-center">
+        <input
+          class="input-display-none"
+          id="update-file-excel"
+          (change)="onFileSelected($event, 'excel')"
+          type="file"
+          accept=".xls,.xlsx"
+        />
+        <label for="update-file-excel" class="mr-1 d-flex" style="gap: 10px">
+          <img
+            src="/assets/images/icons/icon-update-file.svg"
+            class="img-fluid"
+            alt=""
+          />
+          <span class="btn button-file" >Tải tài liệu</span>
+        </label>
+        <span *ngIf="file == null">Chưa chọn tài liệu</span>
+        <span *ngIf="file != null">{{file?.name}}</span>
+      </div>
+      <div class="col-6">
+        <span class="mr-1">Tải lên file excel danh sách</span>
+        <a href="/assets/sim-profile-serial.xlsx" style="color: rgba(252, 183, 30, 1)" class="ml-2">File mẫu tại đây</a>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <button class="btn btn-primary">Tạo phiếu</button>
+    </div>
+  </form>
+</div>

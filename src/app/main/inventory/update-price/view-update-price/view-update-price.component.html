@@ -1,0 +1,180 @@
+<div class="pl-1 pr-1">
+  <div class="row" *blockUI="'section-block'">
+    <div class="col-md-6">
+      <div>
+        <h3>Cập nhật giá</h3>
+      </div>
+      <div>ID của yêu cầu: {{ dataProducts?.batch?.id }}</div>
+      <div>Tiêu đề: {{ dataProducts?.batch?.title }}</div>
+      <div>
+        <span>Trạng thái: </span
+        ><span
+          [innerHTML]="dataProducts?.batch?.status | showStatusUpdatePrice"
+        ></span>
+      </div>
+      <div><span>Admin thao tác: </span>{{ dataText?.user_sync }}</div>
+      <div><span>Mã: </span>{{ dataText?.batch?.code }}</div>
+      <div
+        *ngIf="
+          dataProducts?.batch?.number_success_msisdn &&
+          dataProducts?.batch?.number_success_msisdn > 0
+        "
+      >
+        <b class="text-info" *ngIf="dataProducts && dataProducts?.batch?.task?.otp">
+          Đã xác nhận OTP ĐKTTTB
+        </b>
+        <b class="text-secondary" *ngIf="dataProducts && !dataProducts?.batch?.otp">
+          Chưa xác nhận OTP ĐKTTTB
+        </b>
+      </div>
+    </div>
+    <div class="col-md-12 mb-1">
+      <span>Thời gian tạo: </span>
+      {{ dataProducts?.batch?.created_at | date : "dd/MM/yyyy H:mm" : "UTC"
+      }}<br />
+      <!-- <span>Thời gian mua : </span>
+      {{ dataProducts?.batch.buy_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian cập nhật: </span>
+      {{ dataProducts?.batch.updated_time | date : "dd/MM/yyyy H:mm" : "UTC" }}<br />
+      <span>Thời gian hoàn thành: </span>
+      {{ dataProducts?.batch.sync_time | date : "dd/MM/yyyy H:mm" : "UTC"}}<br /> -->
+      <span>Note: </span> {{ dataProducts?.batch?.note }}
+    </div>
+  </div>
+
+  <div class="view-content-container mb-1">
+    <div class="view-content">
+      <div class="view-content-left">
+        <label for="display">Hiển thị</label>
+        <select id="display" (change)="onSelectChange($event)">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="view-content-right">
+        <label for="search">Tìm kiếm</label>
+        <input type="text" id="search" placeholder="Nhập từ khóa" />
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Số thuê bao</th>
+          <th>Serial</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of dataProducts?.products?.items">
+          <td>0{{ item?.msisdn }}</td>
+          <td>{{ item?.serial }}</td>
+          <td><div [innerHTML]="item?.status | showStatusUpdatePrice"></div></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer">Tổng {{ countDataSim }}</div>
+  </div>
+  <div
+    class="col-12 pt-1 pb-1 pr-2 pl-2 mb-1"
+    style="border: 1px rgba(216, 216, 216, 1) solid"
+  >
+    <!-- <div class="col-12 mb-1" *ngIf="selectView == 'edit'">
+      <label for="update-file-image" class="label-upload-input"
+        >Upload-file
+        <img
+          src="/assets/images/icons/icon-update-file.svg"
+          class="img-fluid"
+          alt=""
+      /></label>
+      <input
+        class="input-display-none"
+        id="update-file-image"
+        type="file"
+        (change)="onFileSelected($event)"
+        multiple
+        style="display: none"
+        accept="image/png, image/gif, image/jpeg"
+      />
+    </div> -->
+    <div class="col-12">
+      <div class="mb-1">
+        <h4 style="font-size: 15px; font-weight: 500">File đính kèm task</h4>
+      </div>
+      <div
+        class="mb-1 d-flex"
+        *ngIf="attachments?.length > 0"
+        style="max-width: 100%; overflow: hidden"
+      >
+        <div class="d-flex name-file flex-column">
+          <div
+            class="d-flex"
+            *ngFor="let item of attachments; let i = index"
+            (click)="modalOpenFileTask(modalViewFileTask, item)"
+          >
+            <img
+              style="margin-right: 15px"
+              *ngIf="item?.ext != '.pdf'"
+              src="/assets/images/icons/icon-image-jpg-black.svg"
+              alt=""
+            />
+            <img
+              style="margin-right: 15px; width: 40px"
+              *ngIf="item?.ext == '.pdf'"
+              src="/assets/images/icons/pdf.png"
+              alt=""
+            />
+            <div class="d-flex flex-column justify-content-around">
+              <div class="text-right">
+                <span style="cursor: pointer" (click)="deleteFile(i)">x</span>
+              </div>
+              <p>{{ itemImage?.name }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="row box-button"
+    style="gap: 10px; justify-content: center"
+    *ngIf="selectView == 'edit' && isShowButtonApprove() && dataProducts?.batch?.status != statusUpdatePrice.APPROVE && dataProducts?.batch?.status != statusUpdatePrice.REFUSE"
+  >
+    <a class="ml-2 btn btn-danger" (click)="select('reject')" *ngIf="dataProducts?.batch?.status == statusUpdatePrice.RECEPTION">
+      <i data-feather="slash" class="text-white cursor-pointer"></i>
+      Từ chối yêu cầu
+    </a>
+    <a class="ml-2 btn btn-success" (click)="select('approve')" *ngIf="dataProducts?.batch?.status == statusUpdatePrice.RECEPTION">
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Duyệt
+    </a>
+    <a class="ml-2 btn btn-info" (click)="reception()" *ngIf="dataProducts?.batch?.status != statusUpdatePrice.RECEPTION">
+      <i data-feather="check" class="text-white cursor-pointer"></i>
+      Tiếp nhận yêu cầu
+    </a>
+  </div>
+</div>
+
+<ng-template #modalItemViewOtp let-modal>
+  <div class="modal-body" tabindex="0">
+    <app-otp (closeModal)="closePopupAll($event)" [idTask]="idTask"></app-otp>
+  </div>
+</ng-template>
+
+<ng-template #modalViewFileTask let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160"></h5>
+      <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <img *ngIf="type == 'img'" src="data:image/png;base64,{{url}}" style="width: 100%;" />
+<pdf-viewer *ngIf="type == 'pdf'" [src]="'data:application/pdf;base64,'+url" [render-text]="true"
+    [original-size]="false" style="height: 400px;"></pdf-viewer>
+<!-- <video *ngIf="type == 'video'" [src]="'data:video/mp4;base64,'+url" style="width: 300px;" autoplay controls> -->
+<!-- </video> -->
+  </div>
+</ng-template>

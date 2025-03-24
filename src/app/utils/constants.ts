@@ -54,6 +54,12 @@ export enum MsisdnStatus {
     STATUS_TERMINATE = 99 //Chấm dứt, thu hồi
 }
 
+export enum StatusUpdatePrice {
+    APPROVE = 1, //duyệt
+    REFUSE = -3, //từ chối
+    RECEPTION = 5, //Tiếp nhận
+    INITIALIZE = 0// mới khởi tạo
+}
 
 export enum ProductStatus {
     STATUS_ACTIVE = 1,

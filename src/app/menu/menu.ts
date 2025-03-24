@@ -302,14 +302,14 @@ export const menu: CoreMenu[] = [
         url: "inventory/sell-chanel",
       },
 
-      // {
-      //   id: 'sell-chanel',
-      //   title: 'Chi tiết kho tổng',
-      //   translate: '',
-      //   type: 'item',
-      //   icon: 'database',
-      //   url: 'inventory/view-detail-totalSell'
-      // },
+      {
+        id: 'update-price',
+        title: 'Cập nhật giá bán',
+        translate: '',
+        type: 'item',
+        icon: 'database',
+        url: 'inventory/update-price'
+      },
 
       {
         id: "report-business",

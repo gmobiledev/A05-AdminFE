@@ -1,0 +1,10 @@
+code-input input {
+  border: none !important;
+  border-bottom: 0.1em solid #aaa !important;
+}
+
+code-input input:focus {
+  outline: 0 !important;
+  /* border-color: skyblue; *rgb(255, 0, 0)
+      /* box-shadow: 0 0 0 0.1em skyblue; */
+}

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AdminService } from "app/auth/service/admin.service";
 import { TelecomService } from "app/auth/service/telecom.service";
@@ -11,6 +11,7 @@ import { SweetAlertService } from "app/utils/sweet-alert.service";
 })
 export class ShipInfoComponent implements OnInit {
   @Input() item;
+  @Output() closePopup = new EventEmitter<any>();
   public detail;
   public ship_tracking;
   public ship_code;
@@ -32,7 +33,6 @@ export class ShipInfoComponent implements OnInit {
   ngOnInit(): void {
     if (this.item) {
       this.detail = JSON?.parse(this.item.detail);
-      console.log(9999, this.detail);
       if (this.detail?.ship_status === 1 && this.detail?.ship_status) {
         this.showSubmit = true;
       }
@@ -144,7 +144,7 @@ export class ShipInfoComponent implements OnInit {
               return;
             }
             this.alertService.showSuccess(res.message);
-            this.modalClose()
+            this.closePopup.next();
           },
           (err) => {
             this.alertService.showMess(err);
@@ -158,7 +158,6 @@ export class ShipInfoComponent implements OnInit {
       this.alertService.showMess("Vui lòng nhập ngày nhận sim");
       return;
     }
-    console.log();
 
     const [year, month, day] = this.shipDateNote.split("-");
     const ship_date_note = `${day}/${month}/${year}`;
@@ -177,6 +176,7 @@ export class ShipInfoComponent implements OnInit {
           }
           this.alertService.showSuccess(res.message);
           this.modalClose();
+          this.closePopup.next();
         },
         (err) => {
           this.alertService.showMess(err);

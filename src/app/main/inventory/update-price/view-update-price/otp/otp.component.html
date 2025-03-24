@@ -1,0 +1,24 @@
+<div class="row mb-1">
+  <div class="col-12 mb-1 d-flex justify-content-center" style="font-weight: bold; font-size: 17px;">
+    Nhập mã OTP đã được gửi về mail của bạn
+  </div>
+  <div class="col-12 mb-1">
+    <code-input
+      [isCodeHidden]="false"
+      [isCharsCode]="false"
+      [codeLength]="6"
+      (codeCompleted)="onCompletedInputOtp($event)"
+    ></code-input>
+  </div>
+  <div class="col-12 d-flex justify-content-center" style="color: #f01a0d">
+    Gửi lại mã
+  </div>
+</div>
+<div class="row box-button" style="gap: 10px; justify-content: center; color: #ffffff;">
+  <a class="ml-2 btn" style="background-color: #ABABAB;" (click)="submit('cancel')">
+    Hủy
+  </a>
+  <a class="ml-2 btn" style="background-color: #3085D6;" (click)="submit('approve')">
+    Gửi
+  </a>
+</div>

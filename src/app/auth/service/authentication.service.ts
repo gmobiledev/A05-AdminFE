@@ -145,6 +145,14 @@ export class AuthenticationService {
     return this._http.post<any>(`${environment.apiUrl}/admin/changepassword`, data)
   }
 
+  forgotPassword(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/forgot-password`, data)
+  }
+
+  resetForgotPassword(data) {
+    return this._http.post<any>(`${environment.apiUrl}/admin/forgot-password/reset`, data)
+  }
+
 
   /**
    * User logout
