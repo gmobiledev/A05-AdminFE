@@ -87,7 +87,8 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "100kb"
                 }
-              ]
+              ],
+              "outputPath": "dist/prod/s198"
             },
             "hmr": {
               "budgets": [
@@ -134,7 +135,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.test.ts"
                 }
-              ]
+              ],
+              "outputPath": "dist/sandbox/s198"
             },
             "public": {
               "budgets": [
@@ -183,7 +185,7 @@
                   "with": "src/environments/environment.test-public.ts"
                 }
               ],
-              "outputPath": "dist/test-public/g99"
+              "outputPath": "dist/test-public/s198"
             }
           },
           "defaultConfiguration": ""
