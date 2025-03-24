@@ -11,6 +11,7 @@ export class TaskCountdownComponent implements AfterViewInit, OnInit, OnDestroy 
   date: any;
   now: any;
   @Input() endDate;
+  @Input() type;
   targetDate: any ;
   targetTime: any;
   difference: number;
@@ -30,7 +31,11 @@ export class TaskCountdownComponent implements AfterViewInit, OnInit, OnDestroy 
   ngAfterViewInit() {
     this.interval = setInterval(() => {
       this.tickTock();
-      this.difference = this.targetTime - this.now - 7*60*60;
+      if(this.type == 'countdown-recall'){
+        this.difference = this.targetTime - this.now;
+      }else{
+        this.difference = this.targetTime - this.now - 7*60*60;
+      }
       if(this.difference <=0) {
         this.difference = 0;        
       }
