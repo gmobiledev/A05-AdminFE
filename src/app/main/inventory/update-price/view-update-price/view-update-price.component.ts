@@ -1,7 +1,15 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TelecomService } from "app/auth/service/telecom.service";
-import { TaskTelecomStatus } from "app/utils/constants";
+import { ObjectLocalStorage, StatusUpdatePrice } from "app/utils/constants";
 import { SweetAlertService } from "app/utils/sweet-alert.service";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import Swal from "sweetalert2";
@@ -15,16 +23,18 @@ export class ViewUpdatePriceComponent implements OnInit {
   @BlockUI("section-block") itemBlockUIView: NgBlockUI;
   @Input() idTask: any;
   @Input() selectView: any;
+  @Output() close = new EventEmitter();
   attachments;
   dataProducts;
   url;
   type = "";
+  currentUser;
   @ViewChild("modalViewFileTask") modalViewFileTask: ElementRef;
   public selectedFilesImage: File[] = [];
   countDataSim;
   @ViewChild("modalItemViewOtp") modalItemViewOtp: ElementRef;
   public modalRef: any;
-  public taskTelecomStatus = TaskTelecomStatus;
+  public statusUpdatePrice = StatusUpdatePrice;
 
   constructor(
     private modalService: NgbModal,
@@ -33,9 +43,10 @@ export class ViewUpdatePriceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.idTask =1203;
+    this.currentUser = JSON.parse(
+      localStorage.getItem(ObjectLocalStorage.CURRENT_USER)
+    );
     this.viewDetailPriceUpdate(this.idTask);
-    console.log(this.selectView);
   }
 
   viewDetailPriceUpdate(id) {
@@ -111,29 +122,34 @@ export class ViewUpdatePriceComponent implements OnInit {
     }
   }
 
-  isShowButtonApprove() {
-    // if (
-    //   this.checkAction(
-    //     "telecom-admin/task/:slug(\\d+)/KHOI_PHUC/update-status"
-    //   ) ||
-    //   this.checkAction(
-    //     "telecom-admin/task/:slug(\\d+)/change-customer-subsriber"
-    //   )
-    // ) {
-    //   return true;
-    // }
-    // return false;
-    return true;
+  closePopupAll(event) {
+    console.log(event);
+    if (event === false) {
+      this.modalRef.close();
+    } else {
+      this.modalRef.close();
+      this.close.next();
+    }
   }
 
-  // checkAction(item) {
-  //   return this.currentUser
-  //     ? this.currentUser.actions.find((itemX) => itemX.includes(item))
-  //     : false;
-  // }
+  isShowButtonApprove() {
+    if (
+      this.checkAction("telecom-admin/product/check-request-available") &&
+      this.checkAction("telecom-admin/product/reject-batch") &&
+      this.checkAction("telecom-admin/product/price-update/verify-otp")
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  checkAction(item) {
+    return this.currentUser
+      ? this.currentUser.actions.find((itemX) => itemX.includes(item))
+      : false;
+  }
 
   select(name: string, typeApprove?: number) {
-    // let data;
     if (name === "approve") {
       this.modalOpen(this.modalItemViewOtp);
     } else {
@@ -151,11 +167,22 @@ export class ViewUpdatePriceComponent implements OnInit {
             Swal.showValidationMessage("Vui lòng nhập nội dung");
             return;
           }
-          // const data = {
-          //   status: -1,
-          //   note: note,
-          // };
-          // this.approveOrReject(data);
+          this.telecomService
+            .postRejectBatch({
+              batchId: this.idTask,
+              note: note,
+            })
+            .subscribe(
+              (res) => {
+                if (res.status == 1) {
+                  this.alertService.showMess(res.message);
+                  this.close.next();
+                }
+              },
+              (err) => {
+                this.alertService.showMess(err);
+              }
+            );
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
@@ -170,7 +197,9 @@ export class ViewUpdatePriceComponent implements OnInit {
   async reception() {
     this.itemBlockUIView.start();
     try {
-      const check = await this.telecomService.checkRequestAvailable({batchId:this.idTask});
+      const check = await this.telecomService.checkRequestAvailable({
+        batchId: this.idTask,
+      });
       if (check.status === 1) {
         this.alertService.showMess(check.message);
         this.itemBlockUIView.stop();

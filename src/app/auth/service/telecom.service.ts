@@ -167,6 +167,14 @@ export class TelecomService {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/create`, data);
   }
 
+  postVerifyOtp(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/price-update/verify-otp`, data);
+  }
+
+  postRejectBatch(data) {
+    return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/product/reject-batch`, data);
+  }
+
   postUploadIdDoc(data) {
     return this._http.post<any>(`${environment.apiTelecomUrl}/telecom-admin/task/upload-id-doc`, data);
   }

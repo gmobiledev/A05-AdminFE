@@ -117,7 +117,7 @@
                       {{ item?.created_at | date: 'dd/MM/yyyy HH:mm:ss' }}
                     </td>
                     <td>
-                      <div [innerHTML]="item?.status | showStatusSell"></div>
+                      <div [innerHTML]="item?.status | showStatusUpdatePrice"></div>
                     </td>
 
                     <td>
@@ -233,6 +233,6 @@
     </button>
   </div>
   <div class="modal-body" tabindex="0">
-    <app-view-update-price  [idTask]="idTask" [selectView]="selectView"></app-view-update-price>
+    <app-view-update-price  [idTask]="idTask" [selectView]="selectView" (close)="modalClose()"></app-view-update-price>
   </div>
 </ng-template>

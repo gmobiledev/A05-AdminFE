@@ -9,7 +9,7 @@
       <div>
         <span>Trạng thái: </span
         ><span
-          [innerHTML]="dataProducts?.batch?.status | showStatusTelecom"
+          [innerHTML]="dataProducts?.batch?.status | showStatusUpdatePrice"
         ></span>
       </div>
       <div><span>Admin thao tác: </span>{{ dataText?.user_sync }}</div>
@@ -70,7 +70,7 @@
         <tr *ngFor="let item of dataProducts?.products?.items">
           <td>0{{ item?.msisdn }}</td>
           <td>{{ item?.serial }}</td>
-          <td><div [innerHTML]="item?.status | showStatusSell"></div></td>
+          <td><div [innerHTML]="item?.status | showStatusUpdatePrice"></div></td>
         </tr>
       </tbody>
     </table>
@@ -140,18 +140,17 @@
   <div
     class="row box-button"
     style="gap: 10px; justify-content: center"
-    *ngIf="selectView == 'edit'"
+    *ngIf="selectView == 'edit' && isShowButtonApprove() && dataProducts?.batch?.status != statusUpdatePrice.APPROVE && dataProducts?.batch?.status != statusUpdatePrice.REFUSE"
   >
-  {{dataProducts?.batch?.status != taskTelecomStatus.STATUS_PROCESSING}}
-    <a class="ml-2 btn btn-danger" (click)="select('reject')" *ngIf="dataProducts?.batch?.status == taskTelecomStatus.STATUS_PROCESSING">
+    <a class="ml-2 btn btn-danger" (click)="select('reject')" *ngIf="dataProducts?.batch?.status == statusUpdatePrice.RECEPTION">
       <i data-feather="slash" class="text-white cursor-pointer"></i>
       Từ chối yêu cầu
     </a>
-    <a class="ml-2 btn btn-success" (click)="select('approve')" *ngIf="dataProducts?.batch?.status == taskTelecomStatus.STATUS_PROCESSING">
+    <a class="ml-2 btn btn-success" (click)="select('approve')" *ngIf="dataProducts?.batch?.status == statusUpdatePrice.RECEPTION">
       <i data-feather="check" class="text-white cursor-pointer"></i>
       Duyệt
     </a>
-    <a class="ml-2 btn btn-info" (click)="reception()" *ngIf="dataProducts?.batch?.status != taskTelecomStatus.STATUS_PROCESSING">
+    <a class="ml-2 btn btn-info" (click)="reception()" *ngIf="dataProducts?.batch?.status != statusUpdatePrice.RECEPTION">
       <i data-feather="check" class="text-white cursor-pointer"></i>
       Tiếp nhận yêu cầu
     </a>
@@ -160,7 +159,7 @@
 
 <ng-template #modalItemViewOtp let-modal>
   <div class="modal-body" tabindex="0">
-    <app-otp></app-otp>
+    <app-otp (closeModal)="closePopupAll($event)" [idTask]="idTask"></app-otp>
   </div>
 </ng-template>
 
@@ -175,7 +174,7 @@
     <img *ngIf="type == 'img'" src="data:image/png;base64,{{url}}" style="width: 100%;" />
 <pdf-viewer *ngIf="type == 'pdf'" [src]="'data:application/pdf;base64,'+url" [render-text]="true"
     [original-size]="false" style="height: 400px;"></pdf-viewer>
-<video *ngIf="type == 'video'" [src]="'data:video/mp4;base64,'+url" style="width: 300px;" autoplay controls>
-</video>
+<!-- <video *ngIf="type == 'video'" [src]="'data:video/mp4;base64,'+url" style="width: 300px;" autoplay controls> -->
+<!-- </video> -->
   </div>
 </ng-template>
