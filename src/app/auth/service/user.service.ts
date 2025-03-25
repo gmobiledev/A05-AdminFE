@@ -91,6 +91,10 @@ export class UserService {
     return this._http.get<any>(`${environment.apiUrl}/admin/users/agents`, { params: params });
   }
 
+  getWarehouse(idSlug = null) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/users/agents-warehouse/`+ idSlug );
+  }
+
   sumitFile(data) {
     return this._http.post<any>(`${environment.apiUrl}/admin/files/uploads-file`, data);
   }

@@ -13,13 +13,22 @@
               <div class="row">
                 <div class="col-md-5">
                   <div class="form-group">
-                    <input type="text" name="keyword" [(ngModel)]="searchForm.keyword" class="form-control"
-                      placeholder="Nhập từ khóa tìm theo tên, sđt, email...">
+                    <input
+                      type="text"
+                      name="keyword"
+                      [(ngModel)]="searchForm.keyword"
+                      class="form-control"
+                      placeholder="Nhập từ khóa tìm theo tên, sđt, email..."
+                    />
                   </div>
                 </div>
                 <div class="col-md-5">
                   <div class="form-group">
-                    <select class="form-control" name="ekyc_status" [(ngModel)]="searchForm.ekyc_status">
+                    <select
+                      class="form-control"
+                      name="ekyc_status"
+                      [(ngModel)]="searchForm.ekyc_status"
+                    >
                       <option value="_all">Chọn trạng thái</option>
                       <option value="APPROVED">Đã định danh</option>
                       <option value="">Chưa định danh</option>
@@ -28,21 +37,39 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
-                        [data-feather]="'search'"></span></button>
+                    <button type="submit" class="btn btn-block btn-info">
+                      Lọc kết quả <span [data-feather]="'search'"></span>
+                    </button>
                   </div>
                 </div>
               </div>
             </form>
             <div class="mt-3 mb-3 overflow-hidden">
               <div class="pull-left">
-                Tổng: <b>{{totalPage}}</b>
+                Tổng: <b>{{ totalPage }}</b>
               </div>
               <div class="pull-right">
-                <button type="button" (click)="modalOpen(modalCreate)" class="btn btn-success mr-2">Thêm đại lý</button>
-                <button type="button" (click)="modalOpen(modalUploadAccount)" class="btn btn-success mr-2">Tạo tài khoản theo lô</button>
-                <button type="button" (click)="modalOpen(modalUploadData)" class="btn btn-info">Tạo theo lô <span
-                    [data-feather]="'upload'"></span></button>
+                <button
+                  type="button"
+                  (click)="modalOpen(modalCreate)"
+                  class="btn btn-success mr-2"
+                >
+                  Thêm đại lý
+                </button>
+                <button
+                  type="button"
+                  (click)="modalOpen(modalUploadAccount)"
+                  class="btn btn-success mr-2"
+                >
+                  Tạo tài khoản theo lô
+                </button>
+                <button
+                  type="button"
+                  (click)="modalOpen(modalUploadData)"
+                  class="btn btn-info"
+                >
+                  Tạo theo lô <span [data-feather]="'upload'"></span>
+                </button>
               </div>
             </div>
             <div class="table-responsive" *blockUI="'section-block'">
@@ -72,13 +99,15 @@
                       {{ item.people ? item?.people?.name : item.full_name }}
                     </td>
                     <td>
-                      {{ item?.create_date | date: 'dd/MM/yyyy H:mm' }}
+                      {{ item?.create_date | date : "dd/MM/yyyy H:mm" }}
                     </td>
                     <!-- <td>
 
                 </td> -->
                     <td>
-                      <div [innerHTML]="item?.people?.ekyc_status | showStatusEkyc"></div>
+                      <div
+                        [innerHTML]="item?.people?.ekyc_status | showStatusEkyc"
+                      ></div>
                     </td>
 
                     <td>
@@ -91,12 +120,36 @@
                       <a class="ml-2" (click)="onSubmitLock(item.id, 1)" *ngIf="!item.status">
                         <i data-feather="unlock" class="text-primary cursor-pointer"></i>
                       </a> -->
-                      <a class="ml-2" (click)="modalOpen(modalCreate, item)" class="mr-1">
-                        <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
+                      <a
+                        class="ml-2"
+                        (click)="modalOpen(modalCreate, item)"
+                        class="mr-1"
+                      >
+                        <i
+                          data-feather="edit-3"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </a>
 
-                      <a (click)="openModalUserCode(modalUserCode, item)" >
-                        <i data-feather="credit-card" class="text-primary cursor-pointer" ngbTooltip="'Sửa user code'" placement="right"></i>
+                      <a
+                        (click)="openModalUserCode(modalUserCode, item)"
+                        class="mr-1"
+                      >
+                        <i
+                          data-feather="credit-card"
+                          class="text-primary cursor-pointer"
+                          ngbTooltip="'Sửa user code'"
+                          placement="right"
+                        ></i>
+                      </a>
+                      <a
+                        ngbTooltip="Xem thông tin kho"
+                        (click)="modalOpenWarehouse(item?.id)"
+                      >
+                        <i
+                          data-feather="eye"
+                          class="text-primary cursor-pointer"
+                        ></i>
                       </a>
                     </td>
                   </tr>
@@ -106,29 +159,49 @@
               <!-- <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalPage" [(page)]="page"
                 [pageSize]="pageSize" [directionLinks]="false" (pageChange)="loadPage($event)"></ngb-pagination> -->
 
-                <ngb-pagination class="d-flex justify-content-end pr-3 pt-2" [collectionSize]="totalPage"
-                                [(page)]="page" [pageSize]="pageSize" [boundaryLinks]="true"
-                                (pageChange)="loadPage($event)">
-                                <ng-template ngbPaginationPages let-page let-pages="pages">
-                                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
-                                        <div class="mb-3 d-flex flex-nowrap px-2">
-                                            <label id="paginationInputLabel" for="paginationInput"
-                                                class="col-form-label me-2 ms-1">Trang</label>
-                                            <input #i type="text" inputmode="numeric" pattern="[0-9]*"
-                                                class="form-control custom-pages-input" id="paginationInput"
-                                                [value]="page" (keyup.enter)="loadPage(i.value)"
-                                                (blur)="loadPage(i.value)" (input)="formatInput($any($event).target)"
-                                                aria-labelledby="paginationInputLabel paginationDescription"
-                                                style="width: 2.5rem" />
-                                            <span id="paginationDescription" class="col-form-label text-nowrap px-2">
-                                                của {{pages.length}}</span>
-                                        </div>
-                                    </li>
-                                </ng-template>
-                            </ngb-pagination>
+              <ngb-pagination
+                class="d-flex justify-content-end pr-3 pt-2"
+                [collectionSize]="totalPage"
+                [(page)]="page"
+                [pageSize]="pageSize"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+              >
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="mb-3 d-flex flex-nowrap px-2">
+                      <label
+                        id="paginationInputLabel"
+                        for="paginationInput"
+                        class="col-form-label me-2 ms-1"
+                        >Trang</label
+                      >
+                      <input
+                        #i
+                        type="text"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control custom-pages-input"
+                        id="paginationInput"
+                        [value]="page"
+                        (keyup.enter)="loadPage(i.value)"
+                        (blur)="loadPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription"
+                        style="width: 2.5rem"
+                      />
+                      <span
+                        id="paginationDescription"
+                        class="col-form-label text-nowrap px-2"
+                      >
+                        của {{ pages.length }}</span
+                      >
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -138,18 +211,30 @@
 <ng-template #modalCreate let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <form class="mt-2" [formGroup]="formGroup" (ngSubmit)="onSubmitCreate()">
-    <div class="modal-body" tabindex="0" >
-
+    <div class="modal-body" tabindex="0">
       <div class="form-group" *ngIf="isCreate">
         <label for="basicInput">Số điện thoại</label>
-        <input type="tel" class="form-control" placeholder="" (focusout)="onCheckExits()" (focus)="onFocusMobile()"
-        mask="0000000000"
-          name="mobile" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+        <input
+          type="tel"
+          class="form-control"
+          placeholder=""
+          (focusout)="onCheckExits()"
+          (focus)="onFocusMobile()"
+          mask="0000000000"
+          name="mobile"
+          formControlName="mobile"
+          [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }"
+        />
         <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
           <div *ngIf="f.mobile.errors.required">Vui lòng số điện thoại</div>
         </div>
@@ -157,9 +242,14 @@
 
       <div class="form-group" *ngIf="isCreate">
         <label for="basicInput">Họ và tên</label>
-        <input type="text" class="form-control" placeholder=""
-       
-          name="mobile" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder=""
+          name="mobile"
+          formControlName="name"
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+        />
         <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
           <div *ngIf="f.name.errors.required">Vui lòng nhập họ và tên</div>
         </div>
@@ -167,12 +257,13 @@
 
       <div class="form-group" *ngIf="!exitsUser && isCreate">
         <label for="basicInput">Mật khẩu đăng nhập</label>
-        <code-input 
-        style="width: 350px;"
-        [isCodeHidden]="true"
-            [isCharsCode]="false"
-              [codeLength]="6"
-              (codeCompleted)="onCompletedInputPassword($event)"></code-input>
+        <code-input
+          style="width: 350px"
+          [isCodeHidden]="true"
+          [isCharsCode]="false"
+          [codeLength]="6"
+          (codeCompleted)="onCompletedInputPassword($event)"
+        ></code-input>
 
         <!-- <input type="password" class="form-control" placeholder="" name="password" formControlName="password"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }" /> -->
@@ -181,7 +272,10 @@
         </div>
       </div>
       <div class="" *ngIf="exitsUser">
-        <i>Đã tồn tại user với số điện thoại trên hệ thống, bạn có đồng ý đặt user làm đại lý?</i>
+        <i
+          >Đã tồn tại user với số điện thoại trên hệ thống, bạn có đồng ý đặt
+          user làm đại lý?</i
+        >
       </div>
       <!-- <div class="form-group" >
       <label for="basicInput">Mã giới thiệu</label>
@@ -194,58 +288,123 @@
       <div class="form-group mt-2">
         <label>Chọn dịch vụ</label>
         <div class="" formArrayName="agents_service">
-          <div *ngFor="let control of formGroup.controls['agents_service'].controls; let i = index" class="row">
+          <div
+            *ngFor="
+              let control of formGroup.controls['agents_service'].controls;
+              let i = index
+            "
+            class="row"
+          >
             <div class="col-8">
               <div [formGroup]="formGroup.controls.agents_service.controls[i]">
                 <div class="form-group">
-                  <select class="form-control" formControlName="service_code"
-                    (change)="onSelectService($event.target.value)">
-                    <option id="{{item.code}}" *ngFor="let item of listServiceFilter" [value]="item.code">{{ item.desc
-                      }}</option>
+                  <select
+                    class="form-control"
+                    formControlName="service_code"
+                    (change)="onSelectService($event.target.value)"
+                  >
+                    <option
+                      id="{{ item.code }}"
+                      *ngFor="let item of listServiceFilter"
+                      [value]="item.code"
+                    >
+                      {{ item.desc }}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="">Mã giới thiệu</label>
-                  <input type="text" class="form-control" formControlName="ref_code">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="ref_code"
+                  />
                 </div>
               </div>
             </div>
             <div class="col-4">
-              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 1"
-                type="button" class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 0)">Khóa <span
-                  [data-feather]="'lock'"></span></button>
-              <button *ngIf="!isCreate && formGroup.controls['agents_service'].value[i]['status'] == 0"
-                type="button" class="btn btn-warning btn-sm" (click)="updateStatusAgentService(i, 1)">Mở <span
-                  [data-feather]="'unlock'"></span></button>
+              <button
+                *ngIf="
+                  !isCreate &&
+                  formGroup.controls['agents_service'].value[i]['status'] == 1
+                "
+                type="button"
+                class="btn btn-warning btn-sm"
+                (click)="updateStatusAgentService(i, 0)"
+              >
+                Khóa <span [data-feather]="'lock'"></span>
+              </button>
+              <button
+                *ngIf="
+                  !isCreate &&
+                  formGroup.controls['agents_service'].value[i]['status'] == 0
+                "
+                type="button"
+                class="btn btn-warning btn-sm"
+                (click)="updateStatusAgentService(i, 1)"
+              >
+                Mở <span [data-feather]="'unlock'"></span>
+              </button>
             </div>
           </div>
         </div>
         <div class="" formArrayName="new_agents_service">
-          <div *ngFor="let control of formGroup.controls['new_agents_service'].controls; let i = index" class="row">
+          <div
+            *ngFor="
+              let control of formGroup.controls['new_agents_service'].controls;
+              let i = index
+            "
+            class="row"
+          >
             <div class="col-8">
-              <div [formGroup]="formGroup.controls.new_agents_service.controls[i]">
+              <div
+                [formGroup]="formGroup.controls.new_agents_service.controls[i]"
+              >
                 <div class="form-group">
-                  <select class="form-control" formControlName="service_code"
-                    (change)="onSelectService($event.target.value)">
-                    <option [disabled]="item.disabled" id="{{item.code}}" *ngFor="let item of listServiceFilter"
-                      [value]="item.code">{{ item.desc }}</option>
+                  <select
+                    class="form-control"
+                    formControlName="service_code"
+                    (change)="onSelectService($event.target.value)"
+                  >
+                    <option
+                      [disabled]="item.disabled"
+                      id="{{ item.code }}"
+                      *ngFor="let item of listServiceFilter"
+                      [value]="item.code"
+                    >
+                      {{ item.desc }}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="">Mã giới thiệu</label>
-                  <input type="text" class="form-control" formControlName="ref_code">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="ref_code"
+                  />
                 </div>
-               
               </div>
             </div>
             <div class="col-4">
-              <button type="button" class="btn btn-danger btn-sm" (click)="removeInput(i)">Xóa <span
-                  [data-feather]="'trash'"></span></button>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="removeInput(i)"
+              >
+                Xóa <span [data-feather]="'trash'"></span>
+              </button>
             </div>
           </div>
         </div>
-        <button *ngIf="isShowAddInput" type="button" class="btn btn-success btn-sm" (click)="addInput()">Thêm <span
-            [data-feather]="'plus'"></span></button>
+        <button
+          *ngIf="isShowAddInput"
+          type="button"
+          class="btn btn-success btn-sm"
+          (click)="addInput()"
+        >
+          Thêm <span [data-feather]="'plus'"></span>
+        </button>
 
         <!-- <input type="text" class="form-control" (input)="onSearchService($event)" placeholder="Tìm kiếm" />
       <div class="row pt-1" style="max-height:600px; overflow-y: auto">
@@ -265,27 +424,27 @@
       </div>
 
       <ng-template *ngIf="isCreate">
-      <div class="form-group">
-        <label for="">Partner code</label>
-        <input type="text" class="form-control" formControlName="partner_user_code">
-      </div>
+        <div class="form-group">
+          <label for="">Partner code</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="partner_user_code"
+          />
+        </div>
 
-      <div class="form-group">
-        <label for="">Kênh bán</label>
-        <select formControlName="channel_id" id="" class="form-control">
-          <option [value]="item.id" *ngFor="let item of listSellChannel">
-            {{ item.code }}
-          </option>
-        </select>
-        
-      </div>
-    </ng-template>
-
+        <div class="form-group">
+          <label for="">Kênh bán</label>
+          <select formControlName="channel_id" id="" class="form-control">
+            <option [value]="item.id" *ngFor="let item of listSellChannel">
+              {{ item.code }}
+            </option>
+          </select>
+        </div>
+      </ng-template>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" rippleEffect>
-        Lưu
-      </button>
+      <button type="submit" class="btn btn-primary" rippleEffect>Lưu</button>
     </div>
   </form>
 </ng-template>
@@ -293,18 +452,23 @@
 <ng-template #modalUploadData let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Tải lên dữ liệu lô đại lý</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" >
+  <div class="modal-body" tabindex="0">
     <div class="form-group" *ngIf="isAdmin">
       <label for="">Admin id</label>
-      <input type="text" class="form-control" [(ngModel)]="adminId">
+      <input type="text" class="form-control" [(ngModel)]="adminId" />
     </div>
     <div class="form-group" *ngIf="isAdmin">
       <label for="">Ref code</label>
-      <input type="text" class="form-control" [(ngModel)]="refCode">
+      <input type="text" class="form-control" [(ngModel)]="refCode" />
     </div>
     <div class="form-group">
       <i class="fa fa-upload" aria-hidden="true"></i>
@@ -318,41 +482,57 @@
       <i class="fa fa-upload" aria-hidden="true"></i>
       <input type="file" (change)="onFileChangeImages($event)" />
       <label>Tải lên zip ảnh giấy tờ tùy thân</label>
-
     </div>
   </div>
   <div class="modal-footer">
-    <button (click)="onSubmitUpload()" type="submit" class="btn btn-primary" rippleEffect>
-      <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true"
-        *ngIf="submittedUpload"></span>
+    <button
+      (click)="onSubmitUpload()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      <span
+        class="spinner-border spinner-border-sm"
+        role="ekyc_status"
+        aria-hidden="true"
+        *ngIf="submittedUpload"
+      ></span>
       Submit
     </button>
   </div>
-
 </ng-template>
 
 <ng-template #modalUploadAccount let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Tải lên dữ liệu lô tài khoản đại lý</h5>
-    <button type="button" class="close" (click)="modalClose()" aria-label="Close">
+    <h5 class="modal-title" id="myModalLabel160">
+      Tải lên dữ liệu lô tài khoản đại lý
+    </h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" >
+  <div class="modal-body" tabindex="0">
     <div class="form-group" *ngIf="isAdmin">
       <label for="">Admin id</label>
-      <input type="text" class="form-control" [(ngModel)]="adminId">
+      <input type="text" class="form-control" [(ngModel)]="adminId" />
     </div>
     <div class="form-group" *ngIf="isAdmin">
       <label for="">Ref code</label>
-      <input type="text" class="form-control" [(ngModel)]="refCode">
+      <input type="text" class="form-control" [(ngModel)]="refCode" />
     </div>
     <div class="form-group">
       <i class="fa fa-upload" aria-hidden="true"></i>
       <input type="file" (change)="onSelectFileAccount($event)" />
       <label>Tải lên file excel</label>
 
-      <a href="/assets/data_upload_account.xls" class="ml-2">File mẫu tại đây</a>
+      <a href="/assets/data_upload_account.xls" class="ml-2"
+        >File mẫu tại đây</a
+      >
     </div>
 
     <div class="form-group">
@@ -362,30 +542,44 @@
           {{ item.code }}
         </option>
       </select>
-      
     </div>
   </div>
   <div class="modal-footer">
-    <button (click)="onSubmitUploadFileAccount()" type="submit" class="btn btn-primary" rippleEffect>
-      <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true"
-        *ngIf="submittedUpload"></span>
+    <button
+      (click)="onSubmitUploadFileAccount()"
+      type="submit"
+      class="btn btn-primary"
+      rippleEffect
+    >
+      <span
+        class="spinner-border spinner-border-sm"
+        role="ekyc_status"
+        aria-hidden="true"
+        *ngIf="submittedUpload"
+      ></span>
       Submit
     </button>
   </div>
-
 </ng-template>
-
 
 <ng-template #modalUserCode let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">{{ titleModal }}</h5>
-    <button type="button" class="close" (click)="modalUserCodeClose()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="modalUserCodeClose()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form class="mt-2" [formGroup]="formGroupUserCode" (ngSubmit)="onSubmitUpdateUserCode()">
-    <div class="modal-body" tabindex="0" >
-
+  <form
+    class="mt-2"
+    [formGroup]="formGroupUserCode"
+    (ngSubmit)="onSubmitUpdateUserCode()"
+  >
+    <div class="modal-body" tabindex="0">
       <!-- <div class="form-group" >
       <label for="basicInput">Mã giới thiệu</label>
         <input type="text" class="form-control"  placeholder=""
@@ -395,10 +589,13 @@
         />
     </div>  -->
 
-
       <div class="form-group">
         <label for="">Partner code</label>
-        <input type="text" class="form-control" formControlName="partner_user_code">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="partner_user_code"
+        />
       </div>
 
       <div class="form-group">
@@ -408,14 +605,44 @@
             {{ item.code }}
           </option>
         </select>
-        
       </div>
-
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" rippleEffect>
-        Lưu
-      </button>
+      <button type="submit" class="btn btn-primary" rippleEffect>Lưu</button>
     </div>
   </form>
+</ng-template>
+
+<ng-template #modalItemWarehouse let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Thông tin kho</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modalClose()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0">
+    <div class="form-group">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên kho</th>
+            <th>Mã kho</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listDataWarehouse; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item?.name }}</td>
+            <td>{{ item?.code }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </ng-template>

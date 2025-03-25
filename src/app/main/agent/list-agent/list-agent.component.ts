@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +28,7 @@ export class ListAgentComponent implements OnInit {
     page: 1
   }
   public listSellChannel: any;
-
+  listDataWarehouse;
   public selectedUserId: number;
   public listAllService: any;
   public listServiceFilter: any;
@@ -58,7 +58,7 @@ export class ListAgentComponent implements OnInit {
   public subFormGroup: FormGroup;
   public modalUserCodeRef: any;
   public formGroupUserCode: FormGroup;
-
+  @ViewChild("modalItemWarehouse") modalItemWarehouse: ElementRef;
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
   count: any;
 
@@ -86,6 +86,22 @@ export class ListAgentComponent implements OnInit {
     this.searchForm.page = page;
     this.router.navigate(['/agent'], { queryParams: this.searchForm })
   }
+
+  async modalOpenWarehouse(id) {
+    this.userService.getWarehouse(id).subscribe(res => {
+      if (!res.status) {
+        this.alertService.showError(res.message);
+        return;
+      }
+      this.listDataWarehouse = res.data;
+      this.modalRef = this.modalService.open(this.modalItemWarehouse, {
+        centered: true,
+        windowClass:'modal modal-primary',
+        size: 'lg'
+      });
+    });
+  }
+
   modalOpen(modal, item = null) {
     if (item) {
       this.titleModal = "Cập nhật đại lý";
