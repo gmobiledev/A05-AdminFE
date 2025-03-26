@@ -80,11 +80,10 @@ export class ForgotPasswordComponent implements OnInit {
       email: this.forgotPasswordForm.value.email,
     };
     this._authenticationService.forgotPassword(data).subscribe(
-      (res) => {
+      (res) => {        
         if (res.status === 1 && res.data) {
           this.showReset = true;
           this.countdown(1);
-          this.countdownExpired();
         } else {
           this.alertService.showMess(res.message);
         }
