@@ -47,37 +47,37 @@ export class AuthenticationService {
   /**
    * User login
    *
-   * @param email
+   * @param username
    * @param password
    * @returns user
    */
-  login(email: string, password: string) {
-    const code = '111111';
+  login(username: string, password: string) {
+    // const code = '111111';
     return this._http
-      .post<any>(`${environment.apiUrl}/admin/login`, { email, password, code }, { observe: 'response' })
+      .post<any>(`${environment.apiUrl}/admin/login/smartotp`, { username, password }, { observe: 'response' })
       .pipe(
         map(res => {
           console.log(res);
-          const user = res.body.data;
+          // const user = res.body.data;
           // login successful if there's a jwt token in the response
-          if (user && user.token) {
+          // if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            // localStorage.setItem('currentUser', JSON.stringify(user));
 
             // Display welcome toast!
-            setTimeout(() => {
-              this._toastrService.success(
-                'Login thành công',
-                'Welcome, ' + email + '!',
-                { toastClass: 'toast ngx-toastr', closeButton: true }
-              );
-            }, 2500);
+          //   setTimeout(() => {
+          //     this._toastrService.success(
+          //       'Login thành công',
+          //       'Welcome, ' + email + '!',
+          //       { toastClass: 'toast ngx-toastr', closeButton: true }
+          //     );
+          //   }, 2500);
 
-            // notify
-            this.currentUserSubject.next(user);
-          }
+          //   // notify
+          //   this.currentUserSubject.next(user);
+          // }
 
-          return user;
+          // return user;
         }, (error: HttpErrorResponse) => {
           console.log(error);          
           return error;
@@ -87,7 +87,7 @@ export class AuthenticationService {
 
   loginOtp(data) {
     return this._http
-      .post<any>(`${environment.apiUrl}/admin/agent-login`, data, { observe: 'response' })
+      .post<any>(`${environment.apiUrl}/admin/login/smartotp/verify`, data, { observe: 'response' })
       .pipe(
         map(res => {
           console.log(res);

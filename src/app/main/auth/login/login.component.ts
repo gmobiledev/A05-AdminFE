@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
   public error = "";
   public passwordTextType: boolean;
   url = "";
+  otp;
+  showOtp = false;
   // Private
   private _unsubscribeAll: Subject<any>;
 
@@ -80,6 +82,10 @@ export class LoginComponent implements OnInit {
     this.error = "";
   }
 
+  onCompletedInputOtp(code) {
+    this.otp = code;
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -90,18 +96,20 @@ export class LoginComponent implements OnInit {
 
     // Login
     this.loading = true;
-    if (this.url == "login-otp") {
+    if (this.showOtp) {
       const data = {
-        username: this.f.mobile.value,
-        otp: this.f.otp.value,
+        username: this.f.email.value,
+        password: this.f.password.value,
+        otp: this.otp,
       };
       this._authenticationService
         .loginOtp(data)
         .pipe(first())
         .subscribe(
           (data) => {
-            console.log("===data===");
-            console.log(data);
+            
+            // console.log("===data===");
+            // console.log(data);
             this._router.navigate([this.returnUrl]);
           },
           (error) => {
@@ -116,9 +124,8 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
           (data) => {
-            console.log("===data===");
-            console.log(data);
-            this._router.navigate([this.returnUrl]);
+            this.loading = false;
+            this.showOtp = true;
           },
           (error) => {
             console.log(error);
