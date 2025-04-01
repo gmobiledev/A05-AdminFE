@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "s198": {
+    "A05-Admin": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -34,7 +34,7 @@
               "highlight.js",
               "ng2-flatpickr"
             ],
-            "outputPath": "dist/s198",
+            "outputPath": "dist/A05-Admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -88,7 +88,7 @@
                   "maximumWarning": "100kb"
                 }
               ],
-              "outputPath": "dist/prod/s198"
+              "outputPath": "dist/prod/A05-Admin"
             },
             "hmr": {
               "budgets": [
@@ -136,7 +136,7 @@
                   "with": "src/environments/environment.test.ts"
                 }
               ],
-              "outputPath": "dist/sandbox/s198"
+              "outputPath": "dist/sandbox/A05-Admin"
             },
             "public": {
               "budgets": [
@@ -193,28 +193,28 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "s198:build"
+            "browserTarget": "A05-Admin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "s198:build:production"
+              "browserTarget": "A05-Admin:build:production"
             },
             "hmr": {
               "hmr": true,
-              "browserTarget": "s198:build:hmr"
+              "browserTarget": "A05-Admin:build:hmr"
             },
             "uat": {
-              "browserTarget": "s198:build:uat"
+              "browserTarget": "A05-Admin:build:uat"
             },
             "test": {
-              "browserTarget": "s198:build:test"
+              "browserTarget": "A05-Admin:build:test"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "s198:build"
+            "browserTarget": "A05-Admin:build"
           }
         },
         "test": {
@@ -239,7 +239,7 @@
         }
       }
     },
-    "s198-e2e": {
+    "A05-Admin-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -248,11 +248,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "s198:serve"
+            "devServerTarget": "A05-Admin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "s198:serve:production"
+              "devServerTarget": "A05-Admin:serve:production"
             }
           }
         },
@@ -266,7 +266,7 @@
       }
     }
   },
-  "defaultProject": "s198",
+  "defaultProject": "A05-Admin",
   "cli": {
     "analytics": false
   }
