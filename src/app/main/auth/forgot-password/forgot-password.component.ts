@@ -72,7 +72,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
+    this.noneShowSubmitOtp = false;
     if (!this.forgotPasswordForm.value.email) {
       this.alertService.showMess("Vui lòng không để trống email");
     }
@@ -83,6 +83,7 @@ export class ForgotPasswordComponent implements OnInit {
       (res) => {        
         if (res.status === 1 && res.data) {
           this.showReset = true;
+          this.countdownExpired();
           this.countdown(1);
         } else {
           this.alertService.showMess(res.message);
@@ -179,7 +180,6 @@ export class ForgotPasswordComponent implements OnInit {
       } else textSec = statSec;
 
       this.timeCountdownExpired = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-
       if (seconds == 0) {
         clearInterval(timer);
       }
