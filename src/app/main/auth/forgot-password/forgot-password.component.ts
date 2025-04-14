@@ -23,6 +23,7 @@ export class ForgotPasswordComponent implements OnInit {
   public submitted = false;
   timeCountdown;
   timeCountdownExpired;
+  expiredTimer;
   otp;
   showReset = false;
   public passwordTextType: boolean;
@@ -79,6 +80,9 @@ export class ForgotPasswordComponent implements OnInit {
     const data = {
       email: this.forgotPasswordForm.value.email,
     };
+    if (this.expiredTimer) {
+      clearInterval(this.expiredTimer);
+    }
     this._authenticationService.forgotPassword(data).subscribe(
       (res) => {        
         if (res.status === 1 && res.data) {
@@ -170,7 +174,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     const prefix = minute < 10 ? "0" : "";
 
-    const timer = setInterval(() => {
+    this.expiredTimer = setInterval(() => {
       seconds--;
       if (statSec != 0) statSec--;
       else statSec = 59;
@@ -181,7 +185,7 @@ export class ForgotPasswordComponent implements OnInit {
 
       this.timeCountdownExpired = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
       if (seconds == 0) {
-        clearInterval(timer);
+        clearInterval(this.expiredTimer);
       }
     }, 1000);
   }
@@ -205,6 +209,9 @@ export class ForgotPasswordComponent implements OnInit {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
+    if (this.expiredTimer) {
+      clearInterval(this.expiredTimer);
+    }
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
