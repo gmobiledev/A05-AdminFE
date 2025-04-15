@@ -285,14 +285,14 @@ export const menu: CoreMenu[] = [
       classes: "badge-light-success badge-pill",
     },
     children: [
-      {
-        id: "dashboard",
-        title: "Thống kê",
-        translate: "",
-        type: "item",
-        icon: "database",
-        url: "inventory/dashboard",
-      },
+      // {
+      //   id: "dashboard",
+      //   title: "Thống kê",
+      //   translate: "",
+      //   type: "item",
+      //   icon: "database",
+      //   url: "inventory/dashboard",
+      // },
 
       {
         id: "batch-sim",
