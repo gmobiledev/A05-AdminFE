@@ -836,23 +836,23 @@ export class ListTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSubscribe();
-    this.getListBundlePackage();
+    // this.getListBundlePackage();
   }
 
-  getListBundlePackage(){
-    this.telecomService.getListBundlePackage().subscribe(
-      (res) => {
-        if (!res.status) {
-          this.alertService.showMess(res.message);
-          return;
-        }
-        this.listBundlePackage = res.data.liskPackage;
-      },
-      (err) => {
-        this.alertService.showError(err);
-      }
-    );
-  }
+  // getListBundlePackage(){
+  //   this.telecomService.getListBundlePackage().subscribe(
+  //     (res) => {
+  //       if (!res.status) {
+  //         this.alertService.showMess(res.message);
+  //         return;
+  //       }
+  //       this.listBundlePackage = res.data.liskPackage;
+  //     },
+  //     (err) => {
+  //       this.alertService.showError(err);
+  //     }
+  //   );
+  // }
 
   getSubscribe() {
     console.log(Notification.permission);
