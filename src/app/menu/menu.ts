@@ -344,14 +344,14 @@ export const menu: CoreMenu[] = [
         icon: "circle",
         url: "inventory/report/doanh-thu",
       },
-      {
-        id: "report-ton-kho-sim",
-        title: "Báo cáo tồn SIM",
-        translate: "",
-        type: "item",
-        icon: "circle",
-        url: "inventory/report/ton-kho-sim",
-      },
+      // {
+      //   id: "report-ton-kho-sim",
+      //   title: "Báo cáo tồn SIM",
+      //   translate: "",
+      //   type: "item",
+      //   icon: "circle",
+      //   url: "inventory/report/ton-kho-sim",
+      // },
       {
         id: "i-action-logs",
         title: "Nhật ký hoạt động",
