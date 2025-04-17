@@ -125,9 +125,16 @@ export class ListTaskComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem(ObjectLocalStorage.CURRENT_USER));
     this.listCurrentAction = user.actions;
     this.listCurrentRoles = user.roles;
+    const currentUrl = this.router.url;
+    let textTitle = '';
+    if(currentUrl == '/task/sim-kitting'){
+      textTitle = 'Danh sách Đơn đấu nối';
+    } else if (currentUrl == '/task/sim-register') {
+      textTitle = 'Danh sách Đơn Đăng ký Thông tin thuê bao';
+    }
 
     this.contentHeader = {
-      headerTitle: 'Danh sách task',
+      headerTitle: textTitle != '' ? textTitle : 'Danh sách task',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -138,7 +145,7 @@ export class ListTaskComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách task',
+            name: textTitle != '' ? textTitle : 'Danh sách task',
             isLink: false
           }
         ]

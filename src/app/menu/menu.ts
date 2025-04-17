@@ -151,7 +151,7 @@ export const menu: CoreMenu[] = [
       },
       {
         id: "agents",
-        title: "Đơn kitting trong SIM duc lịch",
+        title: "Danh sách Đơn đấu nối",
         translate: "",
         type: "item",
         icon: "circle",
@@ -160,7 +160,7 @@ export const menu: CoreMenu[] = [
 
       {
         id: "agents",
-        title: "Đơn DK TTTB trong SIM duc lịch",
+        title: "Danh sách Đơn Đăng ký Thông tin thuê bao",
         translate: "",
         type: "item",
         icon: "circle",
