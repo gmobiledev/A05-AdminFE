@@ -157,7 +157,7 @@ export class LoginComponent implements OnInit {
     }
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this._route.snapshot.queryParams["returnUrl"] || "/";
+    this.returnUrl = "/inventory/sell-chanel";
 
     // Subscribe to config changes
     this._coreConfigService.config
