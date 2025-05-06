@@ -118,16 +118,9 @@
                     <th>STT</th>
                     <th>Số thuê bao/Serial SIM</th>
                     <th>Nhà mạng</th>
-                    <th>Hạng số</th>
-                    <th>
-                      Giá vốn <br />
-                      Giá bán
-                    </th>
-                    <th>Gói</th>
                     <th>Trạng thái</th>
                     <th>Ngày nhập kho</th>                    
                     <th>Ngày xuất kho</th>
-                    <th *ngIf="currentChannel?.code != 'THUHOI'">Xuất cho kho</th>
                     <th *ngIf="searchForm.is_g59 == true ">Địa điểm</th>
                     <th *ngIf="currentChannel?.code == 'THUHOI'">Kho Nhập</th>
 
@@ -159,39 +152,6 @@
                     <td>
                       {{ item.brand }}
                     </td>
-
-                    <td>
-                      {{ item.level }}
-                    </td>
-
-                    <td>
-                      <div
-                        class="d-flex justify-content-center align-items-center"
-                        style="gap: 5px" *ngIf="item.price != null"
-                      >
-                        {{ item.price || number }}
-                        <i
-                          class="fa fa-arrow-down"
-                          aria-hidden="true"
-                          ngbTooltip="Giá vốn"
-                        ></i>
-                      </div>
-                      <div
-                        class="d-flex justify-content-center align-items-center"
-                        style="gap: 5px" *ngIf="item.export_price != null"
-                      >
-                        {{ item.export_price || number }}
-                        <i 
-                          class="fa fa-arrow-up"
-                          aria-hidden="true"
-                          ngbTooltip="Giá bán"
-                        ></i>
-                      </div>
-                    </td>
-                    <td>
-                      {{ item?.package}}
-                    </td>
-
                     <td>
                       <div [innerHTML]="item.status | showStatusProduct"></div>
                     </td>
@@ -201,11 +161,6 @@
                     <td>
                       {{ item?.export_date | date : "dd/MM/yyyy H:mm":'GMT' }}
                     </td>
-                    <td *ngIf="currentChannel?.code != 'THUHOI'">
-                      <a (click)="modalChannelOpen(modalChannelInfo, item)"><u>{{ item.sub_channel_id }}</u></a>
-                    </td>
-                    
-
                     <td *ngIf="searchForm.is_g59 == true ">
                       {{ item?.address }}
                     </td>
