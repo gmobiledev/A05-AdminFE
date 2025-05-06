@@ -89,11 +89,8 @@
                 <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Số thuê bao</th>
+                    <th>Số thuê bao/Serial Sim</th>
                     <th>Nhà mạng</th>
-                    <th>Hạng số</th>
-                    <th>Giá vốn</th>
-                    <th>Giá bán</th>
                     <th>Trạng thái</th>
                     <th>Ngày nhập</th>
                     <th>Xuất cho kho</th>
@@ -115,18 +112,6 @@
                     </td>
                     <td>
                       {{ item.brand }}
-                    </td>
-
-                    <td>
-                      {{ item.level }}
-                    </td>
-
-                    <td>
-                      {{ item.price || number }}
-                    </td>
-
-                    <td>
-                      {{ item.export_price || number }}
                     </td>
                     <td>
                       <div [innerHTML]="item.status | showStatusProductStore"></div>

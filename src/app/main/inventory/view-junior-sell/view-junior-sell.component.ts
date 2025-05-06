@@ -285,7 +285,7 @@ export class ViewJuniorSellComponent implements OnInit {
 
       })
     } else {
-      this.titleModal = "Thêm tài khoản bán hàng";
+      this.titleModal = "Thêm tài khoản đấu nối";
       this.isCreate = true;
 
       if (checkAdd == true) {
@@ -339,7 +339,7 @@ export class ViewJuniorSellComponent implements OnInit {
 
   onFocusMobile() {
     this.exitsUser = false;
-    this.titleModal = "Thêm tài khoản bán hàng";
+    this.titleModal = "Thêm tài khoản đấu nối";
   }
 
   async onSubmitCreate() {

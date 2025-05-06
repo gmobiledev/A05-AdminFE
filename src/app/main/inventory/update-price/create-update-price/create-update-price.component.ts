@@ -69,7 +69,7 @@ export class CreateUpdatePriceComponent implements OnInit {
       return;
     }
     if (!this.attachments) {
-      this.alertService.showMess("Vui lòng không để trống file chứng từ!");
+      this.alertService.showMess("Vui lòng không để trống Văn bản phê duyệt của Lãnh đạo!");
       return;
     }
     if (!this.file) {

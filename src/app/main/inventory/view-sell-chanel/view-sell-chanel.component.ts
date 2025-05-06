@@ -260,7 +260,7 @@ export class ViewSellChanelComponent implements OnInit {
 
       })
     } else {
-      this.titleModal = "Thêm tài khoản bán hàng";
+      this.titleModal = "Thêm tài khoản đấu nối";
       this.isCreate = true;
 
       if (checkAdd == true) {
@@ -437,7 +437,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   onFocusMobile() {
     this.exitsUser = false;
-    this.titleModal = "Thêm tài khoản bán hàng";
+    this.titleModal = "Thêm tài khoản đấu nối";
   }
   ngOnInit(): void {
     this.initForm();
@@ -699,7 +699,7 @@ export class ViewSellChanelComponent implements OnInit {
   }
 
   async onRemoveItem(item) {
-    if ((await this.alertService.showConfirm("Bạn có đồng ý xoá tài khoản bán hàng này không?")).value) {
+    if ((await this.alertService.showConfirm("Bạn có đồng ý xoá tài khoản đấu nối này không?")).value) {
       this.inventoryService.removeUserChanel(this.searchForm.channel_id, item.id).subscribe(res => {
         this.sectionBlockUI.stop();
         this.listSellUser = res.data.items;

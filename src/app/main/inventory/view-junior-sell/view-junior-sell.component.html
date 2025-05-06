@@ -90,7 +90,7 @@
                   (click)="modalOpen(modalAddUser, null, true)"
                   *ngIf="parentID != null"
                 >
-                  Tài khoản bán hàng
+                  Tài khoản đấu nối
                 </button>
                 <button type="button" class="btn btn-success mr-25">
                   <span routerLink="/inventory/new-sell-chanel">Tạo kho</span>
@@ -103,8 +103,6 @@
                   <tr>
                     <th>Mã</th>
                     <th>Tên</th>
-                    <th>Nội dung</th>
-                    <th>Đại lý</th>
                     <th>Địa điểm</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -116,12 +114,6 @@
                       {{ item.code }}
                     </td>
                     <td>{{ item.name }}</td>
-                    <td>
-                      {{ item.desc }}
-                    </td>
-                    <td>
-                      {{ item.admin_id }}
-                    </td>
                     <td>
                       {{ item.address }}
                     </td>
@@ -467,7 +459,7 @@
 
 <ng-template #modalAddUser let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Tài khoản bán hàng</h5>
+    <h5 class="modal-title" id="myModalLabel160">Tài khoản đấu nối</h5>
     <button
       type="button"
       class="close"

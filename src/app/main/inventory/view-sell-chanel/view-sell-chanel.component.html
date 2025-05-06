@@ -100,7 +100,7 @@
                 </button> -->
 
                 <button type="button" class="btn btn-success mr-2" (click)="modalOpen(modalAddUser, null, true)">
-                  Tài khoản bán hàng
+                  Tài khoản đấu nối
                 </button>
 
                 <a routerLink="/inventory/edit-products"
@@ -121,6 +121,7 @@
                     <th>Trạng thái</th>
                     <th>Ngày nhập kho</th>                    
                     <th>Ngày xuất kho</th>
+                    <th *ngIf="currentChannel?.code != 'THUHOI'">Xuất cho kho</th>
                     <th *ngIf="searchForm.is_g59 == true ">Địa điểm</th>
                     <th *ngIf="currentChannel?.code == 'THUHOI'">Kho Nhập</th>
 
@@ -160,6 +161,9 @@
                     </td>
                     <td>
                       {{ item?.export_date | date : "dd/MM/yyyy H:mm":'GMT' }}
+                    </td>
+                    <td *ngIf="currentChannel?.code != 'THUHOI'">
+                      <a (click)="modalChannelOpen(modalChannelInfo, item)"><u>{{ item.sub_channel_id }}</u></a>
                     </td>
                     <td *ngIf="searchForm.is_g59 == true ">
                       {{ item?.address }}
@@ -363,7 +367,7 @@
 
 <ng-template #modalAddUser let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="myModalLabel160">Tài khoản bán hàng</h5>
+    <h5 class="modal-title" id="myModalLabel160">Tài khoản đấu nối</h5>
     <button type="button" class="close" (click)="modalCloseAdd()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
