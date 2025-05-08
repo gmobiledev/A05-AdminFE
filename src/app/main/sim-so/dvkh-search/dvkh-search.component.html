@@ -37,7 +37,6 @@
                   <tr>
                     <th>Số / Serial SIM</th>
                     <th>Nhà mạng</th>
-                    <th *ngIf="item?.level">Hạng số</th>
                     <th>Kho số</th>
                     <th>Trạng thái</th>
                     <th *ngIf="item.status == ProductStatus.STATUS_INIT || item.status == ProductStatus.RETRIEVE">Thao tác</th>
@@ -58,7 +57,6 @@
                           : item?.category_id
                       }}
                     </td>
-                    <td *ngIf="item?.level">{{ item?.level }}</td>
                     <td>
                       {{
                         item?.nearest_channel

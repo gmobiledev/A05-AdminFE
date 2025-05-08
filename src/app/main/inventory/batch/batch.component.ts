@@ -285,9 +285,6 @@ export class BatchComponent implements OnInit {
           return {
             'Name': item.name,
             'Nhà mạng': item.brand,
-            'Hạng số': item.level,
-            'Giá vốn': item.price,
-            'Giá bán': item.export_price
           }
         })
       }

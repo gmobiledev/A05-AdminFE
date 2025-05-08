@@ -588,9 +588,6 @@ export class ViewBatchExportComponent implements OnInit {
         return {
           "Số/Serial": x.name,
           "Nhà mạng": x.brand,
-          "Hạng số": x.level,
-          "Giá vốn": x.price, 
-          "Giá bán": ""
         }
       })
       this.commonService.exportExcel(data, 'Danh sach so thu hoi.xlsx')

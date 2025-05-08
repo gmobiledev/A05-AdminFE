@@ -283,25 +283,12 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Giá vốn" prop="price">
-                        <ng-template let-value="value" ngx-datatable-cell-template>
-                            {{ value | number }}
-                        </ng-template>
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Giá bán" prop="export_price">
-                      <ng-template  let-value="value" ngx-datatable-cell-template>
-                        {{ value | number  }}
-                      </ng-template>
-                    </ngx-datatable-column>
-
                     <ngx-datatable-column name="Trạng thái" prop="status">
                       <ng-template  let-value="value" ngx-datatable-cell-template>
                         <p [innerHTML]="value | showStatusProduct"></p>                        
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>  
                     <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>                  
                     <!-- <ngx-datatable-column name="Actions"  [sortable]="false">
                       <ng-template ngx-datatable-cell-template>
@@ -429,18 +416,6 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="Giá vốn" prop="price">
-                        <ng-template let-value="value" ngx-datatable-cell-template>
-                            {{ value | number }}
-                        </ng-template>
-                    </ngx-datatable-column>
-
-                    <ngx-datatable-column name="Giá bán" prop="export_price">
-                      <ng-template  let-value="value" ngx-datatable-cell-template>
-                        {{ value | number  }}
-                      </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column name="Hạng số" prop="level" ></ngx-datatable-column>
                     <ngx-datatable-column name="Nhà mạng" prop="brand"></ngx-datatable-column>
                     <ngx-datatable-column name="Thao tác"  [sortable]="false" prop="name">
                       <ng-template ngx-datatable-cell-template let-value="value">
