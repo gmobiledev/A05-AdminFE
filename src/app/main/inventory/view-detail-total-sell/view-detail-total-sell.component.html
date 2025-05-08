@@ -27,23 +27,6 @@
                   <div class="form-group">
                     <select
                       class="form-control"
-                      name="level"
-                      [(ngModel)]="searchForm.level"
-                    >
-                      <option value="">Chọn hạng số</option>
-                      <option
-                        *ngFor="let item of taskTelecomStatusSIM"
-                        [value]="item.name"
-                      >
-                        {{ item.id }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <select
-                      class="form-control"
                       name="status"
                       [(ngModel)]="searchForm.status"
                     >
