@@ -11,62 +11,68 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()" class="mb-2">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <div class="form-group">
                     <input type="text" name="keysearch" [(ngModel)]="searchForm.keysearch" class="form-control"
-                      placeholder="Nhập số/serial" />
+                      placeholder="Nhập số/serial sim" />
                   </div>
                 </div>
-
-                <div class="col-md-3">
+            
+                <div class="col-md-4">
                   <div class="form-group">
                     <select class="form-control" name="category_id" [(ngModel)]="searchForm.category_id">
-                      <option value="">-- Chọn loại SP --</option>
+                      <option value="">Chọn sản phẩm</option>
                       <option value="2">SIM</option>
                       <option value="3">Số</option>
                     </select>
                   </div>
                 </div>
-
-                <div class="col-md-3">
+            
+                <div class="col-md-4">
                   <div class="form-group">
                     <select class="form-control" name="status" [(ngModel)]="searchForm.status">
-                      <option value="">-- Chọn trạng thái --</option>
-                      <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value" [id]="item.key">
-                        <span [innerHTML]="item.value | showStatusProduct"></span>
+                      <option value="">Chọn trạng thái</option>
+                      <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value">
+                        {{ item.value }}
                       </option>
                     </select>
                   </div>
                 </div>
-
-                <div class="col-md-3">
+            
+                <div class="col-md-4">
                   <div class="form-group">
                     <select class="form-control" name="is_kitting" [(ngModel)]="searchForm.is_kitting">
-                      <option value=""> -- Tình trạng Kitting --</option>
-                      <option value="1">Đã Kitting</option>
-                      <option value="0">Chưa Kitting</option>
+                      <option value="">Tình trạng kitting</option>
+                      <option value="1">Đã kitting</option>
+                      <option value="0">Chưa kitting</option>
                     </select>
                   </div>
                 </div>
-
-                <div class="col-md-3">
+            
+                <div class="col-md-4">
                   <div class="form-group">
                     <select class="form-control" name="is_exported" [(ngModel)]="searchForm.is_exported">
-                      <option value=""> -- Tình trạng xuất kho --</option>
+                      <option value="">Tình trạng xuất kho</option>
                       <option value="1">Đã xuất kho</option>
                       <option value="0">Chưa xuất kho</option>
                     </select>
                   </div>
                 </div>
-
               </div>
-
-              <div class="row">
+            
+              <!-- Nút bấm -->
+              <div class="row mt-1">
                 <div class="col-md-2">
-                  <button type="submit" class="btn btn-block btn-info" [disabled]="submitted">
-                    Lọc kết quả <span [data-feather]="'search'"></span>
+                  <button type="submit" class="btn btn-info btn-block">
+                    <i class="fa fa-search mr-50"></i> Lọc kết quả
                   </button>
                 </div>
+                <div class="col-md-2">
+                  <button type="button" class="btn btn-success btn-block" (click)="exportExcelByLocal()">
+                    <i data-feather="file"></i> Xuất excel
+                  </button>
+                </div>
+              </div>
                 <!-- <div class="col-md-3">
                   <label class="mr-1" style="font-size: 1rem">Sim cam kết</label>
                   <input type="checkbox" [(ngModel)]="searchForm.is_sck" name="is_sck" (change)="onSubmitSearch()"
@@ -78,20 +84,16 @@
                     [ngModelOptions]="{standalone: true}">
                 </div> -->
 
-              </div>
             </form>
             <div class="overflow-hidden">
               <div class="pull-right">
-                <button type="button" class="btn btn-success mr-2" (click)="exportExcelByLocal()">
-                  Xuất file excel
-                </button>
 
                 <!-- <button type="button" class="btn btn-success mr-2" (click)="modalOpenNormal(modalUploadData)">
                   Kitting
                 </button> -->
 
                 <button type="button" class="btn btn-success mr-2" (click)="modalOpen(modalAddUser, null, true)">
-                  Tài khoản đấu nối
+                  <i data-feather="eye" class="mr-50"></i>  Tài khoản đấu nối
                 </button>
 
                 <a routerLink="/inventory/edit-products"
@@ -121,9 +123,6 @@
                       <th>Số kỳ</th>
                       <th>Giá gói</th>
                     </ng-container>
-                    <th title="Thời gian nhập kho">TG Nhập</th>
-
-
 
                   </tr>
                 </thead>
@@ -174,9 +173,6 @@
                         {{ item?.sell_channels[0]?.commit_price | number }}
                       </td>
                     </ng-container>
-
-                    <td>{{item.created_at | date: 'dd/MM/yyyy H:mm'}}</td>
-
 
                   </tr>
                 </tbody>
@@ -346,7 +342,7 @@
           </div>
         </div>
         <button *ngIf="isShowAddInput" type="button" class="btn btn-success btn-sm" (click)="addInput()">
-          Thêm <span [data-feather]="'plus'"></span>
+          <span [data-feather]="'plus'"></span> Thêm
         </button>
       </div>
     </div>
@@ -367,15 +363,20 @@
     <div class="modal-body" tabindex="0">
       <div class="mb-1 text-right">
         <button type="button" class="btn btn-primary" (click)="modalOpen(modalCreate, null, false)">
-          Thêm người bán hàng
+          <i data-feather="plus"></i> Thêm người đấu nối
         </button>
       </div>
 
-      <div class="m-1" *ngFor="let item of listSellUser">
-        <span class="mr-2" (click)="onRemoveItem(item)"><b class="text-danger">X</b>
-        </span>
-        <span class="">{{ item.full_name }} - {{ item.mobile }}</span>
-      </div>
+      <div class="m-1 d-flex align-items-center" *ngFor="let item of listSellUser">
+        <button
+          (click)="onRemoveItem(item)"
+          class="btn btn-link p-0 text-danger d-flex align-items-center"
+          title="Xóa người dùng"
+        >
+          <i data-feather="trash" class="feather-16"></i>
+        </button>
+        <span class="ml-1">{{ item.full_name }} - {{ item.mobile }}</span>
+      </div>      
     </div>
 
     <!-- <div class="modal-footer">
@@ -388,7 +389,7 @@
 <ng-template #modalUploadData let-modal>
   <div class="modal-header">
     <h5 class="modal-title text-info" id="myModalLabel160">
-      Tải lên dữ liệu lên
+      Tải lên  dữ liệu
     </h5>
     <button type="button" class="close" (click)="modalClose()" aria-label="Close">
       <span aria-hidden="true">&times;</span>

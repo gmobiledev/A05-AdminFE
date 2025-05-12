@@ -10,135 +10,68 @@
           </div>
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <select
-                      name="province_id"
-                      class="form-control"
-                      (change)="onChangeProvince($event)"
-                      [(ngModel)]="searchForm.province_id"
-                    >
-                      <option value="">-- Chọn Tỉnh/Thành phố --</option>
-                      <option *ngFor="let p of provinces" [value]="p.id">
-                        {{ p.title }}
-                      </option>
+              <div class="container-fluid">
+                <!-- Hàng 1 -->
+                <div class="row">
+                  <div class="col">
+                    <select class="form-control" [(ngModel)]="searchForm.province_id" name="province_id">
+                      <option value="">Chọn Tỉnh/Thành phố</option>
+                      <option *ngFor="let p of provinces" [value]="p.id">{{ p.title }}</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <select class="form-control" [(ngModel)]="searchForm.district_id" name="district_id">
+                      <option value="">Chọn Quận/Huyện</option>
+                      <option *ngFor="let d of districts" [value]="d.id">{{ d.title }}</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <select class="form-control" [(ngModel)]="searchForm.commune_id" name="commune_id">
+                      <option value="">Chọn Phường/Xã</option>
+                      <option *ngFor="let c of commues" [value]="c.id">{{ c.title }}</option>
                     </select>
                   </div>
                 </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <select
-                      name="district_id"
-                      id="home_district"
-                      class="form-control"
-                      (change)="onChangeDistrict($event)"
-                      [(ngModel)]="searchForm.district_id"
-                    >
-                      <option value="">--Chọn Quận/Huyện--</option>
-                      <option *ngFor="let p of districts" [value]="p.id">
-                        {{ p.title }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <select
-                      name="commune_id"
-                      class="form-control"
-                      [(ngModel)]="searchForm.commune_id"
-                    >
-                      <option value="">--Chọn Phường/xã --</option>
-                      <option *ngFor="let p of commues" [value]="p.id">
-                        {{ p.title }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <select
-                      class="form-control"
-                      name="status"
-                      [(ngModel)]="searchForm.status"
-                    >
-                      <option value="">Tất cả</option>
-                      <option value="0">Khởi tạo</option>
+            
+                <!-- Hàng 2 -->
+                <div class="row mt-1">
+                  <div class="col">
+                    <select class="form-control" [(ngModel)]="searchForm.status" name="status">
+                      <option value="">Chọn trạng thái</option>
                       <option value="1">Kích hoạt</option>
                       <option value="-2">Khóa</option>
                       <option value="-1">Hủy</option>
                     </select>
                   </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      name="code"
-                      [(ngModel)]="searchForm.code"
-                      class="form-control"
-                      placeholder="Mã kho"
-                    />
+                  <div class="col">
+                    <input type="text" class="form-control" [(ngModel)]="searchForm.code" name="code" placeholder="Mã kho" />
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" [(ngModel)]="searchForm.name" name="name" placeholder="Tên kho" />
                   </div>
                 </div>
-
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      [(ngModel)]="searchForm.name"
-                      class="form-control"
-                      placeholder="Tên kho"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      name="admin_id"
-                      [(ngModel)]="searchForm.admin_id"
-                      class="form-control"
-                      placeholder="Tên đại lý"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-info">
-                      Lọc kết quả <span [data-feather]="'search'"></span>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <button
-                      type="button"
-                      (click)="onSubmitExportExcelReport()"
-                      class="btn btn-block btn-success"
-                    >
-                      Xuất báo cáo excel <span [data-feather]="'file'"></span>
+            
+                <!-- Hàng 3 -->
+                <div class="row mt-2">
+                  <div class="col d-flex">
+                    <button type="submit" class="btn btn-info mr-1" style="background-color: #00cfe8; color: white;">
+                      <i data-feather="search"></i> Lọc kết quả
+                    </button>                    
+                    <button type="button" class="btn btn-success" (click)="onSubmitExportExcelReport()">
+                      <i data-feather="file"></i> Xuất excel
                     </button>
                   </div>
                 </div>
               </div>
             </form>
+            
             <div class="mt-3 mb-3 overflow-hidden">
               <div class="pull-left">
                 Tổng: <b>{{ totalPage }}</b>
               </div>
               <div class="pull-right">
                 <button type="button" class="btn btn-success mr-25" routerLink="/inventory/new-sell-chanel">
-                  <a class="text-white">Tạo kho</a>
+                  <a class="text-white"> <i data-feather="plus"></i> Tạo kho</a>
                 </button>
               </div>
             </div>
@@ -202,7 +135,7 @@
                             item.status == 1 ||
                             item.status == -2)
                         "
-                        title="Từ chối kho"
+                        title="Hủy kho"
                       >
                         <i
                           data-feather="x-square"
@@ -210,7 +143,7 @@
                         ></i>
                       </a>
 
-                      <a
+                      <!-- <a
                         class="ml-1"
                         (click)="onApprove(item.id, 1)"
                         *ngIf="
@@ -223,7 +156,7 @@
                           data-feather="plus-circle"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </a>
+                      </a> -->
                       <a
                         class="ml-1"
                         [routerLink]="['/inventory/view-junior-sell']"
@@ -244,7 +177,7 @@
                         title="Danh sách sim số"
                       >
                         <i
-                          data-feather="phone"
+                          data-feather="list"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
@@ -257,7 +190,7 @@
                         title="Danh sách sim số"
                       >
                         <i
-                          data-feather="phone"
+                          data-feather="list"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
@@ -280,7 +213,7 @@
                         title="Tra cứu số xuất/nhập kho"
                       >
                         <i
-                          data-feather="repeat"
+                          data-feather="search"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>

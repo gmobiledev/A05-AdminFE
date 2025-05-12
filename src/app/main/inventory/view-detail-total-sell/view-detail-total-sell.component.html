@@ -43,23 +43,24 @@
                 </div>
               </div>
 
-              <div class="mt-1 overflow-hidden">
-                <div class="pull-left">
-                  <button type="submit" class="btn btn-block btn-info">
-                    Lọc kết quả <span [data-feather]="'search'"></span>
+              <div class="row mt-1">
+                <div class="col-md-6 d-flex">
+                  <button type="submit" class="btn btn-info mr-1">
+                    <i data-feather="search" class="mr-50"></i> Lọc kết quả
+                  </button>
+                  <button type="button" class="btn btn-success" (click)="exportExcelByLocal()">
+                    <i data-feather="file" class="mr-50"></i> Xuất excel
                   </button>
                 </div>
-
-                <div class="pull-right">
-                <div class="d-flex">
-                  <button type="button" class="btn btn-success mr-2" (click)="exportExcelByLocal()">
-                    Xuất file excel
-                  </button>
-
-                  <a routerLink="/inventory/edit-products"                  
-                  [queryParams]="{channel_id: channel_id}"
-                  class="btn d-block btn-primary">Sửa danh sách số</a>
-                </div>
+            
+                <div class="col-md-6 d-flex justify-content-end">
+                  <a
+                    routerLink="/inventory/edit-products"
+                    [queryParams]="{ channel_id: channel_id }"
+                    class="btn btn-primary"
+                  >
+                    <i data-feather="edit" class="mr-50"></i> Sửa danh sách số
+                  </a>
               </div>
               </div>
             </form>

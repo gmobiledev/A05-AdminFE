@@ -7,37 +7,29 @@
                 </div>
                 <div class="card-body">
                     <form (ngSubmit)="onSubmitSearch()" class="mb-2">
-                        <div class="row">
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="text" name="msisdn" [(ngModel)]="searchForm.msisdn"
-                                        class="form-control" placeholder="Số điện thoại/Serial">
-                                </div>
+                        <div class="row no-gutters">
+                            <div class="col-md-5 px-1">
+                              <input type="text" name="msisdn" [(ngModel)]="searchForm.msisdn"
+                                class="form-control" placeholder="Số điện thoại">
                             </div>
-                            <!-- <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="text" name="user_id" [(ngModel)]="searchForm.user_id" class="form-control"
-                                        placeholder="User">
-                                </div>
+                            <!-- <div class="col-md-3 px-1">
+                              <input type="text" name="user_id" [(ngModel)]="searchForm.user_id"
+                                class="form-control" placeholder="User">
                             </div> -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <input type="text" placeholder="Thời gian" [ngModelOptions]="{standalone: true}"
-                                        ngxDaterangepickerMd [(ngModel)]="dateRange" [ranges]="ranges"
-                                        [locale]="{applyLabel: 'Chọn',format: 'DD/MM/YYYY'}"
-                                        [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
-                                        class="form-control" />
-                                </div>
+                            <div class="col-md-5 px-1">
+                              <input type="text" placeholder="Thời gian" [ngModelOptions]="{standalone: true}"
+                                ngxDaterangepickerMd [(ngModel)]="searchForm.dateRange" [ranges]="ranges"
+                                [locale]="{applyLabel: 'Chọn', format: 'DD/MM/YYYY'}"
+                                [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" name="daterange"
+                                class="form-control" />
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-block btn-info">Lọc kết quả <span
-                                            [data-feather]="'search'"></span></button>
-                                </div>
+                            <div class="col-md-2 px-1">
+                              <button type="submit" class="btn btn-block btn-info">
+                                <span [data-feather]="'search'"></span> Lọc kết quả
+                              </button>
                             </div>
-                        </div>
-                    </form>
+                          </div>
+                        </form>
                     <div class="table-responsive" *blockUI="'section-block'">
                         <table class="table table-striped text-nowrap" *ngIf="list">
                             <thead>

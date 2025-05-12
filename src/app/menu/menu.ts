@@ -315,7 +315,7 @@ export const menu: CoreMenu[] = [
         title: "Danh sách kho",
         translate: "",
         type: "item",
-        icon: "database",
+        icon: "list",
         url: "inventory/sell-chanel",
       },
 

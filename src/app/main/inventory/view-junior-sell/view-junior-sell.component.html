@@ -53,7 +53,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">
-                      Lọc kết quả <span [data-feather]="'search'"></span>
+                      <span [data-feather]="'search'"></span> Lọc kết quả
                     </button>
                   </div>
                 </div>
@@ -65,7 +65,7 @@
                       (click)="onSubmitExportExcelReport()"
                       class="btn btn-block btn-success"
                     >
-                      Xuất báo cáo excel <span [data-feather]="'file'"></span>
+                    <span [data-feather]="'file'"></span> Xuất excel
                     </button>
                   </div>
                 </div>
@@ -92,7 +92,7 @@
                   Tài khoản đấu nối
                 </button>
                 <button type="button" class="btn btn-success mr-25">
-                  <span routerLink="/inventory/new-sell-chanel">Tạo kho</span>
+                  <span routerLink="/inventory/new-sell-chanel"><i data-feather="plus"></i> Tạo kho</span>
                 </button>
               </div>
             </div>
@@ -154,7 +154,7 @@
                           item.status == 1 ||
                           item.status == -2
                         "
-                        title="Từ chối kho"
+                        title="Xóa kho"
                       >
                         <i
                           data-feather="x-square"
@@ -162,7 +162,7 @@
                         ></i>
                       </a>
 
-                      <a
+                      <!-- <a
                         class="ml-1"
                         (click)="onApprove(item.id, 1)"
                         *ngIf="item.status == 0 || item.status == -2"
@@ -172,7 +172,7 @@
                           data-feather="plus-circle"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </a>
+                      </a> -->
                       <a
                         class="ml-1"
                         [routerLink]="['/inventory/view-sell-chanel']"
@@ -180,7 +180,7 @@
                         title="Danh sách sim số"
                       >
                         <i
-                          data-feather="phone"
+                          data-feather="list"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
@@ -192,7 +192,7 @@
                         title="Tra cứu số xuất/nhập kho"
                       >
                         <i
-                          data-feather="repeat"
+                          data-feather="search"
                           class="text-primary cursor-pointer"
                         ></i>
                       </a>
@@ -446,7 +446,7 @@
           class="btn btn-success btn-sm"
           (click)="addInput()"
         >
-          Thêm <span [data-feather]="'plus'"></span>
+        <span [data-feather]="'plus'"></span> Thêm
         </button>
       </div>
     </div>
@@ -476,7 +476,7 @@
           class="btn btn-primary"
           (click)="modalOpen(modalCreate, null, false)"
         >
-          Thêm người bán hàng
+        <span [data-feather]="'plus'"></span> Thêm người đấu nối
         </button>
       </div>
 
