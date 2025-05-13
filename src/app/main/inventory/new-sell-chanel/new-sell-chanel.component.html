@@ -15,10 +15,17 @@
                   type="text"
                   (keydown.space)="$event.preventDefault()"
                   [(ngModel)]="dataSell.code"
-                  mask="A{45}"
+                  (ngModelChange)="validateCode()"
+                  [ngClass]="{ 'is-invalid': codeInvalid }"
+                  maxlength="15"
                 />
+                <small class="form-text text-muted">
+                  *Đặt mã kho theo dạng: KHO_DANANG
+                </small>
+              <div *ngIf="codeInvalid" class="invalid-feedback d-block">
+                Mã kho phải bắt đầu bằng <code>KHO_</code> và chỉ chứa chữ in hoa, số, dấu gạch dưới. Ví dụ: <code>KHO_HN1</code>, <code>KHO_DANANG</code>.
               </div>
-
+            </div>
               <div class="form-group">
                 <label for="">Tên kho</label>
                 <input

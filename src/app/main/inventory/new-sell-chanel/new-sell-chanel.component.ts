@@ -283,5 +283,11 @@ export class NewSellChanelComponent implements OnInit {
     }
   }
 
+  codeInvalid = false;
+
+  validateCode() {
+    const regex = /^KHO_[A-Z0-9_]{1,40}$/;
+    this.codeInvalid = this.dataSell.code ? !regex.test(this.dataSell.code) : false;
+  }
 
 }
