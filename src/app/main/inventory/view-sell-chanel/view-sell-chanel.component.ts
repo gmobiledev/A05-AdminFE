@@ -233,7 +233,7 @@ export class ViewSellChanelComponent implements OnInit {
 
   modalOpen(modal, item = null, checkAdd = true) {
     if (item) {
-      this.titleModal = "Cập nhật đại lý";
+      this.titleModal = "Cập nhật người đấu nối";
       this.isCreate = false;
       this.selectedUserId = item.id;
       this.userService.getAgentServices(item.id).subscribe(res => {
@@ -266,6 +266,7 @@ export class ViewSellChanelComponent implements OnInit {
           });
         }
 
+      this.updateIsShowAddInput();
 
       })
     } else {
@@ -303,12 +304,14 @@ export class ViewSellChanelComponent implements OnInit {
     this.getData();
     this.modalRef.close();
     this.initForm();
+    this.isShowAddInput = true;
   }
 
   modalCloseAdd() {
     this.modalRefAdd.close();
     this.getData();
     this.initForm();
+    this.isShowAddInput = true;
   }
 
   addInput() {
@@ -318,6 +321,7 @@ export class ViewSellChanelComponent implements OnInit {
       service_code: []
     });
     arrayControl.push(newGroup);
+    this.updateIsShowAddInput()
     if (arrayControl.length == this.listAllService.length) {
       this.isShowAddInput = false;
     }
@@ -404,7 +408,7 @@ export class ViewSellChanelComponent implements OnInit {
           this.isCreate = false;
         }
         if (res.status && res.data && !res.data.is_agent) {
-          this.titleModal = "Đặt làm đại lý";
+          this.titleModal = "Đặt làm người đấu nối";
           console.log("check isCreate = ", this.isCreate)
           this.exitsUser = true;
           return;
@@ -423,13 +427,14 @@ export class ViewSellChanelComponent implements OnInit {
               const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
               this.listServiceFilter[index]['disabled'] = 'disabled';
               arrayControl.push(newGroup);
+              this.updateIsShowAddInput();
             }
-            this.titleModal = "Cập nhật đại lý";
+            this.titleModal = "Cập nhật người đấu nối";
             this.isCreate = false;
             this.exitsUser = false;
           })
         }
-        this.titleModal = this.isCreate ? "Thêm đại lý" : "Cập nhật đại lý";
+        this.titleModal = this.isCreate ? "Thêm người đấu nối" : "Cập nhật người đấu nối";
       })
     }
   }
@@ -450,6 +455,7 @@ export class ViewSellChanelComponent implements OnInit {
   }
   ngOnInit(): void {
     this.initForm();
+    this.isShowAddInput = true;
   }
 
 
@@ -569,6 +575,7 @@ export class ViewSellChanelComponent implements OnInit {
           }
           this.modalRef.close();
           this.initForm();
+          this.isShowAddInput = true;
           this.alertService.showSuccess(res2.message);
           this.getData()
         }, error => {
@@ -699,6 +706,7 @@ export class ViewSellChanelComponent implements OnInit {
 
     this.exitsUser = false;
     this.isCreate = true;
+    this.isShowAddInput = true;
   }
 
   onCompletedInputPassword(value) {
@@ -723,16 +731,16 @@ export class ViewSellChanelComponent implements OnInit {
   }
 
 
-  async removeInput(index) {
-    let arrayControl = <FormArray>this.formGroup.controls['new_agents_service'];
-    const i = this.listSellUser.findIndex(item => item.code == this.formGroup.controls['user_id'].value[index]['channel_id']);
-    if (i != -1) {
-      this.listSellUser[i]['disabled'] = '';
-    }
-    arrayControl.removeAt(index);
-    if (arrayControl.length < this.listAllService.length) {
-      this.isShowAddInput = true;
-    }
+  removeInput(index: number) {
+    const arrayControl = this.formGroup.get('new_agents_service') as FormArray;
+    const group = arrayControl.at(index) as FormGroup;
+
+    group.patchValue({
+      ref_code: '',
+      service_code: ''
+    });
+
+    this.updateIsShowAddInput();
   }
 
 
@@ -789,6 +797,23 @@ export class ViewSellChanelComponent implements OnInit {
     }
     return str;
   }
+
+  updateIsShowAddInput() {
+    const arrayControl = this.formGroup.get('new_agents_service') as FormArray;
+    this.isShowAddInput = arrayControl.length < this.listAllService.length;
+  }
+
+  onResetCheck() {
+  this.exitsUser = false;
+  this.isCreate = true;
+  this.titleModal = 'Thêm tài khoản đấu nối';
+  this.formGroup.get('mobile').enable(); // Cho nhập lại số
+  this.formGroup.get('mobile').reset();
+  
+  const agentsService = this.formGroup.get('agents_service') as FormArray;
+  agentsService.clear();
+  this.updateIsShowAddInput();
+}
 
 }
 

@@ -29,7 +29,7 @@
                       name="user"
                       [(ngModel)]="searchForm.user"
                       class="form-control"
-                      placeholder="Nhập tìm theo SĐT của khách hàng"
+                      placeholder="Nhập tìm theo SĐT"
                     />
                   </div>
                 </div>
@@ -75,19 +75,6 @@
                     <select
                       class="form-control"
                       name="type"
-                      [(ngModel)]="searchForm.type"
-                    >
-                      <option value="">Chọn kiểu nạp</option>
-                      <option value="topup">Cộng tiền</option>
-                      <option value="debit">Trừ tiền</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <select
-                      class="form-control"
-                      name="type"
                       [(ngModel)]="searchForm.service_name"
                     >
                       <option value="">Chọn dịch vụ</option>
@@ -101,7 +88,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">
-                      Lọc kết quả
+                     <i data-feather="search" class="mr-50"></i> Lọc kết quả
                     </button>
                   </div>
                 </div>
@@ -127,7 +114,6 @@
                     </th>
                     <th *ngIf="!isSingleService">Merchant</th>
                     <th>Tiêu đề</th>
-                    <th>Số dư tài khoản</th>
                     <th>{{ tableColumnName.amount }}</th>
                     <th
                       *ngIf="[ServiceCode.SIM_PROFILE].includes(currentService)"
@@ -166,22 +152,6 @@
                     </td>
                     <td>
                       {{ item?.title }}
-                    </td>
-                    <td>
-                      <div class="d-flex" *ngIf="getJSONDetailBalance(item) as balance">
-                        <div>
-                          {{(balance.balance_after ? balance.balance_after : balance.balance_before) | number}}
-                        </div>
-                        <div
-                          *ngIf="
-                          balance.balance_after ||
-                          balance.balance_before
-                          "
-                          style="margin-left: 5px;"
-                        >
-                          {{ currency }}
-                        </div>
-                      </div>
                     </td>
                     <td>
                       {{ item?.bill_id }}<br />
@@ -251,7 +221,7 @@
                       </ng-container>
 
                       <button
-                        title="Callback"
+                        ngbTooltip="Callback"
                         class="btn btn-icon btn-flat-success btn-sm"
                         (click)="callbackTransaction(item)"
                       >
@@ -260,9 +230,8 @@
                           class="text-primary cursor-pointer"
                         ></i>
                       </button>
-
                       <button
-                        title="Check giao dịch"
+                        ngbTooltip="Check giao dịch"
                         class="btn btn-icon btn-flat-success btn-sm"
                         (click)="checkGatewayTransaction(item)"
                       >

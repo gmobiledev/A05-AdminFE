@@ -104,7 +104,7 @@ export class ListAgentComponent implements OnInit {
 
   modalOpen(modal, item = null) {
     if (item) {
-      this.titleModal = "Cập nhật đại lý";
+      this.titleModal = "Cập nhật người đấu nối";
       this.isCreate = false;
       this.selectedUserId = item.id;
       this.userService.getAgentServices(item.id).subscribe(res => {
@@ -344,7 +344,7 @@ export class ListAgentComponent implements OnInit {
       this.userService.getByMobile(this.formGroup.controls['mobile'].value).subscribe(async res => {
         this.selectedUserId = res.data.id;
         if (res.status && res.data && !res.data.is_agent) {
-          this.titleModal = "Đặt làm đại lý";
+          this.titleModal = "Đặt làm người đấu nối";
           this.exitsUser = true;
           return;
         } else if (res.status && res.data && res.data.is_agent) {
@@ -363,12 +363,12 @@ export class ListAgentComponent implements OnInit {
               this.listServiceFilter[index]['disabled'] = 'disabled';
               arrayControl.push(newGroup);
             }
-            this.titleModal = "Cập nhật đại lý";
+            this.titleModal = "Cập nhật người đấu nối";
             this.isCreate = false;
             this.exitsUser = false;
           })
         }
-        this.titleModal = this.isCreate ? "Thêm đại lý" : "Cập nhật đại lý";
+        this.titleModal = this.isCreate ? "Thêm đại lý" : "Cập nhật người đấu nối";
         this.exitsUser = false;
       })
     }

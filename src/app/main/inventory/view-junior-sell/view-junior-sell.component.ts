@@ -249,7 +249,7 @@ export class ViewJuniorSellComponent implements OnInit {
 
   modalOpen(modal, item = null, checkAdd = true) {
     if (item) {
-      this.titleModal = "Cập nhật đại lý";
+      this.titleModal = "Cập nhật người đấu nối";
       this.isCreate = false;
       this.selectedUserId = item.id;
       this.userService.getAgentServices(item.id).subscribe(res => {
@@ -459,7 +459,7 @@ export class ViewJuniorSellComponent implements OnInit {
           this.isCreate = false;
         }
         if (res.status && res.data && !res.data.is_agent) {
-          this.titleModal = "Đặt làm đại lý";
+          this.titleModal = "Đặt làm người đấu nối";
           console.log("check isCreate = ", this.isCreate)
           this.exitsUser = true;
           return;
@@ -479,12 +479,12 @@ export class ViewJuniorSellComponent implements OnInit {
               this.listServiceFilter[index]['disabled'] = 'disabled';
               arrayControl.push(newGroup);
             }
-            this.titleModal = "Cập nhật đại lý";
+            this.titleModal = "Cập nhật người đấu nối";
             this.isCreate = false;
             this.exitsUser = false;
           })
         }
-        this.titleModal = this.isCreate ? "Thêm đại lý" : "Cập nhật đại lý";
+        this.titleModal = this.isCreate ? "Thêm người đấu nối" : "Cập nhật người đấu nối";
       })
     }
   }

@@ -258,9 +258,13 @@
           <div *ngIf="f.password.errors.required">Vui lòng nhập mật khẩu</div>
         </div>
       </div>
-      <div class="" *ngIf="exitsUser">
-        <i>Đã tồn tại user với số điện thoại trên hệ thống, bạn có đồng ý đặt
-          user làm đại lý?</i>
+      <div class=" d-flex justify-content-between align-items-center" *ngIf="exitsUser">
+        <span class="text-danger font-italic">
+          Đã tồn tại user với số điện thoại trên hệ thống, bạn có đồng ý đặt user đấu nối?
+        </span>
+        <button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="onResetCheck()">
+          Nhập số khác
+        </button>
       </div>
       <!-- <div class="form-group" >
       <label for="basicInput">Mã giới thiệu</label>
