@@ -46,9 +46,15 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Tên kho</label>
-                    <ng-select [(ngModel)]="searchForm.channel_id" name="channel_id" class="w-100">
-                      <ng-option [value]="0"></ng-option>
-                      <ng-option *ngFor="let p of listChannel" [value]="p.id">{{ p.name }}</ng-option>
+                    <ng-select
+                      [items]="listChannel"
+                      bindLabel="name"
+                      bindValue="id"
+                      [(ngModel)]="searchForm.channel_id"
+                      name="channel_id"
+                      placeholder="-- Chọn kho --"
+                      [clearable]="true"
+                    >
                     </ng-select>
                   </div>
                 </div>

@@ -120,83 +120,36 @@
                       <div [innerHTML]="item.status | showStatusSell"></div>
                     </td>
 
-                    <td class="overflow-auto">
-                      <a
-                        class="ml-1"
-                        title="Chỉnh sửa kho"
-                        [routerLink]="[
-                          '/inventory/edit-sell-chanel/' + item.id
-                        ]"
-                      >
-                        <i
-                          data-feather="edit-3"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                   <td class="overflow-auto">
+                      <!-- Chỉnh sửa kho -->
+                      <a class="ml-1 tooltip-wrapper" *ngIf="item.parent_id != null" [routerLink]="['/inventory/edit-sell-chanel/' + item.id]">
+                        <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Chỉnh sửa kho</span>
                       </a>
 
-                      <a
-                        class="ml-1"
-                        (click)="onApprove(item.id, -2)"
-                        *ngIf="item.status == 1"
-                        title="Khóa kho"
-                      >
-                        <i
-                          data-feather="lock"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <!-- Khóa kho -->
+                      <a class="ml-1 tooltip-wrapper" (click)="onApprove(item.id, -2)" *ngIf="item.status == 1">
+                        <i data-feather="lock" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Khóa kho</span>
                       </a>
 
-                      <a
-                        class="ml-1"
-                        (click)="onApprove(item.id, -1)"
-                        *ngIf="
-                          item.status == 0 ||
-                          item.status == 1 ||
-                          item.status == -2
-                        "
-                        title="Xóa kho"
-                      >
-                        <i
-                          data-feather="x-square"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <!-- Xóa kho -->
+                      <a class="ml-1 tooltip-wrapper" (click)="onApprove(item.id, -1)" *ngIf="item.status == 0 || item.status == 1 || item.status == -2">
+                        <i data-feather="x-square" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Xóa kho</span>
                       </a>
 
-                      <!-- <a
-                        class="ml-1"
-                        (click)="onApprove(item.id, 1)"
-                        *ngIf="item.status == 0 || item.status == -2"
-                        title="Kích hoạt kho"
-                      >
-                        <i
-                          data-feather="plus-circle"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a> -->
-                      <a
-                        class="ml-1"
-                        [routerLink]="['/inventory/view-sell-chanel']"
-                        [queryParams]="{ channel_id: item.id }"
-                        title="Danh sách sim số"
-                      >
-                        <i
-                          data-feather="list"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <!-- Danh sách sim số -->
+                      <a class="ml-1 tooltip-wrapper" [routerLink]="['/inventory/view-sell-chanel']" [queryParams]="{ channel_id: item.id }">
+                        <i data-feather="list" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Danh sách sim số</span>
                       </a>
 
-                      <a
-                        class="ml-1"
-                        [routerLink]="['/inventory/search-product-transfer']"
-                        [queryParams]="{ channel_id: item.id }"
-                        title="Tra cứu số xuất/nhập kho"
-                      >
-                        <i
-                          data-feather="search"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                      <!-- Tra cứu số xuất/nhập kho -->
+                      <a class="ml-1 tooltip-wrapper" [routerLink]="['/inventory/search-product-transfer']" [queryParams]="{ channel_id: item.id }">
+                        <i data-feather="search" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Tra cứu số xuất/nhập kho</span>
                       </a>
-
                     </td>
                   </tr>
                 </tbody>

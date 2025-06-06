@@ -100,124 +100,87 @@
                     </td>
 
                     <td class="overflow-auto">
+                      <!-- Chỉnh sửa kho -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         *ngIf="item.parent_id != null"
-                        title="Chỉnh sửa kho"
-                        [routerLink]="[
-                          '/inventory/edit-sell-chanel/' + item.id
-                        ]"
+                        [routerLink]="['/inventory/edit-sell-chanel/' + item.id]"
                       >
-                        <i
-                          data-feather="edit-3"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Chỉnh sửa kho</span>
                       </a>
 
+                      <!-- Khóa kho -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         (click)="onApprove(item.id, -2)"
                         *ngIf="item.status == 1 && item.parent_id != null"
-                        title="Khóa kho"
                       >
-                        <i
-                          data-feather="lock"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="lock" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Khóa kho</span>
                       </a>
 
+                      <!-- Hủy kho -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         (click)="onApprove(item.id, -1)"
-                        *ngIf="
-                          item.parent_id != null &&
-                          (item.status == 0 ||
-                            item.status == 1 ||
-                            item.status == -2)
-                        "
-                        title="Hủy kho"
+                        *ngIf="item.parent_id != null && (item.status == 0 || item.status == 1 || item.status == -2)"
                       >
-                        <i
-                          data-feather="x-square"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="x-square" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Hủy kho</span>
                       </a>
 
-                      <!-- <a
-                        class="ml-1"
-                        (click)="onApprove(item.id, 1)"
-                        *ngIf="
-                          item.status == 0 ||
-                          (item.status == -2 && item.parent_id != null)
-                        "
-                        title="Kích hoạt kho"
-                      >
-                        <i
-                          data-feather="plus-circle"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a> -->
+                      <!-- Xem chi tiết -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         [routerLink]="['/inventory/view-junior-sell']"
                         [queryParams]="{ current_sell_channel_id: item.id }"
-                        title="Xem chi tiết"
                       >
-                        <i
-                          data-feather="eye"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Xem chi tiết</span>
                       </a>
 
+                      <!-- Danh sách sim số (nội bộ) -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         [routerLink]="['/inventory/view-sell-chanel']"
                         [queryParams]="{ channel_id: item.id }"
                         *ngIf="item.parent_id != null"
-                        title="Danh sách sim số"
                       >
-                        <i
-                          data-feather="list"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="list" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Danh sách sim số</span>
                       </a>
 
+                      <!-- Danh sách sim số (cha) -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         [routerLink]="['/inventory/view-detail-totalSell']"
                         [queryParams]="{ channel_id: item.id }"
                         *ngIf="item.parent_id == null"
-                        title="Danh sách sim số"
                       >
-                        <i
-                          data-feather="list"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="list" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Danh sách sim số</span>
                       </a>
+
+                      <!-- Báo cáo tồn kho -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         [routerLink]="['/inventory/report/ton-kho']"
                         [queryParams]="{ channel_id: item.id }"
-                        title="Báo cáo tồn kho"
                       >
-                        <i
-                          data-feather="file-text"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="file-text" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Báo cáo tồn kho</span>
                       </a>
 
+                      <!-- Tra cứu nhập xuất -->
                       <a
-                        class="ml-1"
+                        class="ml-1 tooltip-wrapper"
                         [routerLink]="['/inventory/search-product-transfer']"
                         [queryParams]="{ channel_id: item.id }"
-                        title="Tra cứu số xuất/nhập kho"
                       >
-                        <i
-                          data-feather="search"
-                          class="text-primary cursor-pointer"
-                        ></i>
+                        <i data-feather="search" class="text-primary cursor-pointer"></i>
+                        <span class="custom-tooltip">Tra cứu nhập/xuất</span>
                       </a>
-
                     </td>
                   </tr>
                 </tbody>

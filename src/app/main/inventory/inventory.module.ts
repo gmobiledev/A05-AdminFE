@@ -52,7 +52,7 @@ import { UpdatePriceComponent } from './update-price/update-price.component';
 import { CreateUpdatePriceComponent } from './update-price/create-update-price/create-update-price.component';
 import { ViewUpdatePriceComponent } from './update-price/view-update-price/view-update-price.component';
 import { OtpComponent } from './update-price/view-update-price/otp/otp.component';
-
+import { ActiveProductComponent } from './active-product/active-product.component';
 const routes: Routes = [
   {
     path: 'batch',
@@ -202,6 +202,10 @@ const routes: Routes = [
     path: 'update-price',
     component: UpdatePriceComponent
   },
+  {
+    path: 'active-product',
+    component: ActiveProductComponent
+  },
 ];
 
 @NgModule({
@@ -228,7 +232,8 @@ const routes: Routes = [
     TonKhoComponent,
     TonKhoSimComponent, 
     TongHopComponent,
-    ChiTietComponent, 
+    ChiTietComponent,
+    ActiveProductComponent,
     KetQuaComponent, ActionLogsComponent, SearchProductsTransferComponent, ChiTietG59Component, TongHopG59Component, DoanhThuG59Component, KetQuaG59Component, KinhDoanhG59Component, TonKhoG59Component, TonKhoSimG59Component, UpdatePriceComponent, CreateUpdatePriceComponent, ViewUpdatePriceComponent, OtpComponent,
   ],
   imports: [

@@ -430,9 +430,9 @@ export class BatchComponent implements OnInit {
       }
     }
     this.listCurrentAction = this.currentUser.actions;
-    let paramSearch = {...this.searchForm};
-    for(let key in paramSearch) {
-      if(paramSearch[key] === '') {
+    let paramSearch = { ...this.searchForm };
+    for (let key in paramSearch) {
+      if (paramSearch[key] === '' || paramSearch[key] === null) {
         delete paramSearch[key];
       }
     }

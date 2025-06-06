@@ -280,7 +280,7 @@ export const menu: CoreMenu[] = [
     type: "collapsible",
     icon: "package",
     badge: {
-      title: "5",
+      title: "6",
       translate: "",
       classes: "badge-light-success badge-pill",
     },
@@ -318,7 +318,14 @@ export const menu: CoreMenu[] = [
         icon: "list",
         url: "inventory/sell-chanel",
       },
-
+      {
+        id: "active-product",
+        title: "Danh sách số đã sử dụng",
+        translate: "",
+        type: "item",
+        icon: "list",
+        url: "inventory/active-product",
+      },
       // {
       //   id: 'sell-chanel',
       //   title: 'Chi tiết kho tổng',

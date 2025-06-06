@@ -32,8 +32,8 @@
                   <div class="form-group">
                     <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                       <option value="">Chọn trạng thái</option>
-                      <option *ngFor="let item of taskTelecomStatus | keyvalue" [value]="item.value">
-                        {{ item.value }}
+                      <option *ngFor="let item of taskTelecomStatus" [ngValue]="item.value">
+                        {{ item.label }}
                       </option>
                     </select>
                   </div>
@@ -115,6 +115,7 @@
                     <th>Ngày nhập kho</th>                    
                     <th>Ngày xuất kho</th>
                     <th *ngIf="currentChannel?.code != 'THUHOI'">Xuất cho kho</th>
+                    <th title="Thời gian nhập kho">TG Nhập</th>
                     <th *ngIf="searchForm.is_g59 == true ">Địa điểm</th>
                     <th *ngIf="currentChannel?.code == 'THUHOI'">Kho Nhập</th>
 
@@ -152,6 +153,7 @@
                     <td>
                       {{ item?.export_date | date : "dd/MM/yyyy H:mm":'GMT' }}
                     </td>
+                    <td>{{item.created_at | date: 'dd/MM/yyyy H:mm'}}</td>
                     <td *ngIf="currentChannel?.code != 'THUHOI'">
                       <a (click)="modalChannelOpen(modalChannelInfo, item)"><u>{{ item.sub_channel_id }}</u></a>
                     </td>

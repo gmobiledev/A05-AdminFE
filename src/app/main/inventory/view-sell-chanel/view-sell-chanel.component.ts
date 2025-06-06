@@ -157,16 +157,25 @@ export class ViewSellChanelComponent implements OnInit {
   ) {
     this.dateRange = null;
     this.activeRouted.queryParams.subscribe(params => {
-      this.taskTelecomStatus = Object.keys(ProductStatus).filter(p => !Number.isInteger(parseInt(p))).reduce((obj, key) => {
-        obj[key] = ProductStatus[key];
-        return obj;
-      }, {});
+      this.taskTelecomStatus = [
+        { value: 0, label: 'Chờ duyệt' },
+        { value: 1, label: 'Đã bán' },
+        { value: 2, label: 'Đang bán' },
+        { value: 3, label: 'Đang trong giỏ hàng' },
+        { value: 4, label: 'Quản lý kho khóa' },
+        { value: 30, label: 'Đang khóa - Nợ cước 2G' },
+        { value: 5, label: 'Đã xuất kho tổng' },
+        { value: 6, label: 'Đã đấu nối và chưa hoàn thiện TTTB' },
+        { value: 21, label: 'Chờ duyệt mới khởi tạo lô nhập, Không được thao tác khác' },
+        { value: 98, label: 'Thu hồi và mở bán vòng đời mới' },
+        { value: 99, label: 'Thu hồi' }
+      ];
 
       this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO
 
 
       this.searchForm.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
-      this.searchForm.status = params['status'] && params['status'] != undefined ? params['status'] : '';
+      this.searchForm.status = params['status'] ? +params['status'] : '';
       this.searchForm.action = params['action'] && params['action'] != undefined ? params['action'] : '';
       this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
       this.searchForm.batch_id = params['batch_id'] && params['batch_id'] != undefined ? params['batch_id'] : '';

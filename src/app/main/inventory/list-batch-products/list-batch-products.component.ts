@@ -273,8 +273,11 @@ export class ListBatchProductsComponent implements OnInit {
     this.sectionBlockUI.start();
     this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.page_size;
 
-    this.inventoryService.findOneBatchExport(this.searchForm.batch_id).subscribe(res => {
-      this.sectionBlockUI.stop();
+    this.inventoryService.findOneBatchExport({
+      batch_id: this.searchForm.batch_id,
+      page: this.searchForm.page,
+      page_size: this.searchForm.page_size
+    }).subscribe(res => {      this.sectionBlockUI.stop();
      
       const data = res.data;
       this.list = data.products.items;

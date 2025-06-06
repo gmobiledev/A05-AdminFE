@@ -142,8 +142,8 @@ export class InventoryService {
     return this._http.post<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/export/create`, data);
   }
 
-  findOneBatchExport(id) {
-    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/find-one?batch_id=${id}`);
+  findOneBatchExport(params: { batch_id: number, page?: number, page_size?: number }) {
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/batch/find-one`, { params });
   }
 
   updateBatchExport(data: UpdateBatchExportDto) {
