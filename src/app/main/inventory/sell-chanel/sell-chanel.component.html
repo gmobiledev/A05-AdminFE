@@ -11,27 +11,6 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="container-fluid">
-                <!-- Hàng 1 -->
-                <div class="row">
-                  <div class="col">
-                    <select class="form-control" [(ngModel)]="searchForm.province_id" name="province_id">
-                      <option value="">Chọn Tỉnh/Thành phố</option>
-                      <option *ngFor="let p of provinces" [value]="p.id">{{ p.title }}</option>
-                    </select>
-                  </div>
-                  <div class="col">
-                    <select class="form-control" [(ngModel)]="searchForm.district_id" name="district_id">
-                      <option value="">Chọn Quận/Huyện</option>
-                      <option *ngFor="let d of districts" [value]="d.id">{{ d.title }}</option>
-                    </select>
-                  </div>
-                  <div class="col">
-                    <select class="form-control" [(ngModel)]="searchForm.commune_id" name="commune_id">
-                      <option value="">Chọn Phường/Xã</option>
-                      <option *ngFor="let c of commues" [value]="c.id">{{ c.title }}</option>
-                    </select>
-                  </div>
-                </div>
             
                 <!-- Hàng 2 -->
                 <div class="row mt-1">
@@ -40,7 +19,6 @@
                       <option value="">Chọn trạng thái</option>
                       <option value="1">Kích hoạt</option>
                       <option value="-2">Khóa</option>
-                      <option value="-1">Hủy</option>
                     </select>
                   </div>
                   <div class="col">
@@ -108,16 +86,6 @@
                       >
                         <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
                         <span class="custom-tooltip">Chỉnh sửa kho</span>
-                      </a>
-
-                      <!-- Khóa kho -->
-                      <a
-                        class="ml-1 tooltip-wrapper"
-                        (click)="onApprove(item.id, -2)"
-                        *ngIf="item.status == 1 && item.parent_id != null"
-                      >
-                        <i data-feather="lock" class="text-primary cursor-pointer"></i>
-                        <span class="custom-tooltip">Khóa kho</span>
                       </a>
 
                       <!-- Hủy kho -->

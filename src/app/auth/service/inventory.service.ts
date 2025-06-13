@@ -411,4 +411,16 @@ export class InventoryService {
   exportBatchUserExcel(params = null, data = null): Observable<any> {
     return this._http.post(`${environment.apiUrl}/admin/mcs/inventory/batch/staff/user/excel`, data, {params: params, observe: 'response', responseType: 'blob'});
   }
+
+  exportAssignedNumbersExcel(params: any): Observable<any> {
+    return this._http.get(`${environment.apiUrl}/task/a05/export-assigned-numbers`, {
+      params,
+      observe: 'response',
+      responseType: 'blob'
+    });
+  }
+
+  getAssignedNumbers(params) {
+    return this._http.get<any>(`${environment.apiUrl}/task/a05/assigned-numbers`, { params: params });
+  }
 }

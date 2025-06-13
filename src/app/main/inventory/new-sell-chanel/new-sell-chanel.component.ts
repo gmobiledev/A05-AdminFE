@@ -66,6 +66,8 @@ export class NewSellChanelComponent implements OnInit {
   public page: number = 1;
   public pageSize: number;
   parentLevel;
+  codeInvalid = false;
+  submitted = false;
 
   public dataSell = {
     parent_id: '',
@@ -211,6 +213,12 @@ export class NewSellChanelComponent implements OnInit {
     if ((await this.alertService.showConfirm("Bạn có đồng ý tạo kho không?")).value) {
       this.submittedUpload = true;
       console.log("data Sell = ",this.dataSell);
+      this.submitted = true;
+      this.validateCode();
+
+      if (!this.dataSell.name || this.codeInvalid) {
+        return; // Ngăn submit nếu có lỗi
+      }
       this.inventoryService.addSellChanel(this.dataSell).subscribe(res => {
         this.submittedUpload = false;
         if (!res.status) {
@@ -283,11 +291,10 @@ export class NewSellChanelComponent implements OnInit {
     }
   }
 
-  codeInvalid = false;
-
   validateCode() {
-    const regex = /^KHO_[A-Z0-9_]{1,40}$/;
-    this.codeInvalid = this.dataSell.code ? !regex.test(this.dataSell.code) : false;
+    const regex = /^KHO_[A-Z0-9_]+$/;
+    const value = this.dataSell.code || '';
+    this.codeInvalid = !regex.test(value);
   }
 
 }

@@ -127,12 +127,6 @@
                         <span class="custom-tooltip">Chỉnh sửa kho</span>
                       </a>
 
-                      <!-- Khóa kho -->
-                      <a class="ml-1 tooltip-wrapper" (click)="onApprove(item.id, -2)" *ngIf="item.status == 1">
-                        <i data-feather="lock" class="text-primary cursor-pointer"></i>
-                        <span class="custom-tooltip">Khóa kho</span>
-                      </a>
-
                       <!-- Xóa kho -->
                       <a class="ml-1 tooltip-wrapper" (click)="onApprove(item.id, -1)" *ngIf="item.status == 0 || item.status == 1 || item.status == -2">
                         <i data-feather="x-square" class="text-primary cursor-pointer"></i>

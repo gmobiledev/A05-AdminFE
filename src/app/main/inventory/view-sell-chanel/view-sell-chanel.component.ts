@@ -158,17 +158,8 @@ export class ViewSellChanelComponent implements OnInit {
     this.dateRange = null;
     this.activeRouted.queryParams.subscribe(params => {
       this.taskTelecomStatus = [
-        { value: 0, label: 'Chờ duyệt' },
-        { value: 1, label: 'Đã bán' },
-        { value: 2, label: 'Đang bán' },
-        { value: 3, label: 'Đang trong giỏ hàng' },
-        { value: 4, label: 'Quản lý kho khóa' },
-        { value: 30, label: 'Đang khóa - Nợ cước 2G' },
-        { value: 5, label: 'Đã xuất kho tổng' },
-        { value: 6, label: 'Đã đấu nối và chưa hoàn thiện TTTB' },
-        { value: 21, label: 'Chờ duyệt mới khởi tạo lô nhập, Không được thao tác khác' },
-        { value: 98, label: 'Thu hồi và mở bán vòng đời mới' },
-        { value: 99, label: 'Thu hồi' }
+        { value: 'used', label: 'Đã sử dụng' },
+        { value: 'unused', label: 'Chưa sử dụng' }
       ];
 
       this.taskTelecomStatusSIM = ProductConstant.HANG_SO_THUE_BAO
@@ -445,6 +436,15 @@ export class ViewSellChanelComponent implements OnInit {
   }
 
   onSubmitSearch() {
+  const allStatuses = [0, 1, 2, 3, 4, 30, 5, 6, 21, 98, 99];
+
+  if (this.searchForm.status === 'used') {
+    this.searchForm.status_array = [1];
+  } else if (this.searchForm.status === 'unused') {
+    this.searchForm.status_array = allStatuses.filter(s => s !== 1);
+  } else {
+    this.searchForm.status_array = [];
+  }
 
     this.router.navigate(['/inventory/view-sell-chanel'], { queryParams: this.searchForm });
   }

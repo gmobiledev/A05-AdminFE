@@ -106,7 +106,7 @@ export class ViewBatchExportComponent implements OnInit {
   getData() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listCurrentAction = this.currentUser.actions;
-    this.inventoryService.findOneBatchExport(this.id).subscribe(res => {
+    this.inventoryService.findOneBatchExport({ batch_id: this.id }).subscribe(res => {
       this.data = res.data;
       this.listProducts = res.data.products.items;
       this.tempList = res.data.products.items;
