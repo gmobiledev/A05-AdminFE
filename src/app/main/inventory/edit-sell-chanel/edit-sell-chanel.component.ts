@@ -283,6 +283,7 @@ export class EditSellChanelComponent implements OnInit {
       isFileChanged: ['', Validators.required],
       attached_file_name: ['', Validators.required],
       attached_file_content: ['', Validators.required],
+      attach_file_base64: ['', Validators.required],
       customer_id: [''],
       approval_1: [''],
       approval_2: [''],
@@ -356,7 +357,8 @@ export class EditSellChanelComponent implements OnInit {
         district_id: res.data.items[0] && res.data.items[0].district_id ? parseInt(res.data.items[0].district_id) : '',
         commune_id: res.data.items[0] && res.data.items[0].commune_id ? parseInt(res.data.items[0].commune_id) : '',
         address: res.data.items[0].address,
-        isPublic: res.data.items[0].is_public
+        isPublic: res.data.items[0].is_public,
+        attach_file_base64: res.data.items[0].attach_file_base64,
       })
 
       this.listEdit = res.data.items;

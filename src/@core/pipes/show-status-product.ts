@@ -8,7 +8,7 @@ export class ShowStatusProductPipe implements PipeTransform {
       case ProductStatus.STATUS_INIT:
         return '<span class="badge badge-pill badge-light-info mr-1">Chưa sử dụng</span>'
       case ProductStatus.STATUS_ACTIVE:
-        return '<span class="badge badge-pill badge-light-success mr-1">Đã bán</span>'
+        return '<span class="badge badge-pill badge-light-success mr-1">Đã sử dụng</span>'
       case ProductStatus.STATUS_AVAILABLE:
         return '<span class="badge badge-pill badge-light-info mr-1">Chưa sử dụng</span>'
       case ProductStatus.STATUS_LOCKED:

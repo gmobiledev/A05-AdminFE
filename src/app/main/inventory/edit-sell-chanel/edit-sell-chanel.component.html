@@ -112,10 +112,35 @@
                     </div>
                   </div>
                 </div>
+              <div class="form-group mt-2" *ngIf="formGroup.get('attach_file_base64')?.value">
+                <label class="mb-2">Văn bản phê duyệt của Lãnh đạo</label>
+                <div style="padding-left: 16px;">
+                <!-- Nếu là ảnh -->
+                <img
+                  *ngIf="formGroup.get('attach_file_base64')?.value.startsWith('data:image/')"
+                  [src]="formGroup.get('attach_file_base64')?.value"
+                  alt="Ảnh đính kèm"
+                  style="max-width: 500px; max-height: 1000px;"
+                />
 
-                <div class="mb-1 row">
-                  <i class="fa fa-upload" aria-hidden="true"></i>
+                <!-- Nếu là PDF -->
+                <div *ngIf="formGroup.get('attach_file_base64')?.value.startsWith('data:application/pdf')">
+                  <pdf-viewer
+                    [src]="formGroup.get('attach_file_base64')?.value"
+                    [render-text]="true"
+                    [original-size]="false"
+                    [external-link-target]="'blank'"
+                    style="max-width: 500px; max-height: 1000px"
+                  ></pdf-viewer>
+                </div>
+              </div>
+          </div>
+                <div class="form-group">
+                <label for="fileUpload">Tải lên Văn bản phê duyệt của Lãnh đạo</label>
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fa fa-upload mr-2" aria-hidden="true"></i>
                   <input
+                    id="fileUpload"
                     type="file"
                     (change)="onFileChangeAttach($event)"
                     [ngClass]="{
@@ -123,38 +148,31 @@
                     }"
                     accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
                   />
-                  <p *ngIf="fileExt"><img *ngIf="fileExt.length < 6" width="25px" src="/assets/images/icons/file/{{fileExt}}.png" /><a (click)="onViewAttachments()" ><u>Xem file đính kèm</u></a></p>
-
-                  <!-- <label class="ml-5 center">Tải lên Văn bản phê duyệt của Lãnh đạo</label> -->
                 </div>
 
-                <div class="form-group row mt-1">
-                  <label for="" class="col-md-3 col-form-label"
-                    >Kho cha</label
-                  >
-
-                  <div class="col-md-9">
-                    <ng-select
-                      name=""
-                      formControlName="parent_id"
-                    >
-                      <ng-option value="">-- Chọn kho cha --</ng-option>
-                      <ng-option *ngFor="let p of listMyChanel" [value]="p.id">
-                        {{ p.name }}
-                      </ng-option>
-                    </ng-select>
-                    <div
-                      *ngIf="submitted && f.parent_id.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.parent_id.required">
-                        Vui lòng nhập tên đại lý
-                      </div>
-                    </div>
-                  </div>
-
+                <p *ngIf="fileExt">
+                  <img *ngIf="fileExt.length < 6" width="25px" src="/assets/images/icons/file/{{fileExt}}.png" />
+                  <a (click)="onViewAttachments()"><u>Xem file đính kèm</u></a>
+                </p>
+              </div>
+              <div class="form-group">
+                <label for="parent_id">Kho tổng</label>
+                <ng-select
+                  id="parent_id"
+                  formControlName="parent_id"
+                  [items]="listMyChanel"
+                  bindLabel="name"
+                  bindValue="id"
+                  placeholder="-- Chọn kho tổng --"
+                >
+                </ng-select>
+                <div
+                  *ngIf="submitted && f.parent_id.errors"
+                  class="invalid-feedback d-block"
+                >
+                  <div *ngIf="f.parent_id.errors.required">Vui lòng chọn kho tổng</div>
                 </div>
-
+              </div>
                 <div class="form-group">
                   <label for="province_id">Tỉnh/Thành Phố</label>
 

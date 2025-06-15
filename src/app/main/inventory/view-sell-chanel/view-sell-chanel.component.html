@@ -32,7 +32,7 @@
                   <div class="form-group">
                     <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                       <option value="">Chọn trạng thái</option>
-                      <option *ngFor="let item of taskTelecomStatus" [ngValue]="item.value">
+                      <option *ngFor="let item of taskTelecomStatus" [value]="item.value">
                         {{ item.label }}
                       </option>
                     </select>

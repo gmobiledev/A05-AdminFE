@@ -158,7 +158,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.dateRange = null;
     this.activeRouted.queryParams.subscribe(params => {
       this.taskTelecomStatus = [
-        { value: 'used', label: 'Đã sử dụng' },
+        { value: '1', label: 'Đã sử dụng' },
         { value: 'unused', label: 'Chưa sử dụng' }
       ];
 
@@ -438,8 +438,8 @@ export class ViewSellChanelComponent implements OnInit {
   onSubmitSearch() {
   const allStatuses = [0, 1, 2, 3, 4, 30, 5, 6, 21, 98, 99];
 
-  if (this.searchForm.status === 'used') {
-    this.searchForm.status_array = [1];
+  if (this.searchForm.status === 1) {
+    this.searchForm.status = 1;
   } else if (this.searchForm.status === 'unused') {
     this.searchForm.status_array = allStatuses.filter(s => s !== 1);
   } else {
