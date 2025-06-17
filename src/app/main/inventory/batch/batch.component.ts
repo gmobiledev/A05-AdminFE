@@ -64,7 +64,11 @@ export class BatchComponent implements OnInit {
   public basicSelectedOption = 20;
   public listProductInputDup = [];
   public listDupToExport = [];
-
+  public batchStatusFilterOptions = {
+    [BatchStatus.INIT]: 0,
+    [BatchStatus.APPROVED]: 2,
+    [BatchStatus.CANCEL_BY_OFFICE]: -2
+  };
   public dataLo = {
     title: '',
     quantility: 0,
@@ -122,6 +126,8 @@ export class BatchComponent implements OnInit {
       this.getData();
     })
   }
+
+  
   loadPage(page): void {
     this.searchForm.page = page;
     this.router.navigate(['/inventory/batch'], { queryParams: this.searchForm })

@@ -63,7 +63,7 @@
                     <label>Trạng thái</label>
                     <select class="form-control" name="status" [(ngModel)]="searchForm.status">
                       <option value="">-- Chọn trạng thái --</option>
-                      <option *ngFor="let item of batchStatusShow | keyvalue" [value]="item.value" [id]="item.key">
+                      <option *ngFor="let item of batchStatusFilterOptions  | keyvalue" [value]="item.value" [id]="item.key">
                         <span [innerHTML]="item.value | showStatusBatch"></span>
                       </option>
                     </select>
@@ -119,7 +119,6 @@
                     <th>Mã</th>
                     <th>Tiêu đề</th>
                     <th>Số lượng</th>
-                    <th>Số lượng đã đẩy</th>                    
                     <th>Trạng thái</th>
                     <th>Thời gian</th>
                     <th>Thao tác</th>
@@ -137,9 +136,8 @@
                       {{ item?.title }}
                     </td>             
                     <td>
-                      {{ item?.quantility }}
-                    </td>
-                    <td>{{ item?.imported_quantility }}</td>                    
+                      {{ item.type === batchType.INPUT ? item?.imported_quantility : item?.quantility }}
+                    </td>         
                     <td>
                       <div [innerHTML]="item?.status | showStatusBatch"></div>
                     </td>
@@ -292,7 +290,7 @@
         aria-hidden="true"
         *ngIf="submittedUpload"
       ></span>
-      Submit
+      Xác nhận
     </button>
   </div>
 </ng-template>
@@ -312,7 +310,7 @@
   <div class="modal-body" tabindex="0" *blockUI="'item-block'">
     <ng-container *ngIf="listProductInputDup.length < 1">
     <div class="form-group">
-      <label for="">Tiêu đề</label>
+      <label for="">Tiêu đề <span class="text-danger">*</span></label>
       <input type="text" class="form-control" [(ngModel)]="dataLo.title" />
     </div>
 
@@ -388,7 +386,7 @@
         (change)="onFileChangeAttach($event)"
         accept="image/png, image/gif, image/jpeg, image/jpg, application/pdf"
       />
-      <label>Tải lên Văn bản phê duyệt của Lãnh đạo</label>
+      <label>Tải lên Văn bản phê duyệt của Lãnh đạo <span class="text-danger">*</span></label>
 
     </div>
 
@@ -399,7 +397,7 @@
         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
         (change)="onFileChangeExcel($event)"        
       />
-      <label>Tải lên file excel danh sách</label>
+      <label>Tải lên file excel danh sách <span class="text-danger">*</span></label>
       <a href="/assets/upload-product.xlsx" class="ml-2">File mẫu tại đây</a>
     </div>
   </ng-container>
@@ -456,7 +454,7 @@
     <ng-container *ngIf="listProductInputDup.length < 1">
       <button (click)="onSubmitUploadLo()" type="submit" class="btn btn-primary" rippleEffect>
         <span class="spinner-border spinner-border-sm" role="ekyc_status" aria-hidden="true" *ngIf="submittedUpload"></span>
-        Submit
+        Xác nhận
       </button>
     </ng-container>
   </div>
