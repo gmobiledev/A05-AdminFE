@@ -696,8 +696,12 @@ export class ViewSellChanelComponent implements OnInit {
       partner_user_code: [''],
       channel_id: [''],
       agents_service: this.formBuilder.array([]),
-      new_agents_service: this.formBuilder.array([])
-    });
+      new_agents_service: this.formBuilder.array([
+      this.formBuilder.group({
+        ref_code: null,
+        service_code: ['TELECOM', Validators.required]
+      })
+    ])    });
 
     this.formGroupUserCode = this.formBuilder.group({
       partner_user_code: [''],
@@ -706,7 +710,7 @@ export class ViewSellChanelComponent implements OnInit {
 
     this.exitsUser = false;
     this.isCreate = true;
-    this.isShowAddInput = true;
+    this.isShowAddInput = false;
   }
 
   onCompletedInputPassword(value) {

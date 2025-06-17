@@ -57,26 +57,6 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="basicInput">Số lượng</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder=""
-                    name="quantity"
-                    formControlName="quantity"
-                    [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }"
-                  />
-                  <div
-                    *ngIf="submitted && f.quantity.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="f.quantity.errors.required">
-                      Vui lòng nhập tên kho
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
                   <label for="basicInput">Ghi chú</label>
                   <input
                     type="text"
@@ -88,33 +68,19 @@
                   />
                 </div>
 
-                <div class="form-group">
-                  <div class="d-flex">
-                    <div class="d-flex justify-content-start mr-1" style="gap: 5px;">
-                      <label for="isPublic1">Public</label>
-                      <input
-                        type="radio"
-                        [value]="1"
-                        name="isPublic"
-                        id="isPublic1"
-                        formControlName="isPublic"
-                      />
-                    </div>
-                    <div class="d-flex justify-content-start" style="gap: 5px;">
-                      <label for="isPublic0">Private</label>
-                      <input
-                        type="radio"
-                        [value]="0"
-                        name="isPublic"
-                        id="isPublic0"
-                        formControlName="isPublic"
-                      />
-                    </div>
-                  </div>
-                </div>
-              <div class="form-group mt-2" *ngIf="formGroup.get('attach_file_base64')?.value">
-                <label class="mb-2">Văn bản phê duyệt của Lãnh đạo</label>
-                <div style="padding-left: 16px;">
+            <div class="form-group mt-2" *ngIf="formGroup.get('attach_file_base64')?.value">
+              <label class="mb-2">Văn bản phê duyệt của Lãnh đạo</label>
+
+              <!-- Nút để mở xem -->
+            <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm ms-2"
+                  (click)="togglePreview()"
+                >  {{ showPreview ? 'Ẩn văn bản' : 'Xem văn bản' }}
+            </button>
+
+              <!-- Hiển thị nội dung khi showPreview = true -->
+              <div *ngIf="showPreview" style="padding-left: 16px;">
                 <!-- Nếu là ảnh -->
                 <img
                   *ngIf="formGroup.get('attach_file_base64')?.value.startsWith('data:image/')"
@@ -134,7 +100,8 @@
                   ></pdf-viewer>
                 </div>
               </div>
-          </div>
+            </div>
+
                 <div class="form-group">
                 <label for="fileUpload">Tải lên Văn bản phê duyệt của Lãnh đạo</label>
                 <div class="d-flex align-items-center mb-2">

@@ -39,46 +39,12 @@
               </div>
 
               <div class="form-group">
-                <label for="">Số lượng</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  [(ngModel)]="dataSell.quantity"
-                />
-              </div>
-
-              <div class="form-group">
                 <label for="">Ghi chú</label>
                 <input
                   type="text"
                   class="form-control"
                   [(ngModel)]="dataSell.desc"
                 />
-              </div>
-
-              <div class="form-group">
-                <div class="d-flex">
-                  <div class="d-flex justify-content-start mr-1" style="gap: 5px;">
-                    <label for="isPublic1">Public</label>
-                    <input
-                      type="radio"
-                      [value]="1"
-                      name="isPublic"
-                      id="isPublic1"
-                      [(ngModel)]="dataSell.is_public"
-                    />
-                  </div>
-                  <div class="d-flex justify-content-start" style="gap: 5px;">
-                    <label for="isPublic0">Private</label>
-                    <input
-                      type="radio"
-                      [value]="0"
-                      name="isPublic"
-                      id="isPublic0"
-                      [(ngModel)]="dataSell.is_public"
-                    />
-                  </div>
-                </div>
               </div>
 
               <div class="form-group">

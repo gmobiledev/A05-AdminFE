@@ -11,7 +11,7 @@
           <div class="card-body">
             <form (ngSubmit)="onSubmitSearch()">
               <div class="row">
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                   <div class="form-group">
                     <select
                       class="form-control"
@@ -24,7 +24,7 @@
                       <option value="-1">Hủy</option>
                     </select>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-4">
                   <div class="form-group">
@@ -49,6 +49,8 @@
                     />
                   </div>
                 </div>
+            </div>
+              <div class="row">
 
                 <div class="col-md-2">
                   <div class="form-group">
@@ -128,7 +130,7 @@
                       </a>
 
                       <!-- Xóa kho -->
-                      <a class="ml-1 tooltip-wrapper" (click)="onApprove(item.id, -1)" *ngIf="item.status == 0 || item.status == 1 || item.status == -2">
+                      <a class="ml-1 tooltip-wrapper" (click)="onApprove(item, -1)" *ngIf="item.status == 0 || item.status == 1 || item.status == -2">
                         <i data-feather="x-square" class="text-primary cursor-pointer"></i>
                         <span class="custom-tooltip">Xóa kho</span>
                       </a>

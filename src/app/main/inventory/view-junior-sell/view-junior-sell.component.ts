@@ -144,7 +144,31 @@ export class ViewJuniorSellComponent implements OnInit {
 
 
   async onApprove(item, status) {
-    let data = { id: item, status }
+console.log("Ưerw",item)
+    let data = {
+      id: item.id,
+      status,
+      parent_id: item.parent_id,
+      name: item.name,
+      code: item.code,
+      desc: item.desc,
+      type: item.type,
+      admin_id: item.admin_id,
+      business_id: item.business_id,
+      province_id: item.province_id,
+      district_id: item.district_id,
+      commune_id: item.commune_id,
+      address: item.address,
+      attached_file_name: item.attached_file_name,
+      customer_id: item.customer_id,
+      level: item.level,
+      approval_1: item.approval_1,
+      approval_2: item.approval_2,
+      create_export: ' ',
+      create_retrieve: item.create_retrieve,
+      is_public: item.is_public
+    };
+    console.log("ưerw",data)
     let confirmMessage = status;
     let title = "";
 

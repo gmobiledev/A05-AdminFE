@@ -523,7 +523,7 @@ export class ListAgentComponent implements OnInit {
 
   ngOnInit(): void {
     this.contentHeader = {
-      headerTitle: 'Danh sách các cơ sở cấp dưới (Phòng)',
+      headerTitle: 'Danh sách tài khoản đấu nối',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -534,7 +534,7 @@ export class ListAgentComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách các cơ sở cấp dưới (Phòng)',
+            name: 'Danh sách tài khoản đấu nối',
             isLink: false
           }
         ]

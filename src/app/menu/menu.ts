@@ -134,7 +134,7 @@ export const menu: CoreMenu[] = [
     children: [
       {
         id: "users",
-        title: "Yêu cầu của cơ sở cấp dưới (Phòng)",
+        title: "Yêu cầu của tài khoản đấu nối",
         translate: "",
         type: "item",
         icon: "user",
@@ -143,7 +143,7 @@ export const menu: CoreMenu[] = [
 
       {
         id: "agents",
-        title: "Danh sách các cơ sở cấp dưới (Phòng)",
+        title: "Danh sách tài khoản đấu nối",
         translate: "",
         type: "item",
         icon: "user",

@@ -155,7 +155,7 @@
                                  (click)="modalOpen(modalUpdateAttributeBatch)" class="btn btn-success mb-1 mr-5" rippleEffect><span
                                    ></span>Cập nhật sản phẩm bằng file</button>
                                   
-                                   <ng-container *ngIf="currentChannel && currentChannel.parent_id">
+                                   <ng-container *ngIf="currentChannel">
                                   <button type="button" [disabled]="selectedItems.length < 1 && !retrieveForm.retrieve_all"
                                     (click)="onUpdateStatusProduct(productStatus.STATUS_AVAILABLE)" class="btn btn-warning mb-1 mr-2" rippleEffect><span
                                       [data-feather]="'unlock'"></span>Mở bán số</button>

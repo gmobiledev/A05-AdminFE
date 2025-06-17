@@ -18,23 +18,11 @@
                       name="keyword"
                       [(ngModel)]="searchForm.keyword"
                       class="form-control"
-                      placeholder="Nhập từ khóa tìm theo tên, sđt, email..."
+                      placeholder="Nhập từ khóa tìm theo tên, sđt"
                     />
                   </div>
                 </div>
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <select
-                      class="form-control"
-                      name="ekyc_status"
-                      [(ngModel)]="searchForm.ekyc_status"
-                    >
-                      <option value="_all">Chọn trạng thái</option>
-                      <option value="APPROVED">Đã định danh</option>
-                      <option value="">Chưa định danh</option>
-                    </select>
-                  </div>
-                </div>
+
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">
@@ -78,12 +66,7 @@
                   <tr>
                     <th>ID</th>
                     <th>SĐT</th>
-                    <th>Email</th>
                     <th>Tên</th>
-                    <th>Ngày tạo</th>
-                    <!-- <th>Level EKYC</th> -->
-                    <th>Trạng thái EKYC</th>
-                    <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -94,64 +77,13 @@
                     <td>
                       {{ item?.mobile }}
                     </td>
-                    <td>{{ item?.email }}</td>
                     <td>
                       {{ item.people ? item?.people?.name : item.full_name }}
-                    </td>
-                    <td>
-                      {{ item?.create_date | date : "dd/MM/yyyy H:mm" }}
                     </td>
                     <!-- <td>
 
                 </td> -->
-                    <td>
-                      <div
-                        [innerHTML]="item?.people?.ekyc_status | showStatusEkyc"
-                      ></div>
-                    </td>
 
-                    <td>
-                      <!-- <a [routerLink]="['/user', item.id]">
-                          <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                      </a> -->
-                      <!-- <a class="ml-2" (click)="onSubmitLock(item.id, 0)" *ngIf="item.status">
-                        <i data-feather="lock" class="text-primary cursor-pointer"></i>
-                      </a>
-                      <a class="ml-2" (click)="onSubmitLock(item.id, 1)" *ngIf="!item.status">
-                        <i data-feather="unlock" class="text-primary cursor-pointer"></i>
-                      </a> -->
-                      <a
-                        class="ml-2"
-                        (click)="modalOpen(modalCreate, item)"
-                        class="mr-1"
-                      >
-                        <i
-                          data-feather="edit-3"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a>
-
-                      <!-- <a
-                        (click)="openModalUserCode(modalUserCode, item)"
-                        class="mr-1"
-                      >
-                        <i
-                          data-feather="credit-card"
-                          class="text-primary cursor-pointer"
-                          ngbTooltip="'Sửa user code'"
-                          placement="right"
-                        ></i>
-                      </a>
-                      <a
-                        ngbTooltip="Xem thông tin kho"
-                        (click)="modalOpenWarehouse(item?.id)"
-                      >
-                        <i
-                          data-feather="eye"
-                          class="text-primary cursor-pointer"
-                        ></i>
-                      </a> -->
-                    </td>
                   </tr>
                 </tbody>
               </table>

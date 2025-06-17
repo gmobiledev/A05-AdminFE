@@ -79,6 +79,7 @@ export class EditSellChanelComponent implements OnInit {
   listFiles = [];
   fileExt;
   listAdminSellAction;
+  showPreview: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -102,6 +103,9 @@ export class EditSellChanelComponent implements OnInit {
     this.getData();
   }
 
+  togglePreview() {
+    this.showPreview = !this.showPreview;
+  }
   ngOnInit(): void {
     this.contentHeader = {
       headerTitle: 'Sửa kho',
@@ -403,6 +407,7 @@ export class EditSellChanelComponent implements OnInit {
       isFileChanged: this.formGroup.controls['isFileChanged'].value,
       attached_file_name: this.formGroup.controls['attached_file_name'].value,
       attached_file_content: this.formGroup.controls['attached_file_content'].value,
+      attach_file_base64: this.formGroup.controls['attach_file_base64'].value,
       customer_id: this.formGroup.controls['customer_id'].value,
       approval_1: this.formGroup.controls['approval_1'].value,
       approval_2: this.formGroup.controls['approval_2'].value,
