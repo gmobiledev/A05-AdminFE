@@ -196,6 +196,9 @@ export class EditSellChanelComponent implements OnInit {
         });
       }
     }
+    this.formGroup.patchValue({
+      isFileChanged: 1
+    });
   }
 
 

@@ -43,7 +43,6 @@ export class SellChanelComponent implements OnInit {
     attach_file_name: '',
     customer_id: '',
     user_sell_channels: '',
-    quantity:'',
     page_size: 10,
     page: 1
   }
@@ -137,7 +136,7 @@ export class SellChanelComponent implements OnInit {
       title = "Bạn có đồng ý khóa kho? Nhập lý do"
     } else if (status == -1) {
       confirmMessage = "Bạn có đồng ý hủy kho này không?"
-      title = "Bạn có đồng ý hủy kho? Nhập lý do"
+      title = "Bạn có đồng ý hủy kho?"
     }
 
     Swal.fire({

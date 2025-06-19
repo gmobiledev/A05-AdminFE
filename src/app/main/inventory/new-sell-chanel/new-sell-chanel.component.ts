@@ -76,7 +76,6 @@ export class NewSellChanelComponent implements OnInit {
     desc: '',
     type: 0,
     status: 0,
-    quantity: '',
     business_id: 0,
     admin_id: 0,
     province_id: '',

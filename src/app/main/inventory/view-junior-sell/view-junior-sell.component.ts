@@ -144,7 +144,6 @@ export class ViewJuniorSellComponent implements OnInit {
 
 
   async onApprove(item, status) {
-console.log("Ưerw",item)
     let data = {
       id: item.id,
       status,
@@ -168,7 +167,6 @@ console.log("Ưerw",item)
       create_retrieve: item.create_retrieve,
       is_public: item.is_public
     };
-    console.log("ưerw",data)
     let confirmMessage = status;
     let title = "";
 
@@ -184,44 +182,34 @@ console.log("Ưerw",item)
       title = "Bạn có đồng ý khóa kho? Nhập lý do"
     } else if (status == -1) {
       confirmMessage = "Bạn có đồng ý hủy kho này không?"
-      title = "Bạn có đồng ý hủy kho? Nhập lý do"
+      title = "Bạn có đồng ý hủy kho?"
     }
 
-    Swal.fire({
-      title,
-      input: 'textarea',
-      inputAttributes: {
-        autocapitalize: 'off'
-      },
+  Swal.fire({
+      title: confirmMessage,
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Gửi',
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy',
       showLoaderOnConfirm: true,
-      preConfirm: (note) => {
-        if (!note || note == '') {
-          Swal.showValidationMessage(
-            "Vui lòng nhập nội dung"
-          )
-          return;
-        }
-        data['note'] = note;
-        this.inventoryService.lockSell(data).subscribe(res => {
-          if (!res.status) {
-            this.alertService.showError(res.message);
-            return;
-          }
-          this.alertService.showSuccess(res.message);
-          this.getData();
-        }, err => {
-          this.alertService.showError(err);
-        })
+      preConfirm: () => {
+        return new Promise<void>((resolve) => {
+          this.inventoryService.lockSell(data).subscribe(res => {
+            if (!res.status) {
+              this.alertService.showError(res.message);
+            } else {
+              this.alertService.showSuccess(res.message);
+              this.getData();
+            }
+            resolve();
+          }, err => {
+            this.alertService.showError(err);
+            resolve();
+          });
+        });
       },
       allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-      }
-    })
-
+    });
   }
 
   onSubmitExportExcelReport() {
