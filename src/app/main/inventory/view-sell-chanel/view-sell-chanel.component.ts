@@ -196,7 +196,7 @@ export class ViewSellChanelComponent implements OnInit {
       this.searchForm.keyword = params['keyword'] && params['keyword'] != undefined ? params['keyword'] : '';
       this.searchForm.page = params['page'] && params['page'] != undefined ? params['page'] : 1;
       this.searchForm.skip = (this.searchForm.page - 1) * this.searchForm.take;
-      this.contentHeader.headerTitle = 'Xem chi tiết kho số:' + this.searchForm.channel_id;
+      this.contentHeader.headerTitle = 'Danh sách sim số:' + this.searchForm.channel_id;
 
       console.log(" searchForm ==== ", this.searchForm)
 
@@ -475,7 +475,7 @@ export class ViewSellChanelComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.inventoryService.viewDetailSell(this.searchForm.channel_id).subscribe(res => {
       this.currentChannel = res.data.items[0];
-      this.contentHeader.headerTitle = 'Xem chi tiết kho số: ' + this.currentChannel.name;
+      this.contentHeader.headerTitle = 'Danh sách sim số: ' + this.currentChannel.name;
 
     })
     this.sectionBlockUI.start();

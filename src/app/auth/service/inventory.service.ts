@@ -413,7 +413,7 @@ export class InventoryService {
   }
 
   exportAssignedNumbersExcel(params: any): Observable<any> {
-    return this._http.get(`${environment.apiUrl}/task/a05/export-assigned-numbers`, {
+    return this._http.get(`${environment.apiUrl}/admin/mcs/inventory/channel/a05/export-assigned-numbers`, {
       params,
       observe: 'response',
       responseType: 'blob'
@@ -421,6 +421,6 @@ export class InventoryService {
   }
 
   getAssignedNumbers(params) {
-    return this._http.get<any>(`${environment.apiUrl}/task/a05/assigned-numbers`, { params: params });
+    return this._http.get<any>(`${environment.apiUrl}/admin/mcs/inventory/channel/a05/assigned-numbers`, { params: params });
   }
 }

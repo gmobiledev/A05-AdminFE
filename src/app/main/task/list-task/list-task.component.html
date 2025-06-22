@@ -57,20 +57,17 @@
                       name="status"
                       [(ngModel)]="searchForm.status"
                     >
-                      <option value="">Chọn trạng thái task</option>
-
-                      <option value="2">Chờ duyệt</option>
-                      <option value="3">Đã duyệt</option>
-                      <option value="1">Thành công</option>
-                      <option value="-1">Hủy</option>
-                      <option value="20">Chờ thanh toán</option>
-                      <option value="30">Chờ KT duyệt</option>
-                      <option value="99">Từ chối</option>
-                      <option value="8">Đang xử lý</option>
+                        <option value="">Chọn trạng thái</option>
+                        <option value="5">Mới khởi tạo</option>
+                        <option value="1">Thành công</option>
+                        <option value="-100">Thất bại</option>
+                        <option value="3">Đã duyệt</option>
+                        <option value="100">Thành công 1 phần</option>
+                        <option value="-1">Hủy</option>
                     </select>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <!-- <div class="col-md-3">
                   <div class="form-group">
                     <select
                       class="form-control"
@@ -84,7 +81,7 @@
                       <option value="PACKAGE_BALANCE">PACKAGE_BALANCE</option>
                     </select>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-md-2">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-info">
@@ -220,7 +217,7 @@
                         </button>
                       </ng-container>
 
-                      <button
+                      <!-- <button
                         ngbTooltip="Callback"
                         class="btn btn-icon btn-flat-success btn-sm"
                         (click)="callbackTransaction(item)"
@@ -229,8 +226,8 @@
                           data-feather="send"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </button>
-                      <button
+                      </button> -->
+                      <!-- <button
                         ngbTooltip="Check giao dịch"
                         class="btn btn-icon btn-flat-success btn-sm"
                         (click)="checkGatewayTransaction(item)"
@@ -239,7 +236,7 @@
                           data-feather="info"
                           class="text-primary cursor-pointer"
                         ></i>
-                      </button>
+                      </button> -->
 
                       <button
                         *ngIf="

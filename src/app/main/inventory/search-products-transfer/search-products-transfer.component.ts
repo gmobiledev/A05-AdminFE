@@ -17,7 +17,7 @@ export class SearchProductsTransferComponent implements OnInit {
   @BlockUI('section-block') sectionBlockUI: NgBlockUI;
 
   public contentHeader: any = {
-    headerTitle: 'Danh sách sim số',
+    headerTitle: 'Tra cứu nhập/xuất',
     actionButton: true,
     breadcrumb: {
       type: '',
@@ -28,7 +28,7 @@ export class SearchProductsTransferComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Danh sách sim số',
+          name: 'Tra cứu nhập/xuất',
           isLink: false
         }
       ]

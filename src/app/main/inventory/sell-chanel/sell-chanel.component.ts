@@ -135,8 +135,8 @@ export class SellChanelComponent implements OnInit {
       confirmMessage = "Bạn có đồng ý khóa kho?"
       title = "Bạn có đồng ý khóa kho? Nhập lý do"
     } else if (status == -1) {
-      confirmMessage = "Bạn có đồng ý hủy kho này không?"
-      title = "Bạn có đồng ý hủy kho?"
+      confirmMessage = "Bạn có đồng ý xóa kho này không?"
+      title = "Bạn có đồng ý xóa kho?"
     }
 
     Swal.fire({

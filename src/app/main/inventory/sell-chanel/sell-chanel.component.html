@@ -88,7 +88,7 @@
                         *ngIf="item.parent_id != null && (item.status == 0 || item.status == 1 || item.status == -2)"
                       >
                         <i data-feather="x-square" class="text-primary cursor-pointer"></i>
-                        <span class="custom-tooltip">Hủy kho</span>
+                        <span class="custom-tooltip">Xóa kho</span>
                       </a>
 
                       <!-- Xem chi tiết -->
@@ -98,7 +98,7 @@
                         [queryParams]="{ current_sell_channel_id: item.id }"
                       >
                         <i data-feather="eye" class="text-primary cursor-pointer"></i>
-                        <span class="custom-tooltip">Xem chi tiết</span>
+                        <span class="custom-tooltip">Danh sách kho con</span>
                       </a>
 
                       <!-- Danh sách sim số (nội bộ) -->
