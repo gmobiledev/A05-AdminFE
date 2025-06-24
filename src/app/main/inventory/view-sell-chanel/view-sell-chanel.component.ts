@@ -166,7 +166,7 @@ export class ViewSellChanelComponent implements OnInit {
 
 
       this.searchForm.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
-      this.searchForm.status = params['status'] ? +params['status'] : '';
+      this.searchForm.status = params['status'] ?? '';
       this.searchForm.action = params['action'] && params['action'] != undefined ? params['action'] : '';
       this.searchForm.channel_id = params['channel_id'] && params['channel_id'] != undefined ? params['channel_id'] : '';
       this.searchForm.batch_id = params['batch_id'] && params['batch_id'] != undefined ? params['batch_id'] : '';
