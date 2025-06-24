@@ -22,7 +22,7 @@ export class ShowStatusProductPipe implements PipeTransform {
       case ProductStatus.EXPORTED:
         return '<span class="badge badge-pill badge-light-info mr-1">Chưa sử dụng</span>'
       case ProductStatus.CONNECTED:
-        return '<span class="badge badge-pill badge-light-info mr-1">Chưa sử dụng</span>'
+        return '<span class="badge badge-pill badge-light-success mr-1">Đã sử dụng</span>'
       case ProductStatus.AWAIT_APPROVE:
         return '<span class="badge badge-pill badge-light-info mr-1">Chưa sử dụng</span>'
       case ProductStatus.RETRIEVE_RENEW:

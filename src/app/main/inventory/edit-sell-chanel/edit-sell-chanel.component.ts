@@ -201,6 +201,26 @@ export class EditSellChanelComponent implements OnInit {
     });
   }
 
+downloadFile(): void {
+  const base64Data = this.formGroup.get('attach_file_base64')?.value;
+  if (!base64Data) return;
+
+  const link = document.createElement('a');
+  link.href = base64Data;
+
+  // Xác định phần mở rộng của file
+  if (base64Data.startsWith('data:image/')) {
+    link.download = 'van-ban-phe-duyet.png'; // hoặc jpg tuỳ loại ảnh
+  } else if (base64Data.startsWith('data:application/pdf')) {
+    link.download = 'van-ban-phe-duyet.pdf';
+  } else {
+    link.download = 'van-ban-phe-duyet';
+  }
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
   async onChangeHomeProvince(id, init = null) {
 

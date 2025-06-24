@@ -40,6 +40,7 @@ export class SearchProductsTransferComponent implements OnInit {
     page: 1,
     page_size: 20,
     status: '',
+    array_status: [],
     type: BatchType.OUTPUT,
     date_range: '',
     category_id: 3,
@@ -53,6 +54,7 @@ export class SearchProductsTransferComponent implements OnInit {
   modalRef;
   showChannel;
   isShowStatusKhoTong: boolean = false;
+  public taskTelecomStatus;
 
   ranges: any = {
     'Hôm nay': [dayjs(), dayjs()],
@@ -74,6 +76,11 @@ export class SearchProductsTransferComponent implements OnInit {
     //   return obj;
     // }, {});
     this.activeRouted.queryParams.subscribe(params => {
+      this.taskTelecomStatus = [
+        { value: 'used', label: 'Đã sử dụng' },
+        { value: 'unused', label: 'Chưa sử dụng' }
+      ];
+      this.searchForm.status = params['status'] ?? '';
       this.searchForm.type = params['type'] && params['type'] != undefined ? params['type'] : this.batchType.OUTPUT;
       this.searchForm.category_id = params['category_id'] && params['category_id'] != undefined ? params['category_id'] : 3;
       this.searchForm.keysearch = params['keysearch'] && params['keysearch'] != undefined ? params['keysearch'] : '';
@@ -96,6 +103,13 @@ export class SearchProductsTransferComponent implements OnInit {
     const daterangeString = this.dateRange.startDate && this.dateRange.endDate 
     ? (new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) + '|' + (new Date(new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset)).toISOString().slice(0,10) : '';
     this.searchForm.date_range = daterangeString;
+    if (this.searchForm.status === 'used') {
+    this.searchForm.status_array = [1, 6];
+    } else if (this.searchForm.status === 'unused') {
+      this.searchForm.status_array = [0, 2, 3, 4, 5, 21, 30, 98, 99];
+    } else {
+      this.searchForm.status_array = [];
+    }
     this.router.navigate(['/inventory/search-product-transfer'], { queryParams: this.searchForm});
   }
 

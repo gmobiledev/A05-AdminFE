@@ -51,27 +51,17 @@
 
                           <div class="col-md-2">
                             <div class="form-group">
-                              <select
-                                class="form-control"
-                                name="status"
-                                [(ngModel)]="searchForm.status"
-                              >
-                                <option value="">-- Chọn trạng thái --</option>
-                                <option
-                                  *ngFor="let item of productStatus | keyvalue"
-                                  [value]="item.value"
-                                  [id]="item.key"
-                                >
-                                  <span
-                                  *ngIf="!isShowStatusKhoTong"
-                                    [innerHTML]="item.value | showStatusProduct"
-                                  ></span>
-                                  <span
-                                  *ngIf="isShowStatusKhoTong"
-                                    [innerHTML]="item.value | showStatusProductStore"
-                                  ></span>
-                                </option>
-                              </select>
+                    <select
+                      class="form-control"
+                      name="status"
+                      [(ngModel)]="searchForm.status"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
+                      <option value="">Chọn trạng thái</option>
+                      <option *ngFor="let item of taskTelecomStatus" [ngValue]="item.value">
+                        {{ item.label }}
+                      </option>
+                    </select>
                             </div>
                           </div>                                    
           
