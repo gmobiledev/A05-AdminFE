@@ -370,6 +370,7 @@ export class NewBatchExportComponent implements OnInit {
   async createBatchOutput() {
     if (!this.createBatchExportForm.to_channel_id) {
       this.alertService.showMess("Vui lòng chọn kho xuất đến");
+      this.submitted = false
       return;
     }
     const dataCreateBatchExport = new CreateBatchExportDto();
