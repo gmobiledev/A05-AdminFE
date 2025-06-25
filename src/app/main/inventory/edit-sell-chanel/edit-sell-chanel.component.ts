@@ -178,49 +178,50 @@ export class EditSellChanelComponent implements OnInit {
 
   async onFileChangeAttach(event) {
     if (event.target.files && event.target.files[0]) {
-      const ext = event.target.files[0].type;
-      if(ext.includes('jpg') || ext.includes('png') || ext.includes('jpeg')) {
-          this.formGroup.patchValue({
-          attached_file_name: event.target.files[0].name,
-        });
-        let img = await this.commonService.resizeImage(event.target.files[0]);
-        this.formGroup.patchValue({
-          attached_file_content: (img + '').replace('data:image/png;base64,', '')
-        });
+      
+      const file = event.target.files[0];
+      const ext = file.type;
+
+      let base64Full;
+      let base64Stripped;
+
+      if (ext.includes('jpg') || ext.includes('jpeg') || ext.includes('png')) {
+        base64Full = await this.commonService.resizeImage(file);
+        base64Stripped = base64Full.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
       } else if (ext.includes('pdf')) {
-        this.formGroup.patchValue({
-          attached_file_name: event.target.files[0].name,
-        });
-        this.formGroup.patchValue({
-          attached_file_content: (await this.commonService.fileUploadToBase64(event.target.files[0])+'').replace('data:application/pdf;base64,', '')
-        });
+        base64Full = await this.commonService.fileUploadToBase64(file);
+        base64Stripped = base64Full.replace(/^data:application\/pdf;base64,/, '');
       }
+
+      this.formGroup.patchValue({
+        attached_file_name: file.name,
+        attached_file_content: base64Stripped,
+        attach_file_base64: base64Full,
+        isFileChanged: 1
+      });
     }
-    this.formGroup.patchValue({
-      isFileChanged: 1
-    });
   }
 
-downloadFile(): void {
-  const base64Data = this.formGroup.get('attach_file_base64')?.value;
-  if (!base64Data) return;
+  downloadFile(): void {
+    const base64Data = this.formGroup.get('attach_file_base64')?.value;
+    if (!base64Data) return;
 
-  const link = document.createElement('a');
-  link.href = base64Data;
+    const link = document.createElement('a');
+    link.href = base64Data;
 
-  // Xác định phần mở rộng của file
-  if (base64Data.startsWith('data:image/')) {
-    link.download = 'van-ban-phe-duyet.png'; // hoặc jpg tuỳ loại ảnh
-  } else if (base64Data.startsWith('data:application/pdf')) {
-    link.download = 'van-ban-phe-duyet.pdf';
-  } else {
-    link.download = 'van-ban-phe-duyet';
+    // Xác định phần mở rộng của file
+    if (base64Data.startsWith('data:image/png') || base64Data.startsWith('data:image/jpeg') || base64Data.startsWith('data:image/png')) {
+      link.download = 'van-ban-phe-duyet.png'; // hoặc jpg tuỳ loại ảnh
+    } else if (base64Data.startsWith('data:image/pdf')) {
+      link.download = 'van-ban-phe-duyet.pdf';
+    } else {
+      link.download = 'van-ban-phe-duyet';
+    }
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
 
   async onChangeHomeProvince(id, init = null) {
 

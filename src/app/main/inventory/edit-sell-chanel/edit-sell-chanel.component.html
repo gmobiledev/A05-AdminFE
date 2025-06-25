@@ -67,8 +67,9 @@
                     [ngClass]="{ 'is-invalid': submitted && f.desc.errors }"
                   />
                 </div>
-                <div class="form-group mt-2" *ngIf="formGroup.get('attach_file_base64')?.value">
-                  <label class="mb-2">Văn bản phê duyệt của Lãnh đạo</label>
+              <div class="form-group mt-2" *ngIf="formGroup.get('attach_file_base64')?.value">
+                <div class="d-flex align-items-center">
+                  <label class="mb-0">Văn bản phê duyệt của Lãnh đạo</label>
 
                   <!-- Nút để tải xuống -->
                   <button
@@ -79,6 +80,7 @@
                     Tải xuống văn bản
                   </button>
                 </div>
+              </div>
 
                 <div class="form-group">
                 <label for="fileUpload">Tải lên Văn bản phê duyệt của Lãnh đạo</label>
