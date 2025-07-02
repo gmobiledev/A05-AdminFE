@@ -5,7 +5,7 @@
 <div class="row" id="table-striped">
     <div class="col-12">
       <div class="card">
-        <div class="card-header"><h4 class="card-title">Danh sách admin</h4></div>        
+        <div class="card-header"><h4 class="card-title">Danh sách tài khoản</h4></div>        
         <div class="card-body">
           <form (ngSubmit)="onSubmitSearch()" class="mb-2">
           <div class="row">
@@ -32,7 +32,7 @@
         </form>
           <a *ngIf="checkAction('POST@/api/admin')" [routerLink]="['/admin/create']" routerLinkActive="router-link-active" class="btn btn-primary mr-1" >
             <span [data-feather]="'plus-circle'" [class]="'mr-25'"></span>
-            Thêm admin</a>
+            Thêm tài khoản</a>
           
             <a *ngIf="checkAction('POST@/api/admin/inventory-manager')" [routerLink]="['/admin/create-inventory-manager']" routerLinkActive="router-link-active"
               class="btn btn-primary">
@@ -42,19 +42,19 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Email</th>
                     <th>Họ tên</th>
+                    <th>Email</th>
                     <th>Trạng thái</th>
                     <th>Ngày tạo</th>
-                    <th>Actions</th>
+                    <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list">
+                    <td>{{ item.full_name }}</td>
                     <td>
                       {{ item.email }}
                     </td>
-                    <td>{{ item.full_name }}</td>
                     <td>
                       <div [innerHTML]="item.status | showStatus"></div>
                     </td>
@@ -62,18 +62,17 @@
                       
                     </td>                
                     <td class="overflow-hidden">
-                      <a *ngIf="checkAction('POST@/api/admin')" [routerLink]="['/admin/view', item.id]" [state]="item">
+                      <a class="ml-1 tooltip-wrapper" *ngIf="checkAction('POST@/api/admin')" [routerLink]="['/admin/view', item.id]" [state]="item">
                         <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                            <span class="custom-tooltip">Cập nhật tài khoản</span>
                         </a>
-                        <a *ngIf="checkAction('POST@/api/admin/lock') && item.status === 1" class="ml-2" (click)="onSubmitLock(item.id, 0)" >
-                          <i data-feather="lock" class="text-primary cursor-pointer"></i>
+                        <a  class="ml-1 tooltip-wrapper" *ngIf="checkAction('POST@/api/admin/lock') && item.status === 1" (click)="onSubmitLock(item.id, 0)" >
+                          <i data-feather="lock" class="text-primary cursor-pointer"> </i>
+                            <span class="custom-tooltip">Khóa</span>
                         </a>
-                        <a *ngIf="checkAction('POST@/api/admin/lock') && item.status === 0" class="ml-2" (click)="onSubmitLock(item.id, 1)" >
+                        <a class="ml-1 tooltip-wrapper" *ngIf="checkAction('POST@/api/admin/lock') && item.status === 0" (click)="onSubmitLock(item.id, 1)" >
                           <i data-feather="unlock" class="text-primary cursor-pointer"></i>
-                        </a>
-
-                        <a *ngIf="checkAction('POST@/api/admin')" class="ml-2" (click)="modalOpen(modalCreate, item)" >
-                          <i data-feather="edit-3" class="text-primary cursor-pointer"></i>
+                            <span class="custom-tooltip">Mở Khóa</span>
                         </a>
 
                     </td>

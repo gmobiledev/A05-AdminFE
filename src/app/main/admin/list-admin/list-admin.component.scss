@@ -1,0 +1,35 @@
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-tooltip {
+  position: absolute;
+  top: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 3px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.05s ease-in-out;
+}
+
+.tooltip-wrapper:hover .custom-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.table-responsive,
+tbody,
+tr,
+td,
+.overflow-auto {
+  overflow: visible !important;
+  position: relative;
+}

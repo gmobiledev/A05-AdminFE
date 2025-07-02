@@ -25,14 +25,24 @@
                 </div>
 
                 <div class="col-md-4">
-                <div class="form-group">
-                  <input
-                    class="form-control"
-                    [(ngModel)]="searchForm.channelName"
-                    name="channelName"
-                    placeholder="Nhập tên kho"
-                  />
+            <ng-select
+              class="custom-ng-select w-100"
+              [items]="listSellChannel"
+              bindLabel="name"
+              bindValue="id"
+              name="channel_name"
+              [(ngModel)]="searchForm.channelId"
+              placeholder="Chọn kho"
+              [searchable]="true"
+              [clearable]="false"
+              [dropdownPosition]="'auto'"
+              >
+              <ng-template ng-header-tmp>
+                <div style="padding: 8px; color: #6c757d; font-size: 0.875rem;">
+                  🔍 Gõ để tìm kiếm kho...
                 </div>
+              </ng-template>
+            </ng-select>
                 </div>
 
                 <div class="col-md-4">
@@ -87,13 +97,13 @@
                     <th>Kho</th>
                     <th>Số điện thoại</th>
                     <th>Serial Sim</th>
-                    <th>Ngày giao</th>
+                    <th>Thời gian giao</th>
                     <th>Người được giao</th>
+                    <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of list; let i = index">
-                    <td>
                       <td>{{ (searchForm.page - 1) * searchForm.take + (i + 1) }}</td>
                       <td>{{ item.channel_name }}</td>
                       <td>{{ item.name }}</td>
@@ -101,10 +111,68 @@
                       <td>{{ item.updated_at | date: 'dd/MM/yyyy HH:mm' }}</td>
                       <td>{{ item.full_name }}</td>
                       <td>
+                        <div class="col-md-2">
+                            <button class="tooltip-wrapper btn p-0 border-0 bg-transparent" (click)="openViewSimModal(viewSimModal, item)" >
+                              <i data-feather="eye" class="text-primary cursor-pointer"></i>
+                              <span class="custom-tooltip">Xem chi tiết người nhận SIM</span>
+                            </button>
+                        </div>
+                      </td>
+                      <td>
                   </tr>
                 </tbody>
               </table>
 
+            <ng-template #viewSimModal let-modal>
+
+              <div class="modal-header text-center d-block">
+              <h3 class="modal-title font-weight-bold text-center w-100 mb-0">
+                Xem chi tiết người sử dụng SIM
+              </h3>
+                  <p class="text-muted mt-1">[{{ selectedSim?.name }}]</p>
+              <button type="button" class="close position-absolute btn btn-danger" style="top: 10px; right: 25px" aria-label="Close" (click)="modal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="selectedSim">
+              <div class="form-row row">
+                <div class="form-group col-md-6">
+                  <label>Mã CBNV:</label>
+                  <input class="form-control" [value]="selectedSim.user_code" readonly />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Họ tên CBNV:</label>
+                  <input class="form-control" [value]="selectedSim.full_name" readonly />
+                </div>
+              </div>
+
+              <div class="form-row row">
+                <div class="form-group col-md-6">
+                  <label>Số điện thoại liên hệ:</label>
+                  <input class="form-control" [value]="selectedSim.mobile" readonly />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Email:</label>
+                  <input class="form-control" [value]="selectedSim.email" readonly />
+                </div>
+              </div>
+
+              <div class="form-row row">
+                <div class="form-group col-md-6">
+                  <label>Đơn vị:</label>
+              <input class="form-control" [value]="getUnitName(selectedSim.unit_id)" readonly />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Ghi chú:</label>
+                  <input class="form-control" [value]="selectedSim.note" readonly />
+                </div>
+              </div>
+            </div>
+
+              <div class="modal-footer text-center d-block justify-content-between">
+              <button type="button" class="btn btn-secondary" (click)="modal.close()">Đóng</button>
+            </div>
+          </ng-template>
               <ngb-pagination
                 class="d-flex justify-content-end pr-3 pt-2"
                 [collectionSize]="totalItems"

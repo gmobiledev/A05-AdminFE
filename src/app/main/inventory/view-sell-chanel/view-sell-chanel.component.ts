@@ -402,10 +402,13 @@ export class ViewSellChanelComponent implements OnInit {
           this.titleModal = "Đặt làm người đấu nối";
           console.log("check isCreate = ", this.isCreate)
           this.exitsUser = true;
+          this.isCreate = true;
           return;
         } else if (res.status && res.data && res.data.is_agent) {
 
           this.userService.getAgentServices(res.data.id).subscribe(res => {
+              console.log("Agent Services:", res);
+
             this.currentService = res.data.map(x => { return { id: x.id, status: x.status, ref_code: x.referal_code, service_code: x.type } });
             let arrayControl = <FormArray>this.formGroup.controls['agents_service'];
             for (let i = 0; i < this.currentService.length; i++) {
@@ -416,13 +419,14 @@ export class ViewSellChanelComponent implements OnInit {
                 service_code: [{ value: this.currentService[i]['service_code'], disabled: true }]
               });
               const index = this.listServiceFilter.findIndex(item => item.code == this.currentService[i]['service_code']);
-              this.listServiceFilter[index]['disabled'] = 'disabled';
+              if (index >= 0) {
+                this.listServiceFilter[index]['disabled'] = 'disabled';
+              }
               arrayControl.push(newGroup);
               this.updateIsShowAddInput();
             }
             this.titleModal = "Cập nhật người đấu nối";
             this.isCreate = false;
-            this.exitsUser = false;
           })
         }
         this.titleModal = this.isCreate ? "Thêm người đấu nối" : "Cập nhật người đấu nối";
@@ -507,7 +511,7 @@ export class ViewSellChanelComponent implements OnInit {
         return;
       }
       const dataAgentServices = this.formGroup.controls['new_agents_service'].value.map(item => {
-        return { ref_code: item.ref_code, service_code: item.service_code, partner_user_code: this.formGroup.controls['partner_user_code'].value }
+        return { ref_code: '', service_code: 'TELECOM', partner_user_code: this.formGroup.controls['partner_user_code'].value }
       });
       if (dataAgentServices.length < 1) {
         this.alertService.showMess("Vui lòng chọn Dịch vụ");

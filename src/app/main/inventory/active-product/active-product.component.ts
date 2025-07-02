@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductConstant, ProductStatus, ProductStoreStatus, STORAGE_KEY, TaskTelecom, TaskTelecomStatus } from 'app/utils/constants';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SweetAlertService } from 'app/utils/sweet-alert.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import dayjs from 'dayjs';
 import { InventoryService } from 'app/auth/service/inventory.service';
-import { CommonService } from 'app/utils/common.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-active-product',
@@ -14,6 +10,7 @@ import { CommonService } from 'app/utils/common.service';
   styleUrls: ['./active-product.component.scss']
 })
 export class ActiveProductComponent implements OnInit {
+  @ViewChild('modalUpdateSim') modalUpdateSim: any;
 
   public contentHeader: any = {
     headerTitle: 'Danh sách số đã sử dụng',
@@ -36,7 +33,8 @@ export class ActiveProductComponent implements OnInit {
 
   public selectedSim: any;
   public modalRef: any;
-  public listChannel: any;
+  listSellChannel: any[] = [];
+  listUnit: any[] = [];
 
   list: any[] = [];
   totalPage = 0;
@@ -64,22 +62,19 @@ export class ActiveProductComponent implements OnInit {
 
   constructor(
     private inventoryService: InventoryService,
-    private alertService: SweetAlertService
-
+    private alertService: SweetAlertService,
+    private readonly modalService: NgbModal,
   ) {}
 
   onSubmitSearch() {
-    if (!this.searchForm.channelId && this.listChannel?.length) {
-      this.searchForm.channelId = this.listChannel[0].id;
-    }
     if (this.dateRange?.startDate && this.dateRange?.endDate) {
       const tzoffset = new Date().getTimezoneOffset() * 60000;
-      this.searchForm.fromDate = new Date(
-        new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset
-      ).toISOString().slice(0, 10);
-      this.searchForm.toDate = new Date(
-        new Date(this.dateRange.endDate.toISOString()).getTime() - tzoffset
-      ).toISOString().slice(0, 10);
+      this.searchForm.fromDate = new Date(new Date(this.dateRange.startDate.toISOString()).getTime() - tzoffset)
+        .toISOString();
+
+      const endDateLocal = new Date(this.dateRange.endDate);
+      endDateLocal.setHours(23, 59, 59, 999);
+      this.searchForm.toDate = new Date(endDateLocal.getTime() - tzoffset).toISOString();
     } else {
       this.searchForm.fromDate = '';
       this.searchForm.toDate = '';
@@ -89,31 +84,40 @@ export class ActiveProductComponent implements OnInit {
     this.loadData();
   }
 
-loadData() {
-  this.inventoryService.getMyChannel({}).subscribe(res => {
-    this.listChannel = res.data.items;
+  getUnitName(unit_id: number): string {
+    const unit = this.listUnit.find(u => u.id === unit_id);
+    return unit ? unit.name : 'Chưa có đơn vị';
+  }
 
-    // Nếu chưa có channelId thì lấy cái đầu tiên
-    if (!this.searchForm.channelId && this.listChannel.length) {
-      this.searchForm.channelId = this.listChannel[0].id;
-    }
+  openViewSimModal(modalTemplate: any, sim: any) {
+    this.selectedSim = sim;
 
-    // Gọi API sau khi đã set xong channelId
-    this.inventoryService.getAssignedNumbers(this.searchForm).subscribe(res => {
-      if (Array.isArray(res)) {
-        this.list = res;
-        this.totalItems = res.length;
-      } else {
-        this.list = res.data || [];
-        this.totalItems = res.meta?.total || 0;
-      }
-
-      this.totalPage = Math.ceil(this.totalItems / this.searchForm.take);
+    this.modalRef = this.modalService.open(modalTemplate, {
+      centered: true,
+      size: 'lg',
+      backdrop: 'static',
+      keyboard: false
     });
-  });
-}
+  }
+
+  loadData() {
+    this.inventoryService.getAllUnits().subscribe(res => {
+      this.listUnit = res.data || res;
+    });
+    this.inventoryService.getAssignedNumbers(this.searchForm).subscribe(res => {
+      this.list = res.data || [];
+      this.totalPage = res.length || 0;
+      this.totalItems = res.total
+    });
+  }
 
   ngOnInit(): void {
+    this.inventoryService.listSellChannelAll().subscribe(res => {
+      this.listSellChannel = [
+        { id: '', name: 'Tất cả kho' },
+        ...res.data.items
+      ];
+    });
     this.loadData();
   }
 

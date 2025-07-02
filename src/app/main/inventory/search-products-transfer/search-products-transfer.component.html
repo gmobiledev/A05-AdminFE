@@ -51,17 +51,32 @@
 
                           <div class="col-md-2">
                             <div class="form-group">
-                    <select
-                      class="form-control"
-                      name="status"
-                      [(ngModel)]="searchForm.status"
-                      [ngModelOptions]="{ standalone: true }"
-                    >
-                      <option value="">Chọn trạng thái</option>
-                      <option *ngFor="let item of taskTelecomStatus" [ngValue]="item.value">
-                        {{ item.label }}
-                      </option>
-                    </select>
+                          <select
+                            class="form-control"
+                            name="status"
+                            [(ngModel)]="searchForm.status"
+                            [ngModelOptions]="{ standalone: true }"
+                          >
+                            <option value="">Chọn trạng thái</option>
+
+                            <!-- Trường hợp không phải kho tổng -->
+                            <ng-container *ngIf="!isShowStatusKhoTong">
+                              <option *ngFor="let item of taskTelecomStatus" [ngValue]="item.value">
+                                {{ item.label }}
+                              </option>
+                            </ng-container>
+
+                            <!-- Trường hợp là kho tổng -->
+                            <ng-container *ngIf="isShowStatusKhoTong">
+                              <option
+                                *ngFor="let item of productStatus | keyvalue"
+                                [value]="item.value"
+                                [id]="item.key"
+                              >
+                                <span [innerHTML]="item.value | showStatusProductStore"></span>
+                              </option>
+                            </ng-container>
+                          </select>
                             </div>
                           </div>                                    
           

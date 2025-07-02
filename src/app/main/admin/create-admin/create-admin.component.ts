@@ -25,7 +25,7 @@ export class CreateAdminComponent implements OnInit {
           link: '/'
         },
         {
-          name: 'Danh sách admin',
+          name: 'Danh sách tài khoản',
           isLink: true,
           link: '/admin/list'
         },

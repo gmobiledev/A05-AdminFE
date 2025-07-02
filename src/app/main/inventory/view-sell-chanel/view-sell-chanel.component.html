@@ -236,7 +236,7 @@
         </div>
       </div>
 
-      <div class="form-group" *ngIf="isCreate">
+      <div class="form-group" *ngIf="isCreate && !exitsUser">
         <label for="basicInput">Họ và tên</label>
         <input type="text" class="form-control" placeholder="" name="name" formControlName="name"
           [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />

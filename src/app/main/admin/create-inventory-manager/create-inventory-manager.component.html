@@ -9,7 +9,7 @@
             <div class="card-body" *blockUI="'section-block'">
                 <form [formGroup]="form" (ngSubmit)="onSubmitSave()">
                     <div class="form-group">
-                        <label for="">Username</label>
+                        <label for="">Tên đăng nhập</label>
                         <input type="text" class="form-control"
                         (keydown.space)="$event.preventDefault()"
                         formControlName="username"

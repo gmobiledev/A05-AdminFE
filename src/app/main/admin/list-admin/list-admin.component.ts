@@ -217,7 +217,7 @@ export class ListAdminComponent implements OnInit {
     })
 
     this.contentHeader = {
-      headerTitle: 'Danh sách admin',
+      headerTitle: 'Danh sách tài khoản',
       actionButton: true,
       breadcrumb: {
         type: '',
@@ -228,7 +228,7 @@ export class ListAdminComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'Danh sách admin',
+            name: 'Danh sách tài khoản',
             isLink: false
           }
         ]
