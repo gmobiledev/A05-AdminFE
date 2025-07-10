@@ -81,7 +81,7 @@
             <ng-container *ngIf="data?.batch?.type == batchType.OUTPUT">
                 <!-- VP/KT duyệt -->
                 <div class="col-12 text-center" >
-                    <button *ngIf="data?.batch?.status == batchStatus.INIT
+                    <!-- <button *ngIf="data?.batch?.status == batchStatus.INIT
                                             && checkAction('batch/export/ke-toan/approve')
                                             && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11)
                                             && checkHasPermissionAction(listAction.APPROVE_EXPORT_LEVEL11)
@@ -95,9 +95,9 @@
                                             " (click)="onApprove(data?.batch, batchStatus.CANCEL_BY_ACCOUNTANT, 'ketoan')"
                         class="btn btn-danger  mb-2 mr-2">
                         <i data-feather="cancel" class="text-white cursor-pointer"></i> Từ chối
-                    </button>
+                    </button> -->
             
-                    <button *ngIf="(data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    <button *ngIf="(data?.batch?.status == batchStatus.INIT
                     
                     || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11, true))
                 )
@@ -107,7 +107,7 @@
                         <i data-feather="check" class="text-white cursor-pointer"></i> Duyệt
                     </button>
             
-                    <button *ngIf="checkAction('batch/export/van-phong/reject') && (data?.batch?.status == batchStatus.APPROVED_BY_ACCOUNTANT
+                    <button *ngIf="checkAction('batch/export/van-phong/reject') && (data?.batch?.status == batchStatus.INIT
                     
                     || (data?.batch?.status == batchStatus.INIT && checkSellAdminAction(listAction.APPROVE_EXPORT_LEVEL11, true)))
                     && checkHasPermissionAction(listAction.APPROVE_EXPORT_LAST)
